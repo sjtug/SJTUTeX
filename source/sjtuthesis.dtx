@@ -47,10 +47,10 @@ The Current Maintainer of this work is Alexara Wu.
 
 \generate{
   \usedir{tex/latex/sjtuthesis}
-    \file{\jobname.cls}         {\from{\jobname.dtx}{class}}
-    \file{\jobname-bachelor.ltx}{\from{\jobname.dtx}{bachelor}}
-    \file{\jobname-graduate.ltx}{\from{\jobname.dtx}{graduate}}
-    \file{sjtudoc.cls}          {\from{\jobname.dtx}{document}}
+    \file{\jobname.cls}              {\from{\jobname.dtx}{class}}
+    \file{\jobname-undergraduate.ltx}{\from{\jobname.dtx}{undergraduate}}
+    \file{\jobname-graduate.ltx}     {\from{\jobname.dtx}{graduate}}
+    \file{sjtudoc.cls}               {\from{\jobname.dtx}{document}}
 %</install>
 %<*internal>
   \usedir{source/latex/sjtuthesis}
@@ -72,11 +72,11 @@ The Current Maintainer of this work is Alexara Wu.
 %<class|document>\NeedsTeXFormat{LaTeX2e}
 %<class>\ProvidesClass{sjtuthesis}
 %<document>\ProvidesClass{sjtudoc}
-%<bachelor>\ProvidesFile{sjtuthesis-bachelor.ltx}
+%<undergraduate>\ProvidesFile{sjtuthesis-undergraduate.ltx}
 %<graduate>\ProvidesFile{sjtuthesis-graduate.ltx}
-%<*(class|bachelor|graduate|document)>
+%<*(class|undergraduate|graduate|document)>
   [2019/06/16 1.0.0rc Shanghai Jiao Tong University Thesis Template]
-%</(class|bachelor|graduate|document)>
+%</(class|undergraduate|graduate|document)>
 %<*(document|class)>
 \hyphenation{SJTU-Thesis}
 \def\sjtuthesis{SJTU\textsc{Thesis}}
@@ -324,7 +324,7 @@ The Current Maintainer of this work is Alexara Wu.
 % \subsection{示例文件}
 % \label{sec:userguide}
 %
-% 模板核心文件有：\file{sjtuthesis.cls}，\file{sjtuthesis-bachelor.ltx} 和 
+% 模板核心文件有：\file{sjtuthesis.cls}，\file{sjtuthesis-undergraduate.ltx} 和 
 % \file{sjtuthesis-graduate.ltx}，但如果没有示例文档会很难下手，所以推荐从模板自
 % 带的示例文档入手，其中包括了论文写作用到的所有命令及其使用方法，只需要用自己的
 % 内容进行相应替换就可以。对于不清楚的命令可以查阅本手册。下面的例子描述了模板中
@@ -633,7 +633,7 @@ The Current Maintainer of this work is Alexara Wu.
 % 根据选项载入配置文件。
 %    \begin{macrocode}
 \ifsjtu@degree@bachelor
-  \AtEndOfClass{\input{sjtuthesis-bachelor.ltx}}
+  \AtEndOfClass{\input{sjtuthesis-undergraduate.ltx}}
 \else
   \ifsjtu@degree@master
     \AtEndOfClass{\input{sjtuthesis-graduate.ltx}}
@@ -823,7 +823,7 @@ The Current Maintainer of this work is Alexara Wu.
 \sjtu@def@label{schoolChi}{上海交通大学}
 \sjtu@def@label{schoolEng}{Shanghai Jiao Tong University}
 %</class>
-%<*bachelor>
+%<*undergraduate>
 \ifsjtu@degree@course
   \sjtu@def@label{degreetypeChi}{}
   \sjtu@def@label{degreetypeEng}{}
@@ -849,7 +849,7 @@ The Current Maintainer of this work is Alexara Wu.
   \sjtu@def@label{subjectEng}{Thesis of \sjtu@label@degreetypeEng}
 \fi
 \sjtu@def@label{bigabstract}{英文大摘要}
-%</bachelor>
+%</undergraduate>
 %<*graduate>
 \ifsjtu@degree@doctor
   \sjtu@def@label{degreetypeChi}{博士}
@@ -1037,15 +1037,15 @@ The Current Maintainer of this work is Alexara Wu.
 %
 % 设置纸张、页边距。
 %    \begin{macrocode}
-%<*(bachelor|graduate)>
+%<*(undergraduate|graduate)>
 \geometry{%
   paper      = a4paper,
-%<*bachelor>
+%<*undergraduate>
   vmargin    = {84bp, 72bp},
   hmargin    = 90bp,
   headheight = 60bp,
   headsep    = 12bp,
-%</bachelor>
+%</undergraduate>
 %<*graduate>
   top        = 3.5cm,
   bottom     = 4.0cm,
@@ -1059,7 +1059,7 @@ The Current Maintainer of this work is Alexara Wu.
 %
 % 设置页眉页脚。
 %    \begin{macrocode}
-%<*bachelor>
+%<*undergraduate>
 \ifsjtu@language@english
   \def\sjtu@titlemark{\sjtu@value@entitle}
   \newcommand{\sjtu@fancyhead}{%
@@ -1081,7 +1081,7 @@ The Current Maintainer of this work is Alexara Wu.
   \fancyhead[R]{\sjtu@fancyhead}
   \fancyfoot[C]{\sjtu@fancyfoot{\thepage}{\lastpageref{pagesLTS.Roman}}}
 }
-%</bachelor>
+%</undergraduate>
 %<*graduate>
 \newcommand{\sjtu@fancyfoot}[2]{
   \ifsjtu@review\relax\else
@@ -1105,11 +1105,11 @@ The Current Maintainer of this work is Alexara Wu.
 %</graduate>
 \fancypagestyle{sjtu@plain}{%
   \fancyhf{}
-%<*bachelor>
+%<*undergraduate>
   \fancyhead[L]{\includegraphics{sjtu-logo.pdf}}
   \fancyhead[R]{\sjtu@fancyhead}
   \fancyfoot[C]{\sjtu@fancyfoot{\thepage}{\lastpageref{pagesLTS.arabic}}}
-%</bachelor>
+%</undergraduate>
 %<*graduate>
   \fancyhead[C]{\zihao{-5}\sjtu@label@subjectChi}
   \fancyfoot[C]{\small ---~{\bfseries\thepage}~---}
@@ -1121,7 +1121,7 @@ The Current Maintainer of this work is Alexara Wu.
   }
 %</graduate>
 }
-%<*bachelor>
+%<*undergraduate>
 \fancypagestyle{sjtu@biglast}{%
   \fancyhf{}
   \fancyhead[L]{\includegraphics{sjtu-logo.pdf}}
@@ -1129,8 +1129,8 @@ The Current Maintainer of this work is Alexara Wu.
   \fancyfoot[C]{\sjtu@fancyfoot{\theCurrentPageLocal}%
                                {\lastpageref{pagesLTS.roman.local}}}
 }
-%</bachelor>
-%</(bachelor|graduate)>
+%</undergraduate>
+%</(undergraduate|graduate)>
 %    \end{macrocode}
 %
 % \subsection{主文档格式}
@@ -1169,12 +1169,12 @@ The Current Maintainer of this work is Alexara Wu.
 % \begin{macro}{\backmatter}
 % 前言的页码设置为大写罗马数字，同时设置前言与正文的页眉页脚风格。
 %    \begin{macrocode}
-%<*(bachelor|graduate)>
+%<*(undergraduate|graduate)>
 \renewcommand{\frontmatter}{%
   \cleardoublepage
   \@mainmatterfalse
   \pagenumbering{Roman}
-%<bachelor>  \pagestyle{sjtu@front}
+%<undergraduate>  \pagestyle{sjtu@front}
 %<graduate>  \pagestyle{sjtu@plain}
 }
 \renewcommand{\mainmatter}{%
@@ -1188,7 +1188,7 @@ The Current Maintainer of this work is Alexara Wu.
   \cleardoublepage
   \@mainmatterfalse
 }
-%</(bachelor|graduate)>
+%</(undergraduate|graduate)>
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
@@ -1230,11 +1230,11 @@ The Current Maintainer of this work is Alexara Wu.
 %
 % 本科与研究生论文三级标题格式不同。
 %    \begin{macrocode}
-%<*bachelor>
+%<*undergraduate>
 \ctexset{%
   subsection/format = \zihao{-4}\normalfont,
 }
-%</bachelor>
+%</undergraduate>
 %    \end{macrocode}
 %
 % \subsubsection{段落}
@@ -1299,11 +1299,11 @@ The Current Maintainer of this work is Alexara Wu.
 %
 % 本科与研究生论文设置不同的目录格式。
 %    \begin{macrocode}
-%<*bachelor>
+%<*undergraduate>
 \renewcommand{\cftchapfont}{\normalfont}
 \renewcommand{\cftchapleader}{\normalfont\cftdotfill{\cftdotsep}}
 \renewcommand{\cftchappagefont}{\normalfont}
-%</bachelor>
+%</undergraduate>
 %<*graduate>
 \renewcommand{\cftchapfont}{\bfseries\heiti}
 \renewcommand{\cftchapleader}{\normalfont\cftdotfill{\cftdotsep}}
@@ -1517,14 +1517,14 @@ The Current Maintainer of this work is Alexara Wu.
 %
 % 定义摘要环境，本科与研究生论文的摘要样式要求略有不同。
 %    \begin{macrocode}
-%<*(bachelor|graduate)>
+%<*(undergraduate|graduate)>
 \NewDocumentEnvironment{abstract}{}{%
   \cleardoublepage
   \pdfbookmark[0]{\sjtu@label@abstract}{abstract}
   \chapter*{%
     \sjtu@value@title \vskip 2ex
     \begingroup
-%<bachelor>      \zihao{4}
+%<undergraduate>      \zihao{4}
       \sjtu@label@abstractChi
     \endgroup
   }
@@ -1534,11 +1534,11 @@ The Current Maintainer of this work is Alexara Wu.
 }{%
   \vskip 3ex \noindent
   \begingroup
-%<bachelor>    \zihao{-4}
+%<undergraduate>    \zihao{-4}
     \heiti\sjtu@label@keywordsChi
   \endgroup
   \begingroup
-%<bachelor>    \zihao{5}
+%<undergraduate>    \zihao{5}
     \sjtu@value@keywords
   \endgroup
 }
@@ -1551,7 +1551,7 @@ The Current Maintainer of this work is Alexara Wu.
   \chapter*{%
     \MakeUppercase\sjtu@value@entitle \vskip 2ex
     \begingroup
-%<bachelor>      \zihao{4}
+%<undergraduate>      \zihao{4}
       \MakeUppercase\sjtu@label@abstractEng
     \endgroup
   }
@@ -1561,12 +1561,12 @@ The Current Maintainer of this work is Alexara Wu.
 }{%
   \vskip 3ex \noindent
   \begingroup
-%<bachelor>    \zihao{-4}\bfseries
+%<undergraduate>    \zihao{-4}\bfseries
 %<graduate>    \bfseries\MakeUppercase
     \sjtu@label@keywordsEng
   \endgroup
   \begingroup
-%<bachelor>    \zihao{5}
+%<undergraduate>    \zihao{5}
     \sjtu@value@enkeywords
   \endgroup
 }
@@ -1578,7 +1578,7 @@ The Current Maintainer of this work is Alexara Wu.
 \NewDocumentEnvironment{bigabstract}{}{%
   \Collect@Body\sjtu@bigabstract
 }{%
-%<*bachelor>
+%<*undergraduate>
   \ifsjtu@degree@course\relax\else
     \ifsjtu@language@english\relax\else
       \AtEndDocument{%
@@ -1593,10 +1593,10 @@ The Current Maintainer of this work is Alexara Wu.
       }
     \fi
   \fi
-%</bachelor>
+%</undergraduate>
 %<graduate>  \relax
 }
-%</(bachelor|graduate)>
+%</(undergraduate|graduate)>
 %    \end{macrocode}
 %
 % \subsubsection{主要符号对照表}
@@ -1817,7 +1817,7 @@ The Current Maintainer of this work is Alexara Wu.
 %
 % 绘制封面
 %    \begin{macrocode}
-%<*(bachelor|graduate)>
+%<*(undergraduate|graduate)>
 \RenewDocumentCommand\maketitle{}{%
   \pdfbookmark[0]{\sjtu@label@titlepage}{titlepage}
   \sjtu@makechinesetitle%
@@ -1825,7 +1825,7 @@ The Current Maintainer of this work is Alexara Wu.
 }
 \newcommand{\sjtu@makechinesetitle}{%
   \cleardoublepage
-%<*bachelor>
+%<*undergraduate>
   \thispagestyle{empty}
   \begin{center}
     \kaishu
@@ -1869,7 +1869,7 @@ The Current Maintainer of this work is Alexara Wu.
       \end{tabular}
     \endgroup
     \vskip 40bp
-%</bachelor>
+%</undergraduate>
 %<*graduate>
   \thispagestyle{sjtu@title}
   \begin{center}
@@ -1937,7 +1937,7 @@ The Current Maintainer of this work is Alexara Wu.
   \cleardoublepage
 }
 %</graduate>
-%</(bachelor|graduate)>
+%</(undergraduate|graduate)>
 %    \end{macrocode}
 %
 % \subsection{文档部件}
