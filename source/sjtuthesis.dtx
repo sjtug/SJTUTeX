@@ -524,11 +524,14 @@ The Current Maintainer of this work is Alexara Wu.
 %
 % \section{实现细节}
 %
-% 报错命令
+% 报错和警告命令。
 %    \begin{macrocode}
 %<*class>
 \newcommand\sjtu@error[1]{%
   \ClassError{sjtuthesis}{#1}{}%
+}
+\newcommand\sjtu@warning[1]{%
+  \ClassWarning{sjtuthesis}{#1}{}%
 }
 %    \end{macrocode}
 %
@@ -574,7 +577,7 @@ The Current Maintainer of this work is Alexara Wu.
 \newcommand\sjtu@define@key[2]{%
   \kvsetkeys{#1@key}{#2}%
 }
-\newcommand\sjtu@set@family@handler[1]{%
+\newcommand\sjtu@set@family@key@handler[1]{%
   \kv@set@family@handler{#1@key}{%
 %    \end{macrocode}
 %
@@ -661,6 +664,41 @@ The Current Maintainer of this work is Alexara Wu.
 }
 %    \end{macrocode}
 %
+%    \begin{macrocode}
+\newcommand\sjtu@define@bool[2]{%
+  \kvsetkeys{#1@bool}{#2}%
+}
+\newcommand\sjtu@set@family@bool@handler[1]{%
+  \kv@set@family@handler{#1@bool}{%
+    \@namedef{#1@##1@@name}{##1}%
+    \@namedef{#1@##1@@init}{false}%
+    \kv@define@key{#1@value}{name}{%
+      \@namedef{#1@##1@@name}{####1}%
+    }%
+    \kv@define@key{#1@value}{init}{%
+      \@namedef{#1@##1@@init}{####1}%
+    }%
+    \@namedef{#1@##1@@code}{}%
+    \kvsetkeys{#1@value}{##2}%
+    \expandafter\newif\csname if#1@\@nameuse{#1@##1@@name}\endcsname
+    \@nameuse{#1@\@nameuse{#1@##1@@name}\@nameuse{#1@##1@@init}}%
+    \kv@define@key{#1}{##1}[true]{%
+      \@ifundefined{%
+        #1@\@nameuse{#1@##1@@name}####1%
+      }{%
+        \sjtu@warning{%
+          Cannot set boolean option to `####1',\MessageBreak
+          use `true' or `false', now using `\@nameuse{#1@##1@@init}'%
+        }%
+      }{%
+        \@nameuse{#1@\@nameuse{#1@##1@@name}####1}%
+      }
+      \@nameuse{#1@##1@@code}%
+    }%
+  }
+}
+%    \end{macrocode}
+%
 % 定义接口向 |key| 添加 |code|：
 %
 %    \begin{macrocode}
@@ -670,7 +708,7 @@ The Current Maintainer of this work is Alexara Wu.
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-\sjtu@set@family@handler{sjtu}
+\sjtu@set@family@key@handler{sjtu}
 \sjtu@define@key{sjtu}{
   degree = {
     choices = {
@@ -891,7 +929,7 @@ The Current Maintainer of this work is Alexara Wu.
 \kv@define@key{sjtu}{format}{
   \kvsetkeys{sjtu@format}{#1}
 }
-\sjtu@set@family@handler{sjtu@format}
+\sjtu@set@family@key@handler{sjtu@format}
 \sjtu@define@key{sjtu@format}{
   title-logo-color = {
     name = title@logo@color,
@@ -920,6 +958,10 @@ The Current Maintainer of this work is Alexara Wu.
     default = {--},
   },
 }
+\sjtu@set@family@bool@handler{sjtu@format}
+\sjtu@define@bool{sjtu@format}{
+  indent-headings = { name = indent@headings },
+}
 %    \end{macrocode}
 %
 % \subsection{信息录入}
@@ -928,7 +970,7 @@ The Current Maintainer of this work is Alexara Wu.
 \kv@define@key{sjtu}{info}{
   \kvsetkeys{sjtu@info}{#1}
 }
-\sjtu@set@family@handler{sjtu@info}
+\sjtu@set@family@key@handler{sjtu@info}
 \sjtu@define@key{sjtu@info}{
 %    \end{macrocode}
 %
@@ -1063,7 +1105,7 @@ The Current Maintainer of this work is Alexara Wu.
 \kv@define@key{sjtu}{name}{
   \kvsetkeys{sjtu@name}{#1}
 }
-\sjtu@set@family@handler{sjtu@name}
+\sjtu@set@family@key@handler{sjtu@name}
 \sjtu@define@key{sjtu@name}{
   appendix          = { default = Appendix },
   contents          = { default = Contents },
@@ -1418,7 +1460,7 @@ The Current Maintainer of this work is Alexara Wu.
 }
 \sjtu@load@fontset
 \sjtu@option@hook{sjtu}{latinfontset}{%
-  \sjtu@load@math@font
+  \sjtu@load@fontset
 }
 %</class>
 %    \end{macrocode}
@@ -1564,7 +1606,7 @@ The Current Maintainer of this work is Alexara Wu.
 % 各级标题格式设置。
 %    \begin{macrocode}
 \ctexset{%
-  chapter={%
+  chapter = {%
     format       = \zihao{3}\bfseries\heiti\centering,
     nameformat   = {},
     titleformat  = {},
@@ -1573,27 +1615,55 @@ The Current Maintainer of this work is Alexara Wu.
     beforeskip   = 1ex,
     afterskip    = 2ex
   },
-  section={%
+  section = {%
     format       = \zihao{4}\bfseries\heiti,
     afterindent  = true,
     afterskip    = 1ex \@plus .2ex
   },
-  subsection={%
+  subsection = {%
     format       = \zihao{-4}\bfseries\heiti,
     afterindent  = true,
     afterskip    = 1ex \@plus .2ex
   },
-  subsubsection={%
+  subsubsection = {%
     format       = \zihao{-4}\normalfont,
     afterindent  = true,
     afterskip    = 1ex \@plus .2ex
   },
   paragraph/afterindent    = true,
-  subparagraph/afterindent = true}
+  subparagraph/afterindent = true,
+}
+\newcommand\sjtu@format@set@indent@headings{%
+  \ifsjtu@format@indent@headings
+    \ctexset{%
+      section/indent       = 2\ccwd,
+      subsection/indent    = 2\ccwd,
+      subsubsection/indent = 2\ccwd,
+    }
+    \ifsjtu@degree@graduate\relax\else
+      \ctexset{%
+        subsubsection/name   = {(,)},
+        subsubsection/number = \arabic{subsubsection},
+      }
+    \fi
+  \else
+    \ctexset{%
+      section/indent       = 0pt,
+      subsection/indent    = 0pt,
+      subsubsection/indent = 0pt,
+      subsubsection/name   = {},
+      subsubsection/number = \thesubsubsection,
+    }
+  \fi
+}
+\sjtu@format@set@indent@headings
+\sjtu@option@hook{sjtu@format}{indent-headings}{%
+  \sjtu@format@set@indent@headings
+}
 %</class>
 %    \end{macrocode}
 %
-% 本科与研究生论文三级标题格式不同。
+% 本科三级标题格式。
 %    \begin{macrocode}
 %<*undergraduate>
 \ctexset{%
@@ -1610,7 +1680,8 @@ The Current Maintainer of this work is Alexara Wu.
 \ctexset{%
   punct          = quanjiao,
   space          = auto,
-  autoindent     = true}
+  autoindent     = true,
+}
 %    \end{macrocode}
 %
 % 使用松散的断行模式。
