@@ -1891,13 +1891,21 @@ The Current Maintainer of this work is Alexara Wu.
 }
 \renewcommand\listoffigures{\sjtu@listof{figure}}
 \renewcommand\listoftables{\sjtu@listof{table}}
-%</class>
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
 % \end{macro}
 % \end{macro}
 % \end{macro}
+%
+% 设置目录线样式。
+%    \begin{macrocode}
+\ifsjtu@language@chinese
+  \renewcommand\cftdot{\textperiodcentered}
+\fi
+\renewcommand\cftdotsep{1}
+%</class>
+%    \end{macrocode}
 %
 % 本科与研究生论文设置不同的目录格式。
 %    \begin{macrocode}
