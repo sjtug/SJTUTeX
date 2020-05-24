@@ -719,8 +719,9 @@ The Current Maintainer of this work is Alexara Wu.
     choices = {
       -4,
       5,
+      auto,
     },
-    initial = 5,
+    initial = auto,
   },
 %    \end{macrocode}
 %
@@ -751,9 +752,14 @@ The Current Maintainer of this work is Alexara Wu.
     \sjtu@degree@graduatetrue
   \fi
 }
-\sjtu@set@graduate
-\sjtu@option@hook{sjtu}{degree}{%
-  \sjtu@set@graduate
+\newcommand\sjtu@set@zihao{%
+  \ifsjtu@zihao@auto
+    \ifsjtu@degree@graduate
+      \def\sjtu@zihao{-4}
+    \else
+      \def\sjtu@zihao{5}
+    \fi
+  \fi
 }
 %    \end{macrocode}
 %
@@ -770,6 +776,8 @@ The Current Maintainer of this work is Alexara Wu.
 % 解析用户传递过来的选项，并加载 \pkg{ctexbook}。
 %    \begin{macrocode}
 \ProcessKeyvalOptions*
+\sjtu@set@graduate
+\sjtu@set@zihao
 %    \end{macrocode}
 %
 % 使用 \XeTeX\ 引擎时，\pkg{fontspec} 宏包会被 \pkg{xeCJK} 自动调用。传递给
