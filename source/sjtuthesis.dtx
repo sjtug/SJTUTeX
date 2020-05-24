@@ -565,37 +565,45 @@ The Current Maintainer of this work is Alexara Wu.
 %         <choice1>,
 %         <choice2>,
 %       },
+%       initial = <initial>,
 %       default = <default>,
 %     },
 %   }
 % \end{latex}
 %
-% 其中 |choices| 设置允许使用的值，默认为第一个（或者 \meta{default}）；
+% 其中 |choices| 设置允许使用的值；
+% \meta{initial} 是选项的初始值，默认为 |choices| 第一个；
+% \meta{default} 是选项的默认值，默认为 \meta{initial}；
 % \meta{code} 是相应的内容被设置时执行的代码。
 %
 %    \begin{macrocode}
 \newcommand\sjtu@define@key[2]{%
   \kvsetkeys{#1@key}{#2}%
 }
-\newcommand\sjtu@set@family@key@handler[1]{%
+\newcommand\sjtu@set@family@handler[1]{%
   \kv@set@family@handler{#1@key}{%
+%    \end{macrocode}
+%
+% |initial| 是定义该 \meta{key} 时的初始值，缺省为空。
+%
+%    \begin{macrocode}
+    \def\sjtu@@initial{}%
+    \def\sjtu@@choices{}%
+    \@namedef{#1@##1@@default}{}%
+    \@namedef{#1@##1@@check}{}%
+    \@namedef{#1@##1@@code}{}%
 %    \end{macrocode}
 %
 % \cs{sjtusetup} 会将 \meta{value} 存到 \cs{\meta{family}@\meta{key}}，
 % 但是宏的名字包含 “-” 这样的特殊字符时不方便直接调用，比如 |key = math-style|，
 % 这时可以用 |name| 设置 \meta{key} 的别称，比如 |key = math@style|，
 % 这样就可以通过 \cs{\meta{family}@math@style} 来引用。
-% |default| 是定义该 \meta{key} 时默认的值，缺省为空。
 %
 %    \begin{macrocode}
     \@namedef{#1@##1@@name}{##1}%
-    \def\sjtu@@default{}%
-    \def\sjtu@@choices{}%
     \kv@define@key{#1@value}{name}{%
       \@namedef{#1@##1@@name}{####1}%
     }%
-    \@namedef{#1@##1@@check}{}%
-    \@namedef{#1@##1@@code}{}%
 %    \end{macrocode}
 %
 % 保存下 |choices = {}| 定义的内容，在定义 \cs{\meta{family}@\meta{name}} 后再执行。
@@ -620,20 +628,30 @@ The Current Maintainer of this work is Alexara Wu.
         \@nameuse{#1@\@nameuse{#1@##1@@name}@\@nameuse{#1@\@nameuse{#1@##1@@name}}true}%
       }%
     }%
+    \kv@define@key{#1@value}{initial}{%
+      \def\sjtu@@initial{####1}%
+      \expandafter\ifx\csname #1@##1@@default\endcsname\@empty
+        \@namedef{#1@##1@@default}{####1}%
+      \fi
+    }%
     \kv@define@key{#1@value}{default}{%
-      \def\sjtu@@default{####1}%
+      \@namedef{#1@##1@@default}{####1}%
     }%
     \kvsetkeys{#1@value}{##2}%
     \@namedef{#1@\@nameuse{#1@##1@@name}}{}%
 %    \end{macrocode}
 %
-% 第一个 \meta{choice} 设为 \meta{default}，
+% 第一个 \meta{choice} 设为 \meta{initial}，
+% 若 \meta{default} 为定义，则设置为 \meta{initial}，
 % 并且对每个 \meta{choice} 定义 \cs{if\meta{family}@\meta{name}@\meta{choice}}。
 %
 %    \begin{macrocode}
     \kv@set@family@handler{#1@choice}{%
-      \ifx\sjtu@@default\@empty
-        \def\sjtu@@default{####1}%
+      \ifx\sjtu@@initial\@empty
+        \def\sjtu@@initial{####1}%
+      \fi
+      \expandafter\ifx\csname #1@##1@@default\endcsname\@empty
+        \@namedef{#1@##1@@default}{####1}%
       \fi
       \expandafter\newif\csname if#1@\@nameuse{#1@##1@@name}@####1\endcsname
       \expandafter\g@addto@macro\csname #1@##1@@reset\endcsname{%
@@ -643,10 +661,10 @@ The Current Maintainer of this work is Alexara Wu.
     \kvsetkeys@expandafter{#1@choice}{\sjtu@@choices}%
 %    \end{macrocode}
 %
-% 将 \meta{default} 赋值到 \cs{\meta{family}@\meta{name}}，如果非空则执行相应的代码。
+% 将 \meta{initial} 赋值到 \cs{\meta{family}@\meta{name}}，如果非空则执行相应的代码。
 %
 %    \begin{macrocode}
-    \expandafter\let\csname #1@\@nameuse{#1@##1@@name}\endcsname\sjtu@@default
+    \expandafter\let\csname #1@\@nameuse{#1@##1@@name}\endcsname\sjtu@@initial
     \expandafter\ifx\csname #1@\@nameuse{#1@##1@@name}\endcsname\@empty\else
       \@nameuse{#1@##1@@check}%
     \fi
@@ -655,44 +673,9 @@ The Current Maintainer of this work is Alexara Wu.
 % 定义 \cs{sjtusetup} 接口。
 %
 %    \begin{macrocode}
-    \kv@define@key{#1}{##1}{%
+    \kv@define@key{#1}{##1}[\@nameuse{#1@##1@@default}]{%
       \@namedef{#1@\@nameuse{#1@##1@@name}}{####1}%
       \@nameuse{#1@##1@@check}%
-      \@nameuse{#1@##1@@code}%
-    }%
-  }
-}
-%    \end{macrocode}
-%
-%    \begin{macrocode}
-\newcommand\sjtu@define@bool[2]{%
-  \kvsetkeys{#1@bool}{#2}%
-}
-\newcommand\sjtu@set@family@bool@handler[1]{%
-  \kv@set@family@handler{#1@bool}{%
-    \@namedef{#1@##1@@name}{##1}%
-    \@namedef{#1@##1@@init}{false}%
-    \kv@define@key{#1@value}{name}{%
-      \@namedef{#1@##1@@name}{####1}%
-    }%
-    \kv@define@key{#1@value}{init}{%
-      \@namedef{#1@##1@@init}{####1}%
-    }%
-    \@namedef{#1@##1@@code}{}%
-    \kvsetkeys{#1@value}{##2}%
-    \expandafter\newif\csname if#1@\@nameuse{#1@##1@@name}\endcsname
-    \@nameuse{#1@\@nameuse{#1@##1@@name}\@nameuse{#1@##1@@init}}%
-    \kv@define@key{#1}{##1}[true]{%
-      \@ifundefined{%
-        #1@\@nameuse{#1@##1@@name}####1%
-      }{%
-        \sjtu@warning{%
-          Cannot set boolean option `##1' to `####1',\MessageBreak
-          use `true' or `false', now using `\@nameuse{#1@##1@@init}'%
-        }%
-      }{%
-        \@nameuse{#1@\@nameuse{#1@##1@@name}####1}%
-      }
       \@nameuse{#1@##1@@code}%
     }%
   }
@@ -708,7 +691,7 @@ The Current Maintainer of this work is Alexara Wu.
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-\sjtu@set@family@key@handler{sjtu}
+\sjtu@set@family@handler{sjtu}
 \sjtu@define@key{sjtu}{
   degree = {
     choices = {
@@ -717,7 +700,6 @@ The Current Maintainer of this work is Alexara Wu.
       bachelor,
       course,
     },
-    default = doctor,
   },
 %    \end{macrocode}
 %
@@ -738,7 +720,7 @@ The Current Maintainer of this work is Alexara Wu.
       -4,
       5,
     },
-    default = 5,
+    initial = 5,
   },
 %    \end{macrocode}
 %
@@ -933,8 +915,17 @@ The Current Maintainer of this work is Alexara Wu.
 \kv@define@key{sjtu}{format}{
   \kvsetkeys{sjtu@format}{#1}
 }
-\sjtu@set@family@key@handler{sjtu@format}
+\sjtu@set@family@handler{sjtu@format}
 \sjtu@define@key{sjtu@format}{
+  indent-headings = {
+    name = indent@headings,
+    choices = {
+      true,
+      false,
+    },
+    initial = false,
+    default = true,
+  },
   title-logo-color = {
     name = title@logo@color,
     choices = {
@@ -942,7 +933,7 @@ The Current Maintainer of this work is Alexara Wu.
       blue,
       black,
     },
-    default = blue,
+    initial = blue,
   },
   header-logo-color = {
     name = header@logo@color,
@@ -951,20 +942,16 @@ The Current Maintainer of this work is Alexara Wu.
       blue,
       black,
     },
-    default = black,
+    initial = black,
   },
   float-number-separator = {
     name = fl@num@sep,
-    default = {--},
+    initial = {--},
   },
   equation-number-separator = {
     name = eq@num@sep,
-    default = {--},
+    initial = {--},
   },
-}
-\sjtu@set@family@bool@handler{sjtu@format}
-\sjtu@define@bool{sjtu@format}{
-  indent-headings = { name = indent@headings },
 }
 %    \end{macrocode}
 %
@@ -974,7 +961,7 @@ The Current Maintainer of this work is Alexara Wu.
 \kv@define@key{sjtu}{info}{
   \kvsetkeys{sjtu@info}{#1}
 }
-\sjtu@set@family@key@handler{sjtu@info}
+\sjtu@set@family@handler{sjtu@info}
 \sjtu@define@key{sjtu@info}{
 %    \end{macrocode}
 %
@@ -1042,7 +1029,7 @@ The Current Maintainer of this work is Alexara Wu.
 % 答辩日期。
 %    \begin{macrocode}
   date            = {%
-    default = {\the\year-\two@digits{\month}-\two@digits{\day}},
+    initial = {\the\year-\two@digits{\month}-\two@digits{\day}},
   },
 }
 %    \end{macrocode}
@@ -1109,26 +1096,26 @@ The Current Maintainer of this work is Alexara Wu.
 \kv@define@key{sjtu}{name}{
   \kvsetkeys{sjtu@name}{#1}
 }
-\sjtu@set@family@key@handler{sjtu@name}
+\sjtu@set@family@handler{sjtu@name}
 \sjtu@define@key{sjtu@name}{
-  appendix          = { default = Appendix },
-  contents          = { default = Contents },
-  listfigure        = { default = List of Figures },
-  listtable         = { default = List of Tables },
-  listalgorithm     = { default = List of Algorithms },
-  figure            = { default = Figure },
-  figure*           = { name = figure@second, default = 图 },
-  table             = { default = Table },
-  table*            = { name = table@second, default = 表 },
-  algorithm         = { default = Algorithm },
-  nomenclature      = { default = Nomenclature },
-  summary           = { default = Summary },
-  bib               = { default = Bibliography },
-  index             = { default = Index },
-  acknowledgements  = { default = Acknowledgements },
-  publications      = { default = Publications },
-  achievements      = { default = Research Achievements },
-  resume            = { default = Resume },
+  appendix          = { initial = Appendix },
+  contents          = { initial = Contents },
+  listfigure        = { initial = List of Figures },
+  listtable         = { initial = List of Tables },
+  listalgorithm     = { initial = List of Algorithms },
+  figure            = { initial = Figure },
+  figure*           = { name = figure@second, initial = 图 },
+  table             = { initial = Table },
+  table*            = { name = table@second, initial = 表 },
+  algorithm         = { initial = Algorithm },
+  nomenclature      = { initial = Nomenclature },
+  summary           = { initial = Summary },
+  bib               = { initial = Bibliography },
+  index             = { initial = Index },
+  acknowledgements  = { initial = Acknowledgements },
+  publications      = { initial = Publications },
+  achievements      = { initial = Research Achievements },
+  resume            = { initial = Resume },
 }
 %    \end{macrocode}
 %
@@ -1760,7 +1747,7 @@ The Current Maintainer of this work is Alexara Wu.
   subparagraph/afterindent = true,
 }
 \newcommand\sjtu@format@set@indent@headings{%
-  \ifsjtu@format@indent@headings
+  \ifsjtu@format@indent@headings@true
     \ctexset{%
       section/indent       = 2\ccwd,
       subsection/indent    = 2\ccwd,
