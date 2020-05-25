@@ -2141,10 +2141,15 @@ The Current Maintainer of this work is Alexara Wu.
     }
   \fi
 }
-%</class>
 %    \end{macrocode}
 %
 % \subsubsection{各种环境}
+%
+% 定义保存环境内容的命令。
+%    \begin{macrocode}
+\newcommand\sjtu@save@env@body[1]{\long\gdef\sjtu@saved@env@body{#1}}
+%</class>
+%    \end{macrocode}
 %
 % 定义摘要环境，本科与研究生论文的摘要样式要求略有不同。
 %    \begin{macrocode}
@@ -2194,32 +2199,6 @@ The Current Maintainer of this work is Alexara Wu.
     \sjtu@info@keywords@en
   \endgroup
 }
-%    \end{macrocode}
-%
-% 本科论文英文大摘要。
-%    \begin{macrocode}
-\newcommand\sjtu@digest[1]{\long\gdef\sjtu@digest@body{#1}}
-\NewDocumentEnvironment{digest}{}{%
-  \Collect@Body\sjtu@digest
-}{%
-%<*undergraduate>
-  \ifsjtu@degree@course\relax\else
-    \ifsjtu@language@english\relax\else
-      \AtEndDocument{%
-        \if@openright\cleardoublepage\else\clearpage\fi%
-        \pagenumbering{roman}
-        \def\sjtu@thepage{\theCurrentPageLocal}
-        \def\sjtu@lastpageref{\lastpageref{pagesLTS.roman.local}}
-        \sjtu@chapter*[\sjtu@name@digest]{\MakeUppercase\sjtu@info@title@en}
-        \addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
-        \renewcommand\thesection{\arabic{section}}
-        \sjtu@digest@body
-      }
-    \fi
-  \fi
-%</undergraduate>
-%<graduate>  \relax
-}
 %</(undergraduate|graduate)>
 %    \end{macrocode}
 %
@@ -2247,13 +2226,12 @@ The Current Maintainer of this work is Alexara Wu.
 %
 % 定义致谢环境，盲审模式下隐藏致谢。
 %    \begin{macrocode}
-\newcommand\sjtu@acknowledgements[1]{\long\gdef\sjtu@acknowledgements@body{#1}}
 \NewDocumentEnvironment{acknowledgements}{}{%
-  \Collect@Body\sjtu@acknowledgements
+  \Collect@Body\sjtu@save@env@body
 }{%
   \ifsjtu@review\relax\else
     \sjtu@chapter{\sjtu@name@acknowledgements}
-    \sjtu@acknowledgements@body
+    \sjtu@saved@env@body
   \fi
 }
 %    \end{macrocode}
@@ -2286,43 +2264,39 @@ The Current Maintainer of this work is Alexara Wu.
 %
 % 分别学术论文、科研成果两个附录环境。
 %    \begin{macrocode}
-\newcommand\sjtu@publications[1]{\long\gdef\sjtu@publications@body{#1}}
 \NewDocumentEnvironment{publications}{O{99}}{%
-  \Collect@Body\sjtu@publications
+  \Collect@Body\sjtu@save@env@body
 }{%
   \ifsjtu@review\relax\else
     \begin{sjtu@bibliolist}{#1}{\sjtu@name@publications}
-      \sjtu@publications@body
+      \sjtu@saved@env@body
     \end{sjtu@bibliolist}
   \fi
 }
-\newcommand\sjtu@@publications[1]{\long\gdef\sjtu@@publications@body{#1}}
 \NewDocumentEnvironment{publications*}{O{99}}{%
-  \Collect@Body\sjtu@@publications
+  \Collect@Body\sjtu@save@env@body
 }{%
   \ifsjtu@review
     \begin{sjtu@bibliolist}{#1}{\sjtu@name@publications}
-      \sjtu@@publications@body
+      \sjtu@saved@env@body
     \end{sjtu@bibliolist}
   \fi
 }
-\newcommand\sjtu@achievements[1]{\long\gdef\sjtu@achievements@body{#1}}
 \NewDocumentEnvironment{achievements}{O{99}}{%
-  \Collect@Body\sjtu@achievements
+  \Collect@Body\sjtu@save@env@body
 }{%
   \ifsjtu@review\relax\else
     \begin{sjtu@bibliolist}{#1}{\sjtu@name@achievements}
-      \sjtu@achievements@body
+      \sjtu@saved@env@body
     \end{sjtu@bibliolist}
   \fi
 }
-\newcommand\sjtu@@achievements[1]{\long\gdef\sjtu@@achievements@body{#1}}
 \NewDocumentEnvironment{achievements*}{O{99}}{%
-  \Collect@Body\sjtu@@achievements
+  \Collect@Body\sjtu@save@env@body
 }{%
   \ifsjtu@review
     \begin{sjtu@bibliolist}{#1}{\sjtu@name@achievements}
-      \sjtu@@achievements@body
+      \sjtu@saved@env@body
     \end{sjtu@bibliolist}
   \fi
 }
@@ -2330,21 +2304,49 @@ The Current Maintainer of this work is Alexara Wu.
 %
 % 定义简历环境。
 %    \begin{macrocode}
-\newcommand\sjtu@resume[1]{\long\gdef\sjtu@resume@body{#1}}
 \NewDocumentEnvironment{resume}{}{%
-  \Collect@Body\sjtu@resume
+  \Collect@Body\sjtu@save@env@body
 }{%
   \ifsjtu@review\relax\else
     \sjtu@chapter{\sjtu@name@resume}
-    \sjtu@resume@body
+    \sjtu@saved@env@body
   \fi
 }
+%</class>
+%    \end{macrocode}
+%
+% 本科论文英文大摘要。
+%    \begin{macrocode}
+%<*(undergraduate|graduate)>
+\NewDocumentEnvironment{digest}{}{%
+  \Collect@Body\sjtu@save@env@body
+}{%
+%<*undergraduate>
+  \ifsjtu@degree@course\relax\else
+    \ifsjtu@language@english\relax\else
+      \AtEndDocument{%
+        \if@openright\cleardoublepage\else\clearpage\fi%
+        \pagenumbering{roman}
+        \def\sjtu@thepage{\theCurrentPageLocal}
+        \def\sjtu@lastpageref{\lastpageref{pagesLTS.roman.local}}
+        \sjtu@chapter*[\sjtu@name@digest]{\MakeUppercase\sjtu@info@title@en}
+        \addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
+        \renewcommand\thesection{\arabic{section}}
+        \sjtu@saved@env@body
+      }
+    \fi
+  \fi
+%</undergraduate>
+%<graduate>  \relax
+}
+%</(undergraduate|graduate)>
 %    \end{macrocode}
 %
 % \subsubsection{盲审模式}
 %
 % 盲审模式下隐藏作者、导师姓名等信息。
 %    \begin{macrocode}
+%<*class>
 \AtEndPreamble{
   \ifsjtu@review%
     \sjtusetup{%
