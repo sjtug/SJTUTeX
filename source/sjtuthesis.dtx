@@ -921,11 +921,11 @@ The Current Maintainer of this work is Alexara Wu.
 % \subsection{定义格式选项}
 %
 %    \begin{macrocode}
-\kv@define@key{sjtu}{format}{
-  \kvsetkeys{sjtu@format}{#1}
+\kv@define@key{sjtu}{style}{
+  \kvsetkeys{sjtu@style}{#1}
 }
-\sjtu@set@family@handler{sjtu@format}
-\sjtu@define@key{sjtu@format}{
+\sjtu@set@family@handler{sjtu@style}
+\sjtu@define@key{sjtu@style}{
   indent-headings = {
     name = indent@headings,
     choices = {
@@ -1652,7 +1652,7 @@ The Current Maintainer of this work is Alexara Wu.
     \fancyhf{}
     \fancyhead[L]{%
       \includegraphics[height=32pt]%
-        {sjtu-vi-logo-\sjtu@format@header@logo@color.pdf}%
+        {sjtu-vi-logo-\sjtu@style@header@logo@color.pdf}%
     }
     \fancyhead[R]{%
       \parbox[b]{0.75\textwidth}{%
@@ -1758,14 +1758,14 @@ The Current Maintainer of this work is Alexara Wu.
 }
 \newlength{\sjtu@indent@headings@fixed@width}
 \setlength{\sjtu@indent@headings@fixed@width}{2\ccwd}
-\newcommand\sjtu@format@set@indent@headings{%
-  \ifsjtu@format@indent@headings@fixed
-    \sjtu@format@indent@headings@truetrue
+\newcommand\sjtu@style@set@indent@headings{%
+  \ifsjtu@style@indent@headings@fixed
+    \sjtu@style@indent@headings@truetrue
     \def\sjtu@indent@headings@width{\sjtu@indent@headings@fixed@width}
   \else
     \def\sjtu@indent@headings@width{2\ccwd}
   \fi
-  \ifsjtu@format@indent@headings@true
+  \ifsjtu@style@indent@headings@true
     \ctexset{%
       section/indent       = \sjtu@indent@headings@width,
       subsection/indent    = \sjtu@indent@headings@width,
@@ -1787,9 +1787,9 @@ The Current Maintainer of this work is Alexara Wu.
     }
   \fi
 }
-\sjtu@format@set@indent@headings
-\sjtu@option@hook{sjtu@format}{indent-headings}{%
-  \sjtu@format@set@indent@headings
+\sjtu@style@set@indent@headings
+\sjtu@option@hook{sjtu@style}{indent-headings}{%
+  \sjtu@style@set@indent@headings
 }
 %</class>
 %    \end{macrocode}
@@ -1954,10 +1954,10 @@ The Current Maintainer of this work is Alexara Wu.
 % 定义公式、图、表的编号为“3-1”的形式，即分隔符由“.”变为“-”。
 %    \begin{macrocode}
 \AtBeginDocument{%
-  \renewcommand\thefigure{\thechapter\sjtu@format@fl@num@sep\arabic{figure}}
+  \renewcommand\thefigure{\thechapter\sjtu@style@fl@num@sep\arabic{figure}}
   \renewcommand\p@subfigure{\thefigure}
-  \renewcommand\thetable{\thechapter\sjtu@format@fl@num@sep\arabic{table}}
-  \renewcommand\theequation{\thechapter\sjtu@format@eq@num@sep\arabic{equation}}
+  \renewcommand\thetable{\thechapter\sjtu@style@fl@num@sep\arabic{table}}
+  \renewcommand\theequation{\thechapter\sjtu@style@eq@num@sep\arabic{equation}}
 }
 %    \end{macrocode}
 %
@@ -2413,13 +2413,13 @@ The Current Maintainer of this work is Alexara Wu.
   \begin{center}
     \kaishu
     \vspace*{48pt}
-    \includegraphics[height=96pt]{sjtu-vi-name-\sjtu@format@title@logo@color.pdf}
+    \includegraphics[height=96pt]{sjtu-vi-name-\sjtu@style@title@logo@color.pdf}
     \vskip 28pt
     {\fontsize{32}{32}\sjtu@name@subject@zh}
     \vskip 16pt
     {\zihao{-2}\MakeUppercase\sjtu@name@subject@en}
     \vskip 16pt
-    \includegraphics[height=86pt]{sjtu-vi-badge-\sjtu@format@title@logo@color.pdf}
+    \includegraphics[height=86pt]{sjtu-vi-badge-\sjtu@style@title@logo@color.pdf}
     \vskip \stretch{2}
     \begingroup
       \zihao{2}
@@ -2718,7 +2718,7 @@ The Current Maintainer of this work is Alexara Wu.
   }
   \renewcommand\listofalgorithms{\sjtu@listof{algocf}}
   \AtBeginDocument{%
-   \renewcommand\thealgocf{\thechapter\sjtu@format@fl@num@sep\@arabic\c@algocf}
+   \renewcommand\thealgocf{\thechapter\sjtu@style@fl@num@sep\@arabic\c@algocf}
   }
 }
 %    \end{macrocode}
@@ -2748,7 +2748,7 @@ The Current Maintainer of this work is Alexara Wu.
   }
   \renewcommand\listofalgorithms{\sjtu@listof{algorithm}}
   \AtBeginDocument{%
-    \renewcommand\thealgorithm{\thechapter\sjtu@format@fl@num@sep\arabic{algorithm}}
+    \renewcommand\thealgorithm{\thechapter\sjtu@style@fl@num@sep\arabic{algorithm}}
   }
 }
 %    \end{macrocode}
