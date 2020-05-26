@@ -926,6 +926,13 @@ The Current Maintainer of this work is Alexara Wu.
 }
 \sjtu@set@family@handler{sjtu@style}
 \sjtu@define@key{sjtu@style}{
+  frontmatter-numbering = {
+    name = frontmatter@numbering,
+    choices = {
+      true,
+      false,
+    }
+  },
   indent-headings = {
     name = indent@headings,
     choices = {
@@ -1617,6 +1624,7 @@ The Current Maintainer of this work is Alexara Wu.
 %<*class>
 \def\sjtu@thepage{}
 \def\sjtu@lastpageref{}
+\newif\ifsjtu@pagenumbering \sjtu@pagenumberingtrue
 \ifsjtu@degree@graduate
   \newcommand\sjtu@thepage@format[2]{---~{\bfseries{#1}}~---}
 \else
@@ -1638,7 +1646,9 @@ The Current Maintainer of this work is Alexara Wu.
     \fancyhf{}
     \fancyhead[C]{\zihao{-5}\sjtu@name@subject@zh}
     \fancyfoot[C]{%
-      \zihao{-5}\sjtu@thepage@format{\sjtu@thepage}{\sjtu@lastpageref}%
+      \ifsjtu@pagenumbering
+        \zihao{-5}\sjtu@thepage@format{\sjtu@thepage}{\sjtu@lastpageref}%
+      \fi
     }
     \renewcommand\headrule{%
       \hrule\@height2.25\p@\@width\headwidth
@@ -1660,7 +1670,9 @@ The Current Maintainer of this work is Alexara Wu.
       }
     }
     \fancyfoot[C]{%
-      \zihao{-5}\sjtu@thepage@format{\sjtu@thepage}{\sjtu@lastpageref}%
+      \ifsjtu@pagenumbering
+        \zihao{-5}\sjtu@thepage@format{\sjtu@thepage}{\sjtu@lastpageref}%
+      \fi
     }
     \renewcommand\headrulewidth{0.75\p@}
   }
@@ -1704,6 +1716,9 @@ The Current Maintainer of this work is Alexara Wu.
 \renewcommand\frontmatter{%
   \if@openright\cleardoublepage\else\clearpage\fi%
   \@mainmatterfalse
+  \ifsjtu@style@frontmatter@numbering@false
+    \sjtu@pagenumberingfalse
+  \fi
   \pagenumbering{Roman}
   \def\sjtu@thepage{\thepage}
   \def\sjtu@lastpageref{\lastpageref{pagesLTS.Roman}}
@@ -1712,6 +1727,7 @@ The Current Maintainer of this work is Alexara Wu.
 \renewcommand\mainmatter{%
   \if@openright\cleardoublepage\else\clearpage\fi%
   \@mainmattertrue
+  \sjtu@pagenumberingtrue
   \sjtu@setfloatfonttrue
   \pagenumbering{arabic}
   \def\sjtu@lastpageref{\lastpageref{pagesLTS.arabic}}
@@ -1787,9 +1803,6 @@ The Current Maintainer of this work is Alexara Wu.
     }
   \fi
 }
-\ifsjtu@degree@bachelor\relax\else
-  \sjtusetup{ style = { indent-headings = fixed } }
-\fi
 \sjtu@style@set@indent@headings
 \sjtu@option@hook{sjtu@style}{indent-headings}{%
   \sjtu@style@set@indent@headings
@@ -2063,13 +2076,28 @@ The Current Maintainer of this work is Alexara Wu.
 % 兼容 \pkg{amssymb} 中的命令。
 %    \begin{macrocode}
 \newcommand\square{\mdlgwhtsquare}
+%</class>
 %    \end{macrocode}
 % \end{macro}
 %
+% 学士论文模版默认设置。
+%    \begin{macrocode}
+%<*undergraduate>
+\ifsjtu@degree@bachelor
+  \sjtusetup{
+    style = {
+      frontmatter-numbering = false,
+      indent-headings = fixed,
+    },
+  }
+\fi
+%</undergraduate>
+%    \end{macrocode}
 % \subsubsection{声明}
 %
 % 支持扫描文件替换。
 %    \begin{macrocode}
+%<*class>
 \newcommand\sjtu@square{%
   \begingroup\CJKfamily+{zhsong}\symbol{"25A1}\endgroup
 }
