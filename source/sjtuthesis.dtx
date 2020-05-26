@@ -887,7 +887,7 @@ The Current Maintainer of this work is Alexara Wu.
 %
 % 脚注支持宏包。
 %    \begin{macrocode}
-\RequirePackage[perpage, bottom]{footmisc}
+\RequirePackage[perpage, bottom, hang]{footmisc}
 %    \end{macrocode}
 %
 % \pkg{pdfpages} 便于我们插入扫描版的原创性声明和授权声明 PDF 文档。
@@ -1843,6 +1843,40 @@ The Current Maintainer of this work is Alexara Wu.
 \setlist[1]{labelindent=\parindent}
 %    \end{macrocode}
 %
+% \subsubsection{脚注}
+%
+% 脚注符合中文习惯，数字带圈。
+% \begin{macro}{\sjtu@enclosed@number}
+% 生成带圈的脚注数字，最多处理到 10。
+%    \begin{macrocode}
+\def\sjtu@enclosed@number#1{%
+  \ifnum\value{#1} >10%
+    \sjtu@error{%
+      Too many footnotes in this page.
+      Keep footnote no more than 10%
+    }%
+  \fi
+  {\CJKfamily+{}\symbol{\the\numexpr\value{#1}+"245F\relax}}%
+}
+\renewcommand{\thefootnote}{\sjtu@enclosed@number{footnote}}
+\renewcommand{\thempfootnote}{\sjtu@enclosed@number{mpfootnote}}
+%    \end{macrocode}
+% \end{macro}
+%
+% 定义脚注悬挂缩进（1.5字符）。
+%    \begin{macrocode}
+\footnotemargin1.5em\relax
+%    \end{macrocode}
+%
+% \cs{@makefnmark} 默认是上标样式，而在脚注部分要求为正文大小。利用\cs{patchcmd}
+% 动态调整 \cs{@makefnmark} 的定义。
+%    \begin{macrocode}
+\let\sjtu@makefnmark\@makefnmark
+\def\sjtu@@makefnmark{\hbox{{\normalfont\@thefnmark}}}
+\pretocmd{\@makefntext}{\let\@makefnmark\sjtu@@makefnmark}{}{}
+\apptocmd{\@makefntext}{\let\@makefnmark\sjtu@makefnmark}{}{}
+%    \end{macrocode}
+%
 % 设置 url 样式，与上下文一致
 %    \begin{macrocode}
 \urlstyle{same}
@@ -2099,7 +2133,7 @@ The Current Maintainer of this work is Alexara Wu.
 %    \begin{macrocode}
 %<*class>
 \newcommand\sjtu@square{%
-  \begingroup\CJKfamily+{zhsong}\symbol{"25A1}\endgroup
+  \begingroup\CJKfamily+{}\symbol{"25A1}\endgroup
 }
 \newcommand\sjtu@authconf{%
   \par\hspace{7em}%
@@ -2227,7 +2261,7 @@ The Current Maintainer of this work is Alexara Wu.
   \endgroup
   \begingroup
 %<undergraduate>    \zihao{5}
-  \sjtu@clist@use{\sjtu@info@keywords@en}{, }
+    \sjtu@clist@use{\sjtu@info@keywords@en}{, }
   \endgroup
 }
 %</(undergraduate|graduate)>
