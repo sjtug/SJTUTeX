@@ -1060,7 +1060,7 @@ The Current Maintainer of this work is Alexara Wu.
 %    \begin{macrocode}
 \newcommand\sjtu@clist@use[2]{%
   \def\sjtu@@tmp{}%
-  \kv@set@family@handler{sjtu@clist}{%
+  \def\sjtu@clist@processor##1{%
     \ifx\sjtu@@tmp\@empty
       \def\sjtu@@tmp{#2}%
     \else
@@ -1068,7 +1068,7 @@ The Current Maintainer of this work is Alexara Wu.
     \fi
     ##1%
   }%
-  \kvsetkeys@expandafter{sjtu@clist}{#1}%
+  \expandafter\comma@parse\expandafter{#1}{\sjtu@clist@processor}%
 }
 %    \end{macrocode}
 %
@@ -1714,7 +1714,7 @@ The Current Maintainer of this work is Alexara Wu.
 % 前言的页码设置为大写罗马数字，同时设置前言与正文的页眉页脚风格。
 %    \begin{macrocode}
 \renewcommand\frontmatter{%
-  \if@openright\cleardoublepage\else\clearpage\fi%
+  \cleardoublepage
   \@mainmatterfalse
   \ifsjtu@style@frontmatter@numbering@false
     \sjtu@pagenumberingfalse
@@ -1725,7 +1725,7 @@ The Current Maintainer of this work is Alexara Wu.
   \pagestyle{sjtu@plain}
 }
 \renewcommand\mainmatter{%
-  \if@openright\cleardoublepage\else\clearpage\fi%
+  \cleardoublepage
   \@mainmattertrue
   \sjtu@pagenumberingtrue
   \sjtu@setfloatfonttrue
@@ -1733,7 +1733,7 @@ The Current Maintainer of this work is Alexara Wu.
   \def\sjtu@lastpageref{\lastpageref{pagesLTS.arabic}}
 }
 \renewcommand\backmatter{%
-  \if@openright\cleardoublepage\else\clearpage\fi%
+  \cleardoublepage
   \@mainmatterfalse
 }
 %    \end{macrocode}
@@ -2120,6 +2120,7 @@ The Current Maintainer of this work is Alexara Wu.
 }
 \NewDocumentCommand{\makeorigpage}{s o}{%
   \ifsjtu@review\relax\else
+    \cleardoublepage
     \IfNoValueTF{#2}{%
       \thispagestyle{empty}
       \sjtu@chapter*[\sjtu@name@orig@subtitle]{%
@@ -2139,14 +2140,14 @@ The Current Maintainer of this work is Alexara Wu.
         \end{minipage}
       \endgroup
     }{%
-      \if@openright\cleardoublepage\else\clearpage\fi%
       \sjtu@pdfbookmark{0}{\sjtu@name@orig@subtitle}%
       \includepdf[pagecommand={\thispagestyle{empty}}]{#1}
     }
   \fi
 }
 \NewDocumentCommand{\makeauthpage}{o}{%
-  \ifsjtu@review\relax\else
+  \ifsjtu@review\relax\else  
+    \cleardoublepage
     \IfNoValueTF{#1}{%
       \thispagestyle{empty}
       \sjtu@chapter*[\sjtu@name@auth@subtitle]{%
@@ -2166,7 +2167,6 @@ The Current Maintainer of this work is Alexara Wu.
         \end{minipage}
       \endgroup
     }{%
-      \if@openright\cleardoublepage\else\clearpage\fi%
       \sjtu@pdfbookmark{0}{\sjtu@name@auth@subtitle}%
       \includepdf[pagecommand={\thispagestyle{empty}}]{#1}
     }
@@ -2202,7 +2202,7 @@ The Current Maintainer of this work is Alexara Wu.
   \endgroup
   \begingroup
 %<undergraduate>    \zihao{5}
-    \sjtu@info@keywords@zh
+    \sjtu@clist@use{\sjtu@info@keywords@zh}{，}
   \endgroup
 }
 %    \end{macrocode}
@@ -2227,7 +2227,7 @@ The Current Maintainer of this work is Alexara Wu.
   \endgroup
   \begingroup
 %<undergraduate>    \zihao{5}
-    \sjtu@info@keywords@en
+  \sjtu@clist@use{\sjtu@info@keywords@en}{, }
   \endgroup
 }
 %</(undergraduate|graduate)>
@@ -2356,7 +2356,7 @@ The Current Maintainer of this work is Alexara Wu.
   \ifsjtu@degree@course\relax\else
     \ifsjtu@language@english\relax\else
       \AtEndDocument{%
-        \if@openright\cleardoublepage\else\clearpage\fi%
+        \cleardoublepage
         \pagenumbering{roman}
         \def\sjtu@thepage{\theCurrentPageLocal}
         \def\sjtu@lastpageref{\lastpageref{pagesLTS.roman.local}}
@@ -2432,13 +2432,13 @@ The Current Maintainer of this work is Alexara Wu.
 % 绘制封面
 %    \begin{macrocode}
 %<*(undergraduate|graduate)>
-\NewDocumentCommand{\maketitlepage}{}{%
+\RenewDocumentCommand{\maketitle}{}{%
   \sjtu@pdfbookmark{0}{\sjtu@name@titlepage}
   \sjtu@make@titlepage@zh%
 %<graduate>  \sjtu@make@titlepage@en%
 }
 \newcommand\sjtu@make@titlepage@zh{%
-  \if@openright\cleardoublepage\else\clearpage\fi%
+  \cleardoublepage
 %<*undergraduate>
   \thispagestyle{empty}
   \begin{center}
@@ -2520,7 +2520,7 @@ The Current Maintainer of this work is Alexara Wu.
 }
 %<*graduate>
 \newcommand\sjtu@make@titlepage@en{%
-  \if@openright\cleardoublepage\else\clearpage\fi%
+  \cleardoublepage
   \def\sjtu@info@fund{\zihao{-5}\sjtu@clist@use{\sjtu@info@fund@en}{\par}}
   \thispagestyle{sjtu@title}
   \begin{center}
