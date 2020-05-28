@@ -750,6 +750,11 @@ The Current Maintainer of this work is Alexara Wu.
 \DeclareBoolOption{review}
 %    \end{macrocode}
 %
+% 浮动体是否采用连续编号。
+%    \begin{macrocode}
+\DeclareBoolOption[false]{continuous}
+%    \end{macrocode}
+%
 % 将选项传递给 \pkg{ctexbook}。
 %    \begin{macrocode}
 \DeclareDefaultOption{\PassOptionsToClass{\CurrentOption}{ctexbook}}
@@ -782,8 +787,6 @@ The Current Maintainer of this work is Alexara Wu.
   \fi
 \fi
 \PassOptionsToClass{zihao=\sjtu@zihao}{ctexbook}
-%    \end{macrocode}
-%
 %    \end{macrocode}
 %
 % 使用 \XeTeX\ 引擎时，\pkg{fontspec} 宏包会被 \pkg{xeCJK} 自动调用。传递给
@@ -878,6 +881,11 @@ The Current Maintainer of this work is Alexara Wu.
 \RequirePackage{caption}
 \RequirePackage[list=off]{bicaption}
 \RequirePackage{subcaption}
+%    \end{macrocode}
+%
+% 计数器控制宏包。
+%    \begin{macrocode}
+\RequirePackage{chngcntr}
 %    \end{macrocode}
 %
 % 使用 \pkg{tocloft} 设置目录格式。
@@ -2002,13 +2010,38 @@ The Current Maintainer of this work is Alexara Wu.
 \renewcommand\floatpagefraction{0.60}
 %    \end{macrocode}
 %
-% 定义公式、图、表的编号为“3-1”的形式，即分隔符由“.”变为“-”。
+% 定义图、表、公式的编号格式。
 %    \begin{macrocode}
+\newcommand\sjtu@def@thefloats{
+  \def\thefigure{\thechapter\sjtu@style@fl@num@sep\arabic{figure}}
+  \def\p@subfigure{\thefigure}
+  \def\thetable{\thechapter\sjtu@style@fl@num@sep\arabic{table}}
+}
+\newcommand\sjtu@counter@without@chapter{
+  \counterwithout{figure}{chapter}
+  \setcounter{figure}{0}
+  \counterwithout{table}{chapter}
+  \setcounter{table}{0}
+}
+\newcommand\sjtu@counter@within@chapter{
+  \counterwithin*{figure}{chapter}
+  \counterwithin*{table}{chapter}
+  \sjtu@def@thefloats
+}
+\ifsjtu@continuous
+  \apptocmd{\mainmatter}{%
+    \sjtu@counter@without@chapter
+  }{}{}
+  \apptocmd{\appendix}{%
+    \sjtu@counter@within@chapter
+  }{}{}
+\else
+  \AtBeginDocument{%
+    \sjtu@def@thefloats
+  }
+\fi
 \AtBeginDocument{%
-  \renewcommand\thefigure{\thechapter\sjtu@style@fl@num@sep\arabic{figure}}
-  \renewcommand\p@subfigure{\thefigure}
-  \renewcommand\thetable{\thechapter\sjtu@style@fl@num@sep\arabic{table}}
-  \renewcommand\theequation{\thechapter\sjtu@style@eq@num@sep\arabic{equation}}
+  \def\theequation{\thechapter\sjtu@style@eq@num@sep\arabic{equation}}
 }
 %    \end{macrocode}
 %
@@ -2036,10 +2069,11 @@ The Current Maintainer of this work is Alexara Wu.
 %    \begin{macrocode}
 \DeclareCaptionFont{sjtu@caption@font}{\zihao{5}\kaishu}
 \DeclareCaptionFont{sjtu@subcaption@font}{\zihao{5}\normalfont}
+\DeclareCaptionLabelSeparator{enskip}{\enskip}
 \captionsetup{%
   format        = plain,
   labelformat   = simple,
-  labelsep      = space,
+  labelsep      = enskip,
   justification = centering,
   font          = sjtu@caption@font
 }
@@ -2396,8 +2430,9 @@ The Current Maintainer of this work is Alexara Wu.
         \def\sjtu@thepage{\theCurrentPageLocal}
         \def\sjtu@lastpageref{\lastpageref{pagesLTS.roman.local}}
         \sjtu@chapter*[\sjtu@name@digest]{\MakeUppercase\sjtu@info@title@en}
-        \addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
-        \renewcommand\thesection{\arabic{section}}
+        \counterwithout{section}{chapter}
+        \sjtu@counter@without@chapter
+        \let\addcontentsline\@gobblethree
         \sjtu@saved@env@body
       }
     \fi
@@ -2779,15 +2814,27 @@ The Current Maintainer of this work is Alexara Wu.
   \setlength{\cftalgindent}{1.5em}
   \setlength{\cftalgnumwidth}{2.3em}
   \renewcommand\cftalgpresnum{\sjtu@name@algorithm~}
+  \apptocmd{\sjtu@counter@without@chapter}{%
+    \counterwithout{algocf}{chapter}
+    \setcounter{algocf}{0}
+  }{}{}
+  \pretocmd{\sjtu@counter@within@chapter}{%
+    \counterwithin*{algocf}{chapter}
+  }{}{}
+  \apptocmd{\sjtu@def@thefloats}{%
+    \def\thealgocf{\thechapter\sjtu@style@fl@num@sep\arabic{algocf}}
+  }{}{}
+  \patchcmd{\algocf@latexcaption}{\addcontentsline}{%
+    \caption@iflist
+      {\addcontentsline}
+      {\@gobblethree}
+  }{}{}
   \AtEndPreamble{%
     \newlength{\sjtu@cftalgnumwidth@tmp}
       \settowidth{\sjtu@cftalgnumwidth@tmp}{\cftalgpresnum}
     \addtolength{\cftalgnumwidth}{\sjtu@cftalgnumwidth@tmp}
   }
   \renewcommand\listofalgorithms{\sjtu@listof{algocf}}
-  \AtBeginDocument{%
-   \renewcommand\thealgocf{\thechapter\sjtu@style@fl@num@sep\@arabic\c@algocf}
-  }
 }
 %    \end{macrocode}
 %
@@ -2809,15 +2856,22 @@ The Current Maintainer of this work is Alexara Wu.
   \setlength{\cftalgindent}{1.5em}
   \setlength{\cftalgnumwidth}{2.3em}
   \renewcommand\cftalgpresnum{\sjtu@name@algorithm~}
+  \apptocmd{\sjtu@counter@without@chapter}{%
+    \counterwithout{algorithm}{chapter}
+    \setcounter{algorithm}{0}
+  }{}{}
+  \pretocmd{\sjtu@counter@within@chapter}{%
+    \counterwithin*{algorithm}{chapter}
+  }{}{}
+  \apptocmd{\sjtu@def@thefloats}{%
+    \def\thealgorithm{\thechapter\sjtu@style@fl@num@sep\arabic{algorithm}}
+  }{}{}
   \AtEndPreamble{%
     \newlength{\sjtu@cftalgnumwidth@tmp}
       \settowidth{\sjtu@cftalgnumwidth@tmp}{\cftalgpresnum}
     \addtolength{\cftalgnumwidth}{\sjtu@cftalgnumwidth@tmp}
   }
   \renewcommand\listofalgorithms{\sjtu@listof{algorithm}}
-  \AtBeginDocument{%
-    \renewcommand\thealgorithm{\thechapter\sjtu@style@fl@num@sep\arabic{algorithm}}
-  }
 }
 %    \end{macrocode}
 %
