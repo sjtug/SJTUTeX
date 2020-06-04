@@ -11,45 +11,6 @@ SJTUThesis is an *unofficial* LaTeX template for preparing bachelor, master, doc
 
 At present, `sjtuthesis` only supports XeTeX engine. `sjtuthesis` only allows UTF-8 character encoding.
 
-## Obtain SJTUThesis
-
-### Downloads
-
-We'd recommend to use packed files downloaded from [Releases](https://github.com/sjtug/SJTUThesis/releases) page directly for normal users.
-
-| Filename | Description |
-| --- | --- |
-| sjtuthesis-vXXX.zip | Packed file for local usage，samples included |
-| sjtuthesis.tds.zip | TDS（TeX Directory Structure）package |
-| sjtuthesis.pdf | Document for SJTUThesis |
-
-Please read `sjtuthesis.pdf` carefully before using the template. And do not
-use `xelatex` to compile `thesis.tex` directly:
-
-```bash
-xelatex thesis.tex 
-```
-
-We highly recommend using `Makefile` or `compile.bat`(for Windows users) 
-to compile.
-
-### Overleaf
-
-[Overleaf](https://www.overleaf.com?r=b3b31f49&rm=d&rs=b) users are able to create project from the template link below.
-
-[![Overleaf](https://img.shields.io/badge/overleaf-sjtuthesis-green.svg)](https://www.overleaf.com/latex/templates/sjtuthesis-latex-thesis-template-for-shanghai-jiao-tong-university/spmggcjfshrb?r=b3b31f49&rm=d&rs=b) 
-
-### Generate manually
-
-The source of SJTUThesis located in `source/sjtuthesis.dtx`, you can use `make` to generate the packed files:
-
-```bash
-make            # generate the template and pack files
-make install    # install sjtuthesis into your local TeX system
-```
-
-The default output folder is `release`.
-
 ## Feedback
 
 We are hearing from:
@@ -59,7 +20,7 @@ We are hearing from:
 
 ## License
 
-The copyright of image sources including SJTU logo (`sjtulogo.pdf` etc.)
+The copyright of image sources including SJTU logo (`sjtu-vi-logo-blue.pdf` etc.)
 belongs to Shanghai Jiao Tong University.
 
 The remain part is under [LPPL](LICENSE)

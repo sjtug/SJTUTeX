@@ -11,44 +11,6 @@
 
 本模板目前仅支持 XeTeX 引擎，字符编码仅支持 UTF-8。
 
-## 获取 SJTUThesis
-
-### 下载模版
-
-普通用户推荐在 [Releases](https://github.com/sjtug/SJTUThesis/releases) 页面下载打包好的压缩包直接使用。
-
-| 文件名 | 描述 |
-| --- | --- |
-| sjtuthesis-vXXX.zip | 本地使用的模版压缩包，包含示例文档 |
-| sjtuthesis.tds.zip | 按 TDS（TeX Directory Structure）组织的压缩包 |
-| sjtuthesis.pdf | 模版的使用文档 |
-
-请务必仔细阅读模板的使用文档前三小节。请不要直接使用
-
-```bash
-xelatex thesis.tex
-```
-
-进行编译。推荐使用已经写好的`Makefile`，Windows用户请使用配套的
-`compile.bat`。
-
-### Overleaf
-
-[Overleaf](https://www.overleaf.com?r=b3b31f49&rm=d&rs=b) 用户可以从下面的模版链接创建自己的项目。
-
-[![Overleaf](https://img.shields.io/badge/overleaf-sjtuthesis-green.svg)](https://www.overleaf.com/latex/templates/sjtuthesis-latex-thesis-template-for-shanghai-jiao-tong-university/spmggcjfshrb?r=b3b31f49&rm=d&rs=b) 
-
-### 生成模板
-
-模板的源代码代码位于 `source/sjtuthesis.dtx` 文件中，可以使用 `make` 工具生成模板：
-
-```bash
-make            # 生成模板并打包
-make install    # 将 sjtuthesis 安装到本地的 TeX 系统中
-```
-
-生成的文件默认在 `release` 目录中。
-
 ## 反馈问题
 
 如果在使用上有任何问题，建议先查阅项目的 [Wiki 文档](https://github.com/sjtug/SJTUThesis/wiki)。如果这些不能解决你的问题，建议以如下的顺序反馈使用过程中的问题：
@@ -79,6 +41,6 @@ SJTUThesis 是一个由诸多感兴趣的同学一起维护的开源项目，我
 
 ## 软件许可证
 
-上海交通大学校徽图片(`sjtulogo.pdf` 等)的版权归上海交通大学所有。
+上海交通大学校徽图片(`sjtu-vi-logo-blue.pdf` 等)的版权归上海交通大学所有。
 
 其他部分使用 [LPPL](LICENSE) 授权。
