@@ -1079,8 +1079,9 @@ The Current Maintainer of this work is Alexara Wu.
 %
 % 使用 \XeTeX\ 引擎时，\pkg{fontspec} 宏包会被 \pkg{xeCJK} 自动调用。传递给
 % \pkg{fontspec} 宏包 \opt{no-math} 选项，避免部分数学符号字体自动调整为 CMR。
+% 并使用 \opt{quiet} 忽略警告。
 %    \begin{macrocode}
-\PassOptionsToPackage{no-math}{fontspec}
+\PassOptionsToPackage{no-math,quiet}{fontspec}
 %    \end{macrocode}
 %
 % 使用 \pkg{ctexbook} 类，优于调用 \pkg{ctex} 宏包。
