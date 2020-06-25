@@ -312,9 +312,9 @@ The Current Maintainer of this work is Alexara Wu.
 %
 % \subsubsection{通用选项}
 %
-% \DescribeFunction{degree}
-%   \begin{sjtusyntax}[emph={[1]degree}]
-%     degree = (*<(doctor)|master|bachelor|course>*)
+% \DescribeFunction{type}
+%   \begin{sjtusyntax}[emph={[1]type}]
+%     type = (*<(doctor)|master|bachelor|course>*)
 %   \end{sjtusyntax}
 % 论文类型。四种选项分别代表博士学位论文、硕士学位论文、本科毕业论文和课程论
 % 文。
@@ -554,12 +554,12 @@ The Current Maintainer of this work is Alexara Wu.
 %   \end{sjtusyntax}
 % 专业中英文名称。
 %
-% \DescribeFunction{coursename}
-% \DescribeFunction{coursename*}
+% \DescribeFunction{course}
+% \DescribeFunction{course*}
 %   \vspace{-1ex}
-%   \begin{sjtusyntax}[emph={[2]coursename,coursename*}]
-%     coursename  = (*\marg{课程中文名称}*)
-%     coursename* = (*\marg{课程英文名称}*)
+%   \begin{sjtusyntax}[emph={[2]course,course*}]
+%     course  = (*\marg{课程中文名称}*)
+%     course* = (*\marg{课程英文名称}*)
 %   \end{sjtusyntax}
 % 课程中英文名称。仅课程论文有效。
 %
@@ -981,7 +981,7 @@ The Current Maintainer of this work is Alexara Wu.
 %    \begin{macrocode}
 \sjtu@set@family@handler{sjtu}
 \sjtu@define@key{sjtu}{
-  degree = {
+  type = {
     choices = {
       doctor,
       master,
@@ -1055,20 +1055,20 @@ The Current Maintainer of this work is Alexara Wu.
 %
 % 设置学位层次。
 %    \begin{macrocode}
-\newif\ifsjtu@degree@graduate
-\sjtu@degree@graduatefalse
-\ifsjtu@degree@doctor
-  \sjtu@degree@graduatetrue
+\newif\ifsjtu@type@graduate
+\sjtu@type@graduatefalse
+\ifsjtu@type@doctor
+  \sjtu@type@graduatetrue
 \fi
-\ifsjtu@degree@master
-  \sjtu@degree@graduatetrue
+\ifsjtu@type@master
+  \sjtu@type@graduatetrue
 \fi
 %    \end{macrocode}
 %
 % 设置默认字号。
 %    \begin{macrocode}
 \ifsjtu@zihao@auto
-  \ifsjtu@degree@graduate
+  \ifsjtu@type@graduate
     \def\sjtu@zihao{-4}
   \else
     \def\sjtu@zihao{5}
@@ -1091,7 +1091,7 @@ The Current Maintainer of this work is Alexara Wu.
 % 根据选项载入配置文件。
 %    \begin{macrocode}
 \AtEndOfClass{
-  \ifsjtu@degree@graduate
+  \ifsjtu@type@graduate
     \input{sjtuthesis-graduate.ltx}
   \else
     \input{sjtuthesis-undergraduate.ltx}
@@ -1334,8 +1334,8 @@ The Current Maintainer of this work is Alexara Wu.
 %
 % 课程中英文名称。
 %    \begin{macrocode}
-  coursename      = { name = coursename@zh },
-  coursename*     = { name = coursename@en },
+  course          = { name = course@zh },
+  course*         = { name = course@en },
 %    \end{macrocode}
 %
 % 资助基金中英文名称。
@@ -1444,8 +1444,8 @@ The Current Maintainer of this work is Alexara Wu.
 }
 \sjtu@name@def{school@zh}{上海交通大学}
 \sjtu@name@def{school@en}{Shanghai Jiao Tong University}
-\ifsjtu@degree@graduate
-  \ifsjtu@degree@doctor
+\ifsjtu@type@graduate
+  \ifsjtu@type@doctor
     \sjtu@name@def{degree@type@zh}{博士}
     \sjtu@name@def{degree@type@en}{Doctor}
   \else
@@ -1480,7 +1480,7 @@ The Current Maintainer of this work is Alexara Wu.
     for the Degree of \sjtu@name@degree@type@en
   }
 \else
-  \ifsjtu@degree@course
+  \ifsjtu@type@course
     \sjtu@name@def{degree@type@zh}{}
     \sjtu@name@def{degree@type@en}{}
     \sjtu@name@def{thesis@type}{课程论文}
@@ -1498,7 +1498,7 @@ The Current Maintainer of this work is Alexara Wu.
   \sjtu@name@def{author@zh}{学生姓名}
   \sjtu@name@def{id@zh}{学生学号}
   \sjtu@name@def{supervisor@zh}{指导教师}
-  \sjtu@name@def{coursename@zh}{课程名称}
+  \sjtu@name@def{course@zh}{课程名称}
   \sjtu@name@def{major@zh}{专业}
   \sjtu@name@def{department@zh}{学院(系)}
   \sjtu@name@def{digest}{英文大摘要}
@@ -1926,7 +1926,7 @@ The Current Maintainer of this work is Alexara Wu.
 \def\sjtu@thepage{}
 \def\sjtu@lastpageref{}
 \newif\ifsjtu@page@numbering \sjtu@page@numberingtrue
-\ifsjtu@degree@graduate
+\ifsjtu@type@graduate
   \newcommand\sjtu@thepage@format[2]{---~{\bfseries{#1}}~---}
 \else
   \ifsjtu@language@chinese
@@ -1942,7 +1942,7 @@ The Current Maintainer of this work is Alexara Wu.
   \renewcommand\headrulewidth{0pt}
   \renewcommand\footrulewidth{0pt}
 }
-\ifsjtu@degree@graduate
+\ifsjtu@type@graduate
   \fancypagestyle{sjtu@plain}{%
     \fancyhf{}
     \fancyhead[C]{\zihao{-5}\sjtu@name@subject@zh}
@@ -2052,8 +2052,8 @@ The Current Maintainer of this work is Alexara Wu.
     titleformat  = {},
     aftername    = \quad,
     afterindent  = true,
-    beforeskip   = {\ifsjtu@degree@graduate 0pt\else 1ex\fi},
-    afterskip    = {\ifsjtu@degree@graduate 3ex\else 4ex\fi},
+    beforeskip   = {\ifsjtu@type@graduate 0pt\else 1ex\fi},
+    afterskip    = {\ifsjtu@type@graduate 3ex\else 4ex\fi},
   },
   section = {%
     format       = \zihao{4}\bfseries\heiti,
@@ -2083,7 +2083,7 @@ The Current Maintainer of this work is Alexara Wu.
     \gdef\sjtu@headings@indent{2\ccwd}
   \fi
   \ifsjtu@style@indent@headings@auto
-    \ifsjtu@degree@graduate\relax\else
+    \ifsjtu@type@graduate\relax\else
       \ctexset{%
         subsubsection/name   = {(,)},
         subsubsection/number = \arabic{subsubsection},
@@ -2445,7 +2445,7 @@ The Current Maintainer of this work is Alexara Wu.
 % 学士论文模版默认设置。
 %    \begin{macrocode}
 %<*undergraduate>
-\ifsjtu@degree@bachelor
+\ifsjtu@type@bachelor
   \sjtusetup{
     style = {
       frontmatter-numbering = false,
@@ -2713,7 +2713,7 @@ The Current Maintainer of this work is Alexara Wu.
   \Collect@Body\sjtu@save@env@body
 }{%
 %<*undergraduate>
-  \ifsjtu@degree@course\relax\else
+  \ifsjtu@type@course\relax\else
     \ifsjtu@language@english\relax\else
       \AtEndDocument{%
         \cleardoublepage
@@ -2831,16 +2831,15 @@ The Current Maintainer of this work is Alexara Wu.
       \def\arraystretch{1.1}
       \begin{tabular}
         {>{\begin{CJKfilltwosides}{4\ccwd}}r<{\end{CJKfilltwosides}}@{：}c}  
-        \sjtu@name@author@zh       & \sjtu@info@author@zh      \\ \cline{2-2}
-        \sjtu@name@id@zh           & \makebox[180pt]{\sjtu@info@id} \\
-          \cline{2-2}
-        \ifsjtu@degree@course
-          \sjtu@name@coursename@zh & \sjtu@info@coursename@zh  \\ \cline{2-2}
+        \sjtu@name@author@zh      & \sjtu@info@author@zh      \\\cline{2-2}
+        \sjtu@name@id@zh          & \makebox[180pt]{\sjtu@info@id} \\\cline{2-2}
+        \ifsjtu@type@course
+          \sjtu@name@course@zh    & \sjtu@info@course@zh      \\\cline{2-2}
         \else
-          \sjtu@name@major@zh      & \sjtu@info@major@zh       \\ \cline{2-2}
+          \sjtu@name@major@zh     & \sjtu@info@major@zh       \\\cline{2-2}
         \fi
-        \sjtu@name@supervisor@zh   & \sjtu@info@supervisor@zh  \\ \cline{2-2}
-        \sjtu@name@department@zh   & \sjtu@info@department@zh  \\ \cline{2-2}
+        \sjtu@name@supervisor@zh  & \sjtu@info@supervisor@zh  \\\cline{2-2}
+        \sjtu@name@department@zh  & \sjtu@info@department@zh  \\\cline{2-2}
       \end{tabular}
     \endgroup
     \vskip 40pt
