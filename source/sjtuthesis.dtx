@@ -2708,18 +2708,15 @@ The Current Maintainer of this work is Alexara Wu.
     \sjtu@saved@env@body
   \fi
 }
-%</class>
 %    \end{macrocode}
 %
 % 本科论文英文大摘要。
 %    \begin{macrocode}
-%<*(undergraduate|graduate)>
 \NewDocumentEnvironment{digest}{}{%
   \Collect@Body\sjtu@save@env@body
 }{%
-%<*undergraduate>
-  \ifsjtu@type@course\relax\else
-    \ifsjtu@language@english\relax\else
+  \ifsjtu@type@bachelor
+    \ifsjtu@language@chinese
       \AtEndDocument{%
         \cleardoublepage
         \pagenumbering{roman}
@@ -2733,17 +2730,13 @@ The Current Maintainer of this work is Alexara Wu.
       }
     \fi
   \fi
-%</undergraduate>
-%<graduate>  \relax
 }
-%</(undergraduate|graduate)>
 %    \end{macrocode}
 %
 % \subsubsection{盲审模式}
 %
 % 盲审模式下隐藏作者、导师姓名等信息。
 %    \begin{macrocode}
-%<*class>
 \AtEndPreamble{
   \ifsjtu@review%
     \sjtusetup{%
