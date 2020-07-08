@@ -308,7 +308,7 @@ The Current Maintainer of this work is Alexara Wu.
 % 部分选项采用 \kvopt{\meta{key}}{\meta{value}} 的形式。当 \meta{value} 省略时，
 % 将采用默认值。在下文的说明中，将用\textbf{粗体}表示默认值。
 %
-% \newpage
+% \pagebreak
 %
 % \subsubsection{通用选项}
 %
@@ -447,6 +447,12 @@ The Current Maintainer of this work is Alexara Wu.
 % \opt{auto} 会缩进两个字，具体距离和字体大小有关；\opt{false} 不缩进。
 % 学士论文默认为 \opt{fixed}，其余默认为 \opt{false}。
 %
+% \DescribeFunction{header}
+%   \begin{sjtusyntax}[emph={[2]header}]
+%     header = (*<(single)|double>*)
+%   \end{sjtusyntax}
+% 选择研究生论文页眉风格。
+%
 % \DescribeFunction{title-logo-color}
 %   \begin{sjtusyntax}[emph={[2]title-logo-color}]
 %     title-logo-color = (*<red|(blue)|black>*)
@@ -464,6 +470,8 @@ The Current Maintainer of this work is Alexara Wu.
 %     float-number-separator = (*\marg{分隔符}*)
 %   \end{sjtusyntax}
 % 图、表等浮动体编号中的分隔符。
+%
+% \pagebreak
 %
 % \DescribeFunction{equation-number-separator}
 %   \begin{sjtusyntax}[emph={[2]equation-number-separator}]
@@ -727,6 +735,8 @@ The Current Maintainer of this work is Alexara Wu.
 % 按学校要求图表内使用五号字体，不受正文环境影响。\vspace{-1ex}
 % 可在文中使用 \cs{SJTUunsetfloatfontsize} 取消此默认设置，
 % 或者使用 \cs{SJTUsetfloatfontsize} 恢复此默认设置。\vspace{1ex}
+%
+% \pagebreak
 %
 % \sjtuthesis 预定义了一系列的数学环境。在启用 \pkg{ntheorem} 或 \pkg{amsthm}
 % 宏包后有效。
@@ -1233,7 +1243,7 @@ The Current Maintainer of this work is Alexara Wu.
     choices = {
       true,
       false,
-    }
+    },
   },
   indent-headings = {
     name = indent@headings,
@@ -1244,6 +1254,12 @@ The Current Maintainer of this work is Alexara Wu.
     },
     initial = false,
     default = fixed,
+  },
+  header = {
+    choices = {
+      single,
+      double,
+    },
   },
   title-logo-color = {
     name = title@logo@color,
@@ -1918,6 +1934,15 @@ The Current Maintainer of this work is Alexara Wu.
   headsep    = 0.5cm,
 %</graduate>
 }
+%    \end{macrocode}
+%
+% \pkg{fancyhdr} 定义页眉页脚很方便，但是有一个非常隐蔽的坑。
+% 第一次调用 \pkg{fancyhdr} 定义的样式时会修改 \cs{chaptermark}，
+% 这会导致页眉信息错误（多余章号并且英文大写）。
+% 这是因为在 \cs{ps@fancy} 中对 \cs{chaptermark} 进行重定义，
+% 所以我们先调用 \cs{ps@fancy}，再修改 \cs{chaptermark}。
+%    \begin{macrocode}
+\pagestyle{fancy}
 %</(undergraduate|graduate)>
 %    \end{macrocode}
 %
@@ -1951,16 +1976,21 @@ The Current Maintainer of this work is Alexara Wu.
 \fancypagestyle{plain}{%
   \fancyhf{}
 %<*graduate>
-  \fancyhead[C]{\zihao{-5}\sjtu@name@subject@zh}
+  \ifsjtu@style@header@single
+    \fancyhead[C]{\zihao{-5}\sjtu@name@subject@zh}
+  \else
+    \fancyhead[RE,LO]{\zihao{-5}\sjtu@name@subject@zh}
+    \fancyhead[RO,LE]{\zihao{-5}\leftmark}
+  \fi
 %</graduate>
 %<*undergraduate>
   \fancyhead[L]{%
     \includegraphics[height=32pt]%
-      {sjtu-vi-logo-\sjtu@style@header@logo@color.pdf}%
+      {sjtu-vi-logo-\sjtu@style@header@logo@color.pdf}
   }
   \fancyhead[R]{%
     \parbox[b]{0.7\textwidth}{%
-      \raggedleft\nouppercase{\zihao{-5}\heiti\sjtu@info@title}%
+      \raggedleft\zihao{-5}\heiti\MakeUppercase{\sjtu@info@title}
     }
   }
 %</undergraduate>
@@ -2011,7 +2041,8 @@ The Current Maintainer of this work is Alexara Wu.
 %    \begin{macrocode}
 \AtBeginDocument{%
   \pagenumbering{Alph}
-  \pagestyle{empty}}
+  \pagestyle{empty}
+}
 %    \end{macrocode}
 %
 % \begin{macro}{\frontmatter}
@@ -2220,7 +2251,7 @@ The Current Maintainer of this work is Alexara Wu.
     \addcontentsline{toc}{chapter}{#4}%
   }%%
   \chapter*{#3}%
-  \@mkboth{#2}{#2}%
+  \@mkboth{\MakeUppercase{#2}}{\MakeUppercase{#2}}%
 }
 %    \end{macrocode}
 % \end{macro}
