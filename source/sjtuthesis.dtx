@@ -1170,11 +1170,6 @@ The Current Maintainer of this work is Alexara Wu.
 \RequirePackage{booktabs}
 %    \end{macrocode}
 %
-% 使用长表格。
-%    \begin{macrocode}
-\RequirePackage{longtable}
-%    \end{macrocode}
-%
 % 题注支持宏包。
 %    \begin{macrocode}
 \RequirePackage{caption}
@@ -2386,10 +2381,6 @@ The Current Maintainer of this work is Alexara Wu.
   \fi
   \@setminipage
 }
-\BeforeBeginEnvironment{longtable}
-  {\begingroup\ifsjtu@set@float@fontsize\zihao{5}\fi}
-\AfterEndEnvironment{longtable}
-  {\endgroup}
 \NewDocumentCommand{\SJTUsetfloatfontsize}{}{\sjtu@set@float@fontsizetrue}
 \NewDocumentCommand{\SJTUunsetfloatfontsize}{}{\sjtu@set@float@fontsizefalse}
 %    \end{macrocode}
@@ -3009,6 +3000,17 @@ The Current Maintainer of this work is Alexara Wu.
 %    \begin{macrocode}
 \AtEndOfPackageFile*{threeparttable}{
   \appto\TPTnoteSettings{\footnotesize}
+}
+%    \end{macrocode}
+%
+% \subsubsection{\pkg{longtable} 宏包}
+%
+%    \begin{macrocode}
+\AtEndOfPackageFile*{longtable}{
+  \BeforeBeginEnvironment{longtable}
+    {\begingroup\ifsjtu@set@float@fontsize\zihao{5}\fi}
+  \AfterEndEnvironment{longtable}
+    {\endgroup}
 }
 %    \end{macrocode}
 %
