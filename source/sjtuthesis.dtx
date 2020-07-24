@@ -232,7 +232,7 @@ The Current Maintainer of this work is Alexara Wu.
 %     视觉系统      & \file{sjtu-vi-logo-*.pdf}   & 校标图片          \\
 %                   & \file{sjtu-vi-badge-*.pdf}  & 校徽图片          \\
 %                   & \file{sjtu-vi-name-*.pdf}   & 校名图片          \\
-%  
+%
 %     \bottomrule
 %   \end{tabular}
 % \end{table}
@@ -304,7 +304,7 @@ The Current Maintainer of this work is Alexara Wu.
 % \begin{latex}
 % \documentclass(*\oarg{模板选项}*){sjtuthesis}
 % \end{latex}
-% 
+%
 % 部分选项采用 \kvopt{\meta{key}}{\meta{value}} 的形式。当 \meta{value} 省略时，
 % 将采用默认值。在下文的说明中，将用\textbf{粗体}表示默认值。
 %
@@ -742,11 +742,11 @@ The Current Maintainer of this work is Alexara Wu.
 % 宏包后有效。
 %
 % \begin{center}\small
-% \begin{tabular}{*{6}{l}}\toprule
-%   assertion & assumption & axiom        & corollary & definition  & example \\
-%   断言      & 假设       & 公理         & 推论      & 定义        & 例      \\\midrule
-%   lemma     & proof      & proposition  & remark    & theorem     &  \\
-%   引理      & 证明       & 命题         & 注        & 定理        &  \\\bottomrule
+% \begin{tabular}{*{7}{l}}\toprule
+%   assumption  & axiom   & conjecture & corollary    & definition  & example   & exercise  \\
+%   假设        & 公理    & 猜想       & 推论         & 定义        & 例        & 练习      \\\midrule
+%   lemma       & problem & proof      & proposition  & remark      & solution  & theorem   \\
+%   引理        & 问题    & 证明       & 命题         & 注          & 解        & 定理      \\\bottomrule
 % \end{tabular}
 % \end{center}
 %
@@ -1045,7 +1045,7 @@ The Current Maintainer of this work is Alexara Wu.
 %
 % 盲审模式开关。
 %    \begin{macrocode}
-\DeclareBoolOption{review}
+\DeclareBoolOption[false]{review}
 %    \end{macrocode}
 %
 % 浮动体是否采用连续编号。
@@ -1599,7 +1599,7 @@ The Current Maintainer of this work is Alexara Wu.
 %    \end{macrocode}
 %
 % \subsection{西文字体}
-% 
+%
 % 使用 \pkg{fontspec} 配置西文字体。
 %
 %  XITS 字体于 v1.109 (2018/09/28) 更改了字体的文件名。这里做一些兼容性设置。
@@ -2533,7 +2533,7 @@ The Current Maintainer of this work is Alexara Wu.
   \fi
 }
 \NewDocumentCommand{\copyrightpage}{O{}}{%
-  \ifsjtu@review\relax\else  
+  \ifsjtu@review\relax\else
     \cleardoublepage
     \ifblank{#1}{%
       \thispagestyle{empty}
@@ -2850,7 +2850,7 @@ The Current Maintainer of this work is Alexara Wu.
       \zihao{3}
       \def\arraystretch{1.1}
       \begin{tabular}
-        {>{\begin{CJKfilltwosides}{4.2\ccwd}}r<{\end{CJKfilltwosides}}@{：}c}  
+        {>{\begin{CJKfilltwosides}{4.2\ccwd}}r<{\end{CJKfilltwosides}}@{：}c}
         \sjtu@name@author@zh      & \sjtu@info@author@zh      \\\cline{2-2}
         \sjtu@name@id@zh          & \makebox[180pt]{\sjtu@info@id} \\\cline{2-2}
         \ifsjtu@type@course
@@ -2889,7 +2889,7 @@ The Current Maintainer of this work is Alexara Wu.
         \sjtu@name@degree@zh           & \sjtu@info@degree@zh         \\
         \sjtu@name@major@zh            & \sjtu@info@major@zh          \\
         \sjtu@name@department@zh       & \sjtu@info@department@zh     \\
-        \sjtu@name@defenddate@zh       & 
+        \sjtu@name@defenddate@zh       &
           \sjtu@date{\sjtu@date@format@zh}{\sjtu@info@date}           \\
         \sjtu@name@conferring@zh       & \sjtu@name@school@zh         \\
       \end{tabular}
@@ -2924,7 +2924,7 @@ The Current Maintainer of this work is Alexara Wu.
         \sjtu@name@degree@en           & \sjtu@info@degree@en         \\
         \sjtu@name@major@en            & \sjtu@info@major@en          \\
         \sjtu@name@department@en       & \sjtu@info@department@en     \\
-        \sjtu@name@defenddate@en       & 
+        \sjtu@name@defenddate@en       &
           \sjtu@date{\sjtu@date@format@en}{\sjtu@info@date}           \\
         \sjtu@name@conferring@en       & \sjtu@name@school@en         \\
       \end{tabular}
@@ -2967,7 +2967,7 @@ The Current Maintainer of this work is Alexara Wu.
     \phantomsection
   }
   \pdfstringdefDisableCommands{%
-    \let\\\@empty	
+    \let\\\@empty
     \let\quad\@empty
     \let\hspace\@gobble
   }
@@ -3038,42 +3038,51 @@ The Current Maintainer of this work is Alexara Wu.
 %    \begin{macrocode}
 \newcommand\sjtu@def@theorem@name{%
   \ifsjtu@language@chinese
-    \sjtu@name@def{assertion}{断言}
     \sjtu@name@def{assumption}{假设}
     \sjtu@name@def{axiom}{公理}
+    \sjtu@name@def{conjecture}{猜想}
     \sjtu@name@def{corollary}{推论}
     \sjtu@name@def{definition}{定义}
     \sjtu@name@def{example}{例}
+    \sjtu@name@def{exercise}{练习}
     \sjtu@name@def{lemma}{引理}
+    \sjtu@name@def{problem}{问题}
     \sjtu@name@def{proof}{证明}
     \sjtu@name@def{proposition}{命题}
     \sjtu@name@def{remark}{注}
+    \sjtu@name@def{solution}{解}
     \sjtu@name@def{theorem}{定理}
   \else
-    \sjtu@name@def{assertion}{Assertion}
     \sjtu@name@def{assumption}{Assumption}
     \sjtu@name@def{axiom}{Axiom}
+    \sjtu@name@def{conjecture}{Conjecture}
     \sjtu@name@def{corollary}{Corollary}
     \sjtu@name@def{definition}{Definition}
     \sjtu@name@def{example}{Example}
+    \sjtu@name@def{exercise}{Exercise}
     \sjtu@name@def{lemma}{Lemma}
+    \sjtu@name@def{problem}{Problem}
     \sjtu@name@def{proof}{Proof}
     \sjtu@name@def{proposition}{Proposition}
     \sjtu@name@def{remark}{Remark}
+    \sjtu@name@def{solution}{Solution}
     \sjtu@name@def{theorem}{Theorem}
   \fi
 }
 \newcommand\sjtu@def@theorem{%
-  \newtheorem{theorem}             {\sjtu@name@theorem}    [chapter]
-  \newtheorem{assertion}  [theorem]{\sjtu@name@assertion}
-  \newtheorem{axiom}      [theorem]{\sjtu@name@axiom}
-  \newtheorem{corollary}  [theorem]{\sjtu@name@corollary}
-  \newtheorem{lemma}      [theorem]{\sjtu@name@lemma}
-  \newtheorem{proposition}[theorem]{\sjtu@name@proposition}
-  \newtheorem{assumption}          {\sjtu@name@assumption} [chapter]
-  \newtheorem{definition}          {\sjtu@name@definition} [chapter]
-  \newtheorem{example}             {\sjtu@name@example}    [chapter]
-  \newtheorem*{remark}             {\sjtu@name@remark}
+  \newtheorem{assumption} {\sjtu@name@assumption} [chapter]
+  \newtheorem{axiom}      {\sjtu@name@axiom}      [chapter]
+  \newtheorem{conjecture} {\sjtu@name@conjecture} [chapter]
+  \newtheorem{corollary}  {\sjtu@name@corollary}  [chapter]
+  \newtheorem{definition} {\sjtu@name@definition} [chapter]
+  \newtheorem{example}    {\sjtu@name@example}    [chapter]
+  \newtheorem{exercise}   {\sjtu@name@exercise}   [chapter]
+  \newtheorem{lemma}      {\sjtu@name@lemma}      [chapter]
+  \newtheorem{problem}    {\sjtu@name@problem}    [chapter]
+  \newtheorem{proposition}{\sjtu@name@proposition}[chapter]
+  \newtheorem{theorem}    {\sjtu@name@theorem}    [chapter]
+  \newtheorem*{remark}    {\sjtu@name@remark}
+  \newtheorem*{solution}  {\sjtu@name@solution}
 }
 %    \end{macrocode}
 %
@@ -3092,7 +3101,7 @@ The Current Maintainer of this work is Alexara Wu.
   \sjtu@def@theorem
 }
 %    \end{macrocode}
-% 
+%
 % \pkg{amsthm} 宏包
 %    \begin{macrocode}
 \AtEndOfPackageFile*{amsthm}{
