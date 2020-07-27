@@ -1115,8 +1115,9 @@ The Current Maintainer of this work is Alexara Wu.
 %
 % 引用的宏包和相应的定义。
 %    \begin{macrocode}
-\RequirePackage{etoolbox}
 \RequirePackage{xparse}
+\RequirePackage{etoolbox}
+\RequirePackage{filehook}
 \RequirePackage{environ}
 %    \end{macrocode}
 %
@@ -1207,9 +1208,14 @@ The Current Maintainer of this work is Alexara Wu.
 \RequirePackage{url}
 %    \end{macrocode}
 %
+% 忽略不必要的警告。
+%    \begin{macrocode}
+\RequirePackage{silence}
+\WarningFilter{pageslts}{Package pdfpages detected}
+%    \end{macrocode}
+%
 % 对冲突的宏包报错。
 %    \begin{macrocode}
-\RequirePackage{filehook}
 \newcommand\sjtu@package@conflict[2]{
   \AtBeginOfPackageFile*{#2}{
     \sjtu@error{The `#2' package is incompatible with required `#1'}
@@ -1225,10 +1231,12 @@ The Current Maintainer of this work is Alexara Wu.
 \sjtu@package@conflict{unicode-math}{mathrsfs}
 %    \end{macrocode}
 %
-% 忽略不必要的警告。
+% 定义一个补丁命令，失败时给出警告。
 %    \begin{macrocode}
-\RequirePackage{silence}
-\WarningFilter{pageslts}{Package pdfpages detected}
+\newcommand\sjtu@patchcmd[3]{%
+  \patchcmd{#1}{#2}{#3}{}%
+    {\sjtu@warning{Oops! Command `\protect#1' is NOT patchable.}}
+}
 %    \end{macrocode}
 %
 % \subsection{定义格式选项}
@@ -2023,18 +2031,16 @@ The Current Maintainer of this work is Alexara Wu.
 % 空白页清空页眉页脚。
 %    \begin{macrocode}
 %<*class>
-\patchcmd\cleardoublepage%
+\sjtu@patchcmd\cleardoublepage%
   {\newpage}{\thispagestyle{empty}\newpage}
-  {}{}
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\chapter}
 % 每章第一页默认会设置特殊的 pagestyle, 我们将其清除。
 %    \begin{macrocode}
-\patchcmd\chapter%
+\sjtu@patchcmd\chapter%
   {\thispagestyle}{\@gobble}
-  {}{}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -2378,15 +2384,9 @@ The Current Maintainer of this work is Alexara Wu.
 % 设置浮动体内的默认字号。
 %    \begin{macrocode}
 \newif\ifsjtu@set@float@fontsize \sjtu@set@float@fontsizefalse
-\renewcommand\@floatboxreset{%
-  \reset@font
-  \ifsjtu@set@float@fontsize
-    \zihao{5}
-  \else
-    \normalsize
-  \fi
-  \@setminipage
-}
+\sjtu@patchcmd\@floatboxreset%
+  {\normalsize}
+  {\ifsjtu@set@float@fontsize\zihao{5}\else\normalsize\fi}
 \NewDocumentCommand{\SJTUsetfloatfontsize}{}{\sjtu@set@float@fontsizetrue}
 \NewDocumentCommand{\SJTUunsetfloatfontsize}{}{\sjtu@set@float@fontsizefalse}
 %    \end{macrocode}
@@ -3160,11 +3160,9 @@ The Current Maintainer of this work is Alexara Wu.
   \apptocmd{\sjtu@def@thefloats}{%
     \def\thealgocf{\thechapter\sjtu@style@fl@num@sep\arabic{algocf}}
   }{}{}
-  \patchcmd{\algocf@latexcaption}{\addcontentsline}{%
-    \caption@iflist
-      {\addcontentsline}
-      {\@gobblethree}
-  }{}{}
+  \sjtu@patchcmd\algocf@latexcaption%
+    {\addcontentsline}
+    {\caption@iflist{\addcontentsline}{\@gobblethree}}
   \AtEndPreamble{%
     \newlength{\sjtu@cftalgnumwidth@tmp}
       \settowidth{\sjtu@cftalgnumwidth@tmp}{\cftalgpresnum}
@@ -3181,11 +3179,10 @@ The Current Maintainer of this work is Alexara Wu.
   \RequirePackage{algorithmicx, algpseudocode}
   \floatname{algorithm}{\sjtu@name@algorithm}
   \@addtoreset{algorithm}{chapter}
-  \patchcmd\@chapter%
+  \sjtu@patchcmd\@chapter%
     {\if@twocolumn}
     {\addtocontents{loa}{\protect\addvspace{10\p@}}%
-      \if@twocolumn}
-    {}{}
+     \if@twocolumn}
   \def\listalgorithmname{\sjtu@name@listalgorithm}
   \newlistof{alg}{loa}{\listalgorithmname}
   \let\l@algorithm\l@alg
