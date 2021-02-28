@@ -2105,6 +2105,8 @@ The Current Maintainer of this work is Alexara Wu.
     afterindent  = true,
     beforeskip   = {\ifsjtu@type@graduate 0pt\else 1ex\fi},
     afterskip    = {\ifsjtu@type@graduate 3ex\else 4ex\fi},
+    lofskip      = 0pt,
+    lotskip      = 0pt,
   },
   section = {%
     format       = \zihao{4}\bfseries\heiti,
@@ -3157,7 +3159,11 @@ The Current Maintainer of this work is Alexara Wu.
 %
 %    \begin{macrocode}
 \PassOptionsToPackage{algochapter}{algorithm2e}
+\AtBeginOfPackageFile*{algorithm2e}{
+  \let\old@chapter\@chapter
+}
 \AtEndOfPackageFile*{algorithm2e}{
+  \let\@chapter\old@chapter
   \SetAlgorithmName{\sjtu@name@algorithm}%
                    {\sjtu@name@algorithm}%
                    {\sjtu@name@listalgorithm}
@@ -3197,10 +3203,6 @@ The Current Maintainer of this work is Alexara Wu.
   \RequirePackage{algorithmicx, algpseudocode}
   \floatname{algorithm}{\sjtu@name@algorithm}
   \@addtoreset{algorithm}{chapter}
-  \sjtu@patchcmd\@chapter%
-    {\if@twocolumn}
-    {\addtocontents{loa}{\protect\addvspace{10\p@}}%
-     \if@twocolumn}
   \def\listalgorithmname{\sjtu@name@listalgorithm}
   \newlistof{alg}{loa}{\listalgorithmname}
   \let\l@algorithm\l@alg
