@@ -882,6 +882,20 @@ The Current Maintainer of this work is Alexara Wu.
 }
 %    \end{macrocode}
 %
+% 检查编译引擎，要求使用 \XeLaTeX 或 \LuaLaTeX。
+%    \begin{macrocode}
+\RequirePackage{iftex}
+\ifXeTeX\else
+  \ifLuaTeX\else
+    \sjtu@error{%
+      The SJTUThesis class requires either XeTeX or LuaTeX.\\\\
+      You must change your typesetting engine to, e.g.,
+      "xelatex" or "lualatex" instead of "latex" or "pdflatex".
+    }
+  \fi
+\fi
+%    \end{macrocode}
+%
 % \subsection{定义文档选项}
 %
 %    \begin{macrocode}
@@ -1187,11 +1201,6 @@ The Current Maintainer of this work is Alexara Wu.
 \RequirePackage{amsmath}
 %    \end{macrocode}
 %
-% 利用 \pkg{xeCJKfntef} 实现汉字的分散对齐。
-%    \begin{macrocode}
-\RequirePackage{xeCJKfntef}
-%    \end{macrocode}
-%
 % 颜色支持宏包。
 %    \begin{macrocode}
 \RequirePackage{xcolor}
@@ -1258,8 +1267,10 @@ The Current Maintainer of this work is Alexara Wu.
 % 对冲突的宏包报错。
 %    \begin{macrocode}
 \newcommand\sjtu@package@conflict[2]{
-  \AtBeginOfPackageFile*{#2}{
-    \sjtu@error{The `#2' package is incompatible with required `#1'}
+  \AtEndOfPackageFile*{#1}{%
+    \AtBeginOfPackageFile*{#2}{%
+      \sjtu@error{The "#2" package is incompatible with "#1"}%
+    }
   }
 }
 \sjtu@package@conflict{unicode-math}{amscd}
@@ -1895,6 +1906,38 @@ The Current Maintainer of this work is Alexara Wu.
 %</mathfont&(termes|pagella|lm)>
 %    \end{macrocode}
 %
+% \subsection{中文字体}
+%
+% 带圈数字和方框使用中文字体。
+%    \begin{macrocode}
+%<*class>
+\ifXeTeX
+  \xeCJKDeclareCharClass{CJK}{"2460->"2473,"25A1}
+\fi
+\ifLuaTeX
+  \ltjdefcharrange{100}{"2460-"2473,"25A1}
+  \ltjsetparameter{jacharrange={+100}}
+\fi
+%    \end{macrocode}
+%
+% 汉字的分散对齐环境 \env{CJKfilltwosides}，\XeLaTeX 下调用 \pkg{xeCJKfntef} 包。
+% \LuaLaTeX 下模仿 \pkg{xeCJKfntef} 中的定义。
+%    \begin{macrocode}
+\ifXeTeX
+  \RequirePackage{xeCJKfntef}
+\fi
+\ifLuaTeX
+\NewDocumentEnvironment{CJKfilltwosides}{O{c} m}{%
+  \minipage[#1]{#2}%
+  \ltjsetparameter{kanjiskip=\z@ plus 1filll}%
+}{%
+  \endminipage%
+  \ignorespacesafterend%
+}
+\fi
+%</class>
+%    \end{macrocode}
+%
 % \subsection{页面设置}
 %
 % 设置纸张、页边距。
@@ -2173,14 +2216,15 @@ The Current Maintainer of this work is Alexara Wu.
 % \begin{macro}{\sjtu@textcircled}
 % 生成带圈的脚注数字，最多处理到 10。
 %    \begin{macrocode}
+\newcommand\footnotemarkfont{}
 \def\sjtu@textcircled#1{%
-  \ifnum\value{#1} >10%
-    \sjtu@error{%
-      Too many footnotes in this page.
-      Keep footnote no more than 10%
-    }%
-  \fi
-  {\CJKfamily+{}\symbol{\the\numexpr\value{#1}+"245F\relax}}%
+  \ifnum\value{#1} <21%
+    {\footnotemarkfont\symbol{\the\numexpr\value{#1}+"245F\relax}}%
+  \else\ifnum\value{#1} <36%
+    {\footnotemarkfont\symbol{\the\numexpr\value{#1}+"323C\relax}}%
+  \else\ifnum\value{#1} <51%
+    {\footnotemarkfont\symbol{\the\numexpr\value{#1}+"328D\relax}}%
+  \fi\fi\fi
 }
 \renewcommand{\thefootnote}{\sjtu@textcircled{footnote}}
 \renewcommand{\thempfootnote}{\sjtu@textcircled{mpfootnote}}
@@ -2414,7 +2458,7 @@ The Current Maintainer of this work is Alexara Wu.
 % 支持扫描文件替换。
 %    \begin{macrocode}
 %<*class>
-\newcommand\sjtu@square{{\CJKfamily+{}\symbol{"25A1}}}
+\newcommand\sjtu@square{\symbol{"25A1}}
 \newcommand\sjtu@copr@addon{%
   \vskip 2ex
   \begingroup
@@ -3401,6 +3445,7 @@ The Current Maintainer of this work is Alexara Wu.
 \def\CJKLaTeX{CJK--\LaTeX}
 \def\XeTeX{\hologo{XeTeX}}
 \def\XeLaTeX{\hologo{XeLaTeX}}
+\def\LuaLaTeX{\hologo{LuaLaTeX}}
 \DeclareRobustCommand\file{\nolinkurl}
 \DeclareRobustCommand\env{\texttt}
 \DeclareRobustCommand\pkg{\textsf}
