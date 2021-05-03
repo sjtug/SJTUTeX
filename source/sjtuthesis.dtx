@@ -2393,50 +2393,8 @@ The Current Maintainer of this work is Alexara Wu.
   \def\figurename{\sjtu@name@figure@second}
 }
 \captionsetup[bi-second]{bi-second}
-%    \end{macrocode}
-%
-% \subsubsection{数学相关}
-%
-% 根据中文的数学排印习惯进行调整：
-%    \begin{macrocode}
-%    \end{macrocode}
-%
-% \begin{macro}{\ldots}
-% 省略号一律居中，所以 \cs{ldots} 不再居于底部。
-%    \begin{macrocode}
-\let\mathellipsis\cdots
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\Re}
-% \begin{macro}{\Im}
-% 实部、虚部操作符使用罗马体 $\mathrm{Re}$、$\mathrm{Im}$ 而不是 fraktur 体
-% $\Re$、$\Im$。
-%    \begin{macrocode}
-\AtBeginDocument{%
-  \renewcommand\Re{\operatorname{Re}}%
-  \renewcommand\Im{\operatorname{Im}}%
-}
-%    \end{macrocode}
-% \end{macro}
-% \end{macro}
-%
-% \begin{macro}{\upe}
-% \begin{macro}{\upi}
-% \begin{macro}{\upj}
-% \begin{macro}{\dif}
-% 提供一些方便的命令：
-%    \begin{macrocode}
-\newcommand\upe{\mathrm{e}}
-\newcommand\upi{\mathrm{i}}
-\newcommand\upj{\mathrm{j}}
-\newcommand\dif{\mathop{}\!\mathrm{d}}
 %</class>
 %    \end{macrocode}
-% \end{macro}
-% \end{macro}
-% \end{macro}
-% \end{macro}
 %
 % 学士论文模版默认设置。
 %    \begin{macrocode}
@@ -3025,6 +2983,23 @@ The Current Maintainer of this work is Alexara Wu.
 }
 %    \end{macrocode}
 % \end{macro}
+%
+% \subsubsection{\pkg{physics} 宏包}
+%
+%    \begin{macrocode}
+\AtEndOfPackageFile*{physics}{
+  \@ifundefined{updelta}{\relax}{
+    \DeclareDocumentCommand\variation{o g d()}{
+      \IfNoValueTF{#2}{
+        \IfNoValueTF{#3}
+          {\updelta \IfNoValueTF{#1}{}{^{#1}}}
+          {\mathinner{\updelta \IfNoValueTF{#1}{}{^{#1}}\argopen(#3\argclose)}}
+        }
+        {\mathinner{\updelta \IfNoValueTF{#1}{}{^{#1}}#2} \IfNoValueTF{#3}{}{(#3)}}
+    }
+  }
+}
+%    \end{macrocode}
 %
 % \subsubsection{\pkg{siunitx} 宏包}
 %
