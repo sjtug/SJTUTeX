@@ -47,14 +47,29 @@ The Current Maintainer of this work is Alexara Wu.
 
 \generate{
   \usedir{tex/latex/sjtuthesis}
-    \file{\jobname.cls}              {\from{\jobname.dtx}{class}}
-    \file{\jobname-undergraduate.ltx}{\from{\jobname.dtx}{undergraduate}}
-    \file{\jobname-graduate.ltx}     {\from{\jobname.dtx}{graduate}}
-    \file{sjtudoc.cls}               {\from{\jobname.dtx}{document}}
+    \file{\jobname.cls}               {\from{\jobname.dtx}{class}}
+    \file{\jobname-undergraduate.ltx} {\from{\jobname.dtx}{undergraduate}}
+    \file{\jobname-graduate.ltx}      {\from{\jobname.dtx}{graduate}}
+    \file{sjtu-text-font-termes.def}  {\from{\jobname.dtx}{textfont,termes}}
+    \file{sjtu-text-font-pagella.def} {\from{\jobname.dtx}{textfont,pagella}}
+    \file{sjtu-text-font-lm.def}      {\from{\jobname.dtx}{textfont,lm}}
+    \file{sjtu-text-font-stix2.def}   {\from{\jobname.dtx}{textfont,stix2}}
+    \file{sjtu-text-font-xits.def}    {\from{\jobname.dtx}{textfont,xits}}
+    \file{sjtu-text-font-newcm.def}   {\from{\jobname.dtx}{textfont,newcm}}
+    \file{sjtu-text-font-cambria.def} {\from{\jobname.dtx}{textfont,cambria}}
+    \file{sjtu-text-font-times.def}   {\from{\jobname.dtx}{textfont,times}}
+    \file{sjtu-math-font-termes.def}  {\from{\jobname.dtx}{mathfont,termes}}
+    \file{sjtu-math-font-pagella.def} {\from{\jobname.dtx}{mathfont,pagella}}
+    \file{sjtu-math-font-lm.def}      {\from{\jobname.dtx}{mathfont,lm}}
+    \file{sjtu-math-font-stix2.def}   {\from{\jobname.dtx}{mathfont,stix2}}
+    \file{sjtu-math-font-xits.def}    {\from{\jobname.dtx}{mathfont,xits}}
+    \file{sjtu-math-font-newcm.def}   {\from{\jobname.dtx}{mathfont,newcm}}
+    \file{sjtu-math-font-cambria.def} {\from{\jobname.dtx}{mathfont,cambria}}
+    \file{sjtudoc.cls}                {\from{\jobname.dtx}{document}}
 %</install>
 %<*internal>
   \usedir{source/latex/sjtuthesis}
-    \file{\jobname.ins}         {\from{\jobname.dtx}{install}}
+    \file{\jobname.ins}               {\from{\jobname.dtx}{install}}
 %</internal>
 %<*install>
 }
@@ -74,14 +89,48 @@ The Current Maintainer of this work is Alexara Wu.
 %<document>\ProvidesClass{sjtudoc}
 %<undergraduate>\ProvidesFile{sjtuthesis-undergraduate.ltx}
 %<graduate>\ProvidesFile{sjtuthesis-graduate.ltx}
-%<*(class|undergraduate|graduate|document)>
-  [2020/07/31 1.0.0rc7 Shanghai Jiao Tong University Thesis Template]
-%</(class|undergraduate|graduate|document)>
-%<*(document|class)>
+%<class|undergraduate|graduate|document>  [2020/07/31 1.0.0rc7 Shanghai Jiao Tong University Thesis Template]
+%<*textfont>
+%<termes>\ProvidesFile{sjtu-text-font-termes.def}
+%<termes>  [2020/07/31 1.0.0rc7 Termes text fonts definition (SJTUThesis)]
+%<pagella>\ProvidesFile{sjtu-text-font-pagella.def}
+%<pagella>  [2020/07/31 1.0.0rc7 Pagella text fonts definition (SJTUThesis)]
+%<stix2>\ProvidesFile{sjtu-text-font-stix2.def}
+%<stix2>  [2020/07/31 1.0.0rc7 STIX Two text fonts definition (SJTUThesis)]
+%<xits>\ProvidesFile{sjtu-text-font-xits.def}
+%<xits>  [2020/07/31 1.0.0rc7 XITS text fonts definition (SJTUThesis)]
+%<lm>\ProvidesFile{sjtu-text-font-lm.def}
+%<lm>  [2020/07/31 1.0.0rc7 Latin Modern text fonts definition (SJTUThesis)]
+%<newcm>\ProvidesFile{sjtu-text-font-newcm.def}
+%<newcm>  [2020/07/31 1.0.0rc7 New Computer Modern text fonts definition (SJTUThesis)]
+%<cambria>\ProvidesFile{sjtu-text-font-cambria.def}
+%<cambria>  [2020/07/31 1.0.0rc7 Cambria text fonts definition (SJTUThesis)]
+%<times>\ProvidesFile{sjtu-text-font-times.def}
+%<times>  [2020/07/31 1.0.0rc7 Times text fonts definition (SJTUThesis)]
+%</textfont>
+%<*mathfont>
+%<termes>\ProvidesFile{sjtu-math-font-termes.def}
+%<termes>  [2020/07/31 1.0.0rc7 Termes math fonts definition (SJTUThesis)]
+%<pagella>\ProvidesFile{sjtu-math-font-pagella.def}
+%<pagella>  [2020/07/31 1.0.0rc7 Pagella math fonts definition (SJTUThesis)]
+%<stix2>\ProvidesFile{sjtu-math-font-stix2.def}
+%<stix2>  [2020/07/31 1.0.0rc7 STIX Two math fonts definition (SJTUThesis)]
+%<xits>\ProvidesFile{sjtu-math-font-xits.def}
+%<xits>  [2020/07/31 1.0.0rc7 XITS math fonts definition (SJTUThesis)]
+%<lm>\ProvidesFile{sjtu-math-font-lm.def}
+%<lm>  [2020/07/31 1.0.0rc7 Latin Modern math fonts definition (SJTUThesis)]
+%<newcm>\ProvidesFile{sjtu-math-font-newcm.def}
+%<newcm>  [2020/07/31 1.0.0rc7 New Computer Modern math fonts definition (SJTUThesis)]
+%<cambria>\ProvidesFile{sjtu-math-font-cambria.def}
+%<cambria>  [2020/07/31 1.0.0rc7 Cambria math fonts definition (SJTUThesis)]
+%</mathfont>
+%<*mathfont>
+%</mathfont>
+%<*document|class>
 \hyphenation{SJTU-Thesis}
 \def\sjtuthesis{SJTU\textsc{Thesis}}
 \def\version{1.0.0rc7}
-%</(document|class)>
+%</document|class>
 %<*driver>
 \documentclass{sjtudoc}
 \EnableCrossrefs
@@ -1022,25 +1071,22 @@ The Current Maintainer of this work is Alexara Wu.
     },
     initial = auto,
   },
+}
 %    \end{macrocode}
 %
-% 西文字体。
+% 正文字体。
 %    \begin{macrocode}
-  latinfontset = {
-    choices = {
-      xits,
-      times,
-      stix,
-      step,
-      termes,
-      pagella,
-      cambria,
-      libertinus,
-      lm,
-      none,
-    },
-  },
-}
+\DeclareStringOption[termes]{textfont}
+%    \end{macrocode}
+%
+% 数学字体。
+%    \begin{macrocode}
+\DeclareStringOption[auto]{mathfont}
+%    \end{macrocode}
+%
+% 是否偏好使用 \pkg{unicode-math}。
+%    \begin{macrocode}
+\DeclareBoolOption[false]{unimath}
 %    \end{macrocode}
 %
 % 盲审模式开关。
@@ -1141,11 +1187,6 @@ The Current Maintainer of this work is Alexara Wu.
 \RequirePackage{amsmath}
 %    \end{macrocode}
 %
-% 使用 \pkg{unicode-math} 处理数学字体。
-%    \begin{macrocode}
-\RequirePackage{unicode-math}
-%    \end{macrocode}
-%
 % 利用 \pkg{xeCJKfntef} 实现汉字的分散对齐。
 %    \begin{macrocode}
 \RequirePackage{xeCJKfntef}
@@ -1229,6 +1270,12 @@ The Current Maintainer of this work is Alexara Wu.
 \sjtu@package@conflict{unicode-math}{eucal}
 \sjtu@package@conflict{unicode-math}{eufrak}
 \sjtu@package@conflict{unicode-math}{mathrsfs}
+\sjtu@package@conflict{unicode-math}{newtxmath}
+\sjtu@package@conflict{unicode-math}{upgreek}
+\sjtu@package@conflict{newtxmath}{amsfonts}
+\sjtu@package@conflict{newtxmath}{amssymb}
+\sjtu@package@conflict{newtxmath}{unicode-math}
+\sjtu@package@conflict{newtxmath}{upgreek}
 %    \end{macrocode}
 %
 % 定义一个补丁命令，失败时给出警告。
@@ -1614,311 +1661,238 @@ The Current Maintainer of this work is Alexara Wu.
 %
 % \subsection{西文字体}
 %
-% 使用 \pkg{fontspec} 配置西文字体。
-%
-%  XITS 字体于 v1.109 (2018/09/28) 更改了字体的文件名。这里做一些兼容性设置。
 %    \begin{macrocode}
-\let\sjtu@font@family@xits\@empty
-\newcommand\sjtu@font@set@xits@names{%
-  \ifx\sjtu@font@family@xits\@empty
-    \IfFontExistsTF{XITSMath-Regular.otf}{%
-      \gdef\sjtu@font@family@xits{XITS}%
-      \gdef\sjtu@font@style@xits@rm{Regular}%
-      \gdef\sjtu@font@style@xits@bf{Bold}%
-      \gdef\sjtu@font@style@xits@it{Italic}%
-      \gdef\sjtu@font@style@xits@bfit{BoldItalic}%
-      \gdef\sjtu@font@name@xits@math@rm{XITSMath-Regular}%
-      \gdef\sjtu@font@name@xits@math@bf{XITSMath-Bold}%
-    }{%
-      \gdef\sjtu@font@family@xits{xits}%
-      \gdef\sjtu@font@style@xits@rm{regular}%
-      \gdef\sjtu@font@style@xits@bf{bold}%
-      \gdef\sjtu@font@style@xits@it{italic}%
-      \gdef\sjtu@font@style@xits@bfit{bolditalic}%
-      \gdef\sjtu@font@name@xits@math@rm{xits-math}%
-      \gdef\sjtu@font@name@xits@math@bf{xits-mathbold}%
-    }%
-  \fi
+\ifsjtu@unimath
+  \RequirePackage{unicode-math}
+\fi
+\ifthenelse{\equal{\sjtu@mathfont}{auto}}{
+  \let\sjtu@mathfont\sjtu@textfont
+}{\relax}
+\ifthenelse{\equal{\sjtu@mathfont}{none}}{\relax}{%
+  \InputIfFileExists{sjtu-math-font-\sjtu@mathfont .def}{\relax}{%
+    \sjtu@warning{%
+      Invalid value `mathfont = \sjtu@mathfont'! \MessageBreak
+      Using `termes' instead.
+    }
+    \def\sjtu@mathfont{termes}
+    \input{sjtu-math-font-\sjtu@mathfont .def}
+  }
 }
-\let\sjtu@font@family@libertinus\@empty
-\newcommand\sjtu@font@set@libertinus@names{%
-  \ifx\sjtu@font@family@libertinus\@empty
-    \IfFontExistsTF{LibertinusSerif-Regular.otf}{%
-      \gdef\sjtu@font@family@libertinus@serif{LibertinusSerif}%
-      \gdef\sjtu@font@family@libertinus@sans{LibertinusSans}%
-      \gdef\sjtu@font@name@libertinus@math{LibertinusMath-Regular}%
-      \gdef\sjtu@font@style@libertinus@rm{Regular}%
-      \gdef\sjtu@font@style@libertinus@bf{Bold}%
-      \gdef\sjtu@font@style@libertinus@it{Italic}%
-      \gdef\sjtu@font@style@libertinus@bfit{BoldItalic}%
-    }{%
-      \gdef\sjtu@font@family@libertinus@serif{libertinusserif}%
-      \gdef\sjtu@font@family@libertinus@sans{libertinussans}%
-      \gdef\sjtu@font@name@libertinus@math{libertinusmath-regular}%
-      \gdef\sjtu@font@style@libertinus@rm{regular}%
-      \gdef\sjtu@font@style@libertinus@bf{bold}%
-      \gdef\sjtu@font@style@libertinus@it{italic}%
-      \gdef\sjtu@font@style@libertinus@bfit{bolditalic}%
-    }%
-  \fi
-}
-\newcommand\sjtu@set@font@xits{%
-  \sjtu@font@set@xits@names
-  \setmainfont{\sjtu@font@family@xits}[
-    Extension      = .otf,
-    UprightFont    = *-\sjtu@font@style@xits@rm,
-    BoldFont       = *-\sjtu@font@style@xits@bf,
-    ItalicFont     = *-\sjtu@font@style@xits@it,
-    BoldItalicFont = *-\sjtu@font@style@xits@bfit,
-  ]
-}
-\newcommand\sjtu@set@font@times{%
-  \setmainfont{Times New Roman}[Ligatures = Rare]
-  \setsansfont{Arial}
-  \setmonofont{Courier New}[Scale = MatchLowercase]
-}
-\newcommand\sjtu@set@font@stix{%
-  \setmainfont{STIX2Text}[
-    Extension      = .otf,
-    UprightFont    = *-Regular,
-    BoldFont       = *-Bold,
-    ItalicFont     = *-Italic,
-    BoldItalicFont = *-BoldItalic,
-  ]
-}
-\newcommand\sjtu@set@font@step{%
-  \setmainfont{STEP}[
-    Extension      = .otf,
-    UprightFont    = *-Regular,
-    BoldFont       = *-Bold,
-    ItalicFont     = *-Italic,
-    BoldItalicFont = *-BoldItalic,
-  ]
-}
-\newcommand\sjtu@set@font@source@sans@mono{%
-  \setsansfont{SourceSansPro}[
-    Extension      = .otf,
-    UprightFont    = *-Regular ,
-    ItalicFont     = *-RegularIt ,
-    BoldFont       = *-Bold ,
-    BoldItalicFont = *-BoldIt,
-  ]
-  \setmonofont{SourceCodePro}[
-    Extension      = .otf,
-    UprightFont    = *-Regular ,
-    ItalicFont     = *-RegularIt ,
-    BoldFont       = *-Bold ,
-    BoldItalicFont = *-BoldIt,
-    Scale          = MatchLowercase,
-  ]
-}
-\newcommand\sjtu@set@font@termes{%
-  \setmainfont{texgyretermes}[
-    Extension      = .otf,
-    UprightFont    = *-regular,
-    BoldFont       = *-bold,
-    ItalicFont     = *-italic,
-    BoldItalicFont = *-bolditalic,
-  ]%
-}
-\newcommand\sjtu@set@font@pagella{%
-  \setmainfont{texgyrepagella}[
-    Extension      = .otf,
-    UprightFont    = *-regular,
-    BoldFont       = *-bold,
-    ItalicFont     = *-italic,
-    BoldItalicFont = *-bolditalic,
-  ]%
-}
-\newcommand\sjtu@set@font@texgyre@sans@mono{%
-  \setsansfont{texgyreheros}[
-    Extension      = .otf,
-    UprightFont    = *-regular,
-    BoldFont       = *-bold,
-    ItalicFont     = *-italic,
-    BoldItalicFont = *-bolditalic,
-  ]%
-  \setmonofont{texgyrecursor}[
-    Extension      = .otf,
-    UprightFont    = *-regular,
-    BoldFont       = *-bold,
-    ItalicFont     = *-italic,
-    BoldItalicFont = *-bolditalic,
-  ]%
-}
-\newcommand\sjtu@set@font@cambria{%
-  \setmainfont{Cambria}
-  \setsansfont{Calibri}
-  \setmonofont{Consolas}[Scale = MatchLowercase]
-}
-\newcommand\sjtu@set@font@libertinus{%
-  \sjtu@font@set@libertinus@names
-  \setmainfont{\sjtu@font@family@libertinus@serif}[
-    Extension      = .otf,
-    UprightFont    = *-\sjtu@font@style@libertinus@rm,
-    BoldFont       = *-\sjtu@font@style@libertinus@bf,
-    ItalicFont     = *-\sjtu@font@style@libertinus@it,
-    BoldItalicFont = *-\sjtu@font@style@libertinus@bfit,
-  ]%
-  \setsansfont{\sjtu@font@family@libertinus@sans}[
-    Extension      = .otf,
-    UprightFont    = *-\sjtu@font@style@libertinus@rm,
-    BoldFont       = *-\sjtu@font@style@libertinus@bf,
-    ItalicFont     = *-\sjtu@font@style@libertinus@it,
-  ]%
-  \setmonofont{lmmonolt10}[
-    Extension      = .otf,
-    UprightFont    = *-regular,
-    BoldFont       = *-bold,
-    ItalicFont     = *-oblique,
-    BoldItalicFont = *-boldoblique,
-  ]%
-}
-\newcommand\sjtu@set@font@lm{%
-  \setmainfont{lmroman10}[
-    Extension      = .otf,
-    UprightFont    = *-regular,
-    BoldFont       = *-bold,
-    ItalicFont     = *-italic,
-    BoldItalicFont = *-bolditalic,
-  ]%
-  \setsansfont{lmsans10}[
-    Extension      = .otf,
-    UprightFont    = *-regular,
-    BoldFont       = *-bold,
-    ItalicFont     = *-oblique,
-    BoldItalicFont = *-boldoblique,
-  ]%
-  \setmonofont{lmmonolt10}[
-    Extension      = .otf,
-    UprightFont    = *-regular,
-    BoldFont       = *-bold,
-    ItalicFont     = *-oblique,
-    BoldItalicFont = *-boldoblique,
-  ]%
-}
-%    \end{macrocode}
-%
-% 使用 \pkg{unicode-math} 配置数学字体。
-%    \begin{macrocode}
-\unimathsetup{
-  math-style = ISO,
-  bold-style = ISO,
-  nabla      = upright,
-  partial    = upright,
-}
-\newcommand\sjtu@set@math@font@xits{%
-  \sjtu@font@set@xits@names
-  \setmathfont{\sjtu@font@name@xits@math@rm}[
-    Extension    = .otf,
-    BoldFont     = \sjtu@font@name@xits@math@bf,
-    StylisticSet = 8,
-  ]%
-  \setmathfont{\sjtu@font@name@xits@math@rm}[
-    Extension    = .otf,
-    BoldFont     = \sjtu@font@name@xits@math@bf,
-    StylisticSet = 1,
-    range        = {cal,bfcal},
-  ]%
-}
-\newcommand\sjtu@set@math@font@stix{%
-  \setmathfont{STIX2Math}[
-    Extension    = .otf,
-    StylisticSet = 8,
-  ]%
-  \setmathfont{STIX2Math}[
-    Extension    = .otf,
-    StylisticSet = 1,
-    range        = {cal,bfcal},
-  ]%
-}
-\newcommand\sjtu@set@math@font@step{%
-  \setmathfont{STEPMath-Regular}[
-    Extension    = .otf,
-    BoldFont     = STEPMath-Bold,
-    StylisticSet = 8,
-  ]%
-  \setmathfont{STEPMath-Regular}[
-    Extension    = .otf,
-    BoldFont     = STEPMath-Bold,
-    StylisticSet = 1,
-    range        = {cal,bfcal},
-  ]%
-}
-\newcommand\sjtu@set@math@font@termes{%
-  \setmathfont{texgyretermes-math.otf}
-}
-\newcommand\sjtu@set@math@font@pagella{%
-  \setmathfont{texgyrepagella-math.otf}
-}
-\newcommand\sjtu@set@math@font@cambria{%
-  \setmathfont{Cambria Math}
-}
-\newcommand\sjtu@set@math@font@libertinus{%
-  \sjtu@font@set@libertinus@names
-  \setmathfont{\sjtu@font@name@libertinus@math .otf}%
-}
-\newcommand\sjtu@set@math@font@lm{%
-  \setmathfont{latinmodern-math.otf}%
-}
-%    \end{macrocode}
-%
-% 设置西文字体集。
-%    \begin{macrocode}
-\newcommand\sjtu@load@fontset@xits{%
-  \sjtu@set@font@xits
-  \sjtu@set@font@source@sans@mono
-  \sjtu@set@math@font@xits
-}
-\newcommand\sjtu@load@fontset@times{%
-  \sjtu@set@font@times
-  \sjtu@set@math@font@xits
-}
-\newcommand\sjtu@load@fontset@stix{%
-  \sjtu@set@font@stix
-  \sjtu@set@font@source@sans@mono
-  \sjtu@set@math@font@stix
-}
-\newcommand\sjtu@load@fontset@step{%
-  \sjtu@set@font@step
-  \sjtu@set@font@source@sans@mono
-  \sjtu@set@math@font@step
-}
-\newcommand\sjtu@load@fontset@termes{%
-  \sjtu@set@font@termes
-  \sjtu@set@font@texgyre@sans@mono
-  \sjtu@set@math@font@termes
-}
-\newcommand\sjtu@load@fontset@pagella{%
-  \sjtu@set@font@pagella
-  \sjtu@set@font@texgyre@sans@mono
-  \sjtu@set@math@font@pagella
-}
-\newcommand\sjtu@load@fontset@cambria{%
-  \sjtu@set@font@cambria
-  \sjtu@set@math@font@cambria
-}
-\newcommand\sjtu@load@fontset@libertinus{%
-  \sjtu@set@font@libertinus
-  \sjtu@set@math@font@libertinus
-}
-\newcommand\sjtu@load@fontset@lm{%
-  \sjtu@set@font@lm
-  \sjtu@set@math@font@lm
-}
-\newcommand\sjtu@load@fontset@none{\relax}
-%    \end{macrocode}
-%
-% 载入西文字体集。
-%    \begin{macrocode}
-\newcommand\sjtu@load@fontset{%
-  \@nameuse{sjtu@load@fontset@\sjtu@latinfontset}
-}
-\sjtu@load@fontset
-\sjtu@option@hook{sjtu}{latinfontset}{%
-  \sjtu@load@fontset
+\ifthenelse{\equal{\sjtu@textfont}{none}}{\relax}{%
+  \InputIfFileExists{sjtu-text-font-\sjtu@textfont .def}{\relax}{%
+    \sjtu@warning{%
+      Invalid value `textfont = \sjtu@textfont'! \MessageBreak
+      Using `termes' instead.
+    }
+    \def\sjtu@textfont{termes}
+    \input{sjtu-text-font-\sjtu@textfont .def}
+  }
 }
 %</class>
+%<*mathfont>
+%<termes|pagella|lm>\ifsjtu@unimath
+%<stix2|xits|newcm|cambria>\sjtu@unimathtrue
+%<stix2|xits|newcm|cambria>\RequirePackage{unicode-math}
+%<termes>  \setmathfont{texgyretermes-math.otf}
+%<pagella>  \setmathfont{texgyrepagella-math.otf}
+%<*stix2>
+\IfFontExistsTF{STIXTwoMath-Regular.otf}{
+  \setmathfont[StylisticSet=8]{STIXTwoMath-Regular.otf}
+  \setmathfont[range={scr,bfscr},StylisticSet=1]{STIXTwoMath-Regular.otf}
+}{
+  \setmathfont[StylisticSet=8]{STIX2Math.otf}
+  \setmathfont[range={scr,bfscr},StylisticSet=1]{STIX2Math.otf}
+}
+%</stix2>
+%<*xits>
+\IfFontExistsTF{XITSMath-Regular.otf}{
+  \setmathfont[
+    Extension    = .otf,
+    BoldFont     = XITSMath-Bold,
+    StylisticSet = 8,
+  ]{XITSMath-Regular}
+  \setmathfont[range={cal,bfcal},StylisticSet=1]{XITSMath-Regular.otf}
+}{
+  \setmathfont[
+    Extension    = .otf,
+    BoldFont     = *bold,
+    StylisticSet = 8,
+  ]{xits-math}
+  \setmathfont[range={cal,bfcal},StylisticSet=1]{xits-math.otf}
+}
+%</xits>
+%<lm>  \setmathfont{latinmodern-math.otf}
+%<*newcm>
+\setmathfont[StylisticSet=2]{NewCMMath-Book.otf}
+\setmathfont[range={scr,bfscr},StylisticSet=1]{NewCMMath-Book.otf}
+%</newcm>
+%<cambria>\setmathfont{Cambria Math}
+%</mathfont>
+%<*termes|pagella>
+%<mathfont>  \setmathrm[
+%<textfont>  \setmainfont[
+    Extension      = .otf,
+    UprightFont    = *-regular,
+    BoldFont       = *-bold,
+    ItalicFont     = *-italic,
+    BoldItalicFont = *-bolditalic,
+%<termes>  ]{texgyretermes}
+%<pagella>  ]{texgyrepagella}
+%</termes|pagella>
+%<*stix2>
+\IfFontExistsTF{STIXTwoText-Regular.otf}{
+%<mathfont>  \setmathrm[
+%<textfont>  \setmainfont[
+    Extension      = .otf,
+    UprightFont    = *-Regular,
+    BoldFont       = *-Bold,
+    ItalicFont     = *-Italic,
+    BoldItalicFont = *-BoldItalic,
+  ]{STIXTwoText}
+}{
+%<mathfont>  \setmathrm[
+%<textfont>  \setmainfont[
+    Extension      = .otf,
+    UprightFont    = *-Regular,
+    BoldFont       = *-Bold,
+    ItalicFont     = *-Italic,
+    BoldItalicFont = *-BoldItalic,
+  ]{STIX2Text}
+}
+%</stix2>
+%<*xits>
+\IfFontExistsTF{XITS-Regular.otf}{
+%<mathfont>  \setmathrm[
+%<textfont>  \setmainfont[
+    Extension      = .otf,
+    UprightFont    = *-Regular,
+    BoldFont       = *-Bold,
+    ItalicFont     = *-Italic,
+    BoldItalicFont = *-BoldItalic,
+  ]{XITS}
+}{
+%<mathfont>  \setmathrm[
+%<textfont>  \setmainfont[
+    Extension      = .otf,
+    UprightFont    = *-regular,
+    BoldFont       = *-bold,
+    ItalicFont     = *-italic,
+    BoldItalicFont = *-bolditalic,
+  ]{xits}
+}
+%</xits>
+%<*termes|pagella|stix2|xits>
+%<mathfont>  \setmathsf[
+%<textfont>  \setsansfont[
+    Extension      = .otf,
+    UprightFont    = *-regular,
+    BoldFont       = *-bold,
+    ItalicFont     = *-italic,
+    BoldItalicFont = *-bolditalic,
+  ]{texgyreheros}
+%<mathfont>  \setmathtt[
+%<textfont>  \setmonofont[
+    Extension      = .otf,
+    UprightFont    = *-regular,
+    BoldFont       = *-bold,
+    ItalicFont     = *-italic,
+    BoldItalicFont = *-bolditalic,
+    Scale          = MatchLowercase,
+    Ligatures      = CommonOff,
+  ]{texgyrecursor}
+%</termes|pagella|stix2|xits>
+%<*lm>
+%<mathfont>  \setmathrm[
+%<textfont>  \setmainfont[
+    Extension      = .otf,
+    UprightFont    = *-regular,
+    BoldFont       = *-bold,
+    ItalicFont     = *-italic,
+    BoldItalicFont = *-bolditalic,
+  ]{lmroman10}
+%<mathfont>  \setmathsf[
+%<textfont>  \setsansfont[
+    Extension      = .otf,
+    UprightFont    = *-regular,
+    BoldFont       = *-bold,
+    ItalicFont     = *-oblique,
+    BoldItalicFont = *-boldoblique,
+  ]{lmsans10}
+%<mathfont>  \setmathtt[
+%<textfont>  \setmonofont[
+    Extension      = .otf,
+    UprightFont    = *-regular,
+    BoldFont       = *-bold,
+    ItalicFont     = *-oblique,
+    BoldItalicFont = *-boldoblique,
+  ]{lmmonolt10}
+%</lm>
+%<*newcm>
+%<mathfont>\setmathrm[
+%<textfont>\setmainfont[
+  Extension      = .otf,
+  UprightFont    = *-Book,
+  BoldFont       = *-Bold,
+  ItalicFont     = *-BookItalic,
+  BoldItalicFont = *-BoldItalic,
+]{NewCM10}
+%<mathfont>\setmathsf[
+%<textfont>\setsansfont[
+  Extension      = .otf,
+  UprightFont    = *-Book,
+  BoldFont       = *-Bold,
+  ItalicFont     = *-BookOblique,
+  BoldItalicFont = *-BoldOblique,
+]{NewCMSans10}
+%<mathfont>\setmathtt[
+%<textfont>\setmonofont[
+  Extension      = .otf,
+  UprightFont    = *-Book,
+  BoldFont       = *-Bold,
+  ItalicFont     = *-BookItalic,
+  BoldItalicFont = *-BoldOblique,
+]{NewCMMono10}
+%</newcm>
+%<*cambria>
+%<*mathfont>
+\setmathrm{Cambria}
+\setmathsf{Calibri}
+\setmathtt[Scale=MatchLowercase]{Consolas}
+%</mathfont>
+%<*textfont>
+\setmainfont{Cambria}
+\setsansfont{Calibri}
+\setmonofont[Scale=MatchLowercase]{Consolas}
+%</textfont>
+%</cambria>
+%<*times>
+\setmainfont[Ligatures=Rare]{Times New Roman}
+\setsansfont{Arial}
+\setmonofont[Scale=MatchLowercase]{Courier New}
+%</times>
+%<*mathfont&(termes|pagella|lm)>
+\else
+%<lm>  \RequirePackage{amssymb}
+%<lm>  \RequirePackage{upgreek}
+  \let\oldencodingdefault\encodingdefault
+  \let\oldrmdefault\rmdefault
+  \let\oldsfdefault\sfdefault
+  \let\oldttdefault\ttdefault
+  \RequirePackage[T1]{fontenc}
+%<termes>  \renewcommand{\rmdefault}{ntxtlf}
+%<pagella>  \renewcommand{\rmdefault}{zpltlf}
+%<termes|pagella>  \renewcommand{\sfdefault}{qhv}
+%<termes|pagella>  \renewcommand{\ttdefault}{ntxtt}
+%<termes>  \RequirePackage[upint]{newtxmath}
+%<pagella>  \RequirePackage[upint]{newpxmath}
+%<lm>  \RequirePackage{lmodern}
+  \let\encodingdefault\oldencodingdefault
+  \let\rmdefault\oldrmdefault
+  \let\sfdefault\oldsfdefault
+  \let\ttdefault\oldttdefault
+  \RequirePackage{bm}
+\fi
+%</mathfont&(termes|pagella|lm)>
 %    \end{macrocode}
 %
 % \subsection{页面设置}
@@ -2457,28 +2431,11 @@ The Current Maintainer of this work is Alexara Wu.
 \newcommand\upi{\mathrm{i}}
 \newcommand\upj{\mathrm{j}}
 \newcommand\dif{\mathop{}\!\mathrm{d}}
-%    \end{macrocode}
-% \end{macro}
-% \end{macro}
-% \end{macro}
-% \end{macro}
-%
-% \begin{macro}{\bm}
-% \begin{macro}{\boldsymbol}
-% 兼容旧的粗体命令：\pkg{bm} 的 \cs{bm} 和 \pkg{amsmath} 的 \cs{boldsymbol}。
-%    \begin{macrocode}
-\newcommand\bm{\symbf}
-\renewcommand\boldsymbol{\symbf}
-%    \end{macrocode}
-% \end{macro}
-% \end{macro}
-%
-% \begin{macro}{\square}
-% 兼容 \pkg{amssymb} 中的命令。
-%    \begin{macrocode}
-\newcommand\square{\mdlgwhtsquare}
 %</class>
 %    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
 % \end{macro}
 %
 % 学士论文模版默认设置。
@@ -3040,6 +2997,35 @@ The Current Maintainer of this work is Alexara Wu.
 }
 %    \end{macrocode}
 %
+% \subsubsection{\pkg{unicode-math} 宏包}
+%
+%    \begin{macrocode}
+\AtEndOfPackageFile*{unicode-math}{
+  \unimathsetup{
+    math-style = ISO,
+    bold-style = ISO,
+    nabla      = upright,
+  }
+%    \end{macrocode}
+%
+% \begin{macro}{\bm}
+% \begin{macro}{\boldsymbol}
+% 兼容旧的粗体命令：\pkg{bm} 的 \cs{bm} 和 \pkg{amsmath} 的 \cs{boldsymbol}。
+%    \begin{macrocode}
+  \newcommand{\bm}{\symbf}
+  \renewcommand{\boldsymbol}{\symbf}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
+% \begin{macro}{\square}
+% 兼容 \pkg{amssymb} 中的命令。
+%    \begin{macrocode}
+  \newcommand{\square}{\mdlgwhtsquare}
+}
+%    \end{macrocode}
+% \end{macro}
+%
 % \subsubsection{\pkg{siunitx} 宏包}
 %
 %    \begin{macrocode}
@@ -3130,7 +3116,20 @@ The Current Maintainer of this work is Alexara Wu.
 %
 % \pkg{amsthm} 宏包
 %    \begin{macrocode}
+\AtBeginOfPackageFile*{amsthm}{
+  \newif\ifsjtu@openbox@defined
+  \@ifundefined{openbox}{
+    \sjtu@openbox@definedfalse
+  }{
+    \sjtu@openbox@definedtrue
+    \let\oldopenbox\openbox
+    \let\openbox\@undefined
+  }
+}
 \AtEndOfPackageFile*{amsthm}{
+  \ifsjtu@openbox@defined
+    \let\openbox\oldopenbox
+  \fi
   \sjtu@def@theorem@name
   \let\sjtu@thmhead\thmhead@plain
   \def\thmhead@plain{\sjtu@indent@box\sjtu@thmhead}
