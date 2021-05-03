@@ -3173,10 +3173,9 @@ The Current Maintainer of this work is Alexara Wu.
 % \subsubsection{\pkg{algorithm} 宏包}
 %
 %    \begin{macrocode}
+\PassOptionsToPackage{chapter}{algorithm}
 \AtEndOfPackageFile*{algorithm}{
-  \RequirePackage{algorithmicx, algpseudocode}
   \floatname{algorithm}{\sjtu@name@algorithm}
-  \@addtoreset{algorithm}{chapter}
   \def\listalgorithmname{\sjtu@name@listalgorithm}
   \newlistof{alg}{loa}{\listalgorithmname}
   \let\l@algorithm\l@alg
