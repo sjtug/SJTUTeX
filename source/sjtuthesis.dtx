@@ -65,6 +65,12 @@ The Current Maintainer of this work is Alexara Wu.
     \file{sjtu-math-font-xits.def}    {\from{\jobname.dtx}{mathfont,xits}}
     \file{sjtu-math-font-newcm.def}   {\from{\jobname.dtx}{mathfont,newcm}}
     \file{sjtu-math-font-cambria.def} {\from{\jobname.dtx}{mathfont,cambria}}
+    \file{sjtu-cjk-font-windows.def}  {\from{\jobname.dtx}{cjkfont,windows}}
+    \file{sjtu-cjk-font-mac.def}      {\from{\jobname.dtx}{cjkfont,mac}}
+    \file{sjtu-cjk-font-ubuntu.def}   {\from{\jobname.dtx}{cjkfont,ubuntu}}
+    \file{sjtu-cjk-font-adobe.def}    {\from{\jobname.dtx}{cjkfont,adobe}}
+    \file{sjtu-cjk-font-fandol.def}   {\from{\jobname.dtx}{cjkfont,fandol}}
+    \file{sjtu-cjk-font-founder.def}  {\from{\jobname.dtx}{cjkfont,founder}}
     \file{sjtudoc.cls}                {\from{\jobname.dtx}{document}}
 %</install>
 %<*internal>
@@ -124,8 +130,20 @@ The Current Maintainer of this work is Alexara Wu.
 %<cambria>\ProvidesFile{sjtu-math-font-cambria.def}
 %<cambria>  [2020/07/31 1.0.0rc7 Cambria math fonts definition (SJTUThesis)]
 %</mathfont>
-%<*mathfont>
-%</mathfont>
+%<*cjkfont>
+%<windows>\ProvidesFile{sjtu-cjk-font-windows.def}
+%<windows>  [2020/07/31 1.0.0rc7 Windows CJK fonts definition (SJTUThesis)]
+%<mac>\ProvidesFile{sjtu-cjk-font-mac.def}
+%<mac>  [2020/07/31 1.0.0rc7 macOS CJK fonts definition (SJTUThesis)]
+%<ubuntu>\ProvidesFile{sjtu-cjk-font-ubuntu.def}
+%<ubuntu>  [2020/07/31 1.0.0rc7 Ubuntu CJK fonts definition (SJTUThesis)]
+%<adobe>\ProvidesFile{sjtu-cjk-font-adobe.def}
+%<adobe>  [2020/07/31 1.0.0rc7 Adobe CJK fonts definition (SJTUThesis)]
+%<fandol>\ProvidesFile{sjtu-cjk-font-fandol.def}
+%<fandol>  [2020/07/31 1.0.0rc7 Fandol CJK fonts definition (SJTUThesis)]
+%<founder>\ProvidesFile{sjtu-cjk-font-founder.def}
+%<founder>  [2020/07/31 1.0.0rc7 Founder CJK fonts definition (SJTUThesis)]
+%</cjkfont>
 %<*document|class>
 \hyphenation{SJTU-Thesis}
 \def\sjtuthesis{SJTU\textsc{Thesis}}
@@ -1098,6 +1116,11 @@ The Current Maintainer of this work is Alexara Wu.
 \DeclareStringOption[auto]{mathfont}
 %    \end{macrocode}
 %
+% 中文字体。
+%    \begin{macrocode}
+\DeclareStringOption[auto]{cjkfont}
+%    \end{macrocode}
+%
 % 是否偏好使用 \pkg{unicode-math}。
 %    \begin{macrocode}
 \DeclareBoolOption[false]{unimath}
@@ -1156,7 +1179,7 @@ The Current Maintainer of this work is Alexara Wu.
 %
 % 使用 \pkg{ctexbook} 类，优于调用 \pkg{ctex} 宏包。
 %    \begin{macrocode}
-\LoadClass[a4paper,UTF8,scheme=plain,linespread=1.3]{ctexbook}[2018/04/01]
+\LoadClass[a4paper,UTF8,scheme=plain,fontset=none,linespread=1.3]{ctexbook}[2018/04/01]
 %    \end{macrocode}
 %
 % 根据选项载入配置文件。
@@ -1678,25 +1701,25 @@ The Current Maintainer of this work is Alexara Wu.
 \fi
 \ifthenelse{\equal{\sjtu@mathfont}{auto}}{
   \let\sjtu@mathfont\sjtu@textfont
-}{\relax}
-\ifthenelse{\equal{\sjtu@mathfont}{none}}{\relax}{%
-  \InputIfFileExists{sjtu-math-font-\sjtu@mathfont .def}{\relax}{%
+}{}
+\ifthenelse{\equal{\sjtu@mathfont}{none}}{}{%
+  \InputIfFileExists{sjtu-math-font-\sjtu@mathfont.def}{}{%
     \sjtu@warning{%
       Invalid value `mathfont = \sjtu@mathfont'! \MessageBreak
       Using `termes' instead.
     }
     \def\sjtu@mathfont{termes}
-    \input{sjtu-math-font-\sjtu@mathfont .def}
+    \input{sjtu-math-font-\sjtu@mathfont.def}
   }
 }
-\ifthenelse{\equal{\sjtu@textfont}{none}}{\relax}{%
-  \InputIfFileExists{sjtu-text-font-\sjtu@textfont .def}{\relax}{%
+\ifthenelse{\equal{\sjtu@textfont}{none}}{}{%
+  \InputIfFileExists{sjtu-text-font-\sjtu@textfont.def}{}{%
     \sjtu@warning{%
       Invalid value `textfont = \sjtu@textfont'! \MessageBreak
       Using `termes' instead.
     }
     \def\sjtu@textfont{termes}
-    \input{sjtu-text-font-\sjtu@textfont .def}
+    \input{sjtu-text-font-\sjtu@textfont.def}
   }
 }
 %</class>
@@ -1708,11 +1731,21 @@ The Current Maintainer of this work is Alexara Wu.
 %<pagella>  \setmathfont{texgyrepagella-math.otf}
 %<*stix2>
 \IfFontExistsTF{STIXTwoMath-Regular.otf}{
-  \setmathfont[StylisticSet=8]{STIXTwoMath-Regular.otf}
-  \setmathfont[range={scr,bfscr},StylisticSet=1]{STIXTwoMath-Regular.otf}
+  \setmathfont[
+    StylisticSet = 8
+  ]{STIXTwoMath-Regular.otf}
+  \setmathfont[
+    range        = {scr, bfscr},
+    StylisticSet = 1
+  ]{STIXTwoMath-Regular.otf}
 }{
-  \setmathfont[StylisticSet=8]{STIX2Math.otf}
-  \setmathfont[range={scr,bfscr},StylisticSet=1]{STIX2Math.otf}
+  \setmathfont[
+    StylisticSet = 8
+  ]{STIX2Math.otf}
+  \setmathfont[
+    range        = {scr, bfscr},
+    StylisticSet = 1
+  ]{STIX2Math.otf}
 }
 %</stix2>
 %<*xits>
@@ -1722,20 +1755,31 @@ The Current Maintainer of this work is Alexara Wu.
     BoldFont     = XITSMath-Bold,
     StylisticSet = 8,
   ]{XITSMath-Regular}
-  \setmathfont[range={cal,bfcal},StylisticSet=1]{XITSMath-Regular.otf}
+  \setmathfont[
+    range        = {cal, bfcal},
+    StylisticSet = 1
+  ]{XITSMath-Regular.otf}
 }{
   \setmathfont[
     Extension    = .otf,
     BoldFont     = *bold,
     StylisticSet = 8,
   ]{xits-math}
-  \setmathfont[range={cal,bfcal},StylisticSet=1]{xits-math.otf}
+  \setmathfont[
+    range        = {cal, bfcal},
+    StylisticSet = 1
+  ]{xits-math.otf}
 }
 %</xits>
 %<lm>  \setmathfont{latinmodern-math.otf}
 %<*newcm>
-\setmathfont[StylisticSet=2]{NewCMMath-Book.otf}
-\setmathfont[range={scr,bfscr},StylisticSet=1]{NewCMMath-Book.otf}
+\setmathfont[
+  StylisticSet = 2
+]{NewCMMath-Book.otf}
+\setmathfont[
+  range        = {scr, bfscr},
+  StylisticSet = 1
+]{NewCMMath-Book.otf}
 %</newcm>
 %<cambria>\setmathfont{Cambria Math}
 %</mathfont>
@@ -1908,9 +1952,38 @@ The Current Maintainer of this work is Alexara Wu.
 %
 % \subsection{中文字体}
 %
-% 带圈数字和方框使用中文字体。
+% 根据操作系统自动选择中文字体。
 %    \begin{macrocode}
 %<*class>
+\ifthenelse{\equal{\sjtu@cjkfont}{auto}}{
+  \IfFontExistsTF{SimSun}{
+    \def\sjtu@cjkfont{windows}
+  }{
+    \IfFileExists{/System/Library/Fonts/Menlo.ttc}{
+      \def\sjtu@cjkfont{mac}
+    }{
+      \IfFontExistsTF{Noto Serif CJK SC}{
+        \def\sjtu@cjkfont{ubuntu}
+      }{
+        \def\sjtu@cjkfont{fandol}
+      }
+    }
+  }
+}{}
+\ifthenelse{\equal{\sjtu@cjkfont}{none}}{}{%
+  \InputIfFileExists{sjtu-cjk-font-\sjtu@cjkfont.def}{}{%
+    \sjtu@warning{%
+      Invalid value `cjkfont = \sjtu@cjkfont'! \MessageBreak
+      Using `fandol' instead.
+    }
+    \def\sjtu@cjkfont{fandol}
+    \input{sjtu-cjk-font-\sjtu@cjkfont.def}
+  }
+}
+%    \end{macrocode}
+%
+% 带圈数字和方框使用中文字体。
+%    \begin{macrocode}
 \ifXeTeX
   \xeCJKDeclareCharClass{CJK}{"2460->"2473,"25A1}
 \fi
@@ -1921,6 +1994,141 @@ The Current Maintainer of this work is Alexara Wu.
 \newcommand\sjtu@square{\symbol{"25A1}}
 \newcommand\sjtu@colon{\makebox[1\ccwd]{\symbol{"FF1A}}}
 %</class>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*cjkfont>
+%<*windows>
+\setCJKmainfont{SimSun}[
+  AutoFakeBold = 3,
+  ItalicFont   = KaiTi,
+]
+\setCJKsansfont{SimHei}[AutoFakeBold=3]
+\setCJKmonofont{FangSong}
+\setCJKfamilyfont{zhsong}{SimSun}[
+  AutoFakeBold = 3,
+  ItalicFont   = KaiTi,
+]
+\setCJKfamilyfont{zhhei}{SimHei}[AutoFakeBold=3]
+\setCJKfamilyfont{zhkai}{KaiTi}
+\setCJKfamilyfont{zhfs}{FangSong}
+%</windows>
+%<*mac>
+\setCJKmainfont{Songti SC}[
+  UprightFont    = * Light,
+  BoldFont       = * Bold,
+  ItalicFont     = Kaiti SC Regular,
+  BoldItalicFont = Kaiti SC Bold,
+]
+\setCJKsansfont{Heiti SC}[
+  AutoFakeBold   = 3,
+  UprightFont    = * Medium,
+]%
+\setCJKmonofont{STFangsong}
+\setCJKfamilyfont{zhsong}{Songti SC}[
+  UprightFont    = * Light,
+  BoldFont       = * Bold,
+]
+\setCJKfamilyfont{zhhei}{Heiti SC}[
+  AutoFakeBold   = 3,
+  UprightFont    = * Medium,
+]
+\setCJKfamilyfont{zhfs}{STFangsong}
+\setCJKfamilyfont{zhkai}{Kaiti SC}[
+  UprightFont    = * Regular,
+  BoldFont       = * Bold,
+]
+%</mac>
+%<*ubuntu>
+\setCJKmainfont{Noto Serif CJK SC}[
+  UprightFont = * Light,
+  BoldFont    = * Bold,
+  ItalicFont  = AR PL UKai CN,
+]
+\setCJKsansfont{Noto Sans CJK SC}[
+  BoldFont    = * Medium,
+]
+\setCJKmonofont{Noto Sans Mono CJK SC}
+\setCJKfamilyfont{zhsong}{Noto Serif CJK SC}[
+  UprightFont = * Light,
+  BoldFont    = * Bold,
+  ItalicFont  = AR PL UKai CN,
+]
+\setCJKfamilyfont{zhhei}{Noto Sans CJK SC}[
+  BoldFont    = * Medium,
+]
+\setCJKfamilyfont{zhkai}{AR PL UKai CN}
+%</ubuntu>
+%<*adobe>
+\setCJKmainfont{AdobeSongStd-Light}[
+  AutoFakeBold = 3,
+  ItalicFont   = AdobeKaitiStd-Regular,
+]
+\setCJKsansfont{AdobeHeitiStd-Regular}[AutoFakeBold=3]
+\setCJKmonofont{AdobeFangsongStd-Regular}
+\setCJKfamilyfont{zhsong}{AdobeSongStd-Light}[
+  AutoFakeBold = 3,
+  ItalicFont = AdobeKaitiStd-Regular,
+]
+\setCJKfamilyfont{zhhei}{AdobeHeitiStd-Regular}[AutoFakeBold=3]
+\setCJKfamilyfont{zhfs}{AdobeFangsongStd-Regular}
+\setCJKfamilyfont{zhkai}{AdobeKaitiStd-Regular}
+%</adobe>
+%<*fandol>
+\setCJKmainfont{FandolSong}[
+  Extension   = .otf,
+  UprightFont = *-Regular,
+  BoldFont    = *-Bold,
+  ItalicFont  = FandolKai-Regular,
+]
+\setCJKsansfont{FandolHei}[
+  Extension   = .otf,
+  UprightFont = *-Regular,
+  BoldFont    = *-Bold,
+]
+\setCJKmonofont{FandolFang}[
+  Extension   = .otf,
+  UprightFont = *-Regular,
+]
+\setCJKfamilyfont{zhsong}{FandolSong}[
+  Extension   = .otf,
+  UprightFont = *-Regular,
+  BoldFont    = *-Bold,
+]
+\setCJKfamilyfont{zhhei}{FandolHei}[
+  Extension   = .otf,
+  UprightFont = *-Regular,
+  BoldFont    = *-Bold,
+]
+\setCJKfamilyfont{zhfs}{FandolFang}[
+  Extension   = .otf,
+  UprightFont = *-Regular,
+]
+\setCJKfamilyfont{zhkai}{FandolKai}[
+  Extension   = .otf,
+  UprightFont = *-Regular,
+]
+%</fandol>
+%<*founder>
+\setCJKmainfont{FZShuSong-Z01}[
+  AutoFakeBold = 3,
+  ItalicFont   = FZKai-Z03,
+]
+\setCJKsansfont{FZHei-B01}[AutoFakeBold=3]
+\setCJKmonofont{FZFangSong-Z02}
+\setCJKfamilyfont{zhsong}{FZShuSong-Z01}[
+  AutoFakeBold = 3,
+  ItalicFont   = FZKai-Z03,
+]
+\setCJKfamilyfont{zhhei}{FZHei-B01}[AutoFakeBold=3]
+\setCJKfamilyfont{zhkai}{FZKai-Z03}
+\setCJKfamilyfont{zhfs}{FZFangSong-Z02}
+%</founder>
+\NewDocumentCommand\songti{}{\CJKfamily{zhsong}}
+\NewDocumentCommand\heiti{}{\CJKfamily{zhhei}}
+%<!ubuntu>\NewDocumentCommand\fangsong{}{\CJKfamily{zhfs}}
+\NewDocumentCommand\kaishu{}{\CJKfamily{zhkai}}
+%</cjkfont>
 %    \end{macrocode}
 %
 % \subsection{页面设置}
