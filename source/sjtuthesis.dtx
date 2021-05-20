@@ -1918,23 +1918,8 @@ The Current Maintainer of this work is Alexara Wu.
   \ltjdefcharrange{100}{"2460-"2473,"25A1}
   \ltjsetparameter{jacharrange={+100}}
 \fi
-%    \end{macrocode}
-%
-% 汉字的分散对齐环境 \env{CJKfilltwosides}，\XeLaTeX 下调用 \pkg{xeCJKfntef} 包。
-% \LuaLaTeX 下模仿 \pkg{xeCJKfntef} 中的定义。
-%    \begin{macrocode}
-\ifXeTeX
-  \RequirePackage{xeCJKfntef}
-\fi
-\ifLuaTeX
-\NewDocumentEnvironment{CJKfilltwosides}{O{c} m}{%
-  \minipage[#1]{#2}%
-  \ltjsetparameter{kanjiskip=\z@ plus 1filll}%
-}{%
-  \endminipage%
-  \ignorespacesafterend%
-}
-\fi
+\newcommand\sjtu@square{\symbol{"25A1}}
+\newcommand\sjtu@colon{\makebox[1\ccwd]{\symbol{"FF1A}}}
 %</class>
 %    \end{macrocode}
 %
@@ -2458,14 +2443,13 @@ The Current Maintainer of this work is Alexara Wu.
 % 支持扫描文件替换。
 %    \begin{macrocode}
 %<*class>
-\newcommand\sjtu@square{\symbol{"25A1}}
 \newcommand\sjtu@copr@addon{%
   \vskip 2ex
   \begingroup
     \linespread{1}\selectfont
     本\sjtu@name@thesis@type 属于\parbox[c]{20\ccwd}{%
       {\heiti 保\hspace{1\ccwd}密}~\sjtu@square ，
-      在\uline{\hspace{2\ccwd}}年解密后适用本授权书。\bigbreak
+      在\underline{\hspace{2\ccwd}}年解密后适用本授权书。\bigbreak
       {\heiti 不保密}~\sjtu@square 。
     }\par
   \endgroup
@@ -2789,6 +2773,19 @@ The Current Maintainer of this work is Alexara Wu.
     \repeat
   \endgroup
 }
+%    \end{macrocode}
+%
+% 表格中汉字分散对齐。
+%    \begin{macrocode}
+\newcolumntype{F}[2]{%
+  >{\minipage[#1]{#2}%
+    \ifXeTeX\def\CJKglue{\hskip \z@ plus 1filll}\fi%
+    \ifLuaTeX\ltjsetparameter{kanjiskip=\z@ plus 1filll}\fi%
+    \begingroup}%
+    c%
+  <{\endgroup%
+    \endminipage%
+    \ignorespacesafterend}}
 %</class>
 %    \end{macrocode}
 %
@@ -2824,7 +2821,7 @@ The Current Maintainer of this work is Alexara Wu.
     \vskip \stretch{2}
     \begingroup
       \zihao{2}
-      \begin{tabular}{r@{：}l}
+      \begin{tabular}{@{}r@{\sjtu@colon}l@{}}
         论文题目 &
         \parbox[t]{280pt}{\centering\zihao{-2}\sjtu@uline\sjtu@info@title@zh}
       \end{tabular}
@@ -2833,8 +2830,7 @@ The Current Maintainer of this work is Alexara Wu.
     \vskip \stretch{1}
     \begingroup
       \zihao{3}
-      \begin{tabular}
-        {>{\begin{CJKfilltwosides}{4.2\ccwd}}r<{\end{CJKfilltwosides}}@{：}c}
+      \begin{tabular}{@{}F{t}{4.2\ccwd}@{\sjtu@colon}c@{}}
         \sjtu@name@author@zh      & \sjtu@info@author@zh      \\\cline{2-2}
         \sjtu@name@id@zh          & \makebox[180pt]{\sjtu@info@id} \\\cline{2-2}
         \ifsjtu@type@course
@@ -2861,9 +2857,7 @@ The Current Maintainer of this work is Alexara Wu.
     \begingroup
       \zihao{4}
       \def\arraystretch{1.25}
-      \begin{tabular}
-        {>{\begin{CJKfilltwosides}[t]{6.5\ccwd}\heiti}r<{\end{CJKfilltwosides}}
-          @{：}l}
+      \begin{tabular}{@{}>{\heiti}F{t}{6.5\ccwd}@{\sjtu@colon}l@{}}
         \sjtu@name@author@zh           & \sjtu@info@author@zh         \\
         \sjtu@name@id@zh               & \sjtu@info@id                \\
         \sjtu@name@supervisor@zh       & \sjtu@info@supervisor@zh     \\
@@ -2897,8 +2891,7 @@ The Current Maintainer of this work is Alexara Wu.
     \begingroup
       \zihao{4}
       \def\arraystretch{1.25}
-      \begin{tabular}
-        {>{\bfseries}l<{:~}p{.45\textwidth}}
+      \begin{tabular}{@{}>{\bfseries}l<{:~}@{}p{.45\textwidth}@{}}
         \sjtu@name@author@en           & \sjtu@info@author@en         \\
         \sjtu@name@id@en               & \sjtu@info@id                \\
         \sjtu@name@supervisor@en       & \sjtu@info@supervisor@en     \\
