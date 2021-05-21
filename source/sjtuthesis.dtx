@@ -1358,7 +1358,7 @@ The Current Maintainer of this work is Alexara Wu.
       blue,
       black,
     },
-    initial = blue,
+    initial = red,
   },
   header-logo-color = {
     name = header@logo@color,
@@ -1367,7 +1367,7 @@ The Current Maintainer of this work is Alexara Wu.
       blue,
       black,
     },
-    initial = black,
+    initial = red,
   },
   float-number-separator = {
     name = fl@num@sep,
@@ -2967,19 +2967,30 @@ The Current Maintainer of this work is Alexara Wu.
 %
 % 定义一个特殊的下划线命令供绘制本科论文封面时使用。
 %    \begin{macrocode}
-\newcommand\sjtu@uline[1]{%
-  \begingroup
-    \setbox0=\vbox{\strut #1\strut}%
-    \dimen0=0pt
-    \loop\ifdim\ht0>0pt
-      \dimen1=\dimexpr\ht0 - \baselineskip\relax
-      \setbox1=\vsplit0 to \ht\strutbox
-      \advance\dimen1 by -\ht0
-      \noindent\raisebox{-\dimen0}[\ht\strutbox][\dp\strutbox]{\box1}%
-      \advance\dimen0 by \dimen1
-      \vspace{-0.2ex}\hrule\vskip 0.2ex
-    \repeat
-  \endgroup
+\newcommand\sjtu@title@box[2][]{%
+  \def\sjtu@@title@uline{\rule[-1ex]{#1}{.5pt}}%
+  \def\sjtu@@title@box##1{\parbox[t]{#1}{##1}}%
+  \newlength\sjtu@@ttile@temp@ht
+  \settototalheight\sjtu@@ttile@temp@ht{\sjtu@@title@box{#2}}%
+  \ifdim\sjtu@@ttile@temp@ht=0pt%
+    \sjtu@@title@uline%
+  \else
+    \leavevmode%
+    \ifdim\sjtu@@ttile@temp@ht>\normalbaselineskip
+      \rlap{\smash{\sjtu@@title@box{%
+        \@whiledim\sjtu@@ttile@temp@ht>0pt%
+        \leavevmode%
+        \do{%
+          \rlap{\sjtu@@title@uline}\\%
+          \addtolength\sjtu@@ttile@temp@ht{-\normalbaselineskip}%
+        }%
+      }}}%
+      \sjtu@@title@box{\centering #2}%
+    \else
+      \rlap{\sjtu@@title@uline}%
+      \sjtu@@title@box{\centering #2}%
+    \fi
+  \fi
 }
 %    \end{macrocode}
 %
@@ -3013,7 +3024,7 @@ The Current Maintainer of this work is Alexara Wu.
     \kaishu
     \vspace*{48pt}
     \begingroup
-      \includegraphics[height=96pt]%
+      \includegraphics[height=105pt]%
         {sjtu-vi-name-\sjtu@style@title@logo@color.pdf}
       \par
     \endgroup
@@ -3022,16 +3033,15 @@ The Current Maintainer of this work is Alexara Wu.
     {\zihao{-2}\MakeUppercase\sjtu@name@subject@en\par}
     \vskip 16pt
     \begingroup
-      \includegraphics[height=86pt]%
+      \includegraphics[height=75pt]%
         {sjtu-vi-badge-\sjtu@style@title@logo@color.pdf}
       \par
     \endgroup
     \vskip \stretch{2}
     \begingroup
-      \zihao{2}
+      \zihao{-2}
       \begin{tabular}{@{}r@{\sjtu@colon}l@{}}
-        论文题目 &
-        \parbox[t]{280pt}{\centering\zihao{-2}\sjtu@uline\sjtu@info@title@zh}
+        论文题目 & \sjtu@title@box[300pt]{\sjtu@info@title@zh}
       \end{tabular}
       \par
     \endgroup
@@ -3051,7 +3061,7 @@ The Current Maintainer of this work is Alexara Wu.
       \end{tabular}
       \par
     \endgroup
-    \vskip 32pt
+    \vskip 64pt
 %</undergraduate>
 %<*graduate>
   \def\sjtu@info@fund{\zihao{-5}\sjtu@clist@use{\sjtu@info@fund@zh}{\par}}
