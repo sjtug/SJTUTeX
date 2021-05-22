@@ -53,7 +53,7 @@ The Current Maintainer of this work is Alexara Wu.
     \file{sjtu-text-font-termes.def}  {\from{\jobname.dtx}{textfont,termes}}
     \file{sjtu-text-font-pagella.def} {\from{\jobname.dtx}{textfont,pagella}}
     \file{sjtu-text-font-lm.def}      {\from{\jobname.dtx}{textfont,lm}}
-    \file{sjtu-text-font-stix2.def}   {\from{\jobname.dtx}{textfont,stix2}}
+    \file{sjtu-text-font-stixtwo.def} {\from{\jobname.dtx}{textfont,stixtwo}}
     \file{sjtu-text-font-xits.def}    {\from{\jobname.dtx}{textfont,xits}}
     \file{sjtu-text-font-newcm.def}   {\from{\jobname.dtx}{textfont,newcm}}
     \file{sjtu-text-font-cambria.def} {\from{\jobname.dtx}{textfont,cambria}}
@@ -61,7 +61,7 @@ The Current Maintainer of this work is Alexara Wu.
     \file{sjtu-math-font-termes.def}  {\from{\jobname.dtx}{mathfont,termes}}
     \file{sjtu-math-font-pagella.def} {\from{\jobname.dtx}{mathfont,pagella}}
     \file{sjtu-math-font-lm.def}      {\from{\jobname.dtx}{mathfont,lm}}
-    \file{sjtu-math-font-stix2.def}   {\from{\jobname.dtx}{mathfont,stix2}}
+    \file{sjtu-math-font-stixtwo.def} {\from{\jobname.dtx}{mathfont,stixtwo}}
     \file{sjtu-math-font-xits.def}    {\from{\jobname.dtx}{mathfont,xits}}
     \file{sjtu-math-font-newcm.def}   {\from{\jobname.dtx}{mathfont,newcm}}
     \file{sjtu-math-font-cambria.def} {\from{\jobname.dtx}{mathfont,cambria}}
@@ -101,8 +101,8 @@ The Current Maintainer of this work is Alexara Wu.
 %<termes>  [2020/07/31 1.0.0rc7 Termes text fonts definition (SJTUThesis)]
 %<pagella>\ProvidesFile{sjtu-text-font-pagella.def}
 %<pagella>  [2020/07/31 1.0.0rc7 Pagella text fonts definition (SJTUThesis)]
-%<stix2>\ProvidesFile{sjtu-text-font-stix2.def}
-%<stix2>  [2020/07/31 1.0.0rc7 STIX Two text fonts definition (SJTUThesis)]
+%<stixtwo>\ProvidesFile{sjtu-text-font-stixtwo.def}
+%<stixtwo>  [2020/07/31 1.0.0rc7 STIX Two text fonts definition (SJTUThesis)]
 %<xits>\ProvidesFile{sjtu-text-font-xits.def}
 %<xits>  [2020/07/31 1.0.0rc7 XITS text fonts definition (SJTUThesis)]
 %<lm>\ProvidesFile{sjtu-text-font-lm.def}
@@ -119,8 +119,8 @@ The Current Maintainer of this work is Alexara Wu.
 %<termes>  [2020/07/31 1.0.0rc7 Termes math fonts definition (SJTUThesis)]
 %<pagella>\ProvidesFile{sjtu-math-font-pagella.def}
 %<pagella>  [2020/07/31 1.0.0rc7 Pagella math fonts definition (SJTUThesis)]
-%<stix2>\ProvidesFile{sjtu-math-font-stix2.def}
-%<stix2>  [2020/07/31 1.0.0rc7 STIX Two math fonts definition (SJTUThesis)]
+%<stixtwo>\ProvidesFile{sjtu-math-font-stixtwo.def}
+%<stixtwo>  [2020/07/31 1.0.0rc7 STIX Two math fonts definition (SJTUThesis)]
 %<xits>\ProvidesFile{sjtu-math-font-xits.def}
 %<xits>  [2020/07/31 1.0.0rc7 XITS math fonts definition (SJTUThesis)]
 %<lm>\ProvidesFile{sjtu-math-font-lm.def}
@@ -876,10 +876,10 @@ The Current Maintainer of this work is Alexara Wu.
 % \DescribeFunction{digest}
 %   \begin{sjtusyntax}[emph={[2]digest}]
 %     \begin{digest}
-%       (*\meta{英文大摘要}*)
+%       (*\meta{大摘要}*)
 %     \end{digest}
 %   \end{sjtusyntax}
-% 学士论文英文大摘要。仅在语言设置为中文，论文类型为学士论文的条件下有效。
+% 学士论文大摘要。仅在语言设置为中文，论文类型为学士论文的条件下有效。
 %
 % \section{致谢}
 %
@@ -1508,12 +1508,14 @@ The Current Maintainer of this work is Alexara Wu.
 %    \begin{macrocode}
 \ifsjtu@language@chinese
   \def\sjtu@info@title{\sjtu@info@title@zh}
+  \def\sjtu@info@title@sec{\sjtu@info@title@en}
   \def\sjtu@info@display@title{\sjtu@info@display@title@zh}
   \def\sjtu@info@running@title{\sjtu@info@running@title@zh}
   \def\sjtu@info@keywords{\sjtu@info@keywords@zh}
   \def\sjtu@info@author{\sjtu@info@author@zh}
 \else
   \def\sjtu@info@title{\sjtu@info@title@en}
+  \def\sjtu@info@title@sec{\sjtu@info@title@zh}
   \def\sjtu@info@display@title{\sjtu@info@display@title@en}
   \def\sjtu@info@running@title{\sjtu@info@running@title@en}
   \def\sjtu@info@keywords{\sjtu@info@keywords@en}
@@ -1562,6 +1564,7 @@ The Current Maintainer of this work is Alexara Wu.
   table             = { initial = Table },
   table*            = { name = table@second, initial = 表 },
   algorithm         = { initial = Algorithm },
+  abbreviation      = { initial = Abbreviation },
   nomenclature      = { initial = Nomenclature },
   summary           = { initial = Summary },
   bib               = { initial = Bibliography },
@@ -1570,6 +1573,7 @@ The Current Maintainer of this work is Alexara Wu.
   publications      = { initial = Publications },
   achievements      = { initial = Research Achievements },
   resume            = { initial = Resume },
+  digest            = { initial = Digest },
 }
 %    \end{macrocode}
 %
@@ -1634,7 +1638,6 @@ The Current Maintainer of this work is Alexara Wu.
   \sjtu@name@def{course@zh}{课程名称}
   \sjtu@name@def{major@zh}{专业}
   \sjtu@name@def{department@zh}{学院(系)}
-  \sjtu@name@def{digest}{英文大摘要}
 \fi
 \sjtu@name@def{orig@subtitle@zh}{原创性声明}
 \sjtu@name@def{orig@subtitle@en}{Declaration of Originality}
@@ -1676,7 +1679,8 @@ The Current Maintainer of this work is Alexara Wu.
       table             = {表},
       table*            = {Table},
       algorithm         = {算法},
-      nomenclature      = {主要符号对照表},
+      abbreviation      = {缩略语对照表},
+      nomenclature      = {符号对照表},
       summary           = {全文总结},
       bib               = {参考文献},
       index             = {索\hspace{\ccwd}引},
@@ -1684,6 +1688,7 @@ The Current Maintainer of this work is Alexara Wu.
       publications      = {攻读学位期间发表（或录用）的学术论文},
       achievements      = {攻读学位期间获得的科研成果},
       resume            = {个人简历},
+      digest            = {大摘要},
     }
   }
   \ctexset{
@@ -1750,11 +1755,11 @@ The Current Maintainer of this work is Alexara Wu.
 %</class>
 %<*mathfont>
 %<termes|pagella|lm>\ifsjtu@unimath
-%<stix2|xits|newcm|cambria>\sjtu@unimathtrue
-%<stix2|xits|newcm|cambria>\RequirePackage{unicode-math}
+%<stixtwo|xits|newcm|cambria>\sjtu@unimathtrue
+%<stixtwo|xits|newcm|cambria>\RequirePackage{unicode-math}
 %<termes>  \setmathfont{texgyretermes-math.otf}
 %<pagella>  \setmathfont{texgyrepagella-math.otf}
-%<*stix2>
+%<*stixtwo>
 \IfFontExistsTF{STIXTwoMath-Regular.otf}{
   \setmathfont[
     StylisticSet = 8
@@ -1772,7 +1777,7 @@ The Current Maintainer of this work is Alexara Wu.
     StylisticSet = 1
   ]{STIX2Math.otf}
 }
-%</stix2>
+%</stixtwo>
 %<*xits>
 \IfFontExistsTF{XITSMath-Regular.otf}{
   \setmathfont[
@@ -1819,7 +1824,7 @@ The Current Maintainer of this work is Alexara Wu.
 %<termes>  ]{texgyretermes}
 %<pagella>  ]{texgyrepagella}
 %</termes|pagella>
-%<*stix2>
+%<*stixtwo>
 \IfFontExistsTF{STIXTwoText-Regular.otf}{
 %<mathfont>  \setmathrm[
 %<textfont>  \setmainfont[
@@ -1839,7 +1844,7 @@ The Current Maintainer of this work is Alexara Wu.
     BoldItalicFont = *-BoldItalic,
   ]{STIX2Text}
 }
-%</stix2>
+%</stixtwo>
 %<*xits>
 \IfFontExistsTF{XITS-Regular.otf}{
 %<mathfont>  \setmathrm[
@@ -1861,7 +1866,7 @@ The Current Maintainer of this work is Alexara Wu.
   ]{xits}
 }
 %</xits>
-%<*termes|pagella|stix2|xits>
+%<*termes|pagella|stixtwo|xits>
 %<mathfont>  \setmathsf[
 %<textfont>  \setsansfont[
     Extension      = .otf,
@@ -1880,7 +1885,7 @@ The Current Maintainer of this work is Alexara Wu.
     Scale          = MatchLowercase,
     Ligatures      = CommonOff,
   ]{texgyrecursor}
-%</termes|pagella|stix2|xits>
+%</termes|pagella|stixtwo|xits>
 %<*lm>
 %<mathfont>  \setmathrm[
 %<textfont>  \setmainfont[
@@ -2166,10 +2171,12 @@ The Current Maintainer of this work is Alexara Wu.
 \geometry{%
   paper      = a4paper,
 %<*undergraduate>
-  vmargin    = {84bp, 72bp},
-  hmargin    = 90bp,
+  top        = 84bp,
+  bottom     = 72bp,
+  left       = 90bp,
+  right      = 90bp,
   headheight = 60bp,
-  headsep    = 12bp,
+  headsep    = 8bp,
 %</undergraduate>
 %<*graduate>
   top        = 3.5cm,
@@ -2332,7 +2339,7 @@ The Current Maintainer of this work is Alexara Wu.
   \def\sjtu@lastpageref{\lastpageref{pagesLTS.arabic}}
 }
 \renewcommand\backmatter{%
-  \cleardoublepage
+  \if@openright\cleardoublepage\else\clearpage\fi%
   \@mainmatterfalse
 }
 %    \end{macrocode}
@@ -2348,25 +2355,29 @@ The Current Maintainer of this work is Alexara Wu.
     format       = \zihao{3}\bfseries\heiti\centering,
     nameformat   = {},
     titleformat  = {},
-    aftername    = \quad,
+    aftername    = \enskip,
     afterindent  = true,
-    beforeskip   = {\ifsjtu@type@graduate 0pt\else 1ex\fi},
-    afterskip    = {\ifsjtu@type@graduate 3ex\else 4ex\fi},
+    fixskip      = true,
+    beforeskip   = 24pt,
+    afterskip    = 24pt,
     lofskip      = 0pt,
     lotskip      = 0pt,
   },
   section = {%
     format       = \zihao{4}\bfseries\heiti,
+    aftername    = \enskip,
     afterindent  = true,
     afterskip    = {1ex \@plus .2ex},
   },
   subsection = {%
     format       = \zihao{-4}\bfseries\heiti,
+    aftername    = \enskip,
     afterindent  = true,
     afterskip    = {1ex \@plus .2ex},
   },
   subsubsection = {%
     format       = \zihao{-4}\normalfont,
+    aftername    = \enskip,
     afterindent  = true,
     afterskip    = {1ex \@plus .2ex},
   },
@@ -2668,11 +2679,12 @@ The Current Maintainer of this work is Alexara Wu.
 }
 \captionsetup[bi-second]{bi-second}
 %</class>
+%<*undergraduate>
+\DeclareCaptionFont{sjtu@caption@font}{\zihao{5}\bfseries}
 %    \end{macrocode}
 %
 % 学士论文模版默认设置。
 %    \begin{macrocode}
-%<*undergraduate>
 \ifsjtu@type@bachelor
   \sjtusetup{
     style = {
@@ -2699,7 +2711,7 @@ The Current Maintainer of this work is Alexara Wu.
 }
 \newcommand\sjtu@signbox[1]{%
   \parbox{.45\textwidth}{%
-    {#1}签名：\vskip 4em
+    {#1}签名：\vskip 1.5\baselineskip
     日期：\hspace{\stretch{3}}年\hspace{\stretch{2}}月\hspace{\stretch{2}}日
   }
 }
@@ -2708,22 +2720,20 @@ The Current Maintainer of this work is Alexara Wu.
     \cleardoublepage
     \ifblank{#1}{%
       \thispagestyle{empty}
-      \sjtu@chapter*[\sjtu@name@orig@subtitle]{%
-        \zihao{-2}\sjtu@name@school@zh\\[6pt]\sjtu@name@orig@title
-      }
       \begingroup
+        \linespread{1.7}\selectfont
+        \sjtu@chapter*[\sjtu@name@orig@subtitle]{%
+          \zihao{-2}\sjtu@name@school@zh\\\sjtu@name@orig@title
+        }
         \zihao{4}
-        \begingroup
-          \linespread{2.0}\selectfont
-          \sjtu@name@origbody\par
-        \endgroup
-        \vskip 16ex
+        \vskip \baselineskip
+        \sjtu@name@origbody\par
+        \vskip 4\baselineskip
         \noindent
         \begin{minipage}{\textwidth}
           \hfill
           \sjtu@signbox{\sjtu@name@thesis@type 作者}
-        \end{minipage}
-        \par
+        \end{minipage}\par
       \endgroup
     }{%
       \includepdf[pagecommand={%
@@ -2737,24 +2747,22 @@ The Current Maintainer of this work is Alexara Wu.
     \cleardoublepage
     \ifblank{#1}{%
       \thispagestyle{empty}
-      \sjtu@chapter*[\sjtu@name@copr@subtitle]{%
-        \zihao{-2}\sjtu@name@school@zh\\[6pt]\sjtu@name@copr@title
-      }
       \begingroup
+        \linespread{1.7}\selectfont
+        \sjtu@chapter*[\sjtu@name@copr@subtitle]{%
+          \zihao{-2}\sjtu@name@school@zh\\\sjtu@name@copr@title
+        }
         \zihao{4}
-        \begingroup
-          \linespread{1.5}\selectfont
-          \sjtu@name@coprbody\par
-          \sjtu@copr@addon\par
-        \endgroup
-        \vskip 16ex
+        \vskip \baselineskip
+        \sjtu@name@coprbody\par
+        \sjtu@copr@addon\par
+        \vskip 4\baselineskip
         \noindent
         \begin{minipage}{\textwidth}
           \sjtu@signbox{\sjtu@name@thesis@type 作者}
           \hfill
           \sjtu@signbox{指导教师}
-        \end{minipage}
-        \par
+        \end{minipage}\par
       \endgroup
     }{%
       \includepdf[pagecommand={%
@@ -2784,9 +2792,8 @@ The Current Maintainer of this work is Alexara Wu.
       \sjtu@name@abstract@zh
     \endgroup
   }[\sjtu@name@abstract]%
-%<graduate>  \zihao{4}
 }{%
-  \vskip 3ex \noindent
+  \vskip \baselineskip \noindent
   \begingroup
 %<undergraduate>    \zihao{-4}
     \heiti\sjtu@name@keywords@zh
@@ -2824,10 +2831,21 @@ The Current Maintainer of this work is Alexara Wu.
 %</(undergraduate|graduate)>
 %    \end{macrocode}
 %
-% \subsubsection{主要符号对照表}
+% \subsubsection{缩略语对照表}
 %
 %    \begin{macrocode}
 %<*class>
+\NewDocumentEnvironment{abbreviation}{}{%
+  \sjtu@chapter{\sjtu@name@abbreviation}
+}{}
+\NewDocumentEnvironment{abbreviation*}{}{%
+  \sjtu@chapter*{\sjtu@name@abbreviation}
+}{}
+%    \end{macrocode}
+%
+% \subsubsection{符号对照表}
+%
+%    \begin{macrocode}
 \NewDocumentEnvironment{nomenclature}{}{%
   \sjtu@chapter{\sjtu@name@nomenclature}
 }{}
@@ -2936,25 +2954,23 @@ The Current Maintainer of this work is Alexara Wu.
 }
 %    \end{macrocode}
 %
-% 本科论文英文大摘要。
+% 本科论文大摘要。
 %    \begin{macrocode}
 \NewDocumentEnvironment{digest}{}{%
   \Collect@Body\sjtu@save@env@body
 }{%
   \ifsjtu@type@bachelor
-    \ifsjtu@language@chinese
-      \AtEndDocument{%
-        \cleardoublepage
-        \pagenumbering{roman}
-        \def\sjtu@thepage{\theCurrentPageLocal}
-        \def\sjtu@lastpageref{\lastpageref{pagesLTS.roman.local}}
-        \sjtu@chapter*[\sjtu@name@digest]{\MakeUppercase\sjtu@info@title@en}
-        \counterwithout{section}{chapter}
-        \sjtu@counter@without@chapter
-        \let\addcontentsline\@gobblethree
-        \sjtu@saved@env@body
-      }
-    \fi
+    \AtEndDocument{%
+      \cleardoublepage
+      \pagenumbering{roman}
+      \def\sjtu@thepage{\theCurrentPageLocal}
+      \def\sjtu@lastpageref{\lastpageref{pagesLTS.roman.local}}
+      \sjtu@chapter*[\sjtu@name@digest]{\MakeUppercase\sjtu@info@title@sec}
+      \counterwithout{section}{chapter}
+      \sjtu@counter@without@chapter
+      \let\addcontentsline\@gobblethree
+      \sjtu@saved@env@body
+    }
   \fi
 }
 %    \end{macrocode}
