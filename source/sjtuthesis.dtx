@@ -1202,6 +1202,7 @@ The Current Maintainer of this work is Alexara Wu.
 \RequirePackage{etoolbox}
 \RequirePackage{filehook}
 \RequirePackage{environ}
+\RequirePackage{calc}
 %    \end{macrocode}
 %
 % 使用 \pkg{geometry} 设置页面。
@@ -2586,12 +2587,8 @@ The Current Maintainer of this work is Alexara Wu.
 \renewcommand\cftfigpresnum{\sjtu@name@figure~}
 \renewcommand\cfttabpresnum{\sjtu@name@table~}
 \AtEndPreamble{%
-  \newlength{\sjtu@cftfignumwidth@tmp}
-    \settowidth{\sjtu@cftfignumwidth@tmp}{\cftfigpresnum}
-  \addtolength{\cftfignumwidth}{\sjtu@cftfignumwidth@tmp}
-  \newlength{\sjtu@cfttabnumwidth@tmp}
-    \settowidth{\sjtu@cfttabnumwidth@tmp}{\cfttabpresnum}
-  \addtolength{\cfttabnumwidth}{\sjtu@cfttabnumwidth@tmp}
+  \addtolength{\cftfignumwidth}{\widthof{\cftfigpresnum}}
+  \addtolength{\cfttabnumwidth}{\widthof{\cfttabpresnum}}
 }
 %    \end{macrocode}
 %
@@ -3451,9 +3448,7 @@ The Current Maintainer of this work is Alexara Wu.
     {\addcontentsline}
     {\caption@iflist{\addcontentsline}{\@gobblethree}}
   \AtEndPreamble{%
-    \newlength{\sjtu@cftalgnumwidth@tmp}
-      \settowidth{\sjtu@cftalgnumwidth@tmp}{\cftalgpresnum}
-    \addtolength{\cftalgnumwidth}{\sjtu@cftalgnumwidth@tmp}
+    \addtolength{\cftalgnumwidth}{\widthof{\cftalgpresnum}}
   }
   \renewcommand\listofalgorithms{\sjtu@listof{algocf}}
 }
@@ -3482,9 +3477,7 @@ The Current Maintainer of this work is Alexara Wu.
     \def\thealgorithm{\thechapter\sjtu@style@fl@num@sep\arabic{algorithm}}
   }{}{}
   \AtEndPreamble{%
-    \newlength{\sjtu@cftalgnumwidth@tmp}
-      \settowidth{\sjtu@cftalgnumwidth@tmp}{\cftalgpresnum}
-    \addtolength{\cftalgnumwidth}{\sjtu@cftalgnumwidth@tmp}
+    \addtolength{\cftalgnumwidth}{\widthof{\cftalgpresnum}}
   }
   \renewcommand\listofalgorithms{\sjtu@listof{algorithm}}
 }
