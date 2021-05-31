@@ -1139,6 +1139,12 @@ The Current Maintainer of this work is Alexara Wu.
 \DeclareBoolOption[false]{continuous}
 %    \end{macrocode}
 %
+% 设置默认 \opt{openany}。
+%    \begin{macrocode}
+\DeclareBoolOption[false]{openright}
+\DeclareComplementaryOption{openany}{openright}
+%    \end{macrocode}
+%
 % 将选项传递给 \pkg{ctexbook}。
 %    \begin{macrocode}
 \DeclareDefaultOption{\PassOptionsToClass{\CurrentOption}{ctexbook}}
@@ -1171,6 +1177,15 @@ The Current Maintainer of this work is Alexara Wu.
   \fi
 \fi
 \PassOptionsToClass{zihao=\sjtu@zihao}{ctexbook}
+%    \end{macrocode}
+%
+% 设置默认 \opt{openany}。
+%    \begin{macrocode}
+\ifsjtu@openright
+  \PassOptionsToClass{openright}{book}
+\else
+  \PassOptionsToClass{openany}{book}
+\fi
 %    \end{macrocode}
 %
 % 使用 \XeTeX{} 引擎时，\pkg{fontspec} 宏包会被 \pkg{xeCJK} 自动调用。传递给
