@@ -47,14 +47,35 @@ The Current Maintainer of this work is Alexara Wu.
 
 \generate{
   \usedir{tex/latex/sjtuthesis}
-    \file{\jobname.cls}              {\from{\jobname.dtx}{class}}
-    \file{\jobname-undergraduate.ltx}{\from{\jobname.dtx}{undergraduate}}
-    \file{\jobname-graduate.ltx}     {\from{\jobname.dtx}{graduate}}
-    \file{sjtudoc.cls}               {\from{\jobname.dtx}{document}}
+    \file{\jobname.cls}               {\from{\jobname.dtx}{class}}
+    \file{\jobname-undergraduate.ltx} {\from{\jobname.dtx}{undergraduate}}
+    \file{\jobname-graduate.ltx}      {\from{\jobname.dtx}{graduate}}
+    \file{sjtu-text-font-termes.def}  {\from{\jobname.dtx}{textfont,termes}}
+    \file{sjtu-text-font-pagella.def} {\from{\jobname.dtx}{textfont,pagella}}
+    \file{sjtu-text-font-lm.def}      {\from{\jobname.dtx}{textfont,lm}}
+    \file{sjtu-text-font-stixtwo.def} {\from{\jobname.dtx}{textfont,stixtwo}}
+    \file{sjtu-text-font-xits.def}    {\from{\jobname.dtx}{textfont,xits}}
+    \file{sjtu-text-font-newcm.def}   {\from{\jobname.dtx}{textfont,newcm}}
+    \file{sjtu-text-font-cambria.def} {\from{\jobname.dtx}{textfont,cambria}}
+    \file{sjtu-text-font-times.def}   {\from{\jobname.dtx}{textfont,times}}
+    \file{sjtu-math-font-termes.def}  {\from{\jobname.dtx}{mathfont,termes}}
+    \file{sjtu-math-font-pagella.def} {\from{\jobname.dtx}{mathfont,pagella}}
+    \file{sjtu-math-font-lm.def}      {\from{\jobname.dtx}{mathfont,lm}}
+    \file{sjtu-math-font-stixtwo.def} {\from{\jobname.dtx}{mathfont,stixtwo}}
+    \file{sjtu-math-font-xits.def}    {\from{\jobname.dtx}{mathfont,xits}}
+    \file{sjtu-math-font-newcm.def}   {\from{\jobname.dtx}{mathfont,newcm}}
+    \file{sjtu-math-font-cambria.def} {\from{\jobname.dtx}{mathfont,cambria}}
+    \file{sjtu-cjk-font-windows.def}  {\from{\jobname.dtx}{cjkfont,windows}}
+    \file{sjtu-cjk-font-mac.def}      {\from{\jobname.dtx}{cjkfont,mac}}
+    \file{sjtu-cjk-font-ubuntu.def}   {\from{\jobname.dtx}{cjkfont,ubuntu}}
+    \file{sjtu-cjk-font-adobe.def}    {\from{\jobname.dtx}{cjkfont,adobe}}
+    \file{sjtu-cjk-font-fandol.def}   {\from{\jobname.dtx}{cjkfont,fandol}}
+    \file{sjtu-cjk-font-founder.def}  {\from{\jobname.dtx}{cjkfont,founder}}
+    \file{sjtudoc.cls}                {\from{\jobname.dtx}{document}}
 %</install>
 %<*internal>
   \usedir{source/latex/sjtuthesis}
-    \file{\jobname.ins}         {\from{\jobname.dtx}{install}}
+    \file{\jobname.ins}               {\from{\jobname.dtx}{install}}
 %</internal>
 %<*install>
 }
@@ -74,14 +95,60 @@ The Current Maintainer of this work is Alexara Wu.
 %<document>\ProvidesClass{sjtudoc}
 %<undergraduate>\ProvidesFile{sjtuthesis-undergraduate.ltx}
 %<graduate>\ProvidesFile{sjtuthesis-graduate.ltx}
-%<*(class|undergraduate|graduate|document)>
-  [2020/07/31 1.0.0rc7 Shanghai Jiao Tong University Thesis Template]
-%</(class|undergraduate|graduate|document)>
-%<*(document|class)>
+%<class|undergraduate|graduate|document>  [2020/07/31 1.0.0rc7 Shanghai Jiao Tong University Thesis Template]
+%<*textfont>
+%<termes>\ProvidesFile{sjtu-text-font-termes.def}
+%<termes>  [2020/07/31 1.0.0rc7 Termes text fonts definition (SJTUThesis)]
+%<pagella>\ProvidesFile{sjtu-text-font-pagella.def}
+%<pagella>  [2020/07/31 1.0.0rc7 Pagella text fonts definition (SJTUThesis)]
+%<stixtwo>\ProvidesFile{sjtu-text-font-stixtwo.def}
+%<stixtwo>  [2020/07/31 1.0.0rc7 STIX Two text fonts definition (SJTUThesis)]
+%<xits>\ProvidesFile{sjtu-text-font-xits.def}
+%<xits>  [2020/07/31 1.0.0rc7 XITS text fonts definition (SJTUThesis)]
+%<lm>\ProvidesFile{sjtu-text-font-lm.def}
+%<lm>  [2020/07/31 1.0.0rc7 Latin Modern text fonts definition (SJTUThesis)]
+%<newcm>\ProvidesFile{sjtu-text-font-newcm.def}
+%<newcm>  [2020/07/31 1.0.0rc7 New Computer Modern text fonts definition (SJTUThesis)]
+%<cambria>\ProvidesFile{sjtu-text-font-cambria.def}
+%<cambria>  [2020/07/31 1.0.0rc7 Cambria text fonts definition (SJTUThesis)]
+%<times>\ProvidesFile{sjtu-text-font-times.def}
+%<times>  [2020/07/31 1.0.0rc7 Times text fonts definition (SJTUThesis)]
+%</textfont>
+%<*mathfont>
+%<termes>\ProvidesFile{sjtu-math-font-termes.def}
+%<termes>  [2020/07/31 1.0.0rc7 Termes math fonts definition (SJTUThesis)]
+%<pagella>\ProvidesFile{sjtu-math-font-pagella.def}
+%<pagella>  [2020/07/31 1.0.0rc7 Pagella math fonts definition (SJTUThesis)]
+%<stixtwo>\ProvidesFile{sjtu-math-font-stixtwo.def}
+%<stixtwo>  [2020/07/31 1.0.0rc7 STIX Two math fonts definition (SJTUThesis)]
+%<xits>\ProvidesFile{sjtu-math-font-xits.def}
+%<xits>  [2020/07/31 1.0.0rc7 XITS math fonts definition (SJTUThesis)]
+%<lm>\ProvidesFile{sjtu-math-font-lm.def}
+%<lm>  [2020/07/31 1.0.0rc7 Latin Modern math fonts definition (SJTUThesis)]
+%<newcm>\ProvidesFile{sjtu-math-font-newcm.def}
+%<newcm>  [2020/07/31 1.0.0rc7 New Computer Modern math fonts definition (SJTUThesis)]
+%<cambria>\ProvidesFile{sjtu-math-font-cambria.def}
+%<cambria>  [2020/07/31 1.0.0rc7 Cambria math fonts definition (SJTUThesis)]
+%</mathfont>
+%<*cjkfont>
+%<windows>\ProvidesFile{sjtu-cjk-font-windows.def}
+%<windows>  [2020/07/31 1.0.0rc7 Windows CJK fonts definition (SJTUThesis)]
+%<mac>\ProvidesFile{sjtu-cjk-font-mac.def}
+%<mac>  [2020/07/31 1.0.0rc7 macOS CJK fonts definition (SJTUThesis)]
+%<ubuntu>\ProvidesFile{sjtu-cjk-font-ubuntu.def}
+%<ubuntu>  [2020/07/31 1.0.0rc7 Ubuntu CJK fonts definition (SJTUThesis)]
+%<adobe>\ProvidesFile{sjtu-cjk-font-adobe.def}
+%<adobe>  [2020/07/31 1.0.0rc7 Adobe CJK fonts definition (SJTUThesis)]
+%<fandol>\ProvidesFile{sjtu-cjk-font-fandol.def}
+%<fandol>  [2020/07/31 1.0.0rc7 Fandol CJK fonts definition (SJTUThesis)]
+%<founder>\ProvidesFile{sjtu-cjk-font-founder.def}
+%<founder>  [2020/07/31 1.0.0rc7 Founder CJK fonts definition (SJTUThesis)]
+%</cjkfont>
+%<*document|class>
 \hyphenation{SJTU-Thesis}
 \def\sjtuthesis{SJTU\textsc{Thesis}}
 \def\version{1.0.0rc7}
-%</(document|class)>
+%</document|class>
 %<*driver>
 \documentclass{sjtudoc}
 \EnableCrossrefs
@@ -809,10 +876,10 @@ The Current Maintainer of this work is Alexara Wu.
 % \DescribeFunction{digest}
 %   \begin{sjtusyntax}[emph={[2]digest}]
 %     \begin{digest}
-%       (*\meta{英文大摘要}*)
+%       (*\meta{大摘要}*)
 %     \end{digest}
 %   \end{sjtusyntax}
-% 学士论文英文大摘要。仅在语言设置为中文，论文类型为学士论文的条件下有效。
+% 学士论文大摘要。仅在语言设置为中文，论文类型为学士论文的条件下有效。
 %
 % \section{致谢}
 %
@@ -831,6 +898,20 @@ The Current Maintainer of this work is Alexara Wu.
 \newcommand\sjtu@warning[1]{%
   \ClassWarning{sjtuthesis}{#1}{}%
 }
+%    \end{macrocode}
+%
+% 检查编译引擎，要求使用 \XeLaTeX 或 \LuaLaTeX。
+%    \begin{macrocode}
+\RequirePackage{iftex}
+\ifXeTeX\else
+  \ifLuaTeX\else
+    \sjtu@error{%
+      The SJTUThesis class requires either XeTeX or LuaTeX.\\\\
+      You must change your typesetting engine to, e.g.,
+      "xelatex" or "lualatex" instead of "latex" or "pdflatex".
+    }
+  \fi
+\fi
 %    \end{macrocode}
 %
 % \subsection{定义文档选项}
@@ -1022,25 +1103,30 @@ The Current Maintainer of this work is Alexara Wu.
     },
     initial = auto,
   },
+}
 %    \end{macrocode}
 %
-% 西文字体。
+% 正文字体。
 %    \begin{macrocode}
-  latinfontset = {
-    choices = {
-      xits,
-      times,
-      stix,
-      step,
-      termes,
-      pagella,
-      cambria,
-      libertinus,
-      lm,
-      none,
-    },
-  },
-}
+\DeclareStringOption[termes]{text-font}
+\@namedef{\KVO@prefix text@font}{\csname\KVO@prefix text-font\endcsname}
+%    \end{macrocode}
+%
+% 数学字体。
+%    \begin{macrocode}
+\DeclareStringOption[auto]{math-font}
+\@namedef{\KVO@prefix math@font}{\csname\KVO@prefix math-font\endcsname}
+%    \end{macrocode}
+%
+% 中文字体。
+%    \begin{macrocode}
+\DeclareStringOption[auto]{cjk-font}
+\@namedef{\KVO@prefix cjk@font}{\csname\KVO@prefix cjk-font\endcsname}
+%    \end{macrocode}
+%
+% 是否偏好使用 \pkg{unicode-math}。
+%    \begin{macrocode}
+\DeclareBoolOption[false]{unimath}
 %    \end{macrocode}
 %
 % 盲审模式开关。
@@ -1051,6 +1137,12 @@ The Current Maintainer of this work is Alexara Wu.
 % 浮动体是否采用连续编号。
 %    \begin{macrocode}
 \DeclareBoolOption[false]{continuous}
+%    \end{macrocode}
+%
+% 设置默认 \opt{openany}。
+%    \begin{macrocode}
+\DeclareBoolOption[false]{openright}
+\DeclareComplementaryOption{openany}{openright}
 %    \end{macrocode}
 %
 % 将选项传递给 \pkg{ctexbook}。
@@ -1087,6 +1179,15 @@ The Current Maintainer of this work is Alexara Wu.
 \PassOptionsToClass{zihao=\sjtu@zihao}{ctexbook}
 %    \end{macrocode}
 %
+% 设置默认 \opt{openany}。
+%    \begin{macrocode}
+\ifsjtu@openright
+  \PassOptionsToClass{openright}{book}
+\else
+  \PassOptionsToClass{openany}{book}
+\fi
+%    \end{macrocode}
+%
 % 使用 \XeTeX{} 引擎时，\pkg{fontspec} 宏包会被 \pkg{xeCJK} 自动调用。传递给
 % \pkg{fontspec} 宏包 \opt{no-math} 选项，避免部分数学符号字体自动调整为 CMR。
 % 并使用 \opt{quiet} 忽略警告。
@@ -1096,7 +1197,7 @@ The Current Maintainer of this work is Alexara Wu.
 %
 % 使用 \pkg{ctexbook} 类，优于调用 \pkg{ctex} 宏包。
 %    \begin{macrocode}
-\LoadClass[a4paper,UTF8,scheme=plain,linespread=1.3]{ctexbook}[2018/04/01]
+\LoadClass[a4paper,UTF8,scheme=plain,fontset=none,linespread=1.3]{ctexbook}[2018/04/01]
 %    \end{macrocode}
 %
 % 根据选项载入配置文件。
@@ -1119,6 +1220,7 @@ The Current Maintainer of this work is Alexara Wu.
 \RequirePackage{etoolbox}
 \RequirePackage{filehook}
 \RequirePackage{environ}
+\RequirePackage{calc}
 %    \end{macrocode}
 %
 % 使用 \pkg{geometry} 设置页面。
@@ -1139,16 +1241,6 @@ The Current Maintainer of this work is Alexara Wu.
 % 使用 \pkg{amsmath} 处理数学公式。
 %    \begin{macrocode}
 \RequirePackage{amsmath}
-%    \end{macrocode}
-%
-% 使用 \pkg{unicode-math} 处理数学字体。
-%    \begin{macrocode}
-\RequirePackage{unicode-math}
-%    \end{macrocode}
-%
-% 利用 \pkg{xeCJKfntef} 实现汉字的分散对齐。
-%    \begin{macrocode}
-\RequirePackage{xeCJKfntef}
 %    \end{macrocode}
 %
 % 颜色支持宏包。
@@ -1217,8 +1309,10 @@ The Current Maintainer of this work is Alexara Wu.
 % 对冲突的宏包报错。
 %    \begin{macrocode}
 \newcommand\sjtu@package@conflict[2]{
-  \AtBeginOfPackageFile*{#2}{
-    \sjtu@error{The `#2' package is incompatible with required `#1'}
+  \AtEndOfPackageFile*{#1}{%
+    \AtBeginOfPackageFile*{#2}{%
+      \sjtu@error{The "#2" package is incompatible with "#1"}%
+    }
   }
 }
 \sjtu@package@conflict{unicode-math}{amscd}
@@ -1229,6 +1323,12 @@ The Current Maintainer of this work is Alexara Wu.
 \sjtu@package@conflict{unicode-math}{eucal}
 \sjtu@package@conflict{unicode-math}{eufrak}
 \sjtu@package@conflict{unicode-math}{mathrsfs}
+\sjtu@package@conflict{unicode-math}{newtxmath}
+\sjtu@package@conflict{unicode-math}{upgreek}
+\sjtu@package@conflict{newtxmath}{amsfonts}
+\sjtu@package@conflict{newtxmath}{amssymb}
+\sjtu@package@conflict{newtxmath}{unicode-math}
+\sjtu@package@conflict{newtxmath}{upgreek}
 %    \end{macrocode}
 %
 % 定义一个补丁命令，失败时给出警告。
@@ -1277,7 +1377,7 @@ The Current Maintainer of this work is Alexara Wu.
       blue,
       black,
     },
-    initial = blue,
+    initial = red,
   },
   header-logo-color = {
     name = header@logo@color,
@@ -1286,7 +1386,7 @@ The Current Maintainer of this work is Alexara Wu.
       blue,
       black,
     },
-    initial = black,
+    initial = red,
   },
   float-number-separator = {
     name = fl@num@sep,
@@ -1313,6 +1413,18 @@ The Current Maintainer of this work is Alexara Wu.
 %    \begin{macrocode}
   title           = { name = title@zh },
   title*          = { name = title@en },
+%    \end{macrocode}
+%
+% 标题页论文中英文题目。
+%    \begin{macrocode}
+  display-title   = { name = display@title@zh },
+  display-title*  = { name = display@title@en },
+%    \end{macrocode}
+%
+% 页眉论文中英文题目。
+%    \begin{macrocode}
+  running-title   = { name = running@title@zh },
+  running-title*  = { name = running@title@en },
 %    \end{macrocode}
 %
 % 关键字。
@@ -1379,8 +1491,21 @@ The Current Maintainer of this work is Alexara Wu.
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-\newcommand\sjtu@nopar[1]{%
-  \begingroup\let\\\@empty#1\endgroup%
+\sjtu@option@hook{sjtu@info}{title}{%
+  \ifx\sjtu@info@display@title@zh\@empty
+    \global\let\sjtu@info@display@title@zh\sjtu@info@title@zh
+  \fi
+  \ifx\sjtu@info@running@title@zh\@empty
+    \global\let\sjtu@info@running@title@zh\sjtu@info@title@zh
+  \fi
+}
+\sjtu@option@hook{sjtu@info}{title*}{%
+  \ifx\sjtu@info@display@title@en\@empty
+    \global\let\sjtu@info@display@title@en\sjtu@info@title@en
+  \fi
+  \ifx\sjtu@info@running@title@en\@empty
+    \global\let\sjtu@info@running@title@en\sjtu@info@title@en
+  \fi
 }
 %    \end{macrocode}
 %
@@ -1402,10 +1527,16 @@ The Current Maintainer of this work is Alexara Wu.
 %    \begin{macrocode}
 \ifsjtu@language@chinese
   \def\sjtu@info@title{\sjtu@info@title@zh}
+  \def\sjtu@info@title@sec{\sjtu@info@title@en}
+  \def\sjtu@info@display@title{\sjtu@info@display@title@zh}
+  \def\sjtu@info@running@title{\sjtu@info@running@title@zh}
   \def\sjtu@info@keywords{\sjtu@info@keywords@zh}
   \def\sjtu@info@author{\sjtu@info@author@zh}
 \else
   \def\sjtu@info@title{\sjtu@info@title@en}
+  \def\sjtu@info@title@sec{\sjtu@info@title@zh}
+  \def\sjtu@info@display@title{\sjtu@info@display@title@en}
+  \def\sjtu@info@running@title{\sjtu@info@running@title@en}
   \def\sjtu@info@keywords{\sjtu@info@keywords@en}
   \def\sjtu@info@author{\sjtu@info@author@en}
 \fi
@@ -1452,6 +1583,7 @@ The Current Maintainer of this work is Alexara Wu.
   table             = { initial = Table },
   table*            = { name = table@second, initial = 表 },
   algorithm         = { initial = Algorithm },
+  abbreviation      = { initial = Abbreviation },
   nomenclature      = { initial = Nomenclature },
   summary           = { initial = Summary },
   bib               = { initial = Bibliography },
@@ -1460,6 +1592,7 @@ The Current Maintainer of this work is Alexara Wu.
   publications      = { initial = Publications },
   achievements      = { initial = Research Achievements },
   resume            = { initial = Resume },
+  digest            = { initial = Digest },
 }
 %    \end{macrocode}
 %
@@ -1497,7 +1630,6 @@ The Current Maintainer of this work is Alexara Wu.
   \sjtu@name@def{conferring@zh}{授予学位单位}
   \sjtu@name@def{conferring@en}{Degree-Conferring-Institution}
   \sjtu@name@def{thesis@type}{学位论文}
-  \sjtu@name@def{thesis@kind}{\sjtu@name@thesis@type}
   \sjtu@name@def{subject@zh}{%
     \sjtu@name@school@zh\sjtu@name@degree@type@zh\sjtu@name@thesis@type
   }
@@ -1510,16 +1642,14 @@ The Current Maintainer of this work is Alexara Wu.
     \sjtu@name@def{degree@type@zh}{}
     \sjtu@name@def{degree@type@en}{}
     \sjtu@name@def{thesis@type}{课程论文}
-    \sjtu@name@def{thesis@kind}{\sjtu@name@thesis@type}
     \sjtu@name@def{subject@zh}{\sjtu@name@thesis@type}
     \sjtu@name@def{subject@en}{Course Paper}
   \else
     \sjtu@name@def{degree@type@zh}{学士}
     \sjtu@name@def{degree@type@en}{Bachelor}
     \sjtu@name@def{thesis@type}{学位论文}
-    \sjtu@name@def{thesis@kind}{毕业设计（论文）}
     \sjtu@name@def{subject@zh}{\sjtu@name@degree@type@zh\sjtu@name@thesis@type}
-    \sjtu@name@def{subject@en}{Thesis of \sjtu@name@degree@type@en}
+    \sjtu@name@def{subject@en}{\sjtu@name@degree@type@en's Thesis}
   \fi
   \sjtu@name@def{author@zh}{学生姓名}
   \sjtu@name@def{id@zh}{学生学号}
@@ -1527,28 +1657,20 @@ The Current Maintainer of this work is Alexara Wu.
   \sjtu@name@def{course@zh}{课程名称}
   \sjtu@name@def{major@zh}{专业}
   \sjtu@name@def{department@zh}{学院(系)}
-  \sjtu@name@def{digest}{英文大摘要}
 \fi
-\sjtu@name@def{orig@subtitle@zh}{原创性声明}
-\sjtu@name@def{orig@subtitle@en}{Declaration of Originality}
-\sjtu@name@def{copr@subtitle@zh}{版权使用授权书}
-\sjtu@name@def{copr@subtitle@en}{Copyright Authorization}
-\sjtu@name@def{orig@title}{\sjtu@name@thesis@kind\sjtu@name@orig@subtitle@zh}
-\sjtu@name@def{copr@title}{\sjtu@name@thesis@kind\sjtu@name@copr@subtitle@zh}
-\sjtu@name@def{title@qouted}{《\sjtu@nopar\sjtu@info@title@zh》}
-\sjtu@name@def{origbody}{%
-  本人郑重声明：所呈交的\sjtu@name@thesis@kind\sjtu@name@title@qouted ，
-  是本人在导师的指导下，独立进行研究工作所取得的成果。除文中已经注明引用
-  的内容外，本论文不包含任何其他个人或集体已经发表或撰写过的作品成果。对
-  本文的研究做出重要贡献的个人和集体，均已在文中以明确方式标明。本人完全
-  意识到本声明的法律结果由本人承担。}
-\sjtu@name@def{coprbody}{%
-  本\sjtu@name@thesis@kind 作者
-  完全了解学校有关保留、使用\sjtu@name@thesis@kind 的规定，同意学校保留
-  并向国家有关部门或机构送交论文的复印件和电子版，允许论文被查阅和借阅。
-  本人授权\sjtu@name@school@zh 可以将本\sjtu@name@thesis@kind 的全部或部
-  分内容编入有关数据库进行检索，可以采用影印、缩印或扫描等复制手段保存和
-  汇编本\sjtu@name@thesis@kind 。}
+\sjtu@name@def{orig@title@zh}{原创性声明}
+\sjtu@name@def{orig@title@en}{Statement of Originality}
+\sjtu@name@def{copr@title@zh}{使用授权书}
+\sjtu@name@def{copr@title@en}{Copyright Permission}
+\sjtu@name@def{orig@body}{%
+  本人郑重声明：所呈交的\sjtu@name@thesis@type ，是本人在导师的指导下，独立进行
+  研究工作所取得的成果。除文中已经注明引用的内容外，本论文不包含任何其他个人或集
+  体已经发表或撰写过的作品成果。对本文的研究做出重要贡献的个人和集体，均已在文中
+  以明确方式标明。本人完全意识到本声明的法律结果由本人承担。}
+\sjtu@name@def{copr@body}{%
+  本\sjtu@name@thesis@type 作者完全了解学校有关保留、使用\sjtu@name@thesis@type
+  的规定，同意学校保留并向国家有关部门或机构送交论文的复印件和电子版，允许论文被
+  查阅和借阅。}
 \sjtu@name@def{abstract@zh}{摘\hspace{\ccwd}要}
 \sjtu@name@def{abstract@en}{Abstract}
 \sjtu@name@def{keywords@zh}{关键词：}
@@ -1570,7 +1692,8 @@ The Current Maintainer of this work is Alexara Wu.
       table             = {表},
       table*            = {Table},
       algorithm         = {算法},
-      nomenclature      = {主要符号对照表},
+      abbreviation      = {缩略语对照表},
+      nomenclature      = {符号对照表},
       summary           = {全文总结},
       bib               = {参考文献},
       index             = {索\hspace{\ccwd}引},
@@ -1578,6 +1701,7 @@ The Current Maintainer of this work is Alexara Wu.
       publications      = {攻读学位期间发表（或录用）的学术论文},
       achievements      = {攻读学位期间获得的科研成果},
       resume            = {个人简历},
+      digest            = {大摘要},
     }
   }
   \ctexset{
@@ -1586,14 +1710,12 @@ The Current Maintainer of this work is Alexara Wu.
   }
   \sjtu@name@def{titlepage}{扉页}
   \sjtu@name@def{subject}{\sjtu@name@subject@zh}
-  \sjtu@name@def{orig@subtitle}{\sjtu@name@orig@subtitle@zh}
-  \sjtu@name@def{copr@subtitle}{\sjtu@name@copr@subtitle@zh}
+  \sjtu@name@def{copr@mk}{\sjtu@name@orig@title@zh 及\sjtu@name@copr@title@zh}
   \sjtu@name@def{abstract}{\sjtu@name@abstract@zh}
 \else
   \sjtu@name@def{titlepage}{Title Page}
   \sjtu@name@def{subject}{\sjtu@name@subject@en}
-  \sjtu@name@def{orig@subtitle}{\sjtu@name@orig@subtitle@en}
-  \sjtu@name@def{copr@subtitle}{\sjtu@name@copr@subtitle@en}
+  \sjtu@name@def{copr@mk}{\sjtu@name@orig@title@en and \sjtu@name@copr@title@en}
   \sjtu@name@def{abstract}{\sjtu@name@abstract@en}
 \fi
 %    \end{macrocode}
@@ -1614,311 +1736,442 @@ The Current Maintainer of this work is Alexara Wu.
 %
 % \subsection{西文字体}
 %
-% 使用 \pkg{fontspec} 配置西文字体。
-%
-%  XITS 字体于 v1.109 (2018/09/28) 更改了字体的文件名。这里做一些兼容性设置。
 %    \begin{macrocode}
-\let\sjtu@font@family@xits\@empty
-\newcommand\sjtu@font@set@xits@names{%
-  \ifx\sjtu@font@family@xits\@empty
-    \IfFontExistsTF{XITSMath-Regular.otf}{%
-      \gdef\sjtu@font@family@xits{XITS}%
-      \gdef\sjtu@font@style@xits@rm{Regular}%
-      \gdef\sjtu@font@style@xits@bf{Bold}%
-      \gdef\sjtu@font@style@xits@it{Italic}%
-      \gdef\sjtu@font@style@xits@bfit{BoldItalic}%
-      \gdef\sjtu@font@name@xits@math@rm{XITSMath-Regular}%
-      \gdef\sjtu@font@name@xits@math@bf{XITSMath-Bold}%
-    }{%
-      \gdef\sjtu@font@family@xits{xits}%
-      \gdef\sjtu@font@style@xits@rm{regular}%
-      \gdef\sjtu@font@style@xits@bf{bold}%
-      \gdef\sjtu@font@style@xits@it{italic}%
-      \gdef\sjtu@font@style@xits@bfit{bolditalic}%
-      \gdef\sjtu@font@name@xits@math@rm{xits-math}%
-      \gdef\sjtu@font@name@xits@math@bf{xits-mathbold}%
-    }%
-  \fi
+\ifsjtu@unimath
+  \RequirePackage{unicode-math}
+\fi
+\ifthenelse{\equal{\sjtu@math@font}{auto}}{
+  \let\sjtu@math@font\sjtu@text@font
+}{}
+\ifthenelse{\equal{\sjtu@math@font}{none}}{}{%
+  \InputIfFileExists{sjtu-math-font-\sjtu@math@font.def}{}{%
+    \sjtu@warning{%
+      Invalid value `math-font = \sjtu@math@font'! \MessageBreak
+      Using `termes' instead.
+    }
+    \def\sjtu@math@font{termes}
+    \input{sjtu-math-font-\sjtu@math@font.def}
+  }
 }
-\let\sjtu@font@family@libertinus\@empty
-\newcommand\sjtu@font@set@libertinus@names{%
-  \ifx\sjtu@font@family@libertinus\@empty
-    \IfFontExistsTF{LibertinusSerif-Regular.otf}{%
-      \gdef\sjtu@font@family@libertinus@serif{LibertinusSerif}%
-      \gdef\sjtu@font@family@libertinus@sans{LibertinusSans}%
-      \gdef\sjtu@font@name@libertinus@math{LibertinusMath-Regular}%
-      \gdef\sjtu@font@style@libertinus@rm{Regular}%
-      \gdef\sjtu@font@style@libertinus@bf{Bold}%
-      \gdef\sjtu@font@style@libertinus@it{Italic}%
-      \gdef\sjtu@font@style@libertinus@bfit{BoldItalic}%
-    }{%
-      \gdef\sjtu@font@family@libertinus@serif{libertinusserif}%
-      \gdef\sjtu@font@family@libertinus@sans{libertinussans}%
-      \gdef\sjtu@font@name@libertinus@math{libertinusmath-regular}%
-      \gdef\sjtu@font@style@libertinus@rm{regular}%
-      \gdef\sjtu@font@style@libertinus@bf{bold}%
-      \gdef\sjtu@font@style@libertinus@it{italic}%
-      \gdef\sjtu@font@style@libertinus@bfit{bolditalic}%
-    }%
-  \fi
-}
-\newcommand\sjtu@set@font@xits{%
-  \sjtu@font@set@xits@names
-  \setmainfont{\sjtu@font@family@xits}[
-    Extension      = .otf,
-    UprightFont    = *-\sjtu@font@style@xits@rm,
-    BoldFont       = *-\sjtu@font@style@xits@bf,
-    ItalicFont     = *-\sjtu@font@style@xits@it,
-    BoldItalicFont = *-\sjtu@font@style@xits@bfit,
-  ]
-}
-\newcommand\sjtu@set@font@times{%
-  \setmainfont{Times New Roman}[Ligatures = Rare]
-  \setsansfont{Arial}
-  \setmonofont{Courier New}[Scale = MatchLowercase]
-}
-\newcommand\sjtu@set@font@stix{%
-  \setmainfont{STIX2Text}[
-    Extension      = .otf,
-    UprightFont    = *-Regular,
-    BoldFont       = *-Bold,
-    ItalicFont     = *-Italic,
-    BoldItalicFont = *-BoldItalic,
-  ]
-}
-\newcommand\sjtu@set@font@step{%
-  \setmainfont{STEP}[
-    Extension      = .otf,
-    UprightFont    = *-Regular,
-    BoldFont       = *-Bold,
-    ItalicFont     = *-Italic,
-    BoldItalicFont = *-BoldItalic,
-  ]
-}
-\newcommand\sjtu@set@font@source@sans@mono{%
-  \setsansfont{SourceSansPro}[
-    Extension      = .otf,
-    UprightFont    = *-Regular ,
-    ItalicFont     = *-RegularIt ,
-    BoldFont       = *-Bold ,
-    BoldItalicFont = *-BoldIt,
-  ]
-  \setmonofont{SourceCodePro}[
-    Extension      = .otf,
-    UprightFont    = *-Regular ,
-    ItalicFont     = *-RegularIt ,
-    BoldFont       = *-Bold ,
-    BoldItalicFont = *-BoldIt,
-    Scale          = MatchLowercase,
-  ]
-}
-\newcommand\sjtu@set@font@termes{%
-  \setmainfont{texgyretermes}[
-    Extension      = .otf,
-    UprightFont    = *-regular,
-    BoldFont       = *-bold,
-    ItalicFont     = *-italic,
-    BoldItalicFont = *-bolditalic,
-  ]%
-}
-\newcommand\sjtu@set@font@pagella{%
-  \setmainfont{texgyrepagella}[
-    Extension      = .otf,
-    UprightFont    = *-regular,
-    BoldFont       = *-bold,
-    ItalicFont     = *-italic,
-    BoldItalicFont = *-bolditalic,
-  ]%
-}
-\newcommand\sjtu@set@font@texgyre@sans@mono{%
-  \setsansfont{texgyreheros}[
-    Extension      = .otf,
-    UprightFont    = *-regular,
-    BoldFont       = *-bold,
-    ItalicFont     = *-italic,
-    BoldItalicFont = *-bolditalic,
-  ]%
-  \setmonofont{texgyrecursor}[
-    Extension      = .otf,
-    UprightFont    = *-regular,
-    BoldFont       = *-bold,
-    ItalicFont     = *-italic,
-    BoldItalicFont = *-bolditalic,
-  ]%
-}
-\newcommand\sjtu@set@font@cambria{%
-  \setmainfont{Cambria}
-  \setsansfont{Calibri}
-  \setmonofont{Consolas}[Scale = MatchLowercase]
-}
-\newcommand\sjtu@set@font@libertinus{%
-  \sjtu@font@set@libertinus@names
-  \setmainfont{\sjtu@font@family@libertinus@serif}[
-    Extension      = .otf,
-    UprightFont    = *-\sjtu@font@style@libertinus@rm,
-    BoldFont       = *-\sjtu@font@style@libertinus@bf,
-    ItalicFont     = *-\sjtu@font@style@libertinus@it,
-    BoldItalicFont = *-\sjtu@font@style@libertinus@bfit,
-  ]%
-  \setsansfont{\sjtu@font@family@libertinus@sans}[
-    Extension      = .otf,
-    UprightFont    = *-\sjtu@font@style@libertinus@rm,
-    BoldFont       = *-\sjtu@font@style@libertinus@bf,
-    ItalicFont     = *-\sjtu@font@style@libertinus@it,
-  ]%
-  \setmonofont{lmmonolt10}[
-    Extension      = .otf,
-    UprightFont    = *-regular,
-    BoldFont       = *-bold,
-    ItalicFont     = *-oblique,
-    BoldItalicFont = *-boldoblique,
-  ]%
-}
-\newcommand\sjtu@set@font@lm{%
-  \setmainfont{lmroman10}[
-    Extension      = .otf,
-    UprightFont    = *-regular,
-    BoldFont       = *-bold,
-    ItalicFont     = *-italic,
-    BoldItalicFont = *-bolditalic,
-  ]%
-  \setsansfont{lmsans10}[
-    Extension      = .otf,
-    UprightFont    = *-regular,
-    BoldFont       = *-bold,
-    ItalicFont     = *-oblique,
-    BoldItalicFont = *-boldoblique,
-  ]%
-  \setmonofont{lmmonolt10}[
-    Extension      = .otf,
-    UprightFont    = *-regular,
-    BoldFont       = *-bold,
-    ItalicFont     = *-oblique,
-    BoldItalicFont = *-boldoblique,
-  ]%
-}
-%    \end{macrocode}
-%
-% 使用 \pkg{unicode-math} 配置数学字体。
-%    \begin{macrocode}
-\unimathsetup{
-  math-style = ISO,
-  bold-style = ISO,
-  nabla      = upright,
-  partial    = upright,
-}
-\newcommand\sjtu@set@math@font@xits{%
-  \sjtu@font@set@xits@names
-  \setmathfont{\sjtu@font@name@xits@math@rm}[
-    Extension    = .otf,
-    BoldFont     = \sjtu@font@name@xits@math@bf,
-    StylisticSet = 8,
-  ]%
-  \setmathfont{\sjtu@font@name@xits@math@rm}[
-    Extension    = .otf,
-    BoldFont     = \sjtu@font@name@xits@math@bf,
-    StylisticSet = 1,
-    range        = {cal,bfcal},
-  ]%
-}
-\newcommand\sjtu@set@math@font@stix{%
-  \setmathfont{STIX2Math}[
-    Extension    = .otf,
-    StylisticSet = 8,
-  ]%
-  \setmathfont{STIX2Math}[
-    Extension    = .otf,
-    StylisticSet = 1,
-    range        = {cal,bfcal},
-  ]%
-}
-\newcommand\sjtu@set@math@font@step{%
-  \setmathfont{STEPMath-Regular}[
-    Extension    = .otf,
-    BoldFont     = STEPMath-Bold,
-    StylisticSet = 8,
-  ]%
-  \setmathfont{STEPMath-Regular}[
-    Extension    = .otf,
-    BoldFont     = STEPMath-Bold,
-    StylisticSet = 1,
-    range        = {cal,bfcal},
-  ]%
-}
-\newcommand\sjtu@set@math@font@termes{%
-  \setmathfont{texgyretermes-math.otf}
-}
-\newcommand\sjtu@set@math@font@pagella{%
-  \setmathfont{texgyrepagella-math.otf}
-}
-\newcommand\sjtu@set@math@font@cambria{%
-  \setmathfont{Cambria Math}
-}
-\newcommand\sjtu@set@math@font@libertinus{%
-  \sjtu@font@set@libertinus@names
-  \setmathfont{\sjtu@font@name@libertinus@math .otf}%
-}
-\newcommand\sjtu@set@math@font@lm{%
-  \setmathfont{latinmodern-math.otf}%
-}
-%    \end{macrocode}
-%
-% 设置西文字体集。
-%    \begin{macrocode}
-\newcommand\sjtu@load@fontset@xits{%
-  \sjtu@set@font@xits
-  \sjtu@set@font@source@sans@mono
-  \sjtu@set@math@font@xits
-}
-\newcommand\sjtu@load@fontset@times{%
-  \sjtu@set@font@times
-  \sjtu@set@math@font@xits
-}
-\newcommand\sjtu@load@fontset@stix{%
-  \sjtu@set@font@stix
-  \sjtu@set@font@source@sans@mono
-  \sjtu@set@math@font@stix
-}
-\newcommand\sjtu@load@fontset@step{%
-  \sjtu@set@font@step
-  \sjtu@set@font@source@sans@mono
-  \sjtu@set@math@font@step
-}
-\newcommand\sjtu@load@fontset@termes{%
-  \sjtu@set@font@termes
-  \sjtu@set@font@texgyre@sans@mono
-  \sjtu@set@math@font@termes
-}
-\newcommand\sjtu@load@fontset@pagella{%
-  \sjtu@set@font@pagella
-  \sjtu@set@font@texgyre@sans@mono
-  \sjtu@set@math@font@pagella
-}
-\newcommand\sjtu@load@fontset@cambria{%
-  \sjtu@set@font@cambria
-  \sjtu@set@math@font@cambria
-}
-\newcommand\sjtu@load@fontset@libertinus{%
-  \sjtu@set@font@libertinus
-  \sjtu@set@math@font@libertinus
-}
-\newcommand\sjtu@load@fontset@lm{%
-  \sjtu@set@font@lm
-  \sjtu@set@math@font@lm
-}
-\newcommand\sjtu@load@fontset@none{\relax}
-%    \end{macrocode}
-%
-% 载入西文字体集。
-%    \begin{macrocode}
-\newcommand\sjtu@load@fontset{%
-  \@nameuse{sjtu@load@fontset@\sjtu@latinfontset}
-}
-\sjtu@load@fontset
-\sjtu@option@hook{sjtu}{latinfontset}{%
-  \sjtu@load@fontset
+\ifthenelse{\equal{\sjtu@text@font}{none}}{}{%
+  \InputIfFileExists{sjtu-text-font-\sjtu@text@font.def}{}{%
+    \sjtu@warning{%
+      Invalid value `text-font = \sjtu@text@font'! \MessageBreak
+      Using `termes' instead.
+    }
+    \def\sjtu@text@font{termes}
+    \input{sjtu-text-font-\sjtu@text@font.def}
+  }
 }
 %</class>
+%<*mathfont>
+%<termes|pagella|lm>\ifsjtu@unimath
+%<stixtwo|xits|newcm|cambria>\sjtu@unimathtrue
+%<stixtwo|xits|newcm|cambria>\RequirePackage{unicode-math}
+%<termes>  \setmathfont{texgyretermes-math.otf}
+%<pagella>  \setmathfont{texgyrepagella-math.otf}
+%<*stixtwo>
+\IfFontExistsTF{STIXTwoMath-Regular.otf}{
+  \setmathfont[
+    StylisticSet = 8
+  ]{STIXTwoMath-Regular.otf}
+  \setmathfont[
+    range        = {scr, bfscr},
+    StylisticSet = 1
+  ]{STIXTwoMath-Regular.otf}
+}{
+  \setmathfont[
+    StylisticSet = 8
+  ]{STIX2Math.otf}
+  \setmathfont[
+    range        = {scr, bfscr},
+    StylisticSet = 1
+  ]{STIX2Math.otf}
+}
+%</stixtwo>
+%<*xits>
+\IfFontExistsTF{XITSMath-Regular.otf}{
+  \setmathfont[
+    Extension    = .otf,
+    BoldFont     = XITSMath-Bold,
+    StylisticSet = 8,
+  ]{XITSMath-Regular}
+  \setmathfont[
+    range        = {cal, bfcal},
+    StylisticSet = 1
+  ]{XITSMath-Regular.otf}
+}{
+  \setmathfont[
+    Extension    = .otf,
+    BoldFont     = *bold,
+    StylisticSet = 8,
+  ]{xits-math}
+  \setmathfont[
+    range        = {cal, bfcal},
+    StylisticSet = 1
+  ]{xits-math.otf}
+}
+%</xits>
+%<lm>  \setmathfont{latinmodern-math.otf}
+%<*newcm>
+\setmathfont[
+  StylisticSet = 2
+]{NewCMMath-Book.otf}
+\setmathfont[
+  range        = {scr, bfscr},
+  StylisticSet = 1
+]{NewCMMath-Book.otf}
+%</newcm>
+%<cambria>\setmathfont{Cambria Math}
+%</mathfont>
+%<*termes|pagella>
+%<mathfont>  \setmathrm[
+%<textfont>  \setmainfont[
+    Extension      = .otf,
+    UprightFont    = *-regular,
+    BoldFont       = *-bold,
+    ItalicFont     = *-italic,
+    BoldItalicFont = *-bolditalic,
+%<termes>  ]{texgyretermes}
+%<pagella>  ]{texgyrepagella}
+%</termes|pagella>
+%<*stixtwo>
+\IfFontExistsTF{STIXTwoText-Regular.otf}{
+%<mathfont>  \setmathrm[
+%<textfont>  \setmainfont[
+    Extension      = .otf,
+    UprightFont    = *-Regular,
+    BoldFont       = *-Bold,
+    ItalicFont     = *-Italic,
+    BoldItalicFont = *-BoldItalic,
+  ]{STIXTwoText}
+}{
+%<mathfont>  \setmathrm[
+%<textfont>  \setmainfont[
+    Extension      = .otf,
+    UprightFont    = *-Regular,
+    BoldFont       = *-Bold,
+    ItalicFont     = *-Italic,
+    BoldItalicFont = *-BoldItalic,
+  ]{STIX2Text}
+}
+%</stixtwo>
+%<*xits>
+\IfFontExistsTF{XITS-Regular.otf}{
+%<mathfont>  \setmathrm[
+%<textfont>  \setmainfont[
+    Extension      = .otf,
+    UprightFont    = *-Regular,
+    BoldFont       = *-Bold,
+    ItalicFont     = *-Italic,
+    BoldItalicFont = *-BoldItalic,
+  ]{XITS}
+}{
+%<mathfont>  \setmathrm[
+%<textfont>  \setmainfont[
+    Extension      = .otf,
+    UprightFont    = *-regular,
+    BoldFont       = *-bold,
+    ItalicFont     = *-italic,
+    BoldItalicFont = *-bolditalic,
+  ]{xits}
+}
+%</xits>
+%<*termes|pagella|stixtwo|xits>
+%<mathfont>  \setmathsf[
+%<textfont>  \setsansfont[
+    Extension      = .otf,
+    UprightFont    = *-regular,
+    BoldFont       = *-bold,
+    ItalicFont     = *-italic,
+    BoldItalicFont = *-bolditalic,
+  ]{texgyreheros}
+%<mathfont>  \setmathtt[
+%<textfont>  \setmonofont[
+    Extension      = .otf,
+    UprightFont    = *-regular,
+    BoldFont       = *-bold,
+    ItalicFont     = *-italic,
+    BoldItalicFont = *-bolditalic,
+    Scale          = MatchLowercase,
+    Ligatures      = CommonOff,
+  ]{texgyrecursor}
+%</termes|pagella|stixtwo|xits>
+%<*lm>
+%<mathfont>  \setmathrm[
+%<textfont>  \setmainfont[
+    Extension      = .otf,
+    UprightFont    = *-regular,
+    BoldFont       = *-bold,
+    ItalicFont     = *-italic,
+    BoldItalicFont = *-bolditalic,
+  ]{lmroman10}
+%<mathfont>  \setmathsf[
+%<textfont>  \setsansfont[
+    Extension      = .otf,
+    UprightFont    = *-regular,
+    BoldFont       = *-bold,
+    ItalicFont     = *-oblique,
+    BoldItalicFont = *-boldoblique,
+  ]{lmsans10}
+%<mathfont>  \setmathtt[
+%<textfont>  \setmonofont[
+    Extension      = .otf,
+    UprightFont    = *-regular,
+    BoldFont       = *-bold,
+    ItalicFont     = *-oblique,
+    BoldItalicFont = *-boldoblique,
+  ]{lmmonolt10}
+%</lm>
+%<*newcm>
+%<mathfont>\setmathrm[
+%<textfont>\setmainfont[
+  Extension      = .otf,
+  UprightFont    = *-Book,
+  BoldFont       = *-Bold,
+  ItalicFont     = *-BookItalic,
+  BoldItalicFont = *-BoldItalic,
+]{NewCM10}
+%<mathfont>\setmathsf[
+%<textfont>\setsansfont[
+  Extension      = .otf,
+  UprightFont    = *-Book,
+  BoldFont       = *-Bold,
+  ItalicFont     = *-BookOblique,
+  BoldItalicFont = *-BoldOblique,
+]{NewCMSans10}
+%<mathfont>\setmathtt[
+%<textfont>\setmonofont[
+  Extension      = .otf,
+  UprightFont    = *-Book,
+  BoldFont       = *-Bold,
+  ItalicFont     = *-BookItalic,
+  BoldItalicFont = *-BoldOblique,
+]{NewCMMono10}
+%</newcm>
+%<*cambria>
+%<*mathfont>
+\setmathrm{Cambria}
+\setmathsf{Calibri}
+\setmathtt[Scale=MatchLowercase]{Consolas}
+%</mathfont>
+%<*textfont>
+\setmainfont{Cambria}
+\setsansfont{Calibri}
+\setmonofont[Scale=MatchLowercase]{Consolas}
+%</textfont>
+%</cambria>
+%<*times>
+\setmainfont[Ligatures=Rare]{Times New Roman}
+\setsansfont{Arial}
+\setmonofont[Scale=MatchLowercase]{Courier New}
+%</times>
+%<*mathfont&(termes|pagella|lm)>
+\else
+%<lm>  \RequirePackage{amssymb}
+%<lm>  \RequirePackage{upgreek}
+  \let\oldencodingdefault\encodingdefault
+  \let\oldrmdefault\rmdefault
+  \let\oldsfdefault\sfdefault
+  \let\oldttdefault\ttdefault
+  \RequirePackage[T1]{fontenc}
+%<termes>  \renewcommand{\rmdefault}{ntxtlf}
+%<pagella>  \renewcommand{\rmdefault}{zpltlf}
+%<termes|pagella>  \renewcommand{\sfdefault}{qhv}
+%<termes|pagella>  \renewcommand{\ttdefault}{ntxtt}
+%<termes>  \RequirePackage[upint]{newtxmath}
+%<pagella>  \RequirePackage[upint]{newpxmath}
+%<lm>  \RequirePackage{lmodern}
+  \let\encodingdefault\oldencodingdefault
+  \let\rmdefault\oldrmdefault
+  \let\sfdefault\oldsfdefault
+  \let\ttdefault\oldttdefault
+  \RequirePackage{bm}
+\fi
+%</mathfont&(termes|pagella|lm)>
+%    \end{macrocode}
+%
+% \subsection{中文字体}
+%
+% 根据操作系统自动选择中文字体。
+%    \begin{macrocode}
+%<*class>
+\ifthenelse{\equal{\sjtu@cjk@font}{auto}}{
+  \IfFontExistsTF{SimSun}{
+    \def\sjtu@cjk@font{windows}
+  }{
+    \IfFileExists{/System/Library/Fonts/Menlo.ttc}{
+      \def\sjtu@cjk@font{mac}
+    }{
+      \IfFontExistsTF{Noto Serif CJK SC}{
+        \def\sjtu@cjk@font{ubuntu}
+      }{
+        \def\sjtu@cjk@font{fandol}
+      }
+    }
+  }
+}{}
+\ifthenelse{\equal{\sjtu@cjk@font}{none}}{}{%
+  \InputIfFileExists{sjtu-cjk-font-\sjtu@cjk@font.def}{}{%
+    \sjtu@warning{%
+      Invalid value `cjk-font = \sjtu@cjk@font'! \MessageBreak
+      Using `fandol' instead.
+    }
+    \def\sjtu@cjk@font{fandol}
+    \input{sjtu-cjk-font-\sjtu@cjk@font.def}
+  }
+}
+%    \end{macrocode}
+%
+% 带圈数字和方框使用中文字体。
+%    \begin{macrocode}
+\ifXeTeX
+  \xeCJKDeclareCharClass{CJK}{"24EA,"2460->"2473,"3251->"32BF,"25A1}
+\fi
+\ifLuaTeX
+  \ltjdefcharrange{100}{"24EA,"2460-"2473,"3251-"32BF,"25A1}
+  \ltjsetparameter{jacharrange={+100}}
+\fi
+\newcommand\sjtu@square{\symbol{"25A1}}
+\newcommand\sjtu@colon{\makebox[1\ccwd]{\symbol{"FF1A}}}
+%</class>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*cjkfont>
+%<*windows>
+\setCJKmainfont{SimSun}[
+  AutoFakeBold = 3,
+  ItalicFont   = KaiTi,
+]
+\setCJKsansfont{SimHei}[BoldFont=*]
+\setCJKmonofont{FangSong}
+\setCJKfamilyfont{zhsong}{SimSun}[
+  AutoFakeBold = 3,
+  ItalicFont   = KaiTi,
+]
+\setCJKfamilyfont{zhhei}{SimHei}[BoldFont=*]
+\setCJKfamilyfont{zhkai}{KaiTi}
+\setCJKfamilyfont{zhfs}{FangSong}
+%</windows>
+%<*mac>
+\setCJKmainfont{Songti SC}[
+  UprightFont    = * Light,
+  BoldFont       = * Bold,
+  ItalicFont     = Kaiti SC Regular,
+  BoldItalicFont = Kaiti SC Bold,
+]
+\setCJKsansfont{Heiti SC}[
+  UprightFont    = * Medium,
+  BoldFont       = * Medium,
+]%
+\setCJKmonofont{STFangsong}
+\setCJKfamilyfont{zhsong}{Songti SC}[
+  UprightFont    = * Light,
+  BoldFont       = * Bold,
+]
+\setCJKfamilyfont{zhhei}{Heiti SC}[
+  UprightFont    = * Medium,
+  BoldFont       = * Medium,
+]
+\setCJKfamilyfont{zhfs}{STFangsong}
+\setCJKfamilyfont{zhkai}{Kaiti SC}[
+  UprightFont    = * Regular,
+  BoldFont       = * Bold,
+]
+%</mac>
+%<*ubuntu>
+\setCJKmainfont{Noto Serif CJK SC}[
+  UprightFont = * Light,
+  BoldFont    = * Bold,
+  ItalicFont  = AR PL UKai CN,
+]
+\setCJKsansfont{Noto Sans CJK SC}[
+  UprightFont = * Medium,
+  BoldFont    = * Medium,
+]
+\setCJKmonofont{Noto Sans Mono CJK SC}
+\setCJKfamilyfont{zhsong}{Noto Serif CJK SC}[
+  UprightFont = * Light,
+  BoldFont    = * Bold,
+  ItalicFont  = AR PL UKai CN,
+]
+\setCJKfamilyfont{zhhei}{Noto Sans CJK SC}[
+  UprightFont = * Medium,
+  BoldFont    = * Medium,
+]
+\setCJKfamilyfont{zhkai}{AR PL UKai CN}
+%</ubuntu>
+%<*adobe>
+\setCJKmainfont{AdobeSongStd-Light}[
+  AutoFakeBold = 3,
+  ItalicFont   = AdobeKaitiStd-Regular,
+]
+\setCJKsansfont{AdobeHeitiStd-Regular}[BoldFont=*]
+\setCJKmonofont{AdobeFangsongStd-Regular}
+\setCJKfamilyfont{zhsong}{AdobeSongStd-Light}[
+  AutoFakeBold = 3,
+  ItalicFont = AdobeKaitiStd-Regular,
+]
+\setCJKfamilyfont{zhhei}{AdobeHeitiStd-Regular}[BoldFont=*]
+\setCJKfamilyfont{zhfs}{AdobeFangsongStd-Regular}
+\setCJKfamilyfont{zhkai}{AdobeKaitiStd-Regular}
+%</adobe>
+%<*fandol>
+\setCJKmainfont{FandolSong}[
+  Extension   = .otf,
+  UprightFont = *-Regular,
+  BoldFont    = *-Bold,
+  ItalicFont  = FandolKai-Regular,
+]
+\setCJKsansfont{FandolHei}[
+  Extension   = .otf,
+  UprightFont = *-Regular,
+  BoldFont    = *-Regular,
+]
+\setCJKmonofont{FandolFang}[
+  Extension   = .otf,
+  UprightFont = *-Regular,
+]
+\setCJKfamilyfont{zhsong}{FandolSong}[
+  Extension   = .otf,
+  UprightFont = *-Regular,
+  BoldFont    = *-Bold,
+]
+\setCJKfamilyfont{zhhei}{FandolHei}[
+  Extension   = .otf,
+  UprightFont = *-Regular,
+  BoldFont    = *-Regular,
+]
+\setCJKfamilyfont{zhfs}{FandolFang}[
+  Extension   = .otf,
+  UprightFont = *-Regular,
+]
+\setCJKfamilyfont{zhkai}{FandolKai}[
+  Extension   = .otf,
+  UprightFont = *-Regular,
+]
+%</fandol>
+%<*founder>
+\setCJKmainfont{FZShuSong-Z01}[
+  AutoFakeBold = 3,
+  ItalicFont   = FZKai-Z03,
+]
+\setCJKsansfont{FZHei-B01}[BoldFont=*]
+\setCJKmonofont{FZFangSong-Z02}
+\setCJKfamilyfont{zhsong}{FZShuSong-Z01}[
+  AutoFakeBold = 3,
+  ItalicFont   = FZKai-Z03,
+]
+\setCJKfamilyfont{zhhei}{FZHei-B01}[BoldFont=*]
+\setCJKfamilyfont{zhkai}{FZKai-Z03}
+\setCJKfamilyfont{zhfs}{FZFangSong-Z02}
+%</founder>
+\NewDocumentCommand\songti{}{\CJKfamily{zhsong}}
+\NewDocumentCommand\heiti{}{\CJKfamily{zhhei}}
+%<!ubuntu>\NewDocumentCommand\fangsong{}{\CJKfamily{zhfs}}
+\NewDocumentCommand\kaishu{}{\CJKfamily{zhkai}}
+%</cjkfont>
 %    \end{macrocode}
 %
 % \subsection{页面设置}
@@ -1929,10 +2182,12 @@ The Current Maintainer of this work is Alexara Wu.
 \geometry{%
   paper      = a4paper,
 %<*undergraduate>
-  vmargin    = {84bp, 72bp},
-  hmargin    = 90bp,
+  top        = 84bp,
+  bottom     = 72bp,
+  left       = 90bp,
+  right      = 90bp,
   headheight = 60bp,
-  headsep    = 12bp,
+  headsep    = 8bp,
 %</undergraduate>
 %<*graduate>
   top        = 3.5cm,
@@ -1985,11 +2240,21 @@ The Current Maintainer of this work is Alexara Wu.
 \fancypagestyle{plain}{%
   \fancyhf{}
 %<*graduate>
-  \ifsjtu@style@header@single
-    \fancyhead[C]{\zihao{-5}\sjtu@name@subject@zh}
+  \if@twoside
+    \ifsjtu@style@header@single
+      \fancyhead[CO]{\zihao{-5}\sjtu@name@subject@zh}
+      \fancyhead[CE]{\zihao{-5}\leftmark}
+    \else
+      \fancyhead[RE,LO]{\zihao{-5}\sjtu@name@subject@zh}
+      \fancyhead[RO,LE]{\zihao{-5}\leftmark}
+    \fi
   \else
-    \fancyhead[RE,LO]{\zihao{-5}\sjtu@name@subject@zh}
-    \fancyhead[RO,LE]{\zihao{-5}\leftmark}
+    \ifsjtu@style@header@single
+      \fancyhead[C]{\zihao{-5}\sjtu@name@subject@zh}
+    \else
+      \fancyhead[L]{\zihao{-5}\sjtu@name@subject@zh}
+      \fancyhead[R]{\zihao{-5}\leftmark}
+    \fi
   \fi
 %</graduate>
 %<*undergraduate>
@@ -1999,7 +2264,7 @@ The Current Maintainer of this work is Alexara Wu.
   }
   \fancyhead[R]{%
     \parbox[b]{0.7\textwidth}{%
-      \raggedleft\zihao{-5}\heiti\MakeUppercase{\sjtu@info@title}
+      \raggedleft\zihao{-5}\heiti\MakeUppercase{\sjtu@info@running@title}
     }
   }
 %</undergraduate>
@@ -2085,7 +2350,7 @@ The Current Maintainer of this work is Alexara Wu.
   \def\sjtu@lastpageref{\lastpageref{pagesLTS.arabic}}
 }
 \renewcommand\backmatter{%
-  \cleardoublepage
+  \if@openright\cleardoublepage\else\clearpage\fi%
   \@mainmatterfalse
 }
 %    \end{macrocode}
@@ -2103,8 +2368,11 @@ The Current Maintainer of this work is Alexara Wu.
     titleformat  = {},
     aftername    = \quad,
     afterindent  = true,
-    beforeskip   = {\ifsjtu@type@graduate 0pt\else 1ex\fi},
-    afterskip    = {\ifsjtu@type@graduate 3ex\else 4ex\fi},
+    fixskip      = true,
+    beforeskip   = 24pt,
+    afterskip    = 24pt,
+    lofskip      = 0pt,
+    lotskip      = 0pt,
   },
   section = {%
     format       = \zihao{4}\bfseries\heiti,
@@ -2197,14 +2465,17 @@ The Current Maintainer of this work is Alexara Wu.
 % \begin{macro}{\sjtu@textcircled}
 % 生成带圈的脚注数字，最多处理到 10。
 %    \begin{macrocode}
+\newcommand\footnotemarkfont{}
 \def\sjtu@textcircled#1{%
-  \ifnum\value{#1} >10%
-    \sjtu@error{%
-      Too many footnotes in this page.
-      Keep footnote no more than 10%
-    }%
-  \fi
-  {\CJKfamily+{}\symbol{\the\numexpr\value{#1}+"245F\relax}}%
+  \ifnum\value{#1} <21%
+    {\footnotemarkfont\symbol{\the\numexpr\value{#1}+"245F\relax}}%
+  \else\ifnum\value{#1} <36%
+    {\footnotemarkfont\symbol{\the\numexpr\value{#1}+"323C\relax}}%
+  \else\ifnum\value{#1} <51%
+    {\footnotemarkfont\symbol{\the\numexpr\value{#1}+"328D\relax}}%
+  \else
+    \sjtu@warning{Too many footnotes in this page.}%
+  \fi\fi\fi
 }
 \renewcommand{\thefootnote}{\sjtu@textcircled{footnote}}
 \renewcommand{\thempfootnote}{\sjtu@textcircled{mpfootnote}}
@@ -2253,7 +2524,7 @@ The Current Maintainer of this work is Alexara Wu.
 \NewDocumentCommand{\sjtu@chapter}{s O{#3} m O{#2}}{
   \if@openright\cleardoublepage\else\clearpage\fi%
   \IfBooleanTF{#1}{%
-    \ifthenelse{\equal{#4}{}}{\relax}{%
+    \ifthenelse{\equal{#4}{}}{}{%
       \sjtu@pdfbookmark{0}{#4}%
     }
   }{%
@@ -2289,8 +2560,10 @@ The Current Maintainer of this work is Alexara Wu.
 \def\sjtu@listof#1{% #1: float type
   \setcounter{tocdepth}{2} % restore tocdepth in case being modified
   \@ifstar
-    {\sjtu@chapter*{\csname list#1name\endcsname}\@starttoc{\csname ext@#1\endcsname}}%
-    {\sjtu@chapter{\csname list#1name\endcsname}\@starttoc{\csname ext@#1\endcsname}}%
+    {\sjtu@chapter*{\csname list#1name\endcsname}
+     \@starttoc{\csname ext@#1\endcsname}}%
+    {\sjtu@chapter{\csname list#1name\endcsname}
+     \@starttoc{\csname ext@#1\endcsname}}%
 }
 \renewcommand\listoffigures{\sjtu@listof{figure}}
 \renewcommand\listoftables{\sjtu@listof{table}}
@@ -2329,12 +2602,8 @@ The Current Maintainer of this work is Alexara Wu.
 \renewcommand\cftfigpresnum{\sjtu@name@figure~}
 \renewcommand\cfttabpresnum{\sjtu@name@table~}
 \AtEndPreamble{%
-  \newlength{\sjtu@cftfignumwidth@tmp}
-    \settowidth{\sjtu@cftfignumwidth@tmp}{\cftfigpresnum}
-  \addtolength{\cftfignumwidth}{\sjtu@cftfignumwidth@tmp}
-  \newlength{\sjtu@cfttabnumwidth@tmp}
-    \settowidth{\sjtu@cfttabnumwidth@tmp}{\cfttabpresnum}
-  \addtolength{\cfttabnumwidth}{\sjtu@cfttabnumwidth@tmp}
+  \addtolength{\cftfignumwidth}{\widthof{\cftfigpresnum}}
+  \addtolength{\cfttabnumwidth}{\widthof{\cfttabpresnum}}
 }
 %    \end{macrocode}
 %
@@ -2417,71 +2686,13 @@ The Current Maintainer of this work is Alexara Wu.
   \def\figurename{\sjtu@name@figure@second}
 }
 \captionsetup[bi-second]{bi-second}
-%    \end{macrocode}
-%
-% \subsubsection{数学相关}
-%
-% 根据中文的数学排印习惯进行调整：
-%    \begin{macrocode}
-%    \end{macrocode}
-%
-% \begin{macro}{\ldots}
-% 省略号一律居中，所以 \cs{ldots} 不再居于底部。
-%    \begin{macrocode}
-\let\mathellipsis\cdots
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\Re}
-% \begin{macro}{\Im}
-% 实部、虚部操作符使用罗马体 $\mathrm{Re}$、$\mathrm{Im}$ 而不是 fraktur 体
-% $\Re$、$\Im$。
-%    \begin{macrocode}
-\AtBeginDocument{%
-  \renewcommand\Re{\operatorname{Re}}%
-  \renewcommand\Im{\operatorname{Im}}%
-}
-%    \end{macrocode}
-% \end{macro}
-% \end{macro}
-%
-% \begin{macro}{\upe}
-% \begin{macro}{\upi}
-% \begin{macro}{\upj}
-% \begin{macro}{\dif}
-% 提供一些方便的命令：
-%    \begin{macrocode}
-\newcommand\upe{\mathrm{e}}
-\newcommand\upi{\mathrm{i}}
-\newcommand\upj{\mathrm{j}}
-\newcommand\dif{\mathop{}\!\mathrm{d}}
-%    \end{macrocode}
-% \end{macro}
-% \end{macro}
-% \end{macro}
-% \end{macro}
-%
-% \begin{macro}{\bm}
-% \begin{macro}{\boldsymbol}
-% 兼容旧的粗体命令：\pkg{bm} 的 \cs{bm} 和 \pkg{amsmath} 的 \cs{boldsymbol}。
-%    \begin{macrocode}
-\newcommand\bm{\symbf}
-\renewcommand\boldsymbol{\symbf}
-%    \end{macrocode}
-% \end{macro}
-% \end{macro}
-%
-% \begin{macro}{\square}
-% 兼容 \pkg{amssymb} 中的命令。
-%    \begin{macrocode}
-\newcommand\square{\mdlgwhtsquare}
 %</class>
+%<*undergraduate>
+\DeclareCaptionFont{sjtu@caption@font}{\zihao{5}\bfseries}
 %    \end{macrocode}
-% \end{macro}
 %
 % 学士论文模版默认设置。
 %    \begin{macrocode}
-%<*undergraduate>
 \ifsjtu@type@bachelor
   \sjtusetup{
     style = {
@@ -2497,87 +2708,67 @@ The Current Maintainer of this work is Alexara Wu.
 % 支持扫描文件替换。
 %    \begin{macrocode}
 %<*class>
-\newcommand\sjtu@square{{\CJKfamily+{}\symbol{"25A1}}}
 \newcommand\sjtu@copr@addon{%
-  \vskip 2ex
-  \begingroup
-    \linespread{1}\selectfont
-    本\sjtu@name@thesis@type 属于\parbox[c]{20\ccwd}{%
-      {\heiti 保\hspace{1\ccwd}密}~\sjtu@square ，
-      在\uline{\hspace{2\ccwd}}年解密后适用本授权书。\bigbreak
-      {\heiti 不保密}~\sjtu@square 。
-    }\par
-  \endgroup
-  \vskip 2ex
-  （请在以上方框内打“$\checkmark$”）
+  \noindent
+  本\sjtu@name@thesis@type 属于\enskip
+  \begin{minipage}[t]{28\ccwd}
+    \sjtu@square{\bfseries 公开论文} \par
+    \sjtu@square{\bfseries 内部论文}，%
+      \sjtu@square 1 年/\sjtu@square 2 年/\sjtu@square 3 年\quad%
+      解密后适用本授权书。\par
+    \sjtu@square{\bfseries 秘密论文}，\underline{\hspace{2\ccwd}}年%
+      （不超过10年）解密后适用本授权书。\par
+    \sjtu@square{\bfseries 机密论文}，\underline{\hspace{2\ccwd}}年%
+      （不超过20年）解密后适用本授权书。\par
+    （请在以上方框内打“$\checkmark$”）
+  \end{minipage}
 }
 \newcommand\sjtu@signbox[1]{%
-  \parbox{.45\textwidth}{%
-    #1 签名：\vskip 4em
+  \begingroup
+  \zihao{4}
+  \parbox[t]{64mm}{%
+    {#1}签名：\\[6pt]
     日期：\hspace{\stretch{3}}年\hspace{\stretch{2}}月\hspace{\stretch{2}}日
   }
-}
-\NewDocumentCommand{\originalitypage}{s O{}}{%
-  \ifsjtu@review\relax\else
-    \cleardoublepage
-    \ifblank{#2}{%
-      \thispagestyle{empty}
-      \sjtu@chapter*[\sjtu@name@orig@subtitle]{%
-        \zihao{-2}\sjtu@name@school@zh\\\sjtu@name@orig@title
-      }
-      \IfBooleanT{#1}{%
-        \let\sjtu@name@title@qouted\@empty
-      }
-      \begingroup
-        \zihao{4}
-        \begingroup
-          \linespread{1.5}\selectfont
-          \sjtu@name@origbody\par
-        \endgroup
-        \vskip 16ex
-        \noindent
-        \begin{minipage}{\textwidth}
-          \hfill
-          \sjtu@signbox{\sjtu@name@thesis@type 作者}
-        \end{minipage}
-        \par
-      \endgroup
-    }{%
-      \includepdf[pagecommand={%
-        \sjtu@pdfbookmark{0}{\sjtu@name@orig@subtitle}%
-      }]{#2}
-    }
-  \fi
+  \endgroup
 }
 \NewDocumentCommand{\copyrightpage}{O{}}{%
   \ifsjtu@review\relax\else
     \cleardoublepage
+    \sjtu@pdfbookmark{0}{\sjtu@name@copr@mk}%
     \ifblank{#1}{%
+      \newgeometry{
+        vmargin = 3cm,
+        left    = 3cm,
+        right   = 2.5cm,
+      }%
       \thispagestyle{empty}
-      \sjtu@chapter*[\sjtu@name@copr@subtitle]{%
-        \zihao{-2}\sjtu@name@school@zh\\\sjtu@name@copr@title
-      }
       \begingroup
-        \zihao{4}
-        \begingroup
-          \linespread{1.5}\selectfont
-          \sjtu@name@coprbody\par
-          \sjtu@copr@addon\par
+        \zihao{-4}\linespread{1.73}\selectfont
+        \begin{center}
+          \heiti\zihao{3}
+          \sjtu@name@school@zh\par
+          \sjtu@name@thesis@type\sjtu@name@orig@title@zh
+        \end{center}\par
+        \sjtu@name@orig@body\par
+        \vskip \baselineskip \hfill
+        \sjtu@signbox{\sjtu@name@thesis@type 作者}
+        \hspace*{20mm}\par
+        \vskip 2\baselineskip
+        \begin{center}
+          \heiti\zihao{3}
+          \sjtu@name@school@zh\par
+          \sjtu@name@thesis@type\sjtu@name@copr@title@zh
+        \end{center}\par
+        \sjtu@name@copr@body\par
+        \vskip \baselineskip
+        \sjtu@copr@addon\par
+        \vskip 1.5\baselineskip
+        \sjtu@signbox{\sjtu@name@thesis@type 作者}\hfill
+        \sjtu@signbox{指导教师}\par
         \endgroup
-        \vskip 16ex
-        \noindent
-        \begin{minipage}{\textwidth}
-          \sjtu@signbox{\sjtu@name@thesis@type 作者}
-          \hfill
-          \sjtu@signbox{指导教师}
-        \end{minipage}
-        \par
-      \endgroup
-    }{%
-      \includepdf[pagecommand={%
-        \sjtu@pdfbookmark{0}{\sjtu@name@copr@subtitle}%
-      }]{#1}
-    }
+      \restoregeometry
+    }{\includepdf[pages=-]{#1}}
   \fi
 }
 %    \end{macrocode}
@@ -2601,9 +2792,8 @@ The Current Maintainer of this work is Alexara Wu.
       \sjtu@name@abstract@zh
     \endgroup
   }[\sjtu@name@abstract]%
-%<graduate>  \zihao{4}
 }{%
-  \vskip 3ex \noindent
+  \vskip \baselineskip \noindent
   \begingroup
 %<undergraduate>    \zihao{-4}
     \heiti\sjtu@name@keywords@zh
@@ -2641,10 +2831,21 @@ The Current Maintainer of this work is Alexara Wu.
 %</(undergraduate|graduate)>
 %    \end{macrocode}
 %
-% \subsubsection{主要符号对照表}
+% \subsubsection{缩略语对照表}
 %
 %    \begin{macrocode}
 %<*class>
+\NewDocumentEnvironment{abbreviation}{}{%
+  \sjtu@chapter{\sjtu@name@abbreviation}
+}{}
+\NewDocumentEnvironment{abbreviation*}{}{%
+  \sjtu@chapter*{\sjtu@name@abbreviation}
+}{}
+%    \end{macrocode}
+%
+% \subsubsection{符号对照表}
+%
+%    \begin{macrocode}
 \NewDocumentEnvironment{nomenclature}{}{%
   \sjtu@chapter{\sjtu@name@nomenclature}
 }{}
@@ -2753,25 +2954,23 @@ The Current Maintainer of this work is Alexara Wu.
 }
 %    \end{macrocode}
 %
-% 本科论文英文大摘要。
+% 本科论文大摘要。
 %    \begin{macrocode}
 \NewDocumentEnvironment{digest}{}{%
   \Collect@Body\sjtu@save@env@body
 }{%
   \ifsjtu@type@bachelor
-    \ifsjtu@language@chinese
-      \AtEndDocument{%
-        \cleardoublepage
-        \pagenumbering{roman}
-        \def\sjtu@thepage{\theCurrentPageLocal}
-        \def\sjtu@lastpageref{\lastpageref{pagesLTS.roman.local}}
-        \sjtu@chapter*[\sjtu@name@digest]{\MakeUppercase\sjtu@info@title@en}
-        \counterwithout{section}{chapter}
-        \sjtu@counter@without@chapter
-        \let\addcontentsline\@gobblethree
-        \sjtu@saved@env@body
-      }
-    \fi
+    \AtEndDocument{%
+      \cleardoublepage
+      \pagenumbering{roman}
+      \def\sjtu@thepage{\theCurrentPageLocal}
+      \def\sjtu@lastpageref{\lastpageref{pagesLTS.roman.local}}
+      \sjtu@chapter*[\sjtu@name@digest]{\MakeUppercase\sjtu@info@title@sec}
+      \counterwithout{section}{chapter}
+      \sjtu@counter@without@chapter
+      \let\addcontentsline\@gobblethree
+      \sjtu@saved@env@body
+    }
   \fi
 }
 %    \end{macrocode}
@@ -2814,20 +3013,44 @@ The Current Maintainer of this work is Alexara Wu.
 %
 % 定义一个特殊的下划线命令供绘制本科论文封面时使用。
 %    \begin{macrocode}
-\newcommand\sjtu@uline[1]{%
-  \begingroup
-    \setbox0=\vbox{\strut #1\strut}%
-    \dimen0=0pt
-    \loop\ifdim\ht0>0pt
-      \dimen1=\dimexpr\ht0 - \baselineskip\relax
-      \setbox1=\vsplit0 to \ht\strutbox
-      \advance\dimen1 by -\ht0
-      \noindent\raisebox{-\dimen0}[\ht\strutbox][\dp\strutbox]{\box1}%
-      \advance\dimen0 by \dimen1
-      \vspace{-0.2ex}\hrule\vskip 0.2ex
-    \repeat
-  \endgroup
+\newcommand\sjtu@title@box[2][]{%
+  \def\sjtu@@title@uline{\rule[-1ex]{#1}{.5pt}}%
+  \def\sjtu@@title@box##1{\parbox[t]{#1}{##1}}%
+  \newlength\sjtu@@title@temp@ht
+  \settototalheight\sjtu@@title@temp@ht{\sjtu@@title@box{#2}}%
+  \ifdim\sjtu@@title@temp@ht=0pt%
+    \sjtu@@title@uline%
+  \else
+    \leavevmode%
+    \ifdim\sjtu@@title@temp@ht>\normalbaselineskip
+      \rlap{\smash{\sjtu@@title@box{%
+        \@whiledim\sjtu@@title@temp@ht>0pt%
+        \leavevmode%
+        \do{%
+          \rlap{\sjtu@@title@uline}\\%
+          \addtolength\sjtu@@title@temp@ht{-\normalbaselineskip}%
+        }%
+      }}}%
+      \sjtu@@title@box{\centering #2}%
+    \else
+      \rlap{\sjtu@@title@uline}%
+      \sjtu@@title@box{\centering #2}%
+    \fi
+  \fi
 }
+%    \end{macrocode}
+%
+% 表格中汉字分散对齐。
+%    \begin{macrocode}
+\newcolumntype{F}[2]{%
+  >{\minipage[#1]{#2}%
+    \ifXeTeX\def\CJKglue{\hskip \z@ plus 1filll}\fi%
+    \ifLuaTeX\ltjsetparameter{kanjiskip=\z@ plus 1filll}\fi%
+    \begingroup}%
+    c%
+  <{\endgroup%
+    \endminipage%
+    \ignorespacesafterend}}
 %</class>
 %    \end{macrocode}
 %
@@ -2847,7 +3070,7 @@ The Current Maintainer of this work is Alexara Wu.
     \kaishu
     \vspace*{48pt}
     \begingroup
-      \includegraphics[height=96pt]%
+      \includegraphics[height=105pt]%
         {sjtu-vi-name-\sjtu@style@title@logo@color.pdf}
       \par
     \endgroup
@@ -2856,24 +3079,22 @@ The Current Maintainer of this work is Alexara Wu.
     {\zihao{-2}\MakeUppercase\sjtu@name@subject@en\par}
     \vskip 16pt
     \begingroup
-      \includegraphics[height=86pt]%
+      \includegraphics[height=75pt]%
         {sjtu-vi-badge-\sjtu@style@title@logo@color.pdf}
       \par
     \endgroup
     \vskip \stretch{2}
     \begingroup
-      \zihao{2}
-      \begin{tabular}{r@{：}l}
-        论文题目 &
-        \parbox[t]{280pt}{\centering\zihao{-2}\sjtu@uline\sjtu@info@title@zh}
+      \zihao{-2}
+      \begin{tabular}{@{}r@{\sjtu@colon}l@{}}
+        论文题目 & \sjtu@title@box[300pt]{\sjtu@info@display@title@zh}
       \end{tabular}
       \par
     \endgroup
     \vskip \stretch{1}
     \begingroup
       \zihao{3}
-      \begin{tabular}
-        {>{\begin{CJKfilltwosides}{4.2\ccwd}}r<{\end{CJKfilltwosides}}@{：}c}
+      \begin{tabular}{@{}F{t}{4.2\ccwd}@{\sjtu@colon}c@{}}
         \sjtu@name@author@zh      & \sjtu@info@author@zh      \\\cline{2-2}
         \sjtu@name@id@zh          & \makebox[180pt]{\sjtu@info@id} \\\cline{2-2}
         \ifsjtu@type@course
@@ -2886,7 +3107,7 @@ The Current Maintainer of this work is Alexara Wu.
       \end{tabular}
       \par
     \endgroup
-    \vskip 32pt
+    \vskip 64pt
 %</undergraduate>
 %<*graduate>
   \def\sjtu@info@fund{\zihao{-5}\sjtu@clist@use{\sjtu@info@fund@zh}{\par}}
@@ -2895,14 +3116,12 @@ The Current Maintainer of this work is Alexara Wu.
     \vspace*{28pt}
     {\zihao{-2}\sjtu@name@subject@zh\par}
     \vskip \stretch{4}
-    {\zihao{2}\heiti\sjtu@info@title@zh\par}
+    {\zihao{2}\heiti\sjtu@info@display@title@zh\par}
     \vskip \stretch{5}
     \begingroup
       \zihao{4}
       \def\arraystretch{1.25}
-      \begin{tabular}
-        {>{\begin{CJKfilltwosides}[t]{6.5\ccwd}\heiti}r<{\end{CJKfilltwosides}}
-          @{：}l}
+      \begin{tabular}{@{}>{\heiti}F{t}{6.5\ccwd}@{\sjtu@colon}l@{}}
         \sjtu@name@author@zh           & \sjtu@info@author@zh         \\
         \sjtu@name@id@zh               & \sjtu@info@id                \\
         \sjtu@name@supervisor@zh       & \sjtu@info@supervisor@zh     \\
@@ -2931,13 +3150,12 @@ The Current Maintainer of this work is Alexara Wu.
     \vspace*{28pt}
     {\zihao{-2}\sjtu@name@subject@en\par}
     \vskip \stretch{4}
-    {\zihao{2}\bfseries\MakeUppercase\sjtu@info@title@en\par}
+    {\zihao{2}\bfseries\MakeUppercase\sjtu@info@display@title@en\par}
     \vskip \stretch{5}
     \begingroup
       \zihao{4}
       \def\arraystretch{1.25}
-      \begin{tabular}
-        {>{\bfseries}l<{:~}p{.45\textwidth}}
+      \begin{tabular}{@{}>{\bfseries}l<{:~}@{}p{.45\textwidth}@{}}
         \sjtu@name@author@en           & \sjtu@info@author@en         \\
         \sjtu@name@id@en               & \sjtu@info@id                \\
         \sjtu@name@supervisor@en       & \sjtu@info@supervisor@en     \\
@@ -3038,6 +3256,52 @@ The Current Maintainer of this work is Alexara Wu.
 }
 %    \end{macrocode}
 %
+% \subsubsection{\pkg{unicode-math} 宏包}
+%
+%    \begin{macrocode}
+\AtEndOfPackageFile*{unicode-math}{
+  \unimathsetup{
+    math-style = ISO,
+    bold-style = ISO,
+    nabla      = upright,
+  }
+%    \end{macrocode}
+%
+% \begin{macro}{\bm}
+% \begin{macro}{\boldsymbol}
+% 兼容旧的粗体命令：\pkg{bm} 的 \cs{bm} 和 \pkg{amsmath} 的 \cs{boldsymbol}。
+%    \begin{macrocode}
+  \newcommand{\bm}{\symbf}
+  \renewcommand{\boldsymbol}{\symbf}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
+% \begin{macro}{\square}
+% 兼容 \pkg{amssymb} 中的命令。
+%    \begin{macrocode}
+  \newcommand{\square}{\mdlgwhtsquare}
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsubsection{\pkg{physics} 宏包}
+%
+%    \begin{macrocode}
+\AtEndOfPackageFile*{physics}{
+  \@ifundefined{updelta}{}{
+    \DeclareDocumentCommand\variation{o g d()}{
+      \IfNoValueTF{#2}{
+        \IfNoValueTF{#3}
+          {\updelta \IfNoValueTF{#1}{}{^{#1}}}
+          {\mathinner{\updelta \IfNoValueTF{#1}{}{^{#1}}\argopen(#3\argclose)}}
+        }
+        {\mathinner{\updelta \IfNoValueTF{#1}{}{^{#1}}#2} \IfNoValueTF{#3}{}{(#3)}}
+    }
+  }
+}
+%    \end{macrocode}
+%
 % \subsubsection{\pkg{siunitx} 宏包}
 %
 %    \begin{macrocode}
@@ -3128,7 +3392,20 @@ The Current Maintainer of this work is Alexara Wu.
 %
 % \pkg{amsthm} 宏包
 %    \begin{macrocode}
+\AtBeginOfPackageFile*{amsthm}{
+  \newif\ifsjtu@openbox@defined
+  \@ifundefined{openbox}{
+    \sjtu@openbox@definedfalse
+  }{
+    \sjtu@openbox@definedtrue
+    \let\oldopenbox\openbox
+    \let\openbox\@undefined
+  }
+}
 \AtEndOfPackageFile*{amsthm}{
+  \ifsjtu@openbox@defined
+    \let\openbox\oldopenbox
+  \fi
   \sjtu@def@theorem@name
   \let\sjtu@thmhead\thmhead@plain
   \def\thmhead@plain{\sjtu@indent@box\sjtu@thmhead}
@@ -3157,7 +3434,11 @@ The Current Maintainer of this work is Alexara Wu.
 %
 %    \begin{macrocode}
 \PassOptionsToPackage{algochapter}{algorithm2e}
+\AtBeginOfPackageFile*{algorithm2e}{
+  \let\old@chapter\@chapter
+}
 \AtEndOfPackageFile*{algorithm2e}{
+  \let\@chapter\old@chapter
   \SetAlgorithmName{\sjtu@name@algorithm}%
                    {\sjtu@name@algorithm}%
                    {\sjtu@name@listalgorithm}
@@ -3182,9 +3463,7 @@ The Current Maintainer of this work is Alexara Wu.
     {\addcontentsline}
     {\caption@iflist{\addcontentsline}{\@gobblethree}}
   \AtEndPreamble{%
-    \newlength{\sjtu@cftalgnumwidth@tmp}
-      \settowidth{\sjtu@cftalgnumwidth@tmp}{\cftalgpresnum}
-    \addtolength{\cftalgnumwidth}{\sjtu@cftalgnumwidth@tmp}
+    \addtolength{\cftalgnumwidth}{\widthof{\cftalgpresnum}}
   }
   \renewcommand\listofalgorithms{\sjtu@listof{algocf}}
 }
@@ -3193,14 +3472,9 @@ The Current Maintainer of this work is Alexara Wu.
 % \subsubsection{\pkg{algorithm} 宏包}
 %
 %    \begin{macrocode}
+\PassOptionsToPackage{chapter}{algorithm}
 \AtEndOfPackageFile*{algorithm}{
-  \RequirePackage{algorithmicx, algpseudocode}
   \floatname{algorithm}{\sjtu@name@algorithm}
-  \@addtoreset{algorithm}{chapter}
-  \sjtu@patchcmd\@chapter%
-    {\if@twocolumn}
-    {\addtocontents{loa}{\protect\addvspace{10\p@}}%
-     \if@twocolumn}
   \def\listalgorithmname{\sjtu@name@listalgorithm}
   \newlistof{alg}{loa}{\listalgorithmname}
   \let\l@algorithm\l@alg
@@ -3218,9 +3492,7 @@ The Current Maintainer of this work is Alexara Wu.
     \def\thealgorithm{\thechapter\sjtu@style@fl@num@sep\arabic{algorithm}}
   }{}{}
   \AtEndPreamble{%
-    \newlength{\sjtu@cftalgnumwidth@tmp}
-      \settowidth{\sjtu@cftalgnumwidth@tmp}{\cftalgpresnum}
-    \addtolength{\cftalgnumwidth}{\sjtu@cftalgnumwidth@tmp}
+    \addtolength{\cftalgnumwidth}{\widthof{\cftalgpresnum}}
   }
   \renewcommand\listofalgorithms{\sjtu@listof{algorithm}}
 }
@@ -3233,7 +3505,7 @@ The Current Maintainer of this work is Alexara Wu.
   \lstdefinestyle{lstStyleCode}{
     aboveskip=\medskipamount,
     belowskip=\medskipamount,
-    basicstyle=\footnotesize\ttfamily,
+    basicstyle=\ttfamily\zihao{-5},
     commentstyle=\slshape\color{black!60},
     stringstyle=\color{green!40!black!100},
     keywordstyle=\bfseries\color{blue!50!black},
@@ -3243,8 +3515,7 @@ The Current Maintainer of this work is Alexara Wu.
     showstringspaces=false,
     xleftmargin=1em,
     xrightmargin=1em,
-    breaklines=true,
-    breakindent=2em,
+    breaklines=false,
     framexleftmargin=1em,
     framexrightmargin=1em,
     backgroundcolor=\color{gray!10},
@@ -3253,45 +3524,6 @@ The Current Maintainer of this work is Alexara Wu.
     texcl=true,
     mathescape=true
   }
-}
-%    \end{macrocode}
-%
-% \subsubsection{\pkg{tikz} 宏包}
-%
-%    \begin{macrocode}
-\AtEndOfPackageFile*{tikz}{
-  \usetikzlibrary{shapes.geometric, arrows}
-  \tikzstyle{startstop} = [
-    rectangle,
-    rounded corners,
-    minimum width=2cm,
-    minimum height=1cm,
-    text centered,
-    draw=black
-  ]
-  \tikzstyle{io} = [
-    trapezium,
-    trapezium left angle=75,
-    trapezium right angle=105,
-    minimum width=1cm,
-    minimum height=1cm,
-    text centered,
-    draw=black
-  ]
-  \tikzstyle{process} = [
-    rectangle,
-    minimum width=2cm,
-    minimum height=1cm,
-    text centered,
-    draw=black
-  ]
-  \tikzstyle{decision} = [
-    diamond,
-    minimum width=2cm,
-    minimum height=1cm,
-    text centered,
-    draw=black]
-  \tikzstyle{arrow} = [thick, ->, >=stealth]
 }
 %</class>
 %    \end{macrocode}
@@ -3413,6 +3645,7 @@ The Current Maintainer of this work is Alexara Wu.
 \def\CJKLaTeX{CJK--\LaTeX}
 \def\XeTeX{\hologo{XeTeX}}
 \def\XeLaTeX{\hologo{XeLaTeX}}
+\def\LuaLaTeX{\hologo{LuaLaTeX}}
 \DeclareRobustCommand\file{\nolinkurl}
 \DeclareRobustCommand\env{\texttt}
 \DeclareRobustCommand\pkg{\textsf}

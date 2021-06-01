@@ -253,6 +253,7 @@ ehthumbs_vista.db
 release/*
 sample/*.pdf
 *.cls
+*.def
 *.ltx
 sjtuthesis.pdf
 thesis.pdf
