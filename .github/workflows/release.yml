@@ -24,6 +24,8 @@ jobs:
       - run: cat source/sjtuthesis.log
         name: display build log
         if: ${{ failure() || success() }}
+      - run: ./package.sh
+        name: package sjtuthesis.tds.zip
       - uses: actions/create-release@latest
         id: create_release
         env:
