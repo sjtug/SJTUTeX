@@ -22,6 +22,16 @@ SJTUTeX 和 SJTUThesis 项目共享讨论区与社区写作模式。如遇问题
 * 感谢 [@sjtug](https://github.com/sjtug) 以及 [@dyweb](https://github.com/dyweb) 对 0.9.5 之后版本的开发和维护工作
 * 感谢所有为模板贡献过代码的[同学们](https://github.com/sjtug/SJTUThesis/graphs/contributors)，以及所有测试和使用模板的各位同学
 
+## 使用方法
+
+`sjtuthesis.dtx` 可以生成 SJTUThesis 项目所需要的 TeX 文件，以及一个 pdf 格式的说明文档。
+
+```bash
+cd source && make build
+```
+
+在您提交 PR 时，GitHub Action 会自动构建文档 pdf。
+
 ## 软件许可证
 
 上海交通大学校徽图片(`sjtu-vi-logo-blue.pdf` 等)的版权归上海交通大学所有。
