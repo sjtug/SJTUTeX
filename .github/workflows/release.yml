@@ -1,0 +1,56 @@
+on:
+  push:
+    branches:
+    - release
+    tags:
+    - "v*"
+
+name: Release
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: actions/checkout@v2
+        name: checkout code
+      - uses: xu-cheng/latex-action@v2
+        with:
+          working_directory: source
+          pre_compile: xetex -interaction=nonstopmode sjtuthesis.ins
+          root_file: sjtuthesis.dtx
+          latexmk_use_xelatex: true
+        name: build with latexmk (xelatex)
+      - run: cat source/sjtuthesis.log
+        name: display build log
+        if: ${{ failure() || success() }}
+      - run: ./package.sh
+        name: package sjtuthesis.tds.zip
+      - uses: actions/create-release@latest
+        id: create_release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: ${{ github.event.head_commit.message }}
+          draft: true
+          prerelease: true
+      - name: add sjtuthesis.pdf
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: source/sjtuthesis.pdf
+          asset_name: sjtuthesis.pdf
+          asset_content_type: application/pdf
+      - name: add sjtuthesis.tds.zip
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: release/sjtuthesis.tds.zip
+          asset_name: sjtuthesis.tds.zip
+          asset_content_type: application/x-zip

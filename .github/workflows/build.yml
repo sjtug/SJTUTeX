@@ -26,6 +26,8 @@ jobs:
       - run: cat source/sjtuthesis.log
         name: display build log
         if: ${{ failure() || success() }}
+      - run: ./package.sh
+        name: package sjtuthesis.tds.zip
       - uses: actions/upload-artifact@v2
         with:
           path: |
