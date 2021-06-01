@@ -1,0 +1,34 @@
+on:
+  push:
+    branches:
+      - master
+      - develop
+  pull_request:
+    branches:
+      - master
+      - develop
+
+name: Build
+
+jobs:
+  build-xelatex:
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: actions/checkout@v2
+        name: checkout code
+      - uses: xu-cheng/latex-action@v2
+        with:
+          working_directory: source
+          pre_compile: xetex -interaction=nonstopmode sjtuthesis.ins
+          root_file: sjtuthesis.dtx
+          latexmk_use_xelatex: true
+        name: build with latexmk (xelatex)
+      - run: cat source/sjtuthesis.log
+        name: display build log
+        if: ${{ failure() || success() }}
+      - uses: actions/upload-artifact@v2
+        with:
+          path: |
+            source/sjtuthesis.pdf
+          name: build-xelatex
+        name: upload build artifacts

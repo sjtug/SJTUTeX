@@ -254,7 +254,6 @@ release/*
 sample/*.pdf
 *.cls
 *.def
-*.ins
 *.ltx
 sjtuthesis.pdf
 thesis.pdf

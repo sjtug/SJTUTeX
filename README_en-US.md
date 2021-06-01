@@ -1,26 +1,23 @@
-# SJTUThesis
+# SJTUTeX
 
-[![Build Status](https://travis-ci.org/sjtug/SJTUThesis.svg?branch=master)](https://travis-ci.org/sjtug/SJTUThesis)
-[![GitHub Release](https://img.shields.io/github/release/sjtug/SJTUThesis.svg)](https://github.com/sjtug/SJTUThesis/releases)
-[![GitHub Release Date](https://img.shields.io/github/release-date/sjtug/SJTUThesis.svg)](https://github.com/sjtug/SJTUThesis/releases)
-[![Join the chat at https://gitter.im/sjtug/SJTUThesis](https://badges.gitter.im/sjtug/SJTUThesis.svg)](https://gitter.im/sjtug/SJTUThesis?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+SJTUTeX is the macro package used by [SJTUThesis](https://github.com/sjtug/SJTUThesis) project.
+After modifying SJTUTeX macro package, developers should synchronize the generated tex
+files to SJTUThesis repo.
 
 ## Welcome to LaTeX thesis template for Shanghai Jiao Tong University
 
 SJTUThesis is an *unofficial* LaTeX template for preparing bachelor, master, doctor thesis or course papers in Shanghai Jiao Tong University.
 
-At present, `sjtuthesis` only supports XeTeX engine. `sjtuthesis` only allows UTF-8 character encoding.
+Currently, `sjtuthesis` only supports XeTeX engine. `sjtuthesis` only supports UTF-8 character encoding.
 
-## Feedback
+## Feedback and Contribution
 
-We are hearing from:
-
-* [issue page of Github](https://github.com/sjtug/SJTUThesis/issues)
-* [SJTU BBS](https://bbs.sjtu.edu.cn/bbsdoc?board=TeX_LaTeX)
+SJTUThesis and SJTUTeX project shares the same discussion and contribution model. Please refer to
+[SJTUThesis](https://github.com/sjtug/SJTUThesis) for more information.
 
 ## License
 
-The copyright of image sources including SJTU logo (`sjtu-vi-logo-blue.pdf` etc.)
+Copyrighted materials including SJTU logo (`sjtu-vi-logo-blue.pdf` etc.)
 belongs to Shanghai Jiao Tong University.
 
-The remain part is under [LPPL](LICENSE)
+The remaining part is licensed under [LPPL](LICENSE).
