@@ -1188,6 +1188,13 @@ The Current Maintainer of this work is Alexara Wu.
 \fi
 %    \end{macrocode}
 %
+% 本科论文设置默认 \opt{oneside}。
+%    \begin{macrocode}
+\ifsjtu@type@graduate\else
+  \PassOptionsToClass{oneside}{book}
+\fi
+%    \end{macrocode}
+%
 % 使用 \XeTeX{} 引擎时，\pkg{fontspec} 宏包会被 \pkg{xeCJK} 自动调用。传递给
 % \pkg{fontspec} 宏包 \opt{no-math} 选项，避免部分数学符号字体自动调整为 CMR。
 % 并使用 \opt{quiet} 忽略警告。
