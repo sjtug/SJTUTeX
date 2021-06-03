@@ -2710,7 +2710,11 @@ The Current Maintainer of this work is Alexara Wu.
 %
 % 设置双语题注。
 %    \begin{macrocode}
-\DeclareCaptionFont{sjtu@caption@font}{\zihao{5}\kaishu}
+\ifsjtu@type@graduate
+  \DeclareCaptionFont{sjtu@caption@font}{\zihao{5}\kaishu}
+\else
+  \DeclareCaptionFont{sjtu@caption@font}{\zihao{5}\bfseries}
+\fi
 \DeclareCaptionFont{sjtu@subcaption@font}{\zihao{5}\normalfont}
 \DeclareCaptionLabelSeparator{enskip}{\enskip}
 \captionsetup{%
@@ -2732,12 +2736,11 @@ The Current Maintainer of this work is Alexara Wu.
 }
 \captionsetup[bi-second]{bi-second}
 %</class>
-%<*undergraduate>
-\DeclareCaptionFont{sjtu@caption@font}{\zihao{5}\bfseries}
 %    \end{macrocode}
 %
 % 学士论文模版默认设置。
 %    \begin{macrocode}
+%<*undergraduate>
 \ifsjtu@type@bachelor
   \sjtusetup{
     style = {
