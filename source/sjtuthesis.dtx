@@ -1139,11 +1139,6 @@ The Current Maintainer of this work is Alexara Wu.
 \DeclareBoolOption[false]{review}
 %    \end{macrocode}
 %
-% 浮动体是否采用连续编号。
-%    \begin{macrocode}
-\DeclareBoolOption[false]{continuous}
-%    \end{macrocode}
-%
 % 设置默认 \opt{openany}。
 %    \begin{macrocode}
 \DeclareBoolOption[false]{openright}
@@ -1280,11 +1275,6 @@ The Current Maintainer of this work is Alexara Wu.
 \RequirePackage{caption}
 \RequirePackage[list=off]{bicaption}
 \RequirePackage{subcaption}
-%    \end{macrocode}
-%
-% 计数器控制宏包。
-%    \begin{macrocode}
-\RequirePackage{chngcntr}
 %    \end{macrocode}
 %
 % 使用 \pkg{tocloft} 设置目录格式。
@@ -2660,36 +2650,19 @@ The Current Maintainer of this work is Alexara Wu.
 %
 % 定义图、表、公式的编号格式。
 %    \begin{macrocode}
-\newcommand\sjtu@def@thefloats{
+\AtBeginDocument{%
   \def\thefigure{\thechapter\sjtu@style@fl@num@sep\arabic{figure}}
   \def\p@subfigure{\thefigure}
   \def\thetable{\thechapter\sjtu@style@fl@num@sep\arabic{table}}
+  \def\theequation{\thechapter\sjtu@style@eq@num@sep\arabic{equation}}
 }
 \newcommand\sjtu@counter@without@chapter{
+  \counterwithout{section}{chapter}
+  \setcounter{section}{0}
   \counterwithout{figure}{chapter}
   \setcounter{figure}{0}
   \counterwithout{table}{chapter}
   \setcounter{table}{0}
-}
-\newcommand\sjtu@counter@within@chapter{
-  \counterwithin*{figure}{chapter}
-  \counterwithin*{table}{chapter}
-  \sjtu@def@thefloats
-}
-\ifsjtu@continuous
-  \apptocmd{\mainmatter}{%
-    \sjtu@counter@without@chapter
-  }{}{}
-  \apptocmd{\appendix}{%
-    \sjtu@counter@within@chapter
-  }{}{}
-\else
-  \AtBeginDocument{%
-    \sjtu@def@thefloats
-  }
-\fi
-\AtBeginDocument{%
-  \def\theequation{\thechapter\sjtu@style@eq@num@sep\arabic{equation}}
 }
 %    \end{macrocode}
 %
@@ -3006,7 +2979,6 @@ The Current Maintainer of this work is Alexara Wu.
       \def\sjtu@thepage{\theCurrentPageLocal}
       \def\sjtu@lastpageref{\lastpageref{pagesLTS.roman.local}}
       \sjtu@chapter*[\sjtu@name@digest]{\MakeUppercase\sjtu@info@title@sec}
-      \counterwithout{section}{chapter}
       \sjtu@counter@without@chapter
       \let\addcontentsline\@gobblethree
       \sjtu@saved@env@body
@@ -3462,12 +3434,6 @@ The Current Maintainer of this work is Alexara Wu.
     \counterwithout{algocf}{chapter}
     \setcounter{algocf}{0}
   }{}{}
-  \pretocmd{\sjtu@counter@within@chapter}{%
-    \counterwithin*{algocf}{chapter}
-  }{}{}
-  \apptocmd{\sjtu@def@thefloats}{%
-    \def\thealgocf{\thechapter\sjtu@style@fl@num@sep\arabic{algocf}}
-  }{}{}
   \sjtu@patchcmd\algocf@latexcaption%
     {\addcontentsline}
     {\caption@iflist{\addcontentsline}{\@gobblethree}}
@@ -3475,6 +3441,9 @@ The Current Maintainer of this work is Alexara Wu.
     \addtolength{\cftalgnumwidth}{\widthof{\cftalgpresnum}}
   }
   \renewcommand\listofalgorithms{\sjtu@listof{algocf}}
+  \AtBeginDocument{%
+    \def\thealgocf{\thechapter\sjtu@style@fl@num@sep\arabic{algocf}}
+  }
 }
 %    \end{macrocode}
 %
@@ -3494,16 +3463,13 @@ The Current Maintainer of this work is Alexara Wu.
     \counterwithout{algorithm}{chapter}
     \setcounter{algorithm}{0}
   }{}{}
-  \pretocmd{\sjtu@counter@within@chapter}{%
-    \counterwithin*{algorithm}{chapter}
-  }{}{}
-  \apptocmd{\sjtu@def@thefloats}{%
-    \def\thealgorithm{\thechapter\sjtu@style@fl@num@sep\arabic{algorithm}}
-  }{}{}
   \AtEndPreamble{%
     \addtolength{\cftalgnumwidth}{\widthof{\cftalgpresnum}}
   }
   \renewcommand\listofalgorithms{\sjtu@listof{algorithm}}
+  \AtBeginDocument{%
+    \def\thealgorithm{\thechapter\sjtu@style@fl@num@sep\arabic{algorithm}}
+  }
 }
 %    \end{macrocode}
 %
