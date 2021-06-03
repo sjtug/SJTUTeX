@@ -1289,7 +1289,7 @@ The Current Maintainer of this work is Alexara Wu.
 %
 % 脚注支持宏包。
 %    \begin{macrocode}
-\RequirePackage[perpage, bottom, hang]{footmisc}
+\RequirePackage[perpage,bottom]{footmisc}
 %    \end{macrocode}
 %
 % \pkg{pdfpages} 便于我们插入扫描版的原创性声明和授权声明 PDF 文档。
@@ -1349,6 +1349,12 @@ The Current Maintainer of this work is Alexara Wu.
 }
 \sjtu@set@family@handler{sjtu@style}
 \sjtu@define@key{sjtu@style}{
+  header = {
+    choices = {
+      single,
+      double,
+    },
+  },
   frontmatter-numbering = {
     name = frontmatter@numbering,
     choices = {
@@ -1366,10 +1372,10 @@ The Current Maintainer of this work is Alexara Wu.
     initial = false,
     default = fixed,
   },
-  header = {
+  footnote = {
     choices = {
-      single,
-      double,
+      indent,
+      hang,
     },
   },
   title-logo-color = {
@@ -1513,7 +1519,7 @@ The Current Maintainer of this work is Alexara Wu.
 %
 %    \begin{macrocode}
 \newcommand\sjtu@clist@use[2]{%
-  \def\sjtu@@tmp{}%
+  \let\sjtu@@tmp\@empty%
   \def\sjtu@clist@processor##1{%
     \ifx\sjtu@@tmp\@empty
       \def\sjtu@@tmp{#2}%
@@ -2493,22 +2499,22 @@ The Current Maintainer of this work is Alexara Wu.
 %
 % 脚注符合中文习惯，数字带圈。
 % \begin{macro}{\sjtu@textcircled}
-% 生成带圈的脚注数字，最多处理到 10。
+% 生成带圈的脚注数字，最多处理到 50。
 %    \begin{macrocode}
-\newcommand\footnotemarkfont{}
-\def\sjtu@textcircled#1{%
-  \ifnum\value{#1} <21%
-    {\footnotemarkfont\symbol{\the\numexpr\value{#1}+"245F\relax}}%
-  \else\ifnum\value{#1} <36%
-    {\footnotemarkfont\symbol{\the\numexpr\value{#1}+"323C\relax}}%
-  \else\ifnum\value{#1} <51%
-    {\footnotemarkfont\symbol{\the\numexpr\value{#1}+"328D\relax}}%
+\let\footnotemarkfont\@empty
+\def\sjtu@num@circled#1{%
+  \ifnum#1 <21%
+    {\footnotemarkfont\symbol{\the\numexpr#1+"245F\relax}}%
+  \else\ifnum#1 <36%
+    {\footnotemarkfont\symbol{\the\numexpr#1+"323C\relax}}%
+  \else\ifnum#1 <51%
+    {\footnotemarkfont\symbol{\the\numexpr#1+"328D\relax}}%
   \else
     \sjtu@warning{Too many footnotes in this page.}%
   \fi\fi\fi
 }
-\renewcommand{\thefootnote}{\sjtu@textcircled{footnote}}
-\renewcommand{\thempfootnote}{\sjtu@textcircled{mpfootnote}}
+\renewcommand{\thefootnote}{\sjtu@num@circled{\c@footnote}}
+\renewcommand{\thempfootnote}{\sjtu@num@circled{\c@mpfootnote}}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -2517,13 +2523,39 @@ The Current Maintainer of this work is Alexara Wu.
 \footnotemargin1.5em\relax
 %    \end{macrocode}
 %
-% \cs{@makefnmark} 默认是上标样式，而在脚注部分要求为正文大小。利用\cs{patchcmd}
-% 动态调整 \cs{@makefnmark} 的定义。
+% 修改 \pkg{footmisc} 定义的脚注格式。
 %    \begin{macrocode}
-\let\sjtu@makefnmark\@makefnmark
-\def\sjtu@@makefnmark{\hbox{{\normalfont\@thefnmark}}}
-\pretocmd{\@makefntext}{\let\@makefnmark\sjtu@@makefnmark}{}{}
-\apptocmd{\@makefntext}{\let\@makefnmark\sjtu@makefnmark}{}{}
+\long\def\@makefntext#1{%
+  \ifsjtu@style@footnote@hang
+    \bgroup
+    \def\@makefnmark{\hbox{\normalfont\@thefnmark}}%
+    \setbox\@tempboxa\hbox{%
+      \ifdim\footnotemargin>\z@
+        \hb@xt@\footnotemargin{\@makefnmark\hss}%
+      \else
+        \@makefnmark
+      \fi
+    }%
+    \leftmargin\wd\@tempboxa
+    \rightmargin\z@
+    \linewidth \columnwidth
+    \advance \linewidth -\leftmargin
+    \parshape \@ne \leftmargin \linewidth
+    \footnotesize
+    \@setpar{{\@@par}}%
+    \leavevmode
+    \llap{\box\@tempboxa}%
+    \parskip\hangfootparskip\relax
+    \parindent\hangfootparindent\relax
+  \else
+    \parindent 2\ccwd%
+    {\normalfont\@thefnmark}
+  \fi
+  \footnotelayout#1%
+  \ifsjtu@style@footnote@hang
+    \par\egroup
+  \fi
+}
 %    \end{macrocode}
 %
 % 设置 url 样式，与上下文一致
