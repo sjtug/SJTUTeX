@@ -338,6 +338,13 @@
 %    \end{macrocode}
 % \end{variable}
 %
+% \begin{variable}{\g_@@_review_bool}
+% 盲审模式。
+%    \begin{macrocode}
+\bool_new:N \g_@@_review_bool
+%    \end{macrocode}
+% \end{variable}
+%
 % \begin{variable}
 %  {\g_@@_ctex_options_clist,\g_@@_hyperref_options_clist}
 % 分别保存由 \cls{sjtuthesis} 传入 \cls{ctex} 文档类和
@@ -470,6 +477,12 @@
 %    \begin{macrocode}
     unimath .bool_gset:N = \g_@@_unimath_bool ,
     unimath .initial:n = false ,
+%    \end{macrocode}
+%
+% 盲审模式。
+%    \begin{macrocode}
+    review .bool_gset:N = \g_@@_review_bool ,
+    review .initial:n = false ,
 %    \end{macrocode}
 %
 % 处理未知选项。
@@ -1342,6 +1355,24 @@
 %<ug>\cs_set:Npn \cftchapfont { \normalfont }
 %    \end{macrocode}
 %
+% \subsubsection{盲审模式}
+%
+% 盲审模式下隐藏作者、导师姓名等信息。
+%    \begin{macrocode}
+\ctex_at_end_preamble:n
+  {
+    \bool_if:NT \g_@@_review_bool
+      {
+        \clist_map_inline:nn
+          {
+            author, author*, id, supervisor, supervisor*,
+            assoc-supervisor, assoc-supervisor* 
+          }
+          { \keys_set:nn { sjtu / info } { #1 = \c_empty_tl } }
+      }
+  }
+%    \end{macrocode}
+%
 % \subsection{其他宏包的设置}
 %
 % 这些宏包并非格式要求，但是为了方便同学们使用，在这里进行简单设置。
@@ -1366,6 +1397,19 @@
         \cs_set_eq:NN \quad    \c_empty_tl
         \cs_set_eq:NN \qquad   \c_empty_tl
         \cs_set_eq:NN \hspace  \use_none:n
+      }
+    \ctex_after_end_preamble:n
+      {
+        \hypersetup{
+%<zh>          pdftitle    = \l_@@_info_title_zh_tl ,
+%<en>          pdftitle    = \l_@@_info_title_en_tl ,
+%<zh>          % pdfsubject  =  ,
+%<en>          % pdfsubject  =  ,
+%<zh>          pdfkeywords = \l_@@_info_keywords_zh_clist ,
+%<en>          pdfkeywords = \l_@@_info_keywords_en_clist ,
+%<zh>          pdfauthor   = \l_@@_info_author_zh_tl
+%<en>          pdfauthor   = \l_@@_info_author_en_tl
+        }
       }
   }
 %    \end{macrocode}
