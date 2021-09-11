@@ -606,8 +606,26 @@
 %    \begin{macrocode}
 \keys_define:nn { sjtu / info }
   {
-    title             .tl_set:N = \l_@@_info_title_zh_tl ,
-    title*            .tl_set:N = \l_@@_info_title_en_tl ,
+    title  .code:n =
+      {
+        \tl_set:Nn \l_@@_info_title_zh_tl {#1}
+        \clist_map_inline:nn
+          {
+            \l_@@_info_display_title_zh_tl ,
+            \l_@@_info_running_title_zh_tl
+          }
+          { \tl_if_empty:NT ##1 { \tl_set:Nn ##1 {#1} } }
+      } ,
+    title* .code:n =
+      {
+        \tl_set:Nn \l_@@_info_title_en_tl {#1}
+        \clist_map_inline:nn
+          {
+            \l_@@_info_display_title_en_tl ,
+            \l_@@_info_running_title_en_tl
+          }
+          { \tl_if_empty:NT ##1 { \tl_set:Nn ##1 {#1} } }
+      } ,
     display-title     .tl_set:N = \l_@@_info_display_title_zh_tl ,
     display-title*    .tl_set:N = \l_@@_info_display_title_en_tl ,
     running-title     .tl_set:N = \l_@@_info_running_title_zh_tl ,
@@ -1297,7 +1315,7 @@
 %
 %    \begin{macrocode}
 \DeclareDocumentEnvironment { abstract  } { }
-  { \SJTU@chapter* { \c_@@_name_abstract_zh_tl } [ \c_@@_name_abstract_tl ] }
+{ \SJTU@chapter* { \c_@@_name_abstract_zh_tl } [ \c_@@_name_abstract_tl ] }
   {
     \par \mode_leave_vertical: \par \noindent
     { \heiti    \c_@@_name_keywords_zh_tl }
