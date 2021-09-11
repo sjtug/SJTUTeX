@@ -1353,6 +1353,36 @@
 %
 % \subsection{目录}
 %
+% \begin{macro}{\tableofcontents}
+% \begin{macro}{\listoffigures}
+% \begin{macro}{\listoffigures*}
+% \begin{macro}{\listoftables}
+% \begin{macro}{\listoftables*}
+% 目录以及图表索引。
+%    \begin{macrocode}
+\DeclareDocumentCommand \tableofcontents { }
+  {
+    \SJTU@chapter* { \contentsname }
+    \@starttoc { toc }
+  }
+\NewDocumentCommand \SJTU@listof { m s }
+  {
+    \IfBooleanTF {#2}
+      { \SJTU@chapter* { \tl_use:c { list #1 name } } }
+      { \SJTU@chapter  { \tl_use:c { list #1 name } } }
+    \@starttoc { \tl_use:c { ext@ #1 }  }
+  }
+\DeclareDocumentCommand \listoffigures { }
+  { \SJTU@listof { figure } }
+\DeclareDocumentCommand \listoftables  { }
+  { \SJTU@listof { table  } }
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
 %    \begin{macrocode}
 %<zh>\tl_set:Nn \cftdot { \textperiodcentered }
 \tl_set:Nn \cftdotsep { 1 }
