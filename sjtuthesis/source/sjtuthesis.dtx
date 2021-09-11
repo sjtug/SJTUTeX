@@ -357,13 +357,6 @@
 %
 % \subsubsection{内部函数}
 %
-% \begin{macro}{\tl_const:co}
-% \LaTeXiii{} 函数变体。
-%    \begin{macrocode}
-\cs_generate_variant:Nn \tl_const:Nn { co }
-%    \end{macrocode}
-% \end{macro}
-%
 % \begin{macro}{\@@_define_name:nn,\@@_define_name:nnn}
 % 用来定义默认名称的辅助函数。
 %    \begin{macrocode}
@@ -373,25 +366,22 @@
   {
     \tl_const:cn { c_@@_name_ #1 _zh_tl } {#2}
     \tl_const:cn { c_@@_name_ #1 _en_tl } {#3}
-    \tl_const:co { c_@@_name_ #1 _tl }
-      { \use:c { c_@@_name_ #1 _ \g_@@_lang_tl _tl } }
+    \tl_gset_eq:cc { c_@@_name_ #1 _tl }
+      { c_@@_name_ #1 _ \g_@@_lang_tl _tl }
   }
-\cs_new_protected:Npn \@@_define_name_list:Nnn  #1#2#3
+\cs_new_protected:Npn \@@_define_name_from_list:nNn  #1#2#3
   {
-    \clist_const:cn { c_@@_name_ #2 _zh_clist } {#3}
-    \tl_const:co { c_@@_name_ #2 _zh_tl }
-      { \clist_item:cn { c_@@_name_ #2 _zh_clist } {#1} }
+    \tl_const:cx { c_@@_name_ #1 _zh_tl }
+      { \clist_item:nn {#3} {#2} }
   }
-\cs_new_protected:Npn \@@_define_name_list:Nnnn #1#2#3#4
+\cs_new_protected:Npn \@@_define_name_from_list:nNnn #1#2#3#4
   {
-    \clist_const:cn { c_@@_name_ #2 _zh_clist } {#3}
-    \clist_const:cn { c_@@_name_ #2 _en_clist } {#4}
-    \tl_const:co { c_@@_name_ #2 _zh_tl }
-      { \clist_item:cn { c_@@_name_ #2 _zh_clist } {#1} }
-    \tl_const:co { c_@@_name_ #2 _en_tl }
-      { \clist_item:cn { c_@@_name_ #2 _en_clist } {#1} }
-    \tl_const:co { c_@@_name_ #2 _tl }
-      { \use:c { c_@@_name_ #2 _ \g_@@_lang_tl _tl } }
+    \tl_const:cx { c_@@_name_ #1 _zh_tl }
+      { \clist_item:nn {#3} {#2} }
+    \tl_const:cx { c_@@_name_ #1 _en_tl }
+      { \clist_item:nn {#4} {#2} }
+    \tl_gset_eq:cc { c_@@_name_ #1 _tl }
+      { c_@@_name_ #1 _ \g_@@_lang_tl _tl }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -1231,8 +1221,26 @@
 %
 %    \begin{macrocode}
 \fancyhf { }
-\fancyhead[RE,LO]{\c_@@_name_univ_zh_tl \c_@@_name_degree_level_zh_tl 论文}
-\fancyhead[RO,LE]{\leftmark}
+\if@twoside
+  \fancyhead [ RE, LO ] { \zihao { -5 } \c_@@_name_subject_full_zh_tl }
+  \fancyhead [ RO, LE ] { \zihao { -5 } \nouppercase { \leftmark } }
+\else:
+  \fancyhead [ L ] { \zihao { -5 } \c_@@_name_subject_full_zh_tl }
+  \fancyhead [ R ] { \zihao { -5 } \nouppercase { \leftmark } }
+\fi:
+\fancyfoot [ C ] { \zihao { -5 } \thepage }
+%    \end{macrocode}
+%
+% 空白页清空页眉页脚。
+%    \begin{macrocode}
+\RenewDocumentCommand \cleardoublepage { }
+  {
+    \clearpage
+    \if@twoside
+      \int_if_odd:nF \c@page
+        { \hbox:n { } \thispagestyle { empty } \newpage }
+    \fi:
+  }
 %    \end{macrocode}
 %
 % \subsection{章节标题结构}
@@ -1403,8 +1411,8 @@
         \hypersetup{
 %<zh>          pdftitle    = \l_@@_info_title_zh_tl ,
 %<en>          pdftitle    = \l_@@_info_title_en_tl ,
-%<zh>          % pdfsubject  =  ,
-%<en>          % pdfsubject  =  ,
+%<zh>          pdfsubject  = \c_@@_name_subject_full_zh_tl ,
+%<en>          pdfsubject  = \c_@@_name_subject_full_en_tl ,
 %<zh>          pdfkeywords = \l_@@_info_keywords_zh_clist ,
 %<en>          pdfkeywords = \l_@@_info_keywords_en_clist ,
 %<zh>          pdfauthor   = \l_@@_info_author_zh_tl
@@ -1423,9 +1431,25 @@
 \@@_define_name:nnn { univ }
   { 上海交通大学 }
   { Shanghai~Jiao~Tong~University }
-\@@_define_name_list:Nnnn \g_@@_thesis_type_int { degree_level }
+\@@_define_name_from_list:nNnn { degree_level } 
+  \g_@@_thesis_type_int 
   { 博士  , 硕士  , 学士     }
   { Doctor, Master, Bachelor }
+\@@_define_name:nnn { subject_full }
+  {
+    \c_@@_name_univ_zh_tl
+    \c_@@_name_degree_level_zh_tl
+    学位论文
+  }
+  { 
+    Dissertation~Submitted~to~
+    \c_@@_name_univ_en_tl \c_space_tl ~
+    for~the~Degree~of~
+    \c_@@_name_degree_level_en_tl
+  }
+\@@_define_name:nnn { subject_short }
+  { \c_@@_name_degree_level_zh_tl 学位论文  }
+  { \c_@@_name_degree_level_en_tl 's~Thesis }
 \tl_const:Nn \c_@@_orig_decl_text_tl
   {
     本人郑重声明：所呈交的学位论文，是本人在导师的指导下，独立进行研究工
