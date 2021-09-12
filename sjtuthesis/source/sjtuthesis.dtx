@@ -1406,7 +1406,7 @@
     \clist_use:Nn \l_@@_info_keywords_zh_clist { ， }
   }
 \DeclareDocumentEnvironment { abstract* } { }
-  { \SJTU@chapter* { \c_@@_name_abstract_en_tl } [ ] }
+  { \SJTU@chapter* { \MakeUppercase \c_@@_name_abstract_en_tl } [ ] }
   {
     \par \mode_leave_vertical: \par \noindent
     { 
@@ -1563,7 +1563,7 @@
   }
 \clist_map_inline:nn
   { 
-    { abstract } { 摘 \quad 要 } { ABSTRACT    } ,
+    { abstract } { 摘 \quad 要 } { Abstract    } ,
     { keywords } { 关键词：    } { Key~words:~ }
   }
   { \@@_define_name:nnn #1 }
