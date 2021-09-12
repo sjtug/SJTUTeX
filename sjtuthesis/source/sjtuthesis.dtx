@@ -289,6 +289,16 @@
 %
 % \subsubsection{内部变量}
 %
+% \begin{variable}{\l_@@_tmp_tl,\l_@@_tmp_int,\l_@@_tmp_box,\l_@@_tmp_dim}
+% 临时变量。
+%    \begin{macrocode}
+\tl_clear_new:N \l_@@_tmp_tl
+\int_new:N \l_@@_tmp_int
+\box_new:N \l_@@_tmp_box
+\dim_new:N \l_@@_tmp_dim
+%    \end{macrocode}
+% \end{variable}
+%
 % \begin{variable}{\g_@@_thesis_type_tl,\g_@@_thesis_type_int}
 % 论文类型。
 %    \begin{macrocode}
@@ -650,6 +660,22 @@
     major*            .tl_set:N = \l_@@_info_major_en_tl ,
     fund           .clist_set:N = \l_@@_info_fund_zh_clist ,
     fund*          .clist_set:N = \l_@@_info_fund_en_clist
+  }
+%    \end{macrocode}
+%
+%
+% \subsubsection{格式选项}
+%
+% 定义 |sjtu/style| 键值类。
+%
+% 浮动体与公式编号中的分隔符。
+%    \begin{macrocode}
+\keys_define:nn { sjtu / style }
+  {  
+    float-numsep     .tl_set:N = \l_@@_style_float_numsep_tl ,
+    float-numsep    .initial:n = { -- } ,
+    equation-numsep  .tl_set:N = \l_@@_style_equation_numsep_tl ,
+    equation-numsep .initial:n = { -- }
   }
 %    \end{macrocode}
 %
@@ -1377,12 +1403,73 @@
 %
 % \subsection{浮动体}
 %
+% 下面这组命令使浮动对象的缺省值稍微宽松一点，从而防止幅度对象占据过多的
+% 文本页面，也可以防止在很大空白的浮动页上放置很小的图形。
+%    \begin{macrocode}
+\tl_set:Nn \textfraction      { .15 }
+\tl_set:Nn \topfraction       { .85 }
+\tl_set:Nn \bottomfraction    { .65 }
+\tl_set:Nn \floatpagefraction { .60 }
+%    \end{macrocode}
+%
+% 设置浮动体内的字体。
+%    \begin{macrocode}
+\cs_new_protected:Npn \SJTUfloatfont { \zihao { 5 } }
+\@@_patch_cmd:Nnn \@floatboxreset
+  { \normalsize } { \SJTUfloatfont }
+%    \end{macrocode}
+%
+% 题注格式。
+%    \begin{macrocode}
+\DeclareCaptionFont { SJTU@font     } { \zihao { 5 } \bfseries   }
+\DeclareCaptionFont { SJTU@sub@font } { \zihao { 5 } \normalfont }
+\DeclareCaptionLabelSeparator { enskip } { \enskip }
+\captionsetup
+  {
+    labelsep      = enskip ,
+    justification = centering ,
+    font          = SJTU@font
+  }
+\captionsetup [ sub ]
+  {
+    format        = hang ,
+    justification = justified ,
+    font          = SJTU@sub@font
+  }
+%    \end{macrocode}
+%
+% 双语题注。
 %    \begin{macrocode}
 \captionsetup [ figure ] [ bi-second ]
   { name = \l_@@_name_figure_second_tl }
 \captionsetup [ table  ] [ bi-second ]
   { name = \l_@@_name_table_second_tl  }
 %    \end{macrocode}
+%
+% 定义图、表、公式的编号格式。
+%    \begin{macrocode}
+\cs_set:Npn \thefigure
+  { \thechapter \l_@@_style_float_numsep_tl    \arabic { figure   } }
+\cs_set:Npn \thetable
+  { \thechapter \l_@@_style_float_numsep_tl    \arabic { table    } }
+\cs_set:Npn \theequation
+  { \thechapter \l_@@_style_equation_numsep_tl \arabic { equation } }
+%    \end{macrocode}
+%
+% \begin{macro}[int]{\@@_counter_without_chapter:}
+% 特殊环境各计数器不随章编号。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_counter_without_chapter:
+  {
+    \counterwithout { section } { chapter }
+    \setcounter     { section } { 0 }
+    \counterwithout { figure  } { chapter }
+    \setcounter     { figure  } { 0 }
+    \counterwithout { table   } { chapter }
+    \setcounter     { table   } { 0 }
+  }
+%    \end{macrocode}
+% \end{macro}
 %
 % \subsection{摘要}
 %
@@ -1459,6 +1546,20 @@
 %<pg>\cs_set:Npn \cftchapfont { \bfseries \heiti }
 %<ug>\cs_set:Npn \cftchapfont { \normalfont }
 %    \end{macrocode}
+%
+% 图表清单标题前添加名称。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_update_cft_presnum:
+  {
+    \tl_set:Nn \cftfigpresnum { \figurename \c_space_tl }
+    \hbox_set:Nn \l_@@_tmp_box { \cftfigpresnum }
+    \dim_add:Nn \cftfignumwidth { \box_wd:N \l_@@_tmp_box }
+    \tl_set:Nn \cfttabpresnum { \tablename  \c_space_tl }
+    \hbox_set:Nn \l_@@_tmp_box { \cftfigpresnum }
+    \dim_add:Nn \cfttabnumwidth { \box_wd:N \l_@@_tmp_box }
+  }
+\ctex_at_end_preamble:n
+  { \@@_update_cft_presnum: }
 %
 % \subsubsection{盲审模式}
 %
