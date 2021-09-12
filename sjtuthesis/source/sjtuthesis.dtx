@@ -356,12 +356,30 @@
 % \end{variable}
 %
 % \begin{variable}
-%  {\g_@@_ctex_options_clist,\g_@@_hyperref_options_clist}
-% 分别保存由 \cls{sjtuthesis} 传入 \cls{ctex} 文档类和
+%  {\g_@@_ctexbook_options_clist,\g_@@_hyperref_options_clist}
+% 分别保存由 \cls{sjtuthesis} 传入 \cls{ctexbook} 文档类和
 % \pkg{hyperref} 宏包的选项列表。
 %    \begin{macrocode}
-\clist_new:N \g_@@_ctex_options_clist
+\clist_new:N \g_@@_ctexbook_options_clist
 \clist_new:N \g_@@_hyperref_options_clist
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{variable}{\g_@@_twoside_bool}
+% 是否开启双页模式。
+%    \begin{macrocode}
+\bool_new:N \g_@@_twoside_bool
+%<pg>\bool_set_true:N  \g_@@_twoside_bool
+%<ug>\bool_set_false:N \g_@@_twoside_bool
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{variable}{\g_@@_openright_bool}
+% 是否在奇数页开始新章。
+%    \begin{macrocode}
+\bool_new:N \g_@@_openright_bool
+%<pg>\bool_set_true:N  \g_@@_openright_bool
+%<ug>\bool_set_false:N \g_@@_openright_bool
 %    \end{macrocode}
 % \end{variable}
 %
@@ -479,6 +497,26 @@
     unimath .initial:n = false ,
 %    \end{macrocode}
 %
+% 单面或双面模式。
+%    \begin{macrocode}
+    oneside .value_forbidden:n = true,
+    twoside .value_forbidden:n = true,
+    oneside .code:n =
+      { \bool_set_false:N \g_@@_twoside_bool } ,
+    twoside .code:n =
+      { \bool_set_true:N  \g_@@_twoside_bool } ,
+%    \end{macrocode}
+%
+% 是否奇数页开章。
+%    \begin{macrocode}
+    openany   .value_forbidden:n = true,
+    openright .value_forbidden:n = true,
+    openany   .code:n =
+      { \bool_set_false:N \g_@@_openright_bool } ,
+    openright .code:n =
+      { \bool_set_true:N  \g_@@_openright_bool } ,
+%    \end{macrocode}
+%
 % 盲审模式。
 %    \begin{macrocode}
     review .bool_gset:N = \g_@@_review_bool ,
@@ -511,6 +549,14 @@
   { \dim_ratio:nn { \g_@@_line_skip_dim } { \g_@@_font_size_dim } / 1.2 }
 %    \end{macrocode}
 %
+% 页面模式设置。
+%    \begin{macrocode}
+\bool_if:NF \g_@@_twoside_bool
+  { \clist_put_right:Nn \g_@@_ctexbook_options_clist { oneside } }
+\bool_if:NF \g_@@_openright_bool
+  { \clist_put_right:Nn \g_@@_ctexbook_options_clist { openany } }
+%    \end{macrocode}
+%
 % \subsection{载入宏包、文档类}
 %
 % 将选项传入 \pkg{ctex} 文档类。
@@ -522,10 +568,9 @@
     fontset = none,
     zihao = \g_@@_zihao_tl,
     linespread = \g_@@_line_spread_fp,
-    \g_@@_ctex_options_clist
+    \g_@@_ctexbook_options_clist
   }
-%<pg>  { ctexbook }
-%<ug>  { ctexrep  }
+  { ctexbook }
 %    \end{macrocode}
 %
 % 传入各宏包选项。
@@ -546,15 +591,12 @@
   { \PassOptionsToPackage #1 }
 %    \end{macrocode}
 %
-% 载入 \pkg{ctex} 文档类。
-% 博士和硕士论文使用 \cls{ctexbook}，学士论文使用 \cls{ctexrep}
-%
-% 在使用 \XeLaTeX{} 编译时，\pkg{ctex} 的底层将调用 \pkg{xeCJK}
+% 载入 \cls{ctexbook} 文档类。
+% 在使用 \XeLaTeX{} 编译时，\cls{ctexbook} 的底层将调用 \pkg{xeCJK}
 % 宏包；而在使用 \LuaLaTeX{} 编译时，则将调用 \pkg{LuaTeX-ja} 宏包。
-% 两种情况下 \pkg{ctex} 均会调用 \pkg{fontspec} 宏包。
+% 两种情况下 \cls{ctexbook} 均会调用 \pkg{fontspec} 宏包。
 %    \begin{macrocode}
-%<pg>\LoadClass { ctexbook }
-%<ug>\LoadClass { ctexrep  }
+\LoadClass { ctexbook }
 %    \end{macrocode}
 %
 % 载入各宏包。
