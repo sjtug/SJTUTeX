@@ -1220,15 +1220,15 @@
 %    \begin{macrocode}
 %<*(ug|pg)>
 \RenewDocumentCommand{\maketitle}{}{
-%<zh>  \SJTU@make@titlepage@zh
-%<en>  \SJTU@make@titlepage@en
+%<zh>  \@@_make_titlepage_zh:
+%<en>  \@@_make_titlepage_en:
 }
 %</(ug|pg)>
 %    \end{macrocode}
 % 绘制本科生英文封面
 %    \begin{macrocode}
 %<*ug>
-\newcommand\SJTU@make@titlepage@zh{
+\cs_new_protected:Npn \@@_make_titlepage_zh: {
   \cleardoublepage
   \thispagestyle{empty}
   这里什么也没有
@@ -1239,7 +1239,7 @@
 % 绘制本科生英文封面
 %    \begin{macrocode}
 %<*ug>
-\newcommand\SJTU@make@titlepage@en{
+\cs_new_protected:Npn \@@_make_titlepage_en: {
   \cleardoublepage
   \thispagestyle{empty}
   这里什么也没有
@@ -1250,7 +1250,7 @@
 % 绘制研究生中文封面
 %    \begin{macrocode}
 %<*pg>
-\newcommand\SJTU@make@titlepage@zh{
+\cs_new_protected:Npn \@@_make_titlepage_zh: {
   \cleardoublepage
   \thispagestyle{empty}
   这里什么也没有
@@ -1261,7 +1261,7 @@
 % 绘制研究生英文封面
 %    \begin{macrocode}
 %<*pg>
-\newcommand\SJTU@make@titlepage@en{
+\cs_new_protected:Npn \@@_make_titlepage_en: {
   \cleardoublepage
   \thispagestyle{empty}
   这里什么也没有
@@ -1406,7 +1406,7 @@
     \clist_use:Nn \l_@@_info_keywords_zh_clist { ， }
   }
 \DeclareDocumentEnvironment { abstract* } { }
-  { \SJTU@chapter* { \MakeUppercase \c_@@_name_abstract_en_tl } [ ] }
+  { \SJTU@chapter* { \MakeUppercase{ \c_@@_name_abstract_en_tl } } [ ] }
   {
     \par \mode_leave_vertical: \par \noindent
     { 
