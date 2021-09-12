@@ -663,6 +663,21 @@
   }
 %    \end{macrocode}
 %
+% 盲审模式下隐藏作者、导师姓名等信息。
+%    \begin{macrocode}
+\ctex_at_end_preamble:n
+  {
+    \bool_if:NT \g_@@_review_bool
+      {
+        \clist_map_inline:nn
+          {
+            author, author*, id, supervisor, supervisor*,
+            assoc-supervisor, assoc-supervisor* 
+          }
+          { \keys_set:nn { sjtu / info } { #1 = \c_empty_tl } }
+      }
+  }
+%    \end{macrocode}
 %
 % \subsubsection{格式选项}
 %
@@ -703,38 +718,35 @@
 \keys_define:nn { sjtu / name }
   {
     figure*        .tl_set:N = \l_@@_name_figure_second_tl ,
-%<zh>    figure*       .initial:n = { Figure       } ,
-%<en>    figure*       .initial:n = { 图                    } ,
+%<zh>    figure*       .initial:n = { Figure } ,
+%<en>    figure*       .initial:n = { 图 } ,
     table*         .tl_set:N = \l_@@_name_table_second_tl ,
-%<zh>    table*        .initial:n = { Table        } ,
-%<en>    table*        .initial:n = { 表                    } ,
+%<zh>    table*        .initial:n = { Table } ,
+%<en>    table*        .initial:n = { 表 } ,
     algorithm      .tl_set:N = \l_@@_name_algorithm_tl ,
-%<zh>    algorithm     .initial:n = { 算法         } ,
-%<en>    algorithm     .initial:n = { Algorithm             } ,
+%<zh>    algorithm     .initial:n = { 算法 } ,
+%<en>    algorithm     .initial:n = { Algorithm } ,
     listalgorithm  .tl_set:N = \l_@@_name_listalgorithm_tl ,
-%<zh>    listalgorithm .initial:n = { 算法         } ,
-%<en>    listalgorithm .initial:n = { List of Algorithms    } ,
+%<zh>    listalgorithm .initial:n = { 算法 } ,
+%<en>    listalgorithm .initial:n = { List of Algorithms } ,
     abbr           .tl_set:N = \l_@@_name_abbr_tl ,
 %<zh>    abbr          .initial:n = { 缩略语对照表 } ,
-%<en>    abbr          .initial:n = { Abbreviations         } ,
+%<en>    abbr          .initial:n = { Abbreviations } ,
     nom            .tl_set:N = \l_@@_name_nom_tl ,
-%<zh>    nom           .initial:n = { 符号对照表   } ,
-%<en>    nom           .initial:n = { Nomenclature          } ,
+%<zh>    nom           .initial:n = { 符号对照表 } ,
+%<en>    nom           .initial:n = { Nomenclature } ,
     ack            .tl_set:N = \l_@@_name_ack_tl ,
-%<zh>    ack           .initial:n = { 致 \quad 谢  } ,
-%<en>    ack           .initial:n = { Acknowledgements      } ,
+%<zh>    ack           .initial:n = { 致 \quad 谢 } ,
+%<en>    ack           .initial:n = { Acknowledgements } ,
     resume         .tl_set:N = \l_@@_name_resume_tl ,
-%<zh>    resume        .initial:n = { 个人简历     } ,
-%<en>    resume        .initial:n = { Resume                } ,
+%<zh>    resume        .initial:n = { 个人简历 } ,
+%<en>    resume        .initial:n = { Resume } ,
     digest         .tl_set:N = \l_@@_name_digest_tl ,
-%<zh>    digest        .initial:n = { 大摘要       } ,
-%<en>    digest        .initial:n = { Digest                } ,
-    publ           .tl_set:N = \l_@@_name_publ_tl ,
-%<zh>    publ          .initial:n = { 攻读学位期间发表（或录用）的学术论文 } ,
-%<en>    publ          .initial:n = { Publications          } ,
+%<zh>    digest        .initial:n = { 大摘要 } , 
+%<en>    digest        .initial:n = { Digest } ,
     achv           .tl_set:N = \l_@@_name_achv_tl ,
-%<zh>    achv          .initial:n = { 攻读学位期间获得的科研成果           } ,
-%<en>    achv          .initial:n = { Research Achievements } ,
+%<zh>    achv          .initial:n = { 学术论文和科研成果目录 }
+%<en>    achv          .initial:n = { List of Research Achievements }
   }
 %    \end{macrocode}
 %
@@ -1560,23 +1572,58 @@
   }
 \ctex_at_end_preamble:n
   { \@@_update_cft_presnum: }
+%    \end{macrocode}
 %
-% \subsubsection{盲审模式}
+% \subsection{附录}
 %
-% 盲审模式下隐藏作者、导师姓名等信息。
+% 致谢，盲审模式下隐藏致谢。
 %    \begin{macrocode}
-\ctex_at_end_preamble:n
+\NewDocumentEnvironment { acknowledgements } { +b }
+  {
+    \bool_if:NF \g_@@_review_bool
+      {
+        \SJTU@chapter { \l_@@_name_ack_tl }
+        #1
+      }
+  } { }
+%    \end{macrocode}
+%
+% 发表论文与学术成果。
+%    \begin{macrocode}
+\NewDocumentEnvironment { achievements  }
+  { O{ \l_@@_name_achv_tl } m +b }
+  {
+    \bool_if:NF \g_@@_review_bool
+      {
+        \group_begin:
+        \if@openright \cleardoublepage \else \clearpage \fi
+        \@@_phantom_section:
+        \addcontentsline { toc } { chapter } {#1}
+        \tl_set:Nn \bibname {#1}
+        \@@_thebibliography_begin:n {#2}
+        #3
+        \@@_thebibliography_end:
+        \group_end:
+      }
+  } { }
+\NewDocumentEnvironment { achievements* }
+  { O { \l_@@_name_achv_tl } m +b }
   {
     \bool_if:NT \g_@@_review_bool
       {
-        \clist_map_inline:nn
-          {
-            author, author*, id, supervisor, supervisor*,
-            assoc-supervisor, assoc-supervisor* 
-          }
-          { \keys_set:nn { sjtu / info } { #1 = \c_empty_tl } }
+        \group_begin:
+        \if@openright \cleardoublepage \else \clearpage \fi
+        \@@_phantom_section:
+        \addcontentsline { toc } { chapter } {#1}
+        \tl_set:Nn \bibname {#1}
+        \@@_thebibliography_begin:n {#2}
+        #3
+        \@@_thebibliography_end:
+        \group_end:
       }
-  }
+  } { }
+\cs_set_eq:NN \@@_thebibliography_begin:n \thebibliography
+\cs_set_eq:NN \@@_thebibliography_end:    \endthebibliography
 %    \end{macrocode}
 %
 % \subsection{其他宏包的设置}
