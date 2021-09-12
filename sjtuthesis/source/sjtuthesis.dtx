@@ -200,7 +200,7 @@
 %
 % \clearpage
 % \section{代码实现}
-% 
+%
 % 本模板使用 \LaTeXiii{} 语法编写，依赖 \pkg{expl3} 环境，
 % 并需调用 \pkg{l3packages} 中的相关宏包。
 %
@@ -536,11 +536,11 @@
     { titles          } { tocloft      },
     { perpage, bottom } { footmisc     },
     { list = off      } { bicaption    },
-    { warnings-off = 
-      { 
+    { warnings-off =
+      {
         mathtools-overbracket,
         mathtools-colon
-      } 
+      }
     }                   { unicode-math }
   }
   { \PassOptionsToPackage #1 }
@@ -563,7 +563,7 @@
   {
     mathtools,
     geometry,
-    fancyhdr, 
+    fancyhdr,
     tocloft,
     footmisc,
     graphicx,
@@ -672,7 +672,7 @@
         \clist_map_inline:nn
           {
             author, author*, id, supervisor, supervisor*,
-            assoc-supervisor, assoc-supervisor* 
+            assoc-supervisor, assoc-supervisor*
           }
           { \keys_set:nn { sjtu / info } { #1 = \c_empty_tl } }
       }
@@ -686,7 +686,7 @@
 % 浮动体与公式编号中的分隔符。
 %    \begin{macrocode}
 \keys_define:nn { sjtu / style }
-  {  
+  {
     float-numsep     .tl_set:N = \l_@@_style_float_numsep_tl ,
     float-numsep    .initial:n = { -- } ,
     equation-numsep  .tl_set:N = \l_@@_style_equation_numsep_tl ,
@@ -742,7 +742,7 @@
 %<zh>    resume        .initial:n = { 个人简历 } ,
 %<en>    resume        .initial:n = { Resume } ,
     digest         .tl_set:N = \l_@@_name_digest_tl ,
-%<zh>    digest        .initial:n = { 大摘要 } , 
+%<zh>    digest        .initial:n = { 大摘要 } ,
 %<en>    digest        .initial:n = { Digest } ,
     achv           .tl_set:N = \l_@@_name_achv_tl ,
 %<zh>    achv          .initial:n = { 学术论文和科研成果目录 }
@@ -819,7 +819,7 @@
 % 西文与数学字体配置。
 %    \begin{macrocode}
 %<*mathfont>
-%<termes|pagella|lm>\bool_if:NTF \g_@@_unimath_bool 
+%<termes|pagella|lm>\bool_if:NTF \g_@@_unimath_bool
 %<termes|pagella|lm>  {
 %<stixtwo|xits|newcm|cambria>\bool_set_true:N \g_@@_unimath_bool
     \RequirePackage { unicode-math }
@@ -1209,7 +1209,7 @@
   ]
 %</fandol>
 %<*founder>
-\setCJKmainfont { FZShuSong-Z01  } 
+\setCJKmainfont { FZShuSong-Z01  }
   [ AutoFakeBold = 3, ItalicFont = FZKai-Z03 ]
 \setCJKsansfont { FZHei-B01      } [ BoldFont = * ]
 \setCJKmonofont { FZFangSong-Z02 }
@@ -1386,7 +1386,7 @@
 \ctex_if_autoindent_touched:F
   { \ctex_set:n { autoindent = true } }
 %    \end{macrocode}
-% 
+%
 % 清除章首页的页面格式。
 %    \begin{macrocode}
 \@@_patch_cmd:Nnn \chapter
@@ -1497,10 +1497,10 @@
   { \SJTU@chapter* { \c_@@_name_abstract_zh_tl } [ \c_@@_name_abstract_tl ] }
   {
     \par \mode_leave_vertical: \par \noindent
-    { 
+    {
       \heiti
 %<ug>  \zihao{-4}
-      \c_@@_name_keywords_zh_tl 
+      \c_@@_name_keywords_zh_tl
     }
     \clist_use:Nn \l_@@_info_keywords_zh_clist { ， }
   }
@@ -1508,10 +1508,10 @@
   { \SJTU@chapter* { \MakeUppercase{ \c_@@_name_abstract_en_tl } } [ ] }
   {
     \par \mode_leave_vertical: \par \noindent
-    { 
+    {
       \bfseries
 %<ug>  \zihao{-4}
-      \c_@@_name_keywords_en_tl 
+      \c_@@_name_keywords_en_tl
     }
     \clist_use:Nn \l_@@_info_keywords_en_clist { ,~ }
   }
@@ -1636,7 +1636,7 @@
 \ctex_at_end_package:nn { hyperref }
   {
     \int_new:N \g_@@_bookmark_int
-    \cs_gset_protected:Npn \@@_pdf_bookmark:nn #1#2 
+    \cs_gset_protected:Npn \@@_pdf_bookmark:nn #1#2
       {
         \phantomsection
         \int_gincr:N \g_@@_bookmark_int
@@ -1676,8 +1676,8 @@
 \@@_define_name:nnn { univ }
   { 上海交通大学 }
   { Shanghai~Jiao~Tong~University }
-\@@_define_name_from_list:nNnn { degree_level } 
-  \g_@@_thesis_type_int 
+\@@_define_name_from_list:nNnn { degree_level }
+  \g_@@_thesis_type_int
   { 博士  , 硕士  , 学士     }
   { Doctor, Master, Bachelor }
 \@@_define_name:nnn { subject_full }
@@ -1686,7 +1686,7 @@
     \c_@@_name_degree_level_zh_tl
     学位论文
   }
-  { 
+  {
     Dissertation~Submitted~to~
     \c_@@_name_univ_en_tl \c_space_tl ~
     for~the~Degree~of~
@@ -1710,13 +1710,13 @@
     阅。
   }
 \clist_map_inline:nn
-  { 
+  {
     { abstract } { 摘 \quad 要 } { Abstract    } ,
     { keywords } { 关键词：    } { Key~words:~ }
   }
   { \@@_define_name:nnn #1 }
 \clist_map_inline:nn
-  { 
+  {
     { assumption  } { 假设 } { Assumption  } ,
     { axiom       } { 公理 } { Axiom       } ,
     { conjecture  } { 猜想 } { Conjecture  } ,
