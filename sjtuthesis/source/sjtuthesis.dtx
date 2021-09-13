@@ -733,14 +733,20 @@
 %    \begin{macrocode}
 \keys_define:nn { sjtu / style }
   {
-    float-numsep       .tl_set:N = \l_@@_style_float_numsep_tl ,
-    float-numsep      .initial:n = { -- } ,
-    equation-numsep    .tl_set:N = \l_@@_style_equation_numsep_tl ,
-    equation-numsep   .initial:n = { -- } ,
-    title-logo-color   .tl_set:N = \l_@@_style_title_logo_color_tl ,
-    title-logo-color  .initial:n = { red } ,
-    header-logo-color  .tl_set:N = \l_@@_style_header_logo_color_tl ,
-    header-logo-color .initial:n = { red }
+    float-numsep        .tl_set:N = \l_@@_style_float_numsep_tl ,
+    float-numsep       .initial:n = { -- } ,
+    equation-numsep     .tl_set:N = \l_@@_style_equation_numsep_tl ,
+    equation-numsep    .initial:n = { -- } ,
+    title-logo-color   .choice: ,
+    title-logo-color   .default:n = { red } ,
+    title-logo-color  .choices:nn =
+      { red, blue, black }
+      { \str_set_eq:NN \l_@@_style_title_logo_color_tl \l_keys_choice_tl } ,
+    header-logo-color   .choice: ,
+    header-logo-color  .default:n = { red } ,
+    header-logo-color .choices:nn =
+      { red, blue, black }
+      { \str_set_eq:NN \l_@@_style_header_logo_color_tl \l_keys_choice_tl } ,
   }
 %    \end{macrocode}
 %
@@ -1344,13 +1350,13 @@
   \newlength\sjtu@@title@temp@ht
   \settototalheight\sjtu@@title@temp@ht{\sjtu@@title@box{#2}}
   \ifdim\sjtu@@title@temp@ht=0pt
-    \sjtu@@title@uline%
+    \sjtu@@title@uline
   \else
-    \leavevmode%
+    \leavevmode
     \ifdim\sjtu@@title@temp@ht>\normalbaselineskip
       \rlap{\smash{\sjtu@@title@box{
         \@whiledim\sjtu@@title@temp@ht>0pt
-        \leavevmode%
+        \leavevmode
         \do{
           \rlap{\sjtu@@title@uline}\\
           \addtolength\sjtu@@title@temp@ht{-\normalbaselineskip}
@@ -1368,8 +1374,8 @@
 %    \begin{macrocode}
 %<*(ug|pg)>
 \RenewDocumentCommand{\maketitle}{}{
-%<zh>  \@@_make_titlepage_zh:
-%<en>  \@@_make_titlepage_en:
+%<zh|ug>  \@@_make_titlepage_zh:
+%<en&!ug>  \@@_make_titlepage_en:
 }
 %</(ug|pg)>
 %    \end{macrocode}
@@ -1418,17 +1424,6 @@
     \endgroup
     \vskip 64pt
   \end{center}
-}
-%</ug>
-%    \end{macrocode}
-%
-% 绘制本科生英文封面
-%    \begin{macrocode}
-%<*ug>
-\cs_new_protected:Npn \@@_make_titlepage_en: {
-  \cleardoublepage
-  \thispagestyle{empty}
-  这里什么也没有
 }
 %</ug>
 %    \end{macrocode}
