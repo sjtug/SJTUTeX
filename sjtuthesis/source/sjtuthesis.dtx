@@ -606,6 +606,7 @@
     mathtools,
     geometry,
     fancyhdr,
+    pageslts,
     tocloft,
     footmisc,
     graphicx,
@@ -1351,16 +1352,55 @@
 %
 % \subsection{页眉页脚}
 %
+% \pkg{ctex} 宏包使用 \opt{heading} 选项后，会把页面格式设置为 |headings|。
+% 因此必须在 \pkg{ctex} 调用之后重新设置 \cs{pagestyle} 为 |fancy|。
+%    \begin{macrocode}
+\pagestyle { fancy }
+%    \end{macrocode}
+%
+% 页码格式。
+%    \begin{macrocode}
+\cs_new_eq:NN \@@_thepage:     \prg_do_nothing:
+\cs_new_eq:NN \@@_lastpageref: \prg_do_nothing:
+\cs_new:Npn \SJTUthepage #1#2
+%<pg>  { ---~ { \bfseries {#1} }~ --- }
+%<ug&zh>  { 第~ {#1}~ 页 \enspace 共~ {#2}~ 页 }
+%<ug&en>  { --~ Page~ {#1}~ of~ {#2}~ -- }
+%    \end{macrocode}
+%
+% 设置页眉页脚。
 %    \begin{macrocode}
 \fancyhf { }
 \if@twoside
   \fancyhead [ RE, LO ] { \zihao { -5 } \c_@@_name_subject_full_zh_tl }
   \fancyhead [ RO, LE ] { \zihao { -5 } \nouppercase { \leftmark } }
-\else:
+\else
   \fancyhead [ L ] { \zihao { -5 } \c_@@_name_subject_full_zh_tl }
   \fancyhead [ R ] { \zihao { -5 } \nouppercase { \leftmark } }
-\fi:
-\fancyfoot [ C ] { \zihao { -5 } \thepage }
+\fi
+\fancyfoot [ C ]
+  {
+    \zihao { -5 }
+    \SJTUthepage { \@@_thepage: } { \@@_lastpageref: }
+  }
+%    \end{macrocode}
+%
+% 重定义 |plain| 样式。
+%    \begin{macrocode}
+\fancypagestyle { plain  }
+  {
+    \fancyfoot [ C ]
+      {
+        \zihao { -5 }
+        \SJTUthepage { \@@_thepage: } { \@@_lastpageref: }
+      }
+  }
+%    \end{macrocode}
+%
+% 学士论文前置部分不编码（清空页脚）。
+%    \begin{macrocode}
+\fancypagestyle { nofoot }
+  { \fancyfoot { } }
 %    \end{macrocode}
 %
 % 空白页清空页眉页脚。
@@ -1371,17 +1411,60 @@
     \if@twoside
       \int_if_odd:nF \c@page
         { \hbox:n { } \thispagestyle { empty } \newpage }
-    \fi:
+    \fi
   }
 %    \end{macrocode}
 %
-% \subsection{章节标题结构}
+% \subsection{Three matters}
 %
-% \pkg{ctex} 宏包使用 \opt{heading} 选项后，会把页面格式设置为 |headings|。
-% 因此必须在 \pkg{ctex} 调用之后重新设置 \cs{pagestyle} 为 |fancy|。
+% 文档开始使用拉丁字母编码。
 %    \begin{macrocode}
-\pagestyle { fancy }
+\AtBeginDocument
+  { \pagenumbering { Alph } }
 %    \end{macrocode}
+%
+% \begin{macro}{\frontmatter}
+% 前置部分，大写罗马数字编码。
+%    \begin{macrocode}
+\RenewDocumentCommand \frontmatter { }
+  {
+    \cleardoublepage
+    \@mainmatterfalse
+    \pagenumbering { Roman }
+    \cs_gset:Npn \@@_thepage:     { \thepage }
+    \cs_gset:Npn \@@_lastpageref: { \lastpageref { pagesLTS.Roman  } }
+%<ug>    \pagestyle { nofoot }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\mainmatter}
+% 主题部分，阿拉伯数字编码。
+%    \begin{macrocode}
+\RenewDocumentCommand \mainmatter  { }
+  {
+    \cleardoublepage
+    \@mainmattertrue
+    \pagenumbering { arabic }
+    \cs_gset:Npn \@@_thepage:     { \thepage }
+    \cs_gset:Npn \@@_lastpageref: { \lastpageref { pagesLTS.arabic } }
+%<ug>    \pagestyle { plain }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\backmatter}
+% 结尾部分。
+%    \begin{macrocode}
+\RenewDocumentCommand \backmatter  { }
+  {
+    \if@openright \cleardoublepage \else \clearpage \fi
+    \@mainmatterfalse
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{章节标题结构}
 %
 % 设置章节标题样式。
 %    \begin{macrocode}
@@ -1432,7 +1515,7 @@
 % 清除章首页的页面格式。
 %    \begin{macrocode}
 \@@_patch_cmd:Nnn \chapter
-  { \thispagestyle } { \@gobble }
+  { \thispagestyle } { \use_none:n }
 %    \end{macrocode}
 %
 % \begin{macro}{\SJTU@chapter,\@@_pdf_bookmark:nn,\@@_phantom_section:}
@@ -1468,7 +1551,7 @@
 %
 % 设置浮动体内的字体。
 %    \begin{macrocode}
-\cs_new_protected:Npn \SJTUfloatfont { \zihao { 5 } }
+\cs_new:Npn \SJTUfloatfont { \zihao { 5 } }
 \@@_patch_cmd:Nnn \@floatboxreset
   { \normalsize } { \SJTUfloatfont }
 %    \end{macrocode}
