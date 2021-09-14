@@ -47,6 +47,6 @@ build-dev:
 
 # Generate `.sty` files and copy resources
 generate:
-	cd $(SOURCE_DIR)/source && l3build unpack && cd ..
+	cd $(SOURCE_DIR) && l3build unpack && cd ..
 
 .PHONY: build format clean

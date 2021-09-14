@@ -3,8 +3,8 @@
 module             = "sjtuthesis"
 
 sourcefiledir      = "source"
-sourcefiles        = {"sjtuthesis.dtx"}
-installfiles       = {"*.cls","*.def","*.cfg","*.dtx","*.pdf"}
+sourcefiles        = {"sjtuthesis.dtx","vi"}
+installfiles       = {"*.cls","*.def","*.cfg","*.dtx","*.pdf","vi"}
 
 docfiledir         = "doc"
 
