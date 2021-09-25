@@ -1470,7 +1470,13 @@
 %    \end{macrocode}
 %
 % 设置页眉页脚。
+%
+% 研究生论文页眉展示论文标题和当前章节。双面打印一面展示其中一个，单面打印每页展示论文标题和当前章节。
+%
+% 本科生论文页眉包含交大 LOGO 和论文标题，单双面打印没有区别。
+%
 %    \begin{macrocode}
+%<*pg>
 \fancyhf { }
 \if@twoside
   \fancyhead [ RE, LO ] { \zihao { -5 } \c_@@_name_subject_full_zh_tl }
@@ -1479,6 +1485,18 @@
   \fancyhead [ L ] { \zihao { -5 } \c_@@_name_subject_full_zh_tl }
   \fancyhead [ R ] { \zihao { -5 } \nouppercase { \leftmark } }
 \fi
+%</pg>
+%<*ug>
+  \fancyhead[ L ]{
+    \includegraphics[ height=32pt ]
+      {vi/sjtu-vi-logo-\l_@@_style_header_logo_color_tl.pdf}
+  }
+  \fancyhead[ R ]{
+    \parbox[ b ]{ 0.7\textwidth }{
+      \raggedleft \zihao{ -5 } \heiti \MakeUppercase{ \l_@@_info_running_title_zh_tl }
+    }
+  }
+%</ug>
 \fancyfoot [ C ]
   {
     \zihao { -5 }
@@ -1711,16 +1729,32 @@
 %
 % \subsection{摘要}
 %
-% “摘要”为四号黑字体居中(摘要后空一行)，摘要内容为五号宋体字，首行缩进二个字，单倍行距;
-% 摘要内容后空一行顶格输入“关键词”(小四号黑体字)，其后为关键词(五号宋体字)，各关键词之间用逗
-% 号分开，最后一个关键词后面无标点符号。
+% 根据《上海交通大学本科生毕业设计(论文)撰写规范》，“中文题目及摘要”页需要包含题目和摘要。
+% 题目为三号黑体字居中(题目前、后各空一行)，“摘要”为四号黑字体居中(摘要后空一行)，
+% 摘要内容为五号宋体字，首行缩进二个字，单倍行距；摘要内容后空一行顶格输入“关键词”(小四号黑体字)，
+% 其后为关键词(五号宋体字)，各关键词之间用逗号分开，最后一个关键词后面无标点符号。
 %
+% 英文题目及摘要，书写格式与中文摘要相对应，论文题目为三号 Times New Roman 居中加黑，一律用大写字母；
 % 英文“ABSTRACT”为四号 Times New Roman 居中加黑, 摘要内容为五号 Times New Roman，首行缩进二个字，
 % 单倍行距;“Key words”小四号 Times New Roman 加黑，顶格书写，关键词五号 Times New Roman，
 % 各关键词之间逗号分开。中英文摘要不需编页码。
+%
+% 由于本科生模版要求标题和摘要在同一页，这里使用了一个 trick：给 \texttt{SJTU@chapter} 传递的章节标题中
+% 同时包含论文标题和摘要。因此，摘要页的章节标题在其他地方不能直接使用。好在本科论文的页眉不需要
+% 显示当前章节，因此暂时没有大的问题。
+%
 %    \begin{macrocode}
-\DeclareDocumentEnvironment { abstract  } { }
-  { \SJTU@chapter* { \c_@@_name_abstract_zh_tl } [ \c_@@_name_abstract_tl ] }
+\DeclareDocumentEnvironment { abstract } { }
+  { \SJTU@chapter*
+    {
+%<ug> \l_@@_info_title_zh_tl \vskip 2ex
+%<ug> \group_begin:
+%<ug>  \zihao{4}
+        \c_@@_name_abstract_zh_tl
+%<ug> \group_end:
+    }
+    [ \c_@@_name_abstract_tl ] 
+  }
   {
     \par \mode_leave_vertical: \par \noindent
     {
@@ -1731,7 +1765,16 @@
     \clist_use:Nn \l_@@_info_keywords_zh_clist { ， }
   }
 \DeclareDocumentEnvironment { abstract* } { }
-  { \SJTU@chapter* { \MakeUppercase{ \c_@@_name_abstract_en_tl } } [ ] }
+  { \SJTU@chapter*
+    {
+%<ug> \l_@@_info_title_en_tl \vskip 2ex
+%<ug> \group_begin:
+%<ug>  \zihao{4}
+      \c_@@_name_abstract_en_tl
+%<ug> \group_end:
+    }
+    [ \c_@@_name_abstract_tl ] 
+  }
   {
     \par \mode_leave_vertical: \par \noindent
     {
