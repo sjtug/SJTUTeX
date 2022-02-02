@@ -38,7 +38,7 @@ jobs:
         with:
           run: |
             apk add diffutils git make
-            make format-dev
+            make format
       - name: check if generated files are of latest version
         run: |
           git diff --exit-code
