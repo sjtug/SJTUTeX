@@ -287,6 +287,13 @@
   }
 %    \end{macrocode}
 %
+% 目前 \cls{sjtuthesis} 仅支持 \XeTeX{} 和 \LuaTeX{}。
+%
+% 定义 \textt{sjtuthesis} 宏。
+%    \begin{macrocode}
+\NewDocumentCommand\sjtuthesis {} { SJTU\textsc{Thesis} }
+%    \end{macrocode}
+%
 % \subsubsection{内部变量}
 %
 % \begin{variable}{\l_@@_tmp_tl,\l_@@_tmp_int,\l_@@_tmp_box,\l_@@_tmp_dim}
@@ -739,15 +746,15 @@
     equation-numsep     .tl_set:N = \l_@@_style_equation_numsep_tl ,
     equation-numsep    .initial:n = { -- } ,
     title-logo-color   .choice: ,
-    title-logo-color   .default:n = { red } ,
     title-logo-color  .choices:nn =
       { red, blue, black }
       { \str_set_eq:NN \l_@@_style_title_logo_color_tl \l_keys_choice_tl } ,
+    title-logo-color   .initial:n = red ,
     header-logo-color   .choice: ,
-    header-logo-color  .default:n = { red } ,
     header-logo-color .choices:nn =
       { red, blue, black }
       { \str_set_eq:NN \l_@@_style_header_logo_color_tl \l_keys_choice_tl } ,
+    header-logo-color   .initial:n = red ,
   }
 %    \end{macrocode}
 %

@@ -9,44 +9,24 @@ SOURCE_DIR=sjtuthesis
 
 all: build
 
-# Build latex files in root directory
-build:
-	latexmk main.tex $(LATEXMK_ARGS)
-	cp build/main.pdf .
-
-# Format tex files in root directory
-format:
-	latexindent main.tex -w $(LATEXINDENT_ARGS)
-
-# Clean temporary files
-clean:
-	latexmk -C $(LATEXMK_ARGS)
-
-# ----------------
-# Developer commands
-# ----------------
-
 # Format all tex and dtx files
-format-dev:
+format:
 	.github/ci/format.sh $(LATEXINDENT_ARGS)
 
 # Clean all temporary files and generated files
-clean-dev:
-	# latexmk -C
+clean:
 	cd $(SOURCE_DIR) && l3build clean
 	git clean -dfX
 
-# Build all covers to `cover.pdf`
-build-cover:
-	.github/ci/gen_cover.sh $(LATEXMK_ARGS)
-	cp build/cover.pdf .
-
 # Build sjtuthesis package
-build-dev:
+build-ctan:
 	cd $(SOURCE_DIR) && l3build ctan
+
+build:
+	cd $(SOURCE_DIR) && l3build doc
 
 # Generate `.sty` files and copy resources
 generate:
 	cd $(SOURCE_DIR) && l3build unpack && cd ..
 
-.PHONY: build format clean
+.PHONY: build build-ctan format clean generate
