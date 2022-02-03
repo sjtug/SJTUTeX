@@ -257,4 +257,5 @@ build/
 
 # `l3build` generated files
 sjtuthesis/sjtuthesis-ctan.zip
+sjtuthesis/sjtuthesis.tds.zip
 sjtuthesis/doc/*.pdf
