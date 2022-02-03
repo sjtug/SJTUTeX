@@ -1,12 +1,10 @@
 % !TeX encoding = UTF-8
 
 % 载入 SJTUThesis 模版
-% 为了保证研究生模版在 undergraduate-compat 启用的时候不会出现显示上的问题，这里加载了 compat。
-\documentclass[type=master,compat,lang=zh]{sjtuthesis}
+\documentclass[type=bachelor,compat,lang=en]{sjtuthesis}
 
 \input{common-package.tex}
-
-\input{common-setup-cn.tex}
+\input{common-setup-en.tex}
 
 \begin{document}
 
@@ -20,12 +18,8 @@
 \frontmatter
 
 \begin{abstract}
-  \input{common-abstract-cn.tex}
-\end{abstract}
-
-\begin{abstract*}
   \input{common-abstract-en.tex}
-\end{abstract*}
+\end{abstract}
 
 % 目录
 \tableofcontents

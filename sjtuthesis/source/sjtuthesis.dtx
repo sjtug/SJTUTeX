@@ -215,7 +215,8 @@
 \int_new:N \g_@@_thesis_lang_int
 %    \end{macrocode}
 %
-% 定义 |sjtu/diversion| 键值类。
+% 定义 |sjtu/diversion| 键值类。这些键值类可以通过 documentclass 传入，仅能在 |sjtuthesis.cls| 中使用。
+% 在 |sjtuthesis-*graduate-*.cls| 中使用的变量，必须定义在 |sjtu/option| 中。
 %    \begin{macrocode}
 \keys_define:nn { sjtu / diversion }
   {
@@ -439,7 +440,7 @@
 %
 % \subsection{选项处理}
 %
-% 定义 |sjtu/option| 键值类。
+% 定义 |sjtu/option| 键值类。option 类可以控制在 documentclass 中传入的选项。
 %    \begin{macrocode}
 \keys_define:nn { sjtu / option }
   {
@@ -528,6 +529,15 @@
 %    \begin{macrocode}
     review .bool_gset:N = \g_@@_review_bool ,
     review .initial:n = false ,
+%    \end{macrocode}
+%
+% 本科生论文模版的兼容设置。
+%
+% 本科生模版将会逐渐过渡到新标准，SJTUTeX v2 也是按照新标准设计的。然而教务处今年没启用新模版，
+% 所以我们增设了一个 compat 开关，用来兼容老模版的一些格式。这个开关默认关闭。
+%    \begin{macrocode}
+    compat .bool_set:N = \g_@@_thesis_compat_bool ,
+    compat .initial:n  = { false } ,
 %    \end{macrocode}
 %
 % 处理未知选项。
@@ -735,7 +745,8 @@
 %
 % \subsubsection{格式选项}
 %
-% 定义 |sjtu/style| 键值类。
+% 定义 |sjtu/style| 键值类。这里面的键值\textbf{不能}用来控制模版加载时的 if 分支。cls 文件加载时，
+% 用户还没有调用 |sjtusetup| 命令。因此，诸如论文标题、LOGO 颜色等选项在此时都是未知的。
 %
 % 浮动体与公式编号中的分隔符。
 %    \begin{macrocode}
@@ -745,6 +756,10 @@
     float-numsep       .initial:n = { -- } ,
     equation-numsep     .tl_set:N = \l_@@_style_equation_numsep_tl ,
     equation-numsep    .initial:n = { -- } ,
+%    \end{macrocode}
+%
+% 标题和页眉上海交通大学 LOGO 的颜色。
+%    \begin{macrocode}
     title-logo-color   .choice: ,
     title-logo-color  .choices:nn =
       { red, blue, black }
@@ -1477,8 +1492,27 @@
 %    \end{macrocode}
 %
 % 设置页眉页脚。
+%
+% 研究生论文页眉展示论文标题和当前章节。双面打印一面展示其中一个，单面打印每页展示论文标题和当前章节。
+%
+% 本科生论文页眉 (老版) 包含交大 LOGO 和论文标题，单双面打印没有区别。
+%
 %    \begin{macrocode}
+%<*pg|ug>
 \fancyhf { }
+%<*ug>
+\bool_if:nTF { \g_@@_thesis_compat_bool } {
+  \fancyhead[ L ]{
+    \includegraphics[ height=32pt ]
+      {vi/sjtu-vi-logo-\l_@@_style_header_logo_color_tl.pdf}
+  }
+  \fancyhead[ R ]{
+    \parbox[ b ]{ 0.7\textwidth }{
+      \raggedleft \zihao{ -5 } \heiti \MakeUppercase{ \l_@@_info_running_title_zh_tl }
+    }
+  }
+} {
+%</ug>
 \if@twoside
   \fancyhead [ RE, LO ] { \zihao { -5 } \c_@@_name_subject_full_zh_tl }
   \fancyhead [ RO, LE ] { \zihao { -5 } \nouppercase { \leftmark } }
@@ -1486,6 +1520,8 @@
   \fancyhead [ L ] { \zihao { -5 } \c_@@_name_subject_full_zh_tl }
   \fancyhead [ R ] { \zihao { -5 } \nouppercase { \leftmark } }
 \fi
+%<ug> }
+%</pg|ug>
 \fancyfoot [ C ]
   {
     \zihao { -5 }
