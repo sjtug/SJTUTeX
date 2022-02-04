@@ -693,27 +693,77 @@
           }
           { \tl_if_empty:NT ##1 { \tl_set:Nn ##1 {#1} } }
       } ,
+%    \end{macrocode}
+%
+% 标题页标题。
+%    \begin{macrocode}
     display-title     .tl_set:N = \l_@@_info_display_title_zh_tl ,
     display-title*    .tl_set:N = \l_@@_info_display_title_en_tl ,
+%    \end{macrocode}
+%
+% 页眉标题。
+%    \begin{macrocode}
     running-title     .tl_set:N = \l_@@_info_running_title_zh_tl ,
     running-title*    .tl_set:N = \l_@@_info_running_title_en_tl ,
+%    \end{macrocode}
+%
+% 关键词。
+%    \begin{macrocode}
     keywords       .clist_set:N = \l_@@_info_keywords_zh_clist ,
     keywords*      .clist_set:N = \l_@@_info_keywords_en_clist ,
+%    \end{macrocode}
+%
+% 作者。
+%    \begin{macrocode}
     author            .tl_set:N = \l_@@_info_author_zh_tl ,
     author*           .tl_set:N = \l_@@_info_author_en_tl ,
+%    \end{macrocode}
+%
+% 学号。
+%    \begin{macrocode}
     id                .tl_set:N = \l_@@_info_id_tl ,
+%    \end{macrocode}
+%
+% 导师。
+%    \begin{macrocode}
     supervisor        .tl_set:N = \l_@@_info_supervisor_zh_tl ,
     supervisor*       .tl_set:N = \l_@@_info_supervisor_en_tl ,
+%    \end{macrocode}
+%
+% 副导师。
+%    \begin{macrocode}
     assoc-supervisor  .tl_set:N = \l_@@_info_assoc_supervisor_zh_tl ,
     assoc-supervisor* .tl_set:N = \l_@@_info_assoc_supervisor_en_tl ,
+%    \end{macrocode}
+%
+% 申请学位（硕士/博士）。
+%    \begin{macrocode}
     degree            .tl_set:N = \l_@@_info_degree_zh_tl ,
     degree*           .tl_set:N = \l_@@_info_degree_en_tl ,
+%    \end{macrocode}
+%
+% 学院。
+%    \begin{macrocode}
     department        .tl_set:N = \l_@@_info_department_zh_tl ,
     department*       .tl_set:N = \l_@@_info_department_en_tl ,
+%    \end{macrocode}
+%
+% 学科/专业名称。
+%    \begin{macrocode}
     major             .tl_set:N = \l_@@_info_major_zh_tl ,
     major*            .tl_set:N = \l_@@_info_major_en_tl ,
-    fund           .clist_set:N = \l_@@_info_fund_zh_clist ,
-    fund*          .clist_set:N = \l_@@_info_fund_en_clist
+%    \end{macrocode}
+%
+% 申请学位层次。
+%    \begin{macrocode}
+    degree-type       .tl_set:N = \l_@@_info_degree_type_zh_tl ,
+    degree-type*      .tl_set:N = \l_@@_info_degree_type_en_tl ,
+%    \end{macrocode}
+%
+%
+% 答辩日期
+%    \begin{macrocode}
+    date              .tl_set:N = \l_@@_info_date_tl ,
   }
 %    \end{macrocode}
 %
@@ -1387,7 +1437,7 @@
 }
 %</(ug|pg)>
 %    \end{macrocode}
-% 绘制本科生英文封面
+% 绘制本科生中文封面（英文论文也使用中文封面）。
 %    \begin{macrocode}
 %<*ug>
 \cs_new_protected:Npn \@@_make_titlepage_zh: {
@@ -1442,7 +1492,36 @@
 \cs_new_protected:Npn \@@_make_titlepage_zh: {
   \cleardoublepage
   \thispagestyle{empty}
-  这里什么也没有
+  \begin{center}
+    \vspace*{28pt}
+    {\zihao{-2}\c_@@_name_subject_short_zh_tl\par}
+    \vskip \stretch{4}
+    {\zihao{2}\heiti\l_@@_info_display_title_zh_tl\par}
+    \vskip \stretch{5}
+    \group_begin:
+      \zihao{4}
+      \def\arraystretch{1.25}
+      \begin{tabular}{@{}>{\heiti}F{t}{6.5\ccwd}@{\@@_colon:}l@{}}
+        姓名   & \l_@@_info_author_zh_tl      \\
+        学号   & \l_@@_info_id_tl             \\
+        导师   & \l_@@_info_supervisor_zh_tl  \\
+        \str_if_empty:NF { \l_@@_info_assoc_supervisor_zh_tl } {
+          副导师   & \l_@@_info_assoc_supervisor_zh_tl  \\
+        }
+        学院   & \l_@@_info_department_zh_tl  \\
+        学科/专业名称 & \l_@@_info_major_zh_tl  \\
+        学位类型 & \l_@@_info_degree_zh_tl \\
+        \str_if_empty:NF { \l_@@_info_degree_type_zh_tl } {
+          申请学位层次 & \l_@@_info_degree_type_zh_tl   \\
+        }
+      \end{tabular}
+      \par
+    \group_end:
+    \vskip 52pt
+    \group_begin:
+      {\zihao{4}\l_@@_info_date_tl\par}
+    \group_end:
+  \end{center}
 }
 %</pg>
 %    \end{macrocode}
@@ -1495,7 +1574,7 @@
 %
 % 重定义 |plain| 样式。
 %    \begin{macrocode}
-\fancypagestyle { plain  }
+\fancypagestyle { plain }
   {
     \fancyfoot [ C ]
       {
