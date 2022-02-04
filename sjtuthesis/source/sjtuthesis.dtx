@@ -623,10 +623,6 @@
     xcolor
   }
 %    \end{macrocode}
-% 表格支持宏包。 
-%    \begin{macrocode}
-\RequirePackage{array}
-%    \end{macrocode}
 %
 % \subsection{用户接口}
 %
@@ -748,13 +744,13 @@
     title-logo-color   .choice: ,
     title-logo-color  .choices:nn =
       { red, blue, black }
-      { \str_set_eq:NN \l_@@_style_title_logo_color_tl \l_keys_choice_tl } ,
-    title-logo-color   .initial:n = red ,
+      { \tl_set_eq:NN \l_@@_style_title_logo_color_tl \l_keys_choice_tl } ,
+    title-logo-color   .initial:n = { red } ,
     header-logo-color   .choice: ,
     header-logo-color .choices:nn =
       { red, blue, black }
-      { \str_set_eq:NN \l_@@_style_header_logo_color_tl \l_keys_choice_tl } ,
-    header-logo-color   .initial:n = red ,
+      { \tl_set_eq:NN \l_@@_style_header_logo_color_tl \l_keys_choice_tl } ,
+    header-logo-color  .initial:n = { red },
   }
 %    \end{macrocode}
 %
@@ -1294,33 +1290,6 @@
 %<*class>
 %    \end{macrocode}
 %
-% 带圈数字和方框使用中文字体。
-%    \begin{macrocode}
-%<*class>
-\sys_if_engine_xetex:T {
-  \xeCJKDeclareCharClass{CJK}{"24EA,"2460->"2473,"3251->"32BF,"25A1}
-}
-\sys_if_engine_luatex:T {
-  \ltjdefcharrange{100}{"24EA,"2460-"2473,"3251-"32BF,"25A1}
-  \ltjsetparameter{jacharrange={+100}}
-}
-\cs_new_protected:Npn \@@_square: { \symbol{"25A1} }
-\cs_new_protected:Npn \@@_colon: { \makebox[1\ccwd]{\symbol{"FF1A}} }
-%
-% 表格中汉字分散对齐。
-%    \begin{macrocode}
-\newcolumntype{F}[2]{%
-  >{\minipage[#1]{#2}%
-    \ifXeTeX\def\CJKglue{\hskip \z@ plus 1filll}\fi%
-    \ifLuaTeX\ltjsetparameter{kanjiskip=\z@ plus 1filll}\fi%
-    \begingroup}%
-    c%
-  <{\endgroup%
-    \endminipage%
-    \ignorespacesafterend}}
-%</class>
-%    \end{macrocode}
-%
 % \subsection{页面布局}
 %
 % 利用 \pkg{geometry} 宏包设置纸张大小、页面边距以及页眉高度。
@@ -1346,44 +1315,11 @@
 %    \end{macrocode}
 %
 % \subsection{绘制封面}
-%
-%<*ug>
-%
-% 定义一个特殊的下划线命令供绘制本科论文封面时使用。空论文题目情况下，输出一条下划线。否则，计算高度并输出多行。
-% TODO: 使用 \LaTeXiii 重写。
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_title_box: #1 #2 {
-  \def\sjtu@@title@uline{\rule[-1ex]{#1}{.5pt}}
-  \def\sjtu@@title@box##1{\parbox[t]{#1}{##1}}
-  \newlength\sjtu@@title@temp@ht
-  \settototalheight\sjtu@@title@temp@ht{\sjtu@@title@box{#2}}
-  \ifdim\sjtu@@title@temp@ht=0pt
-    \sjtu@@title@uline
-  \else
-    \leavevmode
-    \ifdim\sjtu@@title@temp@ht>\normalbaselineskip
-      \rlap{\smash{\sjtu@@title@box{
-        \@whiledim\sjtu@@title@temp@ht>0pt
-        \leavevmode
-        \do{
-          \rlap{\sjtu@@title@uline}\\
-          \addtolength\sjtu@@title@temp@ht{-\normalbaselineskip}
-        }
-      }}}
-      \sjtu@@title@box{\centering #2}
-    \else
-      \rlap{\sjtu@@title@uline}
-      \sjtu@@title@box{\centering #2}
-    \fi
-  \fi
-}
-%    \end{macrocode}
-%</ug>
 %    \begin{macrocode}
 %<*(ug|pg)>
 \RenewDocumentCommand{\maketitle}{}{
-%<zh|ug>  \@@_make_titlepage_zh:
-%<en&!ug>  \@@_make_titlepage_en:
+%<zh>  \@@_make_titlepage_zh:
+%<en>  \@@_make_titlepage_en:
 }
 %</(ug|pg)>
 %    \end{macrocode}
@@ -1393,45 +1329,18 @@
 \cs_new_protected:Npn \@@_make_titlepage_zh: {
   \cleardoublepage
   \thispagestyle{empty}
-  \begin{center}
-    \kaishu
-    \vspace*{48pt}
-    \begingroup
-      \includegraphics[height=105pt]%
-        {vi/sjtu-vi-name-\l_@@_style_title_logo_color_tl.pdf}
-      \par
-    \endgroup
-    {\fontsize{32}{42}\selectfont\c_@@_name_subject_short_zh_tl\par}
-    \vskip 6pt
-    {\zihao{-2}\MakeUppercase\c_@@_name_subject_short_en_tl\par}
-    \vskip 16pt
-    \begingroup
-      \includegraphics[height=75pt]%
-        {vi/sjtu-vi-badge-\l_@@_style_title_logo_color_tl.pdf}
-      \par
-    \endgroup
-    \vskip \stretch{2}
-    \begingroup
-      \zihao{-2}
-      \begin{tabular}{@{}r@{\@@_colon:}l@{}}
-        论文题目 & \@@_title_box:{ 300pt }{ \l_@@_info_display_title_zh_tl }
-      \end{tabular}
-      \par
-    \endgroup
-    \vskip \stretch{1}
-    \begingroup
-      \zihao{3}
-      \begin{tabular}{@{}F{t}{4.2\ccwd}@{\@@_colon:}c@{}}
-        学生姓名  & \makebox[180pt]{\l_@@_info_author_zh_tl}  \\\cline{2-2}
-        学生学号  & \l_@@_info_id_tl                          \\\cline{2-2}
-        专业     & \l_@@_info_major_zh_tl                    \\\cline{2-2}
-        指导老师  & \l_@@_info_supervisor_zh_tl               \\\cline{2-2}
-        学院(系)  & \l_@@_info_department_zh_tl               \\\cline{2-2}
-      \end{tabular}
-      \par
-    \endgroup
-    \vskip 64pt
-  \end{center}
+  这里什么也没有
+}
+%</ug>
+%    \end{macrocode}
+%
+% 绘制本科生英文封面
+%    \begin{macrocode}
+%<*ug>
+\cs_new_protected:Npn \@@_make_titlepage_en: {
+  \cleardoublepage
+  \thispagestyle{empty}
+  这里什么也没有
 }
 %</ug>
 %    \end{macrocode}
