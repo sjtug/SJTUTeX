@@ -55,37 +55,37 @@
 
 \generate{
   \usedir{tex/latex/sjtuthesis}
-    \file{\jobname.cls}                 {\from{\jobname.dtx}{entry}}
-    \file{\jobname-postgraduate-zh.cls} {\from{\jobname.dtx}{class,pg,zh}}
-    \file{\jobname-postgraduate-en.cls} {\from{\jobname.dtx}{class,pg,en}}
-    \file{\jobname-undergraduate-zh.cls}{\from{\jobname.dtx}{class,ug,zh}}
-    \file{\jobname-undergraduate-en.cls}{\from{\jobname.dtx}{class,ug,en}}
-    \file{\jobname-name.cfg}            {\from{\jobname.dtx}{name}}
-    \file{sjtu-text-font-termes.def}    {\from{\jobname.dtx}{textfont,termes}}
-    \file{sjtu-text-font-pagella.def}   {\from{\jobname.dtx}{textfont,pagella}}
-    \file{sjtu-text-font-lm.def}        {\from{\jobname.dtx}{textfont,lm}}
-    \file{sjtu-text-font-stixtwo.def}   {\from{\jobname.dtx}{textfont,stixtwo}}
-    \file{sjtu-text-font-xits.def}      {\from{\jobname.dtx}{textfont,xits}}
-    \file{sjtu-text-font-newcm.def}     {\from{\jobname.dtx}{textfont,newcm}}
-    \file{sjtu-text-font-cambria.def}   {\from{\jobname.dtx}{textfont,cambria}}
-    \file{sjtu-text-font-times.def}     {\from{\jobname.dtx}{textfont,times}}
-    \file{sjtu-math-font-termes.def}    {\from{\jobname.dtx}{mathfont,termes}}
-    \file{sjtu-math-font-pagella.def}   {\from{\jobname.dtx}{mathfont,pagella}}
-    \file{sjtu-math-font-lm.def}        {\from{\jobname.dtx}{mathfont,lm}}
-    \file{sjtu-math-font-stixtwo.def}   {\from{\jobname.dtx}{mathfont,stixtwo}}
-    \file{sjtu-math-font-xits.def}      {\from{\jobname.dtx}{mathfont,xits}}
-    \file{sjtu-math-font-newcm.def}     {\from{\jobname.dtx}{mathfont,newcm}}
-    \file{sjtu-math-font-cambria.def}   {\from{\jobname.dtx}{mathfont,cambria}}
-    \file{sjtu-cjk-font-windows.def}    {\from{\jobname.dtx}{cjkfont,windows}}
-    \file{sjtu-cjk-font-mac.def}        {\from{\jobname.dtx}{cjkfont,mac}}
-    \file{sjtu-cjk-font-ubuntu.def}     {\from{\jobname.dtx}{cjkfont,ubuntu}}
-    \file{sjtu-cjk-font-adobe.def}      {\from{\jobname.dtx}{cjkfont,adobe}}
-    \file{sjtu-cjk-font-fandol.def}     {\from{\jobname.dtx}{cjkfont,fandol}}
-    \file{sjtu-cjk-font-founder.def}    {\from{\jobname.dtx}{cjkfont,founder}}
+    \file{\jobname.cls}              {\from{\jobname.dtx}{entry}}
+    \file{\jobname-postgraduate.cls} {\from{\jobname.dtx}{class,pg}}
+    \file{\jobname-undergraduate.cls}{\from{\jobname.dtx}{class,ug}}
+    \file{\jobname-lang-zh.cfg}      {\from{\jobname.dtx}{lang,zh}}
+    \file{\jobname-lang-en.cfg}      {\from{\jobname.dtx}{lang,en}}
+    \file{\jobname-name.cfg}         {\from{\jobname.dtx}{name}}
+    \file{sjtu-text-font-termes.def} {\from{\jobname.dtx}{textfont,termes}}
+    \file{sjtu-text-font-pagella.def}{\from{\jobname.dtx}{textfont,pagella}}
+    \file{sjtu-text-font-lm.def}     {\from{\jobname.dtx}{textfont,lm}}
+    \file{sjtu-text-font-stixtwo.def}{\from{\jobname.dtx}{textfont,stixtwo}}
+    \file{sjtu-text-font-xits.def}   {\from{\jobname.dtx}{textfont,xits}}
+    \file{sjtu-text-font-newcm.def}  {\from{\jobname.dtx}{textfont,newcm}}
+    \file{sjtu-text-font-cambria.def}{\from{\jobname.dtx}{textfont,cambria}}
+    \file{sjtu-text-font-times.def}  {\from{\jobname.dtx}{textfont,times}}
+    \file{sjtu-math-font-termes.def} {\from{\jobname.dtx}{mathfont,termes}}
+    \file{sjtu-math-font-pagella.def}{\from{\jobname.dtx}{mathfont,pagella}}
+    \file{sjtu-math-font-lm.def}     {\from{\jobname.dtx}{mathfont,lm}}
+    \file{sjtu-math-font-stixtwo.def}{\from{\jobname.dtx}{mathfont,stixtwo}}
+    \file{sjtu-math-font-xits.def}   {\from{\jobname.dtx}{mathfont,xits}}
+    \file{sjtu-math-font-newcm.def}  {\from{\jobname.dtx}{mathfont,newcm}}
+    \file{sjtu-math-font-cambria.def}{\from{\jobname.dtx}{mathfont,cambria}}
+    \file{sjtu-cjk-font-windows.def} {\from{\jobname.dtx}{cjkfont,windows}}
+    \file{sjtu-cjk-font-mac.def}     {\from{\jobname.dtx}{cjkfont,mac}}
+    \file{sjtu-cjk-font-ubuntu.def}  {\from{\jobname.dtx}{cjkfont,ubuntu}}
+    \file{sjtu-cjk-font-adobe.def}   {\from{\jobname.dtx}{cjkfont,adobe}}
+    \file{sjtu-cjk-font-fandol.def}  {\from{\jobname.dtx}{cjkfont,fandol}}
+    \file{sjtu-cjk-font-founder.def} {\from{\jobname.dtx}{cjkfont,founder}}
 %</install>
 %<*internal>
   \usedir{source/latex/sjtuthesis}
-    \file{\jobname.ins}                 {\from{\jobname.dtx}{install}}
+    \file{\jobname.ins}              {\from{\jobname.dtx}{install}}
 %</internal>
 %<*install>
 }
@@ -120,14 +120,14 @@
 %<+!driver>\GetIdInfo$Id$
 %<entry>  {Thesis template for Shanghai Jiao Tong University}
 %<entry>\ProvidesExplClass{sjtuthesis}
-%<pg&zh>  {Thesis template for Shanghai Jiao Tong University (for postgraduates)}
-%<pg&zh>\ProvidesExplClass{sjtuthesis-postgraduate-zh}
-%<pg&en>  {Thesis template for Shanghai Jiao Tong University (for postgraduates)}
-%<pg&en>\ProvidesExplClass{sjtuthesis-postgraduate-en}
-%<ug&zh>  {Thesis template for Shanghai Jiao Tong University (for undergraduates)}
-%<ug&zh>\ProvidesExplClass{sjtuthesis-undergraduate-zh}
-%<ug&en>  {Thesis template for Shanghai Jiao Tong University (for undergraduates)}
-%<ug&en>\ProvidesExplClass{sjtuthesis-undergraduate-en}
+%<pg>  {Thesis template for Shanghai Jiao Tong University (for postgraduates)}
+%<pg>\ProvidesExplClass{sjtuthesis-postgraduate}
+%<ug>  {Thesis template for Shanghai Jiao Tong University (for undergraduates)}
+%<ug>\ProvidesExplClass{sjtuthesis-undergraduate}
+%<lang&zh>  {Chinese language specific config (SJTUThesis)}
+%<lang&zh>\ProvidesExplFile{sjtuthesis-lang-zh.cfg}
+%<lang&en>  {English language specific config (SJTUThesis)}
+%<lang&en>\ProvidesExplFile{sjtuthesis-lang-en.cfg}
 %<name>  {Names definition (SJTUThesis)}
 %<name>\ProvidesExplFile{sjtuthesis-name.cfg}
 %<textfont&termes>  {Termes text fonts definition (SJTUThesis)}
@@ -212,7 +212,6 @@
 %<*entry>
 \RequirePackage { l3keys2e }
 \int_new:N \g_@@_thesis_type_int
-\int_new:N \g_@@_thesis_lang_int
 %    \end{macrocode}
 %
 % 定义 |sjtu/diversion| 键值类。
@@ -225,26 +224,12 @@
       { doctor, master, bachelor }
       { \int_set_eq:NN \g_@@_thesis_type_int \l_keys_choice_int } ,
     type .initial:n = { master } ,
-    lang .choice: ,
-    lang .value_required:n = true ,
-    lang .choices:nn =
-      { zh, en }
-      { \int_set_eq:NN \g_@@_thesis_lang_int \l_keys_choice_int } ,
-    lang .initial:n = { zh } ,
     unknown .code:n = { }
   }
 \ProcessKeysOptions { sjtu / diversion }
 \int_compare:nTF { \g_@@_thesis_type_int < 3 }
-  {
-    \int_compare:nTF { \g_@@_thesis_lang_int = 1 }
-      { \LoadClassWithOptions { sjtuthesis-postgraduate-zh } }
-      { \LoadClassWithOptions { sjtuthesis-postgraduate-en } }
-  }
-  {
-    \int_compare:nTF { \g_@@_thesis_lang_int = 1 }
-      { \LoadClassWithOptions { sjtuthesis-undergraduate-zh } }
-      { \LoadClassWithOptions { sjtuthesis-undergraduate-en } }
-  }
+  { \LoadClassWithOptions { sjtuthesis-postgraduate  } }
+  { \LoadClassWithOptions { sjtuthesis-undergraduate } }
 %</entry>
 %    \end{macrocode}
 %
@@ -391,6 +376,18 @@
 % \end{variable}
 %
 % \subsubsection{内部函数}
+%
+% \begin{macro}[int]{\@@_load_lang:}
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_load_lang:
+  {
+    \ctex_push_file:
+      \file_if_exist_input:nF { sjtuthesis-lang- \g_@@_lang_tl .cfg }
+        { \file_input:n { sjtuthesis-lang-zh.cfg } }
+    \ctex_pop_file:
+  }
+%    \end{macrocode}
+% \end{macro}
 %
 % \begin{macro}{\@@_define_name:nn,\@@_define_name:nnn}
 % 用来定义默认名称的辅助函数。
@@ -571,7 +568,7 @@
 \PassOptionsToClass
   {
     UTF8,
-%<en>    scheme = plain,
+    scheme = plain,
     fontset = none,
     zihao = \g_@@_zihao_tl,
     linespread = \g_@@_line_spread_fp,
@@ -750,8 +747,18 @@
     header-logo-color .choices:nn =
       { red, blue, black }
       { \tl_set_eq:NN \l_@@_style_header_logo_color_tl \l_keys_choice_tl } ,
-    header-logo-color  .initial:n = { red },
+    header-logo-color  .initial:n = { red } ,
+    page-number        .cs_set:Np = \@@_page:nn #1#2 ,
+    page-number        .initial:n = { --~ Page~ {#1}~ of~ {#2}~ -- }
   }
+%</class>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*lang&zh>
+\keys_set_known:nn { sjtu / style }
+  { page-number = { 第~ {#1}~ 页 \enspace 共~ {#2}~ 页 } }
+%</lang&zh>
 %    \end{macrocode}
 %
 % \subsubsection{名称设置}
@@ -760,6 +767,7 @@
 %
 % 设置标准文档类中已定义的名称。
 %    \begin{macrocode}
+%<*class>
 \keys_define:nn { sjtu / name }
   {
     contents       .tl_set:N = \contentsname ,
@@ -769,6 +777,7 @@
     table          .tl_set:N = \tablename ,
     index          .tl_set:N = \indexname ,
     appendix       .tl_set:N = \appendixname ,
+    proof          .tl_set:N = \proofname ,
     bib            .tl_set:N = \bibname
   }
 %    \end{macrocode}
@@ -778,36 +787,61 @@
 \keys_define:nn { sjtu / name }
   {
     figure*        .tl_set:N = \l_@@_name_figure_second_tl ,
-%<zh>    figure*       .initial:n = { Figure } ,
-%<en>    figure*       .initial:n = { 图 } ,
+    figure*       .initial:n = { 图 } ,
     table*         .tl_set:N = \l_@@_name_table_second_tl ,
-%<zh>    table*        .initial:n = { Table } ,
-%<en>    table*        .initial:n = { 表 } ,
+    table*        .initial:n = { 表 } ,
     algorithm      .tl_set:N = \l_@@_name_algorithm_tl ,
-%<zh>    algorithm     .initial:n = { 算法 } ,
-%<en>    algorithm     .initial:n = { Algorithm } ,
+    algorithm     .initial:n = { Algorithm } ,
     listalgorithm  .tl_set:N = \l_@@_name_listalgorithm_tl ,
-%<zh>    listalgorithm .initial:n = { 算法 } ,
-%<en>    listalgorithm .initial:n = { List of Algorithms } ,
+    listalgorithm .initial:n = { List~of~Algorithms } ,
     abbr           .tl_set:N = \l_@@_name_abbr_tl ,
-%<zh>    abbr          .initial:n = { 缩略语对照表 } ,
-%<en>    abbr          .initial:n = { Abbreviations } ,
+    abbr          .initial:n = { Abbreviations } ,
     nom            .tl_set:N = \l_@@_name_nom_tl ,
-%<zh>    nom           .initial:n = { 符号对照表 } ,
-%<en>    nom           .initial:n = { Nomenclature } ,
+    nom           .initial:n = { Nomenclature } ,
     ack            .tl_set:N = \l_@@_name_ack_tl ,
-%<zh>    ack           .initial:n = { 致 \quad 谢 } ,
-%<en>    ack           .initial:n = { Acknowledgements } ,
+    ack           .initial:n = { Acknowledgements } ,
     resume         .tl_set:N = \l_@@_name_resume_tl ,
-%<zh>    resume        .initial:n = { 个人简历 } ,
-%<en>    resume        .initial:n = { Resume } ,
+    resume        .initial:n = { Resume } ,
     digest         .tl_set:N = \l_@@_name_digest_tl ,
-%<zh>    digest        .initial:n = { 大摘要 } ,
-%<en>    digest        .initial:n = { Digest } ,
+    digest        .initial:n = { Digest } ,
     achv           .tl_set:N = \l_@@_name_achv_tl ,
-%<zh>    achv          .initial:n = { 学术论文和科研成果目录 }
-%<en>    achv          .initial:n = { List of Research Achievements }
+    achv          .initial:n = { List~of~Research~Achievements },
   }
+%</class>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*lang&zh>
+\keys_set_known:nn { sjtu / name }
+  {
+    contents      = 目录 ,
+    listfigure    = 插图 ,
+    listtable     = 表格 ,
+    figure        = 图 ,
+    table         = 表 ,
+    index         = 索引 ,
+    appendix      = 附录 ,
+    proof         = 证明 ,
+    bib           = 参考文献 ,
+    figure*       = Figure ,
+    table*        = Table ,
+    algorithm     = 算法 ,
+    listalgorithm = 算法 ,
+    abbr          = 缩略语对照表 ,
+    nom           = 符号对照表 ,
+    ack           = 致谢 ,
+    resume        = 个人简历 ,
+    digest        = 大摘要 ,
+    achv          = 学术论文和科研成果目录
+  }
+%</lang&zh>
+%    \end{macrocode}
+%
+% \subsection{载入语言配置}
+%
+%    \begin{macrocode}
+%<*class>
+\@@_load_lang:
 %    \end{macrocode}
 %
 % \subsection{字体配置}
@@ -869,12 +903,9 @@
 \@onlypreamble \@@_load_font:nn
 \@onlypreamble \@@_load_fontset:
 \@@_load_fontset:
-%    \end{macrocode}
-% \end{macro}
-%
-%    \begin{macrocode}
 %</class>
 %    \end{macrocode}
+% \end{macro}
 %
 % 西文与数学字体配置。
 %    \begin{macrocode}
@@ -1327,10 +1358,8 @@
 %    \begin{macrocode}
 \cs_new_eq:NN \@@_thepage:     \prg_do_nothing:
 \cs_new_eq:NN \@@_lastpageref: \prg_do_nothing:
-\cs_new:Npn \SJTUthepage #1#2
-%<pg>  { ---~ { \bfseries {#1} }~ --- }
-%<ug&zh>  { 第~ {#1}~ 页 \enspace 共~ {#2}~ 页 }
-%<ug&en>  { --~ Page~ {#1}~ of~ {#2}~ -- }
+%<pg>\keys_set_known:nn { sjtu / style }
+%<pg>  { page-number = { ---~ { \bfseries {#1} }~ --- } }
 %    \end{macrocode}
 %
 % 设置页眉页脚。
@@ -1346,7 +1375,7 @@
 \fancyfoot [ C ]
   {
     \zihao { -5 }
-    \SJTUthepage { \@@_thepage: } { \@@_lastpageref: }
+    \@@_page:nn { \@@_thepage: } { \@@_lastpageref: }
   }
 %    \end{macrocode}
 %
@@ -1357,7 +1386,7 @@
     \fancyfoot [ C ]
       {
         \zihao { -5 }
-        \SJTUthepage { \@@_thepage: } { \@@_lastpageref: }
+        \@@_page:nn { \@@_thepage: } { \@@_lastpageref: }
       }
   }
 %    \end{macrocode}
@@ -1446,6 +1475,15 @@
     aftername   = \quad ,
     afterindent = true
   }
+%</class>
+%<*lang&zh>
+\keys_set_known:nn { ctex }
+  {
+    chapter / name   = { 第 , 章 } ,
+    chapter / number = \chinese { chapter }
+  }
+%</lang&zh>
+%<*class>
 \ctex_set:nn { section }
   {
     beforeskip  = 24 bp ,
@@ -1476,6 +1514,15 @@
 \ctex_if_autoindent_touched:F
   { \ctex_set:n { autoindent = true } }
 %    \end{macrocode}
+%
+% \begin{macro}[int]{\verse,\quotation}
+% 修改诗歌和引用环境的缩进。
+%    \begin{macrocode}
+\@@_patch_cmd:Nnn \verse { -1.5em } { -2 \ccwd }
+\@@_patch_cmd:Nnn \verse {  1.5em } {  2 \ccwd }
+\@@_patch_cmd:Nnn \quotation { 1.5em } { 2 \ccwd }
+%    \end{macrocode}
+% \end{macro}
 %
 % 清除章首页的页面格式。
 %    \begin{macrocode}
@@ -1729,14 +1776,10 @@
     \ctex_after_end_preamble:n
       {
         \hypersetup{
-%<zh>          pdftitle    = \l_@@_info_title_zh_tl ,
-%<en>          pdftitle    = \l_@@_info_title_en_tl ,
-%<zh>          pdfsubject  = \c_@@_name_subject_full_zh_tl ,
-%<en>          pdfsubject  = \c_@@_name_subject_full_en_tl ,
-%<zh>          pdfkeywords = \l_@@_info_keywords_zh_clist ,
-%<en>          pdfkeywords = \l_@@_info_keywords_en_clist ,
-%<zh>          pdfauthor   = \l_@@_info_author_zh_tl
-%<en>          pdfauthor   = \l_@@_info_author_en_tl
+          pdftitle    = \l_@@_info_title_zh_tl ,
+          pdfsubject  = \c_@@_name_subject_full_zh_tl ,
+          pdfkeywords = \l_@@_info_keywords_zh_clist ,
+          pdfauthor   = \l_@@_info_author_zh_tl
         }
       }
   }
