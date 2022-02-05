@@ -734,6 +734,8 @@
 %    \begin{macrocode}
 \keys_define:nn { sjtu / style }
   {
+    float-font          .tl_set:N = \l_@@_style_float_font_tl ,
+    float-font         .initial:n = \zihao { 5 } ,
     float-numsep        .tl_set:N = \l_@@_style_float_numsep_tl ,
     float-numsep       .initial:n = { -- } ,
     equation-numsep     .tl_set:N = \l_@@_style_equation_numsep_tl ,
@@ -1563,9 +1565,8 @@
 %
 % 设置浮动体内的字体。
 %    \begin{macrocode}
-\cs_new:Npn \SJTUfloatfont { \zihao { 5 } }
 \@@_patch_cmd:Nnn \@floatboxreset
-  { \normalsize } { \SJTUfloatfont }
+  { \normalsize } { \l_@@_style_float_font_tl }
 %    \end{macrocode}
 %
 % 题注格式。
