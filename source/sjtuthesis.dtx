@@ -2642,6 +2642,9 @@ The Current Maintainer of this work is Alexara Wu.
   \renewcommand\cftdot{\textperiodcentered}
 \fi
 \renewcommand\cftdotsep{1}
+\setlength{\cftbeforechapskip}{0pt}
+\renewcommand\cftchappagefont{\normalfont}
+\renewcommand\cftchapleader{\normalfont\cftdotfill{\cftdotsep}}
 %</class>
 %    \end{macrocode}
 %
@@ -2649,12 +2652,9 @@ The Current Maintainer of this work is Alexara Wu.
 %    \begin{macrocode}
 %<*undergraduate>
 \renewcommand\cftchapfont{\normalfont}
-\renewcommand\cftchapleader{\normalfont\cftdotfill{\cftdotsep}}
-\renewcommand\cftchappagefont{\normalfont}
 %</undergraduate>
 %<*graduate>
 \renewcommand\cftchapfont{\bfseries\heiti}
-\renewcommand\cftchapleader{\normalfont\cftdotfill{\cftdotsep}}
 %</graduate>
 %    \end{macrocode}
 %
