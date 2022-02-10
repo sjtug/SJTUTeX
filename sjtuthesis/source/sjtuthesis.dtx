@@ -60,7 +60,6 @@
     \file{\jobname-undergraduate.cls}{\from{\jobname.dtx}{class,ug}}
     \file{\jobname-lang-zh.cfg}      {\from{\jobname.dtx}{lang,zh}}
     \file{\jobname-lang-en.cfg}      {\from{\jobname.dtx}{lang,en}}
-    \file{\jobname-name.cfg}         {\from{\jobname.dtx}{name}}
     \file{sjtu-text-font-termes.def} {\from{\jobname.dtx}{textfont,termes}}
     \file{sjtu-text-font-pagella.def}{\from{\jobname.dtx}{textfont,pagella}}
     \file{sjtu-text-font-lm.def}     {\from{\jobname.dtx}{textfont,lm}}
@@ -128,8 +127,6 @@
 %<lang&zh>\ProvidesExplFile{sjtuthesis-lang-zh.cfg}
 %<lang&en>  {English language specific config (SJTUThesis)}
 %<lang&en>\ProvidesExplFile{sjtuthesis-lang-en.cfg}
-%<name>  {Names definition (SJTUThesis)}
-%<name>\ProvidesExplFile{sjtuthesis-name.cfg}
 %<textfont&termes>  {Termes text fonts definition (SJTUThesis)}
 %<textfont&termes>\ProvidesExplFile{sjtu-text-font-termes.def}
 %<textfont&pagella>  {Pagella text fonts definition (SJTUThesis)}
@@ -393,7 +390,7 @@
 % 用来定义默认名称的辅助函数。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_define_name:nn #1#2
-  { \tl_const:cn { c_@@_name_ #1 _zh_tl } {#2} }
+  { \tl_const:cn { c_@@_name_ #1 _tl } {#2} }
 \cs_new_protected:Npn \@@_define_name:nnn #1#2#3
   {
     \tl_const:cn { c_@@_name_ #1 _zh_tl } {#2}
@@ -403,7 +400,7 @@
   }
 \cs_new_protected:Npn \@@_define_name_from_list:nNn  #1#2#3
   {
-    \tl_const:cx { c_@@_name_ #1 _zh_tl }
+    \tl_const:cx { c_@@_name_ #1 _tl }
       { \clist_item:nn {#3} {#2} }
   }
 \cs_new_protected:Npn \@@_define_name_from_list:nNnn #1#2#3#4
@@ -540,11 +537,6 @@
 \ProcessKeysOptions { sjtu / option }
 %    \end{macrocode}
 %
-% 载入配置文件。
-%    \begin{macrocode}
-\file_input:n { sjtuthesis-name.cfg }
-%    \end{macrocode}
-%
 % 计算行距倍数。
 %    \begin{macrocode}
 \dim_compare:nNnT \g_@@_line_skip_dim < \g_@@_font_size_dim
@@ -581,16 +573,17 @@
 %    \begin{macrocode}
 \clist_map_inline:nn
   {
-    { no-math         } { fontspec     },
-    { titles          } { tocloft      },
-    { perpage, bottom } { footmisc     },
-    { list = off      } { bicaption    },
+    { no-math           } { fontspec     },
+    { titles            } { tocloft      },
+    { perpage, bottom   } { footmisc     },
+    { list = off        } { bicaption    },
     { warnings-off =
       {
         mathtools-overbracket,
         mathtools-colon
       }
-    }                   { unicode-math }
+    }                     { unicode-math },
+    { amsmath, thmmarks } { ntheorem     }
   }
   { \PassOptionsToPackage #1 }
 %    \end{macrocode}
@@ -1786,12 +1779,76 @@
   }
 %    \end{macrocode}
 %
+% \subsubsection{\pkg{amsthm} 宏包和 \pkg{ntheorem} 宏包}
+%
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_new_theorems:
+  {
+    \clist_map_inline:nn
+      {
+        assumption, axiom, conjecture, corollary, definition, example,
+        exercise, lemma, problem, proposition, theorem
+      }
+      { \newtheorem {##1} { \use:c { c_@@_name_ ##1 _tl } } [ chapter ] }
+    \clist_map_inline:nn
+      { remark, solution }
+      { \newtheorem*{##1} { \use:c { c_@@_name_ ##1 _tl } } }
+  }
+%    \end{macrocode}
+%
+% \pkg{amsthm} 宏包
+%    \begin{macrocode}
+\ctex_at_begin_package:nn { amsthm }
+  {
+    \cs_if_exist:NT \openbox
+      {
+        \cs_new_eq:NN \@@_save_openbox: \openbox
+        \cs_undefine:N \openbox
+      }
+  }
+\ctex_at_end_package:nn { amsthm }
+  {
+    \cs_if_exist:NT \@@_save_openbox:
+      { \cs_set_eq:NN \openbox \@@_save_openbox: }
+    \ExplSyntaxOff
+    \renewenvironment{proof}[1][\proofname]{\par
+      \pushQED{\qed}%
+      \normalfont \topsep\z@\relax
+      \trivlist
+      \item[\hskip\labelsep
+        \bfseries\heiti
+        #1\@addpunct{\enskip}]\ignorespaces
+    }{%
+      \popQED\endtrivlist\@endpefalse
+    }
+    \ExplSyntaxOn
+    \newtheoremstyle { sjtu }
+      { } { } { \normalfont } { } { \bfseries \heiti } { } { \ccwd } { }
+    \theoremstyle { sjtu }
+    \@@_new_theorems:
+  }
+%    \end{macrocode}
+%
+% \pkg{ntheorem} 宏包
+%    \begin{macrocode}
+\ctex_at_end_package:nn { ntheorem }
+  {
+    \theoremheaderfont { \bfseries \heiti }
+    \theorembodyfont   { \normalfont      }
+    \theoremseparator  { \enskip          }
+    \theoremsymbol { \ensuremath { \square } }
+    \newtheorem* { proof }{ \proofname }
+    \theoremsymbol { }
+    \@@_new_theorems:
+  }
+%    \end{macrocode}
+%
 %    \begin{macrocode}
 %</class>
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-%<*name>
+%<*lang>
 \@@_define_name:nnn { univ }
   { 上海交通大学 }
   { Shanghai~Jiao~Tong~University }
@@ -1836,26 +1893,51 @@
   { \@@_define_name:nnn #1 }
 \clist_map_inline:nn
   {
-    { assumption  } { 假设 } { Assumption  } ,
-    { axiom       } { 公理 } { Axiom       } ,
-    { conjecture  } { 猜想 } { Conjecture  } ,
-    { corollary   } { 推论 } { Corollary   } ,
-    { definition  } { 定义 } { Definition  } ,
-    { example     } { 例   } { Example     } ,
-    { exercise    } { 练习 } { Exercise    } ,
-    { lemma       } { 引理 } { Lemma       } ,
-    { problem     } { 问题 } { Problem     } ,
-    { proof       } { 证明 } { Proof       } ,
-    { proposition } { 命题 } { Proposition } ,
-    { remark      } { 注   } { Remark      } ,
-    { solution    } { 解   } { Solution    } ,
-    { theorem     } { 定理 } { Theorem     } ,
+    { assumption  }
+%<zh>    { 假设        } ,
+%<en>    { Assumption  } ,
+    { axiom       }
+%<zh>    { 公理        } ,
+%<en>    { Axiom       } ,
+    { conjecture  }
+%<zh>    { 猜想        } ,
+%<en>    { Conjecture  } ,
+    { corollary   }
+%<zh>    { 推论        } ,
+%<en>    { Corollary   } ,
+    { definition  }
+%<zh>    { 定义        } ,
+%<en>    { Definition  } ,
+    { example     }
+%<zh>    { 例          } ,
+%<en>    { Example     } ,
+    { exercise    }
+%<zh>    { 练习        } ,
+%<en>    { Exercise    } ,
+    { lemma       }
+%<zh>    { 引理        } ,
+%<en>    { Lemma       } ,
+    { problem     }
+%<zh>    { 问题        } ,
+%<en>    { Problem     } ,
+    { proposition }
+%<zh>    { 命题        } ,
+%<en>    { Proposition } ,
+    { remark      }
+%<zh>    { 注          } ,
+%<en>    { Remark      } ,
+    { solution    }
+%<zh>    { 解          } ,
+%<en>    { Solution    } ,
+    { theorem     }
+%<zh>    { 定理        } ,
+%<en>    { Theorem     } ,
   }
-  { \@@_define_name:nnn #1 }
+  { \@@_define_name:nn #1 }
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-%</name>
+%</lang>
 %    \end{macrocode}
 %
 % \end{implementation}
