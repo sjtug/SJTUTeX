@@ -583,7 +583,9 @@
         mathtools-colon
       }
     }                     { unicode-math },
-    { amsmath, thmmarks } { ntheorem     }
+    { amsmath, thmmarks } { ntheorem     },
+    { chapter           } { algorithm    },
+    { algochapter       } { algorithm2e  }
   }
   { \PassOptionsToPackage #1 }
 %    \end{macrocode}
@@ -1647,17 +1649,17 @@
     \SJTU@chapter* { \contentsname }
     \@starttoc { toc }
   }
-\NewDocumentCommand \SJTU@listof { m s }
+\NewDocumentCommand \SJTU@listof { m m s }
   {
-    \IfBooleanTF {#2}
-      { \SJTU@chapter* { \tl_use:c { list #1 name } } }
-      { \SJTU@chapter  { \tl_use:c { list #1 name } } }
-    \@starttoc { \tl_use:c { ext@ #1 }  }
+    \IfBooleanTF {#3}
+      { \SJTU@chapter* {#1} }
+      { \SJTU@chapter  {#1} }
+    \@starttoc { \tl_use:c { ext@ #2 }  }
   }
 \DeclareDocumentCommand \listoffigures { }
-  { \SJTU@listof { figure } }
+  { \SJTU@listof { \listfigurename } { figure } }
 \DeclareDocumentCommand \listoftables  { }
-  { \SJTU@listof { table  } }
+  { \SJTU@listof { \listtablename  } { table  } }
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
@@ -1840,6 +1842,65 @@
     \newtheorem* { proof }{ \proofname }
     \theoremsymbol { }
     \@@_new_theorems:
+  }
+%    \end{macrocode}
+%
+% \subsubsection{\pkg{algorithm} 宏包和 \pkg{algorithm2e} 宏包}
+%
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_newlistof:nnnnn #1#2#3#4#5
+  {
+    \exp_args:Nno \newlistentry {#2} { \tl_use:c { ext@ #3 } } { 0 }
+    \exp_args:No \newcounter { \tl_use:c { ext@ #3 } depth }
+    \exp_args:No \setcounter { \tl_use:c { ext@ #3 } depth } { 1 }
+    \dim_set:cn { cft #2 indent   } { 1.5 em }
+    \dim_set:cn { cft #2 numwidth } { 2.3 em }
+    \cs_set_eq:cc { l@ #3 } { l@ #2 }
+    \@@_appto_cmd:Nn \@@_update_cft_presnum:
+      {
+        \tl_set:cn { cft #2 presnum } { #4 \c_space_tl }
+        \hbox_set:Nn \l_@@_tmp_box { \tl_use:c { cft #2 presnum } }
+        \dim_add:cn { cft #2 numwidth } { \box_wd:N \l_@@_tmp_box }
+      }
+    \exp_args:Nc \DeclareDocumentCommand { listof #1 s } { }
+      { \SJTU@listof {#5} {#3} }
+    \cs_set:cpn { the #3 }
+      { \thechapter \l_@@_style_float_numsep_tl \arabic {#3} }
+    \@@_appto_cmd:Nn \@@_counter_without_chapter:
+      {
+        \counterwithout {#3} { chapter }
+        \setcounter     {#3} { 0 }
+      }
+  }
+%    \end{macrocode}
+%
+% \pkg{algorithm} 宏包
+%    \begin{macrocode}
+\ctex_at_end_package:nn { algorithm }
+  {
+    \tl_set:Nn \fname@algorithm   { \l_@@_name_algorithm_tl     }
+    \tl_set:Nn \listalgorithmname { \l_@@_name_listalgorithm_tl }
+    \@@_newlistof:nnnnn { algorithm } { alg } { algorithm }
+      { \fname@algorithm } { \listalgorithmname }
+  }
+%    \end{macrocode}
+%
+% \pkg{algorithm2e} 宏包
+%    \begin{macrocode}
+\ctex_at_begin_package:nn { algorithm2e }
+  { \cs_set_eq:NN \@@_save_chapter:w \@chapter }
+\ctex_at_end_package:nn { algorithm2e }
+  {
+    \cs_set_eq:NN \@chapter \@@_save_chapter:w
+    \SetAlgorithmName { \l_@@_name_algorithm_tl     }
+                      { \l_@@_name_algorithm_tl     }
+                      { \l_@@_name_listalgorithm_tl }
+    \SetAlgoCaptionSeparator { \enskip }
+    \@@_newlistof:nnnnn { algorithm } { alg } { algocf }
+      { \algorithmcfname } { \listalgorithmcfname }
+    \@@_patch_cmd:Nnn \algocf@latexcaption
+      { \addcontentsline }
+      { \caption@iflist { \addcontentsline } { \use_none:nnn } }
   }
 %    \end{macrocode}
 %
