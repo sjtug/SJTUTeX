@@ -224,7 +224,7 @@
     unknown .code:n = { }
   }
 \ProcessKeysOptions { sjtu / diversion }
-\int_compare:nTF { \g_@@_thesis_type_int < 3 }
+\int_compare:nNnTF { \g_@@_thesis_type_int } < { 3 }
   { \LoadClassWithOptions { sjtuthesis-postgraduate  } }
   { \LoadClassWithOptions { sjtuthesis-undergraduate } }
 %</entry>
@@ -300,6 +300,8 @@
 % 论文语言。
 %    \begin{macrocode}
 \tl_new:N  \g_@@_lang_tl
+\tl_new:N  \g_@@_lang_aux_tl
+\tl_set:Nn \g_@@_lang_aux_tl { zh }
 %    \end{macrocode}
 % \end{variable}
 %
@@ -455,7 +457,11 @@
     lang .value_required:n = true ,
     lang .choices:nn =
       { zh, en }
-      { \tl_gset_eq:NN \g_@@_lang_tl \l_keys_choice_tl } ,
+      {
+        \tl_gset_eq:NN \g_@@_lang_tl \l_keys_choice_tl
+        \int_compare:nNnT { \l_keys_choice_int } = { 1 }
+          { \tl_gset:Nn \g_@@_lang_aux_tl { en } }
+      } ,
     lang .initial:n = { zh } ,
 %    \end{macrocode}
 %
@@ -647,6 +653,12 @@
   {
     \tl_new:c { l_@@_info_ #1 _zh_tl }
     \tl_new:c { l_@@_info_ #1 _en_tl }
+    \tl_new:c  { l_@@_info_ #1 _tl }
+    \tl_set:cn { l_@@_info_ #1 _tl }
+      { \tl_use:c { l_@@_info_ #1 _ \g_@@_lang_tl _tl } }
+    \tl_new:c  { l_@@_info_ #1 _aux_tl }
+    \tl_set:cn { l_@@_info_ #1 _aux_tl }
+      { \tl_use:c { l_@@_info_ #1 _ \g_@@_lang_aux_tl _tl } }
   }
 \clist_map_inline:nn
   { keywords, fund }
@@ -795,6 +807,8 @@
     abbr          .initial:n = { Abbreviations } ,
     nom            .tl_set:N = \l_@@_name_nom_tl ,
     nom           .initial:n = { Nomenclature } ,
+    summary        .tl_set:N = \l_@@_name_summary_tl ,
+    summary       .initial:n = { Summary } ,
     ack            .tl_set:N = \l_@@_name_ack_tl ,
     ack           .initial:n = { Acknowledgements } ,
     resume         .tl_set:N = \l_@@_name_resume_tl ,
@@ -826,6 +840,7 @@
     listalgorithm = 算法 ,
     abbr          = 缩略语对照表 ,
     nom           = 符号对照表 ,
+    summary       = 全文总结 ,
     ack           = 致谢 ,
     resume        = 个人简历 ,
     digest        = 大摘要 ,
@@ -1692,7 +1707,29 @@
   { \@@_update_cft_presnum: }
 %    \end{macrocode}
 %
-% \subsection{附录}
+% \subsection{预定义环境}
+%
+% 缩略语对照表。
+%    \begin{macrocode}
+\NewDocumentEnvironment { abbreviation  } { }
+  { \SJTU@chapter  { \l_@@_name_abbr_tl } } { }
+\NewDocumentEnvironment { abbreviation* } { }
+  { \SJTU@chapter* { \l_@@_name_abbr_tl } } { }
+%    \end{macrocode}
+%
+% 符号对照表。
+%    \begin{macrocode}
+\NewDocumentEnvironment { nomenclature  } { }
+  { \SJTU@chapter  { \l_@@_name_nom_tl } } { }
+\NewDocumentEnvironment { nomenclature* } { }
+  { \SJTU@chapter* { \l_@@_name_nom_tl } } { }
+%    \end{macrocode}
+%
+% 全文总结。
+%    \begin{macrocode}
+\NewDocumentEnvironment { summary } { }
+  { \SJTU@chapter { \l_@@_name_summary_tl } } { }
+%    \end{macrocode}
 %
 % 致谢，盲审模式下隐藏致谢。
 %    \begin{macrocode}
@@ -1742,6 +1779,37 @@
   } { }
 \cs_set_eq:NN \@@_thebibliography_begin:n \thebibliography
 \cs_set_eq:NN \@@_thebibliography_end:    \endthebibliography
+%    \end{macrocode}
+%
+% 简历。
+%    \begin{macrocode}
+\NewDocumentEnvironment { resume } { +b }
+  {
+    \bool_if:NF \g_@@_review_bool
+      {
+        \SJTU@chapter { \l_@@_name_resume_tl }
+        #1
+      }
+  } { }
+%    \end{macrocode}
+%
+% 大摘要。
+%    \begin{macrocode}
+\NewDocumentEnvironment { digest } { +b }
+  {
+    \AtEndDocument
+      {
+        \if@openright \cleardoublepage \else \clearpage \fi
+        \pagenumbering { roman }
+        \cs_gset:Npn \@@_thepage:     { \theCurrentPageLocal }
+        \cs_gset:Npn \@@_lastpageref: { \lastpageref { pagesLTS.roman.local } }
+        \cs_gset_eq:NN \addcontentsline \use_none:nnn
+        \@@_counter_without_chapter:
+        \SJTU@chapter* [ \l_@@_name_digest_tl ]
+          { \MakeUppercase \l_@@_info_title_aux_tl }
+        #1
+      }
+  } { }
 %    \end{macrocode}
 %
 % \subsection{其他宏包的设置}
