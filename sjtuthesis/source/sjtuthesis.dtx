@@ -795,9 +795,9 @@
 %    \begin{macrocode}
 \keys_define:nn { sjtu / name }
   {
-    figure*        .tl_set:N = \l_@@_name_figure_second_tl ,
+    figure*        .tl_set:N = \l_@@_name_figure_aux_tl ,
     figure*       .initial:n = { 图 } ,
-    table*         .tl_set:N = \l_@@_name_table_second_tl ,
+    table*         .tl_set:N = \l_@@_name_table_aux_tl ,
     table*        .initial:n = { 表 } ,
     algorithm      .tl_set:N = \l_@@_name_algorithm_tl ,
     algorithm     .initial:n = { Algorithm } ,
@@ -1600,10 +1600,12 @@
 %
 % 双语题注。
 %    \begin{macrocode}
-\captionsetup [ figure ] [ bi-second ]
-  { name = \l_@@_name_figure_second_tl }
-\captionsetup [ table  ] [ bi-second ]
-  { name = \l_@@_name_table_second_tl  }
+\DeclareCaptionOption { aux-names } [ ]
+  {
+    \tl_set:Nn \figurename { \l_@@_name_figure_aux_tl }
+    \tl_set:Nn \tablename  { \l_@@_name_table_aux_tl  }
+  }
+\captionsetup [ bi-second ] { aux-names }
 %    \end{macrocode}
 %
 % 定义图、表、公式的编号格式。
@@ -1847,6 +1849,20 @@
         }
       }
   }
+%    \end{macrocode}
+%
+% \subsubsection{\pkg{threeparttable} 宏包}
+%
+%    \begin{macrocode}
+\ctex_at_end_package:nn { threeparttable }
+  { \tl_put_right:Nn \TPTnoteSettings { \footnotesize } }
+%    \end{macrocode}
+%
+% \subsubsection{\pkg{longtable} 宏包}
+%
+%    \begin{macrocode}
+\ctex_at_end_package:nn { longtable }
+  { \AtBeginEnvironment { longtable } { \l_@@_style_float_font_tl } }
 %    \end{macrocode}
 %
 % \subsubsection{\pkg{amsthm} 宏包和 \pkg{ntheorem} 宏包}
