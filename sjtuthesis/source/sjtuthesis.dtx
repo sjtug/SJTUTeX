@@ -1929,6 +1929,36 @@
   }
 %    \end{macrocode}
 %
+% \subsubsection{\pkg{listings} 宏包}
+%
+%    \begin{macrocode}
+\ctex_at_end_package:nn { listings }
+  {
+    \lstdefinestyle{lstStyleCode}{
+      aboveskip=\medskipamount,
+      belowskip=\medskipamount,
+      basicstyle=\ttfamily\zihao{6},
+      commentstyle=\slshape\color{black!60},
+      stringstyle=\color{green!40!black!100},
+      keywordstyle=\bfseries\color{blue!50!black},
+      extendedchars=false,
+      upquote=true,
+      tabsize=2,
+      showstringspaces=false,
+      xleftmargin=1em,
+      xrightmargin=1em,
+      breaklines=false,
+      framexleftmargin=1em,
+      framexrightmargin=1em,
+      backgroundcolor=\color{gray!10},
+      columns=flexible,
+      keepspaces=true,
+      texcl=true,
+      mathescape=true
+    }
+  }
+%    \end{macrocode}
+%
 % \subsubsection{\pkg{algorithm} 宏包和 \pkg{algorithm2e} 宏包}
 %
 %    \begin{macrocode}
