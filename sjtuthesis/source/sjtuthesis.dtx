@@ -378,7 +378,7 @@
 %
 % \begin{macro}[int]{\@@_load_lang:}
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_load_lang:
+\cs_new_protected:Nn \@@_load_lang:
   {
     \ctex_push_file:
       \file_if_exist_input:nF { sjtuthesis-lang- \g_@@_lang_tl .cfg }
@@ -902,7 +902,7 @@
     Invalid~ value~ `#1-font~ =~ \use:c{ g_@@_ #1 _font_tl }~ '! \\\\
     Using~ `#2'~ instead.
   }
-\cs_new_protected:Npn \@@_load_fontset:
+\cs_new_protected:Nn \@@_load_fontset:
   {
     \clist_map_inline:nn
       {
@@ -1437,8 +1437,8 @@
     \cleardoublepage
     \@mainmatterfalse
     \pagenumbering { Roman }
-    \cs_gset:Npn \@@_thepage:     { \thepage }
-    \cs_gset:Npn \@@_lastpageref: { \lastpageref { pagesLTS.Roman  } }
+    \cs_gset:Nn \@@_thepage:     { \thepage }
+    \cs_gset:Nn \@@_lastpageref: { \lastpageref { pagesLTS.Roman  } }
 %<ug>    \pagestyle { nofoot }
   }
 %    \end{macrocode}
@@ -1452,8 +1452,8 @@
     \cleardoublepage
     \@mainmattertrue
     \pagenumbering { arabic }
-    \cs_gset:Npn \@@_thepage:     { \thepage }
-    \cs_gset:Npn \@@_lastpageref: { \lastpageref { pagesLTS.arabic } }
+    \cs_gset:Nn \@@_thepage:     { \thepage }
+    \cs_gset:Nn \@@_lastpageref: { \lastpageref { pagesLTS.arabic } }
 %<ug>    \pagestyle { plain }
   }
 %    \end{macrocode}
@@ -1621,7 +1621,7 @@
 % \begin{macro}[int]{\@@_counter_without_chapter:}
 % 特殊环境各计数器不随章编号。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_counter_without_chapter:
+\cs_new_protected:Nn \@@_counter_without_chapter:
   {
     \counterwithout { section } { chapter }
     \setcounter     { section } { 0 }
@@ -1688,15 +1688,15 @@
 %<zh>\tl_set:Nn \cftdot { \textperiodcentered }
 \tl_set:Nn \cftdotsep { 1 }
 %<ug>\dim_zero:N \cftbeforechapskip
-\cs_set:Npn \cftchappagefont { \normalfont }
-\cs_set:Npn \cftchapleader { \normalfont \cftdotfill { \cftdotsep } }
-%<pg>\cs_set:Npn \cftchapfont { \bfseries \heiti }
-%<ug>\cs_set:Npn \cftchapfont { \normalfont }
+\tl_set:Nn \cftchappagefont { \normalfont }
+\tl_set:Nn \cftchapleader { \normalfont \cftdotfill { \cftdotsep } }
+%<pg>\tl_set:Nn \cftchapfont { \bfseries \heiti }
+%<ug>\tl_set:Nn \cftchapfont { \normalfont }
 %    \end{macrocode}
 %
 % 图表清单标题前添加名称。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_update_cft_presnum:
+\cs_new_protected:Nn \@@_update_cft_presnum:
   {
     \tl_set:Nn \cftfigpresnum { \figurename \c_space_tl }
     \hbox_set:Nn \l_@@_tmp_box { \cftfigpresnum }
@@ -1803,8 +1803,8 @@
       {
         \if@openright \cleardoublepage \else \clearpage \fi
         \pagenumbering { roman }
-        \cs_gset:Npn \@@_thepage:     { \theCurrentPageLocal }
-        \cs_gset:Npn \@@_lastpageref: { \lastpageref { pagesLTS.roman.local } }
+        \cs_gset:Nn \@@_thepage:     { \theCurrentPageLocal }
+        \cs_gset:Nn \@@_lastpageref: { \lastpageref { pagesLTS.roman.local } }
         \cs_gset_eq:NN \addcontentsline \use_none:nnn
         \@@_counter_without_chapter:
         \SJTU@chapter* [ \l_@@_name_digest_tl ]
@@ -1868,7 +1868,7 @@
 % \subsubsection{\pkg{amsthm} 宏包和 \pkg{ntheorem} 宏包}
 %
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_new_theorems:
+\cs_new_protected:Nn \@@_new_theorems:
   {
     \clist_map_inline:nn
       {
@@ -1923,7 +1923,7 @@
     \theorembodyfont   { \normalfont      }
     \theoremseparator  { \enskip          }
     \theoremsymbol { \ensuremath { \square } }
-    \newtheorem* { proof }{ \proofname }
+    \newtheorem* { proof } { \proofname }
     \theoremsymbol { }
     \@@_new_theorems:
   }
@@ -1996,7 +1996,7 @@
       {
         aboveskip         = \medskipamount ,
         belowskip         = \medskipamount ,
-        basicstyle        = \ttfamily \zihao{ 6 } ,
+        basicstyle        = \ttfamily \zihao { 6 } ,
         commentstyle      = \slshape \color { black!60 } ,
         stringstyle       = \color { green!40!black!100 } ,
         keywordstyle      = \bfseries \color { blue!50!black } ,
