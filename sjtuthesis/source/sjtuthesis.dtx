@@ -1940,18 +1940,19 @@
   {
     \cs_if_exist:NT \@@_save_openbox:
       { \cs_set_eq:NN \openbox \@@_save_openbox: }
-    \ExplSyntaxOff
-    \renewenvironment{proof}[1][\proofname]{\par
-      \pushQED{\qed}%
-      \normalfont \topsep\z@\relax
-      \trivlist
-      \item[\hskip\labelsep
-        \bfseries\heiti
-        #1\@addpunct{\enskip}]\ignorespaces
-    }{%
-      \popQED\endtrivlist\@endpefalse
-    }
-    \ExplSyntaxOn
+    \RenewDocumentEnvironment { proof } { O{ \proofname } }
+      {
+        \par \pushQED { \qed }
+        \normalfont \dim_zero:N \topsep
+        \trivlist
+        \item
+          [
+            \skip_horizontal:N \labelsep
+            \bfseries \heiti #1 \@addpunct { \enskip }
+          ]
+        \ignorespaces
+      }
+      { \popQED \endtrivlist \@endpefalse }
     \newtheoremstyle { sjtu }
       { } { } { \normalfont } { } { \bfseries \heiti } { } { \ccwd } { }
     \theoremstyle { sjtu }
