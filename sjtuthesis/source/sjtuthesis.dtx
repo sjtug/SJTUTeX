@@ -388,6 +388,23 @@
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}[int]{\@@_dim_set_to_wd:Nn,\@@_dim_add_to_wd:Nn}
+%    \begin{macrocode}
+\cs_new:Npn \@@_dim_set_to_wd:Nn #1#2
+  {
+    \hbox_set:Nn \l_@@_tmp_box {#2}
+    \dim_set:Nn #1 { \box_wd:N \l_@@_tmp_box }
+  }
+\cs_new:Npn \@@_dim_add_to_wd:Nn #1#2
+  {
+    \hbox_set:Nn \l_@@_tmp_box {#2}
+    \dim_add:Nn #1 { \box_wd:N \l_@@_tmp_box }
+  }
+\cs_generate_variant:Nn \@@_dim_set_to_wd:Nn { cn }
+\cs_generate_variant:Nn \@@_dim_add_to_wd:Nn { cn }
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}{\@@_define_name:nn,\@@_define_name:nnn}
 % 用来定义默认名称的辅助函数。
 %    \begin{macrocode}
@@ -1699,11 +1716,9 @@
 \cs_new_protected:Nn \@@_update_cft_presnum:
   {
     \tl_set:Nn \cftfigpresnum { \figurename \c_space_tl }
-    \hbox_set:Nn \l_@@_tmp_box { \cftfigpresnum }
-    \dim_add:Nn \cftfignumwidth { \box_wd:N \l_@@_tmp_box }
+    \@@_dim_add_to_wd:Nn \cftfignumwidth { \cftfigpresnum }
     \tl_set:Nn \cfttabpresnum { \tablename  \c_space_tl }
-    \hbox_set:Nn \l_@@_tmp_box { \cftfigpresnum }
-    \dim_add:Nn \cfttabnumwidth { \box_wd:N \l_@@_tmp_box }
+    \@@_dim_add_to_wd:Nn \cfttabnumwidth { \cftfigpresnum }
   }
 \ctex_at_end_preamble:n
   { \@@_update_cft_presnum: }
@@ -1747,40 +1762,69 @@
 %
 % 发表论文与学术成果。
 %    \begin{macrocode}
-\NewDocumentEnvironment { achievements  }
-  { O{ \l_@@_name_achv_tl } m +b }
+\newcounter { SJTU@bib }
+\NewDocumentEnvironment { @bibliolist } { m }
+  {
+    \cs_if_exist_use:N \bibfont
+    \list
+      { \@biblabel { \arabic{ SJTU@bib } } }
+      {
+        \@@_dim_set_to_wd:Nn \labelwidth { \@biblabel {#1} }
+        \dim_set_eq:NN \leftmargin \labelwidth
+        \dim_add:Nn    \leftmargin { \labelsep }
+        \dim_if_exist:NTF \bibitemsep
+          {
+            \dim_set_eq:NN \itemsep \bibitemsep
+            \dim_if_exist:NT \bibparsep
+              { \dim_set_eq:NN \parsep \bibparsep }
+          }
+          {
+            \dim_if_exist:NT \bibsep
+              {
+                \dim_set_eq:NN \itemsep \bibsep
+                \dim_zero:N    \parsep
+              }
+          }
+        \@nmbrlisttrue
+        \tl_set:Nn  \@listctr    { SJTU@bib }
+        \cs_set:Npn \p@SJTU@bib  { }
+        \cs_set:Npn \theSJTU@bib { \arabic { SJTU@bib } }
+      }
+      \sloppy
+      \int_set:Nn \clubpenalty  { 4000 }
+      \int_set_eq:NN \@clubpenalty \clubpenalty
+      \int_set:Nn \widowpenalty { 4000 }
+      \char_set_sfcode:nn { `\. } { 1000 }
+  }
+  {
+    \cs_set:Npn \@noitemerr
+      { \msg_warning:nnn { sjtuthesis } { empty-environment } { bibliolist } }
+    \endlist
+  }
+\msg_new:nnn { sjtuthesis } { empty-environment }
+  { Empty~ `#1'~ environment. }
+\NewDocumentEnvironment { achievements } { }
+  { \SJTU@chapter { \l_@@_name_achv_tl } } { }
+\NewDocumentEnvironment { bibliolist  } { m +b }
   {
     \bool_if:NF \g_@@_review_bool
       {
-        \group_begin:
-        \if@openright \cleardoublepage \else \clearpage \fi
-        \@@_phantom_section:
-        \addcontentsline { toc } { chapter } {#1}
-        \tl_set:Nn \bibname {#1}
-        \@@_thebibliography_begin:n {#2}
-        #3
-        \@@_thebibliography_end:
-        \group_end:
+        \cs_set:Npn \@noitemerr { }
+        \begin { @bibliolist } {#1}
+        #2
+        \end { @bibliolist }
       }
   } { }
-\NewDocumentEnvironment { achievements* }
-  { O { \l_@@_name_achv_tl } m +b }
+\NewDocumentEnvironment { bibliolist* } { m +b }
   {
     \bool_if:NT \g_@@_review_bool
       {
-        \group_begin:
-        \if@openright \cleardoublepage \else \clearpage \fi
-        \@@_phantom_section:
-        \addcontentsline { toc } { chapter } {#1}
-        \tl_set:Nn \bibname {#1}
-        \@@_thebibliography_begin:n {#2}
-        #3
-        \@@_thebibliography_end:
-        \group_end:
+        \cs_set:Npn \@noitemerr { }
+        \begin { @bibliolist } {#1}
+        #2
+        \end { @bibliolist }
       }
   } { }
-\cs_set_eq:NN \@@_thebibliography_begin:n \thebibliography
-\cs_set_eq:NN \@@_thebibliography_end:    \endthebibliography
 %    \end{macrocode}
 %
 % 简历。
@@ -1943,8 +1987,8 @@
     \@@_appto_cmd:Nn \@@_update_cft_presnum:
       {
         \tl_set:cn { cft #2 presnum } { #4 \c_space_tl }
-        \hbox_set:Nn \l_@@_tmp_box { \tl_use:c { cft #2 presnum } }
-        \dim_add:cn { cft #2 numwidth } { \box_wd:N \l_@@_tmp_box }
+        \@@_dim_add_to_wd:cn { cft #2 numwidth }
+          { \tl_use:c { cft #2 presnum } }
       }
     \exp_args:Nc \DeclareDocumentCommand { listof #1 s } { }
       { \SJTU@listof {#5} {#3} }
