@@ -1506,10 +1506,10 @@
   }
 %</class>
 %<*lang&zh>
-\keys_set_known:nn { ctex }
+\ctex_set:nn { chapter }
   {
-    chapter / name   = { 第 , 章 } ,
-    chapter / number = \chinese { chapter }
+    name        = { 第 , 章 } ,
+    number      = \chinese { chapter }
   }
 %</lang&zh>
 %<*class>
@@ -1542,6 +1542,7 @@
   { afterindent = true }
 \ctex_if_autoindent_touched:F
   { \ctex_set:n { autoindent = true } }
+\ctex_set:n { secnumdepth = 3 }
 %    \end{macrocode}
 %
 % \begin{macro}[int]{\verse,\quotation}
