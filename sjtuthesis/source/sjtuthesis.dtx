@@ -60,16 +60,16 @@
     \file{\jobname-undergraduate.cls}{\from{\jobname.dtx}{class,ug}}
     \file{\jobname-lang-zh.cfg}      {\from{\jobname.dtx}{lang,zh}}
     \file{\jobname-lang-en.cfg}      {\from{\jobname.dtx}{lang,en}}
-    \file{sjtu-text-font-termes.def} {\from{\jobname.dtx}{textfont,termes}}
-    \file{sjtu-text-font-pagella.def}{\from{\jobname.dtx}{textfont,pagella}}
+    \file{sjtu-text-font-newtx.def}  {\from{\jobname.dtx}{textfont,newtx}}
+    \file{sjtu-text-font-newpx.def}  {\from{\jobname.dtx}{textfont,newpx}}
     \file{sjtu-text-font-lm.def}     {\from{\jobname.dtx}{textfont,lm}}
     \file{sjtu-text-font-stixtwo.def}{\from{\jobname.dtx}{textfont,stixtwo}}
     \file{sjtu-text-font-xits.def}   {\from{\jobname.dtx}{textfont,xits}}
     \file{sjtu-text-font-newcm.def}  {\from{\jobname.dtx}{textfont,newcm}}
     \file{sjtu-text-font-cambria.def}{\from{\jobname.dtx}{textfont,cambria}}
     \file{sjtu-text-font-times.def}  {\from{\jobname.dtx}{textfont,times}}
-    \file{sjtu-math-font-termes.def} {\from{\jobname.dtx}{mathfont,termes}}
-    \file{sjtu-math-font-pagella.def}{\from{\jobname.dtx}{mathfont,pagella}}
+    \file{sjtu-math-font-newtx.def}  {\from{\jobname.dtx}{mathfont,newtx}}
+    \file{sjtu-math-font-newpx.def}  {\from{\jobname.dtx}{mathfont,newpx}}
     \file{sjtu-math-font-lm.def}     {\from{\jobname.dtx}{mathfont,lm}}
     \file{sjtu-math-font-stixtwo.def}{\from{\jobname.dtx}{mathfont,stixtwo}}
     \file{sjtu-math-font-xits.def}   {\from{\jobname.dtx}{mathfont,xits}}
@@ -127,10 +127,10 @@
 %<lang&zh>\ProvidesExplFile{sjtuthesis-lang-zh.cfg}
 %<lang&en>  {English language specific config (SJTUThesis)}
 %<lang&en>\ProvidesExplFile{sjtuthesis-lang-en.cfg}
-%<textfont&termes>  {Termes text fonts definition (SJTUThesis)}
-%<textfont&termes>\ProvidesExplFile{sjtu-text-font-termes.def}
-%<textfont&pagella>  {Pagella text fonts definition (SJTUThesis)}
-%<textfont&pagella>\ProvidesExplFile{sjtu-text-font-pagella.def}
+%<textfont&newtx>  {New TX text fonts definition (SJTUThesis)}
+%<textfont&newtx>\ProvidesExplFile{sjtu-text-font-newtx.def}
+%<textfont&newpx>  {New PX text fonts definition (SJTUThesis)}
+%<textfont&newpx>\ProvidesExplFile{sjtu-text-font-newpx.def}
 %<textfont&stixtwo>  {STIX Two text fonts definition (SJTUThesis)}
 %<textfont&stixtwo>\ProvidesExplFile{sjtu-text-font-stixtwo.def}
 %<textfont&xits>  {XITS text fonts definition (SJTUThesis)}
@@ -143,10 +143,10 @@
 %<textfont&cambria>\ProvidesExplFile{sjtu-text-font-cambria.def}
 %<textfont&times>  {Times text fonts definition (SJTUThesis)}
 %<textfont&times>\ProvidesExplFile{sjtu-text-font-times.def}
-%<mathfont&termes>  {Termes math fonts definition (SJTUThesis)}
-%<mathfont&termes>\ProvidesExplFile{sjtu-math-font-termes.def}
-%<mathfont&pagella>  {Pagella math fonts definition (SJTUThesis)}
-%<mathfont&pagella>\ProvidesExplFile{sjtu-math-font-pagella.def}
+%<mathfont&newtx>  {New TX math fonts definition (SJTUThesis)}
+%<mathfont&newtx>\ProvidesExplFile{sjtu-math-font-newtx.def}
+%<mathfont&newpx>  {New PX math fonts definition (SJTUThesis)}
+%<mathfont&newpx>\ProvidesExplFile{sjtu-math-font-newpx.def}
 %<mathfont&stixtwo>  {STIX Two math fonts definition (SJTUThesis)}
 %<mathfont&stixtwo>\ProvidesExplFile{sjtu-math-font-stixtwo.def}
 %<mathfont&xits>  {XITS math fonts definition (SJTUThesis)}
@@ -332,13 +332,6 @@
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}{\g_@@_unimath_bool}
-% 是否偏好使用 \pkg{unicode-math}。
-%    \begin{macrocode}
-\bool_new:N \g_@@_unimath_bool
-%    \end{macrocode}
-% \end{variable}
-%
 % \begin{variable}{\g_@@_review_bool}
 % 盲审模式。
 %    \begin{macrocode}
@@ -510,15 +503,9 @@
 % 字体配置。
 %    \begin{macrocode}
     text-font .tl_gset:N = \g_@@_text_font_tl ,
-    text-font .initial:n = { termes } ,
+    text-font .initial:n = { newtx } ,
     math-font .tl_gset:N = \g_@@_math_font_tl ,
     cjk-font  .tl_gset:N = \g_@@_cjk_font_tl ,
-%    \end{macrocode}
-%
-% \pkg{unicode-math}。
-%    \begin{macrocode}
-    unimath .bool_gset:N = \g_@@_unimath_bool ,
-    unimath .initial:n = false ,
 %    \end{macrocode}
 %
 % 单面或双面模式。
@@ -900,31 +887,31 @@
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_load_font:nn #1#2
   {
-    \str_if_eq:onF { \use:c{ g_@@_ #1 _font_tl } } { none }
+    \str_if_eq:eeF { \tl_use:c{ g_@@_ #1 _font_tl } } { none }
       {
         \ctex_push_file:
           \file_if_exist_input:nF
-            { sjtu- #1 -font- \use:c{ g_@@_ #1 _font_tl } .def }
+            { sjtu- #1 -font- \tl_use:c{ g_@@_ #1 _font_tl } .def }
             {
               \msg_warning:nnnn { sjtuthesis } { invalid-font } {#1} {#2}
               \tl_gset:cn { g_@@_ #1 _font_tl } {#2}
               \file_input:n
-                { sjtu- #1 -font- \use:c{ g_@@_ #1 _font_tl } .def }
+                { sjtu- #1 -font- \tl_use:c{ g_@@_ #1 _font_tl } .def }
             }
         \ctex_pop_file:
       }
   }
 \msg_new:nnn { sjtuthesis } { invalid-font }
   {
-    Invalid~ value~ `#1-font~ =~ \use:c{ g_@@_ #1 _font_tl }~ '! \\\\
+    Invalid~ value~ `#1-font~ =~ \tl_use:c{ g_@@_ #1 _font_tl }~ '! \\\\
     Using~ `#2'~ instead.
   }
 \cs_new_protected:Nn \@@_load_fontset:
   {
     \clist_map_inline:nn
       {
-        { math } { termes },
-        { text } { termes },
+        { math } { newtx  },
+        { text } { newtx  },
         { cjk  } { fandol }
       }
       { \@@_load_font:nn ##1 }
@@ -939,12 +926,7 @@
 % 西文与数学字体配置。
 %    \begin{macrocode}
 %<*mathfont>
-%<termes|pagella|lm>\bool_if:NTF \g_@@_unimath_bool
-%<termes|pagella|lm>  {
-%<stixtwo|xits|newcm|cambria>\bool_set_true:N \g_@@_unimath_bool
-    \RequirePackage { unicode-math }
-%<termes>    \setmathfont { texgyretermes-math.otf }
-%<pagella>    \setmathfont { texgyrepagella-math.otf }
+%<stixtwo|xits|newcm|cambria>\RequirePackage { unicode-math }
 %<*stixtwo>
 \fontspec_font_if_exist:nTF { STIXTwoMath-Regular.otf }
   {
@@ -952,7 +934,7 @@
       [ StylisticSet = 8 ]
     \setmathfont { STIXTwoMath-Regular.otf }
       [
-        range        = {scr, bfscr},
+        range        = { scr, bfscr },
         StylisticSet = 1
       ]
   }
@@ -961,7 +943,7 @@
       [ StylisticSet = 8 ]
     \setmathfont { STIX2Math.otf }
       [
-        range        = {scr, bfscr},
+        range        = { scr, bfscr },
         StylisticSet = 1
       ]
   }
@@ -977,7 +959,7 @@
       ]
     \setmathfont { XITSMath-Regular.otf }
       [
-        range        = {cal, bfcal},
+        range        = { cal, bfcal },
         StylisticSet = 1
       ]
   }
@@ -990,36 +972,38 @@
       ]
     \setmathfont { xits-math.otf }
       [
-        range        = {cal, bfcal},
+        range        = { cal, bfcal },
         StylisticSet = 1
       ]
   }
 %</xits>
-%<lm>    \setmathfont { latinmodern-math.otf }
 %<*newcm>
 \setmathfont { NewCMMath-Book.otf }
   [ StylisticSet = 2 ]
 \setmathfont { NewCMMath-Book.otf }
   [
-    range        = {scr, bfscr},
+    range        = { scr, bfscr },
     StylisticSet = 1
   ]
 %</newcm>
 %<cambria>\setmathfont { Cambria~Math }
 %</mathfont>
-%<*termes|pagella>
-%<mathfont>    \setmathrm
-%<textfont>    \setmainfont
-%<termes>      { texgyretermes }
-%<pagella>      { texgyrepagella }
-      [
-        Extension      = .otf,
-        UprightFont    = *-regular,
-        BoldFont       = *-bold,
-        ItalicFont     = *-italic,
-        BoldItalicFont = *-bolditalic,
-      ]
-%</termes|pagella>
+%<*textfont>
+%<*newtx|newpx>
+\setmainfont
+%<newtx>  { TeXGyreTermesX }
+%<newpx>  { TeXGyrePagellaX }
+  [
+    Extension       = .otf,
+    UprightFont     = *-Regular,
+    BoldFont        = *-Bold,
+    ItalicFont      = *-Italic,
+    BoldItalicFont  = *-BoldItalic,
+    SlantedFont     = *-Slanted,
+    BoldSlantedFont = *-BoldSlanted
+  ]
+%</newtx|newpx>
+%</textfont>
 %<*stixtwo>
 \fontspec_font_if_exist:nTF { STIXTwoText-Regular.otf }
   {
@@ -1074,78 +1058,67 @@
       ]
   }
 %</xits>
-%<*termes|pagella|stixtwo|xits>
-%<mathfont>    \setmathsf
-%<textfont>    \setsansfont
-      { texgyreheros }
-      [
-        Extension      = .otf,
-        UprightFont    = *-regular,
-        BoldFont       = *-bold,
-        ItalicFont     = *-italic,
-        BoldItalicFont = *-bolditalic
-      ]
-%<mathfont>    \setmathtt
-%<textfont>    \setmonofont
-      { texgyrecursor }
-      [
-        Extension      = .otf,
-        UprightFont    = *-regular,
-        BoldFont       = *-bold,
-        ItalicFont     = *-italic,
-        BoldItalicFont = *-bolditalic,
-        Scale          = MatchLowercase,
-        Ligatures      = CommonOff
-      ]
-%</termes|pagella|stixtwo|xits>
-%<*lm>
-%<mathfont>    \setmathrm
-%<textfont>    \setmainfont
-      { lmroman10 }
-      [
-        Extension      = .otf,
-        UprightFont    = *-regular,
-        BoldFont       = *-bold,
-        ItalicFont     = *-italic,
-        BoldItalicFont = *-bolditalic
-      ]
-%<mathfont>    \setmathsf
-%<textfont>    \setsansfont
-      { lmsans10 }
-      [
-        Extension      = .otf,
-        UprightFont    = *-regular,
-        BoldFont       = *-bold,
-        ItalicFont     = *-oblique,
-        BoldItalicFont = *-boldoblique
-      ]
-%<mathfont>    \setmathtt
-%<textfont>    \setmonofont
-      { lmmonolt10 }
-      [
-        Extension      = .otf,
-        UprightFont    = *-regular,
-        BoldFont       = *-bold,
-        ItalicFont     = *-oblique,
-        BoldItalicFont = *-boldoblique
-      ]
-%</lm>
+%<*textfont&(newtx|newpx)|stixtwo|xits>
+%<mathfont>\setmathsf
+%<textfont>\setsansfont
+  { texgyreheros }
+  [
+    Extension      = .otf,
+    UprightFont    = *-regular,
+    BoldFont       = *-bold,
+    ItalicFont     = *-italic,
+    BoldItalicFont = *-bolditalic
+  ]
+%<mathfont>\setmathtt
+%<textfont>\setmonofont
+  { texgyrecursor }
+  [
+    Extension      = .otf,
+    UprightFont    = *-regular,
+    BoldFont       = *-bold,
+    ItalicFont     = *-italic,
+    BoldItalicFont = *-bolditalic,
+    Scale          = MatchLowercase,
+    Ligatures      = CommonOff
+  ]
+%</textfont&(newtx|newpx)|stixtwo|xits>
 %<*newcm>
 %<mathfont>\setmathrm
 %<textfont>\setmainfont
   { NewCM10 }
   [
-    Extension      = .otf,
-    UprightFont    = *-Book,
-    BoldFont       = *-Bold,
-    ItalicFont     = *-BookItalic,
-    BoldItalicFont = *-BoldItalic
+    Extension    = .otf,
+    SizeFeatures = {
+      {
+        Size        = -9,
+        Font        = NewCM08-Book,
+        ItalicFont  = NewCM08-BookItalic,
+        SlantedFont = NewCM08-Book,
+      },
+      { Size        = 9- }
+    },
+    UprightFont         = *-Book,
+    BoldFont            = *-Bold,
+    ItalicFont          = *-BookItalic,
+    BoldItalicFont      = *-BoldItalic,
+    SlantedFont         = *-Book,
+    BoldSlantedFont     = *-Bold,
+    SlantedFeatures     = { FakeSlant = 0.25 },
+    BoldSlantedFeatures = { FakeSlant = 0.25 }
   ]
 %<mathfont>\setmathsf
 %<textfont>\setsansfont
   { NewCMSans10 }
   [
-    Extension      = .otf,
+    Extension    = .otf,
+    SizeFeatures = {
+      {
+        Size       = -9,
+        Font       = NewCMSans08-Book,
+        ItalicFont = NewCMSans08-BookOblique,
+      },
+      { Size       = 9- }
+    },
     UprightFont    = *-Book,
     BoldFont       = *-Bold,
     ItalicFont     = *-BookOblique,
@@ -1155,11 +1128,15 @@
 %<textfont>\setmonofont
   { NewCMMono10 }
   [
-    Extension      = .otf,
-    UprightFont    = *-Book,
-    BoldFont       = *-Bold,
-    ItalicFont     = *-BookItalic,
-    BoldItalicFont = *-BoldOblique
+    Extension           = .otf,
+    UprightFont         = *-Book,
+    BoldFont            = *-Bold,
+    ItalicFont          = *-BookItalic,
+    BoldItalicFont      = *-BoldOblique,
+    SlantedFont         = *-Book,
+    SlantedFeatures     = { FakeSlant = 0.25 },
+    BoldSlantedFont     = *-Bold,
+    BoldSlantedFeatures = { FakeSlant = 0.25 }
   ]
 %</newcm>
 %<*cambria>
@@ -1179,29 +1156,30 @@
 \setsansfont { Arial }
 \setmonofont { Courier~New } [ Scale = MatchLowercase ]
 %</times>
-%<*mathfont&(termes|pagella|lm)>
-  }
-  {
-%<lm>    \RequirePackage { amssymb, upgreek }
-    \tl_set_eq:NN \g_@@_save_encodingdefault_tl \encodingdefault
-    \tl_set_eq:NN \g_@@_save_rmdefault_tl \rmdefault
-    \tl_set_eq:NN \g_@@_save_sfdefault_tl \sfdefault
-    \tl_set_eq:NN \g_@@_save_ttdefault_tl \ttdefault
-    \RequirePackage [ T1 ] { fontenc }
-%<termes>    \tl_set:Nn \rmdefault { ntxtlf }
-%<pagella>    \tl_set:Nn \rmdefault { zpltlf }
-%<termes|pagella>    \tl_set:Nn \sfdefault { qhv }
-%<termes|pagella>    \tl_set:Nn \ttdefault { ntxtt }
-%<termes>    \RequirePackage [ upint ] { newtxmath }
-%<pagella>    \RequirePackage [ upint ] { newpxmath }
-%<lm>    \RequirePackage { lmodern }
-    \tl_set_eq:NN \encodingdefault \g_@@_save_encodingdefault_tl
-    \tl_set_eq:NN \rmdefault \g_@@_save_rmdefault_tl
-    \tl_set_eq:NN \sfdefault \g_@@_save_sfdefault_tl
-    \tl_set_eq:NN \ttdefault \g_@@_save_ttdefault_tl
-    \RequirePackage { bm }
-  }
-%</mathfont&(termes|pagella|lm)>
+%<*mathfont&(newtx|newpx|lm)>
+%<lm>\RequirePackage { amssymb, upgreek }
+\tl_set_eq:NN \g_@@_save_encodingdefault_tl \encodingdefault
+\tl_set_eq:NN \g_@@_save_rmdefault_tl \rmdefault
+\tl_set_eq:NN \g_@@_save_sfdefault_tl \sfdefault
+\tl_set_eq:NN \g_@@_save_ttdefault_tl \ttdefault
+\tl_set:Nn \encodingdefault { OT1 }
+%<newtx>\tl_set:Nn \rmdefault { ntxtlf }
+%<newpx>\tl_set:Nn \rmdefault { zpltlf }
+%<newtx|newpx>\tl_set:Nn \sfdefault { qhv }
+%<newtx|newpx>\tl_set:Nn \ttdefault { ntxtt }
+%<newtx>\RequirePackage [ upint ] { newtxmath }
+%<newpx>\RequirePackage [ upint ] { newpxmath }
+%<*lm>
+\RequirePackage { lmodern }
+\file_if_exist:nT { cmupint.sty }
+  { \RequirePackage { cmupint } }
+%</lm>
+\tl_set_eq:NN \encodingdefault \g_@@_save_encodingdefault_tl
+\tl_set_eq:NN \rmdefault \g_@@_save_rmdefault_tl
+\tl_set_eq:NN \sfdefault \g_@@_save_sfdefault_tl
+\tl_set_eq:NN \ttdefault \g_@@_save_ttdefault_tl
+\RequirePackage { bm }
+%</mathfont&(newtx|newpx|lm)>
 %    \end{macrocode}
 %
 % 中文字体配置，在字体未提供对应粗体的情况下，允许使用伪粗。
@@ -1920,10 +1898,10 @@
         assumption, axiom, conjecture, corollary, definition, example,
         exercise, lemma, problem, proposition, theorem
       }
-      { \newtheorem {##1} { \use:c { c_@@_name_ ##1 _tl } } [ chapter ] }
+      { \newtheorem {##1} { \tl_use:c { c_@@_name_ ##1 _tl } } [ chapter ] }
     \clist_map_inline:nn
       { remark, solution }
-      { \newtheorem*{##1} { \use:c { c_@@_name_ ##1 _tl } } }
+      { \newtheorem*{##1} { \tl_use:c { c_@@_name_ ##1 _tl } } }
   }
 %    \end{macrocode}
 %
