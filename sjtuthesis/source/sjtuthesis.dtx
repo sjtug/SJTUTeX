@@ -1862,6 +1862,22 @@
         \cs_set_eq:NN \qquad   \c_empty_tl
         \cs_set_eq:NN \hspace  \use_none:n
       }
+    \ctex_at_end_package:nn { hyperref }
+      {
+        \hypersetup{
+          linktoc            = all,
+          bookmarksdepth     = 2,
+          bookmarksnumbered  = true,
+          bookmarksopen      = true,
+          bookmarksopenlevel = 1,
+          unicode            = true,
+          psdextra           = true,
+          breaklinks         = true,
+          plainpages         = false,
+          pdfdisplaydoctitle = true,
+          hidelinks,
+        }
+      }
     \ctex_after_end_preamble:n
       {
         \hypersetup{
