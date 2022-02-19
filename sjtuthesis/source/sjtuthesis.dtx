@@ -1846,6 +1846,18 @@
 %    \begin{macrocode}
 \ctex_at_end_package:nn { hyperref }
   {
+    \hypersetup
+      {
+        linktoc            = all,
+        bookmarksdepth     = 2,
+        bookmarksnumbered  = true,
+        bookmarksopen      = true,
+        bookmarksopenlevel = 1,
+        unicode            = true,
+        psdextra           = true,
+        breaklinks         = true,
+        pdfdisplaydoctitle = true
+      }
     \int_new:N \g_@@_bookmark_int
     \cs_gset_protected:Npn \@@_pdf_bookmark:nn #1#2
       {
@@ -1864,12 +1876,13 @@
       }
     \ctex_after_end_preamble:n
       {
-        \hypersetup{
-          pdftitle    = \l_@@_info_title_zh_tl ,
-          pdfsubject  = \c_@@_name_subject_full_zh_tl ,
-          pdfkeywords = \l_@@_info_keywords_zh_clist ,
-          pdfauthor   = \l_@@_info_author_zh_tl
-        }
+        \hypersetup
+          {
+            pdftitle    = \l_@@_info_title_zh_tl,
+            pdfsubject  = \c_@@_name_subject_full_zh_tl,
+            pdfkeywords = \l_@@_info_keywords_zh_clist,
+            pdfauthor   = \l_@@_info_author_zh_tl
+          }
       }
   }
 %    \end{macrocode}
