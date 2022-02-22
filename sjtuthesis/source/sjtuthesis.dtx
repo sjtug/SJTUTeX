@@ -332,6 +332,29 @@
 %    \end{macrocode}
 % \end{variable}
 %
+% \begin{variable}{\g_@@_math_style_int}
+% 数学符号样式。
+%    \begin{macrocode}
+\int_new:N \g_@@_math_style_int
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{variable}{\g_@@_intlimits_bool}
+% 积分号上下限的位置。
+%    \begin{macrocode}
+\bool_new:N \g_@@_intlimits_bool
+\bool_set_false:N \g_@@_intlimits_bool
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{variable}{\g_@@_slint_bool}
+% 积分号的正/斜体。
+%    \begin{macrocode}
+\bool_new:N \g_@@_slint_bool
+\bool_set_false:N \g_@@_slint_bool
+%    \end{macrocode}
+% \end{variable}
+%
 % \begin{variable}{\g_@@_review_bool}
 % 盲审模式。
 %    \begin{macrocode}
@@ -339,13 +362,17 @@
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}
-%  {\g_@@_ctexbook_options_clist,\g_@@_hyperref_options_clist}
-% 分别保存由 \cls{sjtuthesis} 传入 \cls{ctexbook} 文档类和
-% \pkg{hyperref} 宏包的选项列表。
+% \begin{variable}{\g_@@_ctexbook_options_clist}
+% 保存由 \cls{sjtuthesis} 传入 \cls{ctexbook} 文档类的选项列表。
 %    \begin{macrocode}
 \clist_new:N \g_@@_ctexbook_options_clist
-\clist_new:N \g_@@_hyperref_options_clist
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{variable}{\g_@@_options_to_packages_clist}
+% 保存由传入其他宏包的选项列表。
+%    \begin{macrocode}
+\clist_new:N \g_@@_options_to_packages_clist
 %    \end{macrocode}
 % \end{variable}
 %
@@ -508,6 +535,36 @@
     cjk-font  .tl_gset:N = \g_@@_cjk_font_tl ,
 %    \end{macrocode}
 %
+% 数学符号样式。
+%    \begin{macrocode}
+    math-style .choice: ,
+    math-style .value_required: n = true,
+    math-style .choices:nn =
+      { TeX, ISO, GB }
+      { \int_gset_eq:NN \g_@@_math_style_int \l_keys_choice_int } ,
+    math-style .initial:n = { TeX } ,
+%    \end{macrocode}
+%
+% 积分号上下限的位置，\pkg{unicode-math} 模式下不适用。
+%    \begin{macrocode}
+    nointlimits .value_forbidden:n = true,
+    intlimits   .value_forbidden:n = true,
+    nointlimits .code:n =
+      { \bool_set_false:N \g_@@_intlimits_bool },
+    intlimits   .code:n =
+      { \bool_set_true:N  \g_@@_intlimits_bool },
+%    \end{macrocode}
+%
+% 积分号的正/斜体。
+%    \begin{macrocode}
+    upint .value_forbidden:n = true,
+    slint .value_forbidden:n = true,
+    upint .code:n =
+      { \bool_set_false:N \g_@@_slint_bool },
+    slint .code:n =
+      { \bool_set_true:N  \g_@@_slint_bool },
+%    \end{macrocode}
+%
 % 单面或双面模式。
 %    \begin{macrocode}
     oneside .value_forbidden:n = true,
@@ -581,7 +638,7 @@
 %
 % 传入各宏包选项。
 %    \begin{macrocode}
-\clist_map_inline:nn
+\clist_set:Nn \g_@@_options_to_packages_clist
   {
     { no-math           } { fontspec     },
     { titles            } { tocloft      },
@@ -597,6 +654,38 @@
     { chapter           } { algorithm    },
     { algochapter       } { algorithm2e  }
   }
+\int_compare:nNnT { \g_@@_math_style_int } > { 1 }
+  {
+    \clist_put_right:Nn \g_@@_options_to_packages_clist
+      {
+        { slantedGreek } { newtxmath },
+        { slantedGreek } { newpxmath }
+      }
+  }
+\bool_if:NTF \g_@@_intlimits_bool
+  {
+    \clist_put_right:Nn \g_@@_options_to_packages_clist
+      {
+        { intlimits     } { amsmath },
+        { displaylimits } { cmupint }
+      }
+  }
+  {
+    \clist_put_right:Nn \g_@@_options_to_packages_clist
+      {
+        { nointlimits   } { amsmath },
+        { nolimits      } { cmupint }
+      }
+  }
+\bool_if:NF \g_@@_slint_bool
+  {
+    \clist_put_right:Nn \g_@@_options_to_packages_clist
+      {
+        { upint } { newtxmath },
+        { upint } { newpxmath }
+      }
+  }
+\clist_map_inline:Nn \g_@@_options_to_packages_clist
   { \PassOptionsToPackage #1 }
 %    \end{macrocode}
 %
@@ -923,33 +1012,33 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% 西文与数学字体配置。
+% \subsubsection{西文与数学字体}
+%
 %    \begin{macrocode}
 %<*mathfont>
 %<stixtwo|xits|newcm|cambria>\RequirePackage { unicode-math }
 %<*stixtwo>
-\fontspec_font_if_exist:nTF { STIXTwoMath-Regular.otf }
+\bool_if:NTF \g_@@_slint_bool
+  { \setmathfont { STIXTwoMath-Regular.otf } }
   {
     \setmathfont { STIXTwoMath-Regular.otf }
       [ StylisticSet = 8 ]
-    \setmathfont { STIXTwoMath-Regular.otf }
-      [
-        range        = { scr, bfscr },
-        StylisticSet = 1
-      ]
   }
-  {
-    \setmathfont { STIX2Math.otf }
-      [ StylisticSet = 8 ]
-    \setmathfont { STIX2Math.otf }
-      [
-        range        = { scr, bfscr },
-        StylisticSet = 1
-      ]
-  }
+\setmathfont { STIXTwoMath-Regular.otf }
+  [
+    range        = { scr, bfscr },
+    StylisticSet = 1
+  ]
 %</stixtwo>
 %<*xits>
-\fontspec_font_if_exist:nTF { XITSMath-Regular.otf }
+\bool_if:NTF \g_@@_slint_bool
+  {
+    \setmathfont { XITSMath-Regular }
+      [
+        Extension    = .otf,
+        BoldFont     = XITSMath-Bold,
+      ]
+  }
   {
     \setmathfont { XITSMath-Regular }
       [
@@ -957,29 +1046,20 @@
         BoldFont     = XITSMath-Bold,
         StylisticSet = 8
       ]
-    \setmathfont { XITSMath-Regular.otf }
-      [
-        range        = { cal, bfcal },
-        StylisticSet = 1
-      ]
   }
-  {
-    \setmathfont { xits-math }
-      [
-        Extension    = .otf,
-        BoldFont     = *bold,
-        StylisticSet = 8
-      ]
-    \setmathfont { xits-math.otf }
-      [
-        range        = { cal, bfcal },
-        StylisticSet = 1
-      ]
-  }
+\setmathfont { XITSMath-Regular.otf }
+  [
+    range        = { cal, bfcal },
+    StylisticSet = 1
+  ]
 %</xits>
 %<*newcm>
-\setmathfont { NewCMMath-Book.otf }
-  [ StylisticSet = 2 ]
+\bool_if:NTF \g_@@_slint_bool
+  { \setmathfont { NewCMMath-Book.otf } }
+  {
+    \setmathfont { NewCMMath-Book.otf }
+      [ StylisticSet = 2 ]
+  }
 \setmathfont { NewCMMath-Book.otf }
   [
     range        = { scr, bfscr },
@@ -1005,58 +1085,28 @@
 %</newtx|newpx>
 %</textfont>
 %<*stixtwo>
-\fontspec_font_if_exist:nTF { STIXTwoText-Regular.otf }
-  {
-%<mathfont>    \setmathrm
-%<textfont>    \setmainfont
-      { STIXTwoText }
-      [
-        Extension      = .otf,
-        UprightFont    = *-Regular,
-        BoldFont       = *-Bold,
-        ItalicFont     = *-Italic,
-        BoldItalicFont = *-BoldItalic
-      ]
-  }
-  {
-%<mathfont>    \setmathrm
-%<textfont>    \setmainfont
-      { STIX2Text }
-      [
-        Extension      = .otf,
-        UprightFont    = *-Regular,
-        BoldFont       = *-Bold,
-        ItalicFont     = *-Italic,
-        BoldItalicFont = *-BoldItalic
-      ]
-  }
+%<mathfont>\setmathrm
+%<textfont>\setmainfont
+  { STIXTwoText }
+  [
+    Extension      = .otf,
+    UprightFont    = *-Regular,
+    BoldFont       = *-Bold,
+    ItalicFont     = *-Italic,
+    BoldItalicFont = *-BoldItalic
+  ]
 %</stixtwo>
 %<*xits>
-\fontspec_font_if_exist:nTF { XITS-Regular.otf }
-  {
-%<mathfont>    \setmathrm
-%<textfont>    \setmainfont
-      { XITS }
-      [
-        Extension      = .otf,
-        UprightFont    = *-Regular,
-        BoldFont       = *-Bold,
-        ItalicFont     = *-Italic,
-        BoldItalicFont = *-BoldItalic
-      ]
-  }
-  {
-%<mathfont>    \setmathrm
-%<textfont>    \setmainfont
-      { xits }
-      [
-        Extension      = .otf,
-        UprightFont    = *-regular,
-        BoldFont       = *-bold,
-        ItalicFont     = *-italic,
-        BoldItalicFont = *-bolditalic
-      ]
-  }
+%<mathfont>\setmathrm
+%<textfont>\setmainfont
+  { XITS }
+  [
+    Extension      = .otf,
+    UprightFont    = *-Regular,
+    BoldFont       = *-Bold,
+    ItalicFont     = *-Italic,
+    BoldItalicFont = *-BoldItalic
+  ]
 %</xits>
 %<*textfont&(newtx|newpx)|stixtwo|xits>
 %<mathfont>\setmathsf
@@ -1088,15 +1138,16 @@
   { NewCM10 }
   [
     Extension    = .otf,
-    SizeFeatures = {
+    SizeFeatures =
       {
-        Size        = -9,
-        Font        = NewCM08-Book,
-        ItalicFont  = NewCM08-BookItalic,
-        SlantedFont = NewCM08-Book,
+        {
+          Size        = -9,
+          Font        = NewCM08-Book,
+          ItalicFont  = NewCM08-BookItalic,
+          SlantedFont = NewCM08-Book,
+        },
+        { Size        = 9- }
       },
-      { Size        = 9- }
-    },
     UprightFont         = *-Book,
     BoldFont            = *-Bold,
     ItalicFont          = *-BookItalic,
@@ -1111,14 +1162,15 @@
   { NewCMSans10 }
   [
     Extension    = .otf,
-    SizeFeatures = {
+    SizeFeatures =
       {
-        Size       = -9,
-        Font       = NewCMSans08-Book,
-        ItalicFont = NewCMSans08-BookOblique,
+        {
+          Size       = -9,
+          Font       = NewCMSans08-Book,
+          ItalicFont = NewCMSans08-BookOblique,
+        },
+        { Size       = 9- }
       },
-      { Size       = 9- }
-    },
     UprightFont    = *-Book,
     BoldFont       = *-Bold,
     ItalicFont     = *-BookOblique,
@@ -1157,7 +1209,6 @@
 \setmonofont { Courier~New } [ Scale = MatchLowercase ]
 %</times>
 %<*mathfont&(newtx|newpx|lm)>
-%<lm>\RequirePackage { amssymb, upgreek }
 \tl_set_eq:NN \g_@@_save_encodingdefault_tl \encodingdefault
 \tl_set_eq:NN \g_@@_save_rmdefault_tl \rmdefault
 \tl_set_eq:NN \g_@@_save_sfdefault_tl \sfdefault
@@ -1167,22 +1218,57 @@
 %<newpx>\tl_set:Nn \rmdefault { zpltlf }
 %<newtx|newpx>\tl_set:Nn \sfdefault { qhv }
 %<newtx|newpx>\tl_set:Nn \ttdefault { ntxtt }
-%<newtx>\RequirePackage [ upint ] { newtxmath }
-%<newpx>\RequirePackage [ upint ] { newpxmath }
+%<newtx>\RequirePackage { newtxmath }
+%<newpx>\RequirePackage { newpxmath }
 %<*lm>
+\RequirePackage { amssymb, upgreek }
 \RequirePackage { lmodern }
-\file_if_exist:nT { cmupint.sty }
+\bool_if:NF \g_@@_slint_bool
   { \RequirePackage { cmupint } }
 %</lm>
+\RequirePackage { bm }
 \tl_set_eq:NN \encodingdefault \g_@@_save_encodingdefault_tl
 \tl_set_eq:NN \rmdefault \g_@@_save_rmdefault_tl
 \tl_set_eq:NN \sfdefault \g_@@_save_sfdefault_tl
 \tl_set_eq:NN \ttdefault \g_@@_save_ttdefault_tl
-\RequirePackage { bm }
+%<*lm>
+\clist_const:Nn \c_@@_uppercase_greek_clist
+  { Gamma, Delta, Theta, Lambda, Xi, Pi, Sigma, Upsilon, Phi, Psi, Omega }
+\clist_map_inline:Nn \c_@@_uppercase_greek_clist
+  {
+    \cs_set_eq:cc { up #1 } {     #1 }
+    \cs_set_eq:cc { it #1 } { var #1 }
+  }
+\int_compare:nNnT { \g_@@_math_style_int } > { 1 }
+  {
+    \clist_map_inline:Nn \c_@@_uppercase_greek_clist
+      { \cs_set_eq:cc { #1 } { it #1 } }
+  }
+%</lm>
+\cs_set_eq:NN \increment \upDelta
+\cs_set_eq:NN \QED \blacksquare
 %</mathfont&(newtx|newpx|lm)>
 %    \end{macrocode}
 %
-% 中文字体配置，在字体未提供对应粗体的情况下，允许使用伪粗。
+% \pkg{unicode-math} 宏包
+%    \begin{macrocode}
+%<*class>
+\ctex_at_end_package:nn { unicode-math }
+  {
+    \DeclareDocumentCommand \bm { m }
+      { { \symbf {#1} } }
+    \DeclareDocumentCommand \boldsymbol { m }
+      { { \symbf {#1} } }
+    \int_compare:nNnTF { \g_@@_math_style_int } > { 1 }
+      { \keys_set:nn { unicode-math } { math-style = ISO } }
+      { \keys_set:nn { unicode-math } { math-style = TeX } }
+  }
+%</class>
+%    \end{macrocode}
+%
+% \subsubsection{中文字体}
+%
+% 在字体未提供对应粗体的情况下，允许使用伪粗。
 %    \begin{macrocode}
 %<*cjkfont>
 %<*windows>
@@ -1932,6 +2018,7 @@
   {
     \cs_if_exist:NT \@@_save_openbox:
       { \cs_set_eq:NN \openbox \@@_save_openbox: }
+    \tl_set:Nn \qedsymbol { \ensuremath { \QED } }
     \RenewDocumentEnvironment { proof } { O{ \proofname } }
       {
         \par \pushQED { \qed }
@@ -1959,7 +2046,8 @@
     \theoremheaderfont { \bfseries \heiti }
     \theorembodyfont   { \normalfont      }
     \theoremseparator  { \enskip          }
-    \theoremsymbol { \ensuremath { \square } }
+    \theoremsymbol { \ensuremath { \QED } }
+    \qedsymbol     { \ensuremath { \QED } }
     \newtheorem* { proof } { \proofname }
     \theoremsymbol { }
     \@@_new_theorems:
