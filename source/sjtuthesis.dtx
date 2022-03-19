@@ -411,12 +411,10 @@ The Current Maintainer of this work is Alexara Wu.
 % 连续编号开关。开启连续编号后，正文中图、表等浮动体直到附录之前，将从 1 开始连
 % 续编号，与章节的编号无关。默认关闭。
 %
-% \DescribeFunction{oneside}
-% \DescribeFunction{twoside}
+% \DescribeFunction{oneside, twoside}
 % 指明论文的单双面模式，默认为 \opt{twoside}。
 %
-% \DescribeFunction{openright}
-% \DescribeFunction{openany}
+% \DescribeFunction{openright, openany}
 % 指明论文章节的开始页，可以改为 \opt{openright} 从奇数页开始，默认为 \opt{openany} 从任意页开始。
 %
 % \subsection{额外宏包选项}
@@ -440,49 +438,58 @@ The Current Maintainer of this work is Alexara Wu.
 %
 % \subsubsection{字体选项}
 %
-% \DescribeFunction{fontset}
-%   \begin{sjtusyntax}[emph={[1]fontset}]
-%     fontset = (*<adobe|fandol|founder|mac|macnew|macold|ubuntu|windows|none|...>*)
+% \DescribeFunction{cjk-font}
+%   \begin{sjtusyntax}[emph={[1]cjk-font}]
+%     cjk-font = (*<(auto)|(fandol)|windows|mac|ubuntu|adobe|founder|none>*)
 %   \end{sjtusyntax}
-% 指定中文字库。如果没有指定 \opt{fontset} 的值，将自动检测用户使用的操作系统，
-% 配置相应的字体。
+% 指定中文字体集。\sjtuthesis 预定义了一些中文字体组合。默认为 \opt{auto}，跟随操作系统设定。找不到对应定义的中文字体集时的回退选项为 \opt{fandol}。
 %
-% 此选项来自于 \CTeX{} 宏包，详情请参阅 \CTeX{} 文档。
+% \note{不再支持使用 \opt{fontset} 指定字体集。
+% Linux 系统下默认的中文字库 \opt{fandol} 容易出现缺字的情况。
+% 我们建议 Linux 用户自行配置合适的字体。}
 %
-% 注意，Linux 系统下默认的中文字库 Fandol 容易出现缺字的情况。
-% 我们建议 Linux 用户自行配置合适的字体。
-%
-% \DescribeFunction{latinfontset}
-%   \begin{sjtusyntax}[emph={[1]latinfontset}]
-%     latinfontset = (*<(xits)|times|stix|step|termes|pagella|cambria|libertinus|lm|none>*)
+% \DescribeFunction{text-font}
+%   \begin{sjtusyntax}[emph={[1]text-font}]
+%     text-font = (*<(termes)|times|stixtwo|xits|pagella|cambria|newcm|lm|none>*)
 %   \end{sjtusyntax}
 % 指定西文字体集。\sjtuthesis 预定义了一些西文字体组合，具体配置见表 \ref{tab:latinfont}。
+%
+% \DescribeFunction{math-font}
+%   \begin{sjtusyntax}[emph={[1]math-font}]
+%     math-font = (*<(auto)|(termes)|stixtwo|xits|pagella|cambria|newcm|lm|none>*)
+%   \end{sjtusyntax}
+% 指定数学字体集。\sjtuthesis 预定义了一些数学字体组合，具体配置见表 \ref{tab:latinfont} 数学字体列。
+% 默认为 \opt{auto} 以跟随 \opt{text-font} 的设置。
+% 找不到定义的数学字体集时的回退选项为 \opt{termes}。
+%
+% 请注意加载 \opt{stixtwo}，\opt{xits}，\opt{newcm}，\opt{cambria} 数学字体时
+% 会自动加载 \pkg{unicode-math} 宏包，强制将 \opt{unimath} 开启。
 %
 % \begin{table}[ht]
 % \centering\small
 % \begin{threeparttable}
-%   \caption{西文字体配置}
+%   \caption{西文字体与数学字体配置}
 %   \label{tab:latinfont}
 %   \begin{tabular}{ccccc}
 %     \toprule
 %       & \strong{正文字体} & \strong{无衬线字体} & \strong{等宽字体} & \strong{数学字体} \\
 %     \midrule
+%       |termes|          & TG Termes\tnote{a}  & TG Heros        & TG Cursor        & TG Termes Math  \\
+%       |times|\tnote{b}  & Times New Roman     & Arial           & Courier New      & TG Termes Math       \\
+%       |stixtwo|            & STIX Two Text       & Source Sans Pro & Source Code Pro  & STIX Two Math   \\
 %       |xits|            & XITS                & Source Sans Pro & Source Code Pro  & XITS Math       \\
-%       |times|\tnote{a}  & Times New Roman     & Arial           & Courier New      & XITS Math       \\
-%       |stix|            & STIX Two Text       & Source Sans Pro & Source Code Pro  & STIX Two Math   \\
-%       |step|            & STEP                & Source Sans Pro & Source Code Pro  & STEP Math       \\
-%       |termes|          & TG Termes\tnote{b}  & TG Heros        & TG Cursor        & TG Termes Math  \\
 %       |pagella|         & TG Pagella          & TG Heros        & TG Cursor        & TG Pagella Math \\
 %       |cambria|         & Cambria             & Calibri         & Consolas         & Cambria Math    \\
-%       |libertinus|      & Libertinus Serif    & Libertinus Sans & LM Mono\tnote{c} & Libertinus Math \\
+%       |newcm|           & New CM\tnote{c} & New CM Sans        & New CM Mono         & New CM \\
 %       |lm|              & LM Roman            & LM Sans         & LM Mono          & LM Math         \\
 %     \bottomrule
 %   \end{tabular}
 %   \begin{tablenotes}
-%     \item[a] 本行中，Times New Roman、Arial 和 Courier New 是商业字体，
+%     \item[a] “TG”是 TeX Gyre 的缩写。
+%     \item[b] 本行中，Times New Roman、Arial 和 Courier New 是商业字体，
 %       在 Windows 和 macOS 系统上均默认安装。
-%     \item[b] “TG”是 TeX Gyre 的缩写。
-%     \item[a] “LM”是 Latin Modern 的缩写。
+%     \item[b] “LM”是 Latin Modern 的缩写。
+%     \item[c] “CM”是 Computer Modern 的缩写。
 %   \end{tablenotes}
 % \end{threeparttable}
 % \end{table}
@@ -570,7 +577,7 @@ The Current Maintainer of this work is Alexara Wu.
 %
 % \DescribeFunction{footnote}
 %   \begin{sjtusyntax}[emph={[2]footnote}]
-%     footnote = (*<indent|hang>*)
+%     footnote = (*<indent|(hang)>*)
 %   \end{sjtusyntax}
 % 脚注的缩进风格。使用 \opt{indent} 段首缩进（第一行缩进两中文字）
 % 还是 \opt{hang} 悬挂缩进（除首行外缩进 1.5 字符）。
