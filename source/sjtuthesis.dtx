@@ -311,7 +311,20 @@ The Current Maintainer of this work is Alexara Wu.
 % \subsection{获取 \sjtuthesis}
 %
 % 你可以在 \href{https://github.com/sjtug/SJTUThesis/releases}{GitHub Release}
-% 中找到 \sjtuthesis 的所有版本，推荐使用最新版本以避免一些问题。
+% 中找到 \sjtuthesis 的所有版本。
+%
+% 推荐使用最新版本以避免一些问题。可以直接下载 \href{https://github.com/sjtug/SJTUThesis}{GitHub 页面} 
+% 提供的 \href{https://github.com/sjtug/SJTUThesis/archive/refs/heads/master.zip}{压缩包}。熟悉 Git 的用户可以克隆存储仓库：
+%
+% \begin{shell}
+% git clone https://github.com/sjtug/SJTUThesis.git
+% \end{shell}
+%
+% 或者是 SJTUG 镜像仓库：
+%
+% \begin{shell}
+% git clone https://mirror.sjtu.edu.cn/git/SJTUThesis.git/
+% \end{shell}
 %
 % \subsection{使用 \sjtuthesis 文档类}
 % \label{ssec:usage}
@@ -335,7 +348,7 @@ The Current Maintainer of this work is Alexara Wu.
 % 按照 \ref{ssec:compile} 小节中的方式编译该文档，您应当得到一篇 5 页的文章。
 % 当然，这篇文章的绝大 部分都是空白的。
 %
-% \subsection{编译方式}
+% \subsection{终端编译方式}
 % \label{ssec:compile}
 %
 % 推荐使用 \XeLaTeX{} 引擎编译本模板，也可以使用 \LuaLaTeX{} 引擎。
@@ -378,8 +391,6 @@ The Current Maintainer of this work is Alexara Wu.
 %
 % 部分选项采用 \kvopt{\meta{key}}{\meta{value}} 的形式。当 \meta{value} 省略时，
 % 将采用默认值。在下文的说明中，将用\textbf{粗体}表示默认值。
-%
-% \pagebreak
 %
 % \subsubsection{通用选项}
 %
@@ -634,6 +645,8 @@ The Current Maintainer of this work is Alexara Wu.
 %   \end{sjtusyntax}
 % 作者姓名。
 %
+% \pagebreak
+%
 % \DescribeFunction{id}
 %   \begin{sjtusyntax}[emph={[2]id}]
 %     id  = (*\marg{学号}*)
@@ -740,6 +753,7 @@ The Current Maintainer of this work is Alexara Wu.
 %      |ack|              & 致|\hspace{\ccwd}|谢                  & Acknowledgements      \\
 %      |achv|             & 学术论文和科研成果目录                & Research Achievements \\
 %      |resume|           & 个人简历                              & Resume                \\
+%      |digest|           & 大摘要                              & Digest                \\
 %     \bottomrule
 %   \end{tabular}
 % \end{table}
