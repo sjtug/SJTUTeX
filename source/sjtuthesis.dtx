@@ -299,6 +299,10 @@ The Current Maintainer of this work is Alexara Wu.
 %     视觉系统      & \file{sjtu-vi-logo-*.pdf}   & 校标图片          \\
 %                   & \file{sjtu-vi-badge-*.pdf}  & 校徽图片          \\
 %                   & \file{sjtu-vi-name-*.pdf}   & 校名图片          \\
+%     \midrule
+%     字体配置文件   & \file{sjtu-cjk-font-*.def}    & 中文字体配置 \\
+%                  & \file{sjtu-math-font-*.def}   &  数学字体配置 \\
+%                  & \file{sjtu-text-font-*.def}   &  正文字体配置 \\
 %
 %     \bottomrule
 %   \end{tabular}
@@ -307,7 +311,20 @@ The Current Maintainer of this work is Alexara Wu.
 % \subsection{获取 \sjtuthesis}
 %
 % 你可以在 \href{https://github.com/sjtug/SJTUThesis/releases}{GitHub Release}
-% 中找到 \sjtuthesis 的所有版本，推荐使用最新版本以避免一些问题。
+% 中找到 \sjtuthesis 的所有版本。
+%
+% 推荐使用最新版本以避免一些问题。可以直接下载 \href{https://github.com/sjtug/SJTUThesis}{GitHub 页面} 
+% 提供的 \href{https://github.com/sjtug/SJTUThesis/archive/refs/heads/master.zip}{压缩包}。熟悉 Git 的用户可以克隆存储仓库：
+%
+% \begin{shell}
+% git clone https://github.com/sjtug/SJTUThesis.git
+% \end{shell}
+%
+% 或者是 SJTUG 镜像仓库：
+%
+% \begin{shell}
+% git clone https://mirror.sjtu.edu.cn/git/SJTUThesis.git/
+% \end{shell}
 %
 % \subsection{使用 \sjtuthesis 文档类}
 % \label{ssec:usage}
@@ -331,10 +348,10 @@ The Current Maintainer of this work is Alexara Wu.
 % 按照 \ref{ssec:compile} 小节中的方式编译该文档，您应当得到一篇 5 页的文章。
 % 当然，这篇文章的绝大 部分都是空白的。
 %
-% \subsection{编译方式}
+% \subsection{终端编译方式}
 % \label{ssec:compile}
 %
-% 本模版仅支持 \XeLaTeX{} 引擎。
+% 推荐使用 \XeLaTeX{} 引擎编译本模板，也可以使用 \LuaLaTeX{} 引擎。
 % 很多用户对 \LaTeX{} 命令执行的次数不太清楚。一个基本的原则是多次运行 \LaTeX{}
 % 命令直至不再出现警告。
 %
@@ -375,8 +392,6 @@ The Current Maintainer of this work is Alexara Wu.
 % 部分选项采用 \kvopt{\meta{key}}{\meta{value}} 的形式。当 \meta{value} 省略时，
 % 将采用默认值。在下文的说明中，将用\textbf{粗体}表示默认值。
 %
-% \pagebreak
-%
 % \subsubsection{通用选项}
 %
 % \DescribeFunction{type}
@@ -403,59 +418,85 @@ The Current Maintainer of this work is Alexara Wu.
 % 盲审模式开关。开启盲审模式将隐去作者姓名、导师姓名、班级、学号等个人信息，
 % 删去版权使用授权书、原创性声明和致谢页。默认关闭。
 %
-% \DescribeFunction{continuous}
-% 连续编号开关。开启连续编号后，正文中图、表等浮动体直到附录之前，将从 1 开始连
-% 续编号，与章节的编号无关。默认关闭。
-%
-% \DescribeFunction{oneside}
-% \DescribeFunction{twoside}
+% \DescribeFunction{oneside, twoside}
 % 指明论文的单双面模式，默认为 \opt{twoside}。
+%
+% \DescribeFunction{openright, openany}
+% 指明论文章节的开始页，可以改为 \opt{openright} 从奇数页开始，默认为 \opt{openany} 从任意页开始。
+%
+% \subsubsection{额外宏包选项}
+%
+% \DescribeFunction{unimath}
+% 是否使用 \pkg{unicode-math}，默认不使用。
+%
+% \DescribeFunction{nothm}
+% 是否取消预设的定理环境。默认不取消，以采用
+% \sjtuthesis 预定义的一系列数学环境。在启用 \pkg{ntheorem} 或 \pkg{amsthm}
+% 宏包后有效。
+%
+% \begin{center}\small
+% \begin{tabular}{*{7}{l}}\toprule
+%   assumption  & axiom   & conjecture & corollary    & definition  & example   & exercise  \\
+%   假设        & 公理    & 猜想       & 推论         & 定义        & 例        & 练习      \\\midrule
+%   lemma       & problem & proof      & proposition  & remark      & solution  & theorem   \\
+%   引理        & 问题    & 证明       & 命题         & 注          & 解        & 定理      \\\bottomrule
+% \end{tabular}
+% \end{center}
 %
 % \subsubsection{字体选项}
 %
-% \DescribeFunction{fontset}
-%   \begin{sjtusyntax}[emph={[1]fontset}]
-%     fontset = (*<adobe|fandol|founder|mac|macnew|macold|ubuntu|windows|none|...>*)
+% \DescribeFunction{cjk-font}
+%   \begin{sjtusyntax}[emph={[1]cjk-font}]
+%     cjk-font = (*<(auto)|(fandol)|windows|mac|ubuntu|adobe|founder|none>*)
 %   \end{sjtusyntax}
-% 指定中文字库。如果没有指定 \opt{fontset} 的值，将自动检测用户使用的操作系统，
-% 配置相应的字体。
+% 指定中文字体集。\sjtuthesis 预定义了一些中文字体组合。默认为 \opt{auto}，跟随操作系统设定。找不到对应定义的中文字体集时的回退选项为 \opt{fandol}。
 %
-% 此选项来自于 \CTeX{} 宏包，详情请参阅 \CTeX{} 文档。
+% \note{不再支持使用 \opt{fontset} 指定字体集。
+% Linux 系统下默认的中文字库 \opt{fandol} 容易出现缺字的情况。
+% 我们建议 Linux 用户自行配置合适的字体。}
 %
-% 注意，Linux 系统下默认的中文字库 Fandol 容易出现缺字的情况。
-% 我们建议 Linux 用户自行配置合适的字体。
-%
-% \DescribeFunction{latinfontset}
-%   \begin{sjtusyntax}[emph={[1]latinfontset}]
-%     latinfontset = (*<(xits)|times|stix|step|termes|pagella|cambria|libertinus|lm|none>*)
+% \DescribeFunction{text-font}
+%   \begin{sjtusyntax}[emph={[1]text-font}]
+%     text-font = (*<(termes)|times|stixtwo|xits|pagella|cambria|newcm|lm|none>*)
 %   \end{sjtusyntax}
 % 指定西文字体集。\sjtuthesis 预定义了一些西文字体组合，具体配置见表 \ref{tab:latinfont}。
+%
+% \DescribeFunction{math-font}
+%   \begin{sjtusyntax}[emph={[1]math-font}]
+%     math-font = (*<(auto)|(termes)|stixtwo|xits|pagella|cambria|newcm|lm|none>*)
+%   \end{sjtusyntax}
+% 指定数学字体集。\sjtuthesis 预定义了一些数学字体组合，具体配置见表 \ref{tab:latinfont} 数学字体列。
+% 默认为 \opt{auto} 以跟随 \opt{text-font} 的设置。
+% 找不到定义的数学字体集时的回退选项为 \opt{termes}。
+%
+% 请注意加载 \opt{stixtwo}，\opt{xits}，\opt{newcm}，\opt{cambria} 数学字体时
+% 会自动加载 \pkg{unicode-math} 宏包，强制将 \opt{unimath} 开启。
 %
 % \begin{table}[ht]
 % \centering\small
 % \begin{threeparttable}
-%   \caption{西文字体配置}
+%   \caption{西文字体与数学字体配置}
 %   \label{tab:latinfont}
 %   \begin{tabular}{ccccc}
 %     \toprule
 %       & \strong{正文字体} & \strong{无衬线字体} & \strong{等宽字体} & \strong{数学字体} \\
 %     \midrule
+%       |termes|          & TG Termes\tnote{a}  & TG Heros        & TG Cursor        & TG Termes Math  \\
+%       |times|\tnote{b}  & Times New Roman     & Arial           & Courier New      & TG Termes Math       \\
+%       |stixtwo|            & STIX Two Text       & Source Sans Pro & Source Code Pro  & STIX Two Math   \\
 %       |xits|            & XITS                & Source Sans Pro & Source Code Pro  & XITS Math       \\
-%       |times|\tnote{a}  & Times New Roman     & Arial           & Courier New      & XITS Math       \\
-%       |stix|            & STIX Two Text       & Source Sans Pro & Source Code Pro  & STIX Two Math   \\
-%       |step|            & STEP                & Source Sans Pro & Source Code Pro  & STEP Math       \\
-%       |termes|          & TG Termes\tnote{b}  & TG Heros        & TG Cursor        & TG Termes Math  \\
 %       |pagella|         & TG Pagella          & TG Heros        & TG Cursor        & TG Pagella Math \\
 %       |cambria|         & Cambria             & Calibri         & Consolas         & Cambria Math    \\
-%       |libertinus|      & Libertinus Serif    & Libertinus Sans & LM Mono\tnote{c} & Libertinus Math \\
+%       |newcm|           & New CM\tnote{c} & New CM Sans        & New CM Mono         & New CM \\
 %       |lm|              & LM Roman            & LM Sans         & LM Mono          & LM Math         \\
 %     \bottomrule
 %   \end{tabular}
 %   \begin{tablenotes}
-%     \item[a] 本行中，Times New Roman、Arial 和 Courier New 是商业字体，
+%     \item[a] “TG”是 TeX Gyre 的缩写。
+%     \item[b] 本行中，Times New Roman、Arial 和 Courier New 是商业字体，
 %       在 Windows 和 macOS 系统上均默认安装。
-%     \item[b] “TG”是 TeX Gyre 的缩写。
-%     \item[a] “LM”是 Latin Modern 的缩写。
+%     \item[b] “LM”是 Latin Modern 的缩写。
+%     \item[c] “CM”是 Computer Modern 的缩写。
 %   \end{tablenotes}
 % \end{threeparttable}
 % \end{table}
@@ -485,9 +526,14 @@ The Current Maintainer of this work is Alexara Wu.
 %   },
 %   style = {
 %     header-logo-color = red,
-%   }
+%   },
+%   name = {
+%     publications      = {攻读学位期间完成的论文},
+%   },
 % }
 % \end{latex}
+%
+% \pagebreak
 %
 % \subsubsection{论文格式}
 %
@@ -519,13 +565,13 @@ The Current Maintainer of this work is Alexara Wu.
 %
 % \DescribeFunction{title-logo-color}
 %   \begin{sjtusyntax}[emph={[2]title-logo-color}]
-%     title-logo-color = (*<red|(blue)|black>*)
+%     title-logo-color = (*<(red)|blue|black>*)
 %   \end{sjtusyntax}
 % 选择本科论文标题页中的校名、校徽的颜色。
 %
 % \DescribeFunction{header-logo-color}
 %   \begin{sjtusyntax}[emph={[2]header-logo-color}]
-%     header-logo-color = (*<red|blue|(black)>*)
+%     header-logo-color = (*<(red)|blue|black>*)
 %   \end{sjtusyntax}
 % 选择本科论文页眉中的校标颜色。
 %
@@ -534,14 +580,22 @@ The Current Maintainer of this work is Alexara Wu.
 %     float-number-separator = (*\marg{分隔符}*)
 %   \end{sjtusyntax}
 % 图、表等浮动体编号中的分隔符。
-%
-% \pagebreak
+% 默认为 \opt{--}。
 %
 % \DescribeFunction{equation-number-separator}
 %   \begin{sjtusyntax}[emph={[2]equation-number-separator}]
 %     equation-number-separator = (*\marg{分隔符}*)
 %   \end{sjtusyntax}
 % 公式编号中的分隔符。
+% 默认为 \opt{--}。
+%
+% \DescribeFunction{footnote}
+%   \begin{sjtusyntax}[emph={[2]footnote}]
+%     footnote = (*<indent|(hang)>*)
+%   \end{sjtusyntax}
+% 脚注的缩进风格。使用 \opt{indent} 段首缩进（第一行缩进两中文字）
+% 还是 \opt{hang} 悬挂缩进（除首行外缩进 1.5 字符）。
+% 默认为悬挂缩进。
 %
 % \subsubsection{信息录入}
 %
@@ -560,6 +614,24 @@ The Current Maintainer of this work is Alexara Wu.
 %     title* = (*\marg{英文标题}*)
 %   \end{sjtusyntax}
 % 论文标题。如果您的标题过长，建议使用“|\\|”手动断行。
+%
+% \DescribeFunction{display-title}
+% \DescribeFunction{display-title*}
+%   \vspace{-1ex}
+%   \begin{sjtusyntax}[emph={[2]display-title,display-title*}]
+%     display-title  = (*\marg{中文标题页标题}*)
+%     display-title* = (*\marg{英文标题页标题}*)
+%   \end{sjtusyntax}
+% 标题页论文中题目。默认为跟随对应语言的论文标题。
+%
+% \DescribeFunction{running-title}
+% \DescribeFunction{running-title*}
+%   \vspace{-1ex}
+%   \begin{sjtusyntax}[emph={[2]running-title,running-title*}]
+%     running-title  = (*\marg{中文页眉标题}*)
+%     running-title* = (*\marg{英文页眉标题}*)
+%   \end{sjtusyntax}
+% 论文页眉题目。默认为跟随对应语言的论文标题。
 %
 % \DescribeFunction{keywords}
 % \DescribeFunction{keywords*}
@@ -686,9 +758,12 @@ The Current Maintainer of this work is Alexara Wu.
 %      |ack|              & 致|\hspace{\ccwd}|谢                  & Acknowledgements      \\
 %      |achv|             & 学术论文和科研成果目录                & Research Achievements \\
 %      |resume|           & 个人简历                              & Resume                \\
+%      |digest|           & 大摘要                              & Digest                \\
 %     \bottomrule
 %   \end{tabular}
 % \end{table}
+%
+% \pagebreak
 %
 % \subsection{内容编写}
 %
@@ -696,17 +771,6 @@ The Current Maintainer of this work is Alexara Wu.
 %
 % \DescribeFunction{\maketitle}
 % 生成标题页。
-%
-% \DescribeFunction{\originalitypage}
-% \DescribeFunction{\originalitypage*}
-%   \vspace{-1ex}
-%   \begin{sjtusyntax}[morekeywords={\originalitypage,\originalitypage*}]
-%     \originalitypage
-%     \originalitypage*
-%     \originalitypage(*\oarg{声明扫描件}*)
-%   \end{sjtusyntax}
-% 生成空白原创性声明。带星号的版本生成的声明页不包含论文标题。
-% 接受一个可选参数用于插入原创性声明扫描件。
 %
 % \DescribeFunction{\copyrightpage}
 %   \begin{sjtusyntax}[morekeywords={\copyrightpage}]
@@ -733,6 +797,8 @@ The Current Maintainer of this work is Alexara Wu.
 %     \end{abstract*}
 %   \end{sjtusyntax}
 % 摘要环境。不带星号和带星号的版本分别用来输入中文摘要和英文摘要。
+%
+% \pagebreak
 %
 % \DescribeFunction{\tableofcontents}
 % \DescribeFunction{\listoffigures}
@@ -799,26 +865,14 @@ The Current Maintainer of this work is Alexara Wu.
 % 可在文中使用 \cs{SJTUunsetfloatfontsize} 取消此默认设置，
 % 或者使用 \cs{SJTUsetfloatfontsize} 恢复此默认设置。\vspace{1ex}
 %
-% \pagebreak
-%
-% \sjtuthesis 预定义了一系列的数学环境。在启用 \pkg{ntheorem} 或 \pkg{amsthm}
-% 宏包后有效。
-%
-% \begin{center}\small
-% \begin{tabular}{*{7}{l}}\toprule
-%   assumption  & axiom   & conjecture & corollary    & definition  & example   & exercise  \\
-%   假设        & 公理    & 猜想       & 推论         & 定义        & 例        & 练习      \\\midrule
-%   lemma       & problem & proof      & proposition  & remark      & solution  & theorem   \\
-%   引理        & 问题    & 证明       & 命题         & 注          & 解        & 定理      \\\bottomrule
-% \end{tabular}
-% \end{center}
-%
 % \DescribeFunction{\appendix}
 %   \begin{sjtusyntax}[morekeywords={\appendix}]
 %     \appendix
 %     \chapter{...}
 %   \end{sjtusyntax}
 % 附录由 \cs{appendix} 命令开启，然后像正文一样书写。
+%
+% \pagebreak
 %
 % \subsubsection{后文部分}
 %
@@ -1054,6 +1108,10 @@ The Current Maintainer of this work is Alexara Wu.
 %    \begin{macrocode}
 \sjtu@set@family@handler{sjtu}
 \sjtu@define@key{sjtu}{
+%    \end{macrocode}
+%
+% 论文类型。
+%    \begin{macrocode}
   type = {
     choices = {
       doctor,
@@ -1406,7 +1464,7 @@ The Current Maintainer of this work is Alexara Wu.
   display-title*  = { name = display@title@en },
 %    \end{macrocode}
 %
-% 页眉论文中英文题目。
+% 论文页眉中英文题目。
 %    \begin{macrocode}
   running-title   = { name = running@title@zh },
   running-title*  = { name = running@title@en },
