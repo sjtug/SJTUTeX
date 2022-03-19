@@ -562,13 +562,19 @@ The Current Maintainer of this work is Alexara Wu.
 %   \end{sjtusyntax}
 % 图、表等浮动体编号中的分隔符。
 %
-% \pagebreak
-%
 % \DescribeFunction{equation-number-separator}
 %   \begin{sjtusyntax}[emph={[2]equation-number-separator}]
 %     equation-number-separator = (*\marg{分隔符}*)
 %   \end{sjtusyntax}
 % 公式编号中的分隔符。
+%
+% \DescribeFunction{footnote}
+%   \begin{sjtusyntax}[emph={[2]footnote}]
+%     footnote = (*<indent|hang>*)
+%   \end{sjtusyntax}
+% 脚注的缩进风格。使用 \opt{indent} 段首缩进（第一行缩进两中文字）
+% 还是 \opt{hang} 悬挂缩进（除首行外缩进 1.5 字符）。
+% 默认为悬挂缩进。
 %
 % \subsubsection{信息录入}
 %
@@ -1067,6 +1073,10 @@ The Current Maintainer of this work is Alexara Wu.
 %    \begin{macrocode}
 \sjtu@set@family@handler{sjtu}
 \sjtu@define@key{sjtu}{
+%    \end{macrocode}
+%
+% 论文类型。
+%    \begin{macrocode}
   type = {
     choices = {
       doctor,
