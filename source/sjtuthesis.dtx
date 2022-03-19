@@ -338,7 +338,7 @@ The Current Maintainer of this work is Alexara Wu.
 % \subsection{编译方式}
 % \label{ssec:compile}
 %
-% 本模版仅支持 \XeLaTeX{} 引擎。
+% 推荐使用 \XeLaTeX{} 引擎编译本模板，也可以使用 \LuaLaTeX{} 引擎。
 % 很多用户对 \LaTeX{} 命令执行的次数不太清楚。一个基本的原则是多次运行 \LaTeX{}
 % 命令直至不再出现警告。
 %
@@ -407,17 +407,13 @@ The Current Maintainer of this work is Alexara Wu.
 % 盲审模式开关。开启盲审模式将隐去作者姓名、导师姓名、班级、学号等个人信息，
 % 删去版权使用授权书、原创性声明和致谢页。默认关闭。
 %
-% \DescribeFunction{continuous}
-% 连续编号开关。开启连续编号后，正文中图、表等浮动体直到附录之前，将从 1 开始连
-% 续编号，与章节的编号无关。默认关闭。
-%
 % \DescribeFunction{oneside, twoside}
 % 指明论文的单双面模式，默认为 \opt{twoside}。
 %
 % \DescribeFunction{openright, openany}
 % 指明论文章节的开始页，可以改为 \opt{openright} 从奇数页开始，默认为 \opt{openany} 从任意页开始。
 %
-% \subsection{额外宏包选项}
+% \subsubsection{额外宏包选项}
 %
 % \DescribeFunction{unimath}
 % 是否使用 \pkg{unicode-math}，默认不使用。
@@ -601,6 +597,24 @@ The Current Maintainer of this work is Alexara Wu.
 %   \end{sjtusyntax}
 % 论文标题。如果您的标题过长，建议使用“|\\|”手动断行。
 %
+% \DescribeFunction{display-title}
+% \DescribeFunction{display-title*}
+%   \vspace{-1ex}
+%   \begin{sjtusyntax}[emph={[2]display-title,display-title*}]
+%     display-title  = (*\marg{中文标题页标题}*)
+%     display-title* = (*\marg{英文标题页标题}*)
+%   \end{sjtusyntax}
+% 标题页论文中题目。默认为跟随对应语言的论文标题。
+%
+% \DescribeFunction{running-title}
+% \DescribeFunction{running-title*}
+%   \vspace{-1ex}
+%   \begin{sjtusyntax}[emph={[2]running-title,running-title*}]
+%     running-title  = (*\marg{中文页眉标题}*)
+%     running-title* = (*\marg{英文页眉标题}*)
+%   \end{sjtusyntax}
+% 论文页眉题目。默认为跟随对应语言的论文标题。
+%
 % \DescribeFunction{keywords}
 % \DescribeFunction{keywords*}
 %   \vspace{-1ex}
@@ -736,17 +750,6 @@ The Current Maintainer of this work is Alexara Wu.
 %
 % \DescribeFunction{\maketitle}
 % 生成标题页。
-%
-% \DescribeFunction{\originalitypage}
-% \DescribeFunction{\originalitypage*}
-%   \vspace{-1ex}
-%   \begin{sjtusyntax}[morekeywords={\originalitypage,\originalitypage*}]
-%     \originalitypage
-%     \originalitypage*
-%     \originalitypage(*\oarg{声明扫描件}*)
-%   \end{sjtusyntax}
-% 生成空白原创性声明。带星号的版本生成的声明页不包含论文标题。
-% 接受一个可选参数用于插入原创性声明扫描件。
 %
 % \DescribeFunction{\copyrightpage}
 %   \begin{sjtusyntax}[morekeywords={\copyrightpage}]
@@ -1436,7 +1439,7 @@ The Current Maintainer of this work is Alexara Wu.
   display-title*  = { name = display@title@en },
 %    \end{macrocode}
 %
-% 页眉论文中英文题目。
+% 论文页眉中英文题目。
 %    \begin{macrocode}
   running-title   = { name = running@title@zh },
   running-title*  = { name = running@title@en },
