@@ -2363,13 +2363,11 @@ The Current Maintainer of this work is Alexara Wu.
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\chapter}
 % 每章第一页默认会设置特殊的 pagestyle, 我们将其清除。
 %    \begin{macrocode}
-\sjtu@patchcmd\chapter%
-  {\thispagestyle}{\@gobble}
+\def\ps@chapter{}
+\ctexset{chapter/pagestyle = chapter}
 %    \end{macrocode}
-% \end{macro}
 %
 % 设置文档开始时初始的页码与页眉页脚风格。
 %    \begin{macrocode}
