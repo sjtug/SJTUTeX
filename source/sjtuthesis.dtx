@@ -1208,7 +1208,8 @@ The Current Maintainer of this work is Alexara Wu.
     \def\sjtu@zihao{5}
   \fi
 \fi
-\PassOptionsToClass{zihao=\sjtu@zihao}{ctexbook}
+\edef\sjtu@opt@zihao{{zihao=\sjtu@zihao}}
+\expandafter\PassOptionsToClass\sjtu@opt@zihao{ctexbook}
 %    \end{macrocode}
 %
 % 设置默认 \opt{openany}。
