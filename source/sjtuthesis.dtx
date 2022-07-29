@@ -50,16 +50,16 @@ The Current Maintainer of this work is Alexara Wu.
     \file{\jobname.cls}               {\from{\jobname.dtx}{class}}
     \file{\jobname-undergraduate.ltx} {\from{\jobname.dtx}{undergraduate}}
     \file{\jobname-graduate.ltx}      {\from{\jobname.dtx}{graduate}}
-    \file{sjtu-text-font-termes.def}  {\from{\jobname.dtx}{textfont,termes}}
-    \file{sjtu-text-font-pagella.def} {\from{\jobname.dtx}{textfont,pagella}}
+    \file{sjtu-text-font-newtx.def}   {\from{\jobname.dtx}{textfont,newtx}}
+    \file{sjtu-text-font-newpx.def}   {\from{\jobname.dtx}{textfont,newpx}}
     \file{sjtu-text-font-lm.def}      {\from{\jobname.dtx}{textfont,lm}}
     \file{sjtu-text-font-stixtwo.def} {\from{\jobname.dtx}{textfont,stixtwo}}
     \file{sjtu-text-font-xits.def}    {\from{\jobname.dtx}{textfont,xits}}
     \file{sjtu-text-font-newcm.def}   {\from{\jobname.dtx}{textfont,newcm}}
     \file{sjtu-text-font-cambria.def} {\from{\jobname.dtx}{textfont,cambria}}
     \file{sjtu-text-font-times.def}   {\from{\jobname.dtx}{textfont,times}}
-    \file{sjtu-math-font-termes.def}  {\from{\jobname.dtx}{mathfont,termes}}
-    \file{sjtu-math-font-pagella.def} {\from{\jobname.dtx}{mathfont,pagella}}
+    \file{sjtu-math-font-newtx.def}   {\from{\jobname.dtx}{mathfont,newtx}}
+    \file{sjtu-math-font-newpx.def}   {\from{\jobname.dtx}{mathfont,newpx}}
     \file{sjtu-math-font-lm.def}      {\from{\jobname.dtx}{mathfont,lm}}
     \file{sjtu-math-font-stixtwo.def} {\from{\jobname.dtx}{mathfont,stixtwo}}
     \file{sjtu-math-font-xits.def}    {\from{\jobname.dtx}{mathfont,xits}}
@@ -97,10 +97,10 @@ The Current Maintainer of this work is Alexara Wu.
 %<graduate>\ProvidesFile{sjtuthesis-graduate.ltx}
 %<class|undergraduate|graduate|document>  [2021/06/03 1.1.0rc1 Shanghai Jiao Tong University Thesis Template]
 %<*textfont>
-%<termes>\ProvidesFile{sjtu-text-font-termes.def}
-%<termes>  [2021/06/03 1.1.0rc1 Termes text fonts definition (SJTUThesis)]
-%<pagella>\ProvidesFile{sjtu-text-font-pagella.def}
-%<pagella>  [2021/06/03 1.1.0rc1 Pagella text fonts definition (SJTUThesis)]
+%<newtx>\ProvidesFile{sjtu-text-font-newtx.def}
+%<newtx>  [2021/06/03 1.1.0rc1 NewTX text fonts definition (SJTUThesis)]
+%<newpx>\ProvidesFile{sjtu-text-font-newpx.def}
+%<newpx>  [2021/06/03 1.1.0rc1 NewPX text fonts definition (SJTUThesis)]
 %<stixtwo>\ProvidesFile{sjtu-text-font-stixtwo.def}
 %<stixtwo>  [2021/06/03 1.1.0rc1 STIX Two text fonts definition (SJTUThesis)]
 %<xits>\ProvidesFile{sjtu-text-font-xits.def}
@@ -115,10 +115,10 @@ The Current Maintainer of this work is Alexara Wu.
 %<times>  [2021/06/03 1.1.0rc1 Times text fonts definition (SJTUThesis)]
 %</textfont>
 %<*mathfont>
-%<termes>\ProvidesFile{sjtu-math-font-termes.def}
-%<termes>  [2021/06/03 1.1.0rc1 Termes math fonts definition (SJTUThesis)]
-%<pagella>\ProvidesFile{sjtu-math-font-pagella.def}
-%<pagella>  [2021/06/03 1.1.0rc1 Pagella math fonts definition (SJTUThesis)]
+%<newtx>\ProvidesFile{sjtu-math-font-newtx.def}
+%<newtx>  [2021/06/03 1.1.0rc1 NewTX math fonts definition (SJTUThesis)]
+%<newpx>\ProvidesFile{sjtu-math-font-newpx.def}
+%<newpx>  [2021/06/03 1.1.0rc1 NewPX math fonts definition (SJTUThesis)]
 %<stixtwo>\ProvidesFile{sjtu-math-font-stixtwo.def}
 %<stixtwo>  [2021/06/03 1.1.0rc1 STIX Two math fonts definition (SJTUThesis)]
 %<xits>\ProvidesFile{sjtu-math-font-xits.def}
@@ -291,18 +291,18 @@ The Current Maintainer of this work is Alexara Wu.
 %   \label{tab:files}
 %   \begin{tabular}{l|l|p{4cm}}
 %     \toprule
-%     \strong{类别} & \strong{文件}               & \strong{说明}     \\
+%     \strong{类别} & \strong{文件}               & \strong{说明}  \\
 %     \midrule
-%     文档类        & \file{sjtuthesis.cls}       & 文档类文件        \\
-%                   & \file{sjtuthesis-*.ltx}     & 文档类辅助文件    \\
+%     文档类        & \file{sjtuthesis.cls}       & 文档类文件     \\
+%                   & \file{sjtuthesis-*.ltx}     & 文档类辅助文件 \\
 %     \midrule
-%     视觉系统      & \file{sjtu-vi-logo-*.pdf}   & 校标图片          \\
-%                   & \file{sjtu-vi-badge-*.pdf}  & 校徽图片          \\
-%                   & \file{sjtu-vi-name-*.pdf}   & 校名图片          \\
+%     视觉系统      & \file{sjtu-vi-logo-*.pdf}   & 校标图片       \\
+%                   & \file{sjtu-vi-badge-*.pdf}  & 校徽图片       \\
+%                   & \file{sjtu-vi-name-*.pdf}   & 校名图片       \\
 %     \midrule
-%     字体配置文件   & \file{sjtu-cjk-font-*.def}    & 中文字体配置 \\
-%                  & \file{sjtu-math-font-*.def}   &  数学字体配置 \\
-%                  & \file{sjtu-text-font-*.def}   &  正文字体配置 \\
+%     字体配置文件  & \file{sjtu-cjk-font-*.def}  & 中文字体配置   \\
+%                   & \file{sjtu-math-font-*.def} &  数学字体配置  \\
+%                   & \file{sjtu-text-font-*.def} &  正文字体配置  \\
 %
 %     \bottomrule
 %   \end{tabular}
@@ -426,9 +426,6 @@ The Current Maintainer of this work is Alexara Wu.
 %
 % \subsubsection{额外宏包选项}
 %
-% \DescribeFunction{unimath}
-% 是否使用 \pkg{unicode-math}，默认不使用。
-%
 % \DescribeFunction{nothm}
 % 是否取消预设的定理环境。默认不取消，以采用
 % \sjtuthesis 预定义的一系列数学环境。在启用 \pkg{ntheorem} 或 \pkg{amsthm}
@@ -457,20 +454,20 @@ The Current Maintainer of this work is Alexara Wu.
 %
 % \DescribeFunction{text-font}
 %   \begin{sjtusyntax}[emph={[1]text-font}]
-%     text-font = (*<(termes)|times|stixtwo|xits|pagella|cambria|newcm|lm|none>*)
+%     text-font = (*<(newtx)|times|stixtwo|xits|newpx|cambria|newcm|lm|none>*)
 %   \end{sjtusyntax}
 % 指定西文字体集。\sjtuthesis 预定义了一些西文字体组合，具体配置见表 \ref{tab:latinfont}。
 %
 % \DescribeFunction{math-font}
 %   \begin{sjtusyntax}[emph={[1]math-font}]
-%     math-font = (*<(auto)|(termes)|stixtwo|xits|pagella|cambria|newcm|lm|none>*)
+%     math-font = (*<(auto)|(newtx)|stixtwo|xits|newpx|cambria|newcm|lm|none>*)
 %   \end{sjtusyntax}
 % 指定数学字体集。\sjtuthesis 预定义了一些数学字体组合，具体配置见表 \ref{tab:latinfont} 数学字体列。
 % 默认为 \opt{auto} 以跟随 \opt{text-font} 的设置。
-% 找不到定义的数学字体集时的回退选项为 \opt{termes}。
+% 找不到定义的数学字体集时的回退选项为 \opt{newtx}。
 %
 % 请注意加载 \opt{stixtwo}，\opt{xits}，\opt{newcm}，\opt{cambria} 数学字体时
-% 会自动加载 \pkg{unicode-math} 宏包，强制将 \opt{unimath} 开启。
+% 会自动加载 \pkg{unicode-math} 宏包。
 %
 % \begin{table}[ht]
 % \centering\small
@@ -481,14 +478,14 @@ The Current Maintainer of this work is Alexara Wu.
 %     \toprule
 %       & \strong{正文字体} & \strong{无衬线字体} & \strong{等宽字体} & \strong{数学字体} \\
 %     \midrule
-%       |termes|          & TG Termes\tnote{a}  & TG Heros        & TG Cursor        & TG Termes Math  \\
-%       |times|\tnote{b}  & Times New Roman     & Arial           & Courier New      & TG Termes Math       \\
-%       |stixtwo|            & STIX Two Text       & Source Sans Pro & Source Code Pro  & STIX Two Math   \\
-%       |xits|            & XITS                & Source Sans Pro & Source Code Pro  & XITS Math       \\
-%       |pagella|         & TG Pagella          & TG Heros        & TG Cursor        & TG Pagella Math \\
-%       |cambria|         & Cambria             & Calibri         & Consolas         & Cambria Math    \\
-%       |newcm|           & New CM\tnote{c} & New CM Sans        & New CM Mono         & New CM \\
-%       |lm|              & LM Roman            & LM Sans         & LM Mono          & LM Math         \\
+%       |newtx|           & TG Termes X\tnote{a} & TG Heros    & TG Cursor   & newtx         \\
+%       |times|\tnote{b}  & Times New Roman      & Arial       & Courier New & newtx         \\
+%       |stixtwo|         & STIX Two Text        & TG Heros    & TG Cursor   & STIX Two Math \\
+%       |xits|            & XITS                 & TG Heros    & TG Cursor   & XITS Math     \\
+%       |newpx|           & TG Pagella X         & TG Heros    & TG Cursor   & newpx         \\
+%       |cambria|         & Cambria              & Calibri     & Consolas    & Cambria Math  \\
+%       |newcm|           & New CM\tnote{c}      & New CM Sans & New CM Mono & New CM        \\
+%       |lm|              & LM Roman             & LM Sans     & LM Mono     & LM Math       \\
 %     \bottomrule
 %   \end{tabular}
 %   \begin{tablenotes}
@@ -758,7 +755,7 @@ The Current Maintainer of this work is Alexara Wu.
 %      |ack|              & 致|\hspace{\ccwd}|谢                  & Acknowledgements      \\
 %      |achv|             & 学术论文和科研成果目录                & Research Achievements \\
 %      |resume|           & 个人简历                              & Resume                \\
-%      |digest|           & 大摘要                              & Digest                \\
+%      |digest|           & 大摘要                                & Digest                \\
 %     \bottomrule
 %   \end{tabular}
 % \end{table}
@@ -1148,7 +1145,7 @@ The Current Maintainer of this work is Alexara Wu.
 %
 % 正文字体。
 %    \begin{macrocode}
-\DeclareStringOption[termes]{text-font}
+\DeclareStringOption[newtx]{text-font}
 \@namedef{sjtu@text@font}{\csname sjtu@text-font\endcsname}
 %    \end{macrocode}
 %
@@ -1162,11 +1159,6 @@ The Current Maintainer of this work is Alexara Wu.
 %    \begin{macrocode}
 \DeclareStringOption[auto]{cjk-font}
 \@namedef{sjtu@cjk@font}{\csname sjtu@cjk-font\endcsname}
-%    \end{macrocode}
-%
-% 是否偏好使用 \pkg{unicode-math}。
-%    \begin{macrocode}
-\DeclareBoolOption[false]{unimath}
 %    \end{macrocode}
 %
 % 取消预设的定理环境。
@@ -1806,9 +1798,6 @@ The Current Maintainer of this work is Alexara Wu.
 % \subsection{西文字体}
 %
 %    \begin{macrocode}
-\ifsjtu@unimath
-  \RequirePackage{unicode-math}
-\fi
 \ifthenelse{\equal{\sjtu@math@font}{auto}}{
   \let\sjtu@math@font\sjtu@text@font
 }{}
@@ -1816,9 +1805,9 @@ The Current Maintainer of this work is Alexara Wu.
   \InputIfFileExists{sjtu-math-font-\sjtu@math@font.def}{}{%
     \sjtu@warning{%
       Invalid value `math-font = \sjtu@math@font'! \MessageBreak
-      Using `termes' instead.
+      Using `newtx' instead.
     }
-    \def\sjtu@math@font{termes}
+    \def\sjtu@math@font{newtx}
     \input{sjtu-math-font-\sjtu@math@font.def}
   }
 }
@@ -1826,19 +1815,15 @@ The Current Maintainer of this work is Alexara Wu.
   \InputIfFileExists{sjtu-text-font-\sjtu@text@font.def}{}{%
     \sjtu@warning{%
       Invalid value `text-font = \sjtu@text@font'! \MessageBreak
-      Using `termes' instead.
+      Using `newtx' instead.
     }
-    \def\sjtu@text@font{termes}
+    \def\sjtu@text@font{newtx}
     \input{sjtu-text-font-\sjtu@text@font.def}
   }
 }
 %</class>
 %<*mathfont>
-%<termes|pagella|lm>\ifsjtu@unimath
-%<stixtwo|xits|newcm|cambria>\sjtu@unimathtrue
 %<stixtwo|xits|newcm|cambria>\RequirePackage{unicode-math}
-%<termes>  \setmathfont{texgyretermes-math.otf}
-%<pagella>  \setmathfont{texgyrepagella-math.otf}
 %<*stixtwo>
 \IfFontExistsTF{STIXTwoMath-Regular.otf}{
   \setmathfont[
@@ -1881,7 +1866,6 @@ The Current Maintainer of this work is Alexara Wu.
   ]{xits-math.otf}
 }
 %</xits>
-%<lm>  \setmathfont{latinmodern-math.otf}
 %<*newcm>
 \setmathfont[
   StylisticSet = 2
@@ -1893,17 +1877,18 @@ The Current Maintainer of this work is Alexara Wu.
 %</newcm>
 %<cambria>\setmathfont{Cambria Math}
 %</mathfont>
-%<*termes|pagella>
-%<mathfont>  \setmathrm[
-%<textfont>  \setmainfont[
-    Extension      = .otf,
-    UprightFont    = *-regular,
-    BoldFont       = *-bold,
-    ItalicFont     = *-italic,
-    BoldItalicFont = *-bolditalic,
-%<termes>  ]{texgyretermes}
-%<pagella>  ]{texgyrepagella}
-%</termes|pagella>
+%<*textfont>
+%<*newtx|newpx>
+\setmainfont[
+  Extension       = .otf,
+  UprightFont     = *-Regular,
+  BoldFont        = *-Bold,
+  ItalicFont      = *-Italic,
+  BoldItalicFont  = *-BoldItalic
+%<newtx>]{TeXGyreTermesX}
+%<newpx>]{TeXGyrePagellaX}
+%</newtx|newpx>
+%</textfont>
 %<*stixtwo>
 \IfFontExistsTF{STIXTwoText-Regular.otf}{
 %<mathfont>  \setmathrm[
@@ -1946,118 +1931,117 @@ The Current Maintainer of this work is Alexara Wu.
   ]{xits}
 }
 %</xits>
-%<*termes|pagella|stixtwo|xits>
-%<mathfont>  \setmathsf[
-%<textfont>  \setsansfont[
-    Extension      = .otf,
-    UprightFont    = *-regular,
-    BoldFont       = *-bold,
-    ItalicFont     = *-italic,
-    BoldItalicFont = *-bolditalic,
-  ]{texgyreheros}
-%<mathfont>  \setmathtt[
-%<textfont>  \setmonofont[
-    Extension      = .otf,
-    UprightFont    = *-regular,
-    BoldFont       = *-bold,
-    ItalicFont     = *-italic,
-    BoldItalicFont = *-bolditalic,
-    Scale          = MatchLowercase,
-    Ligatures      = CommonOff,
-  ]{texgyrecursor}
-%</termes|pagella|stixtwo|xits>
-%<*lm>
-%<mathfont>  \setmathrm[
-%<textfont>  \setmainfont[
-    Extension      = .otf,
-    UprightFont    = *-regular,
-    BoldFont       = *-bold,
-    ItalicFont     = *-italic,
-    BoldItalicFont = *-bolditalic,
-  ]{lmroman10}
-%<mathfont>  \setmathsf[
-%<textfont>  \setsansfont[
-    Extension      = .otf,
-    UprightFont    = *-regular,
-    BoldFont       = *-bold,
-    ItalicFont     = *-oblique,
-    BoldItalicFont = *-boldoblique,
-  ]{lmsans10}
-%<mathfont>  \setmathtt[
-%<textfont>  \setmonofont[
-    Extension      = .otf,
-    UprightFont    = *-regular,
-    BoldFont       = *-bold,
-    ItalicFont     = *-oblique,
-    BoldItalicFont = *-boldoblique,
-  ]{lmmonolt10}
-%</lm>
-%<*newcm>
-%<mathfont>\setmathrm[
-%<textfont>\setmainfont[
-  Extension      = .otf,
-  UprightFont    = *-Book,
-  BoldFont       = *-Bold,
-  ItalicFont     = *-BookItalic,
-  BoldItalicFont = *-BoldItalic,
-]{NewCM10}
+%<*textfont&(newtx|newpx)|stixtwo|xits>
 %<mathfont>\setmathsf[
 %<textfont>\setsansfont[
   Extension      = .otf,
-  UprightFont    = *-Book,
-  BoldFont       = *-Bold,
-  ItalicFont     = *-BookOblique,
-  BoldItalicFont = *-BoldOblique,
-]{NewCMSans10}
+  UprightFont    = *-regular,
+  BoldFont       = *-bold,
+  ItalicFont     = *-italic,
+  BoldItalicFont = *-bolditalic,
+]{texgyreheros}
 %<mathfont>\setmathtt[
 %<textfont>\setmonofont[
   Extension      = .otf,
+  UprightFont    = *-regular,
+  BoldFont       = *-bold,
+  ItalicFont     = *-italic,
+  BoldItalicFont = *-bolditalic,
+  Scale          = MatchLowercase,
+  Ligatures      = CommonOff,
+]{texgyrecursor}
+%</textfont&(newtx|newpx)|stixtwo|xits>
+%<*newcm>
+%<mathfont>\setmathrm[
+%<textfont>\setmainfont[
+  Extension    = .otf,
+  SizeFeatures =
+    {
+      {
+        Size        = -9,
+        Font        = NewCM08-Book,
+        ItalicFont  = NewCM08-BookItalic,
+        SlantedFont = NewCM08-Book,
+      },
+      { Size        = 9- }
+    },
+  UprightFont         = *-Book,
+  BoldFont            = *-Bold,
+  ItalicFont          = *-BookItalic,
+  BoldItalicFont      = *-BoldItalic,
+  SlantedFont         = *-Book,
+  BoldSlantedFont     = *-Bold,
+  SlantedFeatures     = {FakeSlant=0.25},
+  BoldSlantedFeatures = {FakeSlant=0.25}
+]{NewCM10}
+%<mathfont>\setmathsf[
+%<textfont>\setsansfont[
+  Extension    = .otf,
+  SizeFeatures =
+    {
+      {
+        Size       = -9,
+        Font       = NewCMSans08-Book,
+        ItalicFont = NewCMSans08-BookOblique,
+      },
+      { Size       = 9- }
+    },
   UprightFont    = *-Book,
   BoldFont       = *-Bold,
-  ItalicFont     = *-BookItalic,
-  BoldItalicFont = *-BoldOblique,
+  ItalicFont     = *-BookOblique,
+  BoldItalicFont = *-BoldOblique
+]{NewCMSans10}
+%<mathfont>\setmathtt[
+%<textfont>\setmonofont[
+  Extension           = .otf,
+  UprightFont         = *-Book,
+  BoldFont            = *-Bold,
+  ItalicFont          = *-BookItalic,
+  BoldItalicFont      = *-BoldOblique,
+  SlantedFont         = *-Book,
+  SlantedFeatures     = {FakeSlant = 0.25},
+  BoldSlantedFont     = *-Bold,
+  BoldSlantedFeatures = {FakeSlant = 0.25}
 ]{NewCMMono10}
 %</newcm>
 %<*cambria>
 %<*mathfont>
 \setmathrm{Cambria}
 \setmathsf{Calibri}
-\setmathtt[Scale=MatchLowercase]{Consolas}
+\setmathtt{Consolas}[Scale=MatchLowercase]
 %</mathfont>
 %<*textfont>
 \setmainfont{Cambria}
 \setsansfont{Calibri}
-\setmonofont[Scale=MatchLowercase]{Consolas}
+\setmonofont{Consolas}[Scale=MatchLowercase]
 %</textfont>
 %</cambria>
 %<*times>
-\setmainfont[Ligatures=Rare]{Times New Roman}
+\setmainfont{Times New Roman}[Ligatures=Rare]
 \setsansfont{Arial}
-\setmonofont[Scale=MatchLowercase]{Courier New}
+\setmonofont{Courier New}[Scale=MatchLowercase]
 %</times>
-%<*mathfont&(termes|pagella|lm)>
-\else
-%<lm>  \RequirePackage{amssymb}
-%<lm>  \RequirePackage{upgreek}
-  \let\oldencodingdefault\encodingdefault
-  \let\oldrmdefault\rmdefault
-  \let\oldsfdefault\sfdefault
-  \let\oldttdefault\ttdefault
-  \RequirePackage[T1]{fontenc}
-%<termes>  \renewcommand{\rmdefault}{ntxtlf}
-%<pagella>  \renewcommand{\rmdefault}{zpltlf}
-%<termes|pagella>  \renewcommand{\sfdefault}{qhv}
-%<termes|pagella>  \renewcommand{\ttdefault}{ntxtt}
-%<termes>  \RequirePackage[upint]{newtxmath}
-%<pagella>  \RequirePackage[upint]{newpxmath}
-%<lm>  \RequirePackage{lmodern}
-  \let\encodingdefault\oldencodingdefault
-  \let\rmdefault\oldrmdefault
-  \let\sfdefault\oldsfdefault
-  \let\ttdefault\oldttdefault
-  \RequirePackage{bm}
-\fi
-%</mathfont&(termes|pagella|lm)>
+%<*mathfont&(newtx|newpx|lm)>
+%<lm>\RequirePackage{amssymb}
+%<lm>\RequirePackage{upgreek}
+\let\sjtu@save@encodingdefault\encodingdefault
+\let\sjtu@save@rmdefault\rmdefault
+\let\sjtu@save@sfdefault\sfdefault
+\let\sjtu@save@ttdefault\ttdefault
+\def\encodingdefault{T1}
+%<newtx>\def\rmdefault{ntxtlf}
+%<newpx>\def\rmdefault{zpltlf}
+%<newtx|newpx>\def\sfdefault{qhv}
+%<newtx|newpx>\def\ttdefault{ntxtt}
+%<newtx>\RequirePackage[upint]{newtxmath}
+%<newpx>\RequirePackage[upint]{newpxmath}
+%<lm>\RequirePackage{lmodern}
+\RequirePackage{bm}
+\let\encodingdefault\sjtu@save@encodingdefault
+\let\rmdefault\sjtu@save@rmdefault
+\let\sfdefault\sjtu@save@sfdefault
+\let\ttdefault\sjtu@save@ttdefault
+%</mathfont&(newtx|newpx|lm)>
 %    \end{macrocode}
 %
 % \subsection{中文字体}
