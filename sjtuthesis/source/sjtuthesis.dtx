@@ -1628,8 +1628,8 @@
 %
 % 清除章首页的页面格式。
 %    \begin{macrocode}
-\@@_patch_cmd:Nnn \chapter
-  { \thispagestyle } { \use_none:n }
+\cs_new_eq:NN \ps@chapter \prg_do_nothing:
+\ctex_set:nn { chapter } { pagestyle = chapter }
 %    \end{macrocode}
 %
 % \begin{macro}{\SJTU@chapter,\@@_pdf_bookmark:nn,\@@_phantom_section:}
