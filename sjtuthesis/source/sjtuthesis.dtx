@@ -75,6 +75,7 @@
     \file{sjtu-math-font-xits.def}   {\from{\jobname.dtx}{mathfont,xits}}
     \file{sjtu-math-font-newcm.def}  {\from{\jobname.dtx}{mathfont,newcm}}
     \file{sjtu-math-font-cambria.def}{\from{\jobname.dtx}{mathfont,cambria}}
+    \file{sjtu-math-font-times.def}  {\from{\jobname.dtx}{mathfont,times}}
     \file{sjtu-cjk-font-windows.def} {\from{\jobname.dtx}{cjkfont,windows}}
     \file{sjtu-cjk-font-mac.def}     {\from{\jobname.dtx}{cjkfont,mac}}
     \file{sjtu-cjk-font-ubuntu.def}  {\from{\jobname.dtx}{cjkfont,ubuntu}}
@@ -157,6 +158,8 @@
 %<mathfont&newcm>\ProvidesExplFile{sjtu-math-font-newcm.def}
 %<mathfont&cambria>  {Cambria math fonts definition (SJTUThesis)}
 %<mathfont&cambria>\ProvidesExplFile{sjtu-math-font-cambria.def}
+%<mathfont&times>  {Times math fonts definition (SJTUThesis)}
+%<mathfont&times>\ProvidesExplFile{sjtu-math-font-times.def}
 %<cjkfont&windows>  {Windows CJK fonts definition (SJTUThesis)}
 %<cjkfont&windows>\ProvidesExplFile{sjtu-cjk-font-windows.def}
 %<cjkfont&mac>  {macOS CJK fonts definition (SJTUThesis)}
@@ -250,26 +253,6 @@
     manager~ or~ from~ CTAN.
   }
 %    \end{macrocode}
-%
-% 目前 \cls{sjtuthesis} 仅支持 \XeTeX{} 和 \LuaTeX{}。
-%    \begin{macrocode}
-\sys_if_engine_xetex:F
-  {
-    \sys_if_engine_luatex:F
-      {
-        \msg_fatal:nnx { sjtuthesis } { unsupported-engine }
-          { \c_sys_engine_str }
-      }
-  }
-\msg_new:nnn { sjtuthesis } { unsupported-engine }
-  {
-    The~ sjtuthesis~ class~ requires~ either~ XeTeX~ or~ LuaTeX. \\\\
-    "#1"~ is~ not~ supported~ at~ present.~ You~ must~ change \\
-    your~ typesetting~ engine~ to~ "xelatex"~ or~ "lualatex".
-  }
-%    \end{macrocode}
-%
-% 目前 \cls{sjtuthesis} 仅支持 \XeTeX{} 和 \LuaTeX{}。
 %
 % 定义 \texttt{sjtuthesis} 宏。
 %    \begin{macrocode}
@@ -667,7 +650,8 @@
     \clist_put_right:Nn \g_@@_options_to_packages_clist
       {
         { slantedGreek } { newtxmath },
-        { slantedGreek } { newpxmath }
+        { slantedGreek } { newpxmath },
+        { slantedGreek } { mathptmx  }
       }
   }
 \bool_if:NTF \g_@@_intlimits_bool
@@ -690,7 +674,8 @@
     \clist_put_right:Nn \g_@@_options_to_packages_clist
       {
         { upint } { newtxmath },
-        { upint } { newpxmath }
+        { upint } { newpxmath },
+        { upint } { stix2     }
       }
   }
 \clist_map_inline:Nn \g_@@_options_to_packages_clist
@@ -959,6 +944,67 @@
 %
 % \subsection{字体配置}
 %
+% \begin{macro}[int]{\@@_fontset_error:nn}
+% 字库不可用时给出紧急错误信息，停止读取定义文件。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_fontset_error:nn #1#2
+  { \msg_error:nnnn { sjtuthesis } { font-unavailable } {#1} {#2} }
+\msg_new:nnn { sjtuthesis } { font-unavailable }
+  { `#1-font~ =~ #2'~ is~ unavailable~ in~ current~ mode. }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}[int]{\@@_fontset_case:nn}
+% 2 个参数依次为 \pdfTeX 和 \XeTeX/\LuaTeX。
+%    \begin{macrocode}
+\cs_new:Npx \@@_fontset_case:nn #1#2
+  { \sys_if_engine_pdftex:TF {#1} {#2} }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}[int]{\@@_fontset_case:nnn}
+% 3 个参数依次为 \pdfTeX（生成 PDF）、\pdfTeX（生成 DVI） 和
+% \XeTeX/\LuaTeX。
+%    \begin{macrocode}
+\cs_new:Npx \@@_fontset_case:nnn #1#2#3
+  {
+    \sys_if_engine_pdftex:TF
+      { \sys_if_output_pdf:TF {#1} {#2} }
+      {#3}
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}[int]{\@@_set_slanted_greek:}
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_set_slanted_greek:
+  {
+    \clist_const:Nn \c_@@_uppercase_greek_clist
+      { Gamma, Delta, Theta, Lambda, Xi, Pi, Sigma, Upsilon, Phi, Psi, Omega }
+    \clist_map_inline:Nn \c_@@_uppercase_greek_clist
+      {
+        \cs_set_eq:cc { up ##1 } {     ##1 }
+        \cs_set_eq:cc { it ##1 } { var ##1 }
+      }
+    \int_compare:nNnT { \g_@@_math_style_int } > { 1 }
+      {
+        \clist_map_inline:Nn \c_@@_uppercase_greek_clist
+          { \cs_set_eq:cc { ##1 } { it ##1 } }
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}[int]{\@@_set_unimath_symbol:}
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_set_unimath_symbol:
+  {
+    \cs_set_eq:NN \increment \upDelta
+    \cs_set_eq:NN \QED \blacksquare
+  }
+%    \end{macrocode}
+% \end{macro}
+%
 % 如果没有指定数学字体，则根据西文字体设置匹配的数字字体。
 %    \begin{macrocode}
 \tl_if_empty:NT \g_@@_math_font_tl
@@ -1023,239 +1069,315 @@
 % \subsubsection{西文与数学字体}
 %
 %    \begin{macrocode}
-%<*mathfont>
-%<stixtwo|xits|newcm|cambria>\RequirePackage { unicode-math }
+%<*mathfont|textfont>
 %<*stixtwo>
-\bool_if:NTF \g_@@_slint_bool
-  { \setmathfont { STIXTwoMath-Regular.otf } }
+\@@_fontset_case:nn
   {
+%<*mathfont>
+    \PassOptionsToPackage { notext } { stix2 }
+    \RequirePackage { upgreek, stix2, bm }
+    \@@_set_slanted_greek:
+%</mathfont>
+%<*textfont>
+    \tl_set:Nn \rmdefault { stix2 }
+    \tl_set:Nn \sfdefault { phv }
+    \tl_set:Nn \ttdefault { pcr }
+%</textfont>
+  }
+  {
+%<*mathfont>
+    \RequirePackage { unicode-math }
+    \bool_if:NTF \g_@@_slint_bool
+      { \setmathfont { STIXTwoMath-Regular.otf } }
+      {
+        \setmathfont { STIXTwoMath-Regular.otf }
+          [ StylisticSet = 8 ]
+      }
     \setmathfont { STIXTwoMath-Regular.otf }
-      [ StylisticSet = 8 ]
-  }
-\setmathfont { STIXTwoMath-Regular.otf }
-  [
-    range        = { scr, bfscr },
-    StylisticSet = 1
-  ]
-%</stixtwo>
-%<*xits>
-\bool_if:NTF \g_@@_slint_bool
-  {
-    \setmathfont { XITSMath-Regular }
       [
-        Extension    = .otf,
-        BoldFont     = XITSMath-Bold,
+        range        = { scr, bfscr },
+        StylisticSet = 1
       ]
-  }
-  {
-    \setmathfont { XITSMath-Regular }
-      [
-        Extension    = .otf,
-        BoldFont     = XITSMath-Bold,
-        StylisticSet = 8
-      ]
-  }
-\setmathfont { XITSMath-Regular.otf }
-  [
-    range        = { cal, bfcal },
-    StylisticSet = 1
-  ]
-%</xits>
-%<*newcm>
-\bool_if:NTF \g_@@_slint_bool
-  { \setmathfont { NewCMMath-Book.otf } }
-  {
-    \setmathfont { NewCMMath-Book.otf }
-      [ StylisticSet = 2 ]
-  }
-\setmathfont { NewCMMath-Book.otf }
-  [
-    range        = { scr, bfscr },
-    StylisticSet = 1
-  ]
-%</newcm>
-%<cambria>\setmathfont { Cambria~Math }
 %</mathfont>
-%<*textfont>
-%<*newtx|newpx>
-\setmainfont
-%<newtx>  { TeXGyreTermesX }
-%<newpx>  { TeXGyrePagellaX }
-  [
-    Extension       = .otf,
-    UprightFont     = *-Regular,
-    BoldFont        = *-Bold,
-    ItalicFont      = *-Italic,
-    BoldItalicFont  = *-BoldItalic,
-    SlantedFont     = *-Slanted,
-    BoldSlantedFont = *-BoldSlanted
-  ]
-%</newtx|newpx>
-%</textfont>
-%<*stixtwo>
-%<mathfont>\setmathrm
-%<textfont>\setmainfont
-  { STIXTwoText }
-  [
-    Extension      = .otf,
-    UprightFont    = *-Regular,
-    BoldFont       = *-Bold,
-    ItalicFont     = *-Italic,
-    BoldItalicFont = *-BoldItalic
-  ]
+%<mathfont>    \setmathrm
+%<textfont>    \setmainfont
+      { STIXTwoText }
+      [
+        Extension      = .otf,
+        UprightFont    = *-Regular,
+        BoldFont       = *-Bold,
+        ItalicFont     = *-Italic,
+        BoldItalicFont = *-BoldItalic
+      ]
 %</stixtwo>
 %<*xits>
-%<mathfont>\setmathrm
-%<textfont>\setmainfont
-  { XITS }
-  [
-    Extension      = .otf,
-    UprightFont    = *-Regular,
-    BoldFont       = *-Bold,
-    ItalicFont     = *-Italic,
-    BoldItalicFont = *-BoldItalic
-  ]
-%</xits>
-%<*textfont&(newtx|newpx)|stixtwo|xits>
-%<mathfont>\setmathsf
-%<textfont>\setsansfont
-  { texgyreheros }
-  [
-    Extension      = .otf,
-    UprightFont    = *-regular,
-    BoldFont       = *-bold,
-    ItalicFont     = *-italic,
-    BoldItalicFont = *-bolditalic
-  ]
-%<mathfont>\setmathtt
-%<textfont>\setmonofont
-  { texgyrecursor }
-  [
-    Extension      = .otf,
-    UprightFont    = *-regular,
-    BoldFont       = *-bold,
-    ItalicFont     = *-italic,
-    BoldItalicFont = *-bolditalic,
-    Scale          = MatchLowercase,
-    Ligatures      = CommonOff
-  ]
-%</textfont&(newtx|newpx)|stixtwo|xits>
-%<*newcm>
-%<mathfont>\setmathrm
-%<textfont>\setmainfont
-  { NewCM10 }
-  [
-    Extension    = .otf,
-    SizeFeatures =
-      {
-        {
-          Size        = -9,
-          Font        = NewCM08-Book,
-          ItalicFont  = NewCM08-BookItalic,
-          SlantedFont = NewCM08-Book,
-        },
-        { Size        = 9- }
-      },
-    UprightFont         = *-Book,
-    BoldFont            = *-Bold,
-    ItalicFont          = *-BookItalic,
-    BoldItalicFont      = *-BoldItalic,
-    SlantedFont         = *-Book,
-    BoldSlantedFont     = *-Bold,
-    SlantedFeatures     = { FakeSlant = 0.25 },
-    BoldSlantedFeatures = { FakeSlant = 0.25 }
-  ]
-%<mathfont>\setmathsf
-%<textfont>\setsansfont
-  { NewCMSans10 }
-  [
-    Extension    = .otf,
-    SizeFeatures =
-      {
-        {
-          Size       = -9,
-          Font       = NewCMSans08-Book,
-          ItalicFont = NewCMSans08-BookOblique,
-        },
-        { Size       = 9- }
-      },
-    UprightFont    = *-Book,
-    BoldFont       = *-Bold,
-    ItalicFont     = *-BookOblique,
-    BoldItalicFont = *-BoldOblique
-  ]
-%<mathfont>\setmathtt
-%<textfont>\setmonofont
-  { NewCMMono10 }
-  [
-    Extension           = .otf,
-    UprightFont         = *-Book,
-    BoldFont            = *-Bold,
-    ItalicFont          = *-BookItalic,
-    BoldItalicFont      = *-BoldOblique,
-    SlantedFont         = *-Book,
-    SlantedFeatures     = { FakeSlant = 0.25 },
-    BoldSlantedFont     = *-Bold,
-    BoldSlantedFeatures = { FakeSlant = 0.25 }
-  ]
-%</newcm>
-%<*cambria>
+\@@_fontset_case:nn
+  {
+%<mathfont>    \@@_fontset_error:nn { math } { xits }
+%<textfont>    \@@_fontset_error:nn { text } { xits }
+  }
+  {
 %<*mathfont>
-\setmathrm { Cambria }
-\setmathsf { Calibri }
-\setmathtt { Consolas } [ Scale = MatchLowercase ]
+    \RequirePackage { unicode-math }
+    \bool_if:NTF \g_@@_slint_bool
+      {
+        \setmathfont { XITSMath-Regular }
+          [
+            Extension    = .otf,
+            BoldFont     = XITSMath-Bold,
+          ]
+      }
+      {
+        \setmathfont { XITSMath-Regular }
+          [
+            Extension    = .otf,
+            BoldFont     = XITSMath-Bold,
+            StylisticSet = 8
+          ]
+      }
+    \setmathfont { XITSMath-Regular.otf }
+      [
+        range        = { cal, bfcal },
+        StylisticSet = 1
+      ]
 %</mathfont>
-%<*textfont>
-\setmainfont { Cambria }
-\setsansfont { Calibri }
-\setmonofont { Consolas } [ Scale = MatchLowercase ]
-%</textfont>
-%</cambria>
-%<*times>
-\setmainfont { Times~New~Roman } [ Ligatures = Rare ]
-\setsansfont { Arial }
-\setmonofont { Courier~New } [ Scale = MatchLowercase ]
-%</times>
-%<*mathfont&(newtx|newpx|lm)>
+%<mathfont>    \setmathrm
+%<textfont>    \setmainfont
+      { XITS }
+      [
+        Extension      = .otf,
+        UprightFont    = *-Regular,
+        BoldFont       = *-Bold,
+        ItalicFont     = *-Italic,
+        BoldItalicFont = *-BoldItalic
+      ]
+%</xits>
+%<*newtx|newpx>
+%<*mathfont>
 \tl_set_eq:NN \g_@@_save_encodingdefault_tl \encodingdefault
 \tl_set_eq:NN \g_@@_save_rmdefault_tl \rmdefault
 \tl_set_eq:NN \g_@@_save_sfdefault_tl \sfdefault
 \tl_set_eq:NN \g_@@_save_ttdefault_tl \ttdefault
-\tl_set:Nn \encodingdefault { T1 }
+\tl_set:Nn \encodingdefault { OT1 }
 %<newtx>\tl_set:Nn \rmdefault { ntxtlf }
 %<newpx>\tl_set:Nn \rmdefault { zpltlf }
-%<newtx|newpx>\tl_set:Nn \sfdefault { qhv }
-%<newtx|newpx>\tl_set:Nn \ttdefault { ntxtt }
+\tl_set:Nn \sfdefault { qhv }
+\tl_set:Nn \ttdefault { ntxtt }
 %<newtx>\RequirePackage { newtxmath }
 %<newpx>\RequirePackage { newpxmath }
-%<*lm>
-\RequirePackage { amssymb, upgreek }
-\RequirePackage { lmodern }
-\bool_if:NF \g_@@_slint_bool
-  { \RequirePackage { cmupint } }
-%</lm>
 \RequirePackage { bm }
 \tl_set_eq:NN \encodingdefault \g_@@_save_encodingdefault_tl
 \tl_set_eq:NN \rmdefault \g_@@_save_rmdefault_tl
 \tl_set_eq:NN \sfdefault \g_@@_save_sfdefault_tl
 \tl_set_eq:NN \ttdefault \g_@@_save_ttdefault_tl
+\@@_set_unimath_symbol:
+%</mathfont>
+%<*textfont>
+\@@_fontset_case:nn
+  {
+%<newtx>    \RequirePackage { newtxtext }
+%<newpx>    \RequirePackage { newpxtext }
+  }
+  {
+    \setmainfont
+%<newtx>     { TeXGyreTermesX }
+%<newpx>     { TeXGyrePagellaX }
+      [
+        Extension       = .otf,
+        UprightFont     = *-Regular,
+        BoldFont        = *-Bold,
+        ItalicFont      = *-Italic,
+        BoldItalicFont  = *-BoldItalic,
+        SlantedFont     = *-Slanted,
+        BoldSlantedFont = *-BoldSlanted
+      ]
+%</textfont>
+%</newtx|newpx>
+%<*textfont&(newtx|newpx)|stixtwo|xits>
+%<mathfont>    \setmathsf
+%<textfont>    \setsansfont
+      { texgyreheros }
+      [
+        Extension      = .otf,
+        UprightFont    = *-regular,
+        BoldFont       = *-bold,
+        ItalicFont     = *-italic,
+        BoldItalicFont = *-bolditalic
+      ]
+%<mathfont>    \setmathtt
+%<textfont>    \setmonofont
+      { texgyrecursor }
+      [
+        Extension      = .otf,
+        UprightFont    = *-regular,
+        BoldFont       = *-bold,
+        ItalicFont     = *-italic,
+        BoldItalicFont = *-bolditalic,
+        Scale          = MatchLowercase,
+        Ligatures      = CommonOff
+      ]
+  }
+%</textfont&(newtx|newpx)|stixtwo|xits>
 %<*lm>
-\clist_const:Nn \c_@@_uppercase_greek_clist
-  { Gamma, Delta, Theta, Lambda, Xi, Pi, Sigma, Upsilon, Phi, Psi, Omega }
-\clist_map_inline:Nn \c_@@_uppercase_greek_clist
-  {
-    \cs_set_eq:cc { up #1 } {     #1 }
-    \cs_set_eq:cc { it #1 } { var #1 }
-  }
-\int_compare:nNnT { \g_@@_math_style_int } > { 1 }
-  {
-    \clist_map_inline:Nn \c_@@_uppercase_greek_clist
-      { \cs_set_eq:cc { #1 } { it #1 } }
-  }
+%<*textfont>
+\tl_set:Nn \rmdefault { lmr  }
+\tl_set:Nn \sfdefault { lmss }
+\tl_set:Nn \ttdefault { lmtt }
+%</textfont>
+%<*mathfont>
+\RequirePackage { amssymb, upgreek }
+\SetSymbolFont { operators    } { normal } { OT1 } { lmr  } { m  } { n  }
+\SetSymbolFont { letters      } { normal } { OML } { lmm  } { m  } { it }
+\SetSymbolFont { symbols      } { normal } { OMS } { lmsy } { m  } { n  }
+\SetSymbolFont { largesymbols } { normal } { OMX } { lmex } { m  } { n  }
+\SetSymbolFont { operators    } { bold   } { OT1 } { lmr  } { bx } { n  }
+\SetSymbolFont { letters      } { bold   } { OML } { lmm  } { b  } { it }
+\SetSymbolFont { symbols      } { bold   } { OMS } { lmsy } { b  } { n  }
+\SetSymbolFont { largesymbols } { bold   } { OMX } { lmex } { m  } { n  }
+\SetMathAlphabet { \mathbf } { normal } { OT1 } { lmr  } { bx } { n  }
+\SetMathAlphabet { \mathsf } { normal } { OT1 } { lmss } { m  } { n  }
+\SetMathAlphabet { \mathit } { normal } { OT1 } { lmr  } { m  } { it }
+\SetMathAlphabet { \mathtt } { normal } { OT1 } { lmtt } { m  } { n  }
+\SetMathAlphabet { \mathbf } { bold   } { OT1 } { lmr  } { bx } { n  }
+\SetMathAlphabet { \mathsf } { bold   } { OT1 } { lmss } { bx } { n  }
+\SetMathAlphabet { \mathit } { bold   } { OT1 } { lmr  } { bx } { it }
+\SetMathAlphabet { \mathtt } { bold   } { OT1 } { lmtt } { m  } { n  }
+\bool_if:NF \g_@@_slint_bool
+  { \RequirePackage { cmupint } }
+\RequirePackage { bm }
+\@@_set_slanted_greek:
+\@@_set_unimath_symbol:
+%</mathfont>
 %</lm>
-\cs_set_eq:NN \increment \upDelta
-\cs_set_eq:NN \QED \blacksquare
-%</mathfont&(newtx|newpx|lm)>
+%<*times>
+%<*mathfont>
+\RequirePackage { amssymb, upgreek }
+\tl_set_eq:NN \g_@@_save_rmdefault_tl \rmdefault
+  \RequirePackage { mathptmx }
+\tl_set_eq:NN \rmdefault \g_@@_save_rmdefault_tl
+\DeclareMathAlphabet { \mathsf } { OT1 } { phv } { m } { n }
+\DeclareMathAlphabet { \mathtt } { OT1 } { pcr } { m } { n }
+\SetMathAlphabet { \mathsf } { bold } { OT1 } { phv } { b } { n }
+\SetMathAlphabet { \mathtt } { bold } { OT1 } { pcr } { b } { n }
+\RequirePackage { bm }
+\@@_set_unimath_symbol:
+%</mathfont>
+%<*textfont>
+\@@_fontset_case:nn
+  {
+    \tl_set:Nn \rmdefault { ptm }
+    \tl_set:Nn \sfdefault { phv }
+    \tl_set:Nn \ttdefault { pcr }
+  }
+  {
+    \setmainfont { Times~New~Roman } [ Ligatures = Rare ]
+    \setsansfont { Arial }
+    \setmonofont { Courier~New } [ Scale = MatchLowercase ]
+  }
+%</textfont>
+%</times>
+%<*newcm>
+\@@_fontset_case:nn
+  {
+%<mathfont>    \@@_fontset_error:nn { math } { newcm }
+%<textfont>    \@@_fontset_error:nn { text } { newcm }
+  }
+  {
+%<*mathfont>
+    \RequirePackage { unicode-math }
+    \bool_if:NTF \g_@@_slint_bool
+      { \setmathfont { NewCMMath-Book.otf } }
+      {
+        \setmathfont { NewCMMath-Book.otf }
+          [ StylisticSet = 2 ]
+      }
+    \setmathfont { NewCMMath-Book.otf }
+      [
+        range        = { scr, bfscr },
+        StylisticSet = 1
+      ]
+%</mathfont>
+%<mathfont>    \setmathrm
+%<textfont>    \setmainfont
+      { NewCM10 }
+      [
+        Extension    = .otf,
+        SizeFeatures =
+          {
+            {
+              Size        = -9,
+              Font        = NewCM08-Book,
+              ItalicFont  = NewCM08-BookItalic,
+              SlantedFont = NewCM08-Book,
+            },
+            { Size        = 9- }
+          },
+        UprightFont         = *-Book,
+        BoldFont            = *-Bold,
+        ItalicFont          = *-BookItalic,
+        BoldItalicFont      = *-BoldItalic,
+        SlantedFont         = *-Book,
+        BoldSlantedFont     = *-Bold,
+        SlantedFeatures     = { FakeSlant = 0.25 },
+        BoldSlantedFeatures = { FakeSlant = 0.25 }
+      ]
+%<mathfont>    \setmathsf
+%<textfont>    \setsansfont
+      { NewCMSans10 }
+      [
+        Extension    = .otf,
+        SizeFeatures =
+          {
+            {
+              Size       = -9,
+              Font       = NewCMSans08-Book,
+              ItalicFont = NewCMSans08-BookOblique,
+            },
+            { Size       = 9- }
+          },
+        UprightFont    = *-Book,
+        BoldFont       = *-Bold,
+        ItalicFont     = *-BookOblique,
+        BoldItalicFont = *-BoldOblique
+      ]
+%<mathfont>    \setmathtt
+%<textfont>    \setmonofont
+      { NewCMMono10 }
+      [
+        Extension           = .otf,
+        UprightFont         = *-Book,
+        BoldFont            = *-Bold,
+        ItalicFont          = *-BookItalic,
+        BoldItalicFont      = *-BoldOblique,
+        SlantedFont         = *-Book,
+        SlantedFeatures     = { FakeSlant = 0.25 },
+        BoldSlantedFont     = *-Bold,
+        BoldSlantedFeatures = { FakeSlant = 0.25 }
+      ]
+  }
+%</newcm>
+%<*cambria>
+\@@_fontset_case:nn
+  {
+%<mathfont>    \@@_fontset_error:nn { math } { cambria }
+%<textfont>    \@@_fontset_error:nn { text } { cambria }
+  }
+  {
+%<*mathfont>
+    \RequirePackage { unicode-math }
+    \setmathfont { Cambria~Math }
+    \setmathrm { Cambria }
+    \setmathsf { Calibri }
+    \setmathtt { Consolas } [ Scale = MatchLowercase ]
+%</mathfont>
+%<*textfont>
+    \setmainfont { Cambria }
+    \setsansfont { Calibri }
+    \setmonofont { Consolas } [ Scale = MatchLowercase ]
+%</textfont>
+  }
+%</cambria>
+%</mathfont|textfont>
 %    \end{macrocode}
 %
 % \pkg{unicode-math} 宏包
@@ -1280,136 +1402,201 @@
 %    \begin{macrocode}
 %<*cjkfont>
 %<*windows>
-\setCJKmainfont { SimSun   }
-  [ AutoFakeBold = 3, ItalicFont = KaiTi ]
-\setCJKsansfont { SimHei   } [ BoldFont = * ]
-\setCJKmonofont { FangSong }
-\setCJKfamilyfont { zhsong } { SimSun   }
-  [ AutoFakeBold = 3, ItalicFont = KaiTi ]
-\setCJKfamilyfont { zhhei  } { SimHei   } [ BoldFont = * ]
-\setCJKfamilyfont { zhkai  } { KaiTi    }
-\setCJKfamilyfont { zhfs   } { FangSong }
+\@@_fontset_case:nn
+  {
+    \ctex_load_zhmap:nnnn { zhsong } { zhhei } { zhfs } { windows }
+    \ctex_punct_set:n { windows }
+    \ctex_punct_map_family:nn   { \CJKrmdefault } { zhsong }
+    \ctex_punct_map_bfseries:nn { \CJKrmdefault } { zhhei  }
+    \ctex_punct_map_itshape:nn  { \CJKrmdefault } { zhkai  }
+  }
+  {
+    \setCJKmainfont { SimSun   }
+      [ AutoFakeBold = 3, ItalicFont = KaiTi ]
+    \setCJKsansfont { SimHei   } [ BoldFont = * ]
+    \setCJKmonofont { FangSong }
+    \setCJKfamilyfont { zhsong } { SimSun   }
+      [ AutoFakeBold = 3, ItalicFont = KaiTi ]
+    \setCJKfamilyfont { zhhei  } { SimHei   } [ BoldFont = * ]
+    \setCJKfamilyfont { zhkai  } { KaiTi    }
+    \setCJKfamilyfont { zhfs   } { FangSong }
+  }
 %</windows>
 %<*mac>
-\setCJKmainfont { Songti~SC  }
-  [
-    UprightFont    = *~Light,
-    BoldFont       = *~Bold,
-    ItalicFont     = Kaiti~SC~Regular,
-    BoldItalicFont = Kaiti~SC~Bold
-  ]
-\setCJKsansfont { Heiti~SC   }
-  [
-    UprightFont    = *~Medium,
-    BoldFont       = *~Medium
-  ]
-\setCJKmonofont { STFangsong }
-\setCJKfamilyfont { zhsong } { Songti~SC  }
-  [
-    UprightFont    = *~Light,
-    BoldFont       = *~Bold
-  ]
-\setCJKfamilyfont { zhhei  } { Heiti~SC   }
-  [
-    UprightFont    = *~Medium,
-    BoldFont       = *~Medium
-  ]
-\setCJKfamilyfont { zhfs   } { STFangsong }
-\setCJKfamilyfont { zhkai  } { Kaiti~SC   }
-  [
-    UprightFont    = *~Regular,
-    BoldFont       = *~Bold
-  ]
+\@@_fontset_case:nnn
+  { \@@_fontset_error:nn { cjk } { mac } }
+  {
+    \ctex_load_zhmap:nnnn { zhsong } { zhhei } { zhfs } { mac }
+    \ctex_punct_set:n { mac }
+    \ctex_punct_map_family:nn   { \CJKrmdefault } { zhsong }
+    \ctex_punct_map_family:nn   { \CJKsfdefault } { zhpf   }
+    \ctex_punct_map_bfseries:nn { \CJKrmdefault } { zhpf   }
+    \ctex_punct_map_itshape:nn  { \CJKrmdefault } { zhkai  }
+  }
+  {
+    \setCJKmainfont { Songti~SC  }
+      [
+        UprightFont    = *~Light,
+        BoldFont       = *~Bold,
+        ItalicFont     = Kaiti~SC~Regular,
+        BoldItalicFont = Kaiti~SC~Bold
+      ]
+    \setCJKsansfont { Heiti~SC   }
+      [
+        UprightFont    = *~Medium,
+        BoldFont       = *~Medium
+      ]
+    \setCJKmonofont { STFangsong }
+    \setCJKfamilyfont { zhsong } { Songti~SC  }
+      [
+        UprightFont    = *~Light,
+        BoldFont       = *~Bold
+      ]
+    \setCJKfamilyfont { zhhei  } { Heiti~SC   }
+      [
+        UprightFont    = *~Medium,
+        BoldFont       = *~Medium
+      ]
+    \setCJKfamilyfont { zhfs   } { STFangsong }
+    \setCJKfamilyfont { zhkai  } { Kaiti~SC   }
+      [
+        UprightFont    = *~Regular,
+        BoldFont       = *~Bold
+      ]
+  }
 %</mac>
 %<*ubuntu>
-\setCJKmainfont { Noto~Serif~CJK~SC     }
-  [
-    UprightFont = *~Light,
-    BoldFont    = *~Bold,
-    ItalicFont  = AR~PL~UKai~CN
-  ]
-\setCJKsansfont { Noto~Sans~CJK~SC      }
-  [
-    UprightFont = *~Medium,
-    BoldFont    = *~Medium
-  ]
-\setCJKmonofont { Noto~Sans~Mono~CJK~SC }
-\setCJKfamilyfont { zhsong } { Noto~Serif~CJK~SC }
-  [
-    UprightFont = *~Light,
-    BoldFont    = *~Bold,
-    ItalicFont  = AR~PL~UKai~CN
-  ]
-\setCJKfamilyfont { zhhei  } { Noto~Sans~CJK~SC  }
-  [
-    UprightFont = *~Medium,
-    BoldFont    = *~Medium
-  ]
-\setCJKfamilyfont { zhkai  } { AR~PL~UKai~CN     }
+\@@_fontset_case:nnn
+  { \@@_fontset_error:nn { cjk } { ubuntu } }
+  {
+    \ctex_load_zhmap:nnnn { zhsong } { zhhei } { zhsong } { ubuntu }
+    \ctex_punct_set:n { ubuntu }
+    \ctex_punct_map_family:nn   { \CJKrmdefault } { zhsong }
+    \ctex_punct_map_bfseries:nn { \CJKrmdefault } { zhhei  }
+    \ctex_punct_map_itshape:nn  { \CJKrmdefault } { zhkai  }
+  }
+  {
+    \setCJKmainfont { Noto~Serif~CJK~SC     }
+      [
+        UprightFont = *~Light,
+        BoldFont    = *~Bold,
+        ItalicFont  = AR~PL~KaitiM~GB
+      ]
+    \setCJKsansfont { Noto~Sans~CJK~SC      }
+      [
+        UprightFont = *~Medium,
+        BoldFont    = *~Medium
+      ]
+    \setCJKmonofont { Noto~Sans~Mono~CJK~SC }
+    \setCJKfamilyfont { zhsong } { Noto~Serif~CJK~SC }
+      [
+        UprightFont = *~Light,
+        BoldFont    = *~Bold,
+        ItalicFont  = AR~PL~KaitiM~GB
+      ]
+    \setCJKfamilyfont { zhhei  } { Noto~Sans~CJK~SC  }
+      [
+        UprightFont = *~Medium,
+        BoldFont    = *~Medium
+      ]
+    \setCJKfamilyfont { zhkai  } { AR~PL~KaitiM~GB   }
+  }
 %</ubuntu>
 %<*adobe>
-\setCJKmainfont { AdobeSongStd-Light       }
-  [ AutoFakeBold = 3, ItalicFont = AdobeKaitiStd-Regular ]
-\setCJKsansfont { AdobeHeitiStd-Regular    } [ BoldFont = * ]
-\setCJKmonofont { AdobeFangsongStd-Regular }
-\setCJKfamilyfont { zhsong } { AdobeSongStd-Light       }
-  [ AutoFakeBold = 3, ItalicFont = AdobeKaitiStd-Regular ]
-\setCJKfamilyfont { zhhei  } { AdobeHeitiStd-Regular    } [ BoldFont = * ]
-\setCJKfamilyfont { zhfs   } { AdobeFangsongStd-Regular }
-\setCJKfamilyfont { zhkai  } { AdobeKaitiStd-Regular    }
+\@@_fontset_case:nnn
+  { \@@_fontset_error:nn { cjk } { adobe } }
+  {
+    \ctex_load_zhmap:nnnn { zhsong } { zhhei } { zhfs } { adobe }
+    \ctex_punct_set:n { adobe }
+    \ctex_punct_map_family:nn   { \CJKrmdefault } { zhsong }
+    \ctex_punct_map_bfseries:nn { \CJKrmdefault } { zhhei  }
+    \ctex_punct_map_itshape:nn  { \CJKrmdefault } { zhkai  }
+  }
+  {
+    \setCJKmainfont { AdobeSongStd-Light       }
+      [ AutoFakeBold = 3, ItalicFont = AdobeKaitiStd-Regular ]
+    \setCJKsansfont { AdobeHeitiStd-Regular    } [ BoldFont = * ]
+    \setCJKmonofont { AdobeFangsongStd-Regular }
+    \setCJKfamilyfont { zhsong } { AdobeSongStd-Light       }
+      [ AutoFakeBold = 3, ItalicFont = AdobeKaitiStd-Regular ]
+    \setCJKfamilyfont { zhhei  } { AdobeHeitiStd-Regular    } [ BoldFont = * ]
+    \setCJKfamilyfont { zhfs   } { AdobeFangsongStd-Regular }
+    \setCJKfamilyfont { zhkai  } { AdobeKaitiStd-Regular    }
+  }
 %</adobe>
 %<*fandol>
-\setCJKmainfont { FandolSong }
-  [
-    Extension   = .otf,
-    UprightFont = *-Regular,
-    BoldFont    = *-Bold,
-    ItalicFont  = FandolKai-Regular
-  ]
-\setCJKsansfont { FandolHei  }
-  [
-    Extension   = .otf,
-    UprightFont = *-Regular,
-    BoldFont    = *-Regular,
-  ]
-\setCJKmonofont { FandolFang }
-  [
-    Extension   = .otf,
-    UprightFont = *-Regular,
-  ]
-\setCJKfamilyfont { zhsong } { FandolSong }
-  [
-    Extension   = .otf,
-    UprightFont = *-Regular,
-    BoldFont    = *-Bold
-  ]
-\setCJKfamilyfont { zhhei  } { FandolHei  }
-  [
-    Extension   = .otf,
-    UprightFont = *-Regular,
-    BoldFont    = *-Regular
-  ]
-\setCJKfamilyfont { zhfs   } { FandolFang }
-  [
-    Extension   = .otf,
-    UprightFont = *-Regular
-  ]
-\setCJKfamilyfont { zhkai  } { FandolKai  }
-  [
-    Extension   = .otf,
-    UprightFont = *-Regular
-  ]
+\@@_fontset_case:nnn
+  { \@@_fontset_error:nn { cjk } { fandol } }
+  {
+    \ctex_load_zhmap:nnnn { zhsong } { zhhei } { zhfs } { fandol }
+    \ctex_punct_set:n { fandol }
+    \ctex_punct_map_family:nn   { \CJKrmdefault } { zhsong }
+    \ctex_punct_map_bfseries:nn { \CJKrmdefault } { zhhei  }
+    \ctex_punct_map_itshape:nn  { \CJKrmdefault } { zhkai  }
+  }
+  {
+    \setCJKmainfont { FandolSong }
+      [
+        Extension   = .otf,
+        UprightFont = *-Regular,
+        BoldFont    = *-Bold,
+        ItalicFont  = FandolKai-Regular
+      ]
+    \setCJKsansfont { FandolHei  }
+      [
+        Extension   = .otf,
+        UprightFont = *-Regular,
+        BoldFont    = *-Regular,
+      ]
+    \setCJKmonofont { FandolFang }
+      [
+        Extension   = .otf,
+        UprightFont = *-Regular,
+      ]
+    \setCJKfamilyfont { zhsong } { FandolSong }
+      [
+        Extension   = .otf,
+        UprightFont = *-Regular,
+        BoldFont    = *-Bold
+      ]
+    \setCJKfamilyfont { zhhei  } { FandolHei  }
+      [
+        Extension   = .otf,
+        UprightFont = *-Regular,
+        BoldFont    = *-Regular
+      ]
+    \setCJKfamilyfont { zhfs   } { FandolFang }
+      [
+        Extension   = .otf,
+        UprightFont = *-Regular
+      ]
+    \setCJKfamilyfont { zhkai  } { FandolKai  }
+      [
+        Extension   = .otf,
+        UprightFont = *-Regular
+      ]
+  }
 %</fandol>
 %<*founder>
-\setCJKmainfont { FZShuSong-Z01  }
-  [ AutoFakeBold = 3, ItalicFont = FZKai-Z03 ]
-\setCJKsansfont { FZHei-B01      } [ BoldFont = * ]
-\setCJKmonofont { FZFangSong-Z02 }
-\setCJKfamilyfont { zhsong } { FZShuSong-Z01  }
-  [ AutoFakeBold = 3, ItalicFont = FZKai-Z03 ]
-\setCJKfamilyfont { zhhei  } { FZHei-B01      } [ BoldFont = * ]
-\setCJKfamilyfont { zhkai  } { FZKai-Z03      }
-\setCJKfamilyfont { zhfs   } { FZFangSong-Z02 }
+\@@_fontset_case:nn
+  {
+    \ctex_load_zhmap:nnnn { zhsong } { zhhei } { zhfs } { founder }
+    \ctex_punct_set:n { founder }
+    \ctex_punct_map_family:nn   { \CJKrmdefault } { zhsong }
+    \ctex_punct_map_bfseries:nn { \CJKrmdefault } { zhhei  }
+    \ctex_punct_map_itshape:nn  { \CJKrmdefault } { zhkai  }
+  }
+  {
+    \setCJKmainfont { FZShuSong-Z01  }
+      [ AutoFakeBold = 3, ItalicFont = FZKai-Z03 ]
+    \setCJKsansfont { FZHei-B01      } [ BoldFont = * ]
+    \setCJKmonofont { FZFangSong-Z02 }
+    \setCJKfamilyfont { zhsong } { FZShuSong-Z01  }
+      [ AutoFakeBold = 3, ItalicFont = FZKai-Z03 ]
+    \setCJKfamilyfont { zhhei  } { FZHei-B01      } [ BoldFont = * ]
+    \setCJKfamilyfont { zhkai  } { FZKai-Z03      }
+    \setCJKfamilyfont { zhfs   } { FZFangSong-Z02 }
+  }
 %</founder>
 \NewDocumentCommand \songti   { } { \CJKfamily { zhsong  } }
 \NewDocumentCommand \heiti    { } { \CJKfamily { zhhei   } }
