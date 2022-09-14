@@ -444,6 +444,55 @@
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\@@_symbol:n}
+% 等价于 \LaTeXe{} 中的 \tn{symbol}。
+%    \begin{macrocode}
+\cs_new:Npn \@@_symbol:n #1 { \tex_char:D #1 \scan_stop: }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}[int]{\@@_engine_case:nn}
+% 2 个参数依次为 \pdfTeX 和 \XeTeX/\LuaTeX。
+%    \begin{macrocode}
+\cs_new:Npx \@@_engine_case:nn #1#2
+  {
+    \bool_lazy_or:nnTF
+      { \sys_if_engine_xetex_p:  }
+      { \sys_if_engine_luatex_p: }
+      {#2}
+      { \sys_if_engine_pdftex:T {#1} }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}[int]{\@@_engine_case:nnn}
+% 3 个参数依次为 \pdfTeX、 \XeTeX 和 \LuaTeX。
+%    \begin{macrocode}
+\cs_new:Npx \@@_engine_case:nnn #1#2#3
+  {
+    \sys_if_engine_xetex:TF
+      {#2}
+      {
+        \sys_if_engine_luatex:TF
+          {#3}
+          { \sys_if_engine_pdftex:T {#1} }
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}[int]{\@@_unicode_engine_case:nn}
+% 2 个参数依次为 \XeTeX 和 \LuaTeX。
+%    \begin{macrocode}
+\cs_new:Npx \@@_unicode_engine_case:nn #1#2
+  {
+    \sys_if_engine_xetex:TF
+      {#1}
+      { \sys_if_engine_luatex:T {#2} }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}{\@@_preto_cmd:Nn,\@@_appto_cmd:Nn}
 % 补丁工具，来自 \pkg{ctexpatch} 宏包，在宏的原本定义前后增加钩子。
 %    \begin{macrocode}
@@ -699,7 +748,6 @@
     fancyhdr,
     pageslts,
     tocloft,
-    footmisc,
     graphicx,
     caption,
     bicaption,
@@ -829,6 +877,8 @@
   {
     float-font          .tl_set:N = \SJTU@style@float@font ,
     float-font         .initial:n = \zihao { 5 } ,
+    fnmark-font         .tl_set:N = \l_@@_style_fnmark_font_tl ,
+    fnmark-font        .initial:n = ,
     float-numsep        .tl_set:N = \l_@@_style_float_numsep_tl ,
     float-numsep       .initial:n = { -- } ,
     equation-numsep     .tl_set:N = \l_@@_style_equation_numsep_tl ,
@@ -957,8 +1007,7 @@
 % \begin{macro}[int]{\@@_fontset_case:nn}
 % 2 个参数依次为 \pdfTeX 和 \XeTeX/\LuaTeX。
 %    \begin{macrocode}
-\cs_new:Npx \@@_fontset_case:nn #1#2
-  { \sys_if_engine_pdftex:TF {#1} {#2} }
+\cs_new_eq:NN \@@_fontset_case:nn \@@_engine_case:nn
 %    \end{macrocode}
 % \end{macro}
 %
@@ -968,7 +1017,7 @@
 %    \begin{macrocode}
 \cs_new:Npx \@@_fontset_case:nnn #1#2#3
   {
-    \sys_if_engine_pdftex:TF
+    \@@_engine_case:nn
       { \sys_if_output_pdf:TF {#1} {#2} }
       {#3}
   }
@@ -1605,8 +1654,19 @@
 %</cjkfont>
 %    \end{macrocode}
 %
+% 带圈数字使用中文字体。
 %    \begin{macrocode}
 %<*class>
+\@@_unicode_engine_case:nn
+  {
+    \xeCJK_declare_char_class:nn { CJK }
+      { "24EA, "2460->"2473, "3251->"32BF, "25A1 }
+  }
+  {
+    \ltjdefcharrange { 99 }
+      { "24EA, "2460-"2473, "3251-"32BF, "25A1 }
+    \ltjsetparameter { jacharrange = { +99 } }
+  }
 %    \end{macrocode}
 %
 % \subsection{页面布局}
@@ -1906,6 +1966,71 @@
     \setcounter     { figure  } { 0 }
     \counterwithout { table   } { chapter }
     \setcounter     { table   } { 0 }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{脚注}
+%
+% \begin{macro}[int]{\@makefntext}
+% 重定义内部脚注文字命令，使脚注编号不使用上标。
+% 见 \url{https://www.zhihu.com/question/53030087}。
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_make_fnmark:
+  { \hbox:n { \@thefnmark } }
+\ctex_at_end_preamble:n {
+  \cs_set_eq:NN \@@_save_make_fntext:n \@makefntext
+  \cs_set:Npn \@makefntext #1
+    {
+      \group_begin:
+        \cs_set_eq:NN \@makefnmark \@@_make_fnmark:
+        \@@_save_make_fntext:n {#1}
+      \group_end:
+    }
+}
+\@@_engine_case:nn
+  {
+    \cs_new:Npn \@@_footnote_number:N #1
+      {
+        \int_compare:nNnTF {#1} < { 21 }
+          { \Unicode { "24 } { \int_eval:n { "60 - 1 + #1 } } }
+          {
+              { \Unicode { "32 } { \int_eval:n { "51 - 21 + #1 } } }
+              {
+                \int_compare:nNnTF {#1} < { 51 }
+                  { \Unicode { "32 } { \int_eval:n { "B1 - 36 + #1 } } }
+                  { \msg_warning:nn { sjtuthesis } { too-many-footnotes } }
+              }
+          }
+      }
+  }
+  {
+    \cs_new:Npn \@@_footnote_number:N #1
+      {
+        \int_compare:nNnTF {#1} < { 21 }
+          { \@@_symbol:n { \int_eval:n { "2460 - 1 + #1 } } }
+          {
+            \int_compare:nNnTF {#1} < { 36 }
+              { \@@_symbol:n { \int_eval:n { "3251 - 21 + #1 } } }
+              {
+                \int_compare:nNnTF {#1} < { 51 }
+                  { \@@_symbol:n { \int_eval:n { "32B1 - 36 + #1 } } }
+                  { \msg_warning:nn { sjtuthesis } { too-many-footnotes } }
+              }
+          }
+      }
+  }
+\msg_new:nnn { sjtuthesis } { too-many-footnotes }
+  { Too~ many~ footnotes. }
+\cs_set:Npn \thefootnote
+  {
+    \hbox:n { }
+    { \l_@@_style_fnmark_font_tl \@@_footnote_number:N \c@footnote   }
+  }
+\cs_set:Npn \thempfootnote
+  {
+    \hbox:n { }
+    { \l_@@_style_fnmark_font_tl \@@_footnote_number:N \c@mpfootnote }
   }
 %    \end{macrocode}
 % \end{macro}
