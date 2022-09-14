@@ -444,12 +444,12 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_patch_cmd:Nnn,\@@_appto_cmd:Nn}
-% 补丁工具，来自 \pkg{ctexpatch} 宏包。
+% \begin{macro}{\@@_preto_cmd:Nn,\@@_appto_cmd:Nn}
+% 补丁工具，来自 \pkg{ctexpatch} 宏包，在宏的原本定义前后增加钩子。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_patch_cmd:Nnn #1#2#3
+\cs_new_protected:Npn \@@_preto_cmd:Nn #1#2
   {
-    \ctex_patch_cmd_once:NnnnTF #1 { } {#2} {#3}
+    \ctex_preto_cmd:NnnTF #1 { } {#2}
       { } { \ctex_patch_failure:N #1 }
   }
 \cs_new_protected:Npn \@@_appto_cmd:Nn #1#2
@@ -827,7 +827,7 @@
 %    \begin{macrocode}
 \keys_define:nn { sjtu / style }
   {
-    float-font          .tl_set:N = \l_@@_style_float_font_tl ,
+    float-font          .tl_set:N = \SJTU@style@float@font ,
     float-font         .initial:n = \zihao { 5 } ,
     float-numsep        .tl_set:N = \l_@@_style_float_numsep_tl ,
     float-numsep       .initial:n = { -- } ,
@@ -1807,9 +1807,9 @@
 % \begin{macro}[int]{\verse,\quotation}
 % 修改诗歌和引用环境的缩进。
 %    \begin{macrocode}
-\@@_patch_cmd:Nnn \verse { -1.5em } { -2 \ccwd }
-\@@_patch_cmd:Nnn \verse {  1.5em } {  2 \ccwd }
-\@@_patch_cmd:Nnn \quotation { 1.5em } { 2 \ccwd }
+\ctex_patch_cmd:Nnn \verse { -1.5em } { -2 \ccwd }
+\ctex_patch_cmd:Nnn \verse {  1.5em } {  2 \ccwd }
+\ctex_patch_cmd:Nnn \quotation { 1.5em } { 2 \ccwd }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -1852,8 +1852,8 @@
 %
 % 设置浮动体内的字体。
 %    \begin{macrocode}
-\@@_patch_cmd:Nnn \@floatboxreset
-  { \normalsize } { \l_@@_style_float_font_tl }
+\ctex_patch_cmd:Nnn \@floatboxreset
+  { \normalsize } { \SJTU@style@float@font }
 %    \end{macrocode}
 %
 % 题注格式。
@@ -2179,7 +2179,7 @@
 %
 %    \begin{macrocode}
 \ctex_at_end_package:nn { longtable }
-  { \AtBeginEnvironment { longtable } { \l_@@_style_float_font_tl } }
+  { \AtBeginEnvironment { longtable } { \SJTU@style@float@font } }
 %    \end{macrocode}
 %
 % \subsubsection{\pkg{amsthm} 宏包和 \pkg{ntheorem} 宏包}
@@ -2302,9 +2302,9 @@
     \SetAlgoCaptionSeparator { \enskip }
     \@@_newlistof:nnnnn { algorithm } { alg } { algocf }
       { \algorithmcfname } { \listalgorithmcfname }
-    \@@_patch_cmd:Nnn \algocf@latexcaption
+    \ctex_patch_cmd:Nnn \algocf@latexcaption
       { \addcontentsline }
-      { \caption@iflist { \addcontentsline } { \use_none:nnn } }
+      { \caption@iflist { \addcontentsline } { \@gobblethree } }
   }
 %    \end{macrocode}
 %
