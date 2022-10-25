@@ -1,20 +1,20 @@
 #!/usr/bin/env texlua
 
-module             = "sjtuthesis"
+module             = "sjtutex"
 
 sourcefiledir      = "source"
-sourcefiles        = {"sjtuthesis.dtx","vi"}
+sourcefiles        = {"sjtutex.dtx","vi"}
 installfiles       = {"*.cls","*.def","*.cfg","*.dtx","*.pdf","vi"}
 
 docfiledir         = "doc"
 
 typesetexe         = "xelatex"
-typesetfiles       = {"sample-*.tex","sjtuthesis.dtx"}
+typesetfiles       = {"sample-*.tex","sjtutex.dtx"}
 typesetsuppfiles   = {"common-*.tex"}
 
 bibtexexe          = "bibtex"
 
 unpackexe          = "xetex"
-unpackfiles        = {"sjtuthesis.dtx"}
+unpackfiles        = {"sjtutex.dtx"}
 
 packtdszip         = true

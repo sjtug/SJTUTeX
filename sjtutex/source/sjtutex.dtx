@@ -54,12 +54,10 @@
 \endpreamble
 
 \generate{
-  \usedir{tex/latex/sjtuthesis}
-    \file{\jobname.cls}              {\from{\jobname.dtx}{entry}}
-    \file{\jobname-postgraduate.cls} {\from{\jobname.dtx}{class,pg}}
-    \file{\jobname-undergraduate.cls}{\from{\jobname.dtx}{class,ug}}
-    \file{\jobname-lang-zh.cfg}      {\from{\jobname.dtx}{lang,zh}}
-    \file{\jobname-lang-en.cfg}      {\from{\jobname.dtx}{lang,en}}
+  \usedir{tex/latex/sjtutex}
+    \file{sjtuthesis.cls}            {\from{\jobname.dtx}{class,thesis}}
+    \file{sjtuthesis-lang-zh.cfg}    {\from{\jobname.dtx}{lang,zh}}
+    \file{sjtuthesis-lang-en.cfg}    {\from{\jobname.dtx}{lang,en}}
     \file{sjtu-text-font-newtx.def}  {\from{\jobname.dtx}{textfont,newtx}}
     \file{sjtu-text-font-newpx.def}  {\from{\jobname.dtx}{textfont,newpx}}
     \file{sjtu-text-font-lm.def}     {\from{\jobname.dtx}{textfont,lm}}
@@ -84,7 +82,7 @@
     \file{sjtu-cjk-font-founder.def} {\from{\jobname.dtx}{cjkfont,founder}}
 %</install>
 %<*internal>
-  \usedir{source/latex/sjtuthesis}
+  \usedir{source/latex/sjtutex}
     \file{\jobname.ins}              {\from{\jobname.dtx}{install}}
 %</internal>
 %<*install>
@@ -96,11 +94,12 @@
 \Msg{* To finish the installation you have to move the following *}
 \Msg{* files into a directory searched by TeX:                   *}
 \Msg{*                                                           *}
-\Msg{* The recommended directory is TDS:tex/latex/sjtuthesis     *}
+\Msg{* The recommended directory is TDS:tex/latex/sjtutex        *}
 \Msg{*                                                           *}
 \Msg{*     sjtuthesis.cls                                        *}
+\Msg{*     ...                                                   *}
 \Msg{*                                                           *}
-\Msg{* To produce the documentation, run the file sjtuthesis.dtx *}
+\Msg{* To produce the documentation, run the file sjtutex.dtx    *}
 \Msg{* through XeLaTeX.                                          *}
 \Msg{*                                                           *}
 \Msg{* Happy TeXing!                                             *}
@@ -114,16 +113,12 @@
 \fi
 %</internal>
 %
-%<entry|class>\NeedsTeXFormat{LaTeX2e}
-%<entry|class>\RequirePackage{expl3}
+%<class>\NeedsTeXFormat{LaTeX2e}
+%<class>\RequirePackage{expl3}
 %<*!(driver|install)>
 %<+!driver>\GetIdInfo$Id$
-%<entry>  {Thesis template for Shanghai Jiao Tong University}
-%<entry>\ProvidesExplClass{sjtuthesis}
-%<pg>  {Thesis template for Shanghai Jiao Tong University (for postgraduates)}
-%<pg>\ProvidesExplClass{sjtuthesis-postgraduate}
-%<ug>  {Thesis template for Shanghai Jiao Tong University (for undergraduates)}
-%<ug>\ProvidesExplClass{sjtuthesis-undergraduate}
+%<thesis>  {Thesis template for Shanghai Jiao Tong University}
+%<thesis>\ProvidesExplClass{sjtuthesis}
 %<lang&zh>  {Chinese language specific config (SJTUThesis)}
 %<lang&zh>\ProvidesExplFile{sjtuthesis-lang-zh.cfg}
 %<lang&en>  {English language specific config (SJTUThesis)}
@@ -203,35 +198,6 @@
 %
 % 本模板使用 \LaTeXiii{} 语法编写，依赖 \pkg{expl3} 环境，
 % 并需调用 \pkg{l3packages} 中的相关宏包。
-%
-% \subsection{模板入口}
-%
-% 根据选项载入相应的子类。
-%    \begin{macrocode}
-%<@@=sjtu_ent>
-%<*entry>
-\RequirePackage { l3keys2e }
-\int_new:N \g_@@_thesis_type_int
-%    \end{macrocode}
-%
-% 定义 |sjtu/diversion| 键值类。
-%    \begin{macrocode}
-\keys_define:nn { sjtu / diversion }
-  {
-    type .choice: ,
-    type .value_required:n = true ,
-    type .choices:nn =
-      { doctor, master, bachelor }
-      { \int_set_eq:NN \g_@@_thesis_type_int \l_keys_choice_int } ,
-    type .initial:n = { master } ,
-    unknown .code:n = { }
-  }
-\ProcessKeysOptions { sjtu / diversion }
-\int_compare:nNnTF { \g_@@_thesis_type_int } < { 3 }
-  { \LoadClassWithOptions { sjtuthesis-postgraduate  } }
-  { \LoadClassWithOptions { sjtuthesis-undergraduate } }
-%</entry>
-%    \end{macrocode}
 %
 % \subsection{准备}
 %
@@ -370,8 +336,7 @@
 % 是否开启双页模式。
 %    \begin{macrocode}
 \bool_new:N \g_@@_twoside_bool
-%<pg>\bool_set_true:N  \g_@@_twoside_bool
-%<ug>\bool_set_false:N \g_@@_twoside_bool
+\bool_set_false:N \g_@@_twoside_bool
 %    \end{macrocode}
 % \end{variable}
 %
@@ -379,8 +344,7 @@
 % 是否在奇数页开始新章。
 %    \begin{macrocode}
 \bool_new:N \g_@@_openright_bool
-%<pg>\bool_set_true:N  \g_@@_openright_bool
-%<ug>\bool_set_false:N \g_@@_openright_bool
+\bool_set_false:N \g_@@_openright_bool
 %    \end{macrocode}
 % \end{variable}
 %
@@ -523,8 +487,7 @@
     type .choices:nn =
       { doctor, master, bachelor }
       { \int_gset_eq:NN \g_@@_thesis_type_int \l_keys_choice_int } ,
-%<pg>    type .initial:n = { master   } ,
-%<ug>    type .initial:n = { bachelor } ,
+    type .initial:n = { master } ,
 %    \end{macrocode}
 %
 %
@@ -557,8 +520,7 @@
         \dim_gset:Nn \g_@@_font_size_dim         { 10.5 bp }
         \dim_gset:Nn \g_@@_default_line_skip_dim { 15.6 bp }
       } ,
-%<pg>    zihao .initial:n = { -4 } ,
-%<ug>    zihao .initial:n = {  5 } ,
+    zihao .initial:n = { -4 } ,
 %    \end{macrocode}
 %
 % 行间距。
@@ -894,16 +856,9 @@
       { \tl_set_eq:NN \l_@@_style_header_logo_color_tl \l_keys_choice_tl } ,
     header-logo-color  .initial:n = { red } ,
     page-number        .cs_set:Np = \@@_page:nn #1#2 ,
-    page-number        .initial:n = { --~ Page~ {#1}~ of~ {#2}~ -- }
+    page-number        .initial:n = { {#1} }
   }
 %</class>
-%    \end{macrocode}
-%
-%    \begin{macrocode}
-%<*lang&zh>
-\keys_set_known:nn { sjtu / style }
-  { page-number = { 第~ {#1}~ 页 \enspace 共~ {#2}~ 页 } }
-%</lang&zh>
 %    \end{macrocode}
 %
 % \subsubsection{名称设置}
@@ -1676,7 +1631,6 @@
 \geometry
   {
     paper      = a4paper,
-%<*pg>
     top        = 3.5 cm,
     bottom     = 4.0 cm,
     left       = 3.3 cm,
@@ -1684,12 +1638,6 @@
     headheight = 1.0 cm,
     headsep    = 0.5 cm,
     footskip   = 1.0 cm
-%</pg>
-%<*ug>
-    vmargin    = 2.54 cm,
-    hmargin    = 3.18 cm,
-    headheight = 15 bp
-%</ug>
   }
 %    \end{macrocode}
 %
@@ -1706,8 +1654,6 @@
 %    \begin{macrocode}
 \cs_new_eq:NN \@@_thepage:     \prg_do_nothing:
 \cs_new_eq:NN \@@_lastpageref: \prg_do_nothing:
-%<pg>\keys_set_known:nn { sjtu / style }
-%<pg>  { page-number = { ---~ { \bfseries {#1} }~ --- } }
 %    \end{macrocode}
 %
 % 设置页眉页脚。
@@ -1775,7 +1721,6 @@
     \pagenumbering { Roman }
     \cs_gset:Nn \@@_thepage:     { \thepage }
     \cs_gset:Nn \@@_lastpageref: { \lastpageref { pagesLTS.Roman  } }
-%<ug>    \pagestyle { nofoot }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -1790,7 +1735,6 @@
     \pagenumbering { arabic }
     \cs_gset:Nn \@@_thepage:     { \thepage }
     \cs_gset:Nn \@@_lastpageref: { \lastpageref { pagesLTS.arabic } }
-%<ug>    \pagestyle { plain }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -1848,8 +1792,6 @@
   }
 \ctex_set:nn { subsubsection }
   {
-%<ug>    name        = { ( , ) } ,
-%<ug>    number      = \arabic { subsubsection } ,
     beforeskip  =  6 bp ,
     afterskip   =  6 bp ,
     format      = \zihao { -4 } \normalfont ,
@@ -2089,11 +2031,7 @@
 %    \begin{macrocode}
 %<zh>\tl_set:Nn \cftdot { \textperiodcentered }
 \tl_set:Nn \cftdotsep { 1 }
-%<ug>\dim_zero:N \cftbeforechapskip
-\tl_set:Nn \cftchappagefont { \normalfont }
 \tl_set:Nn \cftchapleader { \normalfont \cftdotfill { \cftdotsep } }
-%<pg>\tl_set:Nn \cftchapfont { \bfseries \heiti }
-%<ug>\tl_set:Nn \cftchapfont { \normalfont }
 %    \end{macrocode}
 %
 % 图表清单标题前添加名称。

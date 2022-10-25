@@ -3,6 +3,6 @@
 ## Development Guide
 
 ```bash
-cd sjtuthesis
+cd sjtutex
 l3build doc
 ```

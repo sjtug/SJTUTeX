@@ -256,6 +256,6 @@ thesis-bot.yml
 build/
 
 # `l3build` generated files
-sjtuthesis/sjtuthesis-ctan.zip
-sjtuthesis/sjtuthesis.tds.zip
-sjtuthesis/doc/*.pdf
+sjtutex/sjtutex-ctan.zip
+sjtutex/sjtutex.tds.zip
+sjtutex/doc/*.pdf

@@ -2,23 +2,16 @@
 # User commands
 # ----------------
 
-BUILD_DIR=build
-LATEXINDENT_ARGS=-l latexindent.yaml -c $(BUILD_DIR)
-LATEXMK_ARGS=-halt-on-error -time -xelatex -outdir=build -shell-escape
-SOURCE_DIR=sjtuthesis
+SOURCE_DIR=sjtutex
 
 all: build
-
-# Format all tex and dtx files
-format:
-	.github/ci/format.sh $(LATEXINDENT_ARGS)
 
 # Clean all temporary files and generated files
 clean:
 	cd $(SOURCE_DIR) && l3build clean
 	git clean -dfX
 
-# Build sjtuthesis package
+# Build sjtutex package
 build-ctan:
 	cd $(SOURCE_DIR) && l3build ctan
 
