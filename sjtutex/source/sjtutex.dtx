@@ -408,13 +408,6 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_symbol:n}
-% 等价于 \LaTeXe{} 中的 \tn{symbol}。
-%    \begin{macrocode}
-\cs_new:Npn \@@_symbol:n #1 { \tex_char:D #1 \scan_stop: }
-%    \end{macrocode}
-% \end{macro}
-%
 % \begin{macro}[int]{\@@_engine_case:nn}
 % 2 个参数依次为 \pdfTeX 和 \XeTeX/\LuaTeX。
 %    \begin{macrocode}
@@ -1609,9 +1602,24 @@
 %</cjkfont>
 %    \end{macrocode}
 %
-% 带圈数字使用中文字体。
+% \begin{macro}{\@@_unicode_char:n}
 %    \begin{macrocode}
 %<*class>
+\@@_engine_case:nn
+  {
+    \cs_new:Npn \@@_unicode_char:n #1
+      {
+        \Unicode
+          { \int_div_truncate:nn {#1} { 256 } }
+          { \int_mod:nn          {#1} { 256 } }
+      }
+  }
+  { \cs_new:Npn \@@_unicode_char:n #1 { \tex_Uchar:D #1 } }
+%    \end{macrocode}
+% \end{macro}
+%
+% 带圈数字使用中文字体。
+%    \begin{macrocode}
 \@@_unicode_engine_case:nn
   {
     \xeCJK_declare_char_class:nn { CJK }
@@ -1930,35 +1938,17 @@
       \group_end:
     }
 }
-\@@_engine_case:nn
+\cs_new:Npn \@@_footnote_number:N #1
   {
-    \cs_new:Npn \@@_footnote_number:N #1
+    \int_compare:nNnTF {#1} < { 21 }
+      { \@@_unicode_char:n { \int_eval:n { "2460 - 1 + #1 } } }
       {
-        \int_compare:nNnTF {#1} < { 21 }
-          { \Unicode { "24 } { \int_eval:n { "60 - 1 + #1 } } }
+        \int_compare:nNnTF {#1} < { 36 }
+          { \@@_unicode_char:n { \int_eval:n { "3251 - 21 + #1 } } }
           {
-              { \Unicode { "32 } { \int_eval:n { "51 - 21 + #1 } } }
-              {
-                \int_compare:nNnTF {#1} < { 51 }
-                  { \Unicode { "32 } { \int_eval:n { "B1 - 36 + #1 } } }
-                  { \msg_warning:nn { sjtuthesis } { too-many-footnotes } }
-              }
-          }
-      }
-  }
-  {
-    \cs_new:Npn \@@_footnote_number:N #1
-      {
-        \int_compare:nNnTF {#1} < { 21 }
-          { \@@_symbol:n { \int_eval:n { "2460 - 1 + #1 } } }
-          {
-            \int_compare:nNnTF {#1} < { 36 }
-              { \@@_symbol:n { \int_eval:n { "3251 - 21 + #1 } } }
-              {
-                \int_compare:nNnTF {#1} < { 51 }
-                  { \@@_symbol:n { \int_eval:n { "32B1 - 36 + #1 } } }
-                  { \msg_warning:nn { sjtuthesis } { too-many-footnotes } }
-              }
+            \int_compare:nNnTF {#1} < { 51 }
+              { \@@_unicode_char:n { \int_eval:n { "32B1 - 36 + #1 } } }
+              { \msg_warning:nn { sjtuthesis } { too-many-footnotes } }
           }
       }
   }
