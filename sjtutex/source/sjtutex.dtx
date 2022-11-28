@@ -198,6 +198,7 @@
 %
 %<*driver>
 \documentclass{ctxdoc}
+\newcommand{\SJTUThesis}{\textsc{SJTUThesis}}
 \begin{document}
   \DocInput{\jobname.dtx}
   \IndexLayout
@@ -209,11 +210,99 @@
 %
 % \GetFileInfo{\jobname.dtx}
 %
+%
+% \changes{v1.1.1}{2022/06/29}{微小修正。}
+% \changes{v1.1.0}{2022/02/15}{开始准备 v2。}
+% \changes{v1.0.0}{2021/05/19}{更新学士学位模板，使用 GitHub Actions。}
+% \changes{v1.0.0}{2020/08/02}{重构部分代码。}
+% \changes{v1.0.0}{2020/06/20}{选项微小修正。}
+% \changes{v1.0.0}{2020/06/05}{采用新的设置接口。分离源代码于 \href{https://github.com/sjtug/SJTUTeX}{SJTUTeX} 仓库，SJTUThesis 仓库仅保留示例文档。}
+% \changes{v1.0.0}{2019/10/21}{上传至 Overleaf 模板库。}
+% \changes{v1.0.0}{2019/09/04}{更新示例文档。}
+% \changes{v1.0.0}{2019/06/23}{整理仓库。} 
+% \changes{v1.0.0}{2019/06/17}{分离使用文档和示例文档。}
+% \changes{v0.10.3}{2019/06/04}{使用新的硕博士封面页，添加课程论文封面页。} 
+% \changes{v0.10.2}{2018/11/05}{完善封面页。}
+% \changes{v0.10.1}{2018/07/05}{完善实用程序与 CI 配置。}
+% \changes{v0.10}{2018/01/09}{项目转移至 \href{https://github.com/sjtug/SJTUThesis}{SJTUG} 名下，并增加了英文模版，修改了默认字体设置。}
+% \changes{v0.9.5}{2017/01/27}{改用 GB/7714-2015 参考文献风格。}
+% \changes{v0.9.4}{2016/08/25}{增加算法和流程图。}
+% \changes{v0.9}{2015/06/19}{适配 \pkg{ctex} 2.x 宏包，需要使用 TeXLive 2015 编译。}
+% \changes{v0.8}{2015/03/15}{使用 \pkg{biber}/\pkg{biblatex} 组合替代 \BibTeX，带来更强大稳定的参考文献处理能力；添加 \pkg{enumitem} 宏包增强列表环境控制能力；完善宏包文字描述。}
+% \changes{v0.7}{2015/02/15}{增加盲审选项，调用外部工具插入扫描件。}
+% \changes{v0.6.5}{2015/02/14}{修正一些小问题，缩减 git 仓库体积，仓库由 sjtu-thesis-template-latex 更名为 \SJTUThesis。}
+% \changes{v0.6}{2014/12/17}{学士、硕士、博士学位论文模板合并在了一起。}
+% \changes{v0.5.3}{2013/05/26}{更正 \env{subsubsection} 格式错误，这个错误导致如“1.1 小结”这样的标题没有被正确加粗。}
+% \changes{v0.5.2}{2012/12/27}{更正拼写错误。在 \file{diss.tex} 加入 \file{ack.tex}。}
+% \changes{v0.5.1}{2012/12/21}{在 \LaTeX{} 命令和中文字符之间留了空格，在 \file{Makefile} 中增加 release 功能。}
+% \changes{v0.5}{2012/12/05}{修改说明文件的措辞，更正 \file{Makefile} 文件，使用 \pkg{metalog} 宏包替换 \pkg{xltxtra} 宏包，使用 \pkg{mathtools} 宏包替换 \pkg{amsmath} 宏包，移除了所有 CJKtilde 符号。}
+% \changes{v0.4}{2012/05/30}{包含交大学士、硕士、博士学位论文模板。模板在 \href{https://github.com/weijianwen/SJTUThesis}{GitHub} 上管理和更新。}
+% \changes{v0.3a}{2010/12/05}{移植到 \XeTeX/\LaTeX 上。}
+% \changes{v0.2a}{2009/12/25}{模板由 \cls{CASthesis} 改名为 \cls{sjtumaster}。在 \file{diss.tex} 中可以方便地改变正文字号、切换但双面打印。增加了不编号的一章“全文总结”。添加了可伸缩符号（等号、箭头）的例子，增加了长标题换行的例子。}
+% \changes{v0.1c}{2009/11/20}{增加了 Linux 下使用 \pkg{ctex} 宏包的注意事项、\file{bib} 条目的规范要求，修正了 \pkg{ctexbook} 与 \pkg{listings} 共同使用时的断页错误。}
+% \changes{v0.1b}{2009/11/13}{完善了模板使用说明，增加了定理环境、并列子图、三线表格的例子。}
+% \changes{v0.1a}{2009/11/12}{上海交通大学硕士学位论文 \LaTeX{} 模板发布。}
+%
+%
+% \title{\SJTUThesis{}: 上海交通大学学位论文模板}
+% \author{SJTUG}
+% \date{\filedate\qquad v\fileversion}
+% 
+% \vfill
+% \maketitle
+% \vfill
+% \begin{abstract}
+% 此宏包旨在建立一个简单易用的上海交通大学论文模板，包括学士、硕士、博士学位论文
+% 以及普通课程论文。
+% \end{abstract}
+% \vfill
+% \def\abstractname{免责声明}
+% \begin{abstract}
+% \noindent
+% \begin{enumerate}
+% \item 本模板的发布遵守 \LaTeX{} Project Public License，使用前请认真阅读
+%   协议内容。
+% \item 本模板根据 \href{https://www.gs.sjtu.edu.cn/info/1143/5801.htm}
+%   {《上海交通大学博士、硕士学位论文撰写指南》} ，并参考
+%   \href{https://www.gs.sjtu.edu.cn/info/1136/8374.htm}
+%   {《上海交通大学研究生学位论文写作模板》} 以及
+%   \href{https://bysj.jwc.sjtu.edu.cn/MoreNews.aspx?NewsType=zUcuaM8R5+lJLruDxDS/Fw....&TypeName=I/SElbms0OT5ZkmE84uuGg....}
+%   {《上海交通大学本科生毕业设计（论文）撰写规范》}
+%   编写而成。旨在供上海交通大学准毕业生撰
+%   写学位论文使用。
+% \item 此模板仅为撰写指南的参考实现，不保证审查老师不提意见。任何由于使用本模板
+%   而引起的论文格式审查问题均与本模板作者无关。
+% \item 任何个人或组织以本模板为基础进行修改、扩展而生成的新的专用模板，请严格遵
+%   守  \LaTeX{} Project Public License 协议。由于违犯协议而引起的任何纠纷
+%   争端均与本模板作者无关。
+% \end{enumerate}
+% \end{abstract}
+% \vfill
+%
+% \thispagestyle{empty}
+% \clearpage
+%
+% \tableofcontents
+% \clearpage
+%
 % \begin{documentation}
 %
 % \section{介绍}
 %
-% Hello, world! 你好，世界！
+% 这是为撰写上海交通大学学士、硕士、博士学位论文以及课程论文而准备的 \LaTeX{} 模
+% 板。
+%
+% 最早的一版学位模板由一位热心的物理系同学制作，中文字符处理采用了当时最为流行的
+% CJK-\LaTeX{} 方案。在此基础上，weijianwen 根据交大研究生院对学位论文的要求，完成
+% 了一份基本可用的交大 \LaTeX{} 学位论文模板。由于 CJK-\LaTeX{} 方案不易使用，
+% weijianwen 与 William Wang 开始着手把模板向 \XeTeX{} 引擎移植。之后 weijianwen
+% 又断断续续做了一些完善模板的工作，在原有硕士学位论文模板的基础上完成了交大学士
+% 和博士学位论文模板。
+%
+% 2012 年 5 月模板开始在 GitHub 上管理和更新，2018 年 1 月项目转移至 SJTUG 名
+% 下。2019 年 6 月 Alexara Wu 重构了整个宏包的代码，并使用 Doc\TeX{} 文档和
+% \textsc{DocStrip} 工具进行代码的管理，升级版本号为 1.0。2022 年 11 月，论文模板
+% 改版后，使用 \LaTeXiii{} 重构了代码，升级版本号为 2.0。
 %
 % \end{documentation}
 %
