@@ -198,7 +198,66 @@
 %
 %<*driver>
 \documentclass{ctxdoc}
-\newcommand{\SJTUThesis}{\textsc{SJTUThesis}}
+\hyphenation{SJTU-Thesis}
+\newcommand{\sjtuthesis}{\textsc{SJTUThesis}}
+\usepackage{graphicx}
+\usepackage{listings}
+\hypersetup{
+  allcolors         = blue,
+  bookmarksnumbered = true,
+  bookmarksopen     = true,
+}
+\AtEndOfClass{\sloppy}
+\definecolor{sjtuRedPrimary}{RGB}{167,32,56}         % engred
+\definecolor{sjtuRedSecondary}{RGB}{240,131,0}       % orange
+\definecolor{sjtuRedTertiary}{RGB}{253,208,0}        % yellow
+\definecolor{sjtuBluePrimary}{RGB}{0,64,152}         % problue
+\definecolor{sjtuBlueSecondary}{RGB}{51,141,39}      % lightgreen
+\definecolor{sjtuBlueTertiary}{RGB}{0,81,78}         % lightgray
+\lstdefinestyle{style@base}{
+  basewidth       = 0.5 em,
+  gobble          = 2,
+  lineskip        = 2 pt,
+  frame           = l,
+  framerule       = 1 pt,
+  framesep        = 0 pt,
+  escapeinside    = {(*}{*)},
+  basicstyle      = \ttfamily,
+  keywordstyle    = \bfseries\color{sjtuBluePrimary},
+  commentstyle    = \itshape\color{sjtuBlueTertiary!60},
+  stringstyle     = \color{sjtuRedPrimary},
+  backgroundcolor = \color{sjtuBlueTertiary!2},
+  xleftmargin       = 1em,
+  xrightmargin      = 1em,
+  framexleftmargin  = 1em,
+  framexrightmargin = 1em
+}
+\lstdefinestyle{style@shell}{
+  style      = style@base,
+  rulecolor  = \color{sjtuBlueTertiary},
+  language   = bash,
+  alsoletter = {-},
+  emphstyle  = \color{sjtuBlueSecondary}
+}
+\lstdefinestyle{style@latex}{
+  style      = style@base,
+  rulecolor  = \color{sjtuBluePrimary},
+  language   = [LaTeX]TeX,
+  alsoletter = {*, -},
+  texcsstyle = *\color{sjtuBluePrimary},
+  emphstyle  = [1]\color{sjtuBlueSecondary!80},
+  emphstyle  = [2]\color{sjtuBlueSecondary}
+}
+\newcommand\shellcmd[1]{%
+  \colorbox{\color{gray!10}}{\lstinline[style=lstStyleShell]|#1|}}
+\lstnewenvironment{shell}[1][]{%
+  \lstset{style=style@shell, #1}}{}
+\lstnewenvironment{latex}[1][]{%
+  \lstset{style=style@latex, #1}}{}
+\lstnewenvironment{sjtusyntax}[1][]{%
+  \lstset{style=style@syntax, #1}\vspace{-4ex}}{}
+\newcommand\note[1]{{%
+  \color{sjtuBlueTertiary}{\noindent\bfseries 说明：}~\emph{#1}}}
 \begin{document}
   \DocInput{\jobname.dtx}
   \IndexLayout
@@ -230,7 +289,7 @@
 % \changes{v0.9}{2015/06/19}{适配 \pkg{ctex} 2.x 宏包，需要使用 TeXLive 2015 编译。}
 % \changes{v0.8}{2015/03/15}{使用 \pkg{biber}/\pkg{biblatex} 组合替代 \BibTeX，带来更强大稳定的参考文献处理能力；添加 \pkg{enumitem} 宏包增强列表环境控制能力；完善宏包文字描述。}
 % \changes{v0.7}{2015/02/15}{增加盲审选项，调用外部工具插入扫描件。}
-% \changes{v0.6.5}{2015/02/14}{修正一些小问题，缩减 git 仓库体积，仓库由 sjtu-thesis-template-latex 更名为 \SJTUThesis。}
+% \changes{v0.6.5}{2015/02/14}{修正一些小问题，缩减 git 仓库体积，仓库由 sjtu-thesis-template-latex 更名为 \sjtuthesis。}
 % \changes{v0.6}{2014/12/17}{学士、硕士、博士学位论文模板合并在了一起。}
 % \changes{v0.5.3}{2013/05/26}{更正 \env{subsubsection} 格式错误，这个错误导致如“1.1 小结”这样的标题没有被正确加粗。}
 % \changes{v0.5.2}{2012/12/27}{更正拼写错误。在 \file{diss.tex} 加入 \file{ack.tex}。}
@@ -244,7 +303,7 @@
 % \changes{v0.1a}{2009/11/12}{上海交通大学硕士学位论文 \LaTeX{} 模板发布。}
 %
 %
-% \title{\SJTUThesis{}: 上海交通大学学位论文模板}
+% \title{\sjtuthesis{}: 上海交通大学学位论文模板}
 % \author{SJTUG}
 % \date{\filedate\qquad v\fileversion}
 % 
@@ -293,8 +352,8 @@
 % 板。
 %
 % 最早的一版学位模板由一位热心的物理系同学制作，中文字符处理采用了当时最为流行的
-% CJK-\LaTeX{} 方案。在此基础上，weijianwen 根据交大研究生院对学位论文的要求，完成
-% 了一份基本可用的交大 \LaTeX{} 学位论文模板。由于 CJK-\LaTeX{} 方案不易使用，
+% CJK--\LaTeX{} 方案。在此基础上，weijianwen 根据交大研究生院对学位论文的要求，完成
+% 了一份基本可用的交大 \LaTeX{} 学位论文模板。由于 CJK--\LaTeX{} 方案不易使用，
 % weijianwen 与 William Wang 开始着手把模板向 \XeTeX{} 引擎移植。之后 weijianwen
 % 又断断续续做了一些完善模板的工作，在原有硕士学位论文模板的基础上完成了交大学士
 % 和博士学位论文模板。
@@ -303,6 +362,185 @@
 % 下。2019 年 6 月 Alexara Wu 重构了整个宏包的代码，并使用 Doc\TeX{} 文档和
 % \textsc{DocStrip} 工具进行代码的管理，升级版本号为 1.0。2022 年 11 月，论文模板
 % 改版后，使用 \LaTeXiii{} 重构了代码，升级版本号为 2.0。
+%
+% 现在，\sjtuthesis{} 代码在 GitHub
+% \footnote{\url{https://github.com/sjtug/SJTUThesis}}
+% 上维护。
+% 你可以在 \href{https://github.com/sjtug/SJTUThesis/discussions}{Discussions}
+% 上提问使用问题，也可以在 \href{https://github.com/sjtug/SJTUThesis/issues}{Issues}
+% 中进行 Bug 反馈与新功能提案。如果需要对文档类代码进行修改，欢迎前往
+% \href{https://github.com/sjtug/SJTUTeX}{SJTUTeX} 仓库进行 Pull Request。
+% \sjtuthesis{} 模板的许多实现细节离不开
+% \href{https://github.com/sjtug/SJTUThesis/graphs/contributors}
+% {热心同学们} 的贡献，在此感谢所有为模板贡献过代码的同学们，以及所有测试和使用
+% 模板的各位同学！
+%
+% \note{模板的作用在于减少论文写作过程中格式调整的时间，前提是遵守模板的用法，否
+%   则即便用了\sjtuthesis{} 也难以保证输出的论文符合学校规范。}
+%
+% \section{简明教程}
+%
+% \subsection{安装最新 \TeX{} 发行版}
+%
+% 因为 \LaTeXiii{} 和相关宏包在不断更新，所以请使用最新的 \TeX{} 发行版。\sjtuthesis{}
+% 支持主流的 \TeX{} 发行版，包括 \TeX{} Live、\hologo{MiKTeX}、Mac\TeX{}，
+% 但不支持 \CTeX{} 套装。安装方法具体可以参考
+% \href{https://github.com/sjtug/SJTUThesis/wiki/TeX-发行版及其安装}
+% {Wiki 页面《\TeX{} 发行版及其安装》}。
+%
+% \subsection{文件组成}
+%
+% 表~\ref{tab:files} 列出了 \sjtuthesis{} 的主要文件及其功能介绍。
+%
+% \begin{table}[!hbt]
+%   \centering
+%   \caption{模板的文件组成}
+%   \label{tab:files}
+%   \begin{tabular}{l|l|p{4cm}}
+%     \toprule
+%     \strong{类别} & \strong{文件}               & \strong{说明}  \\
+%     \midrule
+%     文档类        & \file{sjtuthesis.cls}       & 文档类文件     \\
+%                   & \file{sjtuthesis-*.cfg}     & 文档类辅助文件 \\
+%     \midrule
+%     视觉形象系统    & \file{sjtu-vi-logo-*.pdf}   & 校标图片       \\
+%                   & \file{sjtu-vi-badge-*.pdf}  & 校徽图片       \\
+%                   & \file{sjtu-vi-name-*.pdf}   & 校名图片       \\
+%     \midrule
+%     字体配置文件  & \file{sjtu-cjk-font-*.def}  & 中文字体配置   \\
+%                   & \file{sjtu-math-font-*.def} &  数学字体配置  \\
+%                   & \file{sjtu-text-font-*.def} &  正文字体配置  \\
+%
+%     \bottomrule
+%   \end{tabular}
+% \end{table}
+%
+% \note{\href{https://vi.sjtu.edu.cn}{交大视觉形象系统}
+%   的相关图像资源版权归上海交通大学所有。}
+%
+% \subsection{下载模板}
+%
+% \subsubsection{GitHub 版本}
+%
+% 你可以在 \href{https://github.com/sjtug/SJTUThesis/releases}{GitHub Release}
+% 中找到 \sjtuthesis{} 的所有版本。
+%
+% 推荐使用最新版本以避免一些问题。可以直接下载
+% \href{https://github.com/sjtug/SJTUThesis}{GitHub 页面} 
+% 提供的
+% \href{https://github.com/sjtug/SJTUThesis/archive/refs/heads/master.zip}{压缩包}。
+%
+% 熟悉 \href{https://git-scm.com}{Git} 的用户可以克隆存储仓库：
+%
+% \begin{shell}
+% git clone https://github.com/sjtug/SJTUThesis.git
+% \end{shell}
+%
+% 如果访问 GitHub 的速度不甚理想，可以使用 SJTUG 镜像仓库：
+%
+% \begin{shell}
+% git clone https://mirror.sjtu.edu.cn/git/SJTUThesis.git/
+% \end{shell}
+%
+% \subsubsection{Overleaf 版本}
+%
+% 你也可以于在线平台使用 \sjtuthesis{}，直接使用
+% \href{https://www.overleaf.com/latex/templates/sjtuthesis-latex-thesis-template-for-shanghai-jiao-tong-university/mkdwbyjbtfgg?r=sdkbtJ4qGS8kDZQQ&rm=d&rs=b}{Overleaf 模板} 链接。
+% 或者上传前节中的压缩包至 \href{https://latex.sjtu.edu.cn}{校内平台} 等其他在线平台。
+% 更多信息参见 \href{https://github.com/sjtug/SJTUThesis/wiki/在线使用说明}{Wiki 页面《在线使用说明》}。
+% 
+% \note{由于大部分在线平台基于 Linux 操作系统，所以你需要在设置选单中将编译器修改为
+%   \XeLaTeX{} 才能正确编译。}
+%
+% \subsection{使用文档类}
+%
+% 以下是一份简单的 \TeX{} 文档，它演示了 \sjtuthesis{} 的最基本用法。
+% 将这份文档保存在下载好的 \sjtuthesis{} 模板根目录下，文件以 \texttt{.tex} 后缀结尾。
+% 注意在使用文档类时，需要将涉及到的所有源文件使用 UTF-8 编码保存。
+%
+% \begin{latex}
+% % main.tex
+% \documentclass{sjtuthesis}
+% \begin{document}
+%   \maketitle
+%   \frontmatter
+%   \mainmatter
+%   \chapter{欢迎}
+%   \section{欢迎使用 SJTUThesis}
+%   你好，\LaTeX{}!
+% \end{document}
+% \end{latex}
+%
+% 按照 \ref{sec:compile} 小节中的方式编译该文档，您应当得到一篇 5 页的文章。
+% 当然，目前这篇文章的绝大部分都是空白的。
+%
+% \subsection{编译文档}
+% \label{sec:compile}
+%
+% 推荐使用 \XeLaTeX{} 编译本模板，也可以使用 \LuaLaTeX{}。
+% 在 Windows 系统上可以尝试使用 \pdfLaTeX{}，但请注意相关宏包在该引擎上的适用情况。
+% 很多用户对 \LaTeX{} 命令执行的次数不太清楚。一个基本的原则是多次运行 \LaTeX{}
+% 命令直至不再出现警告。
+%
+% \subsubsection{手动编译}
+%
+% 假设您的 \TeX{} 源文件名为 \file{main.tex}，并且使用 \texttt{biber} 作为管理引
+% 用文献的后端程序。下面给出编译论文的详细过程（\# 开头的行为注释）：
+%
+% \begin{shell}
+% # 1.发现文件中的引用关系，文件后缀 .tex 可省略
+% xelatex main
+% # 2.编译参考文件源文件，生成 .bbl 文件
+% biber main
+% # 3.解决文件中的交叉引用
+% xelatex main
+% # 4.生成完整的 pdf 文件
+% xelatex main
+% \end{shell}
+%
+% \subsubsection{latexmk}
+%
+% \texttt{latexmk} 命令支持全自动生成 \LaTeX\ 编写的文档，并且支持使用不同的工具
+% 链来进行生成，它会自动运行多次工具直到交叉引用都被解决。下面给出了一个用
+% \texttt{latexmk} 调用 \texttt{xelatex} 生成最终文档的示例：
+%
+% \begin{shell}
+% # 一句话就够了！
+% latexmk -xelatex thesis
+% \end{shell}
+%
+% \note{Windows 用户使用 \hologo{MiKTeX} 发行版，使用 \texttt{latexmk} 需要
+%   安装 \href{https://www.perl.org}{Perl}。}
+%
+% \subsubsection{脚本编译}
+%
+% 对于 Linux 和 macOS 用户，\sjtuthesis{} 提供了一个 \file{Makefile}：
+%
+% \begin{shell}
+% make all                      # 编译生成 main.pdf
+% make clean                    # 删除编译所产生的中间文件
+% make cleanall                 # 删除 main.pdf 和所有中间文件
+% make wordcount                # 论文字数统计
+% \end{shell}
+%
+% 对于 Windows 用户，\sjtuthesis{} 提供了 \file{Compile.bat} 可以双击直接编译，
+% 也可以在命令提示符窗口中使用脚本提供的额外功能：
+%
+% \begin{shell}
+% .\Compile.bat thesis          # 编译生成 main.pdf
+% .\Compile.bat clean           # 删除编译所产生的中间文件
+% .\Compile.bat cleanall        # 删除 main.pdf 和所有中间文件
+% .\Compile.bat wordcount       # 论文字数统计
+% \end{shell}
+%
+% 以上提供的脚本默认用 \texttt{latexmk} 调用 \texttt{xelatex} 编译。
+%
+% \subsubsection{编辑器编译}
+%
+% 你也可以使用编辑器集成的编译方法，
+% \href{https://github.com/sjtug/SJTUThesis/wiki/本地使用说明}{Wiki 页面《本地使用说明》}
+% 给出了 VS Code 和 TeXstudio 的配置方法。
+%
 %
 % \end{documentation}
 %
