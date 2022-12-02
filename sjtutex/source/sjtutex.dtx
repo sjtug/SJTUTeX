@@ -248,6 +248,20 @@
   emphstyle  = [1]\color{sjtuBlueSecondary!80},
   emphstyle  = [2]\color{sjtuBlueSecondary}
 }
+\lstdefinestyle{style@syntax}{
+  basewidth     = 0.5 em,
+  gobble        = 6,
+  escapeinside  = {(*}{*)},
+  language      = [LaTeX]TeX,
+  alsoletter    = {*, -},
+  belowskip     = 0pt,
+  basicstyle    = \ttfamily,
+  keywordstyle  = \bfseries\color{sjtuBluePrimary},
+  commentstyle  = \itshape\color{sjtuBlueTertiary!60},
+  texcsstyle    = *\color{sjtuBluePrimary},
+  emphstyle     = [1]\color{sjtuBlueSecondary!80},
+  emphstyle     = [2]\color{sjtuBlueSecondary}
+}
 \newcommand\shellcmd[1]{%
   \colorbox{\color{gray!10}}{\lstinline[style=lstStyleShell]|#1|}}
 \lstnewenvironment{shell}[1][]{%
@@ -258,6 +272,35 @@
   \lstset{style=style@syntax, #1}\vspace{-4ex}}{}
 \newcommand\note[1]{{%
   \color{sjtuBlueTertiary}{\noindent\bfseries 说明：}~\emph{#1}}}
+\DeclareDocumentCommand\kvopt{mm}
+  {\texttt{#1\breakablethinspace=\breakablethinspace#2}}
+\def\breakablethinspace{\hskip 0.16667em\relax}
+\makeatletter
+\let\old@meta\meta
+\renewcommand*\meta[1]{\texttt{\old@meta{#1}}}
+\renewcommand*\marg[1]{\{\meta{#1}\}}
+\renewcommand*\oarg[1]{[\meta{#1}]}
+\renewcommand*\parg[1]{(\meta{#1})}
+\def\syntaxopt#1{\textit{#1}}
+\def\defaultval#1{\textbf{\textup{#1}}}
+\def\syntaxopt@aux#1>{\syntaxopt{#1}}
+\def\defaultval@aux#1){\defaultval{#1}}
+\def\orbar{\textup{\textbar}}
+\def\DescribeFunction{\vspace{1ex}\noindent\DescribeMacro}
+\ExplSyntaxOn
+\AtBeginEnvironment { sjtusyntax }
+  {
+    \cs_set:Npn \lparen { \textup { ( } }
+    \cs_set:Npn \rparen { \textup { ) } }
+    \char_set_catcode_active:N |
+    \char_set_catcode_active:N <
+    \char_set_catcode_active:N (
+    \char_set_active_eq:NN | \orbar
+    \char_set_active_eq:NN < \syntaxopt@aux
+    \char_set_active_eq:NN ( \defaultval@aux
+  }
+\ExplSyntaxOff
+\makeatother
 \begin{document}
   \DocInput{\jobname.dtx}
   \IndexLayout
@@ -541,6 +584,148 @@
 % \href{https://github.com/sjtug/SJTUThesis/wiki/本地使用说明}{Wiki 页面《本地使用说明》}
 % 给出了 VS Code 和 TeXstudio 的配置方法。
 %
+% \section{文档配置}
+%
+% \subsection{文档类选项}
+%
+% 本节所指“文档类选项”是指需要在引入文档类的时候指定的选项:
+%
+% \begin{latex}
+% \documentclass(*\oarg{文档类选项}*){sjtuthesis}
+% \end{latex}
+%
+% 部分选项采用 \kvopt{\meta{key}}{\meta{value}} 的形式。当 \meta{value} 省略时，
+% 将采用默认值。在下文的说明中，将用\textbf{粗体}表示默认值。
+%
+% \subsubsection{通用选项}
+%
+% \DescribeFunction{type}
+%   \begin{sjtusyntax}[emph={[1]type}]
+%     type = (*<doctor|(master)|bachelor>*)
+%   \end{sjtusyntax}
+% 论文类型。三种选项分别代表博士学位论文、硕士学位论文、本科毕业论文。
+%
+% \DescribeFunction{lang}
+%   \begin{sjtusyntax}[emph={[1]lang}]
+%     lang = (*<(zh)|en>*)
+%   \end{sjtusyntax}
+% 论文主要语言。可选中文或英文，该选项会改变文档中的一些标题的名字。
+%
+% \DescribeFunction{review}
+% 盲审模式。开启盲审模式将隐去作者姓名、导师姓名、班级、学号等个人信息，
+% 删去版权使用授权书、原创性声明和致谢页。默认关闭。
+%
+% \subsubsection{页面设置}
+%
+% \DescribeFunction{zihao}
+%   \begin{sjtusyntax}[emph={[1]zihao}]
+%     zihao = (*<(-4)|5>*)
+%   \end{sjtusyntax}
+% 论文默认字号。小四号或五号，默认为小四号。
+%^^A 新模板正文小四，参考文献五号字。虽然正文可以是五号字。
+%
+% \DescribeFunction{lineskip}
+%   \begin{sjtusyntax}[emph={[1]lineskip}]
+%     lineskip = (*\marg{长度}*)
+%   \end{sjtusyntax}
+% 行间距。默认跟随字号设置。
+%^^A 新模板正文固定行间距为 20 磅，参考文献为单倍行距。
+%
+% \DescribeFunction{oneside, twoside}
+% 指明论文的单双面模式。
+% \opt{oneside} 为单面模式，
+% \opt{twoside} 为双面模式。
+% 默认为 \opt{twoside}。
+%
+% \DescribeFunction{openright, openany}
+% 指明论文是否奇数页开章。
+% \opt{openright} 为从奇数页开始新章，
+% \opt{openany} 为从任意页开始新章。
+% 默认为 \opt{openany}。
+%
+% \subsubsection{字体选项}
+%
+% \DescribeFunction{cjk-font}
+%   \begin{sjtusyntax}[emph={[1]cjk-font}]
+%     cjk-font = (*<(auto)|(fandol)|windows|mac|ubuntu|adobe|founder|none>*)
+%   \end{sjtusyntax}
+% 指定中文字体集。\sjtuthesis 预定义了一些中文字体组合。
+% 默认跟随操作系统设定。
+% 找不到对应定义的中文字体集时的回退选项为 \opt{fandol}。
+%
+% \note{不再支持使用 \opt{fontset} 指定字体集。
+% Linux 系统下默认的中文字库 \opt{fandol} 容易出现缺字的情况。
+% 我们建议 Linux 用户自行配置合适的字体。}
+%
+% \DescribeFunction{text-font}
+%   \begin{sjtusyntax}[emph={[1]text-font}]
+%     text-font = (*<(newtx)|times|stixtwo|xits|newpx|cambria|newcm|lm|none>*)
+%   \end{sjtusyntax}
+% 指定西文字体集。\sjtuthesis 预定义了一些西文字体组合，
+% 具体配置见表 \ref{tab:fonts}。
+% 找不到定义的西文字体集时的回退选项为 \opt{newtx}。
+%
+% \DescribeFunction{math-font}
+%   \begin{sjtusyntax}[emph={[1]math-font}]
+%     math-font = (*<(auto)|(newtx)|stixtwo|xits|newpx|cambria|newcm|lm|none>*)
+%   \end{sjtusyntax}
+% 指定数学字体集。\sjtuthesis 预定义了一些数学字体组合，
+% 具体配置见表 \ref{tab:fonts} 数学字体列。
+% 默认跟随西文字体 \opt{text-font} 的设置。
+% 找不到定义的数学字体集时的回退选项为 \opt{newtx}。
+%
+% 请注意加载 \opt{stixtwo}，\opt{xits}，\opt{newcm}，\opt{cambria} 数学字体时
+% 会自动加载 \pkg{unicode-math} 宏包。
+%
+% \begin{table}[ht]
+% \centering\small
+% \begin{threeparttable}
+%   \caption{西文字体与数学字体配置}
+%   \label{tab:fonts}
+%   \begin{tabular}{ccccc}
+%     \toprule
+%       & \strong{正文字体} & \strong{无衬线字体} & \strong{等宽字体} & \strong{数学字体} \\
+%     \midrule
+%       |newtx|           & TG Termes X\tnote{a} & TG Heros    & TG Cursor   & newtx         \\
+%       |times|\tnote{b}  & Times New Roman      & Arial       & Courier New & newtx         \\
+%       |stixtwo|         & STIX Two Text        & TG Heros    & TG Cursor   & STIX Two Math \\
+%       |xits|            & XITS                 & TG Heros    & TG Cursor   & XITS Math     \\
+%       |newpx|           & TG Pagella X         & TG Heros    & TG Cursor   & newpx         \\
+%       |cambria|         & Cambria              & Calibri     & Consolas    & Cambria Math  \\
+%       |newcm|           & New CM\tnote{c}      & New CM Sans & New CM Mono & New CM        \\
+%       |lm|              & LM Roman             & LM Sans     & LM Mono     & LM Math       \\
+%     \bottomrule
+%   \end{tabular}
+%   \begin{tablenotes}
+%     \item[a] “TG”是 TeX Gyre 的缩写。
+%     \item[b] 本行中，Times New Roman、Arial 和 Courier New 是商业字体，
+%       在 Windows 和 macOS 系统上均默认安装。
+%     \item[b] “LM”是 Latin Modern 的缩写。
+%     \item[c] “CM”是 Computer Modern 的缩写。
+%   \end{tablenotes}
+% \end{threeparttable}
+% \end{table}
+%
+% \DescribeFunction{math-style}
+%   \begin{sjtusyntax}[emph={[1]math-style}]
+%     math-style = (*<(TeX)|ISO|GB>*)
+%   \end{sjtusyntax}
+% 数学符号样式。
+% \opt{TeX} 与 \opt{ISO} 选项的最大不同在于一些大写希腊字母是否为斜体。
+%^^A \opt{GB} 特性似乎尚未实现，1.0.0rc4 实现为对 $\ldots$, $\Re$, $\Im$ 进行修正。
+% 默认为 \opt{TeX}。
+%
+% \DescribeFunction{nointlimits, intlimits}
+% 行间公式中积分号上下限的位置，\pkg{unicode-math} 模式下不适用。
+% \opt{nointlimits} 使得上下限在积分号右侧，
+% \opt{intlimits} 使得上下限在积分号上下方。
+% 默认上下限在积分号右侧。
+%
+% \DescribeFunction{upint, slint}
+% 积分号的正体与斜体。
+% \opt{upint} 使得积分号为正体，
+% \opt{slint} 使得积分号为斜体。
+% 默认为正体。
 %
 % \end{documentation}
 %
