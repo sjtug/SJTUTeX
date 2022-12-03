@@ -975,6 +975,183 @@
 %^^A achv 现在应为“攻读学位期间学术论文和科研成果目录”。
 %^^A 尚未展示空格设置。
 %
+% \section{内容编写}
+%
+% 在文档开始后进行内容编写，文档内容由 |document| 环境包裹。
+%
+% \DescribeFunction{document}
+%   \begin{sjtusyntax}
+%     \begin{document}
+%       (*\meta{文档内容}*)
+%     \end{document}
+%   \end{sjtusyntax}
+%
+% \subsection{标题页和声明页}
+%
+% \DescribeFunction{\maketitle}
+%   \begin{sjtusyntax}[morekeywords={\maketitle}]
+%     \maketitle
+%   \end{sjtusyntax}
+% 生成标题页。
+%
+% \DescribeFunction{\copyrightpage}
+%   \begin{sjtusyntax}[morekeywords={\copyrightpage}]
+%     \copyrightpage
+%     \copyrightpage(*\oarg{授权书扫描件}*)
+%   \end{sjtusyntax}
+% 生成空白版权使用授权书。
+% 接受一个可选参数用于插入版权使用授权书扫描件。
+%
+% \subsection{前文部分}
+%
+% \DescribeFunction{\frontmatter}
+%   \begin{sjtusyntax}[morekeywords={\frontmatter}]
+%     \frontmatter
+%   \end{sjtusyntax}
+% 声明前文部分开始。
+%
+% \DescribeFunction{abstract}
+% \DescribeFunction{abstract*}
+%   \vspace{-1ex}
+%   \begin{sjtusyntax}[emph={[2]abstract,abstract*}]
+%     \begin{abstract}
+%       (*\meta{中文摘要}*)
+%     \end{abstract}
+%     \begin{abstract*}
+%       (*\meta{英文摘要}*)
+%     \end{abstract*}
+%   \end{sjtusyntax}
+% 摘要环境。不带星号和带星号的版本分别用来输入中文摘要和英文摘要。
+%
+% \DescribeFunction{\tableofcontents}
+% \DescribeFunction{\listoffigures}
+% \DescribeFunction{\listoffigures*}
+% \DescribeFunction{\listoftables}
+% \DescribeFunction{\listoftables*}
+% \DescribeFunction{\listofalgorithms}
+% \DescribeFunction{\listofalgorithms*}
+% \vspace{-10ex}
+% \begin{table}[ht]
+% \centering\small
+% \begin{threeparttable}
+%   \caption{目录和索引表}
+%   \label{tab:list}
+%   \begin{tabular}{lp{4cm}}
+%     \toprule
+%     \strong{用途}     & \strong{命令}          \\\midrule
+%     目录              & \cs{tableofcontents}   \\\midrule
+%     插图索引          & \cs{listoffigures}     \\
+%                       & \cs{listoffigures*}    \\\midrule
+%     表格索引          & \cs{listoftables}      \\
+%                       & \cs{listoftables*}     \\\midrule
+%     算法索引\tnote{a} & \cs{listofalgorithms}  \\
+%                       & \cs{listofalgorithms*} \\
+%     \bottomrule
+%   \end{tabular}
+%   \begin{tablenotes}
+%     \item[a] 启用 \pkg{algorithm2e} 或 \pkg{algorithm} 后有效。
+%   \end{tablenotes}
+% \end{threeparttable}
+% \end{table}
+%
+% 目录、插图、表格和算法等索引命令如表 \ref{tab:list} 所示，将其插入到期望的
+% 位置即可。带*的命令表示对应的索引表不会出现在目录中。
+%
+% \DescribeFunction{nomenclature}
+% \DescribeFunction{nomenclature*}
+%   \vspace{-1ex}
+%   \begin{sjtusyntax}[emph={[2]nomenclature,nomenclature*}]
+%     \begin{nomenclature}
+%       (*\meta{符号对照表}*)
+%     \end{nomenclature}
+%   \end{sjtusyntax}
+% 符号对照表环境。带星号的版本不会出现在目录中。
+% 符号对照表环境仅设置标题，内部实现可由用户自行决定。
+% 可以使用 \pkg{longtable}，也可以使用 \pkg{nomencl} 宏包。
+%
+% \subsection{正文部分}
+%
+% \DescribeFunction{\mainmatter}
+%   \begin{sjtusyntax}[morekeywords={\mainmatter}]
+%     \mainmatter
+%   \end{sjtusyntax}
+% 声明正文部分开始。正文部分是论文的核心，您可以分章节撰写。
+% 如有需求，也可以采用多文件编译的方式。
+%
+% \DescribeFunction{\footnote}
+%   \begin{sjtusyntax}[morekeywords={\footnote}]
+%     \footnote(*\oarg{脚注编号}*)(*\marg{脚注文字}*)
+%   \end{sjtusyntax}
+% 插入脚注。编号采用中文字体的带圈数字，只支持 1 到 50 号，请保证每页脚注
+% 不超过 50 个，超过 50 号脚注会给出脚注过多的警告。
+%^^A 在一些字体配置下，脚注编号不能超过 20 号，超过 20 号字体集可能不包含该字符，
+%^^A 显示为方框。
+%
+% \DescribeFunction{\appendix}
+%   \begin{sjtusyntax}[morekeywords={\appendix}]
+%     \appendix
+%     \chapter{...}
+%   \end{sjtusyntax}
+% 附录由 \cs{appendix} 命令开启，然后像正文一样书写。
+%^^A 标准新模板将附录编号置于章节标题之后。
+%
+% \subsection{后文部分}
+%
+% \DescribeFunction{\backmatter}
+%   \begin{sjtusyntax}[morekeywords={\backmatter}]
+%     \backmatter
+%   \end{sjtusyntax}
+% 声明后文部分开始。 后文部分包含致谢等。
+%
+% \DescribeFunction{acknowledgements}
+%   \begin{sjtusyntax}[emph={[2]acknowledgements}]
+%     \begin{acknowledgements}
+%       (*\meta{致谢内容}*)
+%     \end{acknowledgements}
+%   \end{sjtusyntax}
+% 致谢环境。盲审模式下致谢将被隐去。
+%
+% \DescribeFunction{achievements}
+%   \begin{sjtusyntax}[emph={[2]achievements}]
+%     \begin{achievements}
+%       (*\meta{获得的科研成果}*)
+%     \end{achievements}
+%   \end{sjtusyntax}
+% 科研成果环境，内部请采用下面的附录用文献列表环境。
+% 你可以在该环境中使用带星号的节次命令以分隔不同的类型的内容
+%（比如学术论文、专利等）。
+%
+% \DescribeFunction{bibliolist}
+% \DescribeFunction{bibliolist*}
+%   \vspace{-1ex}
+%   \begin{sjtusyntax}[emph={[2]bibliolist,bibliolist*}]
+%      \begin{bibliolist}(*\marg{最长条目编号}*)
+%         \item (*\meta{文献条目}*)
+%      \end{bibliolist}
+%      \begin{bibliolist*}(*\marg{最长条目编号}*)
+%         \item (*\meta{文献条目（隐去姓名）}*)
+%      \end{bibliolist*}
+%   \end{sjtusyntax}
+% 附录用文献环境，普通模式下显示不带星号的版本中的内容，
+% 盲审模式下显示带星号的版本中的内容。
+%
+% \DescribeFunction{resume}
+%   \begin{sjtusyntax}[emph={[2]resume}]
+%     \begin{resume}
+%       (*\meta{简历内容}*)
+%     \end{resume}
+%   \end{sjtusyntax}
+% 简历环境。盲审模式下简历将被隐去。
+%
+% \DescribeFunction{digest}
+%   \begin{sjtusyntax}[emph={[2]digest}]
+%     \begin{digest}
+%       (*\meta{大摘要}*)
+%     \end{digest}
+%   \end{sjtusyntax}
+% 学士论文大摘要。论文类型为学士论文的条件下有效。
+%^^A 尚无条件限制。
+%
 % \end{documentation}
 %
 % \begin{implementation}
