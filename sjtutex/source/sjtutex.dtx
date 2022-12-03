@@ -840,7 +840,8 @@
 %   学号。
 % \end{function}
 %
-% \begin{function}{info/supervisor,info/supervisor*,info/assoc-supervisor,info/assoc-supervisor*}
+% \begin{function}[updated=2022-12-03]{info/supervisor,info/supervisor*,
+%   info/assoc-supervisor,info/assoc-supervisor*}
 %   \vspace{-1ex}
 %   \begin{sjtusyntax}[emph={[2]supervisor,supervisor*,assoc-supervisor,assoc-supervisor*}]
 %     supervisor        = (*\marg{姓名}*)
@@ -962,34 +963,42 @@
 %   具体内容见表 \ref{tab:names}。
 % \end{function}
 %
+% \begin{function}{name/contents,name/listfigure,name/listtable,name/figure,
+%   name/table,name/index,name/appendix,name/proof,name/bib,
+%   name/figure*,name/table*,name/algorithm,name/listalgorithm,
+%   name/abbr,name/nom,name/summary,name/ack,name/resume,name/digset,name/achv}
+% \end{function}
+%
 % \begin{table}[!hbt]
+%   \vspace{-47ex}
 %   \centering\small
 %   \caption{\opt{name} 选项的默认设置}
 %   \label{tab:names}
 %   \begin{tabular}{l|l|l}
 %     \toprule
-%     \strong{选项} & \strong{|lang = zh|} & \strong{|lang = en|} \\
+%     \strong{选项}        & \strong{|lang = zh|} & \strong{|lang = en|}          \\
 %     \midrule
-%      |appendix|         & 附录                                  & Appendix              \\
-%      |contents|         & 目录                  & Contents              \\
-%      |listfigure|       & 插图                              & List of Figures       \\
-%      |listtable|        & 表格                              & List of Tables        \\
-%      |listalgorithm|    & 算法                              & List of Algorithms    \\
-%      |figure|           & 图                                    & Figure                \\
-%      |figure*|          & Figure                                & 图                    \\
-%      |table|            & 表                                    & Table                 \\
-%      |table*|           & Table                                 & 表                    \\
-%      |algorithm|        & 算法                                  & Algorithm             \\
-%      |abbr|             & 缩略语对照表                           & Abbreviation          \\
-%      |nom|              & 主要符号对照表                        & Nomenclature          \\
-%      |summary|          & 全文总结                              & Summary               \\
-%      |bib|              & 参考文献                              & Bibliography          \\
-%      |index|            & 索引                  & Index                 \\
-%      |ack|              & 致谢                  & Acknowledgements      \\
-%      |achv|             & 学术论文和科研成果目录                & List of Research Achievements \\
-%      |resume|           & 个人简历                              & Resume                \\
-%      |digest|           & 大摘要                                & Digest                \\
-%      |proof|            & 证明                                 & Proof                  \\
+%      |contents|         & 目录                  & Contents                      \\
+%      |listfigure|       & 插图                  & List of Figures               \\
+%      |listtable|        & 表格                  & List of Tables                \\
+%      |figure|           & 图                    & Figure                        \\
+%      |table|            & 表                    & Table                         \\
+%      |appendix|         & 附录                  & Appendix                      \\
+%      |index|            & 索引                  & Index                         \\
+%      |proof|            & 证明                  & Proof                         \\
+%      |bib|              & 参考文献               & Bibliography                  \\
+%    \midrule
+%      |figure*|          & Figure               & 图                             \\
+%      |table*|           & Table                & 表                             \\
+%      |algorithm|        & 算法                  & Algorithm                     \\
+%      |listalgorithm|    & 算法                  & List of Algorithms            \\
+%      |abbr|             & 缩略语对照表           & Abbreviation                  \\
+%      |nom|              & 主要符号对照表         & Nomenclature                  \\
+%      |summary|          & 全文总结              & Summary                       \\
+%      |ack|              & 致谢                  & Acknowledgements              \\
+%      |resume|           & 个人简历              & Resume                        \\
+%      |digest|           & 大摘要                & Digest                        \\
+%      |achv|             & 学术论文和科研成果目录   & List of Research Achievements \\
 %     \bottomrule
 %   \end{tabular}
 % \end{table}
@@ -1098,6 +1107,25 @@
 %^^A 在一些字体配置下，脚注编号不能超过 20 号，超过 20 号字体集可能不包含该字符，
 %^^A 显示为方框。
 % \end{function}
+%
+% \begin{function}{assumption,axiom,conjecture,corollary,definition,example,
+%   exercise,lemma,problem,proposition,theorem}
+%   \sjtuthesis{} 预定义了一系列数学环境。在启用 \pkg{ntheorem} 或 \pkg{amsthm}
+%   宏包后有效，环境如表 \ref{tab:theorems} 所示。
+% \end{function}
+%
+% \begin{table}[ht]
+% \vspace*{-20ex}
+% \centering\small
+% \caption{预定义的数学环境}
+% \label{tab:theorems}
+% \begin{tabular}{*{7}{l}}\toprule
+%   assumption  & axiom   & conjecture & corollary    & definition  & example   & exercise  \\
+%   假设        & 公理    & 猜想       & 推论         & 定义        & 例        & 练习      \\\midrule
+%   lemma       & problem & proof      & proposition  & remark      & solution  & theorem   \\
+%   引理        & 问题    & 证明       & 命题         & 注          & 解        & 定理      \\\bottomrule
+% \end{tabular}
+% \end{table}
 %
 % \begin{function}{\appendix}
 %   \begin{sjtusyntax}[morekeywords={\appendix}]
