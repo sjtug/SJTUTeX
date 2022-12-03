@@ -269,7 +269,7 @@
 \lstnewenvironment{latex}[1][]{%
   \lstset{style=style@latex, #1}}{}
 \lstnewenvironment{sjtusyntax}[1][]{%
-  \lstset{style=style@syntax, #1}\vspace{-4ex}}{}
+  \lstset{style=style@syntax, #1}\vspace{-1.8ex}}{}
 \newcommand\note[1]{{%
   \color{sjtuBlueTertiary}{\noindent\bfseries 说明：}~\emph{#1}}}
 \DeclareDocumentCommand\kvopt{mm}
@@ -286,7 +286,6 @@
 \def\syntaxopt@aux#1>{\syntaxopt{#1}}
 \def\defaultval@aux#1){\defaultval{#1}}
 \def\orbar{\textup{\textbar}}
-\def\DescribeFunction{\vspace{1ex}\noindent\DescribeMacro}
 \ExplSyntaxOn
 \AtBeginEnvironment { sjtusyntax }
   {
@@ -599,83 +598,93 @@
 %
 % \subsubsection{通用选项}
 %
-% \DescribeFunction{type}
+% \begin{function}[updated=2022-12-03]{type}
 %   \begin{sjtusyntax}[emph={[1]type}]
 %     type = (*<doctor|(master)|bachelor>*)
 %   \end{sjtusyntax}
-% 论文类型。三种选项分别代表博士学位论文、硕士学位论文、本科毕业论文。
+%   论文类型。三种选项分别代表博士学位论文、硕士学位论文、本科毕业论文。
+% \end{function}
 %
-% \DescribeFunction{lang}
+% \begin{function}{lang}
 %   \begin{sjtusyntax}[emph={[1]lang}]
 %     lang = (*<(zh)|en>*)
 %   \end{sjtusyntax}
-% 论文主要语言。可选中文或英文，该选项会改变文档中的一些标题的名字。
+%   论文主要语言。可选中文或英文，该选项会改变文档中的一些标题的名字。
+% \end{function}
 %
-% \DescribeFunction{review}
-% 盲审模式。开启盲审模式将隐去作者姓名、导师姓名、班级、学号等个人信息，
-% 删去版权使用授权书、原创性声明和致谢页。默认关闭。
+% \begin{function}{review}
+%   盲审模式。开启盲审模式将隐去作者姓名、导师姓名、班级、学号等个人信息，
+%   删去版权使用授权书、原创性声明和致谢页。默认关闭。
+% \end{function}
 %
 % \subsubsection{页面设置}
 %
-% \DescribeFunction{zihao}
+% \begin{function}{zihao}
 %   \begin{sjtusyntax}[emph={[1]zihao}]
 %     zihao = (*<(-4)|5>*)
 %   \end{sjtusyntax}
 % 论文默认字号。小四号或五号，默认为小四号。
 %^^A 新模板正文小四，参考文献五号字。虽然正文可以是五号字。
+% \end{function}
 %
-% \DescribeFunction{lineskip}
+% \begin{function}[added=2022-12-03]{lineskip}
 %   \begin{sjtusyntax}[emph={[1]lineskip}]
 %     lineskip = (*\marg{长度}*)
 %   \end{sjtusyntax}
 % 行间距。默认跟随字号设置。
 %^^A 新模板正文固定行间距为 20 磅，参考文献为单倍行距。
+% \end{function}
 %
-% \DescribeFunction{oneside, twoside}
-% 指明论文的单双面模式。
-% \opt{oneside} 为单面模式，
-% \opt{twoside} 为双面模式。
-% 默认为 \opt{twoside}。
+% \begin{function}{oneside, twoside}
+%   指明论文的单双面模式。
+%   \opt{oneside} 为单面模式，
+%   \opt{twoside} 为双面模式。
+%   默认为 \opt{twoside}。
+% \end{function}
 %
-% \DescribeFunction{openright, openany}
-% 指明论文是否奇数页开章。
-% \opt{openright} 为从奇数页开始新章，
-% \opt{openany} 为从任意页开始新章。
-% 默认为 \opt{openany}。
+% \begin{function}{openright, openany}
+%   指明论文是否奇数页开章。
+%   \opt{openright} 为从奇数页开始新章，
+%   \opt{openany} 为从任意页开始新章。
+%   默认为 \opt{openany}。
+% \end{function}
 %
 % \subsubsection{字体选项}
 %
-% \DescribeFunction{cjk-font}
+% \begin{function}{cjk-font}
 %   \begin{sjtusyntax}[emph={[1]cjk-font}]
 %     cjk-font = (*<(auto)|(fandol)|windows|mac|ubuntu|adobe|founder|none>*)
 %   \end{sjtusyntax}
-% 指定中文字体集。\sjtuthesis 预定义了一些中文字体组合。
-% 默认跟随操作系统设定。
-% 找不到对应定义的中文字体集时的回退选项为 \opt{fandol}。
+%   指定中文字体集。\sjtuthesis 预定义了一些中文字体组合。
+%   默认跟随操作系统设定。
+%   找不到对应定义的中文字体集时的回退选项为 \opt{fandol}。
 %
 % \note{不再支持使用 \opt{fontset} 指定字体集。
 % Linux 系统下默认的中文字库 \opt{fandol} 容易出现缺字的情况。
 % 我们建议 Linux 用户自行配置合适的字体。}
+% \end{function}
 %
-% \DescribeFunction{text-font}
+% \begin{function}{text-font}
 %   \begin{sjtusyntax}[emph={[1]text-font}]
 %     text-font = (*<(newtx)|times|stixtwo|xits|newpx|cambria|newcm|lm|none>*)
 %   \end{sjtusyntax}
-% 指定西文字体集。\sjtuthesis 预定义了一些西文字体组合，
-% 具体配置见表 \ref{tab:fonts}。
-% 找不到定义的西文字体集时的回退选项为 \opt{newtx}。
+%   指定西文字体集。\sjtuthesis 预定义了一些西文字体组合，
+%   具体配置见表 \ref{tab:fonts}。
+%   找不到定义的西文字体集时的回退选项为 \opt{newtx}。
+% \end{function}
 %
-% \DescribeFunction{math-font}
+% \begin{function}{math-font}
 %   \begin{sjtusyntax}[emph={[1]math-font}]
 %     math-font = (*<(auto)|(newtx)|stixtwo|xits|newpx|cambria|newcm|lm|none>*)
 %   \end{sjtusyntax}
-% 指定数学字体集。\sjtuthesis 预定义了一些数学字体组合，
-% 具体配置见表 \ref{tab:fonts} 数学字体列。
-% 默认跟随西文字体 \opt{text-font} 的设置。
-% 找不到定义的数学字体集时的回退选项为 \opt{newtx}。
+%   指定数学字体集。\sjtuthesis 预定义了一些数学字体组合，
+%   具体配置见表 \ref{tab:fonts} 数学字体列。
+%   默认跟随西文字体 \opt{text-font} 的设置。
+%   找不到定义的数学字体集时的回退选项为 \opt{newtx}。
 %
-% 请注意加载 \opt{stixtwo}，\opt{xits}，\opt{newcm}，\opt{cambria} 数学字体时
-% 会自动加载 \pkg{unicode-math} 宏包。
+%   请注意加载 \opt{stixtwo}，\opt{xits}，\opt{newcm}，\opt{cambria} 数学字体时
+%   会自动加载 \pkg{unicode-math} 宏包。
+% \end{function}
 %
 % \begin{table}[ht]
 % \centering\small
@@ -706,35 +715,39 @@
 % \end{threeparttable}
 % \end{table}
 %
-% \DescribeFunction{math-style}
+% \begin{function}[added=2022-12-03]{math-style}
 %   \begin{sjtusyntax}[emph={[1]math-style}]
 %     math-style = (*<(TeX)|ISO|GB>*)
 %   \end{sjtusyntax}
-% 数学符号样式。
-% \opt{TeX} 与 \opt{ISO} 选项的最大不同在于一些大写希腊字母是否为斜体。
+%   数学符号样式。
+%   \opt{TeX} 与 \opt{ISO} 选项的最大不同在于一些大写希腊字母是否为斜体。
 %^^A \opt{GB} 特性似乎尚未实现，1.0.0rc4 实现为对 $\ldots$, $\Re$, $\Im$ 进行修正。
-% 默认为 \opt{TeX}。
+%   默认为 \opt{TeX}。
+% \end{function}
 %
-% \DescribeFunction{nointlimits, intlimits}
-% 行间公式中积分号上下限的位置，\pkg{unicode-math} 模式下不适用。
-% \opt{nointlimits} 使得上下限在积分号右侧，
-% \opt{intlimits} 使得上下限在积分号上下方。
-% 默认上下限在积分号右侧。
+% \begin{function}[added=2022-12-03]{nointlimits, intlimits}
+%   行间公式中积分号上下限的位置，\pkg{unicode-math} 模式下不适用。
+%   \opt{nointlimits} 使得上下限在积分号右侧，
+%   \opt{intlimits} 使得上下限在积分号上下方。
+%   默认上下限在积分号右侧。
+% \end{function}
 %
-% \DescribeFunction{upint, slint}
-% 积分号的正体与斜体。
-% \opt{upint} 使得积分号为正体，
-% \opt{slint} 使得积分号为斜体。
-% 默认为正体。
+% \begin{function}[added=2022-12-03]{upint, slint}
+%   积分号的正体与斜体。
+%   \opt{upint} 使得积分号为正体，
+%   \opt{slint} 使得积分号为斜体。
+%   默认为正体。
+% \end{function}
 %
 % \subsection{论文信息设置}
 %
-% \DescribeFunction{\sjtusetup}
+% \begin{function}{\sjtusetup}
 %   \begin{sjtusyntax}[morekeywords={\sjtusetup}]
 %     \sjtusetup(*\marg{键值列表}*)
 %   \end{sjtusyntax}
-% 本模板提供了一系列选项，可由您自行配置。载入文档类之后，以下
-% 所有选项均可通过统一的命令 \cs{sjtusetup} 来设置。
+%   本模板提供了一系列选项，可由您自行配置。载入文档类之后，以下
+%   所有选项均可通过统一的命令 \cs{sjtusetup} 来设置。
+% \end{function}
 %
 % \cs{sjtusetup} 的参数是一组由（英文）逗号隔开的选项列表，列表中的选项通常是
 % \kvopt{\meta{key}}{\meta{value}} 的形式。对于同一项，后面的设置将会覆盖前面的
@@ -761,184 +774,193 @@
 %
 % \subsubsection{信息域}
 %
-% \DescribeFunction{info}
+% \begin{function}{info}
 %   \begin{sjtusyntax}[emph={[1]info}]
 %     info = (*\marg{键值列表}*)
 %   \end{sjtusyntax}
-% 该选项包含许多子项目，用于录入论文信息。
-% 具体内容见下。以下带“*”的项目表示对应的英文字段。
+%   该选项包含许多子项目，用于录入论文信息。
+%   具体内容见下。以下带“*”的项目表示对应的英文字段。
+% \end{function}
 %
-% \DescribeFunction{title}
-% \DescribeFunction{title*}
+% \begin{function}{info/title,info/title*}
 %   \vspace{-1ex}
 %   \begin{sjtusyntax}[emph={[2]title,title*}]
 %     title  = (*\marg{中文标题}*)
 %     title* = (*\marg{英文标题}*)
 %   \end{sjtusyntax}
-% 论文标题。如果您的标题过长，建议使用“|\\|”手动断行。
+%   论文标题。如果您的标题过长，建议使用“|\\|”手动断行。
+% \end{function}
 %
 % \clearpage
 %
-% \DescribeFunction{display-title}
-% \DescribeFunction{display-title*}
+% \begin{function}{info/display-title,info/display-title*}
 %   \vspace{-1ex}
 %   \begin{sjtusyntax}[emph={[2]display-title,display-title*}]
 %     display-title  = (*\marg{中文标题页标题}*)
 %     display-title* = (*\marg{英文标题页标题}*)
 %   \end{sjtusyntax}
-% 标题页论文中题目。默认为跟随对应语言的论文标题。
+%   标题页论文中题目。默认为跟随对应语言的论文标题。
+% \end{function}
 %
-% \DescribeFunction{running-title}
-% \DescribeFunction{running-title*}
+% \begin{function}{info/running-title,info/running-title*}
 %   \vspace{-1ex}
 %   \begin{sjtusyntax}[emph={[2]running-title,running-title*}]
 %     running-title  = (*\marg{中文页眉标题}*)
 %     running-title* = (*\marg{英文页眉标题}*)
 %   \end{sjtusyntax}
-% 论文页眉题目。
+%   论文页眉题目。
 %^^A 默认为跟随对应语言的论文标题。
 %^^A 而论文页眉题目现在应为 “上海交通大学学位论文”。
 %^^A 论文页眉右侧应为章节标题。
+% \end{function}
 %
-% \DescribeFunction{keywords}
-% \DescribeFunction{keywords*}
+% \begin{function}{info/keywords,info/keywords*}
 %   \vspace{-1ex}
 %   \begin{sjtusyntax}[emph={[2]keywords,keywords*}]
 %     keywords  = (*\marg{中文关键字}*)
 %     keywords* = (*\marg{英文关键字}*)
 %   \end{sjtusyntax}
-% 关键字列表。各关键字之间需使用英文逗号隔开。
-% 为防止歧义，可以用分组括号“|{...}|”把各字段括起来。
+%   关键字列表。各关键字之间需使用英文逗号隔开。
+%   为防止歧义，可以用分组括号“|{...}|”把各字段括起来。
+% \end{function}
 %
-% \DescribeFunction{author}
-% \DescribeFunction{author*}
+% \begin{function}{info/author,info/author*}
 %   \vspace{-1ex}
 %   \begin{sjtusyntax}[emph={[2]author,author*}]
 %     author  = (*\marg{姓名}*)
 %     author* = (*\marg{英文姓名或拼音}*)
 %   \end{sjtusyntax}
-% 作者姓名。
+%   作者姓名。
+% \end{function}
 %
-% \DescribeFunction{id}
+% \begin{function}{info/id}
 %   \begin{sjtusyntax}[emph={[2]id}]
 %     id  = (*\marg{学号}*)
 %   \end{sjtusyntax}
-% 学号。
+%   学号。
+% \end{function}
 %
-% \DescribeFunction{supervisor}
-% \DescribeFunction{supervisor*}
-% \DescribeFunction{assoc-supervisor}
-% \DescribeFunction{assoc-supervisor*}
-%   \vspace{-3ex}
+% \begin{function}{info/supervisor,info/supervisor*,info/assoc-supervisor,info/assoc-supervisor*}
+%   \vspace{-1ex}
 %   \begin{sjtusyntax}[emph={[2]supervisor,supervisor*,assoc-supervisor,assoc-supervisor*}]
 %     supervisor        = (*\marg{姓名}*)
 %     supervisor*       = (*\marg{英文姓名或拼音}*)
 %     assoc-supervisor  = (*\marg{姓名}*)
 %     assoc-supervisor* = (*\marg{英文姓名或拼音}*)
 %   \end{sjtusyntax}
-% 导师、副导师姓名。
+%   导师、副导师姓名。
+% \end{function}
 %
-% \DescribeFunction{degree}
-% \DescribeFunction{degree*}
+% \begin{function}{info/degree,info/degree*}
 %   \vspace{-1ex}
 %   \begin{sjtusyntax}[emph={[2]degree,degree*}]
 %     degree  = (*\marg{学位中文名称}*)
 %     degree* = (*\marg{学位英文名称}*)
 %   \end{sjtusyntax}
-% 申请学位中英文名称。
+%   申请学位中英文名称。
+% \end{function}
 %
-% \DescribeFunction{department}
-% \DescribeFunction{department*}
+% \begin{function}{info/department,info/department*}
 %   \vspace{-1ex}
 %   \begin{sjtusyntax}[emph={[2]department,department*}]
 %     department  = (*\marg{院系中文名称}*)
 %     department* = (*\marg{院系英文名称}*)
 %   \end{sjtusyntax}
-% 院系中英文名称。
+%   院系中英文名称。
+% \end{function}
 %
-% \DescribeFunction{major}
-% \DescribeFunction{major*}
+% \begin{function}{info/major,info/major*}
 %   \vspace{-1ex}
 %   \begin{sjtusyntax}[emph={[2]major,major*}]
 %     major  = (*\marg{专业中文名称}*)
 %     major* = (*\marg{专业英文名称}*)
 %   \end{sjtusyntax}
-% 专业中英文名称。
+%   专业中英文名称。
+% \end{function}
 %
-% \DescribeFunction{fund}
-% \DescribeFunction{fund*}
+% \begin{function}{info/fund,info/fund*}
 %   \vspace{-1ex}
 %   \begin{sjtusyntax}[emph={[2]fund,fund*}]
 %     fund  = (*\marg{资助基金中文名称}*)
 %     fund* = (*\marg{资助基金英文名称}*)
 %   \end{sjtusyntax}
-% 资助基金列表。各资助基金名称之间需使用英文逗号隔开。
-% 为防止歧义，可以用分组括号“|{...}|”把各字段括起来。
+%   资助基金列表。各资助基金名称之间需使用英文逗号隔开。
+%   为防止歧义，可以用分组括号“|{...}|”把各字段括起来。
+% \end{function}
 %
 % \subsubsection{样式域}
 %
-% \DescribeFunction{style}
+% \begin{function}{style}
 %   \begin{sjtusyntax}[emph={[1]style}]
 %     style = (*\marg{键值列表}*)
 %   \end{sjtusyntax}
-% 该选项包含许多子项目，用于设置论文样式。具体内容见下。
+%   该选项包含许多子项目，用于设置论文样式。具体内容见下。
+% \end{function}
 %
-% \DescribeFunction{float-font}
+% \begin{function}[added=2022-12-03]{style/float-font}
 %   \begin{sjtusyntax}[emph={[2]float-font}]
 %     float-font = (*\marg{字体设置}*)
 %   \end{sjtusyntax}
-% 图、表等浮动体的额外字体设置。
-% 默认为 |\zihao{5}|，五号字。
+%   图、表等浮动体的额外字体设置。
+%   默认为 |\zihao{5}|，五号字。
+% \end{function}
 %
-% \DescribeFunction{fnmark-font}
+% \begin{function}[added=2022-12-03]{style/fnmark-font}
 %   \begin{sjtusyntax}[emph={[2]fnmark-font}]
 %     fnmark-font = (*\marg{字体设置}*)
 %   \end{sjtusyntax}
-% 脚注的额外字体设置。
-% 默认为空。
+%   脚注的额外字体设置。
+%   默认为空。
+% \end{function}
 %
-% \DescribeFunction{float-numsep}
+% \begin{function}[updated=2022-12-03]{style/float-numsep}
 %   \begin{sjtusyntax}[emph={[2]float-numsep}]
 %     float-numsep = (*\marg{分隔符}*)
 %   \end{sjtusyntax}
-% 图、表等浮动体编号中的分隔符。
-% 默认为 \opt{--}。
+%   图、表等浮动体编号中的分隔符。
+%   默认为 \opt{--}。
+% \end{function}
 %
-% \DescribeFunction{equation-numsep}
+% \begin{function}[updated=2022-12-03]{style/equation-numsep}
 %   \begin{sjtusyntax}[emph={[2]equation-numsep}]
 %     equation-numsep = (*\marg{分隔符}*)
 %   \end{sjtusyntax}
-% 公式编号中的分隔符。
-% 默认为 \opt{--}。
+%   公式编号中的分隔符。
+%   默认为 \opt{--}。
+% \end{function}
 %
-% \DescribeFunction{title-logo-color}
+% \begin{function}{style/title-logo-color}
 %   \begin{sjtusyntax}[emph={[2]title-logo-color}]
 %     title-logo-color = (*<(red)|blue|black>*)
 %   \end{sjtusyntax}
-% 选择论文标题页中的校名、校徽的颜色。
+%   选择论文标题页中的校名、校徽的颜色。
+% \end{function}
 %
-%^^A \DescribeFunction{header-logo-color}
+%^^A \begin{function}{style/header-logo-color}
 %^^A   \begin{sjtusyntax}[emph={[2]header-logo-color}]
 %^^A     header-logo-color = (*<(red)|blue|black>*)
 %^^A   \end{sjtusyntax}
 %^^A 选择本科论文页眉中的校标颜色。
 %^^A 注：新模板不再于页眉设置徽标。
+%^^A \end{function}
 %
-% \DescribeFunction{page-number}
+% \begin{function}[added=2022-12-03]{style/page-number}
 %   \begin{sjtusyntax}[emph={[2]page-number}]
 %     page-number = (*\marg{页码设置}*)
 %   \end{sjtusyntax}
-% 设置页码的显示样式，其中 |#1| 代表当前页码。
-% 默认为 |{#1}|，即仅显示页码本身。
+%   设置页码的显示样式，其中 |#1| 代表当前页码。
+%   默认为 |{#1}|，即仅显示页码本身。
+% \end{function}
 %
 % \subsubsection{名称域}
 %
-% \DescribeFunction{name}
+% \begin{function}{name}
 %   \begin{sjtusyntax}[emph={[1]name}]
 %     name = (*\marg{键值列表}*)
 %   \end{sjtusyntax}
-% 该选项包含许多子项目，用于设置论文中一些标题的名称。
-% 具体内容见表 \ref{tab:names}。
+%   选项包含许多子项目，用于设置论文中一些标题的名称。
+%   具体内容见表 \ref{tab:names}。
+% \end{function}
 %
 % \begin{table}[!hbt]
 %   \centering\small
@@ -979,39 +1001,42 @@
 %
 % 在文档开始后进行内容编写，文档内容由 |document| 环境包裹。
 %
-% \DescribeFunction{document}
+% \begin{function}{document}
 %   \begin{sjtusyntax}
 %     \begin{document}
 %       (*\meta{文档内容}*)
 %     \end{document}
 %   \end{sjtusyntax}
+% \end{function}
 %
 % \subsection{标题页和声明页}
 %
-% \DescribeFunction{\maketitle}
+% \begin{function}[updated=2022-12-03]{\maketitle}
 %   \begin{sjtusyntax}[morekeywords={\maketitle}]
 %     \maketitle
 %   \end{sjtusyntax}
-% 生成标题页。
+%   生成标题页。
+% \end{function}
 %
-% \DescribeFunction{\copyrightpage}
+% \begin{function}[updated=2022-12-03]{\copyrightpage}
 %   \begin{sjtusyntax}[morekeywords={\copyrightpage}]
 %     \copyrightpage
 %     \copyrightpage(*\oarg{授权书扫描件}*)
 %   \end{sjtusyntax}
-% 生成空白版权使用授权书。
-% 接受一个可选参数用于插入版权使用授权书扫描件。
+%   生成空白版权使用授权书。
+%   接受一个可选参数用于插入版权使用授权书扫描件。
+% \end{function}
 %
 % \subsection{前文部分}
 %
-% \DescribeFunction{\frontmatter}
+% \begin{function}{\frontmatter}
 %   \begin{sjtusyntax}[morekeywords={\frontmatter}]
 %     \frontmatter
 %   \end{sjtusyntax}
-% 声明前文部分开始。
+%   声明前文部分开始。
+% \end{function}
 %
-% \DescribeFunction{abstract}
-% \DescribeFunction{abstract*}
+% \begin{function}{abstract,abstract*}
 %   \vspace{-1ex}
 %   \begin{sjtusyntax}[emph={[2]abstract,abstract*}]
 %     \begin{abstract}
@@ -1021,17 +1046,17 @@
 %       (*\meta{英文摘要}*)
 %     \end{abstract*}
 %   \end{sjtusyntax}
-% 摘要环境。不带星号和带星号的版本分别用来输入中文摘要和英文摘要。
+%   摘要环境。不带星号和带星号的版本分别用来输入中文摘要和英文摘要。
+% \end{function}
 %
-% \DescribeFunction{\tableofcontents}
-% \DescribeFunction{\listoffigures}
-% \DescribeFunction{\listoffigures*}
-% \DescribeFunction{\listoftables}
-% \DescribeFunction{\listoftables*}
-% \DescribeFunction{\listofalgorithms}
-% \DescribeFunction{\listofalgorithms*}
-% \vspace{-10ex}
+% \begin{function}{\tableofcontents,\listoffigures,\listoffigures*,\listoftables,\listoftables*,\listofalgorithms,\listofalgorithms*}
+%   目录、插图、表格和算法等索引命令如表 \ref{tab:list} 所示，将其插入到期望的
+%   位置即可。带*的命令表示对应的索引表不会出现在目录中。
+%^^A 似乎不再使用插图、表格和算法索引。
+% \end{function}
+%
 % \begin{table}[ht]
+% \vspace{-10ex}
 % \centering\small
 % \begin{threeparttable}
 %   \caption{目录和索引表}
@@ -1054,75 +1079,77 @@
 % \end{threeparttable}
 % \end{table}
 %
-% 目录、插图、表格和算法等索引命令如表 \ref{tab:list} 所示，将其插入到期望的
-% 位置即可。带*的命令表示对应的索引表不会出现在目录中。
+% \subsection{正文部分}
 %
-% \DescribeFunction{nomenclature}
-% \DescribeFunction{nomenclature*}
+% \begin{function}{\mainmatter}
+%   \begin{sjtusyntax}[morekeywords={\mainmatter}]
+%     \mainmatter
+%   \end{sjtusyntax}
+%   声明正文部分开始。正文部分是论文的核心，您可以分章节撰写。
+%   如有需求，也可以采用多文件编译的方式。
+% \end{function}
+%
+% \begin{function}{\footnote}
+%   \begin{sjtusyntax}[morekeywords={\footnote}]
+%     \footnote(*\oarg{脚注编号}*)(*\marg{脚注文字}*)
+%   \end{sjtusyntax}
+%   插入脚注。编号采用中文字体的带圈数字，只支持 1 到 50 号，请保证每页脚注
+%   不超过 50 个，超过 50 号脚注会给出脚注过多的警告。
+%^^A 在一些字体配置下，脚注编号不能超过 20 号，超过 20 号字体集可能不包含该字符，
+%^^A 显示为方框。
+% \end{function}
+%
+% \begin{function}{\appendix}
+%   \begin{sjtusyntax}[morekeywords={\appendix}]
+%     \appendix
+%     \chapter{...}
+%   \end{sjtusyntax}
+%   附录由 \cs{appendix} 命令开启，然后像正文一样书写。
+%^^A 标准新模板将附录编号置于章节标题之后。
+% \end{function}
+%
+% \begin{function}{nomenclature,nomenclature*}
 %   \vspace{-1ex}
 %   \begin{sjtusyntax}[emph={[2]nomenclature,nomenclature*}]
 %     \begin{nomenclature}
 %       (*\meta{符号对照表}*)
 %     \end{nomenclature}
 %   \end{sjtusyntax}
-% 符号对照表环境。带星号的版本不会出现在目录中。
-% 符号对照表环境仅设置标题，内部实现可由用户自行决定。
-% 可以使用 \pkg{longtable}，也可以使用 \pkg{nomencl} 宏包。
-%
-% \subsection{正文部分}
-%
-% \DescribeFunction{\mainmatter}
-%   \begin{sjtusyntax}[morekeywords={\mainmatter}]
-%     \mainmatter
-%   \end{sjtusyntax}
-% 声明正文部分开始。正文部分是论文的核心，您可以分章节撰写。
-% 如有需求，也可以采用多文件编译的方式。
-%
-% \DescribeFunction{\footnote}
-%   \begin{sjtusyntax}[morekeywords={\footnote}]
-%     \footnote(*\oarg{脚注编号}*)(*\marg{脚注文字}*)
-%   \end{sjtusyntax}
-% 插入脚注。编号采用中文字体的带圈数字，只支持 1 到 50 号，请保证每页脚注
-% 不超过 50 个，超过 50 号脚注会给出脚注过多的警告。
-%^^A 在一些字体配置下，脚注编号不能超过 20 号，超过 20 号字体集可能不包含该字符，
-%^^A 显示为方框。
-%
-% \DescribeFunction{\appendix}
-%   \begin{sjtusyntax}[morekeywords={\appendix}]
-%     \appendix
-%     \chapter{...}
-%   \end{sjtusyntax}
-% 附录由 \cs{appendix} 命令开启，然后像正文一样书写。
-%^^A 标准新模板将附录编号置于章节标题之后。
+%   符号对照表环境。带星号的版本不会出现在目录中。
+%   符号对照表环境仅设置标题，内部实现可由用户自行决定。
+%   可以使用 \pkg{longtable}，也可以使用 \pkg{nomencl} 宏包。
+% \end{function}
 %
 % \subsection{后文部分}
 %
-% \DescribeFunction{\backmatter}
+% \begin{function}{\backmatter}
 %   \begin{sjtusyntax}[morekeywords={\backmatter}]
 %     \backmatter
 %   \end{sjtusyntax}
-% 声明后文部分开始。 后文部分包含致谢等。
+%   声明后文部分开始。 后文部分包含致谢等。
+% \end{function}
 %
-% \DescribeFunction{acknowledgements}
+% \begin{function}{acknowledgements}
 %   \begin{sjtusyntax}[emph={[2]acknowledgements}]
 %     \begin{acknowledgements}
 %       (*\meta{致谢内容}*)
 %     \end{acknowledgements}
 %   \end{sjtusyntax}
-% 致谢环境。盲审模式下致谢将被隐去。
+%   致谢环境。盲审模式下致谢将被隐去。
+% \end{function}
 %
-% \DescribeFunction{achievements}
+% \begin{function}{achievements}
 %   \begin{sjtusyntax}[emph={[2]achievements}]
 %     \begin{achievements}
 %       (*\meta{获得的科研成果}*)
 %     \end{achievements}
 %   \end{sjtusyntax}
-% 科研成果环境，内部请采用下面的附录用文献列表环境。
-% 你可以在该环境中使用带星号的节次命令以分隔不同的类型的内容
-%（比如学术论文、专利等）。
+%   科研成果环境，内部请采用下面的附录用文献列表环境。
+%   你可以在该环境中使用带星号的节次命令以分隔不同的类型的内容
+%  （比如学术论文、专利等）。
+% \end{function}
 %
-% \DescribeFunction{bibliolist}
-% \DescribeFunction{bibliolist*}
+% \begin{function}{bibliolist,bibliolist*}
 %   \vspace{-1ex}
 %   \begin{sjtusyntax}[emph={[2]bibliolist,bibliolist*}]
 %      \begin{bibliolist}(*\marg{最长条目编号}*)
@@ -1132,25 +1159,28 @@
 %         \item (*\meta{文献条目（隐去姓名）}*)
 %      \end{bibliolist*}
 %   \end{sjtusyntax}
-% 附录用文献环境，普通模式下显示不带星号的版本中的内容，
-% 盲审模式下显示带星号的版本中的内容。
+%   附录用文献环境，普通模式下显示不带星号的版本中的内容，
+%   盲审模式下显示带星号的版本中的内容。
+% \end{function}
 %
-% \DescribeFunction{resume}
+% \begin{function}{resume}
 %   \begin{sjtusyntax}[emph={[2]resume}]
 %     \begin{resume}
 %       (*\meta{简历内容}*)
 %     \end{resume}
 %   \end{sjtusyntax}
-% 简历环境。盲审模式下简历将被隐去。
+%   简历环境。盲审模式下简历将被隐去。
+% \end{function}
 %
-% \DescribeFunction{digest}
+% \begin{function}{digest}
 %   \begin{sjtusyntax}[emph={[2]digest}]
 %     \begin{digest}
 %       (*\meta{大摘要}*)
 %     \end{digest}
 %   \end{sjtusyntax}
-% 学士论文大摘要。论文类型为学士论文的条件下有效。
+%   学士论文大摘要。论文类型为学士论文的条件下有效。
 %^^A 尚无条件限制。
+% \end{function}
 %
 % \end{documentation}
 %
