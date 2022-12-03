@@ -245,7 +245,7 @@
   language   = [LaTeX]TeX,
   alsoletter = {*, -},
   texcsstyle = *\color{sjtuBluePrimary},
-  emphstyle  = [1]\color{sjtuBlueSecondary!80},
+  emphstyle  = [1]\color{sjtuBluePrimary!80},
   emphstyle  = [2]\color{sjtuBlueSecondary}
 }
 \lstdefinestyle{style@syntax}{
@@ -259,7 +259,7 @@
   keywordstyle  = \bfseries\color{sjtuBluePrimary},
   commentstyle  = \itshape\color{sjtuBlueTertiary!60},
   texcsstyle    = *\color{sjtuBluePrimary},
-  emphstyle     = [1]\color{sjtuBlueSecondary!80},
+  emphstyle     = [1]\color{sjtuBluePrimary!80},
   emphstyle     = [2]\color{sjtuBlueSecondary}
 }
 \newcommand\shellcmd[1]{%
@@ -726,6 +726,254 @@
 % \opt{upint} 使得积分号为正体，
 % \opt{slint} 使得积分号为斜体。
 % 默认为正体。
+%
+% \subsection{论文信息设置}
+%
+% \DescribeFunction{\sjtusetup}
+%   \begin{sjtusyntax}[morekeywords={\sjtusetup}]
+%     \sjtusetup(*\marg{键值列表}*)
+%   \end{sjtusyntax}
+% 本模板提供了一系列选项，可由您自行配置。载入文档类之后，以下
+% 所有选项均可通过统一的命令 \cs{sjtusetup} 来设置。
+%
+% \cs{sjtusetup} 的参数是一组由（英文）逗号隔开的选项列表，列表中的选项通常是
+% \kvopt{\meta{key}}{\meta{value}} 的形式。对于同一项，后面的设置将会覆盖前面的
+% 设置。在下文的说明中，将用\textbf{粗体}表示默认值。\cs{sjtusetup} 支持不同类型
+% 以及多种层次的选项设定。键值列表中，“|=|”左右的空格不影响设置；但需注意，参数
+% 列表中不可以出现空行。
+%
+% \begin{latex}[morekeywords={\sjtusetup}]
+% \sjtusetup{
+%   info = {
+%     title        = {上海交通大学学位论文 \LaTeX{} 模板示例文档},
+%     title*       = {A Sample Document for \LaTeX-based SJTU Thesis Template},
+%     author       = {某\quad{}某},
+%     author*      = {Mo Mo},
+%   },
+%   style = {
+%     float-numsep = {-},
+%   },
+%   name = {
+%     publications = {攻读学位期间完成的论文},
+%   },
+% }
+% \end{latex}
+%
+% \subsubsection{信息域}
+%
+% \DescribeFunction{info}
+%   \begin{sjtusyntax}[emph={[1]info}]
+%     info = (*\marg{键值列表}*)
+%   \end{sjtusyntax}
+% 该选项包含许多子项目，用于录入论文信息。
+% 具体内容见下。以下带“*”的项目表示对应的英文字段。
+%
+% \DescribeFunction{title}
+% \DescribeFunction{title*}
+%   \vspace{-1ex}
+%   \begin{sjtusyntax}[emph={[2]title,title*}]
+%     title  = (*\marg{中文标题}*)
+%     title* = (*\marg{英文标题}*)
+%   \end{sjtusyntax}
+% 论文标题。如果您的标题过长，建议使用“|\\|”手动断行。
+%
+% \clearpage
+%
+% \DescribeFunction{display-title}
+% \DescribeFunction{display-title*}
+%   \vspace{-1ex}
+%   \begin{sjtusyntax}[emph={[2]display-title,display-title*}]
+%     display-title  = (*\marg{中文标题页标题}*)
+%     display-title* = (*\marg{英文标题页标题}*)
+%   \end{sjtusyntax}
+% 标题页论文中题目。默认为跟随对应语言的论文标题。
+%
+% \DescribeFunction{running-title}
+% \DescribeFunction{running-title*}
+%   \vspace{-1ex}
+%   \begin{sjtusyntax}[emph={[2]running-title,running-title*}]
+%     running-title  = (*\marg{中文页眉标题}*)
+%     running-title* = (*\marg{英文页眉标题}*)
+%   \end{sjtusyntax}
+% 论文页眉题目。
+%^^A 默认为跟随对应语言的论文标题。
+%^^A 而论文页眉题目现在应为 “上海交通大学学位论文”。
+%^^A 论文页眉右侧应为章节标题。
+%
+% \DescribeFunction{keywords}
+% \DescribeFunction{keywords*}
+%   \vspace{-1ex}
+%   \begin{sjtusyntax}[emph={[2]keywords,keywords*}]
+%     keywords  = (*\marg{中文关键字}*)
+%     keywords* = (*\marg{英文关键字}*)
+%   \end{sjtusyntax}
+% 关键字列表。各关键字之间需使用英文逗号隔开。
+% 为防止歧义，可以用分组括号“|{...}|”把各字段括起来。
+%
+% \DescribeFunction{author}
+% \DescribeFunction{author*}
+%   \vspace{-1ex}
+%   \begin{sjtusyntax}[emph={[2]author,author*}]
+%     author  = (*\marg{姓名}*)
+%     author* = (*\marg{英文姓名或拼音}*)
+%   \end{sjtusyntax}
+% 作者姓名。
+%
+% \DescribeFunction{id}
+%   \begin{sjtusyntax}[emph={[2]id}]
+%     id  = (*\marg{学号}*)
+%   \end{sjtusyntax}
+% 学号。
+%
+% \DescribeFunction{supervisor}
+% \DescribeFunction{supervisor*}
+% \DescribeFunction{assoc-supervisor}
+% \DescribeFunction{assoc-supervisor*}
+%   \vspace{-3ex}
+%   \begin{sjtusyntax}[emph={[2]supervisor,supervisor*,assoc-supervisor,assoc-supervisor*}]
+%     supervisor        = (*\marg{姓名}*)
+%     supervisor*       = (*\marg{英文姓名或拼音}*)
+%     assoc-supervisor  = (*\marg{姓名}*)
+%     assoc-supervisor* = (*\marg{英文姓名或拼音}*)
+%   \end{sjtusyntax}
+% 导师、副导师姓名。
+%
+% \DescribeFunction{degree}
+% \DescribeFunction{degree*}
+%   \vspace{-1ex}
+%   \begin{sjtusyntax}[emph={[2]degree,degree*}]
+%     degree  = (*\marg{学位中文名称}*)
+%     degree* = (*\marg{学位英文名称}*)
+%   \end{sjtusyntax}
+% 申请学位中英文名称。
+%
+% \DescribeFunction{department}
+% \DescribeFunction{department*}
+%   \vspace{-1ex}
+%   \begin{sjtusyntax}[emph={[2]department,department*}]
+%     department  = (*\marg{院系中文名称}*)
+%     department* = (*\marg{院系英文名称}*)
+%   \end{sjtusyntax}
+% 院系中英文名称。
+%
+% \DescribeFunction{major}
+% \DescribeFunction{major*}
+%   \vspace{-1ex}
+%   \begin{sjtusyntax}[emph={[2]major,major*}]
+%     major  = (*\marg{专业中文名称}*)
+%     major* = (*\marg{专业英文名称}*)
+%   \end{sjtusyntax}
+% 专业中英文名称。
+%
+% \DescribeFunction{fund}
+% \DescribeFunction{fund*}
+%   \vspace{-1ex}
+%   \begin{sjtusyntax}[emph={[2]fund,fund*}]
+%     fund  = (*\marg{资助基金中文名称}*)
+%     fund* = (*\marg{资助基金英文名称}*)
+%   \end{sjtusyntax}
+% 资助基金列表。各资助基金名称之间需使用英文逗号隔开。
+% 为防止歧义，可以用分组括号“|{...}|”把各字段括起来。
+%
+% \subsubsection{样式域}
+%
+% \DescribeFunction{style}
+%   \begin{sjtusyntax}[emph={[1]style}]
+%     style = (*\marg{键值列表}*)
+%   \end{sjtusyntax}
+% 该选项包含许多子项目，用于设置论文样式。具体内容见下。
+%
+% \DescribeFunction{float-font}
+%   \begin{sjtusyntax}[emph={[2]float-font}]
+%     float-font = (*\marg{字体设置}*)
+%   \end{sjtusyntax}
+% 图、表等浮动体的额外字体设置。
+% 默认为 |\zihao{5}|，五号字。
+%
+% \DescribeFunction{fnmark-font}
+%   \begin{sjtusyntax}[emph={[2]fnmark-font}]
+%     fnmark-font = (*\marg{字体设置}*)
+%   \end{sjtusyntax}
+% 脚注的额外字体设置。
+% 默认为空。
+%
+% \DescribeFunction{float-numsep}
+%   \begin{sjtusyntax}[emph={[2]float-numsep}]
+%     float-numsep = (*\marg{分隔符}*)
+%   \end{sjtusyntax}
+% 图、表等浮动体编号中的分隔符。
+% 默认为 \opt{--}。
+%
+% \DescribeFunction{equation-numsep}
+%   \begin{sjtusyntax}[emph={[2]equation-numsep}]
+%     equation-numsep = (*\marg{分隔符}*)
+%   \end{sjtusyntax}
+% 公式编号中的分隔符。
+% 默认为 \opt{--}。
+%
+% \DescribeFunction{title-logo-color}
+%   \begin{sjtusyntax}[emph={[2]title-logo-color}]
+%     title-logo-color = (*<(red)|blue|black>*)
+%   \end{sjtusyntax}
+% 选择论文标题页中的校名、校徽的颜色。
+%
+%^^A \DescribeFunction{header-logo-color}
+%^^A   \begin{sjtusyntax}[emph={[2]header-logo-color}]
+%^^A     header-logo-color = (*<(red)|blue|black>*)
+%^^A   \end{sjtusyntax}
+%^^A 选择本科论文页眉中的校标颜色。
+%^^A 注：新模板不再于页眉设置徽标。
+%
+% \DescribeFunction{page-number}
+%   \begin{sjtusyntax}[emph={[2]page-number}]
+%     page-number = (*\marg{页码设置}*)
+%   \end{sjtusyntax}
+% 设置页码的显示样式，其中 |#1| 代表当前页码。
+% 默认为 |{#1}|，即仅显示页码本身。
+%
+% \subsubsection{名称域}
+%
+% \DescribeFunction{name}
+%   \begin{sjtusyntax}[emph={[1]name}]
+%     name = (*\marg{键值列表}*)
+%   \end{sjtusyntax}
+% 该选项包含许多子项目，用于设置论文中一些标题的名称。
+% 具体内容见表 \ref{tab:names}。
+%
+% \begin{table}[!hbt]
+%   \centering\small
+%   \caption{\opt{name} 选项的默认设置}
+%   \label{tab:names}
+%   \begin{tabular}{l|l|l}
+%     \toprule
+%     \strong{选项} & \strong{|lang = zh|} & \strong{|lang = en|} \\
+%     \midrule
+%      |appendix|         & 附录                                  & Appendix              \\
+%      |contents|         & 目录                  & Contents              \\
+%      |listfigure|       & 插图                              & List of Figures       \\
+%      |listtable|        & 表格                              & List of Tables        \\
+%      |listalgorithm|    & 算法                              & List of Algorithms    \\
+%      |figure|           & 图                                    & Figure                \\
+%      |figure*|          & Figure                                & 图                    \\
+%      |table|            & 表                                    & Table                 \\
+%      |table*|           & Table                                 & 表                    \\
+%      |algorithm|        & 算法                                  & Algorithm             \\
+%      |abbr|             & 缩略语对照表                           & Abbreviation          \\
+%      |nom|              & 主要符号对照表                        & Nomenclature          \\
+%      |summary|          & 全文总结                              & Summary               \\
+%      |bib|              & 参考文献                              & Bibliography          \\
+%      |index|            & 索引                  & Index                 \\
+%      |ack|              & 致谢                  & Acknowledgements      \\
+%      |achv|             & 学术论文和科研成果目录                & List of Research Achievements \\
+%      |resume|           & 个人简历                              & Resume                \\
+%      |digest|           & 大摘要                                & Digest                \\
+%      |proof|            & 证明                                 & Proof                  \\
+%     \bottomrule
+%   \end{tabular}
+% \end{table}
+%^^A nom 现在应为“符号与注记”。
+%^^A achv 现在应为“攻读学位期间学术论文和科研成果目录”。
+%^^A 尚未展示空格设置。
 %
 % \end{documentation}
 %
