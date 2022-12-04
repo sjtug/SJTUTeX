@@ -732,14 +732,14 @@
 %   默认为 \opt{TeX}。
 % \end{function}
 %
-% \begin{function}[added=2022-12-03]{nointlimits, intlimits}
+% \begin{function}[added=2022-12-03]{nointlimits,intlimits}
 %   行间公式中积分号上下限的位置，\pkg{unicode-math} 模式下不适用。
 %   \opt{nointlimits} 使得上下限在积分号右侧，
 %   \opt{intlimits} 使得上下限在积分号上下方。
 %   默认上下限在积分号右侧。
 % \end{function}
 %
-% \begin{function}[added=2022-12-03]{upint, slint}
+% \begin{function}[added=2022-12-03]{upint,slint}
 %   积分号的正体与斜体。
 %   \opt{upint} 使得积分号为正体，
 %   \opt{slint} 使得积分号为斜体。
@@ -1109,7 +1109,8 @@
 %   \begin{sjtusyntax}[morekeywords={\footnote}]
 %     \footnote(*\oarg{脚注编号}*)(*\marg{脚注文字}*)
 %   \end{sjtusyntax}
-%   插入脚注。编号采用中文字体的带圈数字，只支持 1 到 50 号，请保证每页脚注
+%   插入脚注。其中脚注编号参数是可选的，一般不需要输入。
+%   编号采用中文字体的带圈数字，只支持 1 到 50 号，请保证每页脚注
 %   不超过 50 个，超过 50 号脚注会给出脚注过多的警告。
 %^^A 在一些字体配置下，脚注编号不能超过 20 号，超过 20 号字体集可能不包含该字符，
 %^^A 显示为方框。
@@ -1153,6 +1154,7 @@
 %   符号对照表环境。带星号的版本不会出现在目录中。
 %   符号对照表环境仅设置标题，内部实现可由用户自行决定。
 %   可以使用 \pkg{longtable}，也可以使用 \pkg{nomencl} 宏包。
+%^^A 似乎该环境已经非必要，直接以附录形式给出。
 % \end{function}
 %
 % \subsection{后文部分}
