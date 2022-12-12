@@ -690,7 +690,7 @@
 %   找不到定义的数学字体集时的回退选项为 \opt{newtx}。
 %
 %   请注意加载 \opt{stixtwo}，\opt{xits}，\opt{newcm}，\opt{cambria} 数学字体时
-%   会自动加载 \pkg{unicode-math} 宏包。
+%   会自动加载 \pkg{unicode-math} 宏包，此时不能够使用 \pdfLaTeX{} 编译。
 % \end{function}
 %
 % \begin{table}[ht]
@@ -894,6 +894,15 @@
 %   \end{sjtusyntax}
 %   资助基金列表。各资助基金名称之间需使用英文逗号隔开。
 %   为防止歧义，可以用分组括号“|{...}|”把各字段括起来。
+% \end{function}
+%
+% \begin{function}{info/date}
+%   \vspace{-1ex}
+%   \begin{sjtusyntax}[emph={[2]date}]
+%     date  = (*\marg{日期}*)
+%   \end{sjtusyntax}
+%   答辩日期。默认值为文档编译日期。也可以自己指定，要求使用 ISO 格式，
+%   即 |yyyy-mm-dd|。
 % \end{function}
 %
 % \subsubsection{样式域}
