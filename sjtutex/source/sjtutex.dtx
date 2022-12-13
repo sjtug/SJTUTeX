@@ -227,18 +227,23 @@
 %
 % \subsection{内部变量}
 %
-% \begin{variable}{\l_@@_tmpa_tl,\l_@@_tmp_int,\l_@@_tmp_box,\l_@@_tmpa_dim}
+% \begin{variable}{\l_@@_tmpa_bool,\l_@@_tmpa_int,
+% \l_@@_tmpa_tl,\l_@@_tmpb_tl,
+% \l_@@_tmpa_clist,\l_@@_tmpb_clist,
+% \l_@@_tmpa_dim,\l_@@_tmpb_dim,
+% \l_@@_tmpa_skip,\l_@@_tmpa_box}
 % 临时变量。
 %    \begin{macrocode}
-\tl_clear_new:N \l_@@_tmpa_tl
-\tl_clear_new:N \l_@@_tmpb_tl
+\bool_new:N \l_@@_tmpa_bool
+\int_new:N \l_@@_tmpa_int
+\tl_new:N \l_@@_tmpa_tl
+\tl_new:N \l_@@_tmpb_tl
 \clist_new:N \l_@@_tmpa_clist
 \clist_new:N \l_@@_tmpb_clist
-\int_new:N \l_@@_tmp_int
-\bool_new:N \l_@@_tmp_bool
-\box_new:N \l_@@_tmp_box
 \dim_new:N \l_@@_tmpa_dim
 \dim_new:N \l_@@_tmpb_dim
+\skip_new:N \l_@@_tmpa_skip
+\box_new:N \l_@@_tmpa_box
 %    \end{macrocode}
 % \end{variable}
 %
@@ -691,13 +696,13 @@
 %    \begin{macrocode}
 \cs_new:Npn \@@_dim_set_to_wd:Nn #1#2
   {
-    \hbox_set:Nn \l_@@_tmp_box {#2}
-    \dim_set:Nn #1 { \box_wd:N \l_@@_tmp_box }
+    \hbox_set:Nn \l_@@_tmpa_box {#2}
+    \dim_set:Nn #1 { \box_wd:N \l_@@_tmpa_box }
   }
 \cs_new:Npn \@@_dim_add_to_wd:Nn #1#2
   {
-    \hbox_set:Nn \l_@@_tmp_box {#2}
-    \dim_add:Nn #1 { \box_wd:N \l_@@_tmp_box }
+    \hbox_set:Nn \l_@@_tmpa_box {#2}
+    \dim_add:Nn #1 { \box_wd:N \l_@@_tmpa_box }
   }
 \cs_generate_variant:Nn \@@_dim_set_to_wd:Nn { NV }
 \cs_generate_variant:Nn \@@_dim_set_to_wd:Nn { cn }
@@ -723,10 +728,20 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_vspace:N,\@@_vspace:n,\@@_vspace:c}
-% 类似 \LaTeXe{} 中的 \tn{vspace*}。
+% \begin{macro}{\@@_vspace:N,\@@_vspace:n,\@@_vspace_r:N,\@@_vspace_r:n}
+% 类似 \LaTeXe{} 中的 \tn{vspace} 和 \tn{vspace*}。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_vspace:N #1
+  {
+    \skip_vertical:N #1
+    \skip_vertical:N \c_zero_skip
+  }
+\cs_new_protected:Npn \@@_vspace:n #1
+  {
+    \skip_set:Nn \l_@@_tmpa_skip {#1}
+    \@@_vspace:N \l_@@_tmpa_skip
+  }
+\cs_new_protected:Npn \@@_vspace_r:N #1
   {
     \dim_set_eq:NN \l_@@_tmpa_dim \prevdepth
     \hrule height \c_zero_dim
@@ -735,12 +750,11 @@
     \skip_vertical:N \c_zero_skip
     \dim_set_eq:NN \prevdepth \l_@@_tmpa_dim
   }
-\cs_new_protected:Npn \@@_vspace:n #1
+\cs_new_protected:Npn \@@_vspace_r:n #1
   {
-    \skip_set:Nn \l_@@_tmp_skip {#1}
-    \@@_vspace:N \l_@@_tmp_skip
+    \skip_set:Nn   \l_@@_tmpa_skip {#1}
+    \@@_vspace_r:N \l_@@_tmpa_skip
   }
-\cs_generate_variant:Nn \@@_vspace:N { c }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -753,15 +767,15 @@
       {
         \mode_leave_vertical:
         \group_begin:
-          \bool_set_false:N \l_@@_tmp_bool
+          \bool_set_false:N \l_@@_tmpa_bool
           \cs_set_eq:NN \SJTU@CJK@filltwosidesSymbol \CJKsymbol
           \cs_set:Npn \CJKsymbol ##1
             {
-              \bool_if:NTF \l_@@_tmp_bool
+              \bool_if:NTF \l_@@_tmpa_bool
                 { \hfil \SJTU@CJK@filltwosidesSymbol { ##1 } }
                 {
                   \SJTU@CJK@filltwosidesSymbol { ##1 }
-                  \bool_set_true:N \l_@@_tmp_bool
+                  \bool_set_true:N \l_@@_tmpa_bool
                 }
             }
           \hbox_to_wd:nn {#1} {#2}
@@ -2190,39 +2204,23 @@
     align       =
       {
         left    =
-          \cs_set_protected:Npn \l_@@_component_align:n #1
-            {
-              \group_begin:
-                \flushleft #1 \endflushleft
-              \group_end:
-            },
+          \cs_set_eq:NN \l_@@_component_align: \raggedright ,
         right   =
-          \cs_set_protected:Npn \l_@@_component_align:n #1
-            {
-              \group_begin:
-                \flushright #1 \endflushright
-              \group_end:
-            },
+          \cs_set_eq:NN \l_@@_component_align: \raggedleft ,
         center  =
-          \cs_set_protected:Npn \l_@@_component_align:n #1
-            {
-              \group_begin:
-                \center #1 \endcenter
-              \group_end:
-            },
+          \cs_set_eq:NN \l_@@_component_align: \centering ,
         normal  =
-          \cs_set_protected:Npn \l_@@_component_align:n #1
-            { \group_begin: #1 \group_end: },
+          \cs_set_eq:NN \l_@@_component_align: \prg_do_nothing:
       }
   }
   {
     \AssignTemplateKeys
-    \l_@@_component_align:n
-      {
-        \l_@@_component_format_tl
-        \l_@@_component_content_tl
-        \par
-      }
+    \group_begin:
+      \l_@@_component_align:
+      \l_@@_component_format_tl
+      \l_@@_component_content_tl
+      \par
+    \group_end:
     \@@_vspace:N \l_@@_component_bottom_skip
   }
 \DeclareTemplateInterface { sjtu } { page } { 0 }
@@ -2253,7 +2251,13 @@
     \bool_if:NT \l_@@_page_bookmark_bool
       { \@@_pdf_bookmark:nn { 0 } { \l_@@_page_bookmark_text_tl } }
     \exp_args:No \thispagestyle { \l_@@_page_style_tl }
-    \@@_vspace:N \l_@@_page_top_skip
+%    \end{macrocode}
+% 移除页面顶部 \tn{vspace*} 的多余空白。
+% 见 \url{https://tex.stackexchange.com/questions/247513}。
+%    \begin{macrocode}
+    \@@_vspace_r:N \l_@@_page_top_skip
+    \@@_vspace:n { - \parskip      }
+    \@@_vspace:n { - \baselineskip }
     \group_begin:
       \l_@@_page_format_tl
       \clist_map_inline:Nn \l_@@_page_components_clist
@@ -2303,6 +2307,14 @@
   }
 \clist_map_inline:nn
   {
+    { badge   }
+      {
+        content     =
+          {
+            \includegraphics [ width = 3 cm ]
+              { sjtu-vi-badge- \l_@@_style_title_logo_color_tl .pdf }
+          }
+      },
     { subject }
       {
         format      = \zihao { -2 } ,
@@ -2337,7 +2349,7 @@
     style         = SJTU@fund@zh ,
     format        = \linespread { 1.56 } ,
     prefix        = title / zh ,
-    components    = { subject, title, info, date }
+    components    = { badge, subject, title, info, date }
   }
 \cs_new_protected:Npn \@@_titlepage_info_en:
   {
@@ -2434,13 +2446,14 @@
             \c_@@_name_univ_zh_tl \\
             \c_@@_name_thesis_zh_tl
             \c_@@_name_orig_decl_zh_tl
-          }
+          } ,
+        bottom-skip = 18 bp
       },
     { orig / text  }
       {
         format      = \zihao { -4 } ,
         content     = \c_@@_orig_decl_text_zh_tl ,
-        bottom-skip = 2 ex ,
+        bottom-skip = 3 ex ,
         align       = normal
       },
     { orig / sign  }
@@ -2451,7 +2464,7 @@
             \@@_signature:N \c_@@_name_decl_author_zh_tl
             \skip_horizontal:n { 4 em } \hbox:n { }
           } ,
-        bottom-skip = 20 bp ,
+        bottom-skip = 6 ex ,
         align       = right
       },
     { auth / title }
@@ -2462,13 +2475,14 @@
             \c_@@_name_univ_zh_tl \\
             \c_@@_name_thesis_zh_tl
             \c_@@_name_auth_decl_zh_tl
-          }
+          } ,
+        bottom-skip = 18 bp
       },
     { auth / text  }
       {
         format      = \zihao { -4 } ,
         content     = \c_@@_auth_decl_text_zh_tl ,
-        bottom-skip = 2 ex ,
+        bottom-skip = 3 ex ,
         align       = normal
       },
     { auth / sign  }

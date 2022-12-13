@@ -4,7 +4,7 @@ module             = "sjtutex"
 
 sourcefiledir      = "source"
 sourcefiles        = {"sjtutex.dtx","sjtu-vi-*.pdf"}
-installfiles       = {"*.cls","*.def","*.cfg","*.dtx","*.pdf"}
+installfiles       = {"*.cls","*.def","*.cfg","*.pdf"}
 
 docfiledir         = "doc"
 
