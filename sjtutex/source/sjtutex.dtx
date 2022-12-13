@@ -886,12 +886,12 @@
           }
           {
             \int_case:nnF { \int_mod:nn {#1} { 10 } }
-            {
-              { 1 } { st }
-              { 2 } { nd }
-              { 3 } { rd }
-            }
-            { th }
+              {
+                { 1 } { st }
+                { 2 } { nd }
+                { 3 } { rd }
+              }
+              { th }
           }
       }
   }
@@ -1021,15 +1021,14 @@
     \bool_if:NT \g_@@_review_bool
       {
         \clist_map_inline:nn
+          { author, supervisor, assoc-supervisor, co-supervisor }
           {
-            author, author*, id, supervisor, supervisor*,
-            assoc-supervisor, assoc-supervisor*,
-            co-supervisor, co-supervisor*
+            \tl_clear:c { l_@@_info_ #1 _zh_tl }
+            \tl_clear:c { l_@@_info_ #1 _en_tl }
           }
-          { \keys_set:nn { sjtu / info } { #1 = \c_empty_tl    } }
-        \clist_map_inline:nn
-          { fund, fund* }
-          { \keys_set:nn { sjtu / info } { #1 = \c_empty_clist } }
+        \tl_clear:N \l_@@_info_id_tl
+        \clist_clear:N \l_@@_info_fund_zh_clist
+        \clist_clear:N \l_@@_info_fund_en_clist
       }
   }
 %    \end{macrocode}
