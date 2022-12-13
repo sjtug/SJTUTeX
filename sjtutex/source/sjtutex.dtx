@@ -2514,13 +2514,15 @@
   }
 \NewDocumentCommand \copyrightpage { O{ } }
   {
-    \tl_if_blank:nTF {#1}
-      { \UseInstance { sjtu } { copyright } }
+    \bool_if:NF \g_@@_review_bool
       {
-        \@@_pdf_bookmark:nn { 0 } { \c_@@_name_decl_tl }
-        \includepdf {#1}
+        \tl_if_blank:nTF {#1}
+          { \UseInstance { sjtu } { copyright } }
+          {
+            \@@_pdf_bookmark:nn { 0 } { \c_@@_name_decl_tl }
+            \includepdf {#1}
+          }
       }
-
   }
 %    \end{macrocode}
 %
