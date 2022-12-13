@@ -601,9 +601,9 @@
 %
 % \begin{function}[updated=2022-12-03]{type}
 %   \begin{sjtusyntax}[emph={[1]type}]
-%     type = (*<doctor|(master)|bachelor>*)
+%     type = (*<bachelor|(master)|doctor>*)
 %   \end{sjtusyntax}
-%   论文类型。三种选项分别代表博士学位论文、硕士学位论文、本科毕业论文。
+%   论文类型。三种选项分别代表学士学位论文、硕士学位论文、博士学位论文。
 % \end{function}
 %
 % \begin{function}{lang}
@@ -847,16 +847,19 @@
 %   学号。
 % \end{function}
 %
-% \begin{function}[updated=2022-12-03]{info/supervisor,info/supervisor*,
-%   info/assoc-supervisor,info/assoc-supervisor*}
+% \begin{function}[updated=2022-12-13]{info/supervisor,info/supervisor*,
+%   info/assoc_supervisor,info/assoc_supervisor*,
+%   info/co-supervisor,info/co-supervisor*}
 %   \vspace{-1ex}
-%   \begin{sjtusyntax}[emph={[2]supervisor,supervisor*,assoc-supervisor,assoc-supervisor*}]
+%   \begin{sjtusyntax}[emph={[2]supervisor,supervisor*,assoc-supervisor,assoc-supervisor*,co-supervisor,co-supervisor*}]
 %     supervisor        = (*\marg{姓名}*)
 %     supervisor*       = (*\marg{英文姓名或拼音}*)
 %     assoc-supervisor  = (*\marg{姓名}*)
 %     assoc-supervisor* = (*\marg{英文姓名或拼音}*)
+%     co-supervisor     = (*\marg{姓名}*)
+%     co-supervisor*    = (*\marg{英文姓名或拼音}*)
 %   \end{sjtusyntax}
-%   导师、副导师姓名。
+%   导师、副导师、联合导师姓名。
 % \end{function}
 %
 % \begin{function}{info/degree,info/degree*}
