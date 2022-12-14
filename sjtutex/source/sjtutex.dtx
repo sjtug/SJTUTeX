@@ -625,7 +625,6 @@
 %     zihao = (*<(-4)|5>*)
 %   \end{sjtusyntax}
 % 论文默认字号。小四号或五号，默认为小四号。
-%^^A 新模板正文小四，参考文献五号字。虽然正文可以是五号字。
 % \end{function}
 %
 % \begin{function}[added=2022-12-03]{lineskip}
@@ -633,7 +632,6 @@
 %     lineskip = (*\marg{长度}*)
 %   \end{sjtusyntax}
 % 行间距。默认跟随字号设置。
-%^^A 新模板正文固定行间距为 20 磅，参考文献为单倍行距。
 % \end{function}
 %
 % \begin{function}{oneside, twoside}
@@ -809,17 +807,15 @@
 %   标题页论文中题目。默认为跟随对应语言的论文标题。
 % \end{function}
 %
-% \begin{function}{info/running-title,info/running-title*}
-%   \vspace{-1ex}
-%   \begin{sjtusyntax}[emph={[2]running-title,running-title*}]
-%     running-title  = (*\marg{中文页眉标题}*)
-%     running-title* = (*\marg{英文页眉标题}*)
-%   \end{sjtusyntax}
-%   论文页眉题目。
-%^^A 默认为跟随对应语言的论文标题。
-%^^A 而论文页眉题目现在应为 “上海交通大学学位论文”。
-%^^A 论文页眉右侧应为章节标题。
-% \end{function}
+%^^A \begin{function}{info/running-title,info/running-title*}
+%^^A   \vspace{-1ex}
+%^^A   \begin{sjtusyntax}[emph={[2]running-title,running-title*}]
+%^^A     running-title  = (*\marg{中文页眉标题}*)
+%^^A     running-title* = (*\marg{英文页眉标题}*)
+%^^A   \end{sjtusyntax}
+%^^A   论文页眉题目。
+%^^A   该选项暂时无效。
+%^^A \end{function}
 %
 % \begin{function}{info/keywords,info/keywords*}
 %   \vspace{-1ex}
@@ -851,7 +847,8 @@
 %   info/assoc_supervisor,info/assoc_supervisor*,
 %   info/co-supervisor,info/co-supervisor*}
 %   \vspace{-1ex}
-%   \begin{sjtusyntax}[emph={[2]supervisor,supervisor*,assoc-supervisor,assoc-supervisor*,co-supervisor,co-supervisor*}]
+%   \begin{sjtusyntax}[emph={[2]supervisor,supervisor*,assoc-supervisor,
+%     assoc-supervisor*,co-supervisor,co-supervisor*}]
 %     supervisor        = (*\marg{姓名}*)
 %     supervisor*       = (*\marg{英文姓名或拼音}*)
 %     assoc-supervisor  = (*\marg{姓名}*)
@@ -902,7 +899,7 @@
 % \begin{function}{info/date}
 %   \vspace{-1ex}
 %   \begin{sjtusyntax}[emph={[2]date}]
-%     date  = (*\marg{日期}*)
+%     date = (*\marg{日期}*)
 %   \end{sjtusyntax}
 %   答辩日期。默认值为文档编译日期。也可以自己指定，要求使用 ISO 格式，
 %   即 |yyyy-mm-dd|。
@@ -953,7 +950,7 @@
 %   \begin{sjtusyntax}[emph={[2]title-logo-color}]
 %     title-logo-color = (*<(red)|blue|black>*)
 %   \end{sjtusyntax}
-%   选择论文标题页中的校名、校徽的颜色。
+%   选择论文标题页中校徽的颜色。
 % \end{function}
 %
 %^^A \begin{function}{style/header-logo-color}
@@ -1021,9 +1018,6 @@
 %     \bottomrule
 %   \end{tabular}
 % \end{table}
-%^^A nom 现在应为“符号与注记”。
-%^^A achv 现在应为“攻读学位期间学术论文和科研成果目录”。
-%^^A 尚未展示空格设置。
 %
 % \section{内容编写}
 %
@@ -1077,7 +1071,8 @@
 %   摘要环境。不带星号和带星号的版本分别用来输入中文摘要和英文摘要。
 % \end{function}
 %
-% \begin{function}{\tableofcontents,\listoffigures,\listoffigures*,\listoftables,\listoftables*,\listofalgorithms,\listofalgorithms*}
+% \begin{function}{\tableofcontents,\listoffigures,\listoffigures*,
+%   \listoftables,\listoftables*,\listofalgorithms,\listofalgorithms*}
 %   目录、插图、表格和算法等索引命令如表 \ref{tab:list} 所示，将其插入到期望的
 %   位置即可。带*的命令表示对应的索引表不会出现在目录中。
 %^^A 似乎不再使用插图、表格和算法索引。
@@ -1122,10 +1117,13 @@
 %     \footnote(*\oarg{脚注编号}*)(*\marg{脚注文字}*)
 %   \end{sjtusyntax}
 %   插入脚注。其中脚注编号参数是可选的，一般不需要输入。
-%   编号采用中文字体的带圈数字，只支持 1 到 50 号，请保证每页脚注
-%   不超过 50 个，超过 50 号脚注会给出脚注过多的警告。
-%^^A 在一些字体配置下，脚注编号不能超过 20 号，超过 20 号字体集可能不包含该字符，
-%^^A 显示为方框。
+%   编号采用中文字体的带圈数字，只支持 1 到 50 号，请保证每页脚注不超过 50 个，超过 50 号
+%   脚注会给出脚注过多的警告。
+%   在一些字体配置下，脚注编号不能超过 10 号或 20 号，否则字体集可能不包含该字符，而无法正
+%   常显示。
+%^^A   根据
+%^^A   \href{https://stone-zeng.github.io/2019-02-09-circled-numbers/}{《带圈数字》}
+%^^A   一文，
 % \end{function}
 %
 % \begin{function}{assumption,axiom,conjecture,corollary,definition,example,
@@ -1166,7 +1164,6 @@
 %   符号对照表环境。带星号的版本不会出现在目录中。
 %   符号对照表环境仅设置标题，内部实现可由用户自行决定。
 %   可以使用 \pkg{longtable}，也可以使用 \pkg{nomencl} 宏包。
-%^^A 似乎该环境已经非必要，直接以附录形式给出。
 % \end{function}
 %
 % \subsection{后文部分}
