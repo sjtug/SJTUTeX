@@ -598,15 +598,8 @@
     bicaption,
     subcaption,
     xcolor,
-    graphicx,
-    pdfpages,
-    silence
+    graphicx
   }
-%    \end{macrocode}
-%
-% 过滤不必要的警告。
-%    \begin{macrocode}
-\WarningFilter { pageslts } { Package~ pdfpages~ detected. }
 %    \end{macrocode}
 %
 % \subsection{内部函数}
@@ -2501,6 +2494,11 @@
         auth / title, auth / text, auth / sign
       }
   }
+\msg_new:nnn { sjtuthesis } { require-pdfpages }
+  {
+    Add~"\token_to_str:N \usepackage{pdfpages}"~ in~ your~ preamble \\
+    before~ inserting~ pages~ of~ external~ PDF.
+  }
 \NewDocumentCommand \copyrightpage { O{ } }
   {
     \bool_if:NF \g_@@_review_bool
@@ -2508,8 +2506,15 @@
         \tl_if_blank:nTF {#1}
           { \UseInstance { sjtu } { copyright } }
           {
-            \@@_pdf_bookmark:nn { 0 } { \c_@@_name_decl_tl }
-            \includepdf {#1}
+            \cs_if_exist:NTF \includepdf
+              {
+                \@@_pdf_bookmark:nn { 0 } { \c_@@_name_decl_tl }
+                \includepdf {#1}
+              }
+              {
+                \msg_warning:nn { sjtuthesis } { require-pdfpages }
+                \UseInstance { sjtu } { copyright }
+              }
           }
       }
   }
