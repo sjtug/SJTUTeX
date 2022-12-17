@@ -59,8 +59,12 @@
     \file{sjtureport.cls}            {\from{\jobname.dtx}{class,report}}
     \file{sjtuarticle.cls}           {\from{\jobname.dtx}{class,article}}
     \file{sjtu-name-thesis.cfg}      {\from{\jobname.dtx}{name,thesis}}
-    \file{sjtu-lang-zh.cfg}          {\from{\jobname.dtx}{lang,zh}}
-    \file{sjtu-lang-en.cfg}          {\from{\jobname.dtx}{lang,en}}
+    \file{sjtu-lang-thesis-zh.cfg}   {\from{\jobname.dtx}{lang,thesis,zh}}
+    \file{sjtu-lang-thesis-en.cfg}   {\from{\jobname.dtx}{lang,thesis,en}}
+    \file{sjtu-lang-report-zh.cfg}   {\from{\jobname.dtx}{lang,report,zh}}
+    \file{sjtu-lang-report-en.cfg}   {\from{\jobname.dtx}{lang,report,en}}
+    \file{sjtu-lang-article-zh.cfg}  {\from{\jobname.dtx}{lang,article,zh}}
+    \file{sjtu-lang-article-en.cfg}  {\from{\jobname.dtx}{lang,article,en}}
     \file{sjtu-text-font-newtx.def}  {\from{\jobname.dtx}{textfont,newtx}}
     \file{sjtu-text-font-newpx.def}  {\from{\jobname.dtx}{textfont,newpx}}
     \file{sjtu-text-font-lm.def}     {\from{\jobname.dtx}{textfont,lm}}
@@ -130,10 +134,18 @@
 %<class&article>\ProvidesExplClass{sjtuarticle}
 %<name&thesis>  {Name config for thesis template (SJTUTeX)}
 %<name&thesis>\ProvidesExplFile{sjtu-name-thesis.cfg}
-%<lang&zh>  {Chinese language specific config (SJTUTeX)}
-%<lang&zh>\ProvidesExplFile{sjtu-lang-zh.cfg}
-%<lang&en>  {English language specific config (SJTUTeX)}
-%<lang&en>\ProvidesExplFile{sjtu-lang-en.cfg}
+%<lang&thesis&zh>  {SJTUThesis Chinese config (SJTUTeX)}
+%<lang&thesis&zh>\ProvidesExplFile{sjtu-lang-thesis-zh.cfg}
+%<lang&thesis&en>  {SJTUThesis English config (SJTUTeX)}
+%<lang&thesis&en>\ProvidesExplFile{sjtu-lang-thesis-en.cfg}
+%<lang&report&zh>  {SJTUReport Chinese config (SJTUTeX)}
+%<lang&report&zh>\ProvidesExplFile{sjtu-lang-report-zh.cfg}
+%<lang&report&en>  {SJTUReport English config (SJTUTeX)}
+%<lang&report&en>\ProvidesExplFile{sjtu-lang-report-en.cfg}
+%<lang&article&zh>  {SJTUArticle Chinese config (SJTUTeX)}
+%<lang&article&zh>\ProvidesExplFile{sjtu-lang-article-zh.cfg}
+%<lang&article&en>  {SJTUArticle English config (SJTUTeX)}
+%<lang&article&en>\ProvidesExplFile{sjtu-lang-article-en.cfg}
 %<textfont&newtx>  {New TX text fonts definition (SJTUTeX)}
 %<textfont&newtx>\ProvidesExplFile{sjtu-text-font-newtx.def}
 %<textfont&newpx>  {New PX text fonts definition (SJTUTeX)}
@@ -550,8 +562,8 @@
       }
     }                     { unicode-math },
     { amsmath, thmmarks } { ntheorem     },
-    { chapter           } { algorithm    },
-    { algochapter       } { algorithm2e  }
+%<thesis>    { chapter           } { algorithm    },
+%<thesis>    { algochapter       } { algorithm2e  }
   }
 \int_compare:nNnT { \g_@@_math_style_int } > { 1 }
   {
@@ -914,19 +926,9 @@
 % \end{macro}
 %
 % 载入名称配置。
-% \begin{macro}[int]{\@@_load_config:}
 %    \begin{macrocode}
-\cs_new_protected:Nn \@@_load_config:
-  {
-    \ctex_push_file:
-%<thesis>      \file_input:n { sjtu-name-thesis.cfg }
-      \file_input:n { sjtu-lang- \g_@@_lang_tl .cfg }
-    \ctex_pop_file:
-  }
-\@onlypreamble \@@_load_config:
-\@@_load_config:
+%<thesis>\file_input:n { sjtu-name-thesis.cfg }
 %    \end{macrocode}
-% \end{macro}
 %
 % \subsection{用户接口}
 %
@@ -1151,7 +1153,8 @@
     index          .tl_set:N = \indexname ,
     appendix       .tl_set:N = \appendixname ,
     proof          .tl_set:N = \proofname ,
-    bib            .tl_set:N = \bibname
+%<!article>    bib            .tl_set:N = \bibname
+%<article>    bib            .tl_set:N = \refname
   }
 %    \end{macrocode}
 %
@@ -1213,12 +1216,19 @@
 %</lang&zh>
 %    \end{macrocode}
 %
+% 载入语言配置。
+%    \begin{macrocode}
+%<*class>
+%<thesis>\file_input:n { sjtu-lang-thesis- \g_@@_lang_tl .cfg }
+%<report>\file_input:n { sjtu-lang-report- \g_@@_lang_tl .cfg }
+%<article>\file_input:n { sjtu-lang-article- \g_@@_lang_tl .cfg }
+%    \end{macrocode}
+%
 % \subsection{字体配置}
 %
 % \begin{macro}[int]{\@@_fontset_error:nn}
 % 字库不可用时给出紧急错误信息，停止读取定义文件。
 %    \begin{macrocode}
-%<*class>
 \cs_new_protected:Npn \@@_fontset_error:nn #1#2
   { \msg_error:nnnn { sjtutex } { font-unavailable } {#1} {#2} }
 \msg_new:nnn { sjtutex } { font-unavailable }
@@ -2034,6 +2044,7 @@
 %
 % 设置章节标题样式。
 %    \begin{macrocode}
+%<*!article>
 \ctex_set:nn { chapter }
   {
     pagestyle   = SJTU@null ,
@@ -2048,14 +2059,15 @@
     aftername   = \quad ,
     afterindent = true
   }
+%</!article>
 %</class>
-%<*lang&zh>
+%<*lang&zh&(!article)>
 \ctex_set:nn { chapter }
   {
     name        = { 第 , 章 } ,
     number      = \chinese { chapter }
   }
-%</lang&zh>
+%</lang&zh&(!article)>
 %<*class>
 \ctex_set:nn { section }
   {
