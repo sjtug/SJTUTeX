@@ -56,6 +56,8 @@
 \generate{
   \usedir{tex/latex/sjtutex}
     \file{sjtuthesis.cls}            {\from{\jobname.dtx}{class,thesis}}
+    \file{sjtureport.cls}            {\from{\jobname.dtx}{class,report}}
+    \file{sjtuarticle.cls}           {\from{\jobname.dtx}{class,article}}
     \file{sjtu-name-thesis.cfg}      {\from{\jobname.dtx}{name,thesis}}
     \file{sjtu-lang-zh.cfg}          {\from{\jobname.dtx}{lang,zh}}
     \file{sjtu-lang-en.cfg}          {\from{\jobname.dtx}{lang,en}}
@@ -98,6 +100,8 @@
 \Msg{* The recommended directory is TDS:tex/latex/sjtutex        *}
 \Msg{*                                                           *}
 \Msg{*     sjtuthesis.cls                                        *}
+\Msg{*     sjtureport.cls                                        *}
+\Msg{*     sjtuarticle.cls                                       *}
 \Msg{*     ...                                                   *}
 \Msg{*                                                           *}
 \Msg{* To produce the documentation, run the file sjtutex.dtx    *}
@@ -120,6 +124,10 @@
 %<+!driver>\GetIdInfo$Id$
 %<class&thesis>  {Thesis template for Shanghai Jiao Tong University}
 %<class&thesis>\ProvidesExplClass{sjtuthesis}
+%<class&report>  {Report template for Shanghai Jiao Tong University}
+%<class&report>\ProvidesExplClass{sjtureport}
+%<class&article>  {Article template for Shanghai Jiao Tong University}
+%<class&article>\ProvidesExplClass{sjtuarticle}
 %<name&thesis>  {Name config for thesis template (SJTUTeX)}
 %<name&thesis>\ProvidesExplFile{sjtu-name-thesis.cfg}
 %<lang&zh>  {Chinese language specific config (SJTUTeX)}
@@ -320,16 +328,16 @@
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}{\g_@@_ctexbook_options_clist}
-% 保存由 \cls{sjtuthesis} 传入 \cls{ctexbook} 文档类的选项列表。
+% \begin{variable}{\g_@@_options_to_ctex_class_clist}
+% 保存由 \pkg{sjtutex} 传入 \pkg{ctex} 文档类的选项列表。
 %    \begin{macrocode}
-\clist_new:N \g_@@_ctexbook_options_clist
+\clist_new:N \g_@@_options_to_ctex_class_clist
 %    \end{macrocode}
 %
-% 默认 \cls{ctexbook} 文档类的选项：
+% 默认 \pkg{ctex} 文档类的选项：
 % 使用 UTF8 编码，不调整基础类的版式以及不载入 \pkg{ctex} 字体预设配置。
 %    \begin{macrocode}
-\clist_set:Nn \g_@@_ctexbook_options_clist
+\clist_set:Nn \g_@@_options_to_ctex_class_clist
   { UTF8, scheme = plain, fontset = none }
 %    \end{macrocode}
 % \end{variable}
@@ -345,7 +353,8 @@
 % 是否开启双页模式。
 %    \begin{macrocode}
 \bool_new:N \g_@@_twoside_bool
-\bool_set_false:N \g_@@_twoside_bool
+%<thesis>\bool_set_true:N \g_@@_twoside_bool
+%<!thesis>\bool_set_false:N \g_@@_twoside_bool
 %    \end{macrocode}
 % \end{variable}
 %
@@ -353,7 +362,8 @@
 % 是否在奇数页开始新章。
 %    \begin{macrocode}
 \bool_new:N \g_@@_openright_bool
-\bool_set_false:N \g_@@_openright_bool
+%<thesis>\bool_set_true:N \g_@@_openright_bool
+%<!thesis>\bool_set_false:N \g_@@_openright_bool
 %    \end{macrocode}
 % \end{variable}
 %
@@ -404,7 +414,8 @@
         \dim_gset:Nn \g_@@_font_size_dim         { 10.5 bp }
         \dim_gset:Nn \g_@@_default_line_skip_dim { 15.6 bp }
       } ,
-    zihao .initial:n = { -4 } ,
+%<!article>    zihao .initial:n = { -4 } ,
+%<article>    zihao .initial:n = {  5 } ,
 %    \end{macrocode}
 %
 % 行间距。
@@ -491,7 +502,7 @@
 %
 % 设置字号。
 %    \begin{macrocode}
-\clist_put_right:Nx \g_@@_ctexbook_options_clist
+\clist_put_right:Nx \g_@@_options_to_ctex_class_clist
   { zihao = \g_@@_zihao_tl }
 %    \end{macrocode}
 %
@@ -501,16 +512,16 @@
   { \dim_set_eq:NN \g_@@_line_skip_dim \g_@@_default_line_skip_dim }
 \fp_set:Nn \g_@@_line_spread_fp
   { \dim_ratio:nn { \g_@@_line_skip_dim } { \g_@@_font_size_dim } / 1.2 }
-\clist_put_right:Nx \g_@@_ctexbook_options_clist
+\clist_put_right:Nx \g_@@_options_to_ctex_class_clist
   { linespread = \fp_use:N \g_@@_line_spread_fp }
 %    \end{macrocode}
 %
 % 页面模式设置。
 %    \begin{macrocode}
 \bool_if:NF \g_@@_twoside_bool
-  { \clist_put_right:Nn \g_@@_ctexbook_options_clist { oneside } }
+  { \clist_put_right:Nn \g_@@_options_to_ctex_class_clist { oneside } }
 \bool_if:NF \g_@@_openright_bool
-  { \clist_put_right:Nn \g_@@_ctexbook_options_clist { openany } }
+  { \clist_put_right:Nn \g_@@_options_to_ctex_class_clist { openany } }
 %    \end{macrocode}
 %
 % \subsection{载入宏包、文档类}
@@ -518,8 +529,10 @@
 % 将选项传入 \pkg{ctex} 文档类。
 %    \begin{macrocode}
 \exp_args:No \PassOptionsToClass
-  { \g_@@_ctexbook_options_clist }
-  { ctexbook }
+  { \g_@@_options_to_ctex_class_clist }
+%<thesis>  { ctexbook }
+%<report>  { ctexrep }
+%<article>  { ctexart }
 %    \end{macrocode}
 %
 % 传入各宏包选项。
@@ -577,12 +590,14 @@
   { \PassOptionsToPackage #1 }
 %    \end{macrocode}
 %
-% 载入 \cls{ctexbook} 文档类。
-% 在使用 \XeLaTeX{} 编译时，\cls{ctexbook} 的底层将调用 \pkg{xeCJK}
+% 载入 \pkg{ctex} 文档类。
+% 在使用 \XeLaTeX{} 编译时，\pkg{ctex} 的底层将调用 \pkg{xeCJK}
 % 宏包；而在使用 \LuaLaTeX{} 编译时，则将调用 \pkg{LuaTeX-ja} 宏包。
-% 两种情况下 \cls{ctexbook} 均会调用 \pkg{fontspec} 宏包。
+% 两种情况下 \pkg{ctex} 均会调用 \pkg{fontspec} 宏包。
 %    \begin{macrocode}
-\LoadClass { ctexbook }
+%<thesis>\LoadClass { ctexbook }
+%<report>\LoadClass { ctexrep }
+%<article>\LoadClass { ctexart }
 %    \end{macrocode}
 %
 % 载入各宏包。
@@ -1885,7 +1900,6 @@
   }
 %    \end{macrocode}
 %
-%
 % \subsection{页眉页脚}
 %
 % \pkg{ctex} 宏包使用 \opt{heading} 选项后，会把页面格式设置为 |headings|。
@@ -1933,6 +1947,7 @@
 %
 % |SJTU@fund@zh| 和 |SJTU@fund@en| 样式，页脚添加资助基金信息。
 %    \begin{macrocode}
+%<*thesis>
 \clist_map_inline:nn
   { zh, en }
   {
@@ -1949,6 +1964,7 @@
         \cs_set_eq:NN \@evenfoot \@oddfoot
       }
   }
+%</thesis>
 %    \end{macrocode}
 %
 % 空白页清空页眉页脚。
@@ -1969,12 +1985,14 @@
 % 文档开始使用拉丁字母编码。
 %    \begin{macrocode}
 \AtBeginDocument
-  { \pagenumbering { Alph } }
+%<thesis>  { \pagenumbering { Alph } }
+%<!thesis>  { \pagenumbering { arabic } }
 %    \end{macrocode}
 %
 % \begin{macro}{\frontmatter}
 % 前置部分，大写罗马数字编码。
 %    \begin{macrocode}
+%<*thesis>
 \RenewDocumentCommand \frontmatter { }
   {
     \cleardoublepage
@@ -2009,6 +2027,7 @@
     \@mainmatterfalse
   }
 %    \end{macrocode}
+%</thesis>
 % \end{macro}
 %
 % \subsection{章节标题结构}
@@ -2080,6 +2099,7 @@
 % \begin{macro}{\SJTU@chapter,\@@_pdf_bookmark:nn,\@@_phantom_section:}
 % 定义一个灵活的章标题命令专门处理不同的需求。
 %    \begin{macrocode}
+%<*thesis>
 \NewDocumentCommand \SJTU@chapter { s O{#3} m O{#2} }
   {
     \bool_if:NTF \g_@@_openright_bool { \cleardoublepage } { \clearpage }
@@ -2092,6 +2112,7 @@
     \chapter* {#3}
     \@mkboth { \MakeUppercase {#2} } { \MakeUppercase {#2} }
   }
+%</thesis>
 \cs_new_eq:NN \@@_pdf_bookmark:nn \use_none:nn
 \cs_new_eq:NN \@@_phantom_section: \prg_do_nothing:
 %    \end{macrocode}
@@ -2145,6 +2166,7 @@
 %
 % 定义图、表、公式的编号格式。
 %    \begin{macrocode}
+%<*thesis>
 \cs_set:Npn \thefigure
   { \thechapter \l_@@_style_float_numsep_tl    \arabic { figure   } }
 \cs_set:Npn \thetable
@@ -2165,6 +2187,7 @@
     \counterwithout { table   } { chapter }
     \setcounter     { table   } { 0 }
   }
+%</thesis>
 %    \end{macrocode}
 % \end{macro}
 %
@@ -2299,6 +2322,7 @@
   { \DeclareInstance { sjtu } {#1/#2} { component } {#3} }
 \cs_new:Npn \@@_declare_page:nn #1#2
   { \DeclareInstance { sjtu } {#1} { page } {#2} }
+%<*thesis>
 \cs_new_protected:Npn \@@_titlepage_info_zh:
   {
     \group_begin:
@@ -2572,11 +2596,13 @@
           }
       }
   }
+%</thesis>
 %    \end{macrocode}
 %
 % \subsection{摘要}
 %
 %    \begin{macrocode}
+%<*thesis>
 \DeclareDocumentEnvironment { abstract  } { }
 { \SJTU@chapter* { \c_@@_name_abstract_zh_tl } [ \c_@@_name_abstract_tl ] }
   {
@@ -2629,6 +2655,7 @@
 %<zh>\tl_set:Nn \cftdot { \textperiodcentered }
 \tl_set:Nn \cftdotsep { 1 }
 \tl_set:Nn \cftchapleader { \normalfont \cftdotfill { \cftdotsep } }
+%</thesis>
 %    \end{macrocode}
 %
 % 图表清单标题前添加名称。
@@ -2648,6 +2675,7 @@
 %
 % 缩略语对照表。
 %    \begin{macrocode}
+%<*thesis>
 \NewDocumentEnvironment { abbreviation  } { }
   { \SJTU@chapter  { \l_@@_name_abbr_tl } } { }
 \NewDocumentEnvironment { abbreviation* } { }
@@ -2678,6 +2706,7 @@
         #1
       }
   } { }
+%</thesis>
 %    \end{macrocode}
 %
 % 发表论文与学术成果。
@@ -2723,8 +2752,10 @@
   }
 \msg_new:nnn { sjtutex } { empty-environment }
   { Empty~ `#1'~ environment. }
+%<*thesis>
 \NewDocumentEnvironment { achievements } { }
   { \SJTU@chapter { \l_@@_name_achv_tl } } { }
+%</thesis>
 \NewDocumentEnvironment { bibliolist  } { m +b }
   {
     \bool_if:NF \g_@@_review_bool
@@ -2749,6 +2780,7 @@
 %
 % 简历。
 %    \begin{macrocode}
+%<*thesis>
 \NewDocumentEnvironment { resume } { +b }
   {
     \bool_if:NF \g_@@_review_bool
@@ -2776,6 +2808,7 @@
         #1
       }
   } { }
+%</thesis>
 %    \end{macrocode}
 %
 % \subsection{其他宏包的设置}
@@ -2805,7 +2838,7 @@
         \phantomsection
         \int_gincr:N \g_@@_bookmark_int
         \pdfbookmark [#1] {#2}
-          { sjtuchapter. \int_use:N \g_@@_bookmark_int }
+          { sjtubookmark. \int_use:N \g_@@_bookmark_int }
       }
     \cs_gset_eq:NN \@@_phantom_section: \phantomsection
     \pdfstringdefDisableCommands
@@ -2925,6 +2958,7 @@
         \tl_set:cn { cft #2 presnum } { #4 \c_space_tl }
         \@@_dim_add_to_wd:cv { cft #2 numwidth } { cft #2 presnum }
       }
+%<*thesis>
     \exp_args:Nc \DeclareDocumentCommand { listof #1 s } { }
       { \SJTU@listof {#5} {#3} }
     \cs_set:cpn { the #3 }
@@ -2934,6 +2968,7 @@
         \counterwithout {#3} { chapter }
         \setcounter     {#3} { 0 }
       }
+%</thesis>
   }
 %    \end{macrocode}
 %
