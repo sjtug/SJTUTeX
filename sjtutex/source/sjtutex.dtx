@@ -887,6 +887,21 @@
 %    \end{macrocode}
 % \end{macro}
 %
+% 载入名称配置。
+% \begin{macro}[int]{\@@_load_config:}
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_load_config:
+  {
+    \ctex_push_file:
+%<thesis>      \file_input:n { sjtu-name-thesis.cfg }
+      \file_input:n { sjtu-lang- \g_@@_lang_tl .cfg }
+    \ctex_pop_file:
+  }
+\@onlypreamble \@@_load_config:
+\@@_load_config:
+%    \end{macrocode}
+% \end{macro}
+%
 % \subsection{用户接口}
 %
 % \begin{macro}{\sjtusetup}
@@ -912,7 +927,7 @@
 %    \begin{macrocode}
 \clist_map_inline:nn
   {
-    title, display_title, running_title, author, date, supervisor,
+    title, display_title, running_title, subject, author, date, supervisor,
     assoc_supervisor, co_supervisor, degree, department, major
   }
   {
@@ -962,6 +977,24 @@
     display-title*    .tl_set:N = \l_@@_info_display_title_en_tl ,
     running-title     .tl_set:N = \l_@@_info_running_title_zh_tl ,
     running-title*    .tl_set:N = \l_@@_info_running_title_en_tl ,
+    subject           .tl_set:N = \l_@@_info_subject_zh_tl ,
+%<*thesis>
+    subject          .initial:n =
+      {
+        \c_@@_name_univ_zh_tl
+        \c_@@_name_degree_level_zh_tl
+        \c_@@_name_thesis_zh_tl
+      } ,
+%</thesis>
+    subject*          .tl_set:N = \l_@@_info_subject_en_tl ,
+%<*thesis>
+    subject*         .initial:n =
+      {
+        A~ Dissertation~ Submitted~ to \\
+        { \c_@@_name_univ_en_tl }~ for~
+        { \c_@@_name_degree_level_en_tl }~ Degree
+      } ,
+%</thesis>
     keywords       .clist_set:N = \l_@@_info_keywords_zh_clist ,
     keywords*      .clist_set:N = \l_@@_info_keywords_en_clist ,
     author            .tl_set:N = \l_@@_info_author_zh_tl ,
@@ -1168,27 +1201,12 @@
 %</lang&zh>
 %    \end{macrocode}
 %
-% 载入名称配置。
-% \begin{macro}[int]{\@@_load_config:}
-%    \begin{macrocode}
-%<*class>
-\cs_new_protected:Nn \@@_load_config:
-  {
-    \ctex_push_file:
-%<thesis>      \file_input:n { sjtu-name-thesis.cfg }
-      \file_input:n { sjtu-lang- \g_@@_lang_tl .cfg }
-    \ctex_pop_file:
-  }
-\@onlypreamble \@@_load_config:
-\@@_load_config:
-%    \end{macrocode}
-% \end{macro}
-%
 % \subsection{字体配置}
 %
 % \begin{macro}[int]{\@@_fontset_error:nn}
 % 字库不可用时给出紧急错误信息，停止读取定义文件。
 %    \begin{macrocode}
+%<*class>
 \cs_new_protected:Npn \@@_fontset_error:nn #1#2
   { \msg_error:nnnn { sjtutex } { font-unavailable } {#1} {#2} }
 \msg_new:nnn { sjtutex } { font-unavailable }
@@ -1890,11 +1908,11 @@
 \fancyhf { }
 \bool_if:NTF \g_@@_twoside_bool
   {
-    \fancyhead [ RE, LO ] { \zihao { -5 } \c_@@_name_subject_zh_tl }
+    \fancyhead [ RE, LO ] { \zihao { -5 } \l_@@_info_subject_zh_tl }
     \fancyhead [ RO, LE ] { \zihao { -5 } \nouppercase { \leftmark } }
   }
   {
-    \fancyhead [ L ] { \zihao { -5 } \c_@@_name_subject_zh_tl }
+    \fancyhead [ L ] { \zihao { -5 } \l_@@_info_subject_zh_tl }
     \fancyhead [ R ] { \zihao { -5 } \nouppercase { \leftmark } }
   }
 \fancyfoot [ C ]
@@ -2333,7 +2351,7 @@
     { subject }
       {
         format      = \zihao { -2 } ,
-        content     = \c_@@_name_subject_zh_tl ,
+        content     = \l_@@_info_subject_zh_tl ,
         bottom-skip = \c_zero_dim plus 4 fill
       },
     { title   }
@@ -2399,7 +2417,7 @@
     { subject }
       {
         format      = \zihao { 4 } \bfseries ,
-        content     = \c_@@_name_subject_en_tl ,
+        content     = \l_@@_info_subject_en_tl ,
         bottom-skip = \c_zero_dim plus 2 fill
       },
     { title   }
@@ -2799,7 +2817,7 @@
         \hypersetup
           {
             pdftitle    = \l_@@_info_title_zh_tl,
-            pdfsubject  = \c_@@_name_subject_zh_tl,
+            pdfsubject  = \l_@@_info_subject_zh_tl,
             pdfkeywords = \l_@@_info_keywords_zh_clist,
             pdfauthor   = \l_@@_info_author_zh_tl
           }
@@ -3017,17 +3035,6 @@
   {
     { univ       } { 上海交通大学    } { Shanghai~ Jiao~ Tong~ University } ,
     { address    } { 中国 \quad 上海 } { Shanghai,~ P.R.~ China           } ,
-    { subject    }
-      {
-        \c_@@_name_univ_zh_tl
-        \c_@@_name_degree_level_zh_tl
-        \c_@@_name_thesis_zh_tl
-      }
-      {
-        A~ Dissertation~ Submitted~ to \\
-        { \c_@@_name_univ_en_tl }~ for~
-        { \c_@@_name_degree_level_en_tl }~ Degree
-      } ,
     { title_page } { 扉页            } { Title~ Page                } ,
     { orig_decl  } { 原创性声明      } { Statement~ of~ Originality } ,
     { auth_decl  } { 使用授权书      } { Copyright~ Permission      } ,
