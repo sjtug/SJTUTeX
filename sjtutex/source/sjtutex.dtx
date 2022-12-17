@@ -817,6 +817,18 @@
 %^^A   该选项暂时无效。
 %^^A \end{function}
 %
+% \begin{function}[added=2022-12-17]{info/subject, info/subject*}
+%   \vspace{-1ex}
+%   \begin{sjtusyntax}[emph={[2]subject, subject*}]
+%     subject  = (*\marg{中文主题}*)
+%     subject* = (*\marg{英文主题}*) 
+%   \end{sjtusyntax}
+%   文档中英文主题。中文主题默认值类似于“上海交通大学学士学位论文”，
+%   英文主题默认值类似于“A Dissertation Submitted to Shanghai Jiao Tong University
+%   for Bachelor Degree”，在不同的文档设置下默认值会略有不同。
+%^^A   现在中文主题也是论文页眉题目。
+% \end{function}
+%
 % \begin{function}{info/keywords,info/keywords*}
 %   \vspace{-1ex}
 %   \begin{sjtusyntax}[emph={[2]keywords,keywords*}]
@@ -896,13 +908,23 @@
 %   为防止歧义，可以用分组括号“|{...}|”把各字段括起来。
 % \end{function}
 %
-% \begin{function}{info/date}
+% \begin{function}[updated=2022-12-17]{info/date}
 %   \vspace{-1ex}
 %   \begin{sjtusyntax}[emph={[2]date}]
-%     date = (*\marg{日期}*)
+%     date = (*\marg{ISO 日期}*)
 %   \end{sjtusyntax}
-%   答辩日期。默认值为文档编译日期。也可以自己指定，要求使用 ISO 格式，
-%   即 |yyyy-mm-dd|。
+%   日期。默认值为文档编译日期。也可以自己指定，要求使用 ISO 格式，
+%   即 |yyyy-mm-dd|；如果不符合 ISO 格式将会被回退为文档编译日期。
+% \end{function}
+%
+% \begin{function}[added=2022-12-17]{info/display-date, info/display-date*}
+%   \vspace{-1ex}
+%   \begin{sjtusyntax}[emph={[2]display-date, display-date*}]
+%     display-date  = (*\marg{中文日期文字}*)
+%     display-date* = (*\marg{英文日期文字}*)
+%   \end{sjtusyntax}
+%   中英文显示日期，可以显示不同于标准日期格式的日期，日期文字将会被原样输出。
+%   设定该键时，将会覆盖 \opt{date} 键在对应语言下的设定，应当同时设置中英文语境下的显示日期。
 % \end{function}
 %
 % \subsubsection{样式域}
