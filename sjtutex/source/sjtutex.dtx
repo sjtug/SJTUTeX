@@ -924,7 +924,8 @@
 %     display-date* = (*\marg{英文日期文字}*)
 %   \end{sjtusyntax}
 %   中英文显示日期，可以显示不同于标准日期格式的日期，日期文字将会被原样输出。
-%   设定该键时，将会覆盖 \opt{date} 键在对应语言下的设定，应当同时设置中英文语境下的显示日期。
+%   设定该键时，将会覆盖 \opt{info/date} 键在对应语言下的设定，
+%   应当同时设置中英文语境下的显示日期。
 % \end{function}
 %
 % \subsubsection{样式域}
@@ -1055,11 +1056,39 @@
 %
 % \subsection{标题页和声明页}
 %
+% \begin{function}[added=2022-12-17]{\title,\title*}
+%   \begin{sjtusyntax}[morekeywords={\title, \title*}]
+%     \title(*\marg{中文标题}*)
+%     \title*(*\marg{英文标题}*)
+%   \end{sjtusyntax}
+%   设置中英文标题，分别覆盖 \opt{info/title} 和 \opt{info/title*} 键的值。
+%   会优先显示对应语言下的标题。
+% \end{function}
+%
+% \begin{function}[added=2022-12-17]{\author,\author*}
+%   \begin{sjtusyntax}[morekeywords={\author, \author*}]
+%     \author(*\marg{姓名}*)
+%     \author*(*\marg{英文姓名或拼音}*)
+%   \end{sjtusyntax}
+%   设置作者姓名，分别覆盖 \opt{info/author} 和 \opt{info/author*} 键的值。
+%   会优先显示对应语言下的作者。
+% \end{function}
+%
+% \begin{function}[added=2022-12-17]{\date,\date*}
+%   \begin{sjtusyntax}[morekeywords={\date, \date*}]
+%     \date(*\marg{中文日期}*)
+%     \date*(*\marg{英文日期}*)
+%   \end{sjtusyntax}
+%   设置日期，分别覆盖 \opt{info/display-date} 和 \opt{info/display-date*} 键的值。
+%   日期会被原样显示，会优先显示对应语言下的日期。
+% \end{function}
+%
 % \begin{function}[updated=2022-12-03]{\maketitle}
 %   \begin{sjtusyntax}[morekeywords={\maketitle}]
 %     \maketitle
 %   \end{sjtusyntax}
 %   生成标题页。
+%   或者是标题块。
 % \end{function}
 %
 % \begin{function}[updated=2022-12-03]{\copyrightpage}
@@ -1092,6 +1121,8 @@
 %   \end{sjtusyntax}
 %   摘要环境。不带星号和带星号的版本分别用来输入中文摘要和英文摘要。
 % \end{function}
+%
+% \clearpage
 %
 % \begin{function}{\tableofcontents,\listoffigures,\listoffigures*,
 %   \listoftables,\listoftables*,\listofalgorithms,\listofalgorithms*}
