@@ -753,12 +753,12 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_spread_box:nn}
-% 分散对齐的水平盒子。
+% \begin{macro}{\@@_cjk_spread_box:nn}
+% 汉字分散对齐的水平盒子。
 %    \begin{macrocode}
 \@@_engine_case:nnn
   {
-    \cs_new_protected:Npn \@@_spread_box:nn #1#2
+    \cs_new_protected:Npn \@@_cjk_spread_box:nn #1#2
       {
         \mode_leave_vertical:
         \group_begin:
@@ -778,7 +778,7 @@
       }
   }
   {
-    \cs_new_protected:Npn \@@_spread_box:nn #1#2
+    \cs_new_protected:Npn \@@_cjk_spread_box:nn #1#2
       {
         \mode_leave_vertical:
         \group_begin:
@@ -789,7 +789,7 @@
       }
   }
   {
-    \cs_new_protected:Npn \@@_spread_box:nn #1#2
+    \cs_new_protected:Npn \@@_cjk_spread_box:nn #1#2
       {
         \mode_leave_vertical:
         \group_begin:
@@ -2289,8 +2289,8 @@
 % 见 \url{https://tex.stackexchange.com/questions/247513}。
 %    \begin{macrocode}
     \@@_vspace_r:N \l_@@_page_top_skip
-    \@@_vspace:n { - \parskip      }
-    \@@_vspace:n { - \baselineskip }
+    \@@_vspace:n { - \tex_parskip:D      }
+    \@@_vspace:n { - \tex_baselineskip:D }
     \group_begin:
       \l_@@_page_format_tl
       \clist_map_inline:Nn \l_@@_page_components_clist
@@ -2331,7 +2331,7 @@
         {
           \clist_pop:NN \l_@@_tmpa_clist \l_@@_tmpa_tl
           \clist_pop:NN \l_@@_tmpb_clist \l_@@_tmpb_tl
-          \@@_spread_box:nn { 5 em } { \heiti \l_@@_tmpa_tl }
+          \@@_cjk_spread_box:nn { 5 em } { \heiti \l_@@_tmpa_tl }
           \c_@@_symbol_fwid_colon_tl
           \@@_left_aligned_box:Vn \l_@@_tmpb_dim { \l_@@_tmpb_tl }
           \skip_vertical:n { 1 ex }
@@ -2408,7 +2408,8 @@
         {
           \clist_pop:NN \l_@@_tmpa_clist \l_@@_tmpa_tl
           \clist_pop:NN \l_@@_tmpb_clist \l_@@_tmpb_tl
-          { \bfseries \l_@@_tmpa_tl :~ } { \l_@@_tmpb_tl } \\
+          { \bfseries \l_@@_tmpa_tl :~ } { \l_@@_tmpb_tl }
+          \skip_vertical:N \c_zero_skip
         }
     \group_end:
   }
@@ -2437,9 +2438,12 @@
         format      = \zihao { 3 } ,
         content     =
           {
-            \l_@@_info_department_en_tl \\
-            \c_@@_name_univ_en_tl       \\
-            \c_@@_name_address_en_tl    \\
+            \l_@@_info_department_en_tl
+            \skip_vertical:N \c_zero_skip
+            \c_@@_name_univ_en_tl
+            \skip_vertical:N \c_zero_skip
+            \c_@@_name_address_en_tl
+            \skip_vertical:N \c_zero_skip
             \l_@@_info_date_en_tl
           }
       },
@@ -2476,7 +2480,8 @@
         format      = \zihao { 3 } \heiti ,
         content     =
           {
-            \c_@@_name_univ_zh_tl \\
+            \c_@@_name_univ_zh_tl
+            \skip_vertical:N \c_zero_skip
             \c_@@_name_thesis_zh_tl
             \c_@@_name_orig_decl_zh_tl
           } ,
@@ -2505,7 +2510,8 @@
         format      = \zihao { 3 } \heiti ,
         content     =
           {
-            \c_@@_name_univ_zh_tl \\
+            \c_@@_name_univ_zh_tl
+            \skip_vertical:N \c_zero_skip
             \c_@@_name_thesis_zh_tl
             \c_@@_name_auth_decl_zh_tl
           } ,
