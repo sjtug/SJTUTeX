@@ -2997,11 +2997,11 @@
 %
 % \pkg{algorithm2e} 宏包
 %    \begin{macrocode}
-\ctex_at_begin_package:nn { algorithm2e }
-  { \cs_set_eq:NN \@@_save_chapter:w \@chapter }
+%<!article>\ctex_at_begin_package:nn { algorithm2e }
+%<!article>  { \cs_set_eq:NN \@@_save_chapter:w \@chapter }
 \ctex_at_end_package:nn { algorithm2e }
   {
-    \cs_set_eq:NN \@chapter \@@_save_chapter:w
+%<!article>    \cs_set_eq:NN \@chapter \@@_save_chapter:w
     \SetAlgorithmName { \l_@@_name_algorithm_tl     }
                       { \l_@@_name_algorithm_tl     }
                       { \l_@@_name_listalgorithm_tl }
