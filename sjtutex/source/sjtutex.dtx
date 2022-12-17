@@ -209,7 +209,7 @@
 %<@@=sjtu>
 %<*class>
 \RequirePackage { xparse, xtemplate, l3keys2e }
-\msg_new:nnn { sjtuthesis } { l3-too-old }
+\msg_new:nnn { sjtutex } { l3-too-old }
   {
     Package~ "#1"~ is~ too~ old. \\\\
     Please~ update~ an~ up-to-date~ version~ of~ the~ bundles \\
@@ -217,7 +217,7 @@
     manager~ or~ from~ CTAN.
   }
 \@ifpackagelater { expl3 } { 2018/05/12 } { }
-  { \msg_error:nnn { sjtuthesis } { l3-too-old } {#1} }
+  { \msg_error:nnn { sjtutex } { l3-too-old } {#1} }
 %    \end{macrocode}
 %
 % 定义 \texttt{sjtuthesis} 宏。
@@ -478,9 +478,9 @@
 %
 % 处理未知选项。
 %    \begin{macrocode}
-    unknown .code:n = { \msg_error:nn { sjtuthesis } { unknown-option } }
+    unknown .code:n = { \msg_error:nn { sjtutex } { unknown-option } }
   }
-\msg_new:nnn { sjtuthesis } { unknown-option }
+\msg_new:nnn { sjtutex } { unknown-option }
   { Class~ option~ "\l_keys_key_tl"~ is~ unknown. }
 %    \end{macrocode}
 %
@@ -1190,8 +1190,8 @@
 % 字库不可用时给出紧急错误信息，停止读取定义文件。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_fontset_error:nn #1#2
-  { \msg_error:nnnn { sjtuthesis } { font-unavailable } {#1} {#2} }
-\msg_new:nnn { sjtuthesis } { font-unavailable }
+  { \msg_error:nnnn { sjtutex } { font-unavailable } {#1} {#2} }
+\msg_new:nnn { sjtutex } { font-unavailable }
   { `#1-font~ =~ #2'~ is~ unavailable~ in~ current~ mode. }
 %    \end{macrocode}
 % \end{macro}
@@ -1277,7 +1277,7 @@
           \file_if_exist_input:nF
             { sjtu- #1 -font- \tl_use:c { g_@@_ #1 _font_tl } .def }
             {
-              \msg_warning:nnnn { sjtuthesis } { invalid-font } {#1} {#2}
+              \msg_warning:nnnn { sjtutex } { invalid-font } {#1} {#2}
               \tl_gset:cn { g_@@_ #1 _font_tl } {#2}
               \file_input:n
                 { sjtu- #1 -font- \tl_use:c { g_@@_ #1 _font_tl } .def }
@@ -1285,7 +1285,7 @@
         \ctex_pop_file:
       }
   }
-\msg_new:nnn { sjtuthesis } { invalid-font }
+\msg_new:nnn { sjtutex } { invalid-font }
   {
     Invalid~ value~ `#1-font~ =~ \tl_use:c { g_@@_ #1 _font_tl }~ '! \\\\
     Using~ `#2'~ instead.
@@ -2181,11 +2181,11 @@
           {
             \int_compare:nNnTF {#1} < { 51 }
               { \@@_unicode_char:n { \int_eval:n { "32B1 - 36 + #1 } } }
-              { \msg_warning:nn { sjtuthesis } { too-many-footnotes } }
+              { \msg_warning:nn { sjtutex } { too-many-footnotes } }
           }
       }
   }
-\msg_new:nnn { sjtuthesis } { too-many-footnotes }
+\msg_new:nnn { sjtutex } { too-many-footnotes }
   { Too~ many~ footnotes. }
 \cs_set:Npn \thefootnote
   {
@@ -2527,7 +2527,7 @@
         auth / title, auth / text, auth / sign
       }
   }
-\msg_new:nnn { sjtuthesis } { require-pdfpages }
+\msg_new:nnn { sjtutex } { require-pdfpages }
   {
     Add~"\token_to_str:N \usepackage{pdfpages}"~ in~ your~ preamble \\
     before~ inserting~ pages~ of~ external~ PDF.
@@ -2545,7 +2545,7 @@
                 \includepdf {#1}
               }
               {
-                \msg_warning:nn { sjtuthesis } { require-pdfpages }
+                \msg_warning:nn { sjtutex } { require-pdfpages }
                 \UseInstance { sjtu } { copyright }
               }
           }
@@ -2697,10 +2697,10 @@
   }
   {
     \cs_set:Npn \@noitemerr
-      { \msg_warning:nnn { sjtuthesis } { empty-environment } { bibliolist } }
+      { \msg_warning:nnn { sjtutex } { empty-environment } { bibliolist } }
     \endlist
   }
-\msg_new:nnn { sjtuthesis } { empty-environment }
+\msg_new:nnn { sjtutex } { empty-environment }
   { Empty~ `#1'~ environment. }
 \NewDocumentEnvironment { achievements } { }
   { \SJTU@chapter { \l_@@_name_achv_tl } } { }
