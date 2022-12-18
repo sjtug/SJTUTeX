@@ -1062,7 +1062,7 @@
 %     \title*(*\marg{英文标题}*)
 %   \end{sjtusyntax}
 %   设置中英文标题，分别覆盖 \opt{info/title} 和 \opt{info/title*} 键的值。
-%   会优先显示对应语言下的标题。
+%   会优先显示中文标题。
 % \end{function}
 %
 % \begin{function}[added=2022-12-17]{\author,\author*}
@@ -1071,7 +1071,7 @@
 %     \author*(*\marg{英文姓名或拼音}*)
 %   \end{sjtusyntax}
 %   设置作者姓名，分别覆盖 \opt{info/author} 和 \opt{info/author*} 键的值。
-%   会优先显示对应语言下的作者。
+%   会优先显示中文下的作者。
 % \end{function}
 %
 % \begin{function}[added=2022-12-17]{\date,\date*}
@@ -1080,7 +1080,14 @@
 %     \date*(*\marg{英文日期}*)
 %   \end{sjtusyntax}
 %   设置日期，分别覆盖 \opt{info/display-date} 和 \opt{info/display-date*} 键的值。
-%   日期会被原样显示，会优先显示对应语言下的日期。
+%   日期会被原样显示，会优先显示中文日期。
+% \end{function}
+%
+% \begin{function}[added=2022-12-17]{\today}
+%   \begin{sjtusyntax}[morekeywords={\today}]
+%     \today
+%   \end{sjtusyntax}
+%   文档编译日期，以对应语言的格式显示。
 % \end{function}
 %
 % \begin{function}[updated=2022-12-03]{\maketitle}
