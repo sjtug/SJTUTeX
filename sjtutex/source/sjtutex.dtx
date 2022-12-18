@@ -373,9 +373,9 @@
 % \begin{variable}{\g_@@_openright_bool}
 % 是否在奇数页开始新章。
 %    \begin{macrocode}
-\bool_new:N \g_@@_openright_bool
+%<!article>\bool_new:N \g_@@_openright_bool
 %<thesis>\bool_set_true:N \g_@@_openright_bool
-%<!thesis>\bool_set_false:N \g_@@_openright_bool
+%<report>\bool_set_false:N \g_@@_openright_bool
 %    \end{macrocode}
 % \end{variable}
 %
@@ -485,12 +485,14 @@
 %
 % 是否奇数页开章。
 %    \begin{macrocode}
+%<*!article>
     openany   .value_forbidden:n = true,
     openright .value_forbidden:n = true,
     openany   .code:n =
       { \bool_set_false:N \g_@@_openright_bool } ,
     openright .code:n =
       { \bool_set_true:N  \g_@@_openright_bool } ,
+%</!article>
 %    \end{macrocode}
 %
 % 盲审模式。
@@ -532,8 +534,8 @@
 %    \begin{macrocode}
 \bool_if:NF \g_@@_twoside_bool
   { \clist_put_right:Nn \g_@@_options_to_ctex_class_clist { oneside } }
-\bool_if:NF \g_@@_openright_bool
-  { \clist_put_right:Nn \g_@@_options_to_ctex_class_clist { openany } }
+%<!article>\bool_if:NF \g_@@_openright_bool
+%<!article>  { \clist_put_right:Nn \g_@@_options_to_ctex_class_clist { openany } }
 %    \end{macrocode}
 %
 % \subsection{载入宏包、文档类}
@@ -1990,17 +1992,26 @@
   }
 %    \end{macrocode}
 %
-% \subsection{Three matters}
+% \subsection{页码设置}
 %
-% 文档开始使用拉丁字母编码。
 %    \begin{macrocode}
-\AtBeginDocument
-%<thesis>  { \pagenumbering { Alph } }
-%<!thesis>  { \pagenumbering { arabic } }
+\cs_set_eq:NN \@@_orig_page_numbering:n \pagenumbering
+\RenewDocumentCommand \pagenumbering { m }
+  {
+    \@@_orig_page_numbering:n {#1}
+    \cs_gset:Nn \@@_thepage:     { \thepage }
+    \cs_gset:Nn \@@_lastpageref: { \lastpageref { pagesLTS. #1 } }
+  }
+%    \end{macrocode}
+%
+% 文档初始页码编码设置。
+%    \begin{macrocode}
+%<thesis>\pagenumbering { Alph }
+%<!thesis>\pagenumbering { arabic }
 %    \end{macrocode}
 %
 % \begin{macro}{\frontmatter}
-% 前置部分，大写罗马数字编码。
+% 前置部分使用大写罗马数字编码。
 %    \begin{macrocode}
 %<*thesis>
 \RenewDocumentCommand \frontmatter { }
@@ -2008,36 +2019,9 @@
     \cleardoublepage
     \@mainmatterfalse
     \pagenumbering { Roman }
-    \cs_gset:Nn \@@_thepage:     { \thepage }
-    \cs_gset:Nn \@@_lastpageref: { \lastpageref { pagesLTS.Roman  } }
   }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\mainmatter}
-% 主题部分，阿拉伯数字编码。
-%    \begin{macrocode}
-\RenewDocumentCommand \mainmatter  { }
-  {
-    \cleardoublepage
-    \@mainmattertrue
-    \pagenumbering { arabic }
-    \cs_gset:Nn \@@_thepage:     { \thepage }
-    \cs_gset:Nn \@@_lastpageref: { \lastpageref { pagesLTS.arabic } }
-  }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\backmatter}
-% 结尾部分。
-%    \begin{macrocode}
-\RenewDocumentCommand \backmatter  { }
-  {
-    \bool_if:NTF \g_@@_openright_bool { \cleardoublepage } { \clearpage }
-    \@mainmatterfalse
-  }
-%    \end{macrocode}
 %</thesis>
+%    \end{macrocode}
 % \end{macro}
 %
 % \subsection{章节标题结构}
@@ -2212,12 +2196,12 @@
 \cs_new_protected:Nn \@@_make_fnmark:
   { \hbox:n { \@thefnmark } }
 \ctex_at_end_preamble:n {
-  \cs_set_eq:NN \@@_save_make_fntext:n \@makefntext
+  \cs_set_eq:NN \@@_orig_make_fntext:n \@makefntext
   \cs_set:Npn \@makefntext #1
     {
       \group_begin:
         \cs_set_eq:NN \@makefnmark \@@_make_fnmark:
-        \@@_save_make_fntext:n {#1}
+        \@@_orig_make_fntext:n {#1}
       \group_end:
     }
 }
@@ -2810,7 +2794,7 @@
     \AtEndDocument
       {
         \bool_if:NTF \g_@@_openright_bool { \cleardoublepage } { \clearpage }
-        \pagenumbering { roman }
+        \@@_orig_page_numbering:n { roman }
         \cs_gset:Nn \@@_thepage:     { \theCurrentPageLocal }
         \cs_gset:Nn \@@_lastpageref: { \lastpageref { pagesLTS.roman.local } }
         \cs_gset_eq:NN \addcontentsline \use_none:nnn
