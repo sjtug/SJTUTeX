@@ -336,7 +336,7 @@
 % \begin{variable}{\g_@@_review_bool}
 % 盲审模式。
 %    \begin{macrocode}
-\bool_new:N \g_@@_review_bool
+%<thesis>\bool_new:N \g_@@_review_bool
 %    \end{macrocode}
 % \end{variable}
 %
@@ -497,8 +497,8 @@
 %
 % 盲审模式。
 %    \begin{macrocode}
-    review .bool_gset:N = \g_@@_review_bool ,
-    review .initial:n = false ,
+%<thesis>    review .bool_gset:N = \g_@@_review_bool ,
+%<thesis>    review .initial:n = false ,
 %    \end{macrocode}
 %
 % 处理未知选项。
@@ -633,11 +633,11 @@
 %
 % \subsection{内部函数}
 %
-% \begin{macro}{\tl_const:co,\clist_map_inline:xn,
+% \begin{macro}{\tl_const:co,\tl_const:Nv,\clist_map_inline:xn,
 % \exp_args:NNnv,\regex_match:neTF}
 % \LaTeX3{} 函数变体。
 %    \begin{macrocode}
-\cs_generate_variant:Nn \tl_const:Nn { co }
+\cs_generate_variant:Nn \tl_const:Nn { co, Nv }
 \cs_generate_variant:Nn \clist_map_inline:nn { xn }
 \prg_generate_conditional_variant:Nnn \regex_match:nn { ne } { T }
 \exp_args_generate:n { Nnv }
@@ -924,6 +924,7 @@
           { \tex_day:D }
       }
   }
+\tl_const:Nv \c_@@_today_tl { c_@@_today_ \g_@@_lang_tl _tl }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -957,25 +958,23 @@
 %    \begin{macrocode}
 \clist_map_inline:nn
   {
-    title, display_title, running_title, subject, author, date, supervisor,
-    assoc_supervisor, co_supervisor, degree, department, major
+    title, display_title, running_title, subject, author, date,
+%<thesis>    supervisor, department, major,
+%<thesis>    assoc_supervisor, co_supervisor, degree
   }
   {
     \tl_new:c { l_@@_info_ #1 _zh_tl }
-    \tl_new:c { l_@@_info_ #1 _en_tl }
-    \tl_set:co { l_@@_info_ #1 _tl }
-      { \cs:w l_@@_info_ #1 _ \g_@@_lang_tl _tl     \cs_end: }
-    \tl_set:co { l_@@_info_ #1 _aux_tl }
-      { \cs:w l_@@_info_ #1 _ \g_@@_lang_aux_tl _tl \cs_end: }
+%<thesis>    \tl_new:c { l_@@_info_ #1 _en_tl }
   }
-\tl_new:N \l_@@_info_id_tl
+%<thesis>\tl_set:co { l_@@_info_title_aux_tl }
+%<thesis>  { \cs:w l_@@_info_title_ \g_@@_lang_aux_tl _tl \cs_end: }
 \tl_new:N \l_@@_info_id_zh_tl
-\tl_set:Nn \l_@@_info_id_zh_tl { \l_@@_info_id_tl }
 \clist_map_inline:nn
-  { keywords, fund }
+%<!thesis>  { keywords }
+%<thesis>  { keywords, fund }
   {
     \clist_new:c { l_@@_info_ #1 _zh_clist }
-    \clist_new:c { l_@@_info_ #1 _en_clist }
+%<thesis>    \clist_new:c { l_@@_info_ #1 _en_clist }
   }
 %    \end{macrocode}
 %
@@ -993,6 +992,7 @@
           }
           { \tl_if_empty:NT ##1 { \tl_set:Nn ##1 {#1} } }
       } ,
+%<*thesis>
     title*              .code:n =
       {
         \tl_set:Nn \l_@@_info_title_en_tl {#1}
@@ -1003,10 +1003,11 @@
           }
           { \tl_if_empty:NT ##1 { \tl_set:Nn ##1 {#1} } }
       } ,
+%</thesis>
     display-title     .tl_set:N = \l_@@_info_display_title_zh_tl ,
-    display-title*    .tl_set:N = \l_@@_info_display_title_en_tl ,
+%<thesis>    display-title*    .tl_set:N = \l_@@_info_display_title_en_tl ,
     running-title     .tl_set:N = \l_@@_info_running_title_zh_tl ,
-    running-title*    .tl_set:N = \l_@@_info_running_title_en_tl ,
+%<thesis>    running-title*    .tl_set:N = \l_@@_info_running_title_en_tl ,
     subject           .tl_set:N = \l_@@_info_subject_zh_tl ,
 %<*thesis>
     subject          .initial:n =
@@ -1015,9 +1016,7 @@
         \c_@@_name_degree_level_zh_tl
         \c_@@_name_thesis_zh_tl
       } ,
-%</thesis>
     subject*          .tl_set:N = \l_@@_info_subject_en_tl ,
-%<*thesis>
     subject*         .initial:n =
       {
         A~ Dissertation~ Submitted~ to \\
@@ -1026,24 +1025,24 @@
       } ,
 %</thesis>
     keywords       .clist_set:N = \l_@@_info_keywords_zh_clist ,
-    keywords*      .clist_set:N = \l_@@_info_keywords_en_clist ,
+%<thesis>    keywords*      .clist_set:N = \l_@@_info_keywords_en_clist ,
     author            .tl_set:N = \l_@@_info_author_zh_tl ,
-    author*           .tl_set:N = \l_@@_info_author_en_tl ,
-    id                .tl_set:N = \l_@@_info_id_tl ,
-    supervisor        .tl_set:N = \l_@@_info_supervisor_zh_tl ,
-    supervisor*       .tl_set:N = \l_@@_info_supervisor_en_tl ,
-    assoc-supervisor  .tl_set:N = \l_@@_info_assoc_supervisor_zh_tl ,
-    assoc-supervisor* .tl_set:N = \l_@@_info_assoc_supervisor_en_tl ,
-    co-supervisor     .tl_set:N = \l_@@_info_co_supervisor_zh_tl ,
-    co-supervisor*    .tl_set:N = \l_@@_info_co_supervisor_en_tl ,
-    degree            .tl_set:N = \l_@@_info_degree_zh_tl ,
-    degree*           .tl_set:N = \l_@@_info_degree_en_tl ,
-    department        .tl_set:N = \l_@@_info_department_zh_tl ,
-    department*       .tl_set:N = \l_@@_info_department_en_tl ,
-    major             .tl_set:N = \l_@@_info_major_zh_tl ,
-    major*            .tl_set:N = \l_@@_info_major_en_tl ,
-    fund           .clist_set:N = \l_@@_info_fund_zh_clist ,
-    fund*          .clist_set:N = \l_@@_info_fund_en_clist ,
+%<thesis>    author*           .tl_set:N = \l_@@_info_author_en_tl ,
+    id                .tl_set:N = \l_@@_info_id_zh_tl ,
+%<thesis>    supervisor        .tl_set:N = \l_@@_info_supervisor_zh_tl ,
+%<thesis>    supervisor*       .tl_set:N = \l_@@_info_supervisor_en_tl ,
+%<thesis>    assoc-supervisor  .tl_set:N = \l_@@_info_assoc_supervisor_zh_tl ,
+%<thesis>    assoc-supervisor* .tl_set:N = \l_@@_info_assoc_supervisor_en_tl ,
+%<thesis>    co-supervisor     .tl_set:N = \l_@@_info_co_supervisor_zh_tl ,
+%<thesis>    co-supervisor*    .tl_set:N = \l_@@_info_co_supervisor_en_tl ,
+%<thesis>    degree            .tl_set:N = \l_@@_info_degree_zh_tl ,
+%<thesis>    degree*           .tl_set:N = \l_@@_info_degree_en_tl ,
+%<thesis>    department        .tl_set:N = \l_@@_info_department_zh_tl ,
+%<thesis>    department*       .tl_set:N = \l_@@_info_department_en_tl ,
+%<thesis>    major             .tl_set:N = \l_@@_info_major_zh_tl ,
+%<thesis>    major*            .tl_set:N = \l_@@_info_major_en_tl ,
+%<thesis>    fund           .clist_set:N = \l_@@_info_fund_zh_clist ,
+%<thesis>    fund*          .clist_set:N = \l_@@_info_fund_en_clist ,
     date                .code:n =
       {
         \regex_match:neT { \d{4}-\d{2}-\d{2} } {#1}
@@ -1055,9 +1054,10 @@
           }
       } ,
     display-date      .tl_set:N = \l_@@_info_date_zh_tl ,
-    display-date     .initial:V = \c_@@_today_zh_tl ,
-    display-date*     .tl_set:N = \l_@@_info_date_en_tl ,
-    display-date*    .initial:V = \c_@@_today_en_tl
+%<thesis>    display-date     .initial:V = \c_@@_today_zh_tl ,
+%<!thesis>    display-date     .initial:V = \c_@@_today_tl ,
+%<thesis>    display-date*     .tl_set:N = \l_@@_info_date_en_tl ,
+%<thesis>    display-date*    .initial:V = \c_@@_today_en_tl
   }
 %    \end{macrocode}
 %
@@ -1089,6 +1089,7 @@
 %
 % 盲审模式下隐藏作者、导师姓名等信息。
 %    \begin{macrocode}
+%<*thesis>
 \ctex_at_end_preamble:n
   {
     \bool_if:NT \g_@@_review_bool
@@ -1099,11 +1100,12 @@
             \tl_clear:c { l_@@_info_ #1 _zh_tl }
             \tl_clear:c { l_@@_info_ #1 _en_tl }
           }
-        \tl_clear:N \l_@@_info_id_tl
+        \tl_clear:N \l_@@_info_id_zh_tl
         \clist_clear:N \l_@@_info_fund_zh_clist
         \clist_clear:N \l_@@_info_fund_en_clist
       }
   }
+%</thesis>
 %    \end{macrocode}
 %
 % \subsubsection{格式选项}
@@ -1152,18 +1154,16 @@
     listtable      .tl_set:N = \listtablename ,
     figure         .tl_set:N = \figurename ,
     table          .tl_set:N = \tablename ,
+%<!thesis>    abstract       .tl_set:N = \abstractname ,
     index          .tl_set:N = \indexname ,
     appendix       .tl_set:N = \appendixname ,
     proof          .tl_set:N = \proofname ,
-%<!article>    bib            .tl_set:N = \bibname
-%<article>    bib            .tl_set:N = \refname
-  }
+%<!article>    bib            .tl_set:N = \bibname ,
+%<article>    bib            .tl_set:N = \refname ,
 %    \end{macrocode}
 %
 % 标准文档类中未定义的名称。
 %    \begin{macrocode}
-\keys_define:nn { sjtu / name }
-  {
     figure*        .tl_set:N = \l_@@_name_figure_aux_tl ,
     figure*       .initial:n = { 图 } ,
     table*         .tl_set:N = \l_@@_name_table_aux_tl ,
@@ -1172,6 +1172,7 @@
     algorithm     .initial:n = { Algorithm } ,
     listalgorithm  .tl_set:N = \l_@@_name_listalgorithm_tl ,
     listalgorithm .initial:n = { List~of~Algorithms } ,
+%<*thesis>
     abbr           .tl_set:N = \l_@@_name_abbr_tl ,
     abbr          .initial:n = { Abbreviations } ,
     nom            .tl_set:N = \l_@@_name_nom_tl ,
@@ -1186,6 +1187,7 @@
     digest        .initial:n = { Digest } ,
     achv           .tl_set:N = \l_@@_name_achv_tl ,
     achv          .initial:n = { List~of~Research~Achievements },
+%</thesis>
   }
 %</class>
 %    \end{macrocode}
@@ -1199,6 +1201,7 @@
     listtable     = 表 \quad 格 ,
     figure        = 图 ,
     table         = 表 ,
+%<!thesis>    abstract      = 摘 \quad 要 ,
     index         = 索 \quad 引 ,
     appendix      = 附录 ,
     proof         = 证明 ,
@@ -1207,6 +1210,7 @@
     table*        = Table ,
     algorithm     = 算法 ,
     listalgorithm = 算 \quad 法 ,
+%<*thesis>
     abbr          = 缩略语对照表 ,
     nom           = 符号对照表 ,
     summary       = 全文总结 ,
@@ -1214,6 +1218,7 @@
     resume        = 个人简历 ,
     digest        = 大摘要 ,
     achv          = 学术论文和科研成果目录
+%</thesis>
   }
 %</lang&zh>
 %    \end{macrocode}
@@ -2784,14 +2789,15 @@
 %</thesis>
 \NewDocumentEnvironment { bibliolist  } { m +b }
   {
-    \bool_if:NF \g_@@_review_bool
-      {
+%<thesis>    \bool_if:NF \g_@@_review_bool
+%<thesis>      {
         \cs_set:Npn \@noitemerr { }
         \begin { @bibliolist } {#1}
         #2
         \end { @bibliolist }
-      }
+%<thesis>      }
   } { }
+%<*thesis>
 \NewDocumentEnvironment { bibliolist* } { m +b }
   {
     \bool_if:NT \g_@@_review_bool
@@ -2806,7 +2812,6 @@
 %
 % 简历。
 %    \begin{macrocode}
-%<*thesis>
 \NewDocumentEnvironment { resume } { +b }
   {
     \bool_if:NF \g_@@_review_bool
@@ -2911,7 +2916,8 @@
         assumption, axiom, conjecture, corollary, definition, example,
         exercise, lemma, problem, proposition, theorem
       }
-      { \exp_args:Nnv  \newtheorem  {##1} { c_@@_name_ ##1 _tl } [ chapter ] }
+%<thesis>      { \exp_args:Nnv  \newtheorem  {##1} { c_@@_name_ ##1 _tl } [ chapter ] }
+%<!thesis>      { \exp_args:Nnv  \newtheorem  {##1} { c_@@_name_ ##1 _tl } }
     \clist_map_inline:nn
       { remark, solution }
       { \exp_args:NNnv \newtheorem* {##1} { c_@@_name_ ##1 _tl } }
