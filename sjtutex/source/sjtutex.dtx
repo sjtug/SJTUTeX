@@ -610,7 +610,7 @@
 %    \begin{macrocode}
 \cs_generate_variant:Nn \tl_const:Nn { co }
 \cs_generate_variant:Nn \clist_map_inline:nn { xn }
-\prg_generate_conditional_variant:Nnn \regex_match:nn { ne } { TF }
+\prg_generate_conditional_variant:Nnn \regex_match:nn { ne } { T }
 \exp_args_generate:n { Nnv }
 %    \end{macrocode}
 % \end{macro}
@@ -861,7 +861,7 @@
 \cs_new:Npn \@@_ordinal_en:n #1
   {
     \int_to_arabic:n {#1}
-    \textsuperscript
+    \exp_not:N \textsuperscript
       {
         \int_case:nnF { \int_mod:nn {#1} { 100 } }
           {
@@ -884,6 +884,17 @@
   { \clist_item:Nn \c_@@_name_month_en_clist {#2}~ \@@_ordinal_en:n {#3},~ #1 }
 \cs_new:Npn \@@_date_aux_en:w #1-#2-#3 \q_stop
   { \@@_date_aux_en:nnn {#1} {#2} {#3} }
+\clist_map_inline:nn
+  { zh, en }
+  {
+    \tl_const:cx { c_@@_today_ #1 _tl }
+      {
+        \use:c { @@_date_aux_ #1 :nnn }
+          { \int_value:w \tex_year:D }
+          { \tex_month:D }
+          { \tex_day:D }
+      }
+  }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -1016,33 +1027,18 @@
     fund*          .clist_set:N = \l_@@_info_fund_en_clist ,
     date                .code:n =
       {
-        \regex_match:neTF { \d{4}-\d{2}-\d{2} } {#1}
+        \regex_match:neT { \d{4}-\d{2}-\d{2} } {#1}
           {
-            \tl_set:No \l_@@_info_date_zh_tl
+            \tl_set:Nx \l_@@_info_date_zh_tl
               { \exp_last_unbraced:Ne \@@_date_aux_zh:w #1 \q_stop }
-            \tl_set:No \l_@@_info_date_en_tl
+            \tl_set:Nx \l_@@_info_date_en_tl
               { \exp_last_unbraced:Ne \@@_date_aux_en:w #1 \q_stop }
           }
-          {
-            \tl_set:No \l_@@_info_date_zh_tl
-              {
-                \@@_date_aux_zh:nnn
-                  { \int_value:w \tex_year:D }
-                  { \tex_month:D }
-                  { \tex_day:D }
-              }
-            \tl_set:No \l_@@_info_date_en_tl
-              {
-                \@@_date_aux_en:nnn
-                  { \int_value:w \tex_year:D }
-                  { \tex_month:D }
-                  { \tex_day:D }
-              }
-          }
       } ,
-    date             .initial:n = ,
     display-date      .tl_set:N = \l_@@_info_date_zh_tl ,
-    display-date*     .tl_set:N = \l_@@_info_date_en_tl
+    display-date     .initial:V = \c_@@_today_zh_tl ,
+    display-date*     .tl_set:N = \l_@@_info_date_en_tl ,
+    display-date*    .initial:V = \c_@@_today_en_tl
   }
 %    \end{macrocode}
 %
@@ -1054,21 +1050,22 @@
       { \keys_set:nn { sjtu / info } { title* = {#2} } }
       { \keys_set:nn { sjtu / info } { title  = {#2} } }
   }
-\tl_set:Nn \@title { \l_@@_info_title_tl }
+\tl_set:Nn \@title { \l_@@_info_title_zh_tl }
 \RenewDocumentCommand \author { s m }
   {
     \IfBooleanTF {#1}
       { \keys_set:nn { sjtu / info } { author* = {#2} } }
       { \keys_set:nn { sjtu / info } { author  = {#2} } }
   }
-\tl_set:Nn \@author { \l_@@_info_author_tl }
+\tl_set:Nn \@author { \l_@@_info_author_zh_tl }
 \RenewDocumentCommand \date { s m }
   {
     \IfBooleanTF {#1}
       { \keys_set:nn { sjtu / info } { display-date* = {#2} } }
       { \keys_set:nn { sjtu / info } { display-date  = {#2} } }
   }
-\tl_set:Nn \@date { \l_@@_info_date_tl }
+\tl_set:Nn \@date { \l_@@_info_date_zh_tl }
+\tl_set:Nv \today { c_@@_today_ \g_@@_lang_tl _tl }
 %    \end{macrocode}
 %
 % 盲审模式下隐藏作者、导师姓名等信息。
