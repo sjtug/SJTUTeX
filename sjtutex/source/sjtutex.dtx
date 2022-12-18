@@ -442,7 +442,9 @@
 %     \toprule
 %     \strong{类别} & \strong{文件}               & \strong{说明}  \\
 %     \midrule
-%     文档类        & \file{sjtuthesis.cls}       & 文档类文件     \\
+%     文档类        & \file{sjtuthesis.cls}       & 学位论文文档类文件 \\
+%                  & \file{sjtureport.cls}       & 报告文档类文件  \\
+%                  & \file{sjtuarticle.cls}      & 文稿文档类文件  \\
 %                   & \file{sjtuthesis-*.cfg}     & 文档类辅助文件 \\
 %     \midrule
 %     视觉形象系统    & \file{sjtu-vi-logo-*.pdf}   & 校标图片       \\
@@ -601,7 +603,7 @@
 % \begin{itemize}
 %   \item 名字后面带有 \rexptarget\rexpstar{} 的，表示只能在 \cls{sjtuthesis} 文档类中使用；
 %   \item 名字后面带有 \exptarget\expstar{} 的，表示不能在 \cls{sjtuarticle} 文档类中使用；
-%   \item 名字后面不带有特殊符号的，一般表示在三种文档类中都可以使用，特殊情况另作说明。
+%   \item 名字后面不带有特殊符号的，一般表示在 \cls{sjtuthesis}、\cls{sjtureport} 和 \cls{sjtuarticle} 文档类中都可以使用，特殊情况另作说明。
 % \end{itemize}
 %
 % \subsubsection{通用选项}
@@ -1198,10 +1200,12 @@
 %   \begin{sjtusyntax}[morekeywords={\tableofcontents}]
 %     \tableofcontents
 %   \end{sjtusyntax}
-%   插入目录。
+%   目录。
 % \end{function}
 %
-% \begin{function}[rEXP]{\tableofcontents,\listoffigures,\listoffigures*,
+% \clearpage
+%
+% \begin{function}[rEXP]{\listoffigures,\listoffigures*,
 %   \listoftables,\listoftables*,\listofalgorithms,\listofalgorithms*}
 %   插图、表格和算法等索引命令如表 \ref{tab:list} 所示，将其插入到期望的
 %   位置即可。带*的命令表示对应的索引表不会出现在目录中。
@@ -1284,7 +1288,6 @@
 % \end{function}
 %
 % \begin{function}[rEXP]{nomenclature,nomenclature*}
-%   \vspace{-1ex}
 %   \begin{sjtusyntax}[emph={[2]nomenclature,nomenclature*}]
 %     \begin{nomenclature}
 %       (*\meta{符号对照表}*)
