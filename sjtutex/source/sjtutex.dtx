@@ -1904,9 +1904,9 @@
     paper      = a4paper,
     top        = 3.5 cm,
     bottom     = 4.0 cm,
-    left       = 3.3 cm,
-    right      = 2.8 cm,
-    headheight = 1.0 cm,
+    left       = 3.0 cm,
+    right      = 2.5 cm,
+    headheight = 1.5 cm,
     headsep    = 0.5 cm,
     footskip   = 1.0 cm
   }
@@ -1931,18 +1931,47 @@
 \fancyhf { }
 \bool_if:NTF \g_@@_twoside_bool
   {
-    \fancyhead [ RE, LO ] { \zihao { -5 } \l_@@_info_subject_zh_tl }
-    \fancyhead [ RO, LE ] { \zihao { -5 } \nouppercase { \leftmark } }
+    \fancyhead [ RE, LO ]
+%<thesis>      { \zihao { -5 } \l_@@_info_subject_zh_tl   }
+%<*!thesis>
+      {
+        \includegraphics [ height = 1.2 cm ]
+          { sjtu-vi-logo- \l_@@_style_header_logo_color_tl .pdf }
+      }
+    \fancyhead [ RO ]
+%<report>      { \zihao { -5 } \heiti \nouppercase { \rightmark } }
+%<article>      { \zihao { -5 } \heiti \l_@@_info_running_title_zh_tl }
+    \fancyhead [ LE ]
+%<report>      { \zihao { -5 } \heiti \nouppercase { \leftmark  } }
+%<article>      { \zihao { -5 } \heiti \l_@@_info_subject_zh_tl       }
+%</!thesis>
+%<thesis>    \fancyhead [ RO, LE ]
+%<thesis>      { \zihao { -5 } \nouppercase { \leftmark } }
   }
   {
-    \fancyhead [ L ] { \zihao { -5 } \l_@@_info_subject_zh_tl }
-    \fancyhead [ R ] { \zihao { -5 } \nouppercase { \leftmark } }
+    \fancyhead [ L ]
+%<thesis>      { \zihao { -5 } \l_@@_info_subject_zh_tl   }
+%<*!thesis>
+      {
+        \includegraphics [ height = 1.2 cm ]
+          { sjtu-vi-logo- \l_@@_style_header_logo_color_tl .pdf }
+      }
+%</!thesis>
+    \fancyhead [ R ]
+%<thesis>      { \zihao { -5 } \nouppercase { \leftmark } }
+%<report>      { \zihao { -5 } \heiti \nouppercase { \leftmark } }
+%<article>      { \zihao { -5 } \heiti \l_@@_info_running_title_zh_tl }
   }
 \fancyfoot [ C ]
   {
     \zihao { -5 }
     \@@_page:nn { \@@_thepage: } { \@@_lastpageref: }
   }
+%    \end{macrocode}
+%
+% \cls{sjtuthesis} 的页眉线。
+%    \begin{macrocode}
+%<*thesis>
 \cs_set:Npn \headrule
   {
     \hrule height 2.25 pt width \headwidth
@@ -1950,6 +1979,7 @@
     \hrule height 0.75 pt width \headwidth
     \skip_vertical:n { -3.75 pt }
   }
+%</thesis>
 %    \end{macrocode}
 %
 % |SJTU@null| 样式，不对当前页面样式做任何修改。
