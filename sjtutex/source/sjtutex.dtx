@@ -597,6 +597,13 @@
 % 部分选项采用 \kvopt{\meta{key}}{\meta{value}} 的形式。当 \meta{value} 省略时，
 % 将采用默认值。在下文的说明中，将用\textbf{粗体}表示默认值。
 %
+% 本模板中的选项、命令或环境可以分为以下三类：
+% \begin{itemize}
+%   \item 名字后面带有 \rexptarget\rexpstar{} 的，表示只能在 \cls{sjtuthesis} 文档类中使用；
+%   \item 名字后面带有 \exptarget\expstar{} 的，表示不能在 \cls{sjtuarticle} 文档类中使用；
+%   \item 名字后面不带有特殊符号的，一般表示在三种文档类中都可以使用，特殊情况另作说明。
+% \end{itemize}
+%
 % \subsubsection{通用选项}
 %
 % \begin{function}[updated=2022-12-03]{type}
@@ -613,18 +620,20 @@
 %   论文主要语言。可选中文或英文，该选项会改变文档中的一些标题的名字。
 % \end{function}
 %
-% \begin{function}{review}
+% \begin{function}[rEXP]{review}
 %   盲审模式。开启盲审模式将隐去作者姓名、导师姓名、班级、学号等个人信息，
 %   删去版权使用授权书、原创性声明和致谢页。默认关闭。
 % \end{function}
 %
 % \subsubsection{页面设置}
 %
-% \begin{function}{zihao}
+% \begin{function}[updated=2022-12-18]{zihao}
 %   \begin{sjtusyntax}[emph={[1]zihao}]
 %     zihao = (*<(-4)|5>*)
 %   \end{sjtusyntax}
-% 论文默认字号。小四号或五号，默认为小四号。
+% 论文默认字号，可以设定为小四号或五号。
+% 在 \cls{sjtuthesis} 和 \cls{sjtureport} 中默认为小四号，
+% 在 \cls{sjtuarticle} 中默认为五号。
 % \end{function}
 %
 % \begin{function}[added=2022-12-03]{lineskip}
@@ -638,14 +647,16 @@
 %   指明论文的单双面模式。
 %   \opt{oneside} 为单面模式，
 %   \opt{twoside} 为双面模式。
-%   默认为 \opt{twoside}。
+%   在 \cls{sjtuthesis} 中，默认为 \opt{twoside}。
+%   在 \cls{sjtureport} 和 \cls{sjtuarticle} 中，默认为 \opt{oneside}。
 % \end{function}
 %
-% \begin{function}{openright, openany}
+% \begin{function}[EXP]{openright, openany}
 %   指明论文是否奇数页开章。
 %   \opt{openright} 为从奇数页开始新章，
 %   \opt{openany} 为从任意页开始新章。
-%   默认为 \opt{openany}。
+%   在 \cls{sjtuthesis} 中，默认为 \opt{openright}。
+%   在 \cls{sjtureport} 中，默认为 \opt{openany}。
 % \end{function}
 %
 % \subsubsection{字体选项}
@@ -787,37 +798,51 @@
 %   具体内容见下。以下带“*”的项目表示对应的英文字段。
 % \end{function}
 %
-% \begin{function}{info/title,info/title*}
-%   \vspace{-1ex}
-%   \begin{sjtusyntax}[emph={[2]title,title*}]
-%     title  = (*\marg{中文标题}*)
-%     title* = (*\marg{英文标题}*)
+% \begin{function}{info/title}
+%   \begin{sjtusyntax}[emph={[2]title}]
+%     title = (*\marg{标题}*)
 %   \end{sjtusyntax}
 %   论文标题。如果您的标题过长，建议使用“|\\|”手动断行。
 % \end{function}
 %
-% \clearpage
-%
-% \begin{function}{info/display-title,info/display-title*}
-%   \vspace{-1ex}
-%   \begin{sjtusyntax}[emph={[2]display-title,display-title*}]
-%     display-title  = (*\marg{中文标题页标题}*)
-%     display-title* = (*\marg{英文标题页标题}*)
+% \begin{function}[rEXP]{info/title*}
+%   \begin{sjtusyntax}[emph={[2]title*}]
+%     title* = (*\marg{英文标题}*)
 %   \end{sjtusyntax}
-%   标题页论文中题目。默认为跟随对应语言的论文标题。
+%   论文英文标题。如果您的标题过长，建议使用“|\\|”手动断行。
 % \end{function}
 %
-%^^A \begin{function}{info/running-title,info/running-title*}
-%^^A   \vspace{-1ex}
-%^^A   \begin{sjtusyntax}[emph={[2]running-title,running-title*}]
+% \begin{function}{info/display-title}
+%   \begin{sjtusyntax}[emph={[2]display-title}]
+%     display-title  = (*\marg{中文标题页标题}*)
+%   \end{sjtusyntax}
+%   中文标题页论文中题目。默认为跟随对应语言的论文标题。
+% \end{function}
+%
+% \begin{function}[rEXP]{info/display-title*}
+%   \begin{sjtusyntax}[emph={[2]display-title*}]
+%     display-title* = (*\marg{英文标题页标题}*)
+%   \end{sjtusyntax}
+%   英文标题页论文中题目。默认为跟随对应语言的论文标题。
+% \end{function}
+%
+%^^A \begin{function}{info/running-title}
+%^^A   \begin{sjtusyntax}[emph={[2]running-title}]
 %^^A     running-title  = (*\marg{中文页眉标题}*)
-%^^A     running-title* = (*\marg{英文页眉标题}*)
 %^^A   \end{sjtusyntax}
-%^^A   论文页眉题目。
+%^^A   论文页眉题目（中文）。
 %^^A   该选项暂时无效。
 %^^A \end{function}
 %
-% \begin{function}[added=2022-12-17]{info/subject, info/subject*}
+%^^A \begin{function}[rEXP]{info/running-title*}
+%^^A   \begin{sjtusyntax}[emph={[2]running-title*}]
+%^^A     running-title* = (*\marg{英文页眉标题}*)
+%^^A   \end{sjtusyntax}
+%^^A   论文页眉题目（英文）。
+%^^A   该选项暂时无效。
+%^^A \end{function}
+%
+% \begin{function}[rEXP,added=2022-12-17]{info/subject, info/subject*}
 %   \vspace{-1ex}
 %   \begin{sjtusyntax}[emph={[2]subject, subject*}]
 %     subject  = (*\marg{中文主题}*)
@@ -829,23 +854,35 @@
 %^^A   现在中文主题也是论文页眉题目。
 % \end{function}
 %
-% \begin{function}{info/keywords,info/keywords*}
-%   \vspace{-1ex}
-%   \begin{sjtusyntax}[emph={[2]keywords,keywords*}]
+% \begin{function}{info/keywords}
+%   \begin{sjtusyntax}[emph={[2]keywords}]
 %     keywords  = (*\marg{中文关键字}*)
-%     keywords* = (*\marg{英文关键字}*)
 %   \end{sjtusyntax}
 %   关键字列表。各关键字之间需使用英文逗号隔开。
 %   为防止歧义，可以用分组括号“|{...}|”把各字段括起来。
 % \end{function}
 %
-% \begin{function}{info/author,info/author*}
-%   \vspace{-1ex}
-%   \begin{sjtusyntax}[emph={[2]author,author*}]
+% \begin{function}[rEXP]{info/keywords*}
+%   \begin{sjtusyntax}[emph={[2]keywords*}]
+%     keywords* = (*\marg{英文关键字}*)
+%   \end{sjtusyntax}
+%   英文关键字列表。各关键字之间需使用英文逗号隔开。
+%   为防止歧义，可以用分组括号“|{...}|”把各字段括起来。
+% \end{function}
+%
+% \begin{function}{info/author}
+%   \begin{sjtusyntax}[emph={[2]author}]
 %     author  = (*\marg{姓名}*)
-%     author* = (*\marg{英文姓名或拼音}*)
 %   \end{sjtusyntax}
 %   作者姓名。
+% \end{function}
+%
+% \begin{function}{info/author*}
+%   \vspace{-1ex}
+%   \begin{sjtusyntax}[emph={[2]author*}]
+%     author* = (*\marg{英文姓名或拼音}*)
+%   \end{sjtusyntax}
+%   作者英文姓名。
 % \end{function}
 %
 % \begin{function}{info/id}
@@ -855,7 +892,7 @@
 %   学号。
 % \end{function}
 %
-% \begin{function}[updated=2022-12-13]{info/supervisor,info/supervisor*,
+% \begin{function}[rEXP,updated=2022-12-13]{info/supervisor,info/supervisor*,
 %   info/assoc_supervisor,info/assoc_supervisor*,
 %   info/co-supervisor,info/co-supervisor*}
 %   \vspace{-1ex}
@@ -871,7 +908,7 @@
 %   导师、副导师、联合导师姓名。
 % \end{function}
 %
-% \begin{function}{info/degree,info/degree*}
+% \begin{function}[rEXP]{info/degree,info/degree*}
 %   \vspace{-1ex}
 %   \begin{sjtusyntax}[emph={[2]degree,degree*}]
 %     degree  = (*\marg{学位中文名称}*)
@@ -880,7 +917,7 @@
 %   申请学位中英文名称。
 % \end{function}
 %
-% \begin{function}{info/department,info/department*}
+% \begin{function}[rEXP]{info/department,info/department*}
 %   \vspace{-1ex}
 %   \begin{sjtusyntax}[emph={[2]department,department*}]
 %     department  = (*\marg{院系中文名称}*)
@@ -889,7 +926,7 @@
 %   院系中英文名称。
 % \end{function}
 %
-% \begin{function}{info/major,info/major*}
+% \begin{function}[rEXP]{info/major,info/major*}
 %   \vspace{-1ex}
 %   \begin{sjtusyntax}[emph={[2]major,major*}]
 %     major  = (*\marg{专业中文名称}*)
@@ -898,7 +935,7 @@
 %   专业中英文名称。
 % \end{function}
 %
-% \begin{function}{info/fund,info/fund*}
+% \begin{function}[rEXP]{info/fund,info/fund*}
 %   \vspace{-1ex}
 %   \begin{sjtusyntax}[emph={[2]fund,fund*}]
 %     fund  = (*\marg{资助基金中文名称}*)
@@ -917,15 +954,20 @@
 %   即 |yyyy-mm-dd|；如果不符合 ISO 格式将会被回退为文档编译日期。
 % \end{function}
 %
-% \begin{function}[added=2022-12-17]{info/display-date, info/display-date*}
-%   \vspace{-1ex}
-%   \begin{sjtusyntax}[emph={[2]display-date, display-date*}]
-%     display-date  = (*\marg{中文日期文字}*)
+% \begin{function}[added=2022-12-17]{info/display-date}
+%   \begin{sjtusyntax}[emph={[2]display-date}]
+%     display-date  = (*\marg{日期文字}*)
+%   \end{sjtusyntax}
+%   显示日期，可以显示不同于标准日期格式的日期，日期文字将会被原样输出。
+%   设定该键时，将会覆盖 \opt{info/date} 键在中文语境下的设定。
+% \end{function}
+%
+% \begin{function}[rEXP,added=2022-12-17,updated=2022-12-18]{info/display-date*}
+%   \begin{sjtusyntax}[emph={[2]display-date*}]
 %     display-date* = (*\marg{英文日期文字}*)
 %   \end{sjtusyntax}
-%   中英文显示日期，可以显示不同于标准日期格式的日期，日期文字将会被原样输出。
-%   设定该键时，将会覆盖 \opt{info/date} 键在对应语言下的设定，
-%   应当同时设置中英文语境下的显示日期。
+%   英文显示日期，可以显示不同于标准日期格式的日期，日期文字将会被原样输出。
+%   设定该键时，将会覆盖 \opt{info/date} 键在英文语境下的设定。
 % \end{function}
 %
 % \subsubsection{样式域}
@@ -998,12 +1040,12 @@
 %   \begin{sjtusyntax}[emph={[1]name}]
 %     name = (*\marg{键值列表}*)
 %   \end{sjtusyntax}
-%   选项包含许多子项目，用于设置论文中一些标题的名称。
+%   选项包含许多子项目，用于设置论文中一些标题的名称。部分选项只能在 \cls{sjtuthesis} 中使用。
 %   具体内容见表 \ref{tab:names}。
 % \end{function}
 %
-% \begin{function}{name/contents,name/listfigure,name/listtable,name/figure,
-%   name/table,name/index,name/appendix,name/proof,name/bib,
+% \begin{function}[updated=2022-12-18]{name/contents,name/listfigure,name/listtable,
+%   name/figure,name/table,name/abstract,name/index,name/appendix,name/proof,name/bib,
 %   name/figure*,name/table*,name/algorithm,name/listalgorithm,
 %   name/abbr,name/nom,name/summary,name/ack,name/resume,name/digset,name/achv}
 % \end{function}
@@ -1015,29 +1057,30 @@
 %   \label{tab:names}
 %   \begin{tabular}{l|l|l}
 %     \toprule
-%     \strong{选项}        & \strong{|lang = zh|} & \strong{|lang = en|}          \\
+%     \strong{选项}          & \strong{|lang = zh|} & \strong{|lang = en|}          \\
 %     \midrule
-%      |contents|         & 目录                  & Contents                      \\
-%      |listfigure|       & 插图                  & List of Figures               \\
-%      |listtable|        & 表格                  & List of Tables                \\
-%      |figure|           & 图                    & Figure                        \\
-%      |table|            & 表                    & Table                         \\
-%      |appendix|         & 附录                  & Appendix                      \\
-%      |index|            & 索引                  & Index                         \\
-%      |proof|            & 证明                  & Proof                         \\
-%      |bib|              & 参考文献               & Bibliography                  \\
+%      |contents|           & 目录                  & Contents                      \\
+%      |listfigure|         & 插图                  & List of Figures               \\
+%      |listtable|          & 表格                  & List of Tables                \\
+%      |figure|             & 图                    & Figure                        \\
+%      |table|              & 表                    & Table                         \\
+%      |abstract| \rexpstar & 摘要                  & Abstract                      \\
+%      |appendix|           & 附录                  & Appendix                      \\
+%      |index|              & 索引                  & Index                         \\
+%      |proof|              & 证明                  & Proof                         \\
+%      |bib|                & 参考文献               & Bibliography                  \\
 %    \midrule
-%      |figure*|          & Figure               & 图                             \\
-%      |table*|           & Table                & 表                             \\
-%      |algorithm|        & 算法                  & Algorithm                     \\
-%      |listalgorithm|    & 算法                  & List of Algorithms            \\
-%      |abbr|             & 缩略语对照表           & Abbreviation                  \\
-%      |nom|              & 主要符号对照表         & Nomenclature                  \\
-%      |summary|          & 全文总结              & Summary                       \\
-%      |ack|              & 致谢                  & Acknowledgements              \\
-%      |resume|           & 个人简历              & Resume                        \\
-%      |digest|           & 大摘要                & Digest                        \\
-%      |achv|             & 学术论文和科研成果目录   & List of Research Achievements \\
+%      |figure*|            & Figure               & 图                             \\
+%      |table*|             & Table                & 表                             \\
+%      |algorithm|          & 算法                  & Algorithm                     \\
+%      |listalgorithm|      & 算法                  & List of Algorithms            \\
+%      |abbr| \rexpstar     & 缩略语对照表           & Abbreviation                  \\
+%      |nom| \rexpstar      & 主要符号对照表         & Nomenclature                  \\
+%      |summary| \rexpstar  & 全文总结              & Summary                       \\
+%      |ack| \rexpstar      & 致谢                  & Acknowledgements              \\
+%      |resume| \rexpstar   & 个人简历              & Resume                        \\
+%      |digest| \rexpstar   & 大摘要                & Digest                        \\
+%      |achv| \rexpstar     & 学术论文和科研成果目录   & List of Research Achievements \\
 %     \bottomrule
 %   \end{tabular}
 % \end{table}
@@ -1056,32 +1099,48 @@
 %
 % \subsection{标题页和声明页}
 %
-% \begin{function}[added=2022-12-17]{\title,\title*}
-%   \begin{sjtusyntax}[morekeywords={\title, \title*}]
-%     \title(*\marg{中文标题}*)
+% \begin{function}[added=2022-12-17]{\title}
+%   \begin{sjtusyntax}[morekeywords={\title}]
+%     \title(*\marg{标题}*)
+%   \end{sjtusyntax}
+%   设置标题，覆盖 \opt{info/title} 键的值。
+% \end{function}
+%
+% \begin{function}[rEXP,added=2022-12-17]{\title*}
+%   \begin{sjtusyntax}[morekeywords={\title*}]
 %     \title*(*\marg{英文标题}*)
 %   \end{sjtusyntax}
-%   设置中英文标题，分别覆盖 \opt{info/title} 和 \opt{info/title*} 键的值。
-%   在 \cls{sjtuarticle} 中，使用 \cs{title} 设定文档标题。
+%   设置英文标题，覆盖 \opt{info/title*} 键的值。
 % \end{function}
 %
-% \begin{function}[added=2022-12-17]{\author,\author*}
-%   \begin{sjtusyntax}[morekeywords={\author, \author*}]
+% \begin{function}[added=2022-12-17]{\author}
+%   \begin{sjtusyntax}[morekeywords={\author}]
 %     \author(*\marg{姓名}*)
+%   \end{sjtusyntax}
+%   设置作者姓名，覆盖 \opt{info/author} 键的值。
+% \end{function}
+%
+% \begin{function}[rEXP,added=2022-12-17]{\author*}
+%   \begin{sjtusyntax}[morekeywords={\author*}]
 %     \author*(*\marg{英文姓名或拼音}*)
 %   \end{sjtusyntax}
-%   设置作者姓名，分别覆盖 \opt{info/author} 和 \opt{info/author*} 键的值。
-%   在 \cls{sjtuarticle} 中，使用 \cs{author} 设定文档作者。
+%   设置作者英文姓名，覆盖 \opt{info/author*} 键的值。
 % \end{function}
 %
-% \begin{function}[added=2022-12-17]{\date,\date*}
-%   \begin{sjtusyntax}[morekeywords={\date, \date*}]
-%     \date(*\marg{中文日期}*)
+% \begin{function}[added=2022-12-17]{\date}
+%   \begin{sjtusyntax}[morekeywords={\date}]
+%     \date(*\marg{日期}*)
+%   \end{sjtusyntax}
+%   设置日期，覆盖 \opt{info/display-date} 键的值。
+%   日期会被原样显示。
+% \end{function}
+%
+% \begin{function}[rEXP,added=2022-12-17]{\date*}
+%   \begin{sjtusyntax}[morekeywords={\date*}]
 %     \date*(*\marg{英文日期}*)
 %   \end{sjtusyntax}
-%   设置日期，分别覆盖 \opt{info/display-date} 和 \opt{info/display-date*} 键的值。
+%   设置英文日期，覆盖 \opt{info/display-date*} 键的值。
 %   日期会被原样显示。
-%   在 \cls{sjtuarticle} 中，使用 \cs{date} 设定文档日期。
 % \end{function}
 %
 % \begin{function}[added=2022-12-17]{\today}
@@ -1099,7 +1158,7 @@
 %   在 \cls{sjtuarticle} 中，生成标题块。
 % \end{function}
 %
-% \begin{function}[updated=2022-12-03]{\copyrightpage}
+% \begin{function}[rEXP,updated=2022-12-03]{\copyrightpage}
 %   \begin{sjtusyntax}[morekeywords={\copyrightpage}]
 %     \copyrightpage
 %     \copyrightpage(*\oarg{授权书扫描件}*)
@@ -1117,24 +1176,34 @@
 %   声明前文部分开始。
 % \end{function}
 %
-% \begin{function}{abstract,abstract*}
-%   \vspace{-1ex}
+% \begin{function}{abstract}
 %   \begin{sjtusyntax}[emph={[2]abstract,abstract*}]
 %     \begin{abstract}
-%       (*\meta{中文摘要}*)
+%       (*\meta{摘要}*)
 %     \end{abstract}
+%   \end{sjtusyntax}
+%   摘要环境。
+% \end{function}
+%
+% \begin{function}[rEXP]{abstract*}
+%   \begin{sjtusyntax}[emph={[2]abstract*}]
 %     \begin{abstract*}
 %       (*\meta{英文摘要}*)
 %     \end{abstract*}
 %   \end{sjtusyntax}
-%   摘要环境。不带星号和带星号的版本分别用来输入中文摘要和英文摘要。
+%   英文摘要环境。
 % \end{function}
 %
-% \clearpage
+% \begin{function}{\tableofcontents}
+%   \begin{sjtusyntax}[morekeywords={\tableofcontents}]
+%     \tableofcontents
+%   \end{sjtusyntax}
+%   插入目录。
+% \end{function}
 %
-% \begin{function}{\tableofcontents,\listoffigures,\listoffigures*,
+% \begin{function}[rEXP]{\tableofcontents,\listoffigures,\listoffigures*,
 %   \listoftables,\listoftables*,\listofalgorithms,\listofalgorithms*}
-%   目录、插图、表格和算法等索引命令如表 \ref{tab:list} 所示，将其插入到期望的
+%   插图、表格和算法等索引命令如表 \ref{tab:list} 所示，将其插入到期望的
 %   位置即可。带*的命令表示对应的索引表不会出现在目录中。
 %^^A 似乎不再使用插图、表格和算法索引。
 % \end{function}
@@ -1148,7 +1217,6 @@
 %   \begin{tabular}{lp{4cm}}
 %     \toprule
 %     \strong{用途}     & \strong{命令}          \\\midrule
-%     目录              & \cs{tableofcontents}   \\\midrule
 %     插图索引          & \cs{listoffigures}     \\
 %                       & \cs{listoffigures*}    \\\midrule
 %     表格索引          & \cs{listoftables}      \\
@@ -1215,7 +1283,7 @@
 %^^A 标准新模板将附录编号置于章节标题之后。
 % \end{function}
 %
-% \begin{function}{nomenclature,nomenclature*}
+% \begin{function}[rEXP]{nomenclature,nomenclature*}
 %   \vspace{-1ex}
 %   \begin{sjtusyntax}[emph={[2]nomenclature,nomenclature*}]
 %     \begin{nomenclature}
@@ -1236,7 +1304,7 @@
 %   声明后文部分开始。 后文部分包含致谢等。
 % \end{function}
 %
-% \begin{function}{acknowledgements}
+% \begin{function}[rEXP]{acknowledgements}
 %   \begin{sjtusyntax}[emph={[2]acknowledgements}]
 %     \begin{acknowledgements}
 %       (*\meta{致谢内容}*)
@@ -1245,7 +1313,7 @@
 %   致谢环境。盲审模式下致谢将被隐去。
 % \end{function}
 %
-% \begin{function}{achievements}
+% \begin{function}[rEXP]{achievements}
 %   \begin{sjtusyntax}[emph={[2]achievements}]
 %     \begin{achievements}
 %       (*\meta{获得的科研成果}*)
@@ -1256,21 +1324,26 @@
 %  （比如学术论文、专利等）。
 % \end{function}
 %
-% \begin{function}{bibliolist,bibliolist*}
-%   \vspace{-1ex}
-%   \begin{sjtusyntax}[emph={[2]bibliolist,bibliolist*}]
+% \begin{function}{bibliolist}
+%   \begin{sjtusyntax}[emph={[2]bibliolist}]
 %      \begin{bibliolist}(*\marg{最长条目编号}*)
 %         \item (*\meta{文献条目}*)
 %      \end{bibliolist}
+%   \end{sjtusyntax}
+%   附录用文献环境，普通模式下显示，
+%   在 \cls{sjtuthesis} 中，盲审模式下不显示。
+% \end{function}
+%
+% \begin{function}[rEXP]{bibliolist*}
+%   \begin{sjtusyntax}[emph={[2]bibliolist,bibliolist*}]
 %      \begin{bibliolist*}(*\marg{最长条目编号}*)
 %         \item (*\meta{文献条目（隐去姓名）}*)
 %      \end{bibliolist*}
 %   \end{sjtusyntax}
-%   附录用文献环境，普通模式下显示不带星号的版本中的内容，
-%   盲审模式下显示带星号的版本中的内容。
+%   附录用文献环境，盲审模式下显示。
 % \end{function}
 %
-% \begin{function}{resume}
+% \begin{function}[rEXP]{resume}
 %   \begin{sjtusyntax}[emph={[2]resume}]
 %     \begin{resume}
 %       (*\meta{简历内容}*)
@@ -1279,7 +1352,7 @@
 %   简历环境。盲审模式下简历将被隐去。
 % \end{function}
 %
-% \begin{function}{digest}
+% \begin{function}[rEXP]{digest}
 %   \begin{sjtusyntax}[emph={[2]digest}]
 %     \begin{digest}
 %       (*\meta{大摘要}*)
