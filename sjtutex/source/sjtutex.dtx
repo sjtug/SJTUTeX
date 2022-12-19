@@ -1066,22 +1066,22 @@
 \RenewDocumentCommand \title { s +m }
   {
     \IfBooleanTF {#1}
-      { \keys_set:nn { sjtu / info } { title* = {#2} } }
-      { \keys_set:nn { sjtu / info } { title  = {#2} } }
+      { \keys_set_known:nn { sjtu / info } { title* = {#2} } }
+      { \keys_set_known:nn { sjtu / info } { title  = {#2} } }
   }
 \tl_set:Nn \@title { \l_@@_info_title_zh_tl }
 \RenewDocumentCommand \author { s m }
   {
     \IfBooleanTF {#1}
-      { \keys_set:nn { sjtu / info } { author* = {#2} } }
-      { \keys_set:nn { sjtu / info } { author  = {#2} } }
+      { \keys_set_known:nn { sjtu / info } { author* = {#2} } }
+      { \keys_set_known:nn { sjtu / info } { author  = {#2} } }
   }
 \tl_set:Nn \@author { \l_@@_info_author_zh_tl }
 \RenewDocumentCommand \date { s m }
   {
     \IfBooleanTF {#1}
-      { \keys_set:nn { sjtu / info } { display-date* = {#2} } }
-      { \keys_set:nn { sjtu / info } { display-date  = {#2} } }
+      { \keys_set_known:nn { sjtu / info } { display-date* = {#2} } }
+      { \keys_set_known:nn { sjtu / info } { display-date  = {#2} } }
   }
 \tl_set:Nn \@date { \l_@@_info_date_zh_tl }
 \tl_set:Nv \today { c_@@_today_ \g_@@_lang_tl _tl }
