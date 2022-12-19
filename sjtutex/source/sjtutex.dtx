@@ -1116,26 +1116,40 @@
 %    \begin{macrocode}
 \keys_define:nn { sjtu / style }
   {
-    float-font          .tl_set:N = \SJTU@style@float@font ,
-    float-font         .initial:n = \zihao { 5 } ,
-    fnmark-font         .tl_set:N = \l_@@_style_fnmark_font_tl ,
-    fnmark-font        .initial:n = ,
-    float-numsep        .tl_set:N = \l_@@_style_float_numsep_tl ,
-    float-numsep       .initial:n = { -- } ,
-    equation-numsep     .tl_set:N = \l_@@_style_equation_numsep_tl ,
-    equation-numsep    .initial:n = { -- } ,
-    title-logo-color   .choice: ,
-    title-logo-color  .choices:nn =
+    float-font              .tl_set:N = \SJTU@style@float@font ,
+    float-font             .initial:n = \zihao { 5 } ,
+    fnmark-font             .tl_set:N = \l_@@_style_fnmark_font_tl ,
+    fnmark-font            .initial:n = ,
+    float-numsep            .tl_set:N = \l_@@_style_float_numsep_tl ,
+    float-numsep           .initial:n = { -- } ,
+    equation-numsep         .tl_set:N = \l_@@_style_equation_numsep_tl ,
+    equation-numsep        .initial:n = { -- } ,
+    title-logo-color       .choice: ,
+    title-logo-color      .choices:nn =
       { red, blue, black }
       { \tl_set_eq:NN \l_@@_style_title_logo_color_tl \l_keys_choice_tl } ,
-    title-logo-color   .initial:n = { red } ,
-    header-logo-color   .choice: ,
-    header-logo-color .choices:nn =
+    title-logo-color       .initial:n = { red } ,
+    header-logo-color       .choice: ,
+    header-logo-color     .choices:nn =
       { red, blue, black }
       { \tl_set_eq:NN \l_@@_style_header_logo_color_tl \l_keys_choice_tl } ,
-    header-logo-color  .initial:n = { red } ,
-    page-number        .cs_set:Np = \@@_page:nn #1#2 ,
-    page-number        .initial:n = { {#1} }
+    header-logo-color      .initial:n = { red } ,
+    header-uppercase       .choice: ,
+    header-uppercase / true   .code:n =
+      { \cs_gset_eq:NN \@@_nouppercase:n \use:n } ,
+    header-uppercase / false  .code:n =
+      { \cs_gset:Nn \@@_nouppercase:n { \nouppercase {##1} } } ,
+    header-uppercase       .default:n = { true } ,
+%<!article>    header-uppercase       .initial:n = { false } ,
+%<article>    header-uppercase       .initial:n = { true } ,
+    header-font             .tl_set:N = \l_@@_style_header_font_tl ,
+%<!article>    header-font            .initial:n = \zihao { -5 } ,
+%<article>    header-font            .initial:n = \zihao { 5 } ,
+    footer-font             .tl_set:N = \l_@@_style_footer_font_tl ,
+%<!article>    footer-font            .initial:n = \zihao { -5 } ,
+%<article>    footer-font            .initial:n = \zihao { 5 } ,
+    page-number            .cs_set:Np = \@@_page:nn #1#2 ,
+    page-number            .initial:n = { {#1} }
   }
 %</class>
 %    \end{macrocode}
@@ -1934,42 +1948,51 @@
 % 设置页眉页脚。
 %    \begin{macrocode}
 \fancyhf { }
+%<*!thesis>
+\tl_set:Nn \l_@@_header_logo_tl
+  {
+    \includegraphics [ height = 1.2 cm ]
+      { sjtu-vi-logo- \l_@@_style_header_logo_color_tl .pdf }
+  }
+%</!thesis>
 \bool_if:NTF \g_@@_twoside_bool
   {
     \fancyhead [ RE, LO ]
-%<thesis>      { \zihao { -5 } \l_@@_info_subject_zh_tl   }
+%<thesis>      { \l_@@_style_header_font_tl \l_@@_info_subject_zh_tl   }
 %<*!thesis>
-      {
-        \includegraphics [ height = 1.2 cm ]
-          { sjtu-vi-logo- \l_@@_style_header_logo_color_tl .pdf }
-      }
+      { \l_@@_header_logo_tl }
     \fancyhead [ RO ]
-%<report>      { \zihao { -5 } \heiti \nouppercase { \rightmark } }
-%<article>      { \zihao { -5 } \heiti \l_@@_info_running_title_zh_tl }
+      {
+        \l_@@_style_header_font_tl
+%<report>        \@@_nouppercase:n { \rightmark }
+%<article>        \@@_nouppercase:n
+%<article>          { \MakeUppercase \l_@@_info_running_title_zh_tl }
+      }
     \fancyhead [ LE ]
-%<report>      { \zihao { -5 } \heiti \nouppercase { \leftmark  } }
-%<article>      { \zihao { -5 } \heiti \l_@@_info_subject_zh_tl       }
+      {
+%<report>        \@@_nouppercase:n { \leftmark  }
+%<article>        \@@_nouppercase:n
+%<article>          { \MakeUppercase \l_@@_info_subject_zh_tl       }
+      }
 %</!thesis>
 %<thesis>    \fancyhead [ RO, LE ]
-%<thesis>      { \zihao { -5 } \nouppercase { \leftmark } }
+%<thesis>      { \l_@@_style_header_font_tl \@@_nouppercase:n { \leftmark } }
   }
   {
     \fancyhead [ L ]
-%<thesis>      { \zihao { -5 } \l_@@_info_subject_zh_tl   }
-%<*!thesis>
-      {
-        \includegraphics [ height = 1.2 cm ]
-          { sjtu-vi-logo- \l_@@_style_header_logo_color_tl .pdf }
-      }
-%</!thesis>
+%<thesis>      { \l_@@_style_header_font_tl \l_@@_info_subject_zh_tl   }
+%<!thesis>      { \l_@@_header_logo_tl }
     \fancyhead [ R ]
-%<thesis>      { \zihao { -5 } \nouppercase { \leftmark } }
-%<report>      { \zihao { -5 } \heiti \nouppercase { \leftmark } }
-%<article>      { \zihao { -5 } \heiti \l_@@_info_running_title_zh_tl }
+      {
+        \l_@@_style_header_font_tl
+%<!article>        \@@_nouppercase:n { \leftmark }
+%<article>        \@@_nouppercase:n
+%<article>          { \MakeUppercase \l_@@_info_running_title_zh_tl }
+      }
   }
 \fancyfoot [ C ]
   {
-    \zihao { -5 }
+    \l_@@_style_footer_font_tl
     \@@_page:nn { \@@_thepage: } { \@@_lastpageref: }
   }
 %    \end{macrocode}
@@ -1985,6 +2008,24 @@
     \skip_vertical:n { -3.75 pt }
   }
 %</thesis>
+%    \end{macrocode}
+%
+% \cls{sjtuarticle} 无页眉线。
+%    \begin{macrocode}
+%<article>\tl_set:Nn \headrulewidth { 0 pt }
+%    \end{macrocode}
+%
+% 重定义 |plain| 样式。
+%    \begin{macrocode}
+\bool_if:NTF \g_@@_twoside_bool
+  {
+    \fancypagestyle { plain }
+      { \fancyhead [ RE, LO ] { } }
+  }
+  {
+    \fancypagestyle { plain }
+      { \fancyhead [ R ] { } }
+  }
 %    \end{macrocode}
 %
 % |SJTU@null| 样式，不对当前页面样式做任何修改。
