@@ -2989,8 +2989,8 @@
         assumption, axiom, conjecture, corollary, definition, example,
         exercise, lemma, problem, proposition, theorem
       }
-%<thesis>      { \exp_args:Nnv  \newtheorem  {##1} { c_@@_name_ ##1 _tl } [ chapter ] }
-%<!thesis>      { \exp_args:Nnv  \newtheorem  {##1} { c_@@_name_ ##1 _tl } }
+%<!article>      { \exp_args:Nnv  \newtheorem  {##1} { c_@@_name_ ##1 _tl } [ chapter ] }
+%<article>      { \exp_args:Nnv  \newtheorem  {##1} { c_@@_name_ ##1 _tl } }
     \clist_map_inline:nn
       { remark, solution }
       { \exp_args:NNnv \newtheorem* {##1} { c_@@_name_ ##1 _tl } }
