@@ -953,7 +953,7 @@
 %     date = (*\marg{ISO 日期}*)
 %   \end{sjtusyntax}
 %   日期。默认值为文档编译日期。也可以自己指定，要求使用 ISO 格式，
-%   即 |yyyy-mm-dd|；如果不符合 ISO 格式将会被回退为文档编译日期。
+%   即 |yyyy-mm-dd|，否则设定无效。
 % \end{function}
 %
 % \begin{function}[added=2022-12-17]{info/display-date}
@@ -1254,9 +1254,6 @@
 %   脚注会给出脚注过多的警告。
 %   在一些字体配置下，脚注编号不能超过 10 号或 20 号，否则字体集可能不包含该字符，而无法正
 %   常显示。
-%^^A   根据
-%^^A   \href{https://stone-zeng.github.io/2019-02-09-circled-numbers/}{《带圈数字》}
-%^^A   一文，
 % \end{function}
 %
 % \begin{function}{assumption,axiom,conjecture,corollary,definition,example,
