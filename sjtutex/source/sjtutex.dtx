@@ -1119,6 +1119,12 @@
   {
     float-font              .tl_set:N = \SJTU@style@float@font ,
     float-font             .initial:n = \zihao { 5 } ,
+    caption-font              .code:n =
+      { \DeclareCaptionFont { SJTU@font     } {#1} } ,
+    caption-font           .initial:n = \zihao { 5 } \bfseries ,
+    subcaption-font           .code:n =
+      { \DeclareCaptionFont { SJTU@sub@font } {#1} } ,
+    subcaption-font        .initial:n = \zihao { 5 } \normalfont ,
     fnmark-font             .tl_set:N = \l_@@_style_fnmark_font_tl ,
     fnmark-font            .initial:n = ,
     float-numsep            .tl_set:N = \l_@@_style_float_numsep_tl ,
@@ -2213,8 +2219,6 @@
 %
 % 题注格式。
 %    \begin{macrocode}
-\DeclareCaptionFont { SJTU@font     } { \zihao { 5 } \bfseries   }
-\DeclareCaptionFont { SJTU@sub@font } { \zihao { 5 } \normalfont }
 \DeclareCaptionLabelSeparator { enskip } { \enskip }
 \captionsetup
   {
