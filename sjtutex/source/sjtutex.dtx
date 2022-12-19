@@ -639,6 +639,7 @@
 %    \begin{macrocode}
 \cs_generate_variant:Nn \tl_const:Nn { co, Nv }
 \cs_generate_variant:Nn \clist_map_inline:nn { xn }
+\cs_generate_variant:Nn \cs_gset:Npn { cpo }
 \prg_generate_conditional_variant:Nnn \regex_match:nn { ne } { T }
 \exp_args_generate:n { Nnv }
 %    \end{macrocode}
@@ -2168,23 +2169,26 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\SJTU@chapter,\@@_pdf_bookmark:nn,\@@_phantom_section:}
-% 定义一个灵活的章标题命令专门处理不同的需求。
+% \begin{macro}{\SJTU@chapter,\SJTU@section,
+% \@@_pdf_bookmark:nn,\@@_phantom_section:}
+% 定义一个灵活的章节标题命令专门处理不同的需求。
 %    \begin{macrocode}
-%<*thesis>
-\NewDocumentCommand \SJTU@chapter { s O{#3} m O{#2} }
+%<!article>\NewDocumentCommand \SJTU@chapter { s O{#3} m O{#2} }
+%<article>\NewDocumentCommand \SJTU@section { s O{#3} m O{#2} }
   {
-    \bool_if:NTF \g_@@_openright_bool { \cleardoublepage } { \clearpage }
+%<!article>    \bool_if:NTF \g_@@_openright_bool
+%<!article>      { \cleardoublepage } { \clearpage }
     \IfBooleanTF {#1}
       { \tl_if_empty:nF {#4} { \@@_pdf_bookmark:nn { 0 } {#4} } }
       {
         \@@_phantom_section:
-        \addcontentsline { toc } { chapter } {#4}
+%<!article>        \addcontentsline { toc } { chapter } {#4}
+%<article>        \addcontentsline { toc } { section } {#4}
       }
-    \chapter* {#3}
+%<!article>    \chapter* {#3}
+%<article>    \section* {#3}
     \@mkboth { \MakeUppercase {#2} } { \MakeUppercase {#2} }
   }
-%</thesis>
 \cs_new_eq:NN \@@_pdf_bookmark:nn \use_none:nn
 \cs_new_eq:NN \@@_phantom_section: \prg_do_nothing:
 %    \end{macrocode}
@@ -2236,20 +2240,40 @@
 \captionsetup [ bi-second ] { aux-names }
 %    \end{macrocode}
 %
+% \begin{macro}{\SJTUcounterwithin}
+%    \begin{macrocode}
+\NewDocumentCommand \SJTUcounterwithin
+  { s O{ \l_@@_style_float_numsep_tl } O{ \arabic } m m }
+  {
+    \@ifbothcounters {#4} {#5}
+      {
+        \@addtoreset {#4} {#5}
+        \IfBooleanF {#1}
+          {
+            \cs_gset:cpo { the #4 }
+              { \cs:w the #5 \cs_end: #2 #3 {#4} }
+          }
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
 % 定义图、表、公式的编号格式。
 %    \begin{macrocode}
-%<*thesis>
+%<*!article>
 \cs_set:Npn \thefigure
   { \thechapter \l_@@_style_float_numsep_tl    \arabic { figure   } }
 \cs_set:Npn \thetable
   { \thechapter \l_@@_style_float_numsep_tl    \arabic { table    } }
 \cs_set:Npn \theequation
   { \thechapter \l_@@_style_equation_numsep_tl \arabic { equation } }
+%</!article>
 %    \end{macrocode}
 %
 % \begin{macro}[int]{\@@_counter_without_chapter:}
 % 特殊环境各计数器不随章编号。
 %    \begin{macrocode}
+%<*thesis>
 \cs_new_protected:Nn \@@_counter_without_chapter:
   {
     \counterwithout { section } { chapter }
@@ -2689,6 +2713,7 @@
     { \bfseries \c_@@_name_keywords_en_tl }
     \clist_use:Nn \l_@@_info_keywords_en_clist { ,~ }
   }
+%</thesis>
 %    \end{macrocode}
 %
 % \subsection{目录}
@@ -2702,14 +2727,17 @@
 %    \begin{macrocode}
 \DeclareDocumentCommand \tableofcontents { }
   {
-    \SJTU@chapter* { \contentsname }
+%<!article>    \SJTU@chapter* { \contentsname }
+%<article>    \SJTU@section* { \contentsname }
     \@starttoc { toc }
   }
 \NewDocumentCommand \SJTU@listof { m m s }
   {
     \IfBooleanTF {#3}
-      { \SJTU@chapter* {#1} }
-      { \SJTU@chapter  {#1} }
+%<!article>      { \SJTU@chapter* {#1} }
+%<!article>      { \SJTU@chapter  {#1} }
+%<article>      { \SJTU@section* {#1} }
+%<article>      { \SJTU@section  {#1} }
     \exp_args:Nv \@starttoc { ext@ #2 }
   }
 \DeclareDocumentCommand \listoffigures { }
@@ -2726,8 +2754,7 @@
 %    \begin{macrocode}
 %<zh>\tl_set:Nn \cftdot { \textperiodcentered }
 \tl_set:Nn \cftdotsep { 1 }
-\tl_set:Nn \cftchapleader { \normalfont \cftdotfill { \cftdotsep } }
-%</thesis>
+%<!article>\tl_set:Nn \cftchapleader { \normalfont \cftdotfill { \cftdotsep } }
 %    \end{macrocode}
 %
 % 图表清单标题前添加名称。
@@ -2838,21 +2865,21 @@
         \end { @bibliolist }
 %<thesis>      }
   } { }
-%<*thesis>
 \NewDocumentEnvironment { bibliolist* } { m +b }
   {
-    \bool_if:NT \g_@@_review_bool
-      {
+%<thesis>    \bool_if:NT \g_@@_review_bool
+%<thesis>      {
         \cs_set:Npn \@noitemerr { }
         \begin { @bibliolist } {#1}
         #2
         \end { @bibliolist }
-      }
+%<thesis>      }
   } { }
 %    \end{macrocode}
 %
 % 简历。
 %    \begin{macrocode}
+%<*thesis>
 \NewDocumentEnvironment { resume } { +b }
   {
     \bool_if:NF \g_@@_review_bool
@@ -2869,7 +2896,8 @@
   {
     \AtEndDocument
       {
-        \bool_if:NTF \g_@@_openright_bool { \cleardoublepage } { \clearpage }
+        \bool_if:NTF \g_@@_openright_bool
+          { \cleardoublepage } { \clearpage }
         \@@_orig_page_numbering:n { roman }
         \cs_gset:Nn \@@_thepage:     { \theCurrentPageLocal }
         \cs_gset:Nn \@@_lastpageref: { \lastpageref { pagesLTS.roman.local } }
@@ -3031,11 +3059,11 @@
         \tl_set:cn { cft #2 presnum } { #4 \c_space_tl }
         \@@_dim_add_to_wd:cv { cft #2 numwidth } { cft #2 presnum }
       }
-%<*thesis>
     \exp_args:Nc \DeclareDocumentCommand { listof #1 s } { }
       { \SJTU@listof {#5} {#3} }
-    \cs_set:cpn { the #3 }
-      { \thechapter \l_@@_style_float_numsep_tl \arabic {#3} }
+%<!article>    \cs_set:cpn { the #3 }
+%<!article>      { \thechapter \l_@@_style_float_numsep_tl \arabic {#3} }
+%<*thesis>
     \@@_appto_cmd:Nn \@@_counter_without_chapter:
       {
         \counterwithout {#3} { chapter }
