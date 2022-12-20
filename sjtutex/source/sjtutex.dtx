@@ -379,6 +379,13 @@
 %    \end{macrocode}
 % \end{variable}
 %
+% \begin{variable}{\g_@@_draft_bool}
+% 是否开启草稿模式。
+%    \begin{macrocode}
+\bool_new:N \g_@@_draft_bool
+%    \end{macrocode}
+% \end{variable}
+%
 % \subsection{选项处理}
 %
 % 定义 |sjtu/option| 键值类。
@@ -493,6 +500,22 @@
     openright .code:n =
       { \bool_set_true:N  \g_@@_openright_bool } ,
 %</!article>
+%    \end{macrocode}
+%
+% 是否开启草稿模式。
+%    \begin{macrocode}
+    draft .value_forbidden:n = true,
+    final .value_forbidden:n = true,
+    draft .code:n =
+      {
+        \bool_set_true:N  \g_@@_draft_bool
+        \clist_put_right:Nn \g_@@_options_to_ctex_class_clist { draft }
+      },
+    final .code:n =
+      {
+        \bool_set_false:N \g_@@_draft_bool
+        \clist_put_right:Nn \g_@@_options_to_ctex_class_clist { final }
+      },
 %    \end{macrocode}
 %
 % 盲审模式。
