@@ -804,37 +804,36 @@
 %   \begin{sjtusyntax}[emph={[2]title}]
 %     title = (*\marg{标题}*)
 %   \end{sjtusyntax}
-%   论文标题。如果您的标题过长，建议使用“|\\|”手动断行。
+%   标题。如果您的标题过长，建议使用“|\\|”手动断行。
 % \end{function}
 %
 % \begin{function}[rEXP]{info/title*}
 %   \begin{sjtusyntax}[emph={[2]title*}]
 %     title* = (*\marg{英文标题}*)
 %   \end{sjtusyntax}
-%   论文英文标题。如果您的标题过长，建议使用“|\\|”手动断行。
+%   英文标题。如果您的标题过长，建议使用“|\\|”手动断行。
 % \end{function}
 %
 % \begin{function}{info/display-title}
 %   \begin{sjtusyntax}[emph={[2]display-title}]
 %     display-title  = (*\marg{中文标题页标题}*)
 %   \end{sjtusyntax}
-%   中文标题页论文中题目。默认为跟随对应语言的论文标题。
+%   中文标题页中的题目。默认为跟随中文标题。
 % \end{function}
 %
 % \begin{function}[rEXP]{info/display-title*}
 %   \begin{sjtusyntax}[emph={[2]display-title*}]
 %     display-title* = (*\marg{英文标题页标题}*)
 %   \end{sjtusyntax}
-%   英文标题页论文中题目。默认为跟随对应语言的论文标题。
+%   英文标题页中的题目。默认为跟随英文标题。
 % \end{function}
 %
-%^^A \begin{function}{info/running-title}
-%^^A   \begin{sjtusyntax}[emph={[2]running-title}]
-%^^A     running-title  = (*\marg{中文页眉标题}*)
-%^^A   \end{sjtusyntax}
-%^^A   论文页眉题目（中文）。
-%^^A   该选项暂时无效。
-%^^A \end{function}
+% \begin{function}[updated=2022-12-20]{info/running-title}
+%   \begin{sjtusyntax}[emph={[2]running-title}]
+%     running-title  = (*\marg{页眉标题}*)
+%   \end{sjtusyntax}
+%   \cls{sjtuarticle} 中显示在右上角的页眉题目。默认为跟随中文标题。
+% \end{function}
 %
 %^^A \begin{function}[rEXP]{info/running-title*}
 %^^A   \begin{sjtusyntax}[emph={[2]running-title*}]
@@ -853,7 +852,7 @@
 %   文档中英文主题。中文主题默认值类似于“上海交通大学学士学位论文”，
 %   英文主题默认值类似于“A Dissertation Submitted to Shanghai Jiao Tong University
 %   for Bachelor Degree”，在不同的文档设置下默认值会略有不同。
-%^^A   现在中文主题也是论文页眉题目。
+%   在 \cls{sjtuthesis} 中会显示在左上角。
 % \end{function}
 %
 % \begin{function}{info/keywords}
@@ -880,7 +879,6 @@
 % \end{function}
 %
 % \begin{function}{info/author*}
-%   \vspace{-1ex}
 %   \begin{sjtusyntax}[emph={[2]author*}]
 %     author* = (*\marg{英文姓名或拼音}*)
 %   \end{sjtusyntax}
@@ -989,11 +987,27 @@
 %   默认为 |\zihao{5}|，五号字。
 % \end{function}
 %
+% \begin{function}[added=2022-12-20]{style/caption-font}
+%   \begin{sjtusyntax}[emph={[2]caption-font}]
+%     caption-font = (*\marg{字体设置}*)
+%   \end{sjtusyntax}
+%   题注字体。
+%   默认为 |\zihao{5}\bfseries|，粗体五号字。
+% \end{function}
+%
+% \begin{function}[added=2022-12-20]{style/subcaption-font}
+%   \begin{sjtusyntax}[emph={[2]subcaption-font}]
+%     subcaption-font = (*\marg{字体设置}*)
+%   \end{sjtusyntax}
+%   子图题注字体。
+%   默认为 |\zihao{5}\normalfont|，正常字重五号字。
+% \end{function}
+%
 % \begin{function}[added=2022-12-03]{style/fnmark-font}
 %   \begin{sjtusyntax}[emph={[2]fnmark-font}]
 %     fnmark-font = (*\marg{字体设置}*)
 %   \end{sjtusyntax}
-%   脚注的额外字体设置。
+%   脚注编号的额外字体设置。
 %   默认为空。
 % \end{function}
 %
@@ -1020,13 +1034,39 @@
 %   选择论文标题页中校徽的颜色。
 % \end{function}
 %
-%^^A \begin{function}{style/header-logo-color}
-%^^A   \begin{sjtusyntax}[emph={[2]header-logo-color}]
-%^^A     header-logo-color = (*<(red)|blue|black>*)
-%^^A   \end{sjtusyntax}
-%^^A 选择本科论文页眉中的校标颜色。
-%^^A 注：新模板不再于页眉设置徽标。
-%^^A \end{function}
+% \begin{function}[updated=2022-12-20]{style/header-logo-color}
+%   \begin{sjtusyntax}[emph={[2]header-logo-color}]
+%     header-logo-color = (*<(red)|blue|black>*)
+%   \end{sjtusyntax}
+%   选择 \cls{sjtureport} 和 \cls{sjtuarticle} 中页眉的校标颜色。
+% \end{function}
+%
+% \begin{function}[added=2022-12-20]{style/header-uppercase}
+%   \begin{sjtusyntax}[emph={[2]header-uppercase}]
+%     header-uppercase = (*<true|(false)>*)
+%   \end{sjtusyntax}
+%   页眉英文字母是否大写。
+%   在 \cls{sjtuthesis} 和 \cls{sjtureport} 中，默认为 \opt{false}。
+%   在 \cls{sjtuarticle} 中，默认为 \opt{true}。
+% \end{function}
+%
+% \begin{function}[added=2022-12-20]{style/header-font}
+%   \begin{sjtusyntax}[emph={[2]header-font}]
+%     header-font = (*\marg{页眉字体}*)
+%   \end{sjtusyntax}
+%   页眉字体。
+%   在 \cls{sjtuthesis} 和 \cls{sjtureport} 中，默认为 |\zihao{-5}|，小五号字。
+%   在 \cls{sjtuarticle} 中，默认为 |\zihao{5}|，五号字。
+% \end{function}
+%
+% \begin{function}[added=2022-12-20]{style/footer-font}
+%   \begin{sjtusyntax}[emph={[2]footer-font}]
+%     footer-font = (*\marg{页脚字体}*)
+%   \end{sjtusyntax}
+%   页脚字体。
+%   在 \cls{sjtuthesis} 和 \cls{sjtureport} 中，默认为 |\zihao{-5}|，小五号字。
+%   在 \cls{sjtuarticle} 中，默认为 |\zihao{5}|，五号字。
+% \end{function}
 %
 % \begin{function}[added=2022-12-03]{style/page-number}
 %   \begin{sjtusyntax}[emph={[2]page-number}]
@@ -1052,8 +1092,9 @@
 %   name/abbr,name/nom,name/summary,name/ack,name/resume,name/digset,name/achv}
 % \end{function}
 %
-% \begin{table}[!hbt]
-%   \vspace{-47ex}
+%^^A FIXME: blank area
+% \begin{table}[hbt]
+%^^A   \vspace{-47ex}
 %   \centering\small
 %   \caption{\opt{name} 选项的默认设置}
 %   \label{tab:names}
@@ -1160,13 +1201,13 @@
 %   在 \cls{sjtuarticle} 中，生成标题块。
 % \end{function}
 %
-% \begin{function}[rEXP,updated=2022-12-03]{\copyrightpage}
+% \begin{function}[rEXP,updated=2022-12-20]{\copyrightpage}
 %   \begin{sjtusyntax}[morekeywords={\copyrightpage}]
 %     \copyrightpage
 %     \copyrightpage(*\oarg{授权书扫描件}*)
 %   \end{sjtusyntax}
 %   生成空白版权使用授权书。
-%   接受一个可选参数用于插入版权使用授权书扫描件。
+%   接受一个可选参数用于插入版权使用授权书扫描件，使用可选参数时需要手动加载 \pkg{pdfpages} 宏包。
 % \end{function}
 %
 % \subsection{前文部分}
@@ -1202,8 +1243,6 @@
 %   \end{sjtusyntax}
 %   目录。
 % \end{function}
-%
-% \clearpage
 %
 % \begin{function}[rEXP]{\listoffigures,\listoffigures*,
 %   \listoftables,\listoftables*,\listofalgorithms,\listofalgorithms*}
@@ -1326,19 +1365,19 @@
 %
 % \begin{function}{bibliolist}
 %   \begin{sjtusyntax}[emph={[2]bibliolist}]
-%      \begin{bibliolist}(*\marg{最长条目编号}*)
-%         \item (*\meta{文献条目}*)
-%      \end{bibliolist}
+%     \begin{bibliolist}(*\marg{最长条目编号}*)
+%        \item (*\meta{文献条目}*)
+%     \end{bibliolist}
 %   \end{sjtusyntax}
-%   附录用文献环境，普通模式下显示，
+%   附录用文献环境，普通模式下显示。
 %   在 \cls{sjtuthesis} 中，盲审模式下不显示。
 % \end{function}
 %
 % \begin{function}[rEXP]{bibliolist*}
 %   \begin{sjtusyntax}[emph={[2]bibliolist,bibliolist*}]
-%      \begin{bibliolist*}(*\marg{最长条目编号}*)
-%         \item (*\meta{文献条目（隐去姓名）}*)
-%      \end{bibliolist*}
+%     \begin{bibliolist*}(*\marg{最长条目编号}*)
+%        \item (*\meta{文献条目（隐去姓名）}*)
+%     \end{bibliolist*}
 %   \end{sjtusyntax}
 %   附录用文献环境，盲审模式下显示。
 % \end{function}
