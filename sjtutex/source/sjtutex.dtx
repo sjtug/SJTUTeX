@@ -661,7 +661,6 @@
 % \LaTeX3{} 函数变体。
 %    \begin{macrocode}
 \cs_generate_variant:Nn \tl_const:Nn { co, Nv }
-\cs_generate_variant:Nn \clist_map_inline:nn { xn }
 \cs_generate_variant:Nn \cs_gset:Npn { cpo }
 \prg_generate_conditional_variant:Nnn \regex_match:nn { ne } { T }
 \exp_args_generate:n { Nnv }
@@ -753,26 +752,8 @@
     \hbox_set:Nn \l_@@_tmpa_box {#2}
     \dim_add:Nn #1 { \box_wd:N \l_@@_tmpa_box }
   }
-\cs_generate_variant:Nn \@@_dim_set_to_wd:Nn { NV }
+\cs_generate_variant:Nn \@@_dim_set_to_wd:Nn { Nv }
 \cs_generate_variant:Nn \@@_dim_add_to_wd:Nn { cv }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\@@_dim_set_to_max:NN}
-% 获取多个文本中的最大宽度，并存入 |dim| 型变量。
-%    \begin{macrocode}
-\cs_new:Npn \@@_dim_set_to_max:NN #1#2
-  {
-    \group_begin:
-      \clist_set_eq:NN \l_@@_tmpa_clist #2
-      \bool_until_do:nn { \clist_if_empty_p:N \l_@@_tmpa_clist }
-        {
-          \clist_pop:NN \l_@@_tmpa_clist \l_@@_tmpa_tl
-          \@@_dim_set_to_wd:NV \l_@@_tmpa_dim \l_@@_tmpa_tl
-          \dim_gset:Nn #1 { \dim_max:nn {#1} { \l_@@_tmpa_dim } }
-        }
-    \group_end:
-  }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -854,7 +835,7 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_left_aligned_box:nn,\@@_left_aligned_box:Vn}
+% \begin{macro}{\@@_left_aligned_box:nn}
 % 左对齐的水平盒子。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_left_aligned_box:nn #1#2
@@ -862,7 +843,6 @@
     \mode_leave_vertical:
     \hbox_to_wd:nn {#1} { #2 \hfil }
   }
-\cs_generate_variant:Nn \@@_left_aligned_box:nn  { Vn }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -2459,42 +2439,35 @@
 \cs_new:Npn \@@_declare_page:nn #1#2
   { \DeclareInstance { sjtu } {#1} { page } {#2} }
 %<*thesis>
-\cs_new_protected:Npn \@@_titlepage_info_zh:
+\cs_new:Npn \@@_title_page_info:nnnn #1#2#3#4
   {
     \group_begin:
+      \cs_set:Npn \l_@@_info_output_format:NNN ##1##2##3 {#3}
       \clist_clear:N \l_@@_tmpa_clist
       \clist_clear:N \l_@@_tmpb_clist
-      \clist_map_inline:xn
-        {
-          author, id, supervisor,
-          \tl_if_empty:NF \l_@@_info_assoc_supervisor_zh_tl
-            { assoc_supervisor },
-          \tl_if_empty:NF \l_@@_info_co_supervisor_zh_tl
-            { co_supervisor },
-          department, major,
-          \int_compare:nNnF { \g_@@_thesis_type_int } = { 1 }
-            { degree }
-        }
+      \dim_set:Nn \l_@@_tmpb_dim { 5 em }
+      \clist_map_inline:nn {#2}
         {
           \clist_put_right:No \l_@@_tmpa_clist
-            { \cs:w c_@@_name_ ##1 _zh_tl \cs_end: }
+            { \cs:w c_@@_name_ ##1 _ #1 _tl \cs_end: }
           \clist_put_right:No \l_@@_tmpb_clist
-            { \cs:w l_@@_info_ ##1 _zh_tl \cs_end: }
+            { \cs:w l_@@_info_ ##1 _ #1 _tl \cs_end: }
+          \@@_dim_set_to_wd:Nv \l_@@_tmpa_dim { l_@@_info_ ##1 _ #1 _tl }
+          \dim_set:Nn \l_@@_tmpb_dim
+            { \dim_max:nn { \l_@@_tmpa_dim } { \l_@@_tmpb_dim } }
         }
-      \dim_set:Nn \l_@@_tmpb_dim { 5 em }
-      \@@_dim_set_to_max:NN \l_@@_tmpb_dim \l_@@_tmpb_clist
       \bool_until_do:nn
         { \clist_if_empty_p:N \l_@@_tmpa_clist }
         {
           \clist_pop:NN \l_@@_tmpa_clist \l_@@_tmpa_tl
           \clist_pop:NN \l_@@_tmpb_clist \l_@@_tmpb_tl
-          \@@_cjk_spread_box:nn { 5 em } { \heiti \l_@@_tmpa_tl }
-          \c_@@_symbol_fwid_colon_tl
-          \@@_left_aligned_box:Vn \l_@@_tmpb_dim { \l_@@_tmpb_tl }
-          \skip_vertical:n { 1 ex }
+          \l_@@_info_output_format:NNN
+            \l_@@_tmpa_tl \l_@@_tmpb_dim \l_@@_tmpb_tl
+          \skip_vertical:n { #4 }
         }
     \group_end:
   }
+\cs_generate_variant:Nn \@@_title_page_info:nnnn { nxnn }
 \clist_map_inline:nn
   {
     { badge   }
@@ -2520,7 +2493,26 @@
     { info    }
       {
         format      = \zihao { 4 } ,
-        content     = \@@_titlepage_info_zh: ,
+        content     =
+          {
+            \@@_title_page_info:nxnn { zh }
+              {
+                author, id, supervisor,
+                \tl_if_empty:NF \l_@@_info_assoc_supervisor_zh_tl
+                  { assoc_supervisor },
+                \tl_if_empty:NF \l_@@_info_co_supervisor_zh_tl
+                  { co_supervisor },
+                department, major,
+                \int_compare:nNnF { \g_@@_thesis_type_int } = { 1 }
+                  { degree }
+              }
+              {
+                \@@_cjk_spread_box:nn { 5 em } { \heiti #1 }
+                \c_@@_symbol_fwid_colon_tl
+                \@@_left_aligned_box:nn {#2} {#3}
+              }
+              { 1 ex }
+          } ,
         bottom-skip = \c_zero_dim plus 1 fill
       },
     { date    }
@@ -2541,35 +2533,6 @@
     prefix        = title / zh ,
     components    = { badge, subject, title, info, date }
   }
-\cs_new_protected:Npn \@@_titlepage_info_en:
-  {
-    \group_begin:
-      \clist_clear:N \l_@@_tmpa_clist
-      \clist_clear:N \l_@@_tmpb_clist
-      \clist_map_inline:xn
-        {
-          author, supervisor,
-          \tl_if_empty:NF \l_@@_info_assoc_supervisor_en_tl
-            { assoc_supervisor },
-          \tl_if_empty:NF \l_@@_info_co_supervisor_en_tl
-            { co_supervisor }
-        }
-        {
-          \clist_put_right:No \l_@@_tmpa_clist
-            { \cs:w c_@@_name_ ##1 _en_tl \cs_end: }
-          \clist_put_right:No \l_@@_tmpb_clist
-            { \cs:w l_@@_info_ ##1 _en_tl \cs_end: }
-        }
-      \bool_until_do:nn
-        { \clist_if_empty_p:N \l_@@_tmpa_clist }
-        {
-          \clist_pop:NN \l_@@_tmpa_clist \l_@@_tmpa_tl
-          \clist_pop:NN \l_@@_tmpb_clist \l_@@_tmpb_tl
-          { \bfseries \l_@@_tmpa_tl :~ } { \l_@@_tmpb_tl }
-          \skip_vertical:N \c_zero_skip
-        }
-    \group_end:
-  }
 \clist_map_inline:nn
   {
     { subject }
@@ -2587,7 +2550,19 @@
     { info    }
       {
         format      = \zihao { 3 } ,
-        content     = \@@_titlepage_info_en: ,
+        content     =
+          {
+            \@@_title_page_info:nxnn { en }
+              {
+                author, supervisor,
+                \tl_if_empty:NF \l_@@_info_assoc_supervisor_en_tl
+                  { assoc_supervisor },
+                \tl_if_empty:NF \l_@@_info_co_supervisor_en_tl
+                  { co_supervisor }
+              }
+              { { \bfseries #1 :~ } {#3} }
+              { \c_zero_dim }
+          } ,
         bottom-skip = \c_zero_dim plus 3 fill
       },
     { date    }
