@@ -647,7 +647,6 @@
     mathtools,
     geometry,
     fancyhdr,
-    pageslts,
     tocloft,
     caption,
     bicaption,
@@ -1176,7 +1175,7 @@
     footer-font             .tl_set:N = \l_@@_style_footer_font_tl ,
 %<!article>    footer-font            .initial:n = \zihao { -5 } ,
 %<article>    footer-font            .initial:n = \zihao { 5 } ,
-    page-number            .cs_set:Np = \@@_page:nn #1#2 ,
+    page-number            .cs_set:Np = \@@_page:n #1 ,
     page-number            .initial:n = { {#1} }
   }
 %</class>
@@ -1970,8 +1969,7 @@
 %
 % 页码格式。
 %    \begin{macrocode}
-\cs_new_eq:NN \@@_thepage:     \prg_do_nothing:
-\cs_new_eq:NN \@@_lastpageref: \prg_do_nothing:
+\cs_new:Nn \@@_thepage: { \thepage }
 %    \end{macrocode}
 %
 % 设置页眉页脚。
@@ -2022,7 +2020,7 @@
 \fancyfoot [ C ]
   {
     \l_@@_style_footer_font_tl
-    \@@_page:nn { \@@_thepage: } { \@@_lastpageref: }
+    \@@_page:n { \@@_thepage: }
   }
 %    \end{macrocode}
 %
@@ -2099,20 +2097,9 @@
 %
 % \subsection{页码设置}
 %
-%    \begin{macrocode}
-\cs_set_eq:NN \@@_orig_page_numbering:n \pagenumbering
-\RenewDocumentCommand \pagenumbering { m }
-  {
-    \@@_orig_page_numbering:n {#1}
-    \cs_gset:Nn \@@_thepage:     { \thepage }
-    \cs_gset:Nn \@@_lastpageref: { \lastpageref { pagesLTS. #1 } }
-  }
-%    \end{macrocode}
-%
 % 文档初始页码编码设置。
 %    \begin{macrocode}
 %<thesis>\pagenumbering { Alph }
-%<!thesis>\pagenumbering { arabic }
 %    \end{macrocode}
 %
 % \begin{macro}{\frontmatter}
@@ -2934,9 +2921,8 @@
       {
         \bool_if:NTF \g_@@_openright_bool
           { \cleardoublepage } { \clearpage }
-        \@@_orig_page_numbering:n { roman }
-        \cs_gset:Nn \@@_thepage:     { \theCurrentPageLocal }
-        \cs_gset:Nn \@@_lastpageref: { \lastpageref { pagesLTS.roman.local } }
+        \pagenumbering { roman }
+        \cs_gset:Nn \@@_thepage: { \arabic { page } }
         \cs_gset_eq:NN \addcontentsline \use_none:nnn
         \@@_counter_without_chapter:
         \@@_head_auxb_s:Vo \l_@@_name_digest_tl
