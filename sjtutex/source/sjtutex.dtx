@@ -59,6 +59,7 @@
     \file{sjtureport.cls}            {\from{\jobname.dtx}{class,report}}
     \file{sjtuarticle.cls}           {\from{\jobname.dtx}{class,article}}
     \file{sjtu-name-thesis.cfg}      {\from{\jobname.dtx}{name,thesis}}
+    \file{sjtu-name-generic.cfg}     {\from{\jobname.dtx}{name,generic}}
     \file{sjtu-lang-thesis-zh.cfg}   {\from{\jobname.dtx}{lang,thesis,zh}}
     \file{sjtu-lang-thesis-en.cfg}   {\from{\jobname.dtx}{lang,thesis,en}}
     \file{sjtu-lang-report-zh.cfg}   {\from{\jobname.dtx}{lang,report,zh}}
@@ -134,6 +135,8 @@
 %<class&article>\ProvidesExplClass{sjtuarticle}
 %<name&thesis>  {Name config for thesis template (SJTUTeX)}
 %<name&thesis>\ProvidesExplFile{sjtu-name-thesis.cfg}
+%<name&generic>  {Generic name config (SJTUTeX)}
+%<name&generic>\ProvidesExplFile{sjtu-name-generic.cfg}
 %<lang&thesis&zh>  {SJTUThesis Chinese config (SJTUTeX)}
 %<lang&thesis&zh>\ProvidesExplFile{sjtu-lang-thesis-zh.cfg}
 %<lang&thesis&en>  {SJTUThesis English config (SJTUTeX)}
@@ -740,6 +743,20 @@
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\@@_line_spread:n,\@@_fixed_line_skip:n}
+% 设置行距倍数和行距固定值。
+%    \begin{macrocode}
+\cs_new:Npn \@@_line_spread:n #1
+  { \linespread {#1} \selectfont }
+\cs_new:Npn \@@_fixed_line_skip:n #1
+  {
+    \exp_args:Nx \linespread
+      { \fp_to_decimal:n { \dim_ratio:nn { #1 } { \f@size pt } / 1.2 } }
+    \selectfont
+  }
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}[int]{\@@_dim_set_to_wd:Nn,\@@_dim_add_to_wd:Nn}
 %    \begin{macrocode}
 \cs_new:Npn \@@_dim_set_to_wd:Nn #1#2
@@ -935,6 +952,7 @@
 % 载入名称配置。
 %    \begin{macrocode}
 %<thesis>\file_input:n { sjtu-name-thesis.cfg }
+%<!thesis>\file_input:n { sjtu-name-generic.cfg }
 %    \end{macrocode}
 %
 % \subsection{用户接口}
@@ -963,8 +981,8 @@
 \clist_map_inline:nn
   {
     title, display_title, running_title, subject, author, date,
-%<thesis>    supervisor, department, major,
-%<thesis>    assoc_supervisor, co_supervisor, degree
+    supervisor, assoc_supervisor, department,
+%<thesis>    co_supervisor, major, degree
   }
   {
     \tl_new:c { l_@@_info_ #1 _zh_tl }
@@ -1033,15 +1051,15 @@
     author            .tl_set:N = \l_@@_info_author_zh_tl ,
 %<thesis>    author*           .tl_set:N = \l_@@_info_author_en_tl ,
     id                .tl_set:N = \l_@@_info_id_zh_tl ,
-%<thesis>    supervisor        .tl_set:N = \l_@@_info_supervisor_zh_tl ,
+    supervisor        .tl_set:N = \l_@@_info_supervisor_zh_tl ,
 %<thesis>    supervisor*       .tl_set:N = \l_@@_info_supervisor_en_tl ,
-%<thesis>    assoc-supervisor  .tl_set:N = \l_@@_info_assoc_supervisor_zh_tl ,
+    assoc-supervisor  .tl_set:N = \l_@@_info_assoc_supervisor_zh_tl ,
 %<thesis>    assoc-supervisor* .tl_set:N = \l_@@_info_assoc_supervisor_en_tl ,
 %<thesis>    co-supervisor     .tl_set:N = \l_@@_info_co_supervisor_zh_tl ,
 %<thesis>    co-supervisor*    .tl_set:N = \l_@@_info_co_supervisor_en_tl ,
 %<thesis>    degree            .tl_set:N = \l_@@_info_degree_zh_tl ,
 %<thesis>    degree*           .tl_set:N = \l_@@_info_degree_en_tl ,
-%<thesis>    department        .tl_set:N = \l_@@_info_department_zh_tl ,
+    department        .tl_set:N = \l_@@_info_department_zh_tl ,
 %<thesis>    department*       .tl_set:N = \l_@@_info_department_en_tl ,
 %<thesis>    major             .tl_set:N = \l_@@_info_major_zh_tl ,
 %<thesis>    major*            .tl_set:N = \l_@@_info_major_en_tl ,
@@ -2397,7 +2415,7 @@
     bookmark      : boolean   = false ,
     bookmark-text : tokenlist = \c_empty_tl ,
     style         : tokenlist = empty ,
-    format        : tokenlist = \c_empty_tl ,
+    format        : tokenlist = \@@_line_spread:n { 1 } ,
     prefix        : tokenlist ,
     components    : commalist ,
     top-skip      : skip      = \c_zero_skip ,
@@ -2438,8 +2456,7 @@
   { \DeclareInstance { sjtu } {#1/#2} { component } {#3} }
 \cs_new:Npn \@@_declare_page:nn #1#2
   { \DeclareInstance { sjtu } {#1} { page } {#2} }
-%<*thesis>
-\cs_new:Npn \@@_title_page_info:nnnn #1#2#3#4
+\cs_new:Npn \@@_title_page_info:nnn #1#2#3
   {
     \group_begin:
       \cs_set:Npn \l_@@_info_output_format:NNN ##1##2##3 {#3}
@@ -2463,61 +2480,68 @@
           \clist_pop:NN \l_@@_tmpb_clist \l_@@_tmpb_tl
           \l_@@_info_output_format:NNN
             \l_@@_tmpa_tl \l_@@_tmpb_dim \l_@@_tmpb_tl
-          \skip_vertical:n { #4 }
+          \skip_vertical:N \c_zero_dim
         }
     \group_end:
   }
-\cs_generate_variant:Nn \@@_title_page_info:nnnn { nxnn }
+\cs_generate_variant:Nn \@@_title_page_info:nnn { nxn }
 \clist_map_inline:nn
   {
-    { badge   }
+    { logo    }
       {
         content     =
           {
             \includegraphics [ width = 3 cm ]
               { sjtu-vi-badge- \l_@@_style_title_logo_color_tl .pdf }
+%<*!thesis>
+            \skip_vertical:n { 0.3 cm }
+            \includegraphics [ width = 6.81 cm ]
+              { sjtu-vi-name- \l_@@_style_title_logo_color_tl .pdf }
+%</!thesis>
           }
       },
     { subject }
       {
-        format      = \zihao { -2 } ,
+        format      = \zihao { -2 } \@@_fixed_line_skip:n { 31.2 bp } ,
         content     = \l_@@_info_subject_zh_tl ,
-        bottom-skip = \c_zero_dim plus 4 fill
+        bottom-skip = \c_zero_dim plus 2 fill
       },
     { title   }
       {
-        format      = \zihao { 2 } \bfseries ,
+        format      = \zihao { 2 } \bfseries \@@_fixed_line_skip:n { 31.2 bp } ,
         content     = \l_@@_info_display_title_zh_tl ,
-        bottom-skip = \c_zero_dim plus 5 fill
+        bottom-skip = \c_zero_dim plus 3 fill
       },
     { info    }
       {
-        format      = \zihao { 4 } ,
+        format      = \zihao { 4 } \@@_fixed_line_skip:n { 31.2 bp } ,
         content     =
           {
-            \@@_title_page_info:nxnn { zh }
+            \@@_title_page_info:nxn { zh }
               {
-                author, id, supervisor,
+                author,
+                id,
+                supervisor,
                 \tl_if_empty:NF \l_@@_info_assoc_supervisor_zh_tl
                   { assoc_supervisor },
-                \tl_if_empty:NF \l_@@_info_co_supervisor_zh_tl
-                  { co_supervisor },
-                department, major,
-                \int_compare:nNnF { \g_@@_thesis_type_int } = { 1 }
-                  { degree }
+%<thesis>                \tl_if_empty:NF \l_@@_info_co_supervisor_zh_tl
+%<thesis>                  { co_supervisor },
+                department,
+%<thesis>                major,
+%<thesis>                \int_compare:nNnF { \g_@@_thesis_type_int } = { 1 }
+%<thesis>                  { degree }
               }
               {
                 \@@_cjk_spread_box:nn { 5 em } { \heiti #1 }
                 \c_@@_symbol_fwid_colon_tl
                 \@@_left_aligned_box:nn {#2} {#3}
               }
-              { 1 ex }
           } ,
-        bottom-skip = \c_zero_dim plus 1 fill
+        bottom-skip = 31.2 bp
       },
     { date    }
       {
-        format      = \zihao { 4 } \bfseries ,
+        format      = \zihao { 4 } \bfseries \@@_fixed_line_skip:n { 31.2 bp } ,
         content     = \l_@@_info_date_zh_tl
       }
   }
@@ -2528,31 +2552,31 @@
   {
     bookmark      = true ,
     bookmark-text = \c_@@_name_title_page_tl ,
-    style         = SJTU@fund@zh ,
-    format        = \linespread { 1.56 } ,
+%<thesis>    style         = SJTU@fund@zh ,
     prefix        = title / zh ,
-    components    = { badge, subject, title, info, date }
+    components    = { logo, subject, title, info, date }
   }
+%<*thesis>
 \clist_map_inline:nn
   {
     { subject }
       {
-        format      = \zihao { 4 } \bfseries ,
+        format      = \zihao { 4 } \bfseries \@@_fixed_line_skip:n { 31.2 bp } ,
         content     = \l_@@_info_subject_en_tl ,
         bottom-skip = \c_zero_dim plus 2 fill
       },
     { title   }
       {
-        format      = \zihao { -2 } \bfseries ,
+        format      = \zihao { -2 } \bfseries \@@_fixed_line_skip:n { 31.2 bp } ,
         content     = \MakeUppercase \l_@@_info_display_title_en_tl ,
         bottom-skip = \c_zero_dim plus 2 fill
       },
     { info    }
       {
-        format      = \zihao { 3 } ,
+        format      = \zihao { 3 } \@@_fixed_line_skip:n { 31.2 bp } ,
         content     =
           {
-            \@@_title_page_info:nxnn { en }
+            \@@_title_page_info:nxn { en }
               {
                 author, supervisor,
                 \tl_if_empty:NF \l_@@_info_assoc_supervisor_en_tl
@@ -2561,13 +2585,12 @@
                   { co_supervisor }
               }
               { { \bfseries #1 :~ } {#3} }
-              { \c_zero_dim }
           } ,
         bottom-skip = \c_zero_dim plus 3 fill
       },
     { date    }
       {
-        format      = \zihao { 3 } ,
+        format      = \zihao {  3 } \@@_fixed_line_skip:n { 31.2 bp } ,
         content     =
           {
             \l_@@_info_department_en_tl
@@ -2586,20 +2609,21 @@
 \@@_declare_page:nn { title / en }
   {
     style       = SJTU@fund@en ,
-    format      = \linespread { 1.56 } ,
     prefix      = title / en ,
     components  = { subject, title, info, date }
   }
+%</thesis>
 \RenewDocumentCommand \maketitle { }
   {
     \UseInstance { sjtu } { title / zh }
-    \UseInstance { sjtu } { title / en }
+%<thesis>    \UseInstance { sjtu } { title / en }
   }
 %    \end{macrocode}
 %
 % \subsection{原创性声明及使用授权书}
 %
 %    \begin{macrocode}
+%<*thesis>
 \cs_new_protected:Npn \@@_signature:N #1
   {
     \parbox [ t ] { 12 em }
@@ -2609,7 +2633,7 @@
   {
     { orig / title }
       {
-        format      = \zihao { 3 } \heiti ,
+        format      = \zihao { 3 } \heiti \@@_fixed_line_skip:n { 31.2 bp } ,
         content     =
           {
             \c_@@_name_univ_zh_tl
@@ -2617,29 +2641,29 @@
             \c_@@_name_thesis_zh_tl
             \c_@@_name_orig_decl_zh_tl
           } ,
-        bottom-skip = 18 bp
+        bottom-skip = 15.6 bp
       },
     { orig / text  }
       {
-        format      = \zihao { -4 } ,
+        format      = \zihao { -4 } \@@_fixed_line_skip:n { 23.4 bp } ,
         content     = \c_@@_orig_decl_text_zh_tl ,
-        bottom-skip = 3 ex ,
+        bottom-skip = 21.6 bp ,
         align       = normal
       },
     { orig / sign  }
       {
-        format      = \zihao { 4 } ,
+        format      = \zihao { 4 } \@@_fixed_line_skip:n { 31.2 bp } ,
         content     =
           {
             \@@_signature:N \c_@@_name_decl_author_zh_tl
             \skip_horizontal:n { 4 em } \hbox:n { }
           } ,
-        bottom-skip = 6 ex ,
+        bottom-skip = \c_zero_dim plus 2 fill ,
         align       = right
       },
     { auth / title }
       {
-        format      = \zihao { 3 } \heiti ,
+        format      = \zihao { 3 } \heiti \@@_fixed_line_skip:n { 31.2 bp } ,
         content     =
           {
             \c_@@_name_univ_zh_tl
@@ -2647,24 +2671,25 @@
             \c_@@_name_thesis_zh_tl
             \c_@@_name_auth_decl_zh_tl
           } ,
-        bottom-skip = 18 bp
+        bottom-skip = 15.6 bp
       },
     { auth / text  }
       {
-        format      = \zihao { -4 } ,
+        format      = \zihao { -4 } \@@_fixed_line_skip:n { 23.4 bp } ,
         content     = \c_@@_auth_decl_text_zh_tl ,
-        bottom-skip = 3 ex ,
+        bottom-skip = 21.6 bp ,
         align       = normal
       },
     { auth / sign  }
       {
-        format      = \zihao { 4 } ,
+        format      = \zihao { 4 } \@@_fixed_line_skip:n { 31.2 bp } ,
         content     =
           {
             \@@_signature:N \c_@@_name_decl_author_zh_tl
             \hfill
             \@@_signature:N \c_@@_name_decl_supervisor_zh_tl
           } ,
+        bottom-skip = \c_zero_dim plus 1 fill ,
         align       = normal
       }
   }
@@ -2675,7 +2700,6 @@
   {
     bookmark      = true ,
     bookmark-text = \c_@@_name_decl_tl ,
-    format        = \linespread { 1.56 } ,
     prefix        = copyright ,
     components    =
       {
@@ -3159,21 +3183,29 @@
     { fwid_semicolon   } { "FF1B }
   }
   { \@@_define_symbol:nn #1 }
+%<*thesis>
 \@@_define_name_from_clist:nNnn { degree_level }
   \g_@@_thesis_type_int
   { 学士    , 硕士  , 博士   }
   { Bachelor, Master, Doctor }
+%</thesis>
 \clist_map_inline:nn
   {
-    { thesis      } { 学位论文    } ,
-    { id          } { 学号        } ,
-    { department  } { 院系        } ,
-    { major       } { 学科 / 专业 } ,
-    { degree      } { 申请学位    } ,
-    { decl_author     } { 学位论文作者 } ,
-    { decl_supervisor } { 指导教师     }
+%<!thesis>    { author           } { 姓名         } ,
+    { id               } { 学号         } ,
+%<!thesis>    { supervisor       } { 指导教师     } ,
+%<!thesis>    { assoc_supervisor } { 副指导教师   } ,
+    { department       } { 院系         } ,
+%<*thesis>
+    { major            } { 学科 / 专业  } ,
+    { degree           } { 申请学位     } ,
+    { thesis           } { 学位论文     } ,
+    { decl_author      } { 学位论文作者 } ,
+    { decl_supervisor  } { 指导教师     }
+%</thesis>
   }
   { \@@_define_name:nn #1 }
+%<*thesis>
 \clist_map_inline:nn
   {
     { author           } { 姓名     } { Author             } ,
@@ -3182,11 +3214,13 @@
     { co_supervisor    } { 联合导师 } { Co-supervisor      }
   }
   { \@@_define_name:nnn #1 }
+%</thesis>
 \clist_map_inline:nn
   {
     { univ       } { 上海交通大学    } { Shanghai~ Jiao~ Tong~ University } ,
     { address    } { 中国 \quad 上海 } { Shanghai,~ P.R.~ China           } ,
-    { title_page } { 扉页            } { Title~ Page                } ,
+    { title_page } { 题名页          } { Title~ Page                } ,
+%<*thesis>
     { orig_decl  } { 原创性声明      } { Statement~ of~ Originality } ,
     { auth_decl  } { 使用授权书      } { Copyright~ Permission      } ,
     { decl       }
@@ -3201,9 +3235,11 @@
         { \c_@@_name_auth_decl_en_tl }
       } ,
     { abstract   } { 摘 \quad 要     } { Abstract    } ,
-    { keywords   } { 关键词：        } { Key~words:~ } ,
+    { keywords   } { 关键词：        } { Key~words:~ }
+%</thesis>
   }
   { \@@_define_name_g:nnn #1 }
+%<*thesis>
 \tl_const:Nn \c_@@_orig_decl_text_zh_tl
   {
     本人郑重声明：所呈交的学位论文，是本人在导师的指导下，独立进行研究工
@@ -3235,11 +3271,12 @@
   }
 \tl_const:Nn \c_@@_signature_text_zh_tl
   {
-    签名： \\ [ 1 ex ]
+    签名： \\
     日期： \hspace { \stretch { 3 } } 年
            \hspace { \stretch { 2 } } 月
            \hspace { \stretch { 2 } } 日
   }
+%</thesis>
 %</name>
 %    \end{macrocode}
 %
