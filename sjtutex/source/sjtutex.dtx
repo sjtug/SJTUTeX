@@ -403,7 +403,8 @@
 % 2012 年 5 月模板开始在 GitHub 上管理和更新，2018 年 1 月项目转移至 SJTUG 名
 % 下。2019 年 6 月 Alexara Wu 重构了整个宏包的代码，并使用 Doc\TeX{} 文档和
 % \textsc{DocStrip} 工具进行代码的管理，升级版本号为 1.0。2022 年 11 月，论文模板
-% 改版后，使用 \LaTeXiii{} 重构了代码，升级版本号为 2.0。
+% 改版后，使用 \LaTeXiii{} 重构了代码，添加 \cls{sjtureport} 和 \cls{sjtuarticle}
+% 文档类，升级版本号为 2.0。
 %
 % 现在，\sjtuthesis{} 代码在 GitHub
 % \footnote{\url{https://github.com/sjtug/SJTUThesis}}
@@ -498,13 +499,32 @@
 %
 % \subsection{使用文档类}
 %
-% 以下是一份简单的 \TeX{} 文档，它演示了 \sjtuthesis{} 的最基本用法。
-% 将这份文档保存在下载好的 \sjtuthesis{} 模板根目录下，文件以 \texttt{.tex} 后缀结尾。
-% 注意在使用文档类时，需要将涉及到的所有源文件使用 UTF-8 编码保存。
+% 共有 3 种文档类，\cls{sjtuthesis} 用于学位论文的排版，\cls{sjtureport} 用于课程大报告的排版，
+% \cls{sjtuarticle} 用于课程小论文的排版。
 %
+% 本模板中的选项、命令或环境可以分为以下三类：
+% \begin{itemize}
+%   \item 名字后面带有 \rexptarget\rexpstar{} 的，表示只能在 \cls{sjtuthesis} 文档类中使用；
+%   \item 名字后面带有 \exptarget\expstar{} 的，表示使用范围区别于 \cls{sjtuarticle}；
+%   \item 名字后面不带有特殊符号的，一般表示在 \cls{sjtuthesis}、\cls{sjtureport} 和 \cls{sjtuarticle} 文档类中都可以使用，特殊情况另作说明。
+% \end{itemize}
+%
+% 将文档保存在下载好的 \sjtuthesis{} 模板根目录下，文件以 \texttt{.tex} 后缀结尾。
+% 注意在使用文档类时，需要将涉及到的所有源文件使用 UTF-8 编码保存。对于不同的文档类，使用方法
+% 略有不同，这里给出这三种文档类的最小使用示例。
+%
+% 下面这份 \TeX{} 文档展示了 \cls{sjtuthesis} 文档类的基本用法，一般需要指定中英文名称。
+% 该文档将包含中英文封面，页眉左上角显示“上海交通大学硕士学位论文”，右上角显示章节名称。
 % \begin{latex}
-% % main.tex
-% \documentclass{sjtuthesis}
+% \documentclass[type=master]{sjtuthesis}
+% \sjtusetup{
+%   info = {
+%     title   = {上海交通大学学位论文 \LaTeX{} 模板示例文档},
+%     title*  = {A Sample Document for \LaTeX-based SJTU Thesis Template},
+%     author  = {某\quad{}某},
+%     author* = {Mo Mo},
+%   }
+% }
 % \begin{document}
 %   \maketitle
 %   \frontmatter
@@ -515,8 +535,40 @@
 % \end{document}
 % \end{latex}
 %
-% 按照 \ref{sec:compile} 小节中的方式编译该文档，您应当得到一篇 5 页的文章。
-% 当然，目前这篇文章的绝大部分都是空白的。
+% 下面这份 \TeX{} 文档展示了 \cls{sjtureport} 文档类的基本用法，只需要指定中文名称。
+% 该文档将包含中文封面，页眉左上角为校徽校名，右上角为章节名称。
+% \begin{latex}
+% \documentclass{sjtureport}
+% \sjtusetup{
+%   info = {
+%     title   = {上海交通大学学位论文 \LaTeX{} 模板示例文档},
+%     author  = {某\quad{}某},
+%     subject = {XX课程期末论文}
+%   }
+% }
+% \begin{document}
+%   \maketitle
+%   \chapter{欢迎}
+%   \section{欢迎使用 SJTUReport}
+%   你好，\LaTeX{}!
+% \end{document}
+% \end{latex}
+%
+% 下面这份 \TeX{} 文档展示了 \cls{sjtuarticle} 文档类的基本用法，建议使用标准命令定义中文名称，
+% 不能够使用 \cs{chapter} 这一级。该文档包含标题栏，页眉左上角为校徽校名，右上角为文档标题。
+% \begin{latex}
+% \documentclass{sjtuarticle}
+% \title{示例文档}
+% \author{某某}
+% \begin{document}
+%   \maketitle
+%   \section{欢迎使用 SJTUArticle}
+%   你好，\LaTeX{}!
+% \end{document}
+% \end{latex}
+%
+%^^A 按照 \ref{sec:compile} 小节中的方式编译，您应当得到一篇文档。
+%^^A 当然，目前这篇文章的绝大部分都是空白的。
 %
 % \subsection{编译文档}
 % \label{sec:compile}
@@ -584,7 +636,8 @@
 %
 % 你也可以使用编辑器集成的编译方法，
 % \href{https://github.com/sjtug/SJTUThesis/wiki/本地使用说明}{Wiki 页面《本地使用说明》}
-% 给出了 VS Code 和 TeXstudio 的配置方法。
+% 给出了 VS Code 和 TeXstudio 的配置方法，使之可以使用 \texttt{latexmk} 编译。如果你的编辑器
+% 无法使用 \texttt{latexmk}，可能你需要将 \sjtuthesis{} 安装至 \TeX{} 发行版的文件目录中。
 %
 % \section{文档配置}
 %
@@ -598,13 +651,6 @@
 %
 % 部分选项采用 \kvopt{\meta{key}}{\meta{value}} 的形式。当 \meta{value} 省略时，
 % 将采用默认值。在下文的说明中，将用\textbf{粗体}表示默认值。
-%
-% 本模板中的选项、命令或环境可以分为以下三类：
-% \begin{itemize}
-%   \item 名字后面带有 \rexptarget\rexpstar{} 的，表示只能在 \cls{sjtuthesis} 文档类中使用；
-%   \item 名字后面带有 \exptarget\expstar{} 的，表示不能在 \cls{sjtuarticle} 文档类中使用；
-%   \item 名字后面不带有特殊符号的，一般表示在 \cls{sjtuthesis}、\cls{sjtureport} 和 \cls{sjtuarticle} 文档类中都可以使用，特殊情况另作说明。
-% \end{itemize}
 %
 % \subsubsection{通用选项}
 %
@@ -640,16 +686,16 @@
 %   \begin{sjtusyntax}[emph={[1]zihao}]
 %     zihao = (*<(-4)|5>*)
 %   \end{sjtusyntax}
-% 论文默认字号，可以设定为小四号或五号。
-% 在 \cls{sjtuthesis} 和 \cls{sjtureport} 中默认为小四号，
-% 在 \cls{sjtuarticle} 中默认为五号。
+%   论文默认字号，可以设定为小四号或五号。
+%   在 \cls{sjtuthesis} 和 \cls{sjtureport} 中默认为小四号，
+%   在 \cls{sjtuarticle} 中默认为五号。
 % \end{function}
 %
 % \begin{function}[added=2022-12-03]{lineskip}
 %   \begin{sjtusyntax}[emph={[1]lineskip}]
 %     lineskip = (*\marg{长度}*)
 %   \end{sjtusyntax}
-% 行间距。默认跟随字号设置。
+%   行间距。默认跟随字号设置。
 % \end{function}
 %
 % \begin{function}{oneside, twoside}
@@ -666,6 +712,7 @@
 %   \opt{openany} 为从任意页开始新章。
 %   在 \cls{sjtuthesis} 中，默认为 \opt{openright}。
 %   在 \cls{sjtureport} 中，默认为 \opt{openany}。
+%   在 \cls{sjtuarticle} 中无法使用。
 % \end{function}
 %
 % \subsubsection{字体选项}
@@ -789,7 +836,7 @@
 %     author*      = {Mo Mo},
 %   },
 %   style = {
-%     float-numsep = {-},
+%     float-numsep = {--},
 %   },
 %   name = {
 %     publications = {攻读学位期间完成的论文},
@@ -835,7 +882,7 @@
 %   英文标题页中的题目。默认为跟随英文标题。
 % \end{function}
 %
-% \begin{function}[updated=2022-12-20]{info/running-title}
+% \begin{function}[EXP,updated=2022-12-20]{info/running-title}
 %   \begin{sjtusyntax}[emph={[2]running-title}]
 %     running-title  = (*\marg{页眉标题}*)
 %   \end{sjtusyntax}
@@ -850,16 +897,22 @@
 %^^A   该选项暂时无效。
 %^^A \end{function}
 %
-% \begin{function}[rEXP,added=2022-12-17]{info/subject, info/subject*}
-%   \vspace{-1ex}
-%   \begin{sjtusyntax}[emph={[2]subject, subject*}]
+% \begin{function}[added=2022-12-17,updated=2022-12-23]{info/subject}
+%   \begin{sjtusyntax}[emph={[2]subject}]
 %     subject  = (*\marg{中文主题}*)
+%   \end{sjtusyntax}
+%   文档中文主题。
+%   在 \cls{sjtuthesis} 中，默认值类似于“上海交通大学学士学位论文”，并显示在页面左上角。
+%   在 \cls{sjtureport} 中，默认为空，会显示在标题页徽标下方。
+% \end{function}
+%
+% \begin{function}[rEXP,added=2022-12-17,updated=2022-12-23]{info/subject*}
+%   \begin{sjtusyntax}[emph={[2]subject*}]
 %     subject* = (*\marg{英文主题}*) 
 %   \end{sjtusyntax}
-%   文档中英文主题。中文主题默认值类似于“上海交通大学学士学位论文”，
-%   英文主题默认值类似于“A Dissertation Submitted to Shanghai Jiao Tong University
-%   for Bachelor Degree”，在不同的文档设置下默认值会略有不同。
-%   在 \cls{sjtuthesis} 中会显示在左上角。
+%   文档英文主题。
+%   在 \cls{sjtuthesis} 中，默认值类似于“A Dissertation Submitted to
+%   Shanghai Jiao Tong University for Bachelor Degree”，显示在英文标题页中。
 % \end{function}
 %
 % \begin{function}{info/keywords}
@@ -899,20 +952,31 @@
 %   学号。
 % \end{function}
 %
-% \begin{function}[rEXP,updated=2022-12-13]{info/supervisor,info/supervisor*,
-%   info/assoc_supervisor,info/assoc_supervisor*,
-%   info/co-supervisor,info/co-supervisor*}
+% \begin{function}[updated=2022-12-23]{info/supervisor,info/assoc-supervisor}
 %   \vspace{-1ex}
-%   \begin{sjtusyntax}[emph={[2]supervisor,supervisor*,assoc-supervisor,
-%     assoc-supervisor*,co-supervisor,co-supervisor*}]
+%   \begin{sjtusyntax}[emph={[2]supervisor,assoc-supervisor}]
 %     supervisor        = (*\marg{姓名}*)
-%     supervisor*       = (*\marg{英文姓名或拼音}*)
 %     assoc-supervisor  = (*\marg{姓名}*)
+%   \end{sjtusyntax}
+%   导师、副导师中文姓名。
+% \end{function}
+%
+% \begin{function}[rEXP,updated=2022-12-23]{info/co-supervisor}
+%   \begin{sjtusyntax}[emph={[2]co-supervisor}]
+%     co-supervisor = (*\marg{姓名}*)
+%   \end{sjtusyntax}
+%   联合导师中文姓名。
+% \end{function}
+%
+% \begin{function}[rEXP,updated=2022-12-23]{info/supervisor*,info/assoc_supervisor*,
+%   info/co-supervisor*}
+%   \vspace{-1ex}
+%   \begin{sjtusyntax}[emph={[2]supervisor*,assoc-supervisor*,co-supervisor*}]
+%     supervisor*       = (*\marg{英文姓名或拼音}*)
 %     assoc-supervisor* = (*\marg{英文姓名或拼音}*)
-%     co-supervisor     = (*\marg{姓名}*)
 %     co-supervisor*    = (*\marg{英文姓名或拼音}*)
 %   \end{sjtusyntax}
-%   导师、副导师、联合导师姓名。
+%   导师、副导师、联合导师英文姓名。
 % \end{function}
 %
 % \begin{function}[rEXP]{info/degree,info/degree*}
@@ -922,15 +986,23 @@
 %     degree* = (*\marg{学位英文名称}*)
 %   \end{sjtusyntax}
 %   申请学位中英文名称。
+%   默认跟随 \opt{type} 文档类选项的设置，
+%   中文名称默认值类似于“学士”、“硕士”、“博士”，
+%   英文名称默认值类似于``Bachelor'', ``Master'', ``Doctor''。
 % \end{function}
 %
-% \begin{function}[rEXP]{info/department,info/department*}
-%   \vspace{-1ex}
-%   \begin{sjtusyntax}[emph={[2]department,department*}]
+% \begin{function}{info/department}
+%   \begin{sjtusyntax}[emph={[2]department}]
 %     department  = (*\marg{院系中文名称}*)
+%   \end{sjtusyntax}
+%   院系中文名称。
+% \end{function}
+%
+% \begin{function}[rEXP]{info/department*}
+%   \begin{sjtusyntax}[emph={[2]department*}]
 %     department* = (*\marg{院系英文名称}*)
 %   \end{sjtusyntax}
-%   院系中英文名称。
+%   院系英文名称。
 % \end{function}
 %
 % \begin{function}[rEXP]{info/major,info/major*}
@@ -1099,9 +1171,8 @@
 %   name/abbr,name/nom,name/summary,name/ack,name/resume,name/digset,name/achv}
 % \end{function}
 %
-%^^A FIXME: blank area
 % \begin{table}[hbt]
-%^^A   \vspace{-47ex}
+%   \vspace{-47ex}
 %   \centering\small
 %   \caption{\opt{name} 选项的默认设置}
 %   \label{tab:names}
