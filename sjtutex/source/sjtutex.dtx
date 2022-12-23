@@ -687,8 +687,10 @@
 %     zihao = (*<(-4)|5>*)
 %   \end{sjtusyntax}
 %   论文默认字号，可以设定为小四号或五号。
-%   在 \cls{sjtuthesis} 和 \cls{sjtureport} 中默认为小四号，
-%   在 \cls{sjtuarticle} 中默认为五号。
+%   \begin{itemize}
+%     \item 在 \cls{sjtuthesis} 和 \cls{sjtureport} 文档类中默认为小四号;
+%     \item 在 \cls{sjtuarticle} 文档类中默认为五号。
+%   \end{itemize}
 % \end{function}
 %
 % \begin{function}[added=2022-12-03]{lineskip}
@@ -702,17 +704,32 @@
 %   指明论文的单双面模式。
 %   \opt{oneside} 为单面模式，
 %   \opt{twoside} 为双面模式。
-%   在 \cls{sjtuthesis} 中，默认为 \opt{twoside}。
-%   在 \cls{sjtureport} 和 \cls{sjtuarticle} 中，默认为 \opt{oneside}。
+%   \begin{itemize}
+%     \item 在 \cls{sjtuthesis} 文档类中，默认为 \opt{twoside}。
+%     \item 在 \cls{sjtureport} 和 \cls{sjtuarticle} 文档类中，默认为 \opt{oneside}。
+%   \end{itemize}
 % \end{function}
 %
 % \begin{function}[EXP]{openright, openany}
 %   指明论文是否奇数页开章。
 %   \opt{openright} 为从奇数页开始新章，
 %   \opt{openany} 为从任意页开始新章。
-%   在 \cls{sjtuthesis} 中，默认为 \opt{openright}。
-%   在 \cls{sjtureport} 中，默认为 \opt{openany}。
-%   在 \cls{sjtuarticle} 中无法使用。
+%   \begin{itemize}
+%     \item 在 \cls{sjtuthesis} 文档类中，默认为 \opt{openright}。
+%     \item 在 \cls{sjtureport} 文档类中，默认为 \opt{openany}。
+%     \item 在 \cls{sjtuarticle} 文档类中，该选项不可用。
+%   \end{itemize}
+% \end{function}
+%
+% \begin{function}[added=2022-12-23]{titlepage, notitlepage}
+%   指明论文的标题形式。
+%   \opt{titlepage} 为使用标题页。
+%   \opt{notitlepage} 为使用标题块。
+%   \begin{itemize}
+%     \item 在 \cls{sjtureport} 文档类中，默认为 \opt{titlepage}。
+%     \item 在 \cls{sjtuarticle} 文档类中，默认为 \opt{notitlepage}。
+%     \item 在 \cls{sjtuthesis} 文档类中，该选项不可用。
+%   \end{itemize}
 % \end{function}
 %
 % \subsubsection{字体选项}
@@ -901,18 +918,22 @@
 %   \begin{sjtusyntax}[emph={[2]subject}]
 %     subject  = (*\marg{中文主题}*)
 %   \end{sjtusyntax}
-%   文档中文主题。
-%   在 \cls{sjtuthesis} 中，默认值类似于“上海交通大学学士学位论文”，并显示在页面左上角。
-%   在 \cls{sjtureport} 中，默认为空，会显示在标题页徽标下方。
+%   文档中文主题。一般显示在中文标题页校徽下方。
+%   \begin{itemize}
+%     \item 在 \cls{sjtuthesis} 文档类中，默认值类似于“上海交通大学学士学位论文”。
+%     \item 在 \cls{sjtureport} 文档类中，默认为空。
+%   \end{itemize}
 % \end{function}
 %
 % \begin{function}[rEXP,added=2022-12-17,updated=2022-12-23]{info/subject*}
 %   \begin{sjtusyntax}[emph={[2]subject*}]
 %     subject* = (*\marg{英文主题}*) 
 %   \end{sjtusyntax}
-%   文档英文主题。
-%   在 \cls{sjtuthesis} 中，默认值类似于“A Dissertation Submitted to
-%   Shanghai Jiao Tong University for Bachelor Degree”，显示在英文标题页中。
+%   文档英文主题。一般显示在英文标题页顶部。
+%   \begin{itemize}
+%     \item 在 \cls{sjtuthesis} 文档类中，默认值类似于“A Dissertation Submitted to
+%           Shanghai Jiao Tong University for Bachelor Degree”。
+%   \end{itemize}
 % \end{function}
 %
 % \begin{function}{info/keywords}
@@ -1090,17 +1111,17 @@
 %   默认为空。
 % \end{function}
 %
-% \begin{function}[updated=2022-12-03]{style/float-numsep}
-%   \begin{sjtusyntax}[emph={[2]float-numsep}]
-%     float-numsep = (*\marg{分隔符}*)
+% \begin{function}[updated=2022-12-23]{style/float-num-sep}
+%   \begin{sjtusyntax}[emph={[2]float-num-sep}]
+%     float-num-sep = (*\marg{分隔符}*)
 %   \end{sjtusyntax}
 %   图、表等浮动体编号中的分隔符。
 %   默认为 \opt{--}。
 % \end{function}
 %
-% \begin{function}[updated=2022-12-03]{style/equation-numsep}
-%   \begin{sjtusyntax}[emph={[2]equation-numsep}]
-%     equation-numsep = (*\marg{分隔符}*)
+% \begin{function}[updated=2022-12-23]{style/equation-num-sep}
+%   \begin{sjtusyntax}[emph={[2]equation-num-sep}]
+%     equation-num-sep = (*\marg{分隔符}*)
 %   \end{sjtusyntax}
 %   公式编号中的分隔符。
 %   默认为 \opt{--}。
@@ -1125,8 +1146,10 @@
 %     header-uppercase = (*<true|(false)>*)
 %   \end{sjtusyntax}
 %   页眉英文字母是否大写。
-%   在 \cls{sjtuthesis} 和 \cls{sjtureport} 中，默认为 \opt{false}。
-%   在 \cls{sjtuarticle} 中，默认为 \opt{true}。
+%   \begin{itemize}
+%     \item 在 \cls{sjtuthesis} 和 \cls{sjtureport} 文档类中，默认为 \opt{false}。
+%     \item 在 \cls{sjtuarticle} 文档类中，默认为 \opt{true}。
+%   \end{itemize}
 % \end{function}
 %
 % \begin{function}[added=2022-12-20]{style/header-font}
@@ -1134,8 +1157,10 @@
 %     header-font = (*\marg{页眉字体}*)
 %   \end{sjtusyntax}
 %   页眉字体。
-%   在 \cls{sjtuthesis} 和 \cls{sjtureport} 中，默认为 |\zihao{-5}|，小五号字。
-%   在 \cls{sjtuarticle} 中，默认为 |\zihao{5}|，五号字。
+%   \begin{itemize}
+%     \item 在 \cls{sjtuthesis} 和 \cls{sjtureport} 文档类中，默认为 |\zihao{-5}|，小五号字。
+%     \item 在 \cls{sjtuarticle} 文档类中，默认为 |\zihao{5}|，五号字。
+%   \end{itemize}
 % \end{function}
 %
 % \begin{function}[added=2022-12-20]{style/footer-font}
@@ -1143,8 +1168,10 @@
 %     footer-font = (*\marg{页脚字体}*)
 %   \end{sjtusyntax}
 %   页脚字体。
-%   在 \cls{sjtuthesis} 和 \cls{sjtureport} 中，默认为 |\zihao{-5}|，小五号字。
-%   在 \cls{sjtuarticle} 中，默认为 |\zihao{5}|，五号字。
+%   \begin{itemize}
+%     \item 在 \cls{sjtuthesis} 和 \cls{sjtureport} 文档类中，默认为 |\zihao{-5}|，小五号字。
+%     \item 在 \cls{sjtuarticle} 文档类中，默认为 |\zihao{5}|，五号字。
+%   \end{itemize}
 % \end{function}
 %
 % \begin{function}[added=2022-12-03]{style/page-number}
@@ -1275,8 +1302,15 @@
 %   \begin{sjtusyntax}[morekeywords={\maketitle}]
 %     \maketitle
 %   \end{sjtusyntax}
-%   生成标题页。
-%   在 \cls{sjtuarticle} 中，生成标题块。
+%   生成标题。
+%   \begin{itemize}
+%     \item 在 \cls{sjtuthesis} 文档类中，生成标题页。
+%     \item 在 \cls{sjtureport} 和 \cls{sjtuarticle} 文档类中，
+%           \begin{itemize}
+%             \item 若处于 \opt{titlepage} 文档类选项中，生成标题页。\cls{sjtureport} 文档类默认。
+%             \item 若处于 \opt{notitlepage} 文档类选项中，生成标题块。\cls{sjtuarticle} 文档类默认。
+%           \end{itemize}
+%   \end{itemize}
 % \end{function}
 %
 % \begin{function}[rEXP,updated=2022-12-20]{\copyrightpage}
