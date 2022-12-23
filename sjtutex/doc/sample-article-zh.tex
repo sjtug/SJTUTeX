@@ -1,0 +1,46 @@
+\documentclass{sjtuarticle}
+
+\input{common-package}
+
+% 标题
+\title{上海交通大学 \LaTeX{} 文稿模板示例文档}
+% 作者
+\author{某\quad{}某}
+% 日期
+\date{\today}
+
+\begin{document}
+
+% 标题块
+\maketitle
+
+% 摘要
+\begin{abstract}
+  \zhlipsum[1]
+\end{abstract}
+
+\section{简介}
+
+\zhlipsum[2]
+
+\section{相关工作}
+
+\zhlipsum[3]
+
+\section{主要方法}
+
+\zhlipsum[4-5]
+
+\section{测试结果}
+
+\zhlipsum[6]
+
+\section{结论}
+
+\zhlipsum[7]
+
+% 参考文献
+\nocite{*}
+\printbibliography[heading=bibintoc]
+
+\end{document}

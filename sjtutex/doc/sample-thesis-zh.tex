@@ -3,8 +3,8 @@
 % 载入 SJTUThesis 模版
 \documentclass[type=master,lang=zh]{sjtuthesis}
 
-\input{common-package.tex}
-\input{common-setup-cn.tex}
+\input{common-package}
+\input{common-setup-thesis}
 
 \begin{document}
 
@@ -18,7 +18,7 @@
 \frontmatter
 
 \begin{abstract}
-  \input{common-abstract-cn.tex}
+  \input{common-abstract-zh.tex}
 \end{abstract}
 
 \begin{abstract*}
@@ -37,7 +37,7 @@
 % 主体部分
 \mainmatter
 
-\input{common-mainmatter-cn}
+\input{common-mainmatter-zh}
 
 % 参考文献
 \nocite{*}
@@ -49,15 +49,17 @@
 % 附录中图表不加入索引
 \captionsetup{list=no}
 
-\input{common-nomenclature-cn}
+\input{common-nomenclature-zh}
 
 % 结尾部分
 \backmatter
 
 % 用于盲审的论文需隐去致谢、发表论文、科研成果、简历
 
-\input{common-achievements-cn}
+\input{common-achievements-zh}
 
-\input{common-acknowledgements-cn}
+\input{common-acknowledgements-zh}
+
+\input{common-digest}
 
 \end{document}

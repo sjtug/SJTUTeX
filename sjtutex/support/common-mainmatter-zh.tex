@@ -26,21 +26,18 @@
 研究方法的比较等，因学科性质不同可有所变化。\cite{Jia2000}
 
 论文内容一般应由十个主要部分组成，依次为：
-\begin{enumerate}
-  \item 封面
-  \item 中文摘要
-  \item 英文摘要
-  \item 目录
-  \item 符号说明
-  \item 论文正文
-  \item 参考文献
-  \item 附录
-  \item 致谢
-  \item 攻读学位期间发表的学术论文目录
-\end{enumerate}
+1. 封面
+2. 中文摘要
+3. 英文摘要
+4. 目录
+5. 符号说明
+6. 论文正文
+7. 参考文献
+8. 附录
+9. 致谢
+10. 攻读学位期间发表的学术论文目录
 
 以上各部分独立为一部分，每部分应从新的一页开始，且纸质论文应装订在论文的右侧。
-
 \footnote[1]{测试第 1 号脚注}
 \footnote[11]{测试第 11 号脚注}
 \footnote[21]{测试第 21 号脚注}
@@ -87,7 +84,7 @@
       & \multicolumn{1}{c}{时间 (s)} &  文件（KB）\\
     \midrule
     \endfirsthead
-    \multicolumn{7}{l}{续表~\thetable} \\
+    \multicolumn{7}{l}{\textbf{续表~\thetable}} \\
     \toprule
     测试程序 & \multicolumn{1}{c}{正常运行} & \multicolumn{1}{c}{同步}
       & \multicolumn{1}{c}{检查点} & \multicolumn{1}{c}{卷回恢复}
@@ -142,6 +139,58 @@
   -\nabla\left(\frac{1}{\mu}\right)\times(\nabla\times\mathbf{A})
   +\mathbf{J}_0=0
 \end{equation}
+
+\section{代码环境}
+
+\begin{codeblock}[language=C]
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+
+int main() {
+  pid_t pid;
+
+  switch ((pid = fork())) {
+  case -1:
+    printf("fork failed\n");
+    break;
+  case 0:
+    /* child calls exec */
+    execl("/bin/ls", "ls", "-l", (char*)0);
+    printf("execl failed\n");
+    break;
+  default:
+    /* parent uses wait to suspend execution until child finishes */
+    wait((int*)0);
+    printf("is completed\n");
+    break;
+  }
+  return 0;
+}
+\end{codeblock}
+
+\section{算法环境}
+
+\begin{algorithm}[htb]
+  \caption{算法示例}
+  \label{algo:algorithm}
+  \small
+  \SetAlgoLined
+  \KwData{this text}
+  \KwResult{how to write algorithm with \LaTeXe }
+
+  initialization\;
+  \While{not at end of this document}{
+    read current\;
+    \eIf{understand}{
+      go to next section\;
+      current section becomes this one\;
+    }{
+      go back to the beginning of current section\;
+    }
+  }
+\end{algorithm}
 
 \section{本章小结}
 

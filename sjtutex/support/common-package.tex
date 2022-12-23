@@ -3,6 +3,10 @@
 \usepackage[backend=biber,style=gb7714-2015]{biblatex}
 \addbibresource{ref.bib}
 \usepackage[perpage,bottom,hang]{footmisc}
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\usepackage{listings}
+\lstnewenvironment{codeblock}[1][]%
+  {\lstset{style=lstStyleCode,#1}}{}
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{threeparttable}
