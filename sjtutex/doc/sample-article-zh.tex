@@ -1,0 +1,43 @@
+\documentclass{sjtuarticle}
+
+\input{common-package}
+
+\title{上海交通大学学位论文 \LaTeX{} 模板示例文档}
+\author{某\quad{}某}
+\date{\today}
+
+\begin{document}
+
+% 摘要
+\begin{abstract}
+  \input{common-abstract-zh.tex}
+\end{abstract}
+
+% 目录
+\tableofcontents
+
+\section{简介}
+
+\zhlipsum[1]
+
+\section{相关工作}
+
+\zhlipsum[2]
+
+\section{主要方法}
+
+\zhlipsum[3]
+
+\section{测试结果}
+
+\zhlipsum[4]
+
+\section{结论}
+
+\zhlipsum[5]
+
+% 参考文献
+\nocite{*}
+\printbibliography[heading=bibintoc]
+
+\end{document}

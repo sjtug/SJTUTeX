@@ -1,0 +1,28 @@
+\documentclass{sjtureport}
+
+\input{common-package}
+\input{common-setup-report}
+
+\begin{document}
+
+% 标题页
+\maketitle
+
+% 前置部分
+\frontmatter
+
+% 摘要
+\begin{abstract}
+  \input{common-abstract-zh.tex}
+\end{abstract}
+
+% 目录
+\tableofcontents
+
+\input{common-mainmatter-zh}
+
+% 参考文献
+\nocite{*}
+\printbibliography[heading=bibintoc]
+
+\end{document}
