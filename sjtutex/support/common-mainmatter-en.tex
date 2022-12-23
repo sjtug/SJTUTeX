@@ -22,19 +22,16 @@
 \section{Basic text format requirements}
 
 The content of the thesis should generally consist of ten main parts\cite{Jia2000}, in order:
-\begin{enumerate}
-  \item cover
-  \item Chinese abstract
-  \item English abstract
-  \item table of contents
-  \item symbol description
-  \item thesis body
-  \item references
-  \item appendices
-  \item acknowledgements
-  \item published academic papers during degree study
-\end{enumerate}
-
+1. cover
+2. Chinese abstract
+3. English abstract
+4. table of contents
+5. symbol description
+6. thesis body
+7. references
+8. appendices
+9. acknowledgements
+10. published academic papers during degree study
 \footnote[1]{Test footnote Number 1.}
 \footnote[11]{Test footnote Number 11.}
 \footnote[21]{Test footnote Number 21.}
@@ -80,7 +77,7 @@ The content of the thesis should generally consist of ten main parts\cite{Jia200
       & \multicolumn{1}{c}{Time (s)} &  File Size (KB)\\
     \midrule
     \endfirsthead
-    \multicolumn{7}{r}{Table~\thetable~(continued)} \\
+    \multicolumn{7}{r}{\textbf{Table~\thetable~(continued)}} \\
     \toprule
     Test Program & \multicolumn{1}{c}{Run} & \multicolumn{1}{c}{Sync}
       & \multicolumn{1}{c}{Checkpoint} & \multicolumn{1}{c}{Rollback}
@@ -135,6 +132,58 @@ The content of the thesis should generally consist of ten main parts\cite{Jia200
   -\nabla\left(\frac{1}{\mu}\right)\times(\nabla\times\mathbf{A})
   +\mathbf{J}_0=0
 \end{equation}
+
+\section{Codeblock Example}
+
+\begin{codeblock}[language=C]
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+
+int main() {
+  pid_t pid;
+
+  switch ((pid = fork())) {
+  case -1:
+    printf("fork failed\n");
+    break;
+  case 0:
+    /* child calls exec */
+    execl("/bin/ls", "ls", "-l", (char*)0);
+    printf("execl failed\n");
+    break;
+  default:
+    /* parent uses wait to suspend execution until child finishes */
+    wait((int*)0);
+    printf("is completed\n");
+    break;
+  }
+  return 0;
+}
+\end{codeblock}
+
+\section{Algorithm Example}
+
+\begin{algorithm}[htb]
+  \caption{Algorithm Example}
+  \label{algo:algorithm}
+  \small
+  \SetAlgoLined
+  \KwData{this text}
+  \KwResult{how to write algorithm with \LaTeXe }
+
+  initialization\;
+  \While{not at end of this document}{
+    read current\;
+    \eIf{understand}{
+      go to next section\;
+      current section becomes this one\;
+    }{
+      go back to the beginning of current section\;
+    }
+  }
+\end{algorithm}
 
 \section{Summary}
 
