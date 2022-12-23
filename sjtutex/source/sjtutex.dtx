@@ -2439,7 +2439,9 @@
   }
   {
     \AssignTemplateKeys
-    \cleardoublepage
+%<!article>    \bool_if:NTF \g_@@_openright_bool
+%<!article>      { \cleardoublepage } { \clearpage }
+%<article>    \clearpage
     \bool_if:NT \l_@@_page_bookmark_bool
       { \@@_pdf_bookmark:nn { 0 } { \l_@@_page_bookmark_text_tl } }
     \exp_args:No \thispagestyle { \l_@@_page_style_tl }
@@ -2456,6 +2458,7 @@
         { \UseInstance { sjtu } { \l_@@_page_prefix_tl / ##1 } }
     \group_end:
     \@@_vspace:N \l_@@_page_bottom_skip
+    \clearpage
   }
 \cs_new:Npn \@@_declare_component:nnn #1#2#3
   { \DeclareInstance { sjtu } {#1/#2} { component } {#3} }
@@ -2775,10 +2778,14 @@
 \bool_if:NTF \g_@@_titlepage_bool
   {
     \DeclareDocumentEnvironment { abstract } { }
-      { \@@_head_aux_s:n { \abstractname } }
+      {
+%<article>        \clearpage
+        \@@_head_aux_s:n { \abstractname }
+      }
       {
         \@@_output_keywords:Nnn \l_@@_info_keywords_zh_clist
           { \c_@@_name_keywords_tl } { \c_@@_name_item_sep_tl }
+        \clearpage
       }
   }
   {
