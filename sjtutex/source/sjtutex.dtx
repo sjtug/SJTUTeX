@@ -675,7 +675,8 @@
     bicaption,
     subcaption,
     xcolor,
-    graphicx
+    graphicx,
+    enumitem
   }
 %    \end{macrocode}
 %
@@ -2191,19 +2192,8 @@
   { afterindent = true }
 \ctex_set:nn { subparagraph }
   { afterindent = true }
-\ctex_if_autoindent_touched:F
-  { \ctex_set:n { autoindent = true } }
 \ctex_set:n { secnumdepth = 3 }
 %    \end{macrocode}
-%
-% \begin{macro}[int]{\verse,\quotation}
-% 修改诗歌和引用环境的缩进。
-%    \begin{macrocode}
-\ctex_patch_cmd:Nnn \verse { -1.5em } { -2 \ccwd }
-\ctex_patch_cmd:Nnn \verse {  1.5em } {  2 \ccwd }
-\ctex_patch_cmd:Nnn \quotation { 1.5em } { 2 \ccwd }
-%    \end{macrocode}
-% \end{macro}
 %
 % \begin{macro}{\SJTU@head,\@@_pdf_bookmark:nn,\@@_phantom_section:}
 % 定义一个灵活的章节标题命令专门处理不同的需求。
@@ -2241,6 +2231,28 @@
 \cs_new_eq:NN \@@_phantom_section: \prg_do_nothing:
 %    \end{macrocode}
 % \end{macro}
+%
+% \subsection{段落}
+%
+% 全文首行缩进 2 字符。
+%    \begin{macrocode}
+\ctex_if_autoindent_touched:F
+  { \ctex_set:n { autoindent = true } }
+%    \end{macrocode}
+%
+% \begin{macro}[int]{\verse,\quotation}
+% 修改诗歌和引用环境的缩进。
+%    \begin{macrocode}
+\ctex_patch_cmd:Nnn \verse { -1.5em } { -2 \ccwd }
+\ctex_patch_cmd:Nnn \verse {  1.5em } {  2 \ccwd }
+\ctex_patch_cmd:Nnn \quotation { 1.5em } { 2 \ccwd }
+%    \end{macrocode}
+% \end{macro}
+%
+% 使用 \pkg{enumitem} 调整默认列表环境的间距。
+%    \begin{macrocode}
+\setlist { nosep }
+%    \end{macrocode}
 %
 % \subsection{浮动体}
 %
