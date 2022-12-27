@@ -273,7 +273,7 @@
 % \begin{variable}{\g_@@_thesis_type_int}
 % 论文类型。
 %    \begin{macrocode}
-\int_new:N \g_@@_thesis_type_int
+%<thesis>\int_new:N \g_@@_thesis_type_int
 %    \end{macrocode}
 % \end{variable}
 %
@@ -1379,16 +1379,14 @@
   {
     \str_if_eq:eeF { \tl_use:c { g_@@_ #1 _font_tl } } { none }
       {
-        \ctex_push_file:
-          \file_if_exist_input:nF
-            { sjtu- #1 -font- \tl_use:c { g_@@_ #1 _font_tl } .def }
-            {
-              \msg_warning:nnnn { sjtutex } { invalid-font } {#1} {#2}
-              \tl_gset:cn { g_@@_ #1 _font_tl } {#2}
-              \file_input:n
-                { sjtu- #1 -font- \tl_use:c { g_@@_ #1 _font_tl } .def }
-            }
-        \ctex_pop_file:
+        \file_if_exist:nF
+          { sjtu- #1 -font- \tl_use:c { g_@@_ #1 _font_tl } .def }
+          {
+            \msg_warning:nnnn { sjtutex } { invalid-font } {#1} {#2}
+            \tl_gset:cn { g_@@_ #1 _font_tl } {#2}
+          }
+        \ctex_file_input:n
+          { sjtu- #1 -font- \tl_use:c { g_@@_ #1 _font_tl } .def }
       }
   }
 \msg_new:nnn { sjtutex } { invalid-font }
@@ -1530,9 +1528,7 @@
         UprightFont     = *-Regular,
         BoldFont        = *-Bold,
         ItalicFont      = *-Italic,
-        BoldItalicFont  = *-BoldItalic,
-        SlantedFont     = *-Slanted,
-        BoldSlantedFont = *-BoldSlanted
+        BoldItalicFont  = *-BoldItalic
       ]
 %</textfont>
 %</newtx|newpx>
