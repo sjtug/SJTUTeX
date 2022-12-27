@@ -765,17 +765,17 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_line_spread:n,\@@_fixed_line_skip:n}
-% 设置行距倍数和行距固定值。
+% \begin{macro}{\fixedlineskip}
+% 设置固定值行距。通过当前字体大小计算行距倍数，在字号命令之后使用。
 %    \begin{macrocode}
-\cs_new:Npn \@@_line_spread:n #1
-  { \linespread {#1} \selectfont }
 \cs_new:Npn \@@_fixed_line_skip:n #1
   {
     \exp_args:Nx \linespread
       { \fp_to_decimal:n { \dim_ratio:nn { #1 } { \f@size pt } / 1.2 } }
     \selectfont
   }
+\NewDocumentCommand \fixedlineskip { m }
+  { \exp_args:Nx \@@_fixed_line_skip:n {#1} \tex_ignorespaces:D }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -1161,7 +1161,7 @@
 \keys_define:nn { sjtu / style }
   {
     float-font              .tl_set:N = \SJTU@style@float@font ,
-    float-font             .initial:n = \zihao { 5 } ,
+    float-font             .initial:n = \normalsize \fixedlineskip { 15.6 bp } ,
     caption-font              .code:n =
       { \DeclareCaptionFont { SJTU@font     } {#1} } ,
     caption-font           .initial:n = \zihao { 5 } \bfseries ,
@@ -2423,7 +2423,7 @@
     bookmark      : boolean   = false ,
     bookmark-text : tokenlist = \c_empty_tl ,
     style         : tokenlist = empty ,
-    format        : tokenlist = \@@_line_spread:n { 1 } ,
+    format        : tokenlist = \linespread { 1 } \selectfont ,
     prefix        : tokenlist ,
     components    : commalist ,
     top-skip      : skip      = \c_zero_skip ,
@@ -2513,19 +2513,19 @@
       },
     { subject }
       {
-        format      = \zihao { -2 } \@@_fixed_line_skip:n { 31.2 bp } ,
+        format      = \zihao { -2 } \fixedlineskip { 31.2 bp } ,
         content     = \l_@@_info_subject_zh_tl ,
         bottom-skip = \c_zero_dim plus 2 fill
       },
     { title   }
       {
-        format      = \zihao { 2 } \bfseries \@@_fixed_line_skip:n { 31.2 bp } ,
+        format      = \zihao { 2 } \bfseries \fixedlineskip { 31.2 bp } ,
         content     = \l_@@_info_display_title_zh_tl ,
         bottom-skip = \c_zero_dim plus 3 fill
       },
     { info    }
       {
-        format      = \zihao { 4 } \@@_fixed_line_skip:n { 31.2 bp } ,
+        format      = \zihao { 4 } \fixedlineskip { 31.2 bp } ,
         content     =
           {
             \@@_title_page_info:nxn { zh }
@@ -2552,7 +2552,7 @@
       },
     { date    }
       {
-        format      = \zihao { 4 } \bfseries \@@_fixed_line_skip:n { 31.2 bp } ,
+        format      = \zihao { 4 } \bfseries \fixedlineskip { 31.2 bp } ,
         content     = \l_@@_info_date_zh_tl
       }
   }
@@ -2572,19 +2572,19 @@
   {
     { subject }
       {
-        format      = \zihao { 4 } \bfseries \@@_fixed_line_skip:n { 31.2 bp } ,
+        format      = \zihao { 4 } \bfseries \fixedlineskip { 31.2 bp } ,
         content     = \l_@@_info_subject_en_tl ,
         bottom-skip = \c_zero_dim plus 2 fill
       },
     { title   }
       {
-        format      = \zihao { -2 } \bfseries \@@_fixed_line_skip:n { 31.2 bp } ,
+        format      = \zihao { -2 } \bfseries \fixedlineskip { 31.2 bp } ,
         content     = \MakeUppercase \l_@@_info_display_title_en_tl ,
         bottom-skip = \c_zero_dim plus 2 fill
       },
     { info    }
       {
-        format      = \zihao { 3 } \@@_fixed_line_skip:n { 31.2 bp } ,
+        format      = \zihao { 3 } \fixedlineskip { 31.2 bp } ,
         content     =
           {
             \@@_title_page_info:nxn { en }
@@ -2601,7 +2601,7 @@
       },
     { date    }
       {
-        format      = \zihao { 3 } \@@_fixed_line_skip:n { 31.2 bp } ,
+        format      = \zihao { 3 } \fixedlineskip { 31.2 bp } ,
         content     =
           {
             \l_@@_info_department_en_tl
@@ -2651,7 +2651,7 @@
   {
     { orig / title }
       {
-        format      = \zihao { 3 } \heiti \@@_fixed_line_skip:n { 31.2 bp } ,
+        format      = \zihao { 3 } \heiti \fixedlineskip { 31.2 bp } ,
         content     =
           {
             \c_@@_name_univ_zh_tl
@@ -2663,14 +2663,14 @@
       },
     { orig / text  }
       {
-        format      = \zihao { -4 } \@@_fixed_line_skip:n { 23.4 bp } ,
+        format      = \zihao { -4 } \fixedlineskip { 23.4 bp } ,
         content     = \c_@@_orig_decl_text_zh_tl ,
         bottom-skip = 15.6 bp ,
         align       = normal
       },
     { orig / sign  }
       {
-        format      = \zihao { 4 } \@@_fixed_line_skip:n { 31.2 bp } ,
+        format      = \zihao { 4 } \fixedlineskip { 31.2 bp } ,
         content     =
           {
             \@@_signature:N \c_@@_name_decl_author_zh_tl
@@ -2681,7 +2681,7 @@
       },
     { auth / title }
       {
-        format      = \zihao { 3 } \heiti \@@_fixed_line_skip:n { 31.2 bp } ,
+        format      = \zihao { 3 } \heiti \fixedlineskip { 31.2 bp } ,
         content     =
           {
             \c_@@_name_univ_zh_tl
@@ -2693,14 +2693,14 @@
       },
     { auth / text  }
       {
-        format      = \zihao { -4 } \@@_fixed_line_skip:n { 23.4 bp } ,
+        format      = \zihao { -4 } \fixedlineskip { 23.4 bp } ,
         content     = \c_@@_auth_decl_text_zh_tl ,
         bottom-skip = 15.6 bp ,
         align       = normal
       },
     { auth / sign  }
       {
-        format      = \zihao { 4 } \@@_fixed_line_skip:n { 31.2 bp } ,
+        format      = \zihao { 4 } \fixedlineskip { 31.2 bp } ,
         content     =
           {
             \@@_signature:N \c_@@_name_decl_author_zh_tl
