@@ -201,6 +201,7 @@
 \hyphenation{SJTU-Thesis}
 \newcommand{\sjtuthesis}{\textsc{SJTUThesis}}
 \usepackage{graphicx}
+\usepackage{multirow}
 \usepackage{listings}
 \hypersetup{
   allcolors         = blue,
@@ -741,8 +742,7 @@
 %   默认跟随西文字体 \opt{text-font} 的设置。
 %   找不到定义的数学字体集时的回退选项为 \opt{newtx}。
 %
-%   请注意加载 \opt{stixtwo}，\opt{xits}，\opt{newcm}，\opt{cambria} 数学字体时
-%   会自动加载 \pkg{unicode-math} 宏包，此时\textbf{不能}够使用 \pdfLaTeX{} 编译。
+%   \opt{xits}，\opt{newcm}，\opt{cambria} 选项仅支持 \XeLaTeX/\LuaLaTeX{} 编译。
 % \end{function}
 %
 % \begin{table}[ht]
@@ -754,22 +754,24 @@
 %     \toprule
 %       & \strong{正文字体} & \strong{无衬线字体} & \strong{等宽字体} & \strong{数学字体} \\
 %     \midrule
-%       |newtx|           & TG Termes X\tnote{a} & TG Heros    & TG Cursor   & newtx         \\
-%       |times|\tnote{b}  & Times New Roman      & Arial       & Courier New & newtx         \\
-%       |stixtwo|         & STIX Two Text        & TG Heros    & TG Cursor   & STIX Two Math \\
-%       |xits|            & XITS                 & TG Heros    & TG Cursor   & XITS Math     \\
-%       |newpx|           & TG Pagella X         & TG Heros    & TG Cursor   & newpx         \\
-%       |cambria|         & Cambria              & Calibri     & Consolas    & Cambria Math  \\
-%       |newcm|           & New CM\tnote{c}      & New CM Sans & New CM Mono & New CM        \\
-%       |lm|              & LM Roman             & LM Sans     & LM Mono     & LM Math       \\
+%       |newtx|                  & TG Termes X\tnote{a}     & TG Heros    & TG Cursor   & newtx         \\
+%       \multirow{2}{*}{|times|} & Times New Roman\tnote{b} & Arial       & Courier New & \multirow{2}{*}{mathptmx} \\
+%                                & Times\tnote{c}           & Helvetica   & Courier     &               \\
+%       |stixtwo|                & STIX Two Text            & TG Heros    & TG Cursor   & STIX Two Math \\
+%       |xits|                   & XITS                     & TG Heros    & TG Cursor   & XITS Math     \\
+%       |newpx|                  & TG Pagella X             & TG Heros    & TG Cursor   & newpx         \\
+%       |cambria|                & Cambria                  & Calibri     & Consolas    & Cambria Math  \\
+%       |newcm|                  & New CM\tnote{d}          & New CM Sans & New CM Mono & New CM        \\
+%       |lm|                     & LM Roman\tnote{e}        & LM Sans     & LM Mono     & LM Math       \\
 %     \bottomrule
 %   \end{tabular}
 %   \begin{tablenotes}
 %     \item[a] “TG”是 TeX Gyre 的缩写。
 %     \item[b] 本行中，Times New Roman、Arial 和 Courier New 是商业字体，
 %       在 Windows 和 macOS 系统上均默认安装。
-%     \item[b] “LM”是 Latin Modern 的缩写。
-%     \item[c] “CM”是 Computer Modern 的缩写。
+%     \item[c] 使用 \pdfTeX{} 引擎时，实际使用对应字体的 Type 1 开源版本。
+%     \item[d] “CM”是 Computer Modern 的缩写。
+%     \item[e] “LM”是 Latin Modern 的缩写。
 %   \end{tablenotes}
 % \end{threeparttable}
 % \end{table}
