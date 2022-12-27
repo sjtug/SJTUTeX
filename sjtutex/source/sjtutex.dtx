@@ -423,13 +423,16 @@
 %
 % \section{简明教程}
 %
-% \subsection{安装最新 \TeX{} 发行版}
+% \subsection{安装 \TeX{} 发行版}
 %
-% 因为 \LaTeXiii{} 和相关宏包在不断更新，所以请使用最新的 \TeX{} 发行版。\sjtuthesis{}
-% 支持主流的 \TeX{} 发行版，包括 \TeX{} Live、\hologo{MiKTeX}、Mac\TeX{}，
-% 但不支持 \CTeX{} 套装。安装方法具体可以参考
+% 因为 \LaTeXiii{} 和相关宏包在不断更新，所以推荐使用最新的 \TeX{} 发行版。
+% \sjtuthesis{} 支持主流的 \TeX{} 发行版，包括 \TeX{} Live、\hologo{MiKTeX}、
+% Mac\TeX{}，但不支持 \CTeX{} 套装。安装方法具体可以参考
 % \href{https://github.com/sjtug/SJTUThesis/wiki/TeX-发行版及其安装}
 % {Wiki 页面《\TeX{} 发行版及其安装》}。
+%
+% \sjtuthesis{} 最低支持至 2020 年发行的 \TeX{} 发行版，\pkg{ctex} 宏包版本应当在
+% v2.5 及以上。版本过低将无法正常编译。
 %
 % \subsection{文件组成}
 %
@@ -446,7 +449,7 @@
 %     文档类        & \file{sjtuthesis.cls}       & 学位论文文档类文件 \\
 %                  & \file{sjtureport.cls}       & 报告文档类文件  \\
 %                  & \file{sjtuarticle.cls}      & 文稿文档类文件  \\
-%                   & \file{sjtuthesis-*.cfg}     & 文档类辅助文件 \\
+%                   & \file{sjtu-*.cfg}          & 文档类辅助文件 \\
 %     \midrule
 %     视觉形象系统    & \file{sjtu-vi-logo-*.pdf}   & 校标图片       \\
 %                   & \file{sjtu-vi-badge-*.pdf}  & 校徽图片       \\
@@ -541,7 +544,7 @@
 % \documentclass{sjtureport}
 % \sjtusetup{
 %   info = {
-%     title   = {上海交通大学学位论文 \LaTeX{} 模板示例文档},
+%     title   = {上海交通大学 \LaTeX{} 报告模板示例文档},
 %     author  = {某\quad{}某},
 %     subject = {XX课程期末论文}
 %   }
@@ -567,22 +570,19 @@
 % \end{document}
 % \end{latex}
 %
-%^^A 按照 \ref{sec:compile} 小节中的方式编译，您应当得到一篇文档。
-%^^A 当然，目前这篇文章的绝大部分都是空白的。
-%
 % \subsection{编译文档}
 % \label{sec:compile}
 %
 % 推荐使用 \XeLaTeX{} 编译本模板，也可以使用 \LuaLaTeX{}。
-% 在 Windows 系统上可以尝试使用 \pdfLaTeX{}，但请注意相关宏包在该引擎上的适用情况。
+% 在部分字体配置下可以尝试使用 \pdfLaTeX{}，详见第 \ref{sec:fontsetup} 节，
+% 也请注意其他宏包在该引擎上的适用情况。
 %
 % \subsubsection{手动编译}
 %
 % 很多用户对 \LaTeX{} 命令执行的次数不太清楚。一个基本的原则是多次运行 \LaTeX{}
-% 命令直至不再出现警告。
-%
-% 假设您的 \TeX{} 源文件名为 \file{main.tex}，并且使用 \texttt{biber} 作为管理引
-% 用文献的后端程序。下面给出编译论文的详细过程（\# 开头的行为注释）：
+% 命令直至不再出现警告。假设您的 \TeX{} 源文件名为 \file{main.tex}，并且使用
+% \texttt{biber} 作为管理引用文献的后端程序。
+% 下面给出编译论文的详细过程（\# 开头的行为注释）：
 %
 % \begin{shell}
 % # 1.发现文件中的引用关系，文件后缀 .tex 可省略
@@ -726,23 +726,27 @@
 %   \opt{titlepage} 为使用标题页。
 %   \opt{notitlepage} 为使用标题块。
 %   \begin{itemize}
+%     \item 在 \cls{sjtuthesis} 文档类中，该选项不可用，只能使用标题页。
 %     \item 在 \cls{sjtureport} 文档类中，默认为 \opt{titlepage}。
 %     \item 在 \cls{sjtuarticle} 文档类中，默认为 \opt{notitlepage}。
-%     \item 在 \cls{sjtuthesis} 文档类中，该选项不可用。
 %   \end{itemize}
 % \end{function}
 %
 % \subsubsection{字体选项}
+% \label{sec:fontsetup}
 %
 % \begin{function}{cjk-font}
 %   \begin{sjtusyntax}[emph={[1]cjk-font}]
 %     cjk-font = (*<(auto)|(fandol)|windows|mac|ubuntu|adobe|founder|none>*)
 %   \end{sjtusyntax}
-%   指定中文字体集。\sjtuthesis 预定义了一些中文字体组合。
-%   默认跟随操作系统设定。
+%   指定中文字体集。\sjtuthesis 预定义了一些中文字体组合，
+%   默认跟随操作系统设定：
+%   Windows 系统默认使用 \opt{windows}，
+%   macOS 系统默认使用 \opt{mac}，
+%   Linux 系统默认使用 \opt{fandol}。
 %   找不到对应定义的中文字体集时的回退选项为 \opt{fandol}。
 %
-%   仅 |windows| 和 |founder| 字体集支持 \pdfLaTeX{} 直接生成 PDF。
+%   \textbf{仅} |windows| 和 |founder| 字体集支持 \pdfLaTeX{} 直接生成 PDF。
 %   其他中文字体集使用 \pdfTeX{} 引擎需要先通过 \LaTeX{} 生成 DVI，
 %   然后再使用 DVIPDFM\textit{x} 转换为 PDF。
 %
@@ -772,7 +776,7 @@
 %   找不到定义的数学字体集时的回退选项为 \opt{newtx}。
 %
 %   请注意加载 \opt{stixtwo}，\opt{xits}，\opt{newcm}，\opt{cambria} 数学字体时
-%   会自动加载 \pkg{unicode-math} 宏包，此时不能够使用 \pdfLaTeX{} 编译。
+%   会自动加载 \pkg{unicode-math} 宏包，此时\textbf{不能}够使用 \pdfLaTeX{} 编译。
 % \end{function}
 %
 % \begin{table}[ht]
