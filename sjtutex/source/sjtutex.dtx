@@ -231,7 +231,7 @@
 %    \begin{macrocode}
 %<@@=sjtu>
 %<*class>
-\RequirePackage { xparse, xtemplate, l3keys2e }
+\RequirePackage { xparse, xtemplate }
 \msg_new:nnn { sjtutex } { l3-too-old }
   {
     Package~ "#1"~ is~ too~ old. \\\\
@@ -239,7 +239,7 @@
     "l3kernel"~ and~ "l3packages"~ using~ your~ TeX~ package \\
     manager~ or~ from~ CTAN.
   }
-\@ifpackagelater { expl3 } { 2018/05/12 } { }
+\@ifpackagelater { expl3 } { 2020/04/06 } { }
   { \msg_error:nnn { sjtutex } { l3-too-old } {#1} }
 %    \end{macrocode}
 %
@@ -554,7 +554,12 @@
 %
 % 将文档类选项传给 |sjtu/option|。
 %    \begin{macrocode}
-\ProcessKeysOptions { sjtu / option }
+\cs_if_exist:NTF \ProcessKeyOptions
+  { \ProcessKeyOptions [ sjtu / option ] }
+  {
+    \RequirePackage { l3keys2e }
+    \ProcessKeysOptions { sjtu / option }
+  }
 %    \end{macrocode}
 %
 % 计算行距倍数。
