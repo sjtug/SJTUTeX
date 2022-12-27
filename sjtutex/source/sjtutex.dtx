@@ -1193,11 +1193,10 @@
 %<!article>    header-uppercase       .initial:n = { false } ,
 %<article>    header-uppercase       .initial:n = { true } ,
     header-font             .tl_set:N = \l_@@_style_header_font_tl ,
-%<!article>    header-font            .initial:n = \zihao { -5 } ,
-%<article>    header-font            .initial:n = \zihao { 5 } ,
+%<thesis>    header-font            .initial:n = \zihao { -5 } ,
+%<!thesis>    header-font            .initial:n = \zihao { -5 } \sffamily ,
     footer-font             .tl_set:N = \l_@@_style_footer_font_tl ,
-%<!article>    footer-font            .initial:n = \zihao { -5 } ,
-%<article>    footer-font            .initial:n = \zihao { 5 } ,
+    footer-font            .initial:n = \zihao { -5 } ,
     page-number            .cs_set:Np = \@@_page:n #1 ,
     page-number            .initial:n = { {#1} }
   }
@@ -2056,22 +2055,25 @@
 %</thesis>
 %    \end{macrocode}
 %
-% \cls{sjtuarticle} 无页眉线。
-%    \begin{macrocode}
-%<article>\tl_set:Nn \headrulewidth { 0 pt }
-%    \end{macrocode}
-%
 % 重定义 |plain| 样式。
 %    \begin{macrocode}
+%<*!thesis>
 \bool_if:NTF \g_@@_twoside_bool
   {
     \fancypagestyle { plain }
-      { \fancyhead [ RE, LO ] { } }
+      {
+        \fancyhead [ RE, LO ] { }
+        \tl_set:Nn \headrulewidth { 0 pt }
+      }
   }
   {
     \fancypagestyle { plain }
-      { \fancyhead [ R ] { } }
+      {
+        \fancyhead [ R ] { }
+        \tl_set:Nn \headrulewidth { 0 pt }
+      }
   }
+%</!thesis>
 %    \end{macrocode}
 %
 % |SJTU@null| 样式，不对当前页面样式做任何修改。
