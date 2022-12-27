@@ -1059,7 +1059,7 @@
 %     float-font = (*\marg{字体设置}*)
 %   \end{sjtusyntax}
 %   图、表等浮动体的额外字体设置。
-%   默认为 |\zihao{5}|，五号字。
+%   默认为 |\normalsize\fixedlineskip{15.6bp}|，正常字号、固定行距 15.6 磅。
 % \end{function}
 %
 % \begin{function}[added=2022-12-20]{style/caption-font}
@@ -1400,6 +1400,13 @@
 %   引理        & 问题    & 证明       & 命题         & 注          & 解        & 定理      \\\bottomrule
 % \end{tabular}
 % \end{table}
+%
+% \begin{function}{\fixedlineskip}
+%   \begin{sjtusyntax}[morekeywords={\fixedlineskip}]
+%     \fixedlineskip(*\marg{长度}*)
+%   \end{sjtusyntax}
+%   设置固定值行距。通过当前字体大小计算行距倍数，在字号命令之后使用。
+% \end{function}
 %
 % \begin{function}{\appendix}
 %   \begin{sjtusyntax}[morekeywords={\appendix}]
