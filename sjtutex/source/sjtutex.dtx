@@ -1,6 +1,8 @@
 % \iffalse meta-comment
 %
-% Copyright (C) 2018--2021 by Alexara Wu <alexarawu@outlook.com>
+% Copyright (C) SJTUG
+%   2018--2022 Alexara Wu   <alexarawu@outlook.com>
+%   2022       Log Creative <logcreative@outlook.com>
 %
 % This work may be distributed and/or modified under the
 % conditions of the LaTeX Project Public License, either
@@ -14,7 +16,7 @@
 %
 % This work has the LPPL maintenance status `maintained'.
 %
-% The Current Maintainer of this work is Alexara Wu.
+% The Current Maintainers of this work are Alexara Wu and Log Creative.
 %
 %<*internal>
 \iffalse
@@ -35,7 +37,9 @@
 
 \preamble
 
-    Copyright (C) 2018--2021 by Alexara Wu <alexarawu@outlook.com>
+    Copyright (C) SJTUG
+      2018--2022 Alexara Wu   <alexarawu@outlook.com>
+      2022       Log Creative <logcreative@outlook.com>
 
     This work may be distributed and/or modified under the
     conditions of the LaTeX Project Public License, either
@@ -49,7 +53,7 @@
 
     This work has the LPPL maintenance status `maintained'.
 
-    The Current Maintainer of this work is Alexara Wu.
+    TThe Current Maintainers of this work are Alexara Wu and Log Creative.
 
 \endpreamble
 
@@ -126,7 +130,7 @@
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<class>\RequirePackage{expl3}
 %<*!(driver|install)>
-%<+!driver>\GetIdInfo$Id$
+%<+!driver>\GetIdInfo $Id: sjtutex.dtx 2.0-alpha 2022-12-27 18:30:00Z Alexara Wu <alexarawu@outlook.com> $
 %<class&thesis>  {Thesis template for Shanghai Jiao Tong University}
 %<class&thesis>\ProvidesExplClass{sjtuthesis}
 %<class&report>  {Report template for Shanghai Jiao Tong University}
@@ -198,6 +202,109 @@
 %
 %<*driver>
 \documentclass{ctxdoc}
+\hyphenation{SJTU-Thesis}
+\newcommand{\sjtuthesis}{\textsc{SJTUThesis}}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{listings}
+\hypersetup{
+  allcolors         = blue,
+  bookmarksnumbered = true,
+  bookmarksopen     = true,
+}
+\AtEndOfClass{\sloppy}
+\definecolor{sjtuRedPrimary}{RGB}{167,32,56}         % engred
+\definecolor{sjtuRedSecondary}{RGB}{240,131,0}       % orange
+\definecolor{sjtuRedTertiary}{RGB}{253,208,0}        % yellow
+\definecolor{sjtuBluePrimary}{RGB}{0,64,152}         % problue
+\definecolor{sjtuBlueSecondary}{RGB}{51,141,39}      % lightgreen
+\definecolor{sjtuBlueTertiary}{RGB}{0,81,78}         % lightgray
+\lstdefinestyle{style@base}{
+  basewidth       = 0.5 em,
+  gobble          = 2,
+  lineskip        = 2 pt,
+  frame           = l,
+  framerule       = 1 pt,
+  framesep        = 0 pt,
+  escapeinside    = {(*}{*)},
+  basicstyle      = \ttfamily,
+  keywordstyle    = \bfseries\color{sjtuBluePrimary},
+  commentstyle    = \itshape\color{sjtuBlueTertiary!60},
+  stringstyle     = \color{sjtuRedPrimary},
+  backgroundcolor = \color{sjtuBlueTertiary!2},
+  xleftmargin       = 1em,
+  xrightmargin      = 1em,
+  framexleftmargin  = 1em,
+  framexrightmargin = 1em
+}
+\lstdefinestyle{style@shell}{
+  style      = style@base,
+  rulecolor  = \color{sjtuBlueTertiary},
+  language   = bash,
+  alsoletter = {-},
+  emphstyle  = \color{sjtuBlueSecondary}
+}
+\lstdefinestyle{style@latex}{
+  style      = style@base,
+  rulecolor  = \color{sjtuBluePrimary},
+  language   = [LaTeX]TeX,
+  alsoletter = {*, -},
+  texcsstyle = *\color{sjtuBluePrimary},
+  emphstyle  = [1]\color{sjtuBluePrimary!80},
+  emphstyle  = [2]\color{sjtuBlueSecondary}
+}
+\lstdefinestyle{style@syntax}{
+  basewidth     = 0.5 em,
+  gobble        = 6,
+  escapeinside  = {(*}{*)},
+  language      = [LaTeX]TeX,
+  alsoletter    = {*, -},
+  belowskip     = 0pt,
+  basicstyle    = \ttfamily,
+  keywordstyle  = \bfseries\color{sjtuBluePrimary},
+  commentstyle  = \itshape\color{sjtuBlueTertiary!60},
+  texcsstyle    = *\color{sjtuBluePrimary},
+  emphstyle     = [1]\color{sjtuBluePrimary!80},
+  emphstyle     = [2]\color{sjtuBlueSecondary}
+}
+\newcommand\shellcmd[1]{%
+  \colorbox{\color{gray!10}}{\lstinline[style=lstStyleShell]|#1|}}
+\lstnewenvironment{shell}[1][]{%
+  \lstset{style=style@shell, #1}}{}
+\lstnewenvironment{latex}[1][]{%
+  \lstset{style=style@latex, #1}}{}
+\lstnewenvironment{sjtusyntax}[1][]{%
+  \lstset{style=style@syntax, #1}\vspace{-1.8ex}}{}
+\newcommand\note[1]{{%
+  \color{sjtuBlueTertiary}{\noindent\bfseries 说明：}~\emph{#1}}}
+\DeclareDocumentCommand\kvopt{mm}
+  {\texttt{#1\breakablethinspace=\breakablethinspace#2}}
+\def\breakablethinspace{\hskip 0.16667em\relax}
+\makeatletter
+\let\old@meta\meta
+\renewcommand*\meta[1]{\texttt{\old@meta{#1}}}
+\renewcommand*\marg[1]{\{\meta{#1}\}}
+\renewcommand*\oarg[1]{[\meta{#1}]}
+\renewcommand*\parg[1]{(\meta{#1})}
+\def\syntaxopt#1{\textit{#1}}
+\def\defaultval#1{\textbf{\textup{#1}}}
+\def\syntaxopt@aux#1>{\syntaxopt{#1}}
+\def\defaultval@aux#1){\defaultval{#1}}
+\def\orbar{\textup{\textbar}}
+\ExplSyntaxOn
+\AtBeginEnvironment { sjtusyntax }
+  {
+    \cs_set:Npn \lparen { \textup { ( } }
+    \cs_set:Npn \rparen { \textup { ) } }
+    \char_set_catcode_active:N |
+    \char_set_catcode_active:N <
+    \char_set_catcode_active:N (
+    \char_set_active_eq:NN | \orbar
+    \char_set_active_eq:NN < \syntaxopt@aux
+    \char_set_active_eq:NN ( \defaultval@aux
+  }
+\ExplSyntaxOff
+\makeatother
 \begin{document}
   \DocInput{\jobname.dtx}
   \IndexLayout
@@ -209,11 +316,1190 @@
 %
 % \GetFileInfo{\jobname.dtx}
 %
+% \title{\sjtuthesis{}: 上海交通大学学位论文模板}
+% \author{SJTUG}
+% \date{2022/12/27\quad v2.0-alpha}
+%
+% \vfill
+% \maketitle
+% \vfill
+% \begin{abstract}
+% 此宏包旨在建立一个简单易用的上海交通大学论文模板，包括学士、硕士、博士学位论文
+% 以及普通课程论文。
+% \end{abstract}
+% \vfill
+% \def\abstractname{免责声明}
+% \begin{abstract}
+% \noindent
+% \begin{enumerate}
+% \item 本模板的发布遵守 \LaTeX{} Project Public License，使用前请认真阅读
+%   协议内容。
+% \item 本模板根据 \href{https://www.gs.sjtu.edu.cn/info/1143/5801.htm}
+%   {《上海交通大学博士、硕士学位论文撰写指南》} ，并参考
+%   \href{https://www.gs.sjtu.edu.cn/info/1136/8374.htm}
+%   {《上海交通大学研究生学位论文写作模板》} 以及
+%   \href{https://bysj.jwc.sjtu.edu.cn/MoreNews.aspx?NewsType=zUcuaM8R5+lJLruDxDS/Fw....&TypeName=I/SElbms0OT5ZkmE84uuGg....}
+%   {《上海交通大学本科生毕业设计（论文）撰写规范》}
+%   编写而成。旨在供上海交通大学准毕业生撰
+%   写学位论文使用。
+% \item 此模板仅为撰写指南的参考实现，不保证审查老师不提意见。任何由于使用本模板
+%   而引起的论文格式审查问题均与本模板作者无关。
+% \item 任何个人或组织以本模板为基础进行修改、扩展而生成的新的专用模板，请严格遵
+%   守  \LaTeX{} Project Public License 协议。由于违犯协议而引起的任何纠纷
+%   争端均与本模板作者无关。
+% \end{enumerate}
+% \end{abstract}
+% \vfill
+%
+% \thispagestyle{empty}
+% \clearpage
+%
+% \tableofcontents
+% \clearpage
+%
 % \begin{documentation}
 %
 % \section{介绍}
 %
-% Hello, world! 你好，世界！
+% 这是为撰写上海交通大学学士、硕士、博士学位论文以及课程论文而准备的 \LaTeX{} 模
+% 板。
+%
+% 最早的一版学位模板由一位热心的物理系同学制作，中文字符处理采用了当时最为流行的
+% CJK--\LaTeX{} 方案。在此基础上，weijianwen 根据交大研究生院对学位论文的要求，完成
+% 了一份基本可用的交大 \LaTeX{} 学位论文模板。由于 CJK--\LaTeX{} 方案不易使用，
+% weijianwen 与 William Wang 开始着手把模板向 \XeTeX{} 引擎移植。之后 weijianwen
+% 又断断续续做了一些完善模板的工作，在原有硕士学位论文模板的基础上完成了交大学士
+% 和博士学位论文模板。
+%
+% 2012 年 5 月模板开始在 GitHub 上管理和更新，2018 年 1 月项目转移至 SJTUG 名
+% 下。2019 年 6 月 Alexara Wu 重构了整个宏包的代码，并使用 Doc\TeX{} 文档和
+% \textsc{DocStrip} 工具进行代码的管理，升级版本号为 1.0。2022 年 11 月，论文模板
+% 改版后，使用 \LaTeXiii{} 重构了代码，添加 \cls{sjtureport} 和 \cls{sjtuarticle}
+% 文档类，升级版本号为 2.0。
+%
+% 现在，\sjtuthesis{} 代码在 GitHub
+% \footnote{\url{https://github.com/sjtug/SJTUThesis}}
+% 上维护。
+% 你可以在 \href{https://github.com/sjtug/SJTUThesis/discussions}{Discussions}
+% 上提问使用问题，也可以在 \href{https://github.com/sjtug/SJTUThesis/issues}{Issues}
+% 中进行 Bug 反馈与新功能提案。如果需要对文档类代码进行修改，欢迎前往
+% \href{https://github.com/sjtug/SJTUTeX}{SJTUTeX} 仓库进行 Pull Request。
+% \sjtuthesis{} 模板的许多实现细节离不开
+% \href{https://github.com/sjtug/SJTUThesis/graphs/contributors}
+% {热心同学们} 的贡献，在此感谢所有为模板贡献过代码的同学们，以及所有测试和使用
+% 模板的各位同学！
+%
+% \note{模板的作用在于减少论文写作过程中格式调整的时间，前提是遵守模板的用法，否
+%   则即便用了\sjtuthesis{} 也难以保证输出的论文符合学校规范。}
+%
+% \section{简明教程}
+%
+% \subsection{安装 \TeX{} 发行版}
+%
+% 因为 \LaTeXiii{} 和相关宏包在不断更新，所以推荐使用最新的 \TeX{} 发行版。
+% \sjtuthesis{} 支持主流的 \TeX{} 发行版，包括 \TeX{} Live、\hologo{MiKTeX}、
+% Mac\TeX{}，但不支持 \CTeX{} 套装。安装方法具体可以参考
+% \href{https://github.com/sjtug/SJTUThesis/wiki/TeX-发行版及其安装}
+% {Wiki 页面《\TeX{} 发行版及其安装》}。
+%
+% \sjtuthesis{} 最低支持至 2020 年发行的 \TeX{} 发行版，\pkg{ctex} 宏包版本应当在
+% v2.5 及以上。版本过低将无法正常编译。
+%
+% \subsection{文件组成}
+%
+% 表~\ref{tab:files} 列出了 \sjtuthesis{} 的主要文件及其功能介绍。
+%
+% \begin{table}[!hbt]
+%   \centering
+%   \caption{模板的文件组成}
+%   \label{tab:files}
+%   \begin{tabular}{l|l|p{4cm}}
+%     \toprule
+%     \strong{类别} & \strong{文件}               & \strong{说明}  \\
+%     \midrule
+%     文档类        & \file{sjtuthesis.cls}       & 学位论文文档类 \\
+%                   & \file{sjtureport.cls}       & 报告文档类     \\
+%                   & \file{sjtuarticle.cls}      & 文稿文档类     \\
+%                   & \file{sjtu-*.cfg}           & 文档类配置     \\
+%     \midrule
+%     视觉形象系统  & \file{sjtu-vi-logo-*.pdf}   & 校标图片       \\
+%                   & \file{sjtu-vi-badge-*.pdf}  & 校徽图片       \\
+%                   & \file{sjtu-vi-name-*.pdf}   & 校名图片       \\
+%     \midrule
+%     字体配置文件  & \file{sjtu-cjk-font-*.def}  & 中文字体配置   \\
+%                   & \file{sjtu-math-font-*.def} &  数学字体配置  \\
+%                   & \file{sjtu-text-font-*.def} &  正文字体配置  \\
+%
+%     \bottomrule
+%   \end{tabular}
+% \end{table}
+%
+% \note{\href{https://vi.sjtu.edu.cn}{交大视觉形象系统}
+%   的相关图像资源版权归上海交通大学所有。}
+%
+% \subsection{下载模板}
+%
+% \subsubsection{GitHub 版本}
+%
+% 你可以在 \href{https://github.com/sjtug/SJTUThesis/releases}{GitHub Release}
+% 中找到 \sjtuthesis{} 的所有版本。
+%
+% 推荐使用最新版本以避免一些问题。可以直接下载
+% \href{https://github.com/sjtug/SJTUThesis}{GitHub 页面}
+% 提供的
+% \href{https://github.com/sjtug/SJTUThesis/archive/refs/heads/master.zip}{压缩包}。
+%
+% 熟悉 \href{https://git-scm.com}{Git} 的用户可以克隆存储仓库：
+%
+% \begin{shell}
+% git clone https://github.com/sjtug/SJTUThesis.git
+% \end{shell}
+%
+% 如果访问 GitHub 的速度不甚理想，可以使用 SJTUG 镜像仓库：
+%
+% \begin{shell}
+% git clone https://mirror.sjtu.edu.cn/git/SJTUThesis.git/
+% \end{shell}
+%
+% \subsubsection{Overleaf 版本}
+%
+% 你也可以于在线平台使用 \sjtuthesis{}，直接使用
+% \href{https://www.overleaf.com/latex/templates/sjtuthesis-latex-thesis-template-for-shanghai-jiao-tong-university/mkdwbyjbtfgg?r=sdkbtJ4qGS8kDZQQ&rm=d&rs=b}{Overleaf 模板} 链接。
+% 或者上传前节中的压缩包至 \href{https://latex.sjtu.edu.cn}{校内平台} 等其他在线平台。
+% 更多信息参见 \href{https://github.com/sjtug/SJTUThesis/wiki/在线使用说明}{Wiki 页面《在线使用说明》}。
+%
+% \note{由于大部分在线平台基于 Linux 操作系统，所以你需要在设置选单中将编译器修改为
+%   \XeLaTeX{} 才能正确编译。}
+%
+% \subsection{使用文档类}
+%
+% 共有 3 种文档类，\cls{sjtuthesis} 用于学位论文的排版，\cls{sjtureport} 用于课程大报告的排版，
+% \cls{sjtuarticle} 用于课程小论文的排版。
+%
+% 本模板中的选项、命令或环境可以分为以下三类：
+% \begin{itemize}
+%   \item 名字后面带有 \rexptarget\rexpstar{} 的，表示只能在 \cls{sjtuthesis} 文档类中使用；
+%   \item 名字后面带有 \exptarget\expstar{} 的，表示使用范围区别于 \cls{sjtuarticle}；
+%   \item 名字后面不带有特殊符号的，一般表示在 \cls{sjtuthesis}、\cls{sjtureport} 和 \cls{sjtuarticle} 文档类中都可以使用，特殊情况另作说明。
+% \end{itemize}
+%
+% 将文档保存在下载好的 \sjtuthesis{} 模板根目录下，文件以 \texttt{.tex} 后缀结尾。
+% 注意在使用文档类时，需要将涉及到的所有源文件使用 UTF-8 编码保存。对于不同的文档类，使用方法
+% 略有不同，这里给出这三种文档类的最小使用示例。
+%
+% 下面这份 \TeX{} 文档展示了 \cls{sjtuthesis} 文档类的基本用法，一般需要指定中英文名称。
+% 该文档将包含中英文封面，页眉左上角显示“上海交通大学硕士学位论文”，右上角显示章节名称。
+% \begin{latex}
+% \documentclass[type=master]{sjtuthesis}
+% \sjtusetup{
+%   info = {
+%     title   = {上海交通大学学位论文 \LaTeX{} 模板示例文档},
+%     title*  = {A Sample Document for \LaTeX-based SJTU Thesis Template},
+%     author  = {某\quad{}某},
+%     author* = {Mo Mo},
+%   }
+% }
+% \begin{document}
+%   \maketitle
+%   \frontmatter
+%   \mainmatter
+%   \chapter{欢迎}
+%   \section{欢迎使用 SJTUThesis}
+%   你好，\LaTeX{}!
+% \end{document}
+% \end{latex}
+%
+% 下面这份 \TeX{} 文档展示了 \cls{sjtureport} 文档类的基本用法，只需要指定中文名称。
+% 该文档将包含中文封面，页眉左上角为校徽校名，右上角为章节名称。
+% \begin{latex}
+% \documentclass{sjtureport}
+% \sjtusetup{
+%   info = {
+%     title   = {上海交通大学 \LaTeX{} 报告模板示例文档},
+%     author  = {某\quad{}某},
+%     subject = {XX课程期末论文}
+%   }
+% }
+% \begin{document}
+%   \maketitle
+%   \chapter{欢迎}
+%   \section{欢迎使用 SJTUReport}
+%   你好，\LaTeX{}!
+% \end{document}
+% \end{latex}
+%
+% 下面这份 \TeX{} 文档展示了 \cls{sjtuarticle} 文档类的基本用法，建议使用标准命令定义中文名称，
+% 不能够使用 \cs{chapter} 这一级。该文档包含标题栏，页眉左上角为校徽校名，右上角为文档标题。
+% \begin{latex}
+% \documentclass{sjtuarticle}
+% \title{示例文档}
+% \author{某某}
+% \begin{document}
+%   \maketitle
+%   \section{欢迎使用 SJTUArticle}
+%   你好，\LaTeX{}!
+% \end{document}
+% \end{latex}
+%
+% \subsection{编译文档}
+% \label{sec:compile}
+%
+% 推荐使用 \XeLaTeX{} 编译本模板，也可以使用 \LuaLaTeX{}。
+% 在部分字体配置下可以尝试使用 \pdfLaTeX{}，详见第 \ref{sec:fontsetup} 节，
+% 也请注意其他宏包在该引擎上的适用情况。
+%
+% \subsubsection{手动编译}
+%
+% 很多用户对 \LaTeX{} 命令执行的次数不太清楚。一个基本的原则是多次运行 \LaTeX{}
+% 命令直至不再出现警告。假设您的 \TeX{} 源文件名为 \file{main.tex}，并且使用
+% \texttt{biber} 作为管理引用文献的后端程序。
+% 下面给出编译论文的详细过程（\# 开头的行为注释）：
+%
+% \begin{shell}
+% # 1.发现文件中的引用关系，文件后缀 .tex 可省略
+% xelatex main
+% # 2.编译参考文件源文件，生成 .bbl 文件
+% biber main
+% # 3.解决文件中的交叉引用
+% xelatex main
+% # 4.生成完整的 pdf 文件
+% xelatex main
+% \end{shell}
+%
+% \subsubsection{latexmk}
+%
+% \texttt{latexmk} 命令支持全自动生成 \LaTeX\ 编写的文档，并且支持使用不同的工具
+% 链来进行生成，它会自动运行多次工具直到交叉引用都被解决。下面给出了一个用
+% \texttt{latexmk} 调用 \texttt{xelatex} 生成最终文档的示例：
+%
+% \begin{shell}
+% # 一句话就够了！
+% latexmk -xelatex thesis
+% \end{shell}
+%
+% \note{使用 \hologo{MiKTeX} 发行版，使用 \texttt{latexmk} 需要
+%   安装 \href{https://www.perl.org}{Perl}。}
+%
+% \subsubsection{脚本编译}
+%
+% 对于 Linux 和 macOS 用户，\sjtuthesis{} 提供了一个 \file{Makefile}：
+%
+% \begin{shell}
+% make all                      # 编译生成 main.pdf
+% make clean                    # 删除编译所产生的中间文件
+% make cleanall                 # 删除 main.pdf 和所有中间文件
+% make wordcount                # 论文字数统计
+% \end{shell}
+%
+% 对于 Windows 用户，\sjtuthesis{} 提供了 \file{Compile.bat} 可以双击直接编译，
+% 也可以在命令提示符窗口中使用脚本提供的额外功能：
+%
+% \begin{shell}
+% .\Compile.bat thesis          # 编译生成 main.pdf
+% .\Compile.bat clean           # 删除编译所产生的中间文件
+% .\Compile.bat cleanall        # 删除 main.pdf 和所有中间文件
+% .\Compile.bat wordcount       # 论文字数统计
+% \end{shell}
+%
+% 以上提供的脚本默认用 \texttt{latexmk} 调用 \texttt{xelatex} 编译。
+%
+% \subsubsection{编辑器编译}
+%
+% 你也可以使用编辑器集成的编译方法，
+% \href{https://github.com/sjtug/SJTUThesis/wiki/本地使用说明}{Wiki 页面《本地使用说明》}
+% 给出了 VS Code 和 TeXstudio 的配置方法，使之可以使用 \texttt{latexmk} 编译。如果你的编辑器
+% 无法使用 \texttt{latexmk}，可能你需要将 \sjtuthesis{} 安装至 \TeX{} 发行版的文件目录中。
+%
+% \section{文档配置}
+%
+% \subsection{文档类选项}
+%
+% 本节所指“文档类选项”是指需要在引入文档类的时候指定的选项:
+%
+% \begin{latex}
+% \documentclass(*\oarg{文档类选项}*){sjtuthesis}
+% \end{latex}
+%
+% 部分选项采用 \kvopt{\meta{key}}{\meta{value}} 的形式。当 \meta{value} 省略时，
+% 将采用默认值。在下文的说明中，将用\textbf{粗体}表示默认值。
+%
+% \subsubsection{通用选项}
+%
+% \begin{function}[rEXP,updated=2022-12-03]{type}
+%   \begin{sjtusyntax}[emph={[1]type}]
+%     type = (*<bachelor|(master)|doctor>*)
+%   \end{sjtusyntax}
+%   论文类型。三种选项分别代表学士学位论文、硕士学位论文、博士学位论文。
+% \end{function}
+%
+% \begin{function}{lang}
+%   \begin{sjtusyntax}[emph={[1]lang}]
+%     lang = (*<(zh)|en>*)
+%   \end{sjtusyntax}
+%   论文主要语言。可选中文或英文，该选项会改变文档中的一些标题的名字。
+% \end{function}
+%
+% \begin{function}{draft, final}
+%   是否开启草稿模式。
+%   \opt{draft} 开启草稿模式，所有的图片将不会被加载，超过边界的区域将会被涂上黑色色块。
+%   \opt{final} 关闭草稿模式。
+%   默认为 \opt{final}。
+% \end{function}
+%
+% \begin{function}[rEXP]{review}
+%   盲审模式。开启盲审模式将隐去作者姓名、导师姓名、班级、学号等个人信息，
+%   删去版权使用授权书、原创性声明和致谢页。默认关闭。
+% \end{function}
+%
+% \subsubsection{页面设置}
+%
+% \begin{function}[updated=2022-12-18]{zihao}
+%   \begin{sjtusyntax}[emph={[1]zihao}]
+%     zihao = (*<(-4)|5>*)
+%   \end{sjtusyntax}
+%   论文默认字号，可以设定为小四号或五号。
+%   \begin{itemize}
+%     \item 在 \cls{sjtuthesis} 和 \cls{sjtureport} 文档类中默认为小四号;
+%     \item 在 \cls{sjtuarticle} 文档类中默认为五号。
+%   \end{itemize}
+% \end{function}
+%
+% \begin{function}[added=2022-12-03]{lineskip}
+%   \begin{sjtusyntax}[emph={[1]lineskip}]
+%     lineskip = (*\marg{长度}*)
+%   \end{sjtusyntax}
+%   行间距。默认跟随字号设置。
+% \end{function}
+%
+% \begin{function}{oneside, twoside}
+%   指明论文的单双面模式。
+%   \opt{oneside} 为单面模式，
+%   \opt{twoside} 为双面模式。
+%   \begin{itemize}
+%     \item 在 \cls{sjtuthesis} 文档类中，默认为 \opt{twoside}。
+%     \item 在 \cls{sjtureport} 和 \cls{sjtuarticle} 文档类中，默认为 \opt{oneside}。
+%   \end{itemize}
+% \end{function}
+%
+% \begin{function}[EXP]{openright, openany}
+%   指明论文是否奇数页开章。
+%   \opt{openright} 为从奇数页开始新章，
+%   \opt{openany} 为从任意页开始新章。
+%   \begin{itemize}
+%     \item 在 \cls{sjtuthesis} 文档类中，默认为 \opt{openright}。
+%     \item 在 \cls{sjtureport} 文档类中，默认为 \opt{openany}。
+%     \item 在 \cls{sjtuarticle} 文档类中，该选项不可用。
+%   \end{itemize}
+% \end{function}
+%
+% \begin{function}[added=2022-12-23]{titlepage, notitlepage}
+%   指明论文的标题形式。
+%   \opt{titlepage} 为使用标题页。
+%   \opt{notitlepage} 为使用标题块。
+%   \begin{itemize}
+%     \item 在 \cls{sjtuthesis} 文档类中，该选项不可用，只能使用标题页。
+%     \item 在 \cls{sjtureport} 文档类中，默认为 \opt{titlepage}。
+%     \item 在 \cls{sjtuarticle} 文档类中，默认为 \opt{notitlepage}。
+%   \end{itemize}
+% \end{function}
+%
+% \subsubsection{字体选项}
+% \label{sec:fontsetup}
+%
+% \begin{function}{cjk-font}
+%   \begin{sjtusyntax}[emph={[1]cjk-font}]
+%     cjk-font = (*<(auto)|(fandol)|windows|mac|ubuntu|adobe|founder|none>*)
+%   \end{sjtusyntax}
+%   指定中文字体集。\sjtuthesis 预定义了一些中文字体组合，
+%   默认跟随操作系统设定：
+%   Windows 系统默认使用 \opt{windows}，
+%   macOS 系统默认使用 \opt{mac}，
+%   Linux 系统默认使用 \opt{fandol}。
+%   找不到对应定义的中文字体集时的回退选项为 \opt{fandol}。
+%
+%   \textbf{仅} |windows| 和 |founder| 字体集支持 \pdfLaTeX{} 直接生成 PDF。
+%   其他中文字体集使用 \pdfTeX{} 引擎需要先通过 \LaTeX{} 生成 DVI，
+%   然后再使用 DVIPDFM\textit{x} 转换为 PDF。
+%
+%   \note{不再支持使用 \opt{fontset} 指定字体集。
+%     Linux 系统下默认的中文字库 \opt{fandol} 容易出现缺字的情况。
+%     我们建议 Linux 用户自行配置合适的字体。参见
+%     \href{https://github.com/sjtug/SJTUThesis/wiki/在线使用说明}
+%     {Wiki 页面《在线使用说明》}。}
+% \end{function}
+%
+% \begin{function}{text-font}
+%   \begin{sjtusyntax}[emph={[1]text-font}]
+%     text-font = (*<(newtx)|times|stixtwo|xits|newpx|cambria|newcm|lm|none>*)
+%   \end{sjtusyntax}
+%   指定西文字体集。\sjtuthesis 预定义了一些西文字体组合，
+%   具体配置见表 \ref{tab:latinfonts}。
+%   找不到定义的西文字体集时的回退选项为 \opt{newtx}。
+% \end{function}
+%
+% \begin{function}{math-font}
+%   \begin{sjtusyntax}[emph={[1]math-font}]
+%     math-font = (*<(auto)|(newtx)|stixtwo|xits|newpx|cambria|newcm|lm|none>*)
+%   \end{sjtusyntax}
+%   指定数学字体集。\sjtuthesis 预定义了一些数学字体组合，
+%   具体配置见表 \ref{tab:latinfonts} 数学字体列。
+%   默认跟随西文字体 \opt{text-font} 的设置。
+%   找不到定义的数学字体集时的回退选项为 \opt{newtx}。
+%
+%   \opt{xits}，\opt{newcm}，\opt{cambria} 选项仅支持 \XeLaTeX/\LuaLaTeX{} 编译。
+% \end{function}
+%
+% \begin{table}[ht]
+% \centering\small
+% \begin{threeparttable}
+%   \caption{西文字体与数学字体配置}
+%   \label{tab:latinfonts}
+%   \begin{tabular}{ccccc}
+%     \toprule
+%       & \strong{正文字体} & \strong{无衬线字体} & \strong{等宽字体} & \strong{数学字体} \\
+%     \midrule
+%       |newtx|                  & TG Termes X\tnote{a}     & TG Heros    & TG Cursor   & newtx         \\
+%       \multirow{2}{*}{|times|} & Times New Roman\tnote{b} & Arial       & Courier New & \multirow{2}{*}{mathptmx} \\
+%                                & Times\tnote{c}           & Helvetica   & Courier     &               \\
+%       |stixtwo|                & STIX Two Text            & TG Heros    & TG Cursor   & STIX Two Math \\
+%       |xits|                   & XITS                     & TG Heros    & TG Cursor   & XITS Math     \\
+%       |newpx|                  & TG Pagella X             & TG Heros    & TG Cursor   & newpx         \\
+%       |cambria|                & Cambria                  & Calibri     & Consolas    & Cambria Math  \\
+%       |newcm|                  & New CM\tnote{d}          & New CM Sans & New CM Mono & New CM        \\
+%       |lm|                     & LM Roman\tnote{e}        & LM Sans     & LM Mono     & LM Math       \\
+%     \bottomrule
+%   \end{tabular}
+%   \begin{tablenotes}
+%     \item[a] “TG”是 TeX Gyre 的缩写。
+%     \item[b] 本行中，Times New Roman、Arial 和 Courier New 是商业字体，
+%       在 Windows 和 macOS 系统上均默认安装。
+%     \item[c] 使用 \pdfTeX{} 引擎时，实际使用对应字体的 Type 1 开源版本。
+%     \item[d] “CM”是 Computer Modern 的缩写。
+%     \item[e] “LM”是 Latin Modern 的缩写。
+%   \end{tablenotes}
+% \end{threeparttable}
+% \end{table}
+%
+% \begin{function}[added=2022-12-03]{math-style}
+%   \begin{sjtusyntax}[emph={[1]math-style}]
+%     math-style = (*<(TeX)|ISO|GB>*)
+%   \end{sjtusyntax}
+%   数学符号样式。
+%   \opt{TeX} 与 \opt{ISO} 选项的最大不同在于一些大写希腊字母是否为斜体。
+%^^A \opt{GB} 特性似乎尚未实现，1.0.0rc4 实现为对 $\ldots$, $\Re$, $\Im$ 进行修正。
+%   默认为 \opt{TeX}。
+% \end{function}
+%
+% \begin{function}[added=2022-12-03]{nointlimits,intlimits}
+%   行间公式中积分号上下限的位置，\pkg{unicode-math} 模式下不适用。
+%   \opt{nointlimits} 使得上下限在积分号右侧，
+%   \opt{intlimits} 使得上下限在积分号上下方。
+%   默认上下限在积分号右侧。
+% \end{function}
+%
+% \begin{function}[added=2022-12-03]{upint,slint}
+%   积分号的正体与斜体。
+%   \opt{upint} 使得积分号为正体，
+%   \opt{slint} 使得积分号为斜体。
+%   默认为正体。
+% \end{function}
+%
+% \subsection{论文信息设置}
+%
+% \begin{function}{\sjtusetup}
+%   \begin{sjtusyntax}[morekeywords={\sjtusetup}]
+%     \sjtusetup(*\marg{键值列表}*)
+%   \end{sjtusyntax}
+%   本模板提供了一系列选项，可由您自行配置。载入文档类之后，以下
+%   所有选项均可通过统一的命令 \cs{sjtusetup} 来设置。
+% \end{function}
+%
+% \cs{sjtusetup} 的参数是一组由（英文）逗号隔开的选项列表，列表中的选项通常是
+% \kvopt{\meta{key}}{\meta{value}} 的形式。对于同一项，后面的设置将会覆盖前面的
+% 设置。在下文的说明中，将用\textbf{粗体}表示默认值。\cs{sjtusetup} 支持不同类型
+% 以及多种层次的选项设定。键值列表中，“|=|”左右的空格不影响设置；但需注意，参数
+% 列表中不可以出现空行。
+%
+% \begin{latex}[morekeywords={\sjtusetup}]
+% \sjtusetup{
+%   info = {
+%     title        = {上海交通大学学位论文 \LaTeX{} 模板示例文档},
+%     title*       = {A Sample Document for \LaTeX-based SJTU Thesis Template},
+%     author       = {某\quad{}某},
+%     author*      = {Mo Mo},
+%   },
+%   style = {
+%     float-numsep = {--},
+%   },
+%   name = {
+%     publications = {攻读学位期间完成的论文},
+%   },
+% }
+% \end{latex}
+%
+% \subsubsection{信息域}
+%
+% \begin{function}{info}
+%   \begin{sjtusyntax}[emph={[1]info}]
+%     info = (*\marg{键值列表}*)
+%   \end{sjtusyntax}
+%   该选项包含许多子项目，用于录入论文信息。
+%   具体内容见下。以下带“*”的项目表示对应的英文字段。
+% \end{function}
+%
+% \begin{function}{info/title}
+%   \begin{sjtusyntax}[emph={[2]title}]
+%     title = (*\marg{标题}*)
+%   \end{sjtusyntax}
+%   标题。
+% \end{function}
+%
+% \begin{function}[rEXP]{info/title*}
+%   \begin{sjtusyntax}[emph={[2]title*}]
+%     title* = (*\marg{英文标题}*)
+%   \end{sjtusyntax}
+%   英文标题。
+% \end{function}
+%
+% \begin{function}{info/display-title}
+%   \begin{sjtusyntax}[emph={[2]display-title}]
+%     display-title  = (*\marg{中文标题页标题}*)
+%   \end{sjtusyntax}
+%   中文标题页中的题目。默认为跟随中文标题。
+%   如果标题过长，可以尝试使用“|\\|”手动断行。
+% \end{function}
+%
+% \begin{function}[rEXP]{info/display-title*}
+%   \begin{sjtusyntax}[emph={[2]display-title*}]
+%     display-title* = (*\marg{英文标题页标题}*)
+%   \end{sjtusyntax}
+%   英文标题页中的题目。默认为跟随英文标题。
+%   如果标题过长，可以尝试使用“|\\|”手动断行。
+% \end{function}
+%
+% \begin{function}[EXP,updated=2022-12-20]{info/running-title}
+%   \begin{sjtusyntax}[emph={[2]running-title}]
+%     running-title  = (*\marg{页眉标题}*)
+%   \end{sjtusyntax}
+%   \cls{sjtuarticle} 中显示在右上角的页眉题目。默认为跟随中文标题。
+% \end{function}
+%
+%^^A \begin{function}[rEXP]{info/running-title*}
+%^^A   \begin{sjtusyntax}[emph={[2]running-title*}]
+%^^A     running-title* = (*\marg{英文页眉标题}*)
+%^^A   \end{sjtusyntax}
+%^^A   论文页眉题目（英文）。
+%^^A   该选项暂时无效。
+%^^A \end{function}
+%
+% \begin{function}[added=2022-12-17,updated=2022-12-23]{info/subject}
+%   \begin{sjtusyntax}[emph={[2]subject}]
+%     subject  = (*\marg{中文主题}*)
+%   \end{sjtusyntax}
+%   文档中文主题。一般显示在中文标题页校徽下方。
+%   \begin{itemize}
+%     \item 在 \cls{sjtuthesis} 文档类中，默认值类似于“上海交通大学学士学位论文”。
+%     \item 在 \cls{sjtureport} 文档类中，默认为空。
+%   \end{itemize}
+% \end{function}
+%
+% \begin{function}[rEXP,added=2022-12-17,updated=2022-12-23]{info/subject*}
+%   \begin{sjtusyntax}[emph={[2]subject*}]
+%     subject* = (*\marg{英文主题}*)
+%   \end{sjtusyntax}
+%   文档英文主题。一般显示在英文标题页顶部。
+%   \begin{itemize}
+%     \item 在 \cls{sjtuthesis} 文档类中，默认值类似于“A Dissertation Submitted to
+%           Shanghai Jiao Tong University for Bachelor Degree”。
+%   \end{itemize}
+% \end{function}
+%
+% \begin{function}{info/keywords}
+%   \begin{sjtusyntax}[emph={[2]keywords}]
+%     keywords  = (*\marg{中文关键字}*)
+%   \end{sjtusyntax}
+%   关键字列表。各关键字之间需使用英文逗号隔开。
+%   为防止歧义，可以用分组括号“|{...}|”把各字段括起来。
+% \end{function}
+%
+% \begin{function}[rEXP]{info/keywords*}
+%   \begin{sjtusyntax}[emph={[2]keywords*}]
+%     keywords* = (*\marg{英文关键字}*)
+%   \end{sjtusyntax}
+%   英文关键字列表。各关键字之间需使用英文逗号隔开。
+%   为防止歧义，可以用分组括号“|{...}|”把各字段括起来。
+% \end{function}
+%
+% \begin{function}{info/author}
+%   \begin{sjtusyntax}[emph={[2]author}]
+%     author  = (*\marg{姓名}*)
+%   \end{sjtusyntax}
+%   作者姓名。
+% \end{function}
+%
+% \begin{function}{info/author*}
+%   \begin{sjtusyntax}[emph={[2]author*}]
+%     author* = (*\marg{英文姓名或拼音}*)
+%   \end{sjtusyntax}
+%   作者英文姓名。
+% \end{function}
+%
+% \begin{function}{info/id}
+%   \begin{sjtusyntax}[emph={[2]id}]
+%     id  = (*\marg{学号}*)
+%   \end{sjtusyntax}
+%   学号。
+% \end{function}
+%
+% \begin{function}[updated=2022-12-23]{info/supervisor,info/assoc-supervisor}
+%   \vspace{-1ex}
+%   \begin{sjtusyntax}[emph={[2]supervisor,assoc-supervisor}]
+%     supervisor        = (*\marg{姓名}*)
+%     assoc-supervisor  = (*\marg{姓名}*)
+%   \end{sjtusyntax}
+%   导师、副导师中文姓名。
+% \end{function}
+%
+% \begin{function}[rEXP,updated=2022-12-23]{info/co-supervisor}
+%   \begin{sjtusyntax}[emph={[2]co-supervisor}]
+%     co-supervisor = (*\marg{姓名}*)
+%   \end{sjtusyntax}
+%   联合导师中文姓名。
+% \end{function}
+%
+% \begin{function}[rEXP,updated=2022-12-23]{info/supervisor*,info/assoc-supervisor*,
+%   info/co-supervisor*}
+%   \vspace{-1ex}
+%   \begin{sjtusyntax}[emph={[2]supervisor*,assoc-supervisor*,co-supervisor*}]
+%     supervisor*       = (*\marg{英文姓名或拼音}*)
+%     assoc-supervisor* = (*\marg{英文姓名或拼音}*)
+%     co-supervisor*    = (*\marg{英文姓名或拼音}*)
+%   \end{sjtusyntax}
+%   导师、副导师、联合导师英文姓名。
+% \end{function}
+%
+% \begin{function}[rEXP]{info/degree,info/degree*}
+%   \vspace{-1ex}
+%   \begin{sjtusyntax}[emph={[2]degree,degree*}]
+%     degree  = (*\marg{学位中文名称}*)
+%     degree* = (*\marg{学位英文名称}*)
+%   \end{sjtusyntax}
+%   申请学位中英文名称。
+%   包括申请的学位类别和级别，如“工学硕士”、“理学博士”等。
+%   学士论文无需标注。
+% \end{function}
+%
+% \begin{function}{info/department}
+%   \begin{sjtusyntax}[emph={[2]department}]
+%     department  = (*\marg{院系中文名称}*)
+%   \end{sjtusyntax}
+%   院系中文名称。
+% \end{function}
+%
+% \begin{function}[rEXP]{info/department*}
+%   \begin{sjtusyntax}[emph={[2]department*}]
+%     department* = (*\marg{院系英文名称}*)
+%   \end{sjtusyntax}
+%   院系英文名称。
+% \end{function}
+%
+% \begin{function}[rEXP]{info/major,info/major*}
+%   \vspace{-1ex}
+%   \begin{sjtusyntax}[emph={[2]major,major*}]
+%     major  = (*\marg{专业中文名称}*)
+%     major* = (*\marg{专业英文名称}*)
+%   \end{sjtusyntax}
+%   专业中英文名称。
+% \end{function}
+%
+% \begin{function}[rEXP]{info/fund,info/fund*}
+%   \vspace{-1ex}
+%   \begin{sjtusyntax}[emph={[2]fund,fund*}]
+%     fund  = (*\marg{资助基金中文名称}*)
+%     fund* = (*\marg{资助基金英文名称}*)
+%   \end{sjtusyntax}
+%   资助基金列表。各资助基金名称之间需使用英文逗号隔开。
+%   为防止歧义，可以用分组括号“|{...}|”把各字段括起来。
+% \end{function}
+%
+% \begin{function}[updated=2022-12-17]{info/date}
+%   \vspace{-1ex}
+%   \begin{sjtusyntax}[emph={[2]date}]
+%     date = (*\marg{ISO 日期}*)
+%   \end{sjtusyntax}
+%   日期。默认值为文档编译日期。也可以自己指定，要求使用 ISO 格式，
+%   即 |yyyy-mm-dd|，否则设定无效。
+% \end{function}
+%
+% \begin{function}[added=2022-12-17]{info/display-date}
+%   \begin{sjtusyntax}[emph={[2]display-date}]
+%     display-date  = (*\marg{日期文字}*)
+%   \end{sjtusyntax}
+%   显示日期，可以显示不同于标准日期格式的日期，日期文字将会被原样输出。
+%   设定该键时，将会覆盖 \opt{info/date} 键在中文语境下的设定。
+% \end{function}
+%
+% \begin{function}[rEXP,added=2022-12-17,updated=2022-12-18]{info/display-date*}
+%   \begin{sjtusyntax}[emph={[2]display-date*}]
+%     display-date* = (*\marg{英文日期文字}*)
+%   \end{sjtusyntax}
+%   英文显示日期，可以显示不同于标准日期格式的日期，日期文字将会被原样输出。
+%   设定该键时，将会覆盖 \opt{info/date} 键在英文语境下的设定。
+% \end{function}
+%
+% \subsubsection{样式域}
+%
+% \begin{function}{style}
+%   \begin{sjtusyntax}[emph={[1]style}]
+%     style = (*\marg{键值列表}*)
+%   \end{sjtusyntax}
+%   该选项包含许多子项目，用于设置论文样式。具体内容见下。
+% \end{function}
+%
+% \begin{function}[added=2022-12-03,updated=2022-12-27]{style/float-font}
+%   \begin{sjtusyntax}[emph={[2]float-font}]
+%     float-font = (*\marg{字体设置}*)
+%   \end{sjtusyntax}
+%   图、表等浮动体的额外字体设置。
+%   默认为 |\zihao{5}\fixedlineskip{15.6bp}|，五号字、固定行距 15.6 磅。
+%   若英文学位模板使用者希望符合 Word 英文模板规则，可以将该项改为
+%   |\normalsize\fixedlineskip{15.6bp}| 正常字号、固定行距 15.6 磅。
+%   其中 15.6 磅的固定行距为 Microsoft Word 文档网格的默认固定行间距。
+% \end{function}
+%
+% \begin{function}[added=2022-12-20]{style/caption-font}
+%   \begin{sjtusyntax}[emph={[2]caption-font}]
+%     caption-font = (*\marg{字体设置}*)
+%   \end{sjtusyntax}
+%   题注字体。
+%   默认为 |\zihao{5}\bfseries|，粗体五号字。
+% \end{function}
+%
+% \begin{function}[added=2022-12-20]{style/subcaption-font}
+%   \begin{sjtusyntax}[emph={[2]subcaption-font}]
+%     subcaption-font = (*\marg{字体设置}*)
+%   \end{sjtusyntax}
+%   子图题注字体。
+%   默认为 |\zihao{5}\normalfont|，正常字重五号字。
+% \end{function}
+%
+% \begin{function}[added=2022-12-03]{style/fnmark-font}
+%   \begin{sjtusyntax}[emph={[2]fnmark-font}]
+%     fnmark-font = (*\marg{字体设置}*)
+%   \end{sjtusyntax}
+%   脚注编号的额外字体设置。
+%   默认为空。
+% \end{function}
+%
+% \begin{function}[updated=2022-12-23]{style/float-num-sep}
+%   \begin{sjtusyntax}[emph={[2]float-num-sep}]
+%     float-num-sep = (*\marg{分隔符}*)
+%   \end{sjtusyntax}
+%   图、表等浮动体编号中的分隔符。
+%   默认为 \opt{--}。
+% \end{function}
+%
+% \begin{function}[updated=2022-12-23]{style/equation-num-sep}
+%   \begin{sjtusyntax}[emph={[2]equation-num-sep}]
+%     equation-num-sep = (*\marg{分隔符}*)
+%   \end{sjtusyntax}
+%   公式编号中的分隔符。
+%   默认为 \opt{--}。
+% \end{function}
+%
+% \begin{function}{style/title-logo-color}
+%   \begin{sjtusyntax}[emph={[2]title-logo-color}]
+%     title-logo-color = (*<(red)|blue|black>*)
+%   \end{sjtusyntax}
+%   选择论文标题页中校徽的颜色。
+% \end{function}
+%
+% \begin{function}[updated=2022-12-20]{style/header-logo-color}
+%   \begin{sjtusyntax}[emph={[2]header-logo-color}]
+%     header-logo-color = (*<(red)|blue|black>*)
+%   \end{sjtusyntax}
+%   选择 \cls{sjtureport} 和 \cls{sjtuarticle} 中页眉的校标颜色。
+% \end{function}
+%
+% \begin{function}[added=2022-12-20]{style/header-uppercase}
+%   \begin{sjtusyntax}[emph={[2]header-uppercase}]
+%     header-uppercase = (*<true|(false)>*)
+%   \end{sjtusyntax}
+%   页眉英文字母是否大写。
+%   \begin{itemize}
+%     \item 在 \cls{sjtuthesis} 和 \cls{sjtureport} 文档类中，默认为 \opt{false}。
+%     \item 在 \cls{sjtuarticle} 文档类中，默认为 \opt{true}。
+%   \end{itemize}
+% \end{function}
+%
+% \begin{function}[added=2022-12-20]{style/header-font}
+%   \begin{sjtusyntax}[emph={[2]header-font}]
+%     header-font = (*\marg{页眉字体}*)
+%   \end{sjtusyntax}
+%   页眉字体。
+%   \begin{itemize}
+%     \item 在 \cls{sjtuthesis} 文档类中，默认为 |\zihao{-5}|，小五号字。
+%     \item 在 \cls{sjtureport} 和 \cls{sjtuarticle} 文档类中，默认为 |\zihao{-5}\sffamily|，小五号字黑体。
+%   \end{itemize}
+% \end{function}
+%
+% \begin{function}[added=2022-12-20]{style/footer-font}
+%   \begin{sjtusyntax}[emph={[2]footer-font}]
+%     footer-font = (*\marg{页脚字体}*)
+%   \end{sjtusyntax}
+%   页脚字体。
+%   \begin{itemize}
+%     \item 在 \cls{sjtuthesis} 和 \cls{sjtureport} 文档类中，默认为 |\zihao{-5}|，小五号字。
+%     \item 在 \cls{sjtuarticle} 文档类中，默认为 |\zihao{5}|，五号字。
+%   \end{itemize}
+% \end{function}
+%
+% \begin{function}[added=2022-12-03]{style/page-number}
+%   \begin{sjtusyntax}[emph={[2]page-number}]
+%     page-number = (*\marg{页码设置}*)
+%   \end{sjtusyntax}
+%   设置页码的显示样式，其中 |#1| 代表当前页码。
+%   默认为 |{#1}|，即仅显示页码本身。
+% \end{function}
+%
+% \subsubsection{名称域}
+%
+% \begin{function}{name}
+%   \begin{sjtusyntax}[emph={[1]name}]
+%     name = (*\marg{键值列表}*)
+%   \end{sjtusyntax}
+%   选项包含许多子项目，用于设置论文中一些标题的名称。部分选项只能在 \cls{sjtuthesis} 中使用。
+%   具体内容见表 \ref{tab:names}。
+% \end{function}
+%
+% \begin{function}[updated=2022-12-18]{name/contents,name/listfigure,name/listtable,
+%   name/figure,name/table,name/abstract,name/index,name/appendix,name/proof,name/bib,
+%   name/figure*,name/table*,name/algorithm,name/listalgorithm,
+%   name/abbr,name/nom,name/summary,name/ack,name/resume,name/digset,name/achv}
+% \end{function}
+%
+% \begin{table}[hbt]
+%   \vspace{-47ex}
+%   \centering\small
+%   \caption{\opt{name} 选项的默认设置}
+%   \label{tab:names}
+%   \begin{tabular}{l|l|l}
+%     \toprule
+%     \strong{选项}          & \strong{|lang = zh|} & \strong{|lang = en|}          \\
+%     \midrule
+%      |contents|           & 目录                  & Contents                      \\
+%      |listfigure|         & 插图                  & List of Figures               \\
+%      |listtable|          & 表格                  & List of Tables                \\
+%      |figure|             & 图                    & Figure                        \\
+%      |table|              & 表                    & Table                         \\
+%      |abstract| \rexpstar & 摘要                  & Abstract                      \\
+%      |appendix|           & 附录                  & Appendix                      \\
+%      |index|              & 索引                  & Index                         \\
+%      |proof|              & 证明                  & Proof                         \\
+%      |bib|                & 参考文献               & Bibliography                  \\
+%    \midrule
+%      |figure*|            & Figure               & 图                             \\
+%      |table*|             & Table                & 表                             \\
+%      |algorithm|          & 算法                  & Algorithm                     \\
+%      |listalgorithm|      & 算法                  & List of Algorithms            \\
+%      |abbr| \rexpstar     & 缩略语对照表           & Abbreviation                  \\
+%      |nom| \rexpstar      & 主要符号对照表         & Nomenclature                  \\
+%      |summary| \rexpstar  & 全文总结              & Summary                       \\
+%      |ack| \rexpstar      & 致谢                  & Acknowledgements              \\
+%      |resume| \rexpstar   & 个人简历              & Resume                        \\
+%      |digest| \rexpstar   & 大摘要                & Digest                        \\
+%      |achv| \rexpstar     & 学术论文和科研成果目录   & List of Research Achievements \\
+%     \bottomrule
+%   \end{tabular}
+% \end{table}
+%
+% \section{内容编写}
+%
+% 在文档开始后进行内容编写，文档内容由 |document| 环境包裹。
+%
+% \begin{function}{document}
+%   \begin{sjtusyntax}[emph={[2]document}]
+%     \begin{document}
+%       (*\meta{文档内容}*)
+%     \end{document}
+%   \end{sjtusyntax}
+% \end{function}
+%
+% \subsection{标题页和声明页}
+%
+% \begin{function}[added=2022-12-17]{\title}
+%   \begin{sjtusyntax}[morekeywords={\title}]
+%     \title(*\marg{标题}*)
+%   \end{sjtusyntax}
+%   设置标题，覆盖 \opt{info/title} 键的值。
+% \end{function}
+%
+% \begin{function}[rEXP,added=2022-12-17]{\title*}
+%   \begin{sjtusyntax}[morekeywords={\title*}]
+%     \title*(*\marg{英文标题}*)
+%   \end{sjtusyntax}
+%   设置英文标题，覆盖 \opt{info/title*} 键的值。
+% \end{function}
+%
+% \begin{function}[added=2022-12-17]{\author}
+%   \begin{sjtusyntax}[morekeywords={\author}]
+%     \author(*\marg{姓名}*)
+%   \end{sjtusyntax}
+%   设置作者姓名，覆盖 \opt{info/author} 键的值。
+% \end{function}
+%
+% \begin{function}[rEXP,added=2022-12-17]{\author*}
+%   \begin{sjtusyntax}[morekeywords={\author*}]
+%     \author*(*\marg{英文姓名或拼音}*)
+%   \end{sjtusyntax}
+%   设置作者英文姓名，覆盖 \opt{info/author*} 键的值。
+% \end{function}
+%
+% \begin{function}[added=2022-12-17]{\date}
+%   \begin{sjtusyntax}[morekeywords={\date}]
+%     \date(*\marg{日期}*)
+%   \end{sjtusyntax}
+%   设置日期，覆盖 \opt{info/display-date} 键的值。
+%   日期会被原样显示。
+% \end{function}
+%
+% \begin{function}[rEXP,added=2022-12-17]{\date*}
+%   \begin{sjtusyntax}[morekeywords={\date*}]
+%     \date*(*\marg{英文日期}*)
+%   \end{sjtusyntax}
+%   设置英文日期，覆盖 \opt{info/display-date*} 键的值。
+%   日期会被原样显示。
+% \end{function}
+%
+% \begin{function}[added=2022-12-17]{\today}
+%   \begin{sjtusyntax}[morekeywords={\today}]
+%     \today
+%   \end{sjtusyntax}
+%   文档编译日期，以对应语言的格式显示。
+% \end{function}
+%
+% \begin{function}[updated=2022-12-03]{\maketitle}
+%   \begin{sjtusyntax}[morekeywords={\maketitle}]
+%     \maketitle
+%   \end{sjtusyntax}
+%   生成标题。
+%   \begin{itemize}
+%     \item 在 \cls{sjtuthesis} 文档类中，生成标题页。
+%     \item 在 \cls{sjtureport} 和 \cls{sjtuarticle} 文档类中，
+%           \begin{itemize}
+%             \item 若处于 \opt{titlepage} 文档类选项中，生成标题页。\cls{sjtureport} 文档类默认。
+%             \item 若处于 \opt{notitlepage} 文档类选项中，生成标题块。\cls{sjtuarticle} 文档类默认。
+%           \end{itemize}
+%   \end{itemize}
+% \end{function}
+%
+% \begin{function}[rEXP,updated=2022-12-20]{\copyrightpage}
+%   \begin{sjtusyntax}[morekeywords={\copyrightpage}]
+%     \copyrightpage
+%     \copyrightpage(*\oarg{授权书扫描件}*)
+%   \end{sjtusyntax}
+%   生成空白版权使用授权书。
+%   接受一个可选参数用于插入版权使用授权书扫描件，使用可选参数时需要手动加载 \pkg{pdfpages} 宏包。
+% \end{function}
+%
+% \subsection{前文部分}
+%
+% \begin{function}[rEXP]{\frontmatter}
+%   \begin{sjtusyntax}[morekeywords={\frontmatter}]
+%     \frontmatter
+%   \end{sjtusyntax}
+%   声明前文部分开始。
+% \end{function}
+%
+% \begin{function}{abstract}
+%   \begin{sjtusyntax}[emph={[2]abstract,abstract*}]
+%     \begin{abstract}
+%       (*\meta{摘要}*)
+%     \end{abstract}
+%   \end{sjtusyntax}
+%   摘要环境。
+% \end{function}
+%
+% \begin{function}[rEXP]{abstract*}
+%   \begin{sjtusyntax}[emph={[2]abstract*}]
+%     \begin{abstract*}
+%       (*\meta{英文摘要}*)
+%     \end{abstract*}
+%   \end{sjtusyntax}
+%   英文摘要环境。
+% \end{function}
+%
+% \begin{function}{\tableofcontents}
+%   \begin{sjtusyntax}[morekeywords={\tableofcontents}]
+%     \tableofcontents
+%   \end{sjtusyntax}
+%   目录。
+% \end{function}
+%
+% \begin{function}[rEXP]{\listoffigures,\listoffigures*,
+%   \listoftables,\listoftables*,\listofalgorithms,\listofalgorithms*}
+%   插图、表格和算法等索引命令如表 \ref{tab:list} 所示，将其插入到期望的
+%   位置即可。带*的命令表示对应的索引表不会出现在目录中。
+%^^A 似乎不再使用插图、表格和算法索引。
+% \end{function}
+%
+% \begin{table}[ht]
+% \vspace{-10ex}
+% \centering\small
+% \begin{threeparttable}
+%   \caption{目录和索引表}
+%   \label{tab:list}
+%   \begin{tabular}{lp{4cm}}
+%     \toprule
+%     \strong{用途}     & \strong{命令}          \\\midrule
+%     插图索引          & \cs{listoffigures}     \\
+%                       & \cs{listoffigures*}    \\\midrule
+%     表格索引          & \cs{listoftables}      \\
+%                       & \cs{listoftables*}     \\\midrule
+%     算法索引\tnote{a} & \cs{listofalgorithms}  \\
+%                       & \cs{listofalgorithms*} \\
+%     \bottomrule
+%   \end{tabular}
+%   \begin{tablenotes}
+%     \item[a] 启用 \pkg{algorithm2e} 或 \pkg{algorithm} 后有效。
+%   \end{tablenotes}
+% \end{threeparttable}
+% \end{table}
+%
+% \subsection{正文部分}
+%
+% \begin{function}[rEXP]{\mainmatter}
+%   \begin{sjtusyntax}[morekeywords={\mainmatter}]
+%     \mainmatter
+%   \end{sjtusyntax}
+%   声明正文部分开始。正文部分是论文的核心，您可以分章节撰写。
+%   如有需求，也可以采用多文件编译的方式。
+% \end{function}
+%
+% \begin{function}[updated=2022-12-03]{\footnote}
+%   \begin{sjtusyntax}[morekeywords={\footnote}]
+%     \footnote(*\oarg{脚注编号}*)(*\marg{脚注文字}*)
+%   \end{sjtusyntax}
+%   插入脚注。其中脚注编号参数是可选的，一般不需要输入。
+%   编号采用中文字体的带圈数字，只支持 1 到 50 号，请保证每页脚注不超过 50 个，超过 50 号
+%   脚注会给出脚注过多的警告。
+%   在一些字体配置下，脚注编号不能超过 10 号或 20 号，否则字体集可能不包含该字符，而无法正
+%   常显示。
+% \end{function}
+%
+% \begin{function}{assumption,axiom,conjecture,corollary,definition,example,
+%   exercise,lemma,problem,proposition,theorem}
+%   \sjtuthesis{} 预定义了一系列数学环境。在启用 \pkg{ntheorem} 或 \pkg{amsthm}
+%   宏包后有效，环境如表 \ref{tab:theorems} 所示。
+% \end{function}
+%
+% \begin{table}[ht]
+% \vspace*{-20ex}
+% \centering\small
+% \caption{预定义的数学环境}
+% \label{tab:theorems}
+% \begin{tabular}{*{7}{l}}\toprule
+%   assumption  & axiom   & conjecture & corollary    & definition  & example   & exercise  \\
+%   假设        & 公理    & 猜想       & 推论         & 定义        & 例        & 练习      \\\midrule
+%   lemma       & problem & proof      & proposition  & remark      & solution  & theorem   \\
+%   引理        & 问题    & 证明       & 命题         & 注          & 解        & 定理      \\\bottomrule
+% \end{tabular}
+% \end{table}
+%
+% \begin{function}[added=2022-12-27]{\fixedlineskip}
+%   \begin{sjtusyntax}[morekeywords={\fixedlineskip}]
+%     \fixedlineskip(*\marg{长度}*)
+%   \end{sjtusyntax}
+%   设置固定值行距。通过当前字体大小计算行距倍数，在字号命令之后使用。
+% \end{function}
+%
+% \begin{function}{\appendix}
+%   \begin{sjtusyntax}[morekeywords={\appendix}]
+%     \appendix
+%     \chapter{...}
+%   \end{sjtusyntax}
+%   附录由 \cs{appendix} 命令开启，然后像正文一样书写。
+%^^A 标准新模板将附录编号置于章节标题之后。
+% \end{function}
+%
+% \begin{function}[rEXP]{nomenclature,nomenclature*}
+%   \begin{sjtusyntax}[emph={[2]nomenclature,nomenclature*}]
+%     \begin{nomenclature}
+%       (*\meta{符号对照表}*)
+%     \end{nomenclature}
+%   \end{sjtusyntax}
+%   符号对照表环境。带星号的版本不会出现在目录中。
+%   符号对照表环境仅设置标题，内部实现可由用户自行决定。
+%   可以使用 \pkg{longtable}，也可以使用 \pkg{nomencl} 宏包。
+% \end{function}
+%
+% \subsection{后文部分}
+%
+% \begin{function}[rEXP]{\backmatter}
+%   \begin{sjtusyntax}[morekeywords={\backmatter}]
+%     \backmatter
+%   \end{sjtusyntax}
+%   声明后文部分开始。 后文部分包含致谢等。
+% \end{function}
+%
+% \begin{function}[rEXP]{acknowledgements}
+%   \begin{sjtusyntax}[emph={[2]acknowledgements}]
+%     \begin{acknowledgements}
+%       (*\meta{致谢内容}*)
+%     \end{acknowledgements}
+%   \end{sjtusyntax}
+%   致谢环境。盲审模式下致谢将被隐去。
+% \end{function}
+%
+% \begin{function}[rEXP]{achievements}
+%   \begin{sjtusyntax}[emph={[2]achievements}]
+%     \begin{achievements}
+%       (*\meta{获得的科研成果}*)
+%     \end{achievements}
+%   \end{sjtusyntax}
+%   科研成果环境，内部请采用下面的附录用文献列表环境。
+%   你可以在该环境中使用带星号的节次命令以分隔不同的类型的内容
+%  （比如学术论文、专利等）。
+% \end{function}
+%
+% \begin{function}{bibliolist}
+%   \begin{sjtusyntax}[emph={[2]bibliolist}]
+%     \begin{bibliolist}(*\marg{最长条目编号}*)
+%        \item (*\meta{文献条目}*)
+%     \end{bibliolist}
+%   \end{sjtusyntax}
+%   附录用文献环境，普通模式下显示。
+%   在 \cls{sjtuthesis} 中，盲审模式下不显示。
+% \end{function}
+%
+% \begin{function}[rEXP]{bibliolist*}
+%   \begin{sjtusyntax}[emph={[2]bibliolist,bibliolist*}]
+%     \begin{bibliolist*}(*\marg{最长条目编号}*)
+%        \item (*\meta{文献条目（隐去姓名）}*)
+%     \end{bibliolist*}
+%   \end{sjtusyntax}
+%   附录用文献环境，盲审模式下显示。
+% \end{function}
+%
+% \begin{function}[rEXP]{resume}
+%   \begin{sjtusyntax}[emph={[2]resume}]
+%     \begin{resume}
+%       (*\meta{简历内容}*)
+%     \end{resume}
+%   \end{sjtusyntax}
+%   简历环境。盲审模式下简历将被隐去。
+% \end{function}
+%
+% \begin{function}[rEXP]{digest}
+%   \begin{sjtusyntax}[emph={[2]digest}]
+%     \begin{digest}
+%       (*\meta{大摘要}*)
+%     \end{digest}
+%   \end{sjtusyntax}
+%   学士论文大摘要。
+%^^A 论文类型为学士论文的条件下有效。
+%^^A 尚无条件限制。
+% \end{function}
 %
 % \end{documentation}
 %
