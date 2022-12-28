@@ -2870,17 +2870,29 @@
 %    \begin{macrocode}
 %<*thesis>
 \NewDocumentEnvironment { abbreviation  } { }
-  { \@@_head_aux:V   \l_@@_name_abbr_tl } { }
+  {
+    \@@_head_aux:V   \l_@@_name_abbr_tl
+    \tl_clear:N \SJTU@style@float@font
+  } { }
 \NewDocumentEnvironment { abbreviation* } { }
-  { \@@_head_aux_s:V \l_@@_name_abbr_tl } { }
+  {
+    \@@_head_aux_s:V \l_@@_name_abbr_tl
+    \tl_clear:N \SJTU@style@float@font
+  } { }
 %    \end{macrocode}
 %
 % 符号对照表。
 %    \begin{macrocode}
 \NewDocumentEnvironment { nomenclature  } { }
-  { \@@_head_aux:V   \l_@@_name_nom_tl } { }
+  {
+    \@@_head_aux:V   \l_@@_name_nom_tl
+    \tl_clear:N \SJTU@style@float@font
+  } { }
 \NewDocumentEnvironment { nomenclature* } { }
-  { \@@_head_aux_s:V \l_@@_name_nom_tl } { }
+  {
+    \@@_head_aux_s:V \l_@@_name_nom_tl
+    \tl_clear:N \SJTU@style@float@font
+  } { }
 %    \end{macrocode}
 %
 % 全文总结。
