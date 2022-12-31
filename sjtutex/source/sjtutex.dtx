@@ -4037,6 +4037,8 @@
           {
             \cs_if_exist:NTF \includepdf
               {
+                \bool_if:NTF \g_@@_openright_bool
+                  { \cleardoublepage } { \clearpage }
                 \@@_pdf_bookmark:nn { 0 } { \c_@@_name_decl_tl }
                 \includepdf {#1}
               }
