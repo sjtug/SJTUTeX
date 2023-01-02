@@ -1684,6 +1684,21 @@
 %    \end{macrocode}
 % \end{variable}
 %
+% \begin{macro}[int]{\@@_deprecated_option:n,\@@_set_deprecated_option:n}
+% 对过时选项给出警告。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_deprecated_option:n
+  { \msg_warning:nnn { sjtutex } { deprecated-option } }
+\cs_new_protected:Npn \@@_set_deprecated_option:n #1
+  {
+    \@@_deprecated_option:n { Option~ `#1'~ is~ set. }
+    \keys_set:nn { sjtu / option } {#1}
+  }
+\msg_new:nnn { sjtutex } { deprecated-option }
+  { Option~ `\l_keys_key_tl'~ is~ deprecated. \\ #1 }
+%    \end{macrocode}
+% \end{macro}
+%
 % \subsection{选项处理}
 %
 % 定义 |sjtu/option| 键值类。
@@ -1748,6 +1763,11 @@
     text-font .initial:n = { newtx } ,
     math-font .tl_gset:N = \g_@@_math_font_tl ,
     cjk-font  .tl_gset:N = \g_@@_cjk_font_tl ,
+%    \end{macrocode}
+%
+% \opt{fontset} 是过时选项。
+%    \begin{macrocode}
+    fontset .code:n = { \@@_set_deprecated_option:n { cjk-font = #1 } } ,
 %    \end{macrocode}
 %
 % 数学符号样式。
