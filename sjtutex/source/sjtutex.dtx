@@ -780,28 +780,45 @@
 % \end{threeparttable}
 % \end{table}
 %
-% \begin{function}[added=2022-12-03]{math-style}
+% \begin{function}[added=2022-12-03,updated=2023-01-05]{math-style}
 %   \begin{sjtusyntax}[emph={[1]math-style}]
-%     math-style = (*<(TeX)|ISO|GB>*)
+%     math-style = (*<(ISO)|TeX>*)
 %   \end{sjtusyntax}
-%   数学符号样式。
-%   \opt{TeX} 与 \opt{ISO} 选项的最大不同在于一些大写希腊字母是否为斜体。
-%^^A \opt{GB} 特性似乎尚未实现，1.0.0rc4 实现为对 $\ldots$, $\Re$, $\Im$ 进行修正。
-%   默认为 \opt{TeX}。
+%   数学符号样式。该选项将影响 \opt{uppercase-greek}、\opt{integral}、
+%   \opt{integral-limits} 选项。
+%   \opt{ISO} 使得这些选项为 \opt{true}，
+%   \opt{TeX} 使得这些选项为 \opt{false}。
+%   默认为 \opt{ISO}。
 % \end{function}
 %
-% \begin{function}[added=2022-12-03]{nointlimits,intlimits}
-%   行间公式中积分号上下限的位置，\pkg{unicode-math} 模式下不适用。
-%   \opt{nointlimits} 使得上下限在积分号右侧，
-%   \opt{intlimits} 使得上下限在积分号上下方。
-%   默认上下限在积分号右侧。
+% \begin{function}[added=2023-01-05]{uppercase-greek}
+%   \begin{sjtusyntax}[emph={[1]uppercase-greek}]
+%     uppercase-greek = (*<(true)|false>*)
+%   \end{sjtusyntax}
+%   大写希腊字母是否斜体。
+%   \opt{true} 使得大写希腊字母为斜体，
+%   \opt{false} 使得大写希腊字母为正体。
+%   默认为斜体。
 % \end{function}
 %
-% \begin{function}[added=2022-12-03]{upint,slint}
+% \begin{function}[added=2023-01-05]{integral}
+%   \begin{sjtusyntax}[emph={[1]integral}]
+%     integral = (*<(true)|false>*)
+%   \end{sjtusyntax}
 %   积分号的正体与斜体。
-%   \opt{upint} 使得积分号为正体，
-%   \opt{slint} 使得积分号为斜体。
+%   \opt{true} 使得积分号为正体，
+%   \opt{false} 使得积分号为斜体。
 %   默认为正体。
+% \end{function}
+%
+% \begin{function}[added=2023-01-05]{integral-limits}
+%   \begin{sjtusyntax}[emph={[1]integral-limits}]
+%     integral-limits = (*<(true)|false>*)
+%   \end{sjtusyntax}
+%   行间公式中积分号上下限的位置，\pkg{unicode-math} 模式下不适用。
+%   \opt{true} 使得上下限在积分号上下方。
+%   \opt{false} 使得上下限在积分号右侧。
+%   默认上下限在积分号上下方。
 % \end{function}
 %
 % \subsection{论文信息设置}
