@@ -1783,7 +1783,7 @@
         \bool_gset_true:N \g_@@_slanted_uppercase_greek_bool
         \bool_gset_true:N \g_@@_upright_integral_bool
         \bool_gset_true:N \g_@@_integral_limits_bool
-      }
+      } ,
     math-style .initial:n = { ISO } ,
 %    \end{macrocode}
 %
@@ -1792,9 +1792,9 @@
     uppercase-greek .choice: ,
     uppercase-greek .value_required:n = true ,
     uppercase-greek / slanted .code:n =
-      { \bool_gset_true:N  \g_@@_slanted_uppercase_greek_bool },
+      { \bool_gset_true:N  \g_@@_slanted_uppercase_greek_bool } ,
     uppercase-greek / upright .code:n =
-      { \bool_gset_false:N \g_@@_slanted_uppercase_greek_bool },
+      { \bool_gset_false:N \g_@@_slanted_uppercase_greek_bool } ,
 %    \end{macrocode}
 %
 % 积分号的正/斜体。
@@ -1802,9 +1802,9 @@
     integral .choice: ,
     integral .value_required:n = true ,
     integral / slanted .code:n =
-      { \bool_gset_false:N \g_@@_upright_integral_bool },
+      { \bool_gset_false:N \g_@@_upright_integral_bool } ,
     integral / upright .code:n =
-      { \bool_gset_true:N  \g_@@_upright_integral_bool },
+      { \bool_gset_true:N  \g_@@_upright_integral_bool } ,
 %    \end{macrocode}
 %
 % 积分号上下限的位置，\pkg{unicode-math} 模式下不适用。
@@ -1812,9 +1812,9 @@
     integral-limits .choice: ,
     integral-limits .value_required:n = true ,
     integral-limits / false .code:n =
-      { \bool_gset_false:N \g_@@_integral_limits_bool },
+      { \bool_gset_false:N \g_@@_integral_limits_bool } ,
     integral-limits / true  .code:n =
-      { \bool_gset_true:N  \g_@@_integral_limits_bool },
+      { \bool_gset_true:N  \g_@@_integral_limits_bool } ,
 %    \end{macrocode}
 %
 % 单面或双面模式。
@@ -1856,9 +1856,9 @@
     draft .value_forbidden:n = true,
     final .value_forbidden:n = true,
     draft .code:n =
-      { \bool_gset_true:N  \g_@@_draft_bool },
+      { \bool_gset_true:N  \g_@@_draft_bool } ,
     final .code:n =
-      { \bool_gset_false:N \g_@@_draft_bool },
+      { \bool_gset_false:N \g_@@_draft_bool } ,
 %    \end{macrocode}
 %
 % 盲审模式。
