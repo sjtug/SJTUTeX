@@ -1599,26 +1599,24 @@
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}{\g_@@_math_style_int}
-% 数学符号样式。
+% \begin{variable}{\g_@@_slanted_uppercase_greek_bool}
+% 大写希腊字母的正/斜体。
 %    \begin{macrocode}
-\int_new:N \g_@@_math_style_int
+\bool_new:N \g_@@_slanted_uppercase_greek_bool
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}{\g_@@_intlimits_bool}
-% 积分号上下限的位置。
-%    \begin{macrocode}
-\bool_new:N \g_@@_intlimits_bool
-\bool_set_false:N \g_@@_intlimits_bool
-%    \end{macrocode}
-% \end{variable}
-%
-% \begin{variable}{\g_@@_slint_bool}
+% \begin{variable}{\g_@@_upright_integral_bool}
 % 积分号的正/斜体。
 %    \begin{macrocode}
-\bool_new:N \g_@@_slint_bool
-\bool_set_false:N \g_@@_slint_bool
+\bool_new:N \g_@@_upright_integral_bool
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{variable}{\g_@@_integral_limits_bool}
+% 积分号上下限的位置。
+%    \begin{macrocode}
+\bool_new:N \g_@@_integral_limits_bool
 %    \end{macrocode}
 % \end{variable}
 %
@@ -1639,7 +1637,7 @@
 % 使用 UTF8 编码，不调整基础类的版式以及不载入 \pkg{ctex} 字体预设配置。
 %    \begin{macrocode}
 \clist_set:Nn \g_@@_options_to_ctex_class_clist
-  { UTF8, scheme = plain, fontset = none }
+  { a4paper, UTF8, scheme = plain, fontset = none }
 %    \end{macrocode}
 % \end{variable}
 %
@@ -1773,31 +1771,50 @@
 % 数学符号样式。
 %    \begin{macrocode}
     math-style .choice: ,
-    math-style .value_required: n = true,
-    math-style .choices:nn =
-      { TeX, ISO, GB }
-      { \int_gset_eq:NN \g_@@_math_style_int \l_keys_choice_int } ,
-    math-style .initial:n = { TeX } ,
+    math-style .value_required:n = true,
+    math-style / TeX .code:n =
+      {
+        \bool_gset_false:N \g_@@_slanted_uppercase_greek_bool
+        \bool_gset_false:N \g_@@_upright_integral_bool
+        \bool_gset_false:N \g_@@_integral_limits_bool
+      } ,
+    math-style / ISO .code:n =
+      {
+        \bool_gset_true:N \g_@@_slanted_uppercase_greek_bool
+        \bool_gset_true:N \g_@@_upright_integral_bool
+        \bool_gset_true:N \g_@@_integral_limits_bool
+      }
+    math-style .initial:n = { ISO } ,
 %    \end{macrocode}
 %
-% 积分号上下限的位置，\pkg{unicode-math} 模式下不适用。
+% 大写希腊字母的正/斜体。
 %    \begin{macrocode}
-    nointlimits .value_forbidden:n = true,
-    intlimits   .value_forbidden:n = true,
-    nointlimits .code:n =
-      { \bool_set_false:N \g_@@_intlimits_bool },
-    intlimits   .code:n =
-      { \bool_set_true:N  \g_@@_intlimits_bool },
+    uppercase-greek .choice: ,
+    uppercase-greek .value_required:n = true ,
+    uppercase-greek / slanted .code:n =
+      { \bool_gset_true:N  \g_@@_slanted_uppercase_greek_bool },
+    uppercase-greek / upright .code:n =
+      { \bool_gset_false:N \g_@@_slanted_uppercase_greek_bool },
 %    \end{macrocode}
 %
 % 积分号的正/斜体。
 %    \begin{macrocode}
-    upint .value_forbidden:n = true,
-    slint .value_forbidden:n = true,
-    upint .code:n =
-      { \bool_set_false:N \g_@@_slint_bool },
-    slint .code:n =
-      { \bool_set_true:N  \g_@@_slint_bool },
+    integral .choice: ,
+    integral .value_required:n = true ,
+    integral / slanted .code:n =
+      { \bool_gset_false:N \g_@@_upright_integral_bool },
+    integral / upright .code:n =
+      { \bool_gset_true:N  \g_@@_upright_integral_bool },
+%    \end{macrocode}
+%
+% 积分号上下限的位置，\pkg{unicode-math} 模式下不适用。
+%    \begin{macrocode}
+    integral-limits .choice: ,
+    integral-limits .value_required:n = true ,
+    integral-limits / false .code:n =
+      { \bool_gset_false:N \g_@@_integral_limits_bool },
+    integral-limits / true  .code:n =
+      { \bool_gset_true:N  \g_@@_integral_limits_bool },
 %    \end{macrocode}
 %
 % 单面或双面模式。
@@ -1805,9 +1822,9 @@
     oneside .value_forbidden:n = true,
     twoside .value_forbidden:n = true,
     oneside .code:n =
-      { \bool_set_false:N \g_@@_twoside_bool } ,
+      { \bool_gset_false:N \g_@@_twoside_bool } ,
     twoside .code:n =
-      { \bool_set_true:N  \g_@@_twoside_bool } ,
+      { \bool_gset_true:N  \g_@@_twoside_bool } ,
 %    \end{macrocode}
 %
 % 是否奇数页开章。
@@ -1816,9 +1833,9 @@
     openany   .value_forbidden:n = true,
     openright .value_forbidden:n = true,
     openany   .code:n =
-      { \bool_set_false:N \g_@@_openright_bool } ,
+      { \bool_gset_false:N \g_@@_openright_bool } ,
     openright .code:n =
-      { \bool_set_true:N  \g_@@_openright_bool } ,
+      { \bool_gset_true:N  \g_@@_openright_bool } ,
 %</!article>
 %    \end{macrocode}
 %
@@ -1828,9 +1845,9 @@
     titlepage   .value_forbidden:n = true,
     notitlepage .value_forbidden:n = true,
     titlepage   .code:n =
-      { \bool_set_true:N  \g_@@_titlepage_bool } ,
+      { \bool_gset_true:N  \g_@@_titlepage_bool } ,
     notitlepage .code:n =
-      { \bool_set_false:N \g_@@_titlepage_bool } ,
+      { \bool_gset_false:N \g_@@_titlepage_bool } ,
 %</!thesis>
 %    \end{macrocode}
 %
@@ -1839,9 +1856,9 @@
     draft .value_forbidden:n = true,
     final .value_forbidden:n = true,
     draft .code:n =
-      { \bool_set_true:N  \g_@@_draft_bool },
+      { \bool_gset_true:N  \g_@@_draft_bool },
     final .code:n =
-      { \bool_set_false:N \g_@@_draft_bool },
+      { \bool_gset_false:N \g_@@_draft_bool },
 %    \end{macrocode}
 %
 % 盲审模式。
@@ -1876,6 +1893,20 @@
   { \dim_ratio:nn { \g_@@_line_skip_dim } { \g_@@_font_size_dim } / 1.2 }
 %    \end{macrocode}
 %
+% 追加全局选项。
+%    \begin{macrocode}
+\clist_put_right:Nn \@classoptionslist
+  {
+    a4paper ,
+    \bool_if:NT \g_@@_slanted_uppercase_greek_bool
+      { slantedGreek } ,
+    \bool_if:NT \g_@@_upright_integral_bool
+      { upint } ,
+    \bool_if:NT \g_@@_integral_limits_bool
+      { intlimits }
+  }
+%    \end{macrocode}
+%
 % 设置传入 \pkg{ctex} 文档类的选项。
 %    \begin{macrocode}
 \clist_put_right:Nx \g_@@_options_to_ctex_class_clist
@@ -1906,54 +1937,25 @@
 %
 % 传入各宏包选项。
 %    \begin{macrocode}
-\clist_set:Nn \g_@@_options_to_packages_clist
+\clist_set:Nx \g_@@_options_to_packages_clist
   {
-    { no-math           } { fontspec     },
-    { titles            } { tocloft      },
-    { perpage, bottom   } { footmisc     },
-    { list = off        } { bicaption    },
+    { no-math           } { fontspec     } ,
+    { titles            } { tocloft      } ,
+    { perpage, bottom   } { footmisc     } ,
+    { list = off        } { bicaption    } ,
     { warnings-off =
       {
         mathtools-overbracket,
         mathtools-colon
       }
-    }                     { unicode-math },
-    { amsmath, thmmarks } { ntheorem     },
-%<!article>    { chapter           } { algorithm    },
-%<!article>    { algochapter       } { algorithm2e  }
-  }
-\int_compare:nNnT { \g_@@_math_style_int } > { 1 }
-  {
-    \clist_put_right:Nn \g_@@_options_to_packages_clist
-      {
-        { slantedGreek } { newtxmath },
-        { slantedGreek } { newpxmath },
-        { slantedGreek } { mathptmx  }
-      }
-  }
-\bool_if:NTF \g_@@_intlimits_bool
-  {
-    \clist_put_right:Nn \g_@@_options_to_packages_clist
-      {
-        { intlimits     } { amsmath },
-        { displaylimits } { cmupint }
-      }
-  }
-  {
-    \clist_put_right:Nn \g_@@_options_to_packages_clist
-      {
-        { nointlimits   } { amsmath },
-        { nolimits      } { cmupint }
-      }
-  }
-\bool_if:NF \g_@@_slint_bool
-  {
-    \clist_put_right:Nn \g_@@_options_to_packages_clist
-      {
-        { upint } { newtxmath },
-        { upint } { newpxmath },
-        { upint } { stix2     }
-      }
+    }                     { unicode-math } ,
+    { amsmath, thmmarks } { ntheorem     } ,
+%<!article>    { chapter           } { algorithm    } ,
+%<!article>    { algochapter       } { algorithm2e  } ,
+    {
+      \bool_if:NTF \g_@@_integral_limits_bool
+        { displaylimits } { nolimits }
+    }                     { cmupint      }
   }
 \clist_map_inline:Nn \g_@@_options_to_packages_clist
   { \PassOptionsToPackage #1 }
@@ -2644,7 +2646,7 @@
         \cs_set_eq:cc { up ##1 } {     ##1 }
         \cs_set_eq:cc { it ##1 } { var ##1 }
       }
-    \int_compare:nNnT { \g_@@_math_style_int } > { 1 }
+    \bool_if:NT \g_@@_slanted_uppercase_greek_bool
       {
         \clist_map_inline:Nn \c_@@_uppercase_greek_clist
           { \cs_set_eq:cc { ##1 } { it ##1 } }
@@ -2743,12 +2745,12 @@
   {
 %<*mathfont>
     \RequirePackage { unicode-math }
-    \bool_if:NTF \g_@@_slint_bool
-      { \setmathfont { STIXTwoMath-Regular.otf } }
+    \bool_if:NTF \g_@@_upright_integral_bool
       {
         \setmathfont { STIXTwoMath-Regular.otf }
           [ StylisticSet = 8 ]
       }
+      { \setmathfont { STIXTwoMath-Regular.otf } }
     \setmathfont { STIXTwoMath-Regular.otf }
       [
         range        = { scr, bfscr },
@@ -2773,12 +2775,13 @@
   {
 %<*mathfont>
     \RequirePackage { unicode-math }
-    \bool_if:NTF \g_@@_slint_bool
+    \bool_if:NTF \g_@@_upright_integral_bool
       {
         \setmathfont { XITSMath-Regular }
           [
             Extension    = .otf,
             BoldFont     = XITSMath-Bold,
+            StylisticSet = 8
           ]
       }
       {
@@ -2786,7 +2789,6 @@
           [
             Extension    = .otf,
             BoldFont     = XITSMath-Bold,
-            StylisticSet = 8
           ]
       }
     \setmathfont { XITSMath-Regular.otf }
@@ -2892,7 +2894,7 @@
 \SetMathAlphabet { \mathsf } { bold   } { OT1 } { lmss } { bx } { n  }
 \SetMathAlphabet { \mathit } { bold   } { OT1 } { lmr  } { bx } { it }
 \SetMathAlphabet { \mathtt } { bold   } { OT1 } { lmtt } { m  } { n  }
-\bool_if:NF \g_@@_slint_bool
+\bool_if:NT \g_@@_upright_integral_bool
   { \RequirePackage { cmupint } }
 \RequirePackage { bm }
 \@@_set_slanted_greek:
@@ -2933,12 +2935,12 @@
   {
 %<*mathfont>
     \RequirePackage { unicode-math }
-    \bool_if:NTF \g_@@_slint_bool
-      { \setmathfont { NewCMMath-Book.otf } }
+    \bool_if:NTF \g_@@_upright_integral_bool
       {
         \setmathfont { NewCMMath-Book.otf }
           [ StylisticSet = 2 ]
       }
+      { \setmathfont { NewCMMath-Book.otf } }
     \setmathfont { NewCMMath-Book.otf }
       [
         range        = { scr, bfscr },
@@ -3035,7 +3037,7 @@
       { { \symbf {#1} } }
     \DeclareDocumentCommand \boldsymbol { m }
       { { \symbf {#1} } }
-    \int_compare:nNnTF { \g_@@_math_style_int } > { 1 }
+    \bool_if:NTF \g_@@_slanted_uppercase_greek_bool
       { \keys_set:nn { unicode-math } { math-style = ISO } }
       { \keys_set:nn { unicode-math } { math-style = TeX } }
   }
@@ -3268,11 +3270,10 @@
 %
 % \subsection{页面布局}
 %
-% 利用 \pkg{geometry} 宏包设置纸张大小、页面边距以及页眉高度。
+% 利用 \pkg{geometry} 宏包设置页面边距以及页眉高度。
 %    \begin{macrocode}
 \geometry
   {
-    paper         = a4paper,
     top           = 3.5 cm,
     bottom        = 4.0 cm,
     left          = 2.5 cm,
