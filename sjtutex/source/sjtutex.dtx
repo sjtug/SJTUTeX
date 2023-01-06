@@ -2923,6 +2923,8 @@
 \DeclareMathAlphabet { \mathtt } { OT1 } { pcr } { m } { n }
 \SetMathAlphabet { \mathsf } { bold } { OT1 } { phv } { b } { n }
 \SetMathAlphabet { \mathtt } { bold } { OT1 } { pcr } { b } { n }
+\bool_if:NT \g_@@_upright_integral_bool
+  { \RequirePackage { cmupint } }
 \RequirePackage { bm }
 \@@_set_unimath_symbol:
 %</mathfont>
