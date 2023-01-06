@@ -786,39 +786,34 @@
 %   \end{sjtusyntax}
 %   数学符号样式。该选项将影响 \opt{uppercase-greek}、\opt{integral}、
 %   \opt{integral-limits} 选项。
-%   \opt{ISO} 使得这些选项为 \opt{true}，
-%   \opt{TeX} 使得这些选项为 \opt{false}。
-%   默认为 \opt{ISO}。
+%   默认遵循 ISO 80000-2 标准设置，即斜体的大写希腊字母、直立的积分号
+%   以及积分号上下限置于上下方。
+%   用户也可以逐项修改数学样式。
 % \end{function}
 %
 % \begin{function}[added=2023-01-05]{uppercase-greek}
 %   \begin{sjtusyntax}[emph={[1]uppercase-greek}]
-%     uppercase-greek = (*<(true)|false>*)
+%     uppercase-greek = (*<slanted|upright>*)
 %   \end{sjtusyntax}
-%   大写希腊字母是否斜体。
-%   \opt{true} 使得大写希腊字母为斜体，
-%   \opt{false} 使得大写希腊字母为正体。
-%   默认为斜体。
+%   大写希腊字母的正/斜体。
 % \end{function}
 %
 % \begin{function}[added=2023-01-05]{integral}
 %   \begin{sjtusyntax}[emph={[1]integral}]
-%     integral = (*<(true)|false>*)
+%     integral = (*<slanted|upright>*)
 %   \end{sjtusyntax}
-%   积分号的正体与斜体。
-%   \opt{true} 使得积分号为正体，
-%   \opt{false} 使得积分号为斜体。
-%   默认为正体。
+%   积分号的正/斜体。
 % \end{function}
 %
 % \begin{function}[added=2023-01-05]{integral-limits}
 %   \begin{sjtusyntax}[emph={[1]integral-limits}]
-%     integral-limits = (*<(true)|false>*)
+%     integral-limits = (*<true|false>*)
 %   \end{sjtusyntax}
-%   行间公式中积分号上下限的位置，\pkg{unicode-math} 模式下不适用。
-%   \opt{true} 使得上下限在积分号上下方。
+%   行间公式中积分号上下限的位置，
+%   \opt{true} 使得上下限在积分号上下方，
 %   \opt{false} 使得上下限在积分号右侧。
-%   默认上下限在积分号上下方。
+%   该选项只影响行间公式，行内公式统一居右侧，不受影响。
+%   \pkg{unicode-math} 模式下不适用。
 % \end{function}
 %
 % \subsection{论文信息设置}
