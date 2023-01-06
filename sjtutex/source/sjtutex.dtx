@@ -813,7 +813,6 @@
 %   \opt{true} 使得上下限在积分号上下方，
 %   \opt{false} 使得上下限在积分号右侧。
 %   该选项只影响行间公式，行内公式统一居右侧，不受影响。
-%   \pkg{unicode-math} 模式下不适用。
 % \end{function}
 %
 % \subsection{论文信息设置}
@@ -1819,7 +1818,7 @@
       { \bool_gset_true:N  \g_@@_upright_integral_bool } ,
 %    \end{macrocode}
 %
-% 积分号上下限的位置，\pkg{unicode-math} 模式下不适用。
+% 积分号上下限的位置。
 %    \begin{macrocode}
     integral-limits .choice: ,
     integral-limits .value_required:n = true ,
@@ -3054,6 +3053,15 @@
     \bool_if:NTF \g_@@_slanted_uppercase_greek_bool
       { \keys_set:nn { unicode-math } { math-style = ISO } }
       { \keys_set:nn { unicode-math } { math-style = TeX } }
+    \bool_if:NTF \g_@@_integral_limits_bool
+      { \removenolimits } { \addnolimits }
+      {
+        \int\iint\iiint\iiiint\oint\oiint\oiiint
+        \intclockwise\varointclockwise\ointctrclockwise\sumint
+        \intbar\intBar\fint\cirfnint\awint\rppolint
+        \scpolint\npolint\pointint\sqint\intlarhk\intx
+        \intcap\intcup\upint\lowint
+      }
   }
 %</class>
 %    \end{macrocode}
