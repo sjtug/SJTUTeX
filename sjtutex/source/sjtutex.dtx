@@ -435,13 +435,6 @@
 % 共有 3 种文档类，\cls{sjtuthesis} 用于学位论文的排版，\cls{sjtureport} 用于课程大报告的排版，
 % \cls{sjtuarticle} 用于课程小论文的排版。
 %
-% 本模板中的选项、命令或环境可以分为以下三类：
-% \begin{itemize}
-%   \item 名字后面带有 \rexptarget\rexpstar{} 的，表示只能在 \cls{sjtuthesis} 文档类中使用；
-%   \item 名字后面带有 \exptarget\expstar{} 的，表示使用范围区别于 \cls{sjtuarticle}；
-%   \item 名字后面不带有特殊符号的，一般表示在 \cls{sjtuthesis}、\cls{sjtureport} 和 \cls{sjtuarticle} 文档类中都可以使用，特殊情况另作说明。
-% \end{itemize}
-%
 % 将文档保存在下载好的 \sjtutex{} 模板根目录下，文件以 \texttt{.tex} 后缀结尾。
 % 注意在使用文档类时，需要将涉及到的所有源文件使用 UTF-8 编码保存。对于不同的文档类，使用方法
 % 略有不同，这里给出这三种文档类的最小使用示例。
@@ -500,76 +493,14 @@
 % \end{document}
 % \end{latex}
 %
-% \subsection{编译文档}
-% \label{sec:compile}
-%
-% 推荐使用 \XeLaTeX{} 编译本模板，也可以使用 \LuaLaTeX{}。
-% 在部分字体配置下可以尝试使用 \pdfLaTeX{}，详见第 \ref{sec:fontsetup} 节，
-% 也请注意其他宏包在该引擎上的适用情况。
-%
-% \subsubsection{手动编译}
-%
-% 很多用户对 \LaTeX{} 命令执行的次数不太清楚。一个基本的原则是多次运行 \LaTeX{}
-% 命令直至不再出现警告。假设您的 \TeX{} 源文件名为 \file{main.tex}，并且使用
-% \texttt{biber} 作为管理引用文献的后端程序。
-% 下面给出编译论文的详细过程（\# 开头的行为注释）：
-%
-% \begin{shell}
-% # 1.发现文件中的引用关系，文件后缀 .tex 可省略
-% xelatex main
-% # 2.编译参考文件源文件，生成 .bbl 文件
-% biber main
-% # 3.解决文件中的交叉引用
-% xelatex main
-% # 4.生成完整的 pdf 文件
-% xelatex main
-% \end{shell}
-%
-% \subsubsection{latexmk}
-%
-% \texttt{latexmk} 命令支持全自动生成 \LaTeX\ 编写的文档，并且支持使用不同的工具
-% 链来进行生成，它会自动运行多次工具直到交叉引用都被解决。下面给出了一个用
-% \texttt{latexmk} 调用 \texttt{xelatex} 生成最终文档的示例：
-%
-% \begin{shell}
-% # 一句话就够了！
-% latexmk -xelatex thesis
-% \end{shell}
-%
-% \note{使用 \hologo{MiKTeX} 发行版，使用 \texttt{latexmk} 需要
-%   安装 \href{https://www.perl.org}{Perl}。}
-%
-% \subsubsection{脚本编译}
-%
-% 对于 Linux 和 macOS 用户，\sjtutex{} 提供了一个 \file{Makefile}：
-%
-% \begin{shell}
-% make all                      # 编译生成 main.pdf
-% make clean                    # 删除编译所产生的中间文件
-% make cleanall                 # 删除 main.pdf 和所有中间文件
-% make wordcount                # 论文字数统计
-% \end{shell}
-%
-% 对于 Windows 用户，\sjtutex{} 提供了 \file{Compile.bat} 可以双击直接编译，
-% 也可以在命令提示符窗口中使用脚本提供的额外功能：
-%
-% \begin{shell}
-% .\Compile.bat thesis          # 编译生成 main.pdf
-% .\Compile.bat clean           # 删除编译所产生的中间文件
-% .\Compile.bat cleanall        # 删除 main.pdf 和所有中间文件
-% .\Compile.bat wordcount       # 论文字数统计
-% \end{shell}
-%
-% 以上提供的脚本默认用 \texttt{latexmk} 调用 \texttt{xelatex} 编译。
-%
-% \subsubsection{编辑器编译}
-%
-% 你也可以使用编辑器集成的编译方法，
-% \href{https://github.com/sjtug/SJTUThesis/wiki/本地使用说明}{Wiki 页面《本地使用说明》}
-% 给出了 VS Code 和 TeXstudio 的配置方法，使之可以使用 \texttt{latexmk} 编译。如果你的编辑器
-% 无法使用 \texttt{latexmk}，可能你需要将 \sjtutex{} 安装至 \TeX{} 发行版的文件目录中。
-%
 % \section{文档配置}
+%
+% 本模板中的选项、命令或环境可以分为以下三类：
+% \begin{itemize}
+%   \item 名字后面带有 \rexptarget\rexpstar{} 的，表示只能在 \cls{sjtuthesis} 文档类中使用；
+%   \item 名字后面带有 \exptarget\expstar{} 的，表示使用范围区别于 \cls{sjtuarticle}；
+%   \item 名字后面不带有特殊符号的，一般表示在 \cls{sjtuthesis}、\cls{sjtureport} 和 \cls{sjtuarticle} 文档类中都可以使用，特殊情况另作说明。
+% \end{itemize}
 %
 % \subsection{文档类选项}
 %
