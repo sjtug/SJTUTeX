@@ -47,39 +47,3 @@ jobs:
           asset_path: sjtutex/sjtutex.tds.zip
           asset_name: sjtutex.tds.zip
           asset_content_type: application/x-zip
-      - name: add samples-thesis-zh.pdf
-        uses: actions/upload-release-asset@v1.0.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: sjtutex/doc/samples-thesis-zh.pdf
-          asset_name: samples-thesis-zh.pdf
-          asset_content_type: application/pdf
-      - name: add samples-thesis-en.pdf
-        uses: actions/upload-release-asset@v1.0.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: sjtutex/doc/samples-thesis-en.pdf
-          asset_name: samples-thesis-en.pdf
-          asset_content_type: application/pdf
-      - name: add samples-report-zh.pdf
-        uses: actions/upload-release-asset@v1.0.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: sjtutex/doc/samples-report-zh.pdf
-          asset_name: samples-report-zh.pdf
-          asset_content_type: application/pdf
-      - name: add samples-article-zh.pdf
-        uses: actions/upload-release-asset@v1.0.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: sjtutex/doc/samples-article-zh.pdf
-          asset_name: samples-article-zh.pdf
-          asset_content_type: application/pdf
