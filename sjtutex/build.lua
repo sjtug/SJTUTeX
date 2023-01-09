@@ -10,7 +10,7 @@ docfiledir         = "doc"
 
 typesetexe         = "xelatex"
 typesetfiles       = {"sample-*.tex","sjtutex.dtx"}
-typesetsuppfiles   = {"common-*.tex"}
+typesetsuppfiles   = {"common-*.tex","ref.bib"}
 
 bibtexexe          = "bibtex"
 
