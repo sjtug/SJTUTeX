@@ -22,7 +22,7 @@ jobs:
       - name: prepare upload artifacts
         run: |
           sudo rm -r sjtutex/build/distrib/tds/*/
-          unzip -d sjtutex/build/distrib/tds/ sjtutex/build/distrib/tds/sjtutex.tds.zip
+          sudo unzip -d sjtutex/build/distrib/tds/ sjtutex/build/distrib/tds/sjtutex.tds.zip
           sudo rm sjtutex/build/distrib/tds/sjtutex.tds.zip
           sudo rm sjtutex/doc/sjtutex.pdf
       - uses: actions/upload-artifact@v2
