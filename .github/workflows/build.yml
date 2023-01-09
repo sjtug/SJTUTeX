@@ -21,11 +21,19 @@ jobs:
         name: build package with l3build
       - name: prepare upload artifacts
         run: |
-          unzip -l sjtutex/build/distrib/tds/sjtutex.tds.zip
+          sudo rm -r sjtutex/build/distrib/tds/*/
+          unzip -d sjtutex/build/distrib/tds/ sjtutex/build/distrib/tds/sjtutex.tds.zip
           sudo rm sjtutex/build/distrib/tds/sjtutex.tds.zip
+          sudo rm sjtutex/doc/sjtutex.pdf
       - uses: actions/upload-artifact@v2
         with:
           path: |
             sjtutex/build/distrib/tds/
           name: sjtutex.tds
-        name: upload build artifacts
+        name: upload build tds artifacts
+      - uses: actions/upload-artifact@v2
+        with:
+          path: |
+            sjtutex/doc/
+          name: samples
+        name: upload build samples artifacts
