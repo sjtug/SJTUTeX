@@ -1,8 +1,8 @@
 % \iffalse meta-comment
 %
 % Copyright (C) SJTUG
-%   2018--2022 Alexara Wu   <alexarawu@outlook.com>
-%   2022       Log Creative <logcreative@outlook.com>
+%   2018--2023 Alexara Wu   <alexarawu@outlook.com>
+%   2022--2023 Log Creative <logcreative@outlook.com>
 %
 % This work may be distributed and/or modified under the
 % conditions of the LaTeX Project Public License, either
@@ -38,8 +38,8 @@
 \preamble
 
     Copyright (C) SJTUG
-      2018--2022 Alexara Wu   <alexarawu@outlook.com>
-      2022       Log Creative <logcreative@outlook.com>
+      2018--2023 Alexara Wu   <alexarawu@outlook.com>
+      2022--2023 Log Creative <logcreative@outlook.com>
 
     This work may be distributed and/or modified under the
     conditions of the LaTeX Project Public License, either
@@ -130,7 +130,7 @@
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<class>\RequirePackage{expl3}
 %<*!(driver|install)>
-%<+!driver>\GetIdInfo $Id: sjtutex.dtx 2.0-alpha 2022-12-27 18:30:00Z Alexara Wu <alexarawu@outlook.com> $
+%<+!driver>\GetIdInfo $Id: sjtutex.dtx 2.0-beta 2023-01-06 17:30:00Z Alexara Wu <alexarawu@outlook.com> $
 %<class&thesis>  {Thesis template for Shanghai Jiao Tong University}
 %<class&thesis>\ProvidesExplClass{sjtuthesis}
 %<class&report>  {Report template for Shanghai Jiao Tong University}
@@ -202,8 +202,7 @@
 %
 %<*driver>
 \documentclass{ctxdoc}
-\hyphenation{SJTU-Thesis}
-\newcommand{\sjtuthesis}{\textsc{SJTUThesis}}
+\newcommand{\sjtutex}{SJTU\TeX}
 \usepackage{graphicx}
 \usepackage{multirow}
 \usepackage{listings}
@@ -316,25 +315,24 @@
 %
 % \GetFileInfo{\jobname.dtx}
 %
-% \title{\sjtuthesis{}: 上海交通大学学位论文模板}
+% \title{\sjtutex{}: 上海交通大学文档类集}
 % \author{SJTUG}
-% \date{2022/12/27\quad v2.0-alpha}
+% \date{2023/1/6\quad v2.0-beta}
 %
-% \vfill
 % \maketitle
-% \vfill
+%
 % \begin{abstract}
-% 此宏包旨在建立一个简单易用的上海交通大学论文模板，包括学士、硕士、博士学位论文
-% 以及普通课程论文。
+% 此宏包旨在建立一个简单易用的上海交通大学文档类集，包括学位论文文档类
+% \cls{sjtuthesis} 以及普通文档类 \cls{sjtuarticle} 和 \cls{sjtureport}。
 % \end{abstract}
-% \vfill
+%
 % \def\abstractname{免责声明}
 % \begin{abstract}
 % \noindent
 % \begin{enumerate}
 % \item 本模板的发布遵守 \LaTeX{} Project Public License，使用前请认真阅读
 %   协议内容。
-% \item 本模板根据 \href{https://www.gs.sjtu.edu.cn/info/1143/5801.htm}
+% \item 学位论文模板根据 \href{https://www.gs.sjtu.edu.cn/info/1143/5801.htm}
 %   {《上海交通大学博士、硕士学位论文撰写指南》} ，并参考
 %   \href{https://www.gs.sjtu.edu.cn/info/1136/8374.htm}
 %   {《上海交通大学研究生学位论文写作模板》} 以及
@@ -342,72 +340,67 @@
 %   {《上海交通大学本科生毕业设计（论文）撰写规范》}
 %   编写而成。旨在供上海交通大学准毕业生撰
 %   写学位论文使用。
-% \item 此模板仅为撰写指南的参考实现，不保证审查老师不提意见。任何由于使用本模板
+% \item 学位论文模板仅为撰写指南的参考实现，不保证审查老师不提意见。任何由于使用本模板
 %   而引起的论文格式审查问题均与本模板作者无关。
 % \item 任何个人或组织以本模板为基础进行修改、扩展而生成的新的专用模板，请严格遵
 %   守  \LaTeX{} Project Public License 协议。由于违犯协议而引起的任何纠纷
 %   争端均与本模板作者无关。
 % \end{enumerate}
 % \end{abstract}
-% \vfill
-%
-% \thispagestyle{empty}
-% \clearpage
 %
 % \tableofcontents
-% \clearpage
 %
 % \begin{documentation}
 %
 % \section{介绍}
 %
-% 这是为撰写上海交通大学学士、硕士、博士学位论文以及课程论文而准备的 \LaTeX{} 模
-% 板。
-%
-% 最早的一版学位模板由一位热心的物理系同学制作，中文字符处理采用了当时最为流行的
+% 最早的一版 \LaTeX{} 学位论文模板由一位热心的物理系同学制作，中文字符处理采用了当时最为流行的
 % CJK--\LaTeX{} 方案。在此基础上，weijianwen 根据交大研究生院对学位论文的要求，完成
 % 了一份基本可用的交大 \LaTeX{} 学位论文模板。由于 CJK--\LaTeX{} 方案不易使用，
 % weijianwen 与 William Wang 开始着手把模板向 \XeTeX{} 引擎移植。之后 weijianwen
 % 又断断续续做了一些完善模板的工作，在原有硕士学位论文模板的基础上完成了交大学士
 % 和博士学位论文模板。
 %
-% 2012 年 5 月模板开始在 GitHub 上管理和更新，2018 年 1 月项目转移至 SJTUG 名
+% 2012 年 5 月模板开始在 GitHub%
+% \footnote{\url{https://github.com/weijianwen/SJTUThesis}，项目转移后该链接已重定向。}%
+% 上管理和更新，2018 年 1 月项目转移至 SJTUG 名
 % 下。2019 年 6 月 Alexara Wu 重构了整个宏包的代码，并使用 Doc\TeX{} 文档和
 % \textsc{DocStrip} 工具进行代码的管理，升级版本号为 1.0。2022 年 11 月，论文模板
 % 改版后，使用 \LaTeXiii{} 重构了代码，添加 \cls{sjtureport} 和 \cls{sjtuarticle}
 % 文档类，升级版本号为 2.0。
 %
-% 现在，\sjtuthesis{} 代码在 GitHub
-% \footnote{\url{https://github.com/sjtug/SJTUThesis}}
+% 现在，\sjtutex{} 代码在 GitHub%
+% \footnote{\url{https://github.com/sjtug/SJTUTeX}}%
 % 上维护。
-% 你可以在 \href{https://github.com/sjtug/SJTUThesis/discussions}{Discussions}
+% 原 \href{https://github.com/sjtug/SJTUThesis}{SJTUThesis} 仓库则作为学位论文示例文档，提供开箱即用的模板。
+% 学位论文模板用户可以在 \href{https://github.com/sjtug/SJTUThesis/discussions}{Discussions}
 % 上提问使用问题，也可以在 \href{https://github.com/sjtug/SJTUThesis/issues}{Issues}
 % 中进行 Bug 反馈与新功能提案。如果需要对文档类代码进行修改，欢迎前往
-% \href{https://github.com/sjtug/SJTUTeX}{SJTUTeX} 仓库进行 Pull Request。
-% \sjtuthesis{} 模板的许多实现细节离不开
+% \href{https://github.com/sjtug/SJTUTeX}{\sjtutex} 仓库进行 Pull Request。
+% \sjtutex{} 模板的许多实现细节离不开
 % \href{https://github.com/sjtug/SJTUThesis/graphs/contributors}
 % {热心同学们} 的贡献，在此感谢所有为模板贡献过代码的同学们，以及所有测试和使用
 % 模板的各位同学！
 %
 % \note{模板的作用在于减少论文写作过程中格式调整的时间，前提是遵守模板的用法，否
-%   则即便用了\sjtuthesis{} 也难以保证输出的论文符合学校规范。}
+%   则即便用了\sjtutex{} 也难以保证输出的论文符合学校规范。}
 %
 % \section{简明教程}
 %
 % \subsection{安装 \TeX{} 发行版}
 %
 % 因为 \LaTeXiii{} 和相关宏包在不断更新，所以推荐使用最新的 \TeX{} 发行版。
-% \sjtuthesis{} 支持主流的 \TeX{} 发行版，包括 \TeX{} Live、\hologo{MiKTeX}、
+% \sjtutex{} 支持主流的 \TeX{} 发行版，包括 \TeX{} Live、\hologo{MiKTeX}、
 % Mac\TeX{}，但不支持 \CTeX{} 套装。安装方法具体可以参考
 % \href{https://github.com/sjtug/SJTUThesis/wiki/TeX-发行版及其安装}
 % {Wiki 页面《\TeX{} 发行版及其安装》}。
 %
-% \sjtuthesis{} 最低支持至 2020 年发行的 \TeX{} 发行版，\pkg{ctex} 宏包版本应当在
+% \sjtutex{} 最低支持至 2020 年发行的 \TeX{} 发行版，\pkg{ctex} 宏包版本应当在
 % v2.5 及以上。版本过低将无法正常编译。
 %
 % \subsection{文件组成}
 %
-% 表~\ref{tab:files} 列出了 \sjtuthesis{} 的主要文件及其功能介绍。
+% 表~\ref{tab:files} 列出了 \sjtutex{} 的主要文件及其功能介绍。
 %
 % \begin{table}[!hbt]
 %   \centering
@@ -437,53 +430,12 @@
 % \note{\href{https://vi.sjtu.edu.cn}{交大视觉形象系统}
 %   的相关图像资源版权归上海交通大学所有。}
 %
-% \subsection{下载模板}
-%
-% \subsubsection{GitHub 版本}
-%
-% 你可以在 \href{https://github.com/sjtug/SJTUThesis/releases}{GitHub Release}
-% 中找到 \sjtuthesis{} 的所有版本。
-%
-% 推荐使用最新版本以避免一些问题。可以直接下载
-% \href{https://github.com/sjtug/SJTUThesis}{GitHub 页面}
-% 提供的
-% \href{https://github.com/sjtug/SJTUThesis/archive/refs/heads/master.zip}{压缩包}。
-%
-% 熟悉 \href{https://git-scm.com}{Git} 的用户可以克隆存储仓库：
-%
-% \begin{shell}
-% git clone https://github.com/sjtug/SJTUThesis.git
-% \end{shell}
-%
-% 如果访问 GitHub 的速度不甚理想，可以使用 SJTUG 镜像仓库：
-%
-% \begin{shell}
-% git clone https://mirror.sjtu.edu.cn/git/SJTUThesis.git/
-% \end{shell}
-%
-% \subsubsection{Overleaf 版本}
-%
-% 你也可以于在线平台使用 \sjtuthesis{}，直接使用
-% \href{https://www.overleaf.com/latex/templates/sjtuthesis-latex-thesis-template-for-shanghai-jiao-tong-university/mkdwbyjbtfgg?r=sdkbtJ4qGS8kDZQQ&rm=d&rs=b}{Overleaf 模板} 链接。
-% 或者上传前节中的压缩包至 \href{https://latex.sjtu.edu.cn}{校内平台} 等其他在线平台。
-% 更多信息参见 \href{https://github.com/sjtug/SJTUThesis/wiki/在线使用说明}{Wiki 页面《在线使用说明》}。
-%
-% \note{由于大部分在线平台基于 Linux 操作系统，所以你需要在设置选单中将编译器修改为
-%   \XeLaTeX{} 才能正确编译。}
-%
 % \subsection{使用文档类}
 %
 % 共有 3 种文档类，\cls{sjtuthesis} 用于学位论文的排版，\cls{sjtureport} 用于课程大报告的排版，
 % \cls{sjtuarticle} 用于课程小论文的排版。
 %
-% 本模板中的选项、命令或环境可以分为以下三类：
-% \begin{itemize}
-%   \item 名字后面带有 \rexptarget\rexpstar{} 的，表示只能在 \cls{sjtuthesis} 文档类中使用；
-%   \item 名字后面带有 \exptarget\expstar{} 的，表示使用范围区别于 \cls{sjtuarticle}；
-%   \item 名字后面不带有特殊符号的，一般表示在 \cls{sjtuthesis}、\cls{sjtureport} 和 \cls{sjtuarticle} 文档类中都可以使用，特殊情况另作说明。
-% \end{itemize}
-%
-% 将文档保存在下载好的 \sjtuthesis{} 模板根目录下，文件以 \texttt{.tex} 后缀结尾。
+% 将文档保存在下载好的 \sjtutex{} 模板根目录下，文件以 \texttt{.tex} 后缀结尾。
 % 注意在使用文档类时，需要将涉及到的所有源文件使用 UTF-8 编码保存。对于不同的文档类，使用方法
 % 略有不同，这里给出这三种文档类的最小使用示例。
 %
@@ -541,76 +493,14 @@
 % \end{document}
 % \end{latex}
 %
-% \subsection{编译文档}
-% \label{sec:compile}
-%
-% 推荐使用 \XeLaTeX{} 编译本模板，也可以使用 \LuaLaTeX{}。
-% 在部分字体配置下可以尝试使用 \pdfLaTeX{}，详见第 \ref{sec:fontsetup} 节，
-% 也请注意其他宏包在该引擎上的适用情况。
-%
-% \subsubsection{手动编译}
-%
-% 很多用户对 \LaTeX{} 命令执行的次数不太清楚。一个基本的原则是多次运行 \LaTeX{}
-% 命令直至不再出现警告。假设您的 \TeX{} 源文件名为 \file{main.tex}，并且使用
-% \texttt{biber} 作为管理引用文献的后端程序。
-% 下面给出编译论文的详细过程（\# 开头的行为注释）：
-%
-% \begin{shell}
-% # 1.发现文件中的引用关系，文件后缀 .tex 可省略
-% xelatex main
-% # 2.编译参考文件源文件，生成 .bbl 文件
-% biber main
-% # 3.解决文件中的交叉引用
-% xelatex main
-% # 4.生成完整的 pdf 文件
-% xelatex main
-% \end{shell}
-%
-% \subsubsection{latexmk}
-%
-% \texttt{latexmk} 命令支持全自动生成 \LaTeX\ 编写的文档，并且支持使用不同的工具
-% 链来进行生成，它会自动运行多次工具直到交叉引用都被解决。下面给出了一个用
-% \texttt{latexmk} 调用 \texttt{xelatex} 生成最终文档的示例：
-%
-% \begin{shell}
-% # 一句话就够了！
-% latexmk -xelatex thesis
-% \end{shell}
-%
-% \note{使用 \hologo{MiKTeX} 发行版，使用 \texttt{latexmk} 需要
-%   安装 \href{https://www.perl.org}{Perl}。}
-%
-% \subsubsection{脚本编译}
-%
-% 对于 Linux 和 macOS 用户，\sjtuthesis{} 提供了一个 \file{Makefile}：
-%
-% \begin{shell}
-% make all                      # 编译生成 main.pdf
-% make clean                    # 删除编译所产生的中间文件
-% make cleanall                 # 删除 main.pdf 和所有中间文件
-% make wordcount                # 论文字数统计
-% \end{shell}
-%
-% 对于 Windows 用户，\sjtuthesis{} 提供了 \file{Compile.bat} 可以双击直接编译，
-% 也可以在命令提示符窗口中使用脚本提供的额外功能：
-%
-% \begin{shell}
-% .\Compile.bat thesis          # 编译生成 main.pdf
-% .\Compile.bat clean           # 删除编译所产生的中间文件
-% .\Compile.bat cleanall        # 删除 main.pdf 和所有中间文件
-% .\Compile.bat wordcount       # 论文字数统计
-% \end{shell}
-%
-% 以上提供的脚本默认用 \texttt{latexmk} 调用 \texttt{xelatex} 编译。
-%
-% \subsubsection{编辑器编译}
-%
-% 你也可以使用编辑器集成的编译方法，
-% \href{https://github.com/sjtug/SJTUThesis/wiki/本地使用说明}{Wiki 页面《本地使用说明》}
-% 给出了 VS Code 和 TeXstudio 的配置方法，使之可以使用 \texttt{latexmk} 编译。如果你的编辑器
-% 无法使用 \texttt{latexmk}，可能你需要将 \sjtuthesis{} 安装至 \TeX{} 发行版的文件目录中。
-%
 % \section{文档配置}
+%
+% 本模板中的选项、命令或环境可以分为以下三类：
+% \begin{itemize}
+%   \item 名字后面带有 \rexptarget\rexpstar{} 的，表示只能在 \cls{sjtuthesis} 文档类中使用；
+%   \item 名字后面带有 \exptarget\expstar{} 的，表示使用范围区别于 \cls{sjtuarticle}；
+%   \item 名字后面不带有特殊符号的，一般表示在 \cls{sjtuthesis}、\cls{sjtureport} 和 \cls{sjtuarticle} 文档类中都可以使用，特殊情况另作说明。
+% \end{itemize}
 %
 % \subsection{文档类选项}
 %
@@ -710,7 +600,7 @@
 %   \begin{sjtusyntax}[emph={[1]cjk-font}]
 %     cjk-font = (*<(auto)|(fandol)|windows|mac|ubuntu|adobe|founder|none>*)
 %   \end{sjtusyntax}
-%   指定中文字体集。\sjtuthesis 预定义了一些中文字体组合，
+%   指定中文字体集。\sjtutex{} 预定义了一些中文字体组合，
 %   默认跟随操作系统设定：
 %   Windows 系统默认使用 \opt{windows}，
 %   macOS 系统默认使用 \opt{mac}，
@@ -721,8 +611,7 @@
 %   其他中文字体集使用 \pdfTeX{} 引擎需要先通过 \LaTeX{} 生成 DVI，
 %   然后再使用 DVIPDFM\textit{x} 转换为 PDF。
 %
-%   \note{不再支持使用 \opt{fontset} 指定字体集。
-%     Linux 系统下默认的中文字库 \opt{fandol} 容易出现缺字的情况。
+%   \note{发行版中自带的 \opt{fandol} 中文字库容易出现缺字的情况。
 %     我们建议 Linux 用户自行配置合适的字体。参见
 %     \href{https://github.com/sjtug/SJTUThesis/wiki/在线使用说明}
 %     {Wiki 页面《在线使用说明》}。}
@@ -732,7 +621,7 @@
 %   \begin{sjtusyntax}[emph={[1]text-font}]
 %     text-font = (*<(newtx)|times|stixtwo|xits|newpx|cambria|newcm|lm|none>*)
 %   \end{sjtusyntax}
-%   指定西文字体集。\sjtuthesis 预定义了一些西文字体组合，
+%   指定西文字体集。\sjtutex{} 预定义了一些西文字体组合，
 %   具体配置见表 \ref{tab:latinfonts}。
 %   找不到定义的西文字体集时的回退选项为 \opt{newtx}。
 % \end{function}
@@ -741,7 +630,7 @@
 %   \begin{sjtusyntax}[emph={[1]math-font}]
 %     math-font = (*<(auto)|(newtx)|stixtwo|xits|newpx|cambria|newcm|lm|none>*)
 %   \end{sjtusyntax}
-%   指定数学字体集。\sjtuthesis 预定义了一些数学字体组合，
+%   指定数学字体集。\sjtutex{} 预定义了一些数学字体组合，
 %   具体配置见表 \ref{tab:latinfonts} 数学字体列。
 %   默认跟随西文字体 \opt{text-font} 的设置。
 %   找不到定义的数学字体集时的回退选项为 \opt{newtx}。
@@ -843,7 +732,7 @@
 %     float-numsep = {--},
 %   },
 %   name = {
-%     publications = {攻读学位期间完成的论文},
+%     achv         = {攻读学位期间完成的论文},
 %   },
 % }
 % \end{latex}
@@ -1400,7 +1289,7 @@
 %
 % \begin{function}{assumption,axiom,conjecture,corollary,definition,example,
 %   exercise,lemma,problem,proposition,theorem}
-%   \sjtuthesis{} 预定义了一系列数学环境。在启用 \pkg{ntheorem} 或 \pkg{amsthm}
+%   \sjtutex{} 预定义了一系列数学环境。在启用 \pkg{ntheorem} 或 \pkg{amsthm}
 %   宏包后有效，环境如表 \ref{tab:theorems} 所示。
 % \end{function}
 %
@@ -1538,11 +1427,6 @@
   }
 \@ifpackagelater { expl3 } { 2020/04/06 } { }
   { \msg_error:nnn { sjtutex } { l3-too-old } {#1} }
-%    \end{macrocode}
-%
-% 定义 \texttt{sjtuthesis} 宏。
-%    \begin{macrocode}
-\NewDocumentCommand \sjtuthesis { } { SJTU \textsc{ Thesis } }
 %    \end{macrocode}
 %
 % \subsection{内部变量}
@@ -4579,6 +4463,7 @@
 %</class>
 %    \end{macrocode}
 %
+% \subsection{名称配置}
 %    \begin{macrocode}
 %<*name>
 %<*thesis>
