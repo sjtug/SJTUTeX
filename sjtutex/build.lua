@@ -10,7 +10,7 @@ docfiledir         = "doc"
 
 typesetexe         = "xelatex"
 typesetfiles       = {"sample-*.tex","sjtutex.dtx"}
-typesetsuppfiles   = {"common-*.tex"}
+typesetsuppfiles   = {"common-*.tex","ref.bib"}
 
 bibtexexe          = "bibtex"
 
@@ -24,3 +24,5 @@ tdslocations = {
   "tex/latex/sjtutex/fd/sjtu-*-font-*.def",
   "tex/latex/sjtutex/vi/sjtu-vi-*.pdf"
 }
+
+excludefiles       = {"*~","sample-*.tex","sample-*.pdf"}
