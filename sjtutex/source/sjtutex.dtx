@@ -2431,28 +2431,28 @@
 %
 % 标准文档类中未定义的名称。
 %    \begin{macrocode}
-    figure*        .tl_set:N = \l_@@_name_figure_aux_tl ,
+    figure*        .tl_set:N = \SJTU@figurename@aux ,
     figure*       .initial:n = { 图 } ,
-    table*         .tl_set:N = \l_@@_name_table_aux_tl ,
+    table*         .tl_set:N = \SJTU@tablename@aux ,
     table*        .initial:n = { 表 } ,
-    algorithm      .tl_set:N = \l_@@_name_algorithm_tl ,
+    algorithm      .tl_set:N = \SJTU@algorithmname ,
     algorithm     .initial:n = { Algorithm } ,
-    listalgorithm  .tl_set:N = \l_@@_name_listalgorithm_tl ,
+    listalgorithm  .tl_set:N = \SJTU@listalgorithmname ,
     listalgorithm .initial:n = { List~of~Algorithms } ,
 %<*thesis>
-    abbr           .tl_set:N = \l_@@_name_abbr_tl ,
+    abbr           .tl_set:N = \SJTU@abbrname ,
     abbr          .initial:n = { Abbreviations } ,
-    nom            .tl_set:N = \l_@@_name_nom_tl ,
+    nom            .tl_set:N = \SJTU@nomname ,
     nom           .initial:n = { Nomenclature } ,
-    summary        .tl_set:N = \l_@@_name_summary_tl ,
+    summary        .tl_set:N = \SJTU@summaryname ,
     summary       .initial:n = { Summary } ,
-    ack            .tl_set:N = \l_@@_name_ack_tl ,
+    ack            .tl_set:N = \SJTU@ackname ,
     ack           .initial:n = { Acknowledgements } ,
-    resume         .tl_set:N = \l_@@_name_resume_tl ,
+    resume         .tl_set:N = \SJTU@resumename ,
     resume        .initial:n = { Resume } ,
-    digest         .tl_set:N = \l_@@_name_digest_tl ,
+    digest         .tl_set:N = \SJTU@digestname ,
     digest        .initial:n = { Digest } ,
-    achv           .tl_set:N = \l_@@_name_achv_tl ,
+    achv           .tl_set:N = \SJTU@achvname ,
     achv          .initial:n = { List~of~Research~Achievements },
 %</thesis>
   }
@@ -3512,8 +3512,8 @@
 %    \begin{macrocode}
 \DeclareCaptionOption { aux-names } [ ]
   {
-    \tl_set:Nn \figurename { \l_@@_name_figure_aux_tl }
-    \tl_set:Nn \tablename  { \l_@@_name_table_aux_tl  }
+    \tl_set:Nn \figurename { \SJTU@figurename@aux }
+    \tl_set:Nn \tablename  { \SJTU@tablename@aux  }
   }
 \captionsetup [ bi-second ] { aux-names }
 %    \end{macrocode}
@@ -4093,12 +4093,12 @@
 %<*thesis>
 \NewDocumentEnvironment { abbreviation  } { }
   {
-    \@@_head_aux:V   \l_@@_name_abbr_tl
+    \@@_head_aux:V   \SJTU@abbrname
     \tl_clear:N \SJTU@style@float@font
   } { }
 \NewDocumentEnvironment { abbreviation* } { }
   {
-    \@@_head_aux_s:V \l_@@_name_abbr_tl
+    \@@_head_aux_s:V \SJTU@abbrname
     \tl_clear:N \SJTU@style@float@font
   } { }
 %    \end{macrocode}
@@ -4107,12 +4107,12 @@
 %    \begin{macrocode}
 \NewDocumentEnvironment { nomenclature  } { }
   {
-    \@@_head_aux:V   \l_@@_name_nom_tl
+    \@@_head_aux:V   \SJTU@nomname
     \tl_clear:N \SJTU@style@float@font
   } { }
 \NewDocumentEnvironment { nomenclature* } { }
   {
-    \@@_head_aux_s:V \l_@@_name_nom_tl
+    \@@_head_aux_s:V \SJTU@nomname
     \tl_clear:N \SJTU@style@float@font
   } { }
 %    \end{macrocode}
@@ -4120,7 +4120,7 @@
 % 全文总结。
 %    \begin{macrocode}
 \NewDocumentEnvironment { summary } { }
-  { \@@_head_aux:V \l_@@_name_summary_tl } { }
+  { \@@_head_aux:V \SJTU@summaryname } { }
 %    \end{macrocode}
 %
 % 致谢，盲审模式下隐藏致谢。
@@ -4129,7 +4129,7 @@
   {
     \bool_if:NF \g_@@_review_bool
       {
-        \@@_head_aux:V \l_@@_name_ack_tl
+        \@@_head_aux:V \SJTU@ackname
         #1
       }
   } { }
@@ -4181,7 +4181,7 @@
   { Empty~ `#1'~ environment. }
 %<*thesis>
 \NewDocumentEnvironment { achievements } { }
-  { \@@_head_aux:V \l_@@_name_achv_tl } { }
+  { \@@_head_aux:V \SJTU@achvname } { }
 %</thesis>
 \NewDocumentEnvironment { bibliolist  } { m +b }
   {
@@ -4212,7 +4212,7 @@
   {
     \bool_if:NF \g_@@_review_bool
       {
-        \@@_head_aux:V \l_@@_name_resume_tl
+        \@@_head_aux:V \SJTU@resumename
         #1
       }
   } { }
@@ -4230,7 +4230,7 @@
         \cs_gset:Nn \@@_thepage: { \arabic { page } }
         \cs_gset_eq:NN \addcontentsline \use_none:nnn
         \@@_counter_without_chapter:
-        \@@_head_auxb_s:Vo \l_@@_name_digest_tl
+        \@@_head_auxb_s:Vo \SJTU@digestname
           { \exp_args:NV \MakeUppercase \l_@@_info_title_aux_tl }
         #1
       }
@@ -4404,8 +4404,8 @@
 %    \begin{macrocode}
 \ctex_at_end_package:nn { algorithm }
   {
-    \tl_set:Nn \fname@algorithm   { \l_@@_name_algorithm_tl     }
-    \tl_set:Nn \listalgorithmname { \l_@@_name_listalgorithm_tl }
+    \tl_set:Nn \fname@algorithm   { \SJTU@algorithmname     }
+    \tl_set:Nn \listalgorithmname { \SJTU@listalgorithmname }
     \@@_newlistof:nnnnn { algorithm } { alg } { algorithm }
       { \fname@algorithm } { \listalgorithmname }
   }
@@ -4418,9 +4418,9 @@
 \ctex_at_end_package:nn { algorithm2e }
   {
 %<!article>    \cs_set_eq:NN \@chapter \@@_save_chapter:w
-    \SetAlgorithmName { \l_@@_name_algorithm_tl     }
-                      { \l_@@_name_algorithm_tl     }
-                      { \l_@@_name_listalgorithm_tl }
+    \SetAlgorithmName { \SJTU@algorithmname     }
+                      { \SJTU@algorithmname     }
+                      { \SJTU@listalgorithmname }
     \SetAlgoCaptionSeparator { \enskip }
     \@@_newlistof:nnnnn { algorithm } { alg } { algocf }
       { \algorithmcfname } { \listalgorithmcfname }
@@ -4463,7 +4463,7 @@
 % \subsubsection{\pkg{nomencl} 宏包}
 %    \begin{macrocode}
 \ctex_at_end_package:nn { nomencl }
-  { \tl_set:Nn \nomname { \l_@@_name_nom_tl } }
+  { \tl_set:Nn \nomname { \SJTU@nomname } }
 %    \end{macrocode}
 %
 %    \begin{macrocode}
