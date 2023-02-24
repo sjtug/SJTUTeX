@@ -4170,7 +4170,10 @@
 \msg_new:nnn { sjtutex } { empty-environment }
   { Empty~ `#1'~ environment. }
 \NewDocumentEnvironment { achievements } { O{ \SJTU@achvname } }
-  { \@@_head_aux:n {#1} } { }
+  {
+    \@@_head_aux:n {#1}
+    \setcounter { SJTU@bib } { 0 }
+  } { }
 \NewDocumentEnvironment { bibliolist  } { m +b }
   {
     \bool_if:NF \g_@@_review_bool
