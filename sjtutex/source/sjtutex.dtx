@@ -3436,10 +3436,8 @@
   { \SJTU@head* {#1} [#2] }
 \cs_new:Npn \@@_head_auxb_s:nn #1#2
   { \SJTU@head* [#1] {#2} }
-\cs_generate_variant:Nn \@@_head_aux:n   { V }
-\cs_generate_variant:Nn \@@_head_aux_s:n { V }
 \cs_generate_variant:Nn \@@_head_auxa_s:nn { Vn, VV }
-\cs_generate_variant:Nn \@@_head_auxb_s:nn { Vo }
+\cs_generate_variant:Nn \@@_head_auxb_s:nn { no }
 \cs_new_eq:NN \@@_pdf_bookmark:nn \use_none:nn
 \cs_new_eq:NN \@@_phantom_section: \prg_do_nothing:
 %    \end{macrocode}
@@ -4084,49 +4082,48 @@
 % 缩略语对照表。
 %    \begin{macrocode}
 %<*thesis>
-\NewDocumentEnvironment { abbreviation  } { }
+\NewDocumentEnvironment { abbreviation  } { O{ \SJTU@abbrname } }
   {
-    \@@_head_aux:V   \SJTU@abbrname
+    \@@_head_aux:n   {#1}
     \tl_clear:N \SJTU@style@float@font
   } { }
-\NewDocumentEnvironment { abbreviation* } { }
+\NewDocumentEnvironment { abbreviation* } { O{ \SJTU@abbrname } }
   {
-    \@@_head_aux_s:V \SJTU@abbrname
+    \@@_head_aux_s:n {#1}
     \tl_clear:N \SJTU@style@float@font
   } { }
 %    \end{macrocode}
 %
 % 符号对照表。
 %    \begin{macrocode}
-\NewDocumentEnvironment { nomenclature  } { }
+\NewDocumentEnvironment { nomenclature  } { O{ \SJTU@nomname } }
   {
-    \@@_head_aux:V   \SJTU@nomname
+    \@@_head_aux:n   {#1}
     \tl_clear:N \SJTU@style@float@font
   } { }
-\NewDocumentEnvironment { nomenclature* } { }
+\NewDocumentEnvironment { nomenclature* } { O{ \SJTU@nomname } }
   {
-    \@@_head_aux_s:V \SJTU@nomname
+    \@@_head_aux_s:n {#1}
     \tl_clear:N \SJTU@style@float@font
   } { }
 %    \end{macrocode}
 %
 % 全文总结。
 %    \begin{macrocode}
-\NewDocumentEnvironment { summary } { }
-  { \@@_head_aux:V \SJTU@summaryname } { }
+\NewDocumentEnvironment { summary } { O{ \SJTU@summaryname } }
+  { \@@_head_aux:n {#1} } { }
 %    \end{macrocode}
 %
 % 致谢，盲审模式下隐藏致谢。
 %    \begin{macrocode}
-\NewDocumentEnvironment { acknowledgements } { +b }
+\NewDocumentEnvironment { acknowledgements } { O{ \SJTU@ackname } +b }
   {
     \bool_if:NF \g_@@_review_bool
       {
-        \@@_head_aux:V \SJTU@ackname
-        #1
+        \@@_head_aux:n {#1}
+        #2
       }
   } { }
-%</thesis>
 %    \end{macrocode}
 %
 % 发表论文与学术成果。
@@ -4172,41 +4169,38 @@
   }
 \msg_new:nnn { sjtutex } { empty-environment }
   { Empty~ `#1'~ environment. }
-%<*thesis>
-\NewDocumentEnvironment { achievements } { }
-  { \@@_head_aux:V \SJTU@achvname } { }
-%</thesis>
+\NewDocumentEnvironment { achievements } { O{ \SJTU@achvname } }
+  { \@@_head_aux:n {#1} } { }
 \NewDocumentEnvironment { bibliolist  } { m +b }
   {
-%<thesis>    \bool_if:NF \g_@@_review_bool
-%<thesis>      {
+    \bool_if:NF \g_@@_review_bool
+      {
         \cs_set:Npn \@noitemerr { }
         \begin { @bibliolist } {#1}
         #2
         \end { @bibliolist }
-%<thesis>      }
+      }
   } { }
 \NewDocumentEnvironment { bibliolist* } { m +b }
   {
-%<thesis>    \bool_if:NT \g_@@_review_bool
-%<thesis>      {
+    \bool_if:NT \g_@@_review_bool
+      {
         \cs_set:Npn \@noitemerr { }
         \begin { @bibliolist } {#1}
         #2
         \end { @bibliolist }
-%<thesis>      }
+      }
   } { }
 %    \end{macrocode}
 %
 % 简历。
 %    \begin{macrocode}
-%<*thesis>
-\NewDocumentEnvironment { resume } { +b }
+\NewDocumentEnvironment { resume } { O{ \SJTU@resumename } +b }
   {
     \bool_if:NF \g_@@_review_bool
       {
-        \@@_head_aux:V \SJTU@resumename
-        #1
+        \@@_head_aux:n {#1}
+        #2
       }
   } { }
 %    \end{macrocode}
@@ -4223,7 +4217,7 @@
         \cs_gset:Nn \@@_thepage: { \arabic { page } }
         \cs_gset_eq:NN \addcontentsline \use_none:nnn
         \@@_counter_without_chapter:
-        \@@_head_auxb_s:Vo \SJTU@digestname
+        \@@_head_auxb_s:no { \SJTU@digestname }
           { \exp_args:NV \MakeUppercase \l_@@_info_title_aux_tl }
         #1
       }
