@@ -4176,13 +4176,20 @@
   }
 \msg_new:nnn { sjtutex } { empty-environment }
   { Empty~ `#1'~ environment. }
+\bool_new:N \l_@@_achievements_bool
 \NewDocumentEnvironment { achievements } { O{ \SJTU@achvname } }
   {
     \@@_head_aux:n {#1}
     \setcounter { SJTU@bib } { 0 }
+    \bool_set_true:N \l_@@_achievements_bool
   } { }
 \NewDocumentEnvironment { bibliolist  } { m +b }
   {
+    \bool_if:NF \l_@@_achievements_bool
+      {
+        \msg_error:nnnn { sjtutex } { environment-validation }
+          { bibliolist  } { achievements }
+      }
     \bool_if:NF \g_@@_review_bool
       {
         \cs_set:Npn \@noitemerr { }
@@ -4193,6 +4200,11 @@
   } { }
 \NewDocumentEnvironment { bibliolist* } { m +b }
   {
+    \bool_if:NF \l_@@_achievements_bool
+      {
+        \msg_error:nnnn { sjtutex } { environment-validation }
+          { bibliolist* } { achievements }
+      }
     \bool_if:NT \g_@@_review_bool
       {
         \cs_set:Npn \@noitemerr { }
@@ -4201,6 +4213,8 @@
         \end { @bibliolist }
       }
   } { }
+\msg_new:nnn { sjtutex } { environment-validation }
+  { `#1'~ is~ only~ valid~ in~ `#2'~ environment. }
 %    \end{macrocode}
 %
 % 简历。
