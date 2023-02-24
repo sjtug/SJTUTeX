@@ -1266,6 +1266,27 @@
 % \end{threeparttable}
 % \end{table}
 %
+% \begin{function}[rEXP,updated=2022-02-24]{nomenclature,nomenclature*}
+%   \begin{sjtusyntax}[emph={[2]nomenclature,nomenclature*}]
+%     \begin{nomenclature}(*\oarg{标题}*)
+%       (*\meta{符号对照表}*)
+%     \end{nomenclature}
+%   \end{sjtusyntax}
+%   符号对照表环境。带星号的版本不会出现在目录中。可以使用可选参数手动设置标题。
+%   符号对照表环境仅设置标题，内部实现可由用户自行决定。
+%   可以使用 \pkg{longtable}，也可以使用 \pkg{nomencl} 宏包。
+% \end{function}
+%
+% \begin{function}[rEXP,updated=2022-02-24]{abbreviation,abbreviation*}
+%   \begin{sjtusyntax}[emph={[2]abbreviation,abbreviation*}]
+%     \begin{abbreviation}(*\oarg{标题}*)
+%       (*\meta{缩略语对照表}*)
+%     \end{abbreviation}
+%   \end{sjtusyntax}
+%   缩略语对照表环境。带星号的版本不会出现在目录中。可以使用可选参数手动设置标题。
+%   缩略语对照表环境仅设置标题，内部实现可由用户自行决定。
+% \end{function}
+%
 % \subsection{正文部分}
 %
 % \begin{function}[rEXP]{\mainmatter}
@@ -1313,6 +1334,15 @@
 %   设置固定值行距。通过当前字体大小计算行距倍数，在字号命令之后使用。
 % \end{function}
 %
+% \begin{function}[rEXP,updated=2022-02-24]{summary}
+%   \begin{sjtusyntax}[morekeywords={summary}]
+%     \begin{summary}(*\oarg{标题}*)
+%       (*\meta{全文总结内容}*)
+%     \end{summary}
+%   \end{sjtusyntax}
+%   全文总结。可以使用可选参数手动设置标题。该环境无章编号。
+% \end{function}
+%
 % \begin{function}{\appendix}
 %   \begin{sjtusyntax}[morekeywords={\appendix}]
 %     \appendix
@@ -1320,17 +1350,6 @@
 %   \end{sjtusyntax}
 %   附录由 \cs{appendix} 命令开启，然后像正文一样书写。
 %^^A 标准新模板将附录编号置于章节标题之后。
-% \end{function}
-%
-% \begin{function}[rEXP]{nomenclature,nomenclature*}
-%   \begin{sjtusyntax}[emph={[2]nomenclature,nomenclature*}]
-%     \begin{nomenclature}
-%       (*\meta{符号对照表}*)
-%     \end{nomenclature}
-%   \end{sjtusyntax}
-%   符号对照表环境。带星号的版本不会出现在目录中。
-%   符号对照表环境仅设置标题，内部实现可由用户自行决定。
-%   可以使用 \pkg{longtable}，也可以使用 \pkg{nomencl} 宏包。
 % \end{function}
 %
 % \subsection{后文部分}
@@ -1342,52 +1361,50 @@
 %   声明后文部分开始。 后文部分包含致谢等。
 % \end{function}
 %
-% \begin{function}[rEXP]{acknowledgements}
+% \begin{function}[rEXP,updated=2022-02-24]{acknowledgements}
 %   \begin{sjtusyntax}[emph={[2]acknowledgements}]
-%     \begin{acknowledgements}
+%     \begin{acknowledgements}(*\oarg{标题}*)
 %       (*\meta{致谢内容}*)
 %     \end{acknowledgements}
 %   \end{sjtusyntax}
-%   致谢环境。盲审模式下致谢将被隐去。
+%   致谢环境。盲审模式下致谢将被隐去。可以使用可选参数手动设置标题。
 % \end{function}
 %
-% \begin{function}[rEXP]{achievements}
+% \begin{function}[rEXP,updated=2022-02-24]{achievements}
 %   \begin{sjtusyntax}[emph={[2]achievements}]
-%     \begin{achievements}
+%     \begin{achievements}(*\oarg{标题}*)
 %       (*\meta{获得的科研成果}*)
 %     \end{achievements}
 %   \end{sjtusyntax}
-%   科研成果环境，内部请采用下面的附录用文献列表环境。
-%   你可以在该环境中使用带星号的节次命令以分隔不同的类型的内容
-%  （比如学术论文、专利等）。
+%   科研成果环境，可以使用可选参数手动设置标题。内部请配合使用下面的附录用文献列表环境
+%   \env{bibliolist} 和 \env{bibliolist*}。你可以在该环境中使用带星号的节次命令
+%   以分隔不同的类型的成果（比如学术论文、专利等）；你也可以使用多个 \env{achievements}
+%   环境，配合不同的可选参数作为标题，展示不同类型的成果。
 % \end{function}
 %
-% \begin{function}{bibliolist}
-%   \begin{sjtusyntax}[emph={[2]bibliolist}]
+% \begin{function}[rEXP,updated=2022-02-24]{bibliolist,bibliolist*}
+%   \begin{sjtusyntax}[emph={[2]bibliolist,bibliolist*}]
 %     \begin{bibliolist}(*\marg{最长条目编号}*)
 %        \item (*\meta{文献条目}*)
 %     \end{bibliolist}
-%   \end{sjtusyntax}
-%   附录用文献环境，普通模式下显示。
-%   在 \cls{sjtuthesis} 中，盲审模式下不显示。
-% \end{function}
-%
-% \begin{function}[rEXP]{bibliolist*}
-%   \begin{sjtusyntax}[emph={[2]bibliolist,bibliolist*}]
 %     \begin{bibliolist*}(*\marg{最长条目编号}*)
 %        \item (*\meta{文献条目（隐去姓名）}*)
 %     \end{bibliolist*}
 %   \end{sjtusyntax}
-%   附录用文献环境，盲审模式下显示。
+%   附录用文献环境，只允许在 \env{achievements} 环境中使用。
+%   需要指定最长条目的编号作为参数，比如 \opt{99}。
+%   环境内部使用 \cs{item} 来分隔各条目，在同一个 \env{achievements} 环境内、不同的
+%   \env{bibliolist} 或 \env{bibliolist*} 环境中编号连续递增、不会间断。
+%   普通模式下显示 \env{bibliolist} 中的内容，盲审模式下显示 \env{bibliolist*} 中的内容。
 % \end{function}
 %
-% \begin{function}[rEXP]{resume}
+% \begin{function}[rEXP,updated=2022-02-24]{resume}
 %   \begin{sjtusyntax}[emph={[2]resume}]
-%     \begin{resume}
+%     \begin{resume}(*\oarg{标题}*)
 %       (*\meta{简历内容}*)
 %     \end{resume}
 %   \end{sjtusyntax}
-%   简历环境。盲审模式下简历将被隐去。
+%   简历环境。盲审模式下简历将被隐去。可以使用可选参数手动设置标题。
 % \end{function}
 %
 % \begin{function}[rEXP]{digest}
