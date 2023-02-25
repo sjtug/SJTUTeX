@@ -1908,7 +1908,7 @@
 %    \begin{macrocode}
 \cs_generate_variant:Nn \tl_const:Nn { co, Nv }
 \cs_generate_variant:Nn \cs_gset:Npn { cpo }
-\prg_generate_conditional_variant:Nnn \regex_match:nn { ne } { T }
+\prg_generate_conditional_variant:Nnn \regex_match:nn { ne } { T, TF }
 \exp_args_generate:n { Nnv }
 %    \end{macrocode}
 % \end{macro}
@@ -2138,19 +2138,33 @@
 %    \end{macrocode}
 % \end{macro}
 %
+% 载入名称配置。
+%    \begin{macrocode}
+%<thesis>\file_input:n { sjtu-name-thesis.cfg }
+%<!thesis>\file_input:n { sjtu-name-generic.cfg }
+%    \end{macrocode}
+%
 % \begin{macro}{\@@_date_aux_zh:nnn,\@@_date_aux_zh:w,
-% \@@_date_aux_en:nnn,\@@_date_aux_en:w}
-% 将形如 |yyyy-mm-dd| 的 ISO 日期格式字符串转化为日期表示。
+% \@@_date_aux_short_zh:nn,\@@_date_aux_short_zh:w,
+% \@@_date_aux_en:nnn,\@@_date_aux_en:w,
+% \@@_date_aux_short_en:nn,\@@_date_aux_short_en:w}
+% 将形如 |yyyy-mm-dd| 或 |yyyy-mm| 的 ISO 日期格式字符串转化为日期表示。
 %    \begin{macrocode}
 \cs_new:Npn \@@_date_aux_zh:nnn #1#2#3
-  { \__zhnum_date_aux:Nnnnn \int_to_arabic:n { ~ } {#1} {#2} {#3} }
+  {
+    \int_to_arabic:n {#1} ~ { \exp_not:V \c_@@_name_year_zh_tl  } ~
+    \int_to_arabic:n {#2} ~ { \exp_not:V \c_@@_name_month_zh_tl } ~
+    \int_to_arabic:n {#3} ~ { \exp_not:V \c_@@_name_day_zh_tl   }
+  }
 \cs_new:Npn \@@_date_aux_zh:w #1-#2-#3 \q_stop
   { \@@_date_aux_zh:nnn {#1} {#2} {#3} }
-\clist_const:Nn \c_@@_name_month_en_clist
+\cs_new:Npn \@@_date_aux_short_zh:nn #1#2
   {
-    January, February, March, April, May, June,
-    July, August, September, October, November, December
+    \int_to_arabic:n {#1} ~ { \exp_not:V \c_@@_name_year_zh_tl  } ~
+    \int_to_arabic:n {#2} ~ { \exp_not:V \c_@@_name_month_zh_tl }
   }
+\cs_new:Npn \@@_date_aux_short_zh:w #1-#2 \q_stop
+  { \@@_date_aux_short_zh:nn {#1} {#2} }
 \cs_new:Npn \@@_ordinal_en:n #1
   {
     \int_to_arabic:n {#1}
@@ -2174,9 +2188,20 @@
       }
   }
 \cs_new:Npn \@@_date_aux_en:nnn #1#2#3
-  { \clist_item:Nn \c_@@_name_month_en_clist {#2}~ \@@_ordinal_en:n {#3},~ #1 }
+  {
+    \clist_item:Nn \c_@@_name_month_en_clist {#2} ~
+    \@@_ordinal_en:n {#3} ,~
+    \int_to_arabic:n {#1}
+  }
 \cs_new:Npn \@@_date_aux_en:w #1-#2-#3 \q_stop
   { \@@_date_aux_en:nnn {#1} {#2} {#3} }
+\cs_new:Npn \@@_date_aux_short_en:nn #1#2
+  {
+    \clist_item:Nn \c_@@_name_month_en_clist {#2} ,~
+    \int_to_arabic:n {#1}
+  }
+\cs_new:Npn \@@_date_aux_short_en:w #1-#2 \q_stop
+  { \@@_date_aux_short_en:nn {#1} {#2} }
 \clist_map_inline:nn
   { zh, en }
   {
@@ -2191,12 +2216,6 @@
 \tl_const:Nv \c_@@_today_tl { c_@@_today_ \g_@@_lang_tl _tl }
 %    \end{macrocode}
 % \end{macro}
-%
-% 载入名称配置。
-%    \begin{macrocode}
-%<thesis>\file_input:n { sjtu-name-thesis.cfg }
-%<!thesis>\file_input:n { sjtu-name-generic.cfg }
-%    \end{macrocode}
 %
 % \subsection{用户接口}
 %
@@ -2310,12 +2329,21 @@
 %<thesis>    fund*          .clist_set:N = \l_@@_info_fund_en_clist ,
     date                .code:n =
       {
-        \regex_match:neT { \d{4}-\d{2}-\d{2} } {#1}
+        \regex_match:neTF { \d{4}-\d{2}-\d{2} } {#1}
           {
             \tl_set:Nx \l_@@_info_date_zh_tl
               { \exp_last_unbraced:Ne \@@_date_aux_zh:w #1 \q_stop }
             \tl_set:Nx \l_@@_info_date_en_tl
               { \exp_last_unbraced:Ne \@@_date_aux_en:w #1 \q_stop }
+          }
+          {
+            \regex_match:neT { \d{4}-\d{2} } {#1}
+            {
+              \tl_set:Nx \l_@@_info_date_zh_tl
+                { \exp_last_unbraced:Ne \@@_date_aux_short_zh:w #1 \q_stop }
+              \tl_set:Nx \l_@@_info_date_en_tl
+                { \exp_last_unbraced:Ne \@@_date_aux_short_en:w #1 \q_stop }
+            }
           }
       } ,
     display-date      .tl_set:N = \l_@@_info_date_zh_tl ,
@@ -4501,6 +4529,18 @@
 % \subsection{名称配置}
 %    \begin{macrocode}
 %<*name>
+\clist_map_inline:nn
+  {
+    { year  } { 年 } ,
+    { month } { 月 } ,
+    { day   } { 日 }
+  }
+  { \__sjtu_define_name:nn #1 }
+\clist_const:Nn \c_@@_name_month_en_clist
+  {
+    January, February, March, April, May, June,
+    July, August, September, October, November, December
+  }
 %<*thesis>
 \@@_define_symbol:nn { white_square } { "25A1 }
 \@@_define_name_from_clist:nNnn { degree_level }
