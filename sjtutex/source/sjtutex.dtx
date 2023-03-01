@@ -1901,14 +1901,14 @@
 %
 % \subsection{内部函数}
 %
-% \begin{macro}{\tl_const:co,\tl_const:Nv,\clist_map_inline:xn,
+% \begin{macro}{\cs_gset:cpo,\tl_const:Nv,
 % \exp_args:NNnv,\regex_match:neTF}
 % \LaTeX3{} 函数变体。
 %    \begin{macrocode}
-\cs_generate_variant:Nn \tl_const:Nn { co, Nv }
 \cs_generate_variant:Nn \cs_gset:Npn { cpo }
-\prg_generate_conditional_variant:Nnn \regex_match:nn { ne } { T, TF }
+\cs_generate_variant:Nn \tl_const:Nn { Nv }
 \exp_args_generate:n { Nnv }
+\prg_generate_conditional_variant:Nnn \regex_match:nn { ne } { T, TF }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -1960,7 +1960,7 @@
   {
     \cs_new:Npn \@@_unicode_char:n #1
       {
-        \Unicode
+        \exp_not:N \Unicode
           { \int_div_truncate:nn {#1} { 256 } }
           { \int_mod:nn          {#1} { 256 } }
       }
@@ -2133,7 +2133,7 @@
       { \clist_item:nn {#4} {#2} }
   }
 \cs_new_protected:Npn \@@_define_symbol:nn #1#2
-  { \tl_const:co { c_@@_symbol_ #1 _tl } { \@@_unicode_char:n {#2} } }
+  { \tl_const:cx { c_@@_symbol_ #1 _tl } { \@@_unicode_char:n {#2} } }
 %    \end{macrocode}
 % \end{macro}
 %
