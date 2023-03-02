@@ -4135,7 +4135,7 @@
 %<*thesis>
 \NewDocumentEnvironment { abbreviation  } { O{ \SJTU@abbrname } }
   {
-    \@@_head_aux:n   {#1}
+    \chapter {#1}
     \tl_clear:N \SJTU@style@float@font
   } { }
 \NewDocumentEnvironment { abbreviation* } { O{ \SJTU@abbrname } }
@@ -4149,7 +4149,7 @@
 %    \begin{macrocode}
 \NewDocumentEnvironment { nomenclature  } { O{ \SJTU@nomname } }
   {
-    \@@_head_aux:n   {#1}
+    \chapter {#1}
     \tl_clear:N \SJTU@style@float@font
   } { }
 \NewDocumentEnvironment { nomenclature* } { O{ \SJTU@nomname } }
