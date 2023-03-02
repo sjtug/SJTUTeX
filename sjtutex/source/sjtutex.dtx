@@ -1265,26 +1265,6 @@
 % \end{threeparttable}
 % \end{table}
 %
-% \begin{function}[rEXP,updated=2022-02-24]{nomenclature,nomenclature*}
-%   \begin{sjtusyntax}[emph={[2]nomenclature,nomenclature*}]
-%     \begin{nomenclature}(*\oarg{标题}*)
-%       (*\meta{符号对照表}*)
-%     \end{nomenclature}
-%   \end{sjtusyntax}
-%   符号对照表环境。带星号的版本不会出现在目录中。可以使用可选参数手动设置标题。
-%   符号对照表环境仅设置标题，内部实现可由用户自行决定。
-%   可以使用 \pkg{longtable}，也可以使用 \pkg{nomencl} 宏包。
-% \end{function}
-%
-% \begin{function}[rEXP,updated=2022-02-24]{abbreviation,abbreviation*}
-%   \begin{sjtusyntax}[emph={[2]abbreviation,abbreviation*}]
-%     \begin{abbreviation}(*\oarg{标题}*)
-%       (*\meta{缩略语对照表}*)
-%     \end{abbreviation}
-%   \end{sjtusyntax}
-%   缩略语对照表环境。带星号的版本不会出现在目录中。可以使用可选参数手动设置标题。
-%   缩略语对照表环境仅设置标题，内部实现可由用户自行决定。
-% \end{function}
 %
 % \subsection{正文部分}
 %
@@ -1349,6 +1329,27 @@
 %   \end{sjtusyntax}
 %   附录由 \cs{appendix} 命令开启，然后像正文一样书写。
 %^^A 标准新模板将附录编号置于章节标题之后。
+% \end{function}
+%
+% \begin{function}[rEXP,updated=2022-03-02]{nomenclature,nomenclature*}
+%   \begin{sjtusyntax}[emph={[2]nomenclature,nomenclature*}]
+%     \begin{nomenclature}(*\oarg{标题}*)
+%       (*\meta{符号对照表}*)
+%     \end{nomenclature}
+%   \end{sjtusyntax}
+%   符号对照表环境。带星号的版本不会出现在目录中。可以使用可选参数手动设置标题。
+%   符号对照表环境仅设置标题，内部实现可由用户自行决定。
+%   可以使用 \pkg{longtable}，也可以使用 \pkg{nomencl} 宏包。
+% \end{function}
+%
+% \begin{function}[rEXP,updated=2022-03-02]{abbreviation,abbreviation*}
+%   \begin{sjtusyntax}[emph={[2]abbreviation,abbreviation*}]
+%     \begin{abbreviation}(*\oarg{标题}*)
+%       (*\meta{缩略语对照表}*)
+%     \end{abbreviation}
+%   \end{sjtusyntax}
+%   缩略语对照表环境。带星号的版本不会出现在目录中。可以使用可选参数手动设置标题。
+%   缩略语对照表环境仅设置标题，内部实现可由用户自行决定。
 % \end{function}
 %
 % \subsection{后文部分}
