@@ -2240,26 +2240,53 @@
 %
 % 定义字段。
 %    \begin{macrocode}
-\clist_map_inline:nn
-  {
-    title, display_title, running_title, subject, author, date,
-    supervisor, assoc_supervisor, department,
-%<thesis>    co_supervisor, major, degree
-  }
-  {
-    \tl_new:c { l_@@_info_ #1 _zh_tl }
-%<thesis>    \tl_new:c { l_@@_info_ #1 _en_tl }
-  }
 %<thesis>\tl_set:co { l_@@_info_title_aux_tl }
 %<thesis>  { \cs:w l_@@_info_title_ \g_@@_lang_aux_tl _tl \cs_end: }
 \tl_new:N \l_@@_info_id_zh_tl
-\clist_map_inline:nn
-%<!thesis>  { keywords }
-%<thesis>  { keywords, fund }
+%    \end{macrocode}
+%
+% 定义 |sjtu/info| 键值类。
+%    \begin{macrocode}
+\cs_new:Npn \@@_info_keys_define:n #1
   {
-    \clist_new:c { l_@@_info_ #1 _zh_clist }
-%<thesis>    \clist_new:c { l_@@_info_ #1 _en_clist }
+    \clist_map_inline:nn
+      {
+        title, display_title, running_title, subject, author, date,
+        supervisor, assoc_supervisor, department,
+        co_supervisor, major, degree
+      }
+      { \tl_new:c { l_@@_info_ ##1 _ #1 _tl } }
+    \clist_map_inline:nn
+      { keywords, fund }
+      { \clist_new:c { l_@@_info_ ##1 _ #1 _clist } }
+    \keys_define:nn { sjtu }
+      { info / #1 .meta:nn = { sjtu / info / #1 } {##1} }
+    \keys_define:nn { sjtu / info }
+      {        #1 .meta:nn = { sjtu / info / #1 } {##1} }
+    \keys_define:nn { sjtu / info / #1 }
+      {
+        title               .code:n =
+          {
+            \tl_set:cn { l_@@_info_title_ #1 _tl } {##1}
+            \tl_if_empty:cT { l_@@_info_display_title_ #1 _tl }
+              { \tl_set:cn { l_@@_info_display_title_ #1 _tl } {##1} }
+          } ,
+        display-title     .tl_set:c = l_@@_info_display_title_ #1 _tl ,
+        subject           .tl_set:c = l_@@_info_subject_ #1 _tl ,
+        keywords       .clist_set:c = l_@@_info_keywords_ #1 _clist ,
+        author            .tl_set:c = l_@@_info_author_ #1 _tl ,
+        supervisor        .tl_set:c = l_@@_info_supervisor_ #1 _tl ,
+        assoc-supervisor  .tl_set:c = l_@@_info_assoc_supervisor_ #1 _tl ,
+        co-supervisor     .tl_set:c = l_@@_info_co_supervisor_ #1 _tl ,
+        degree            .tl_set:c = l_@@_info_degree_ #1 _tl ,
+        department        .tl_set:c = l_@@_info_department_ #1 _tl ,
+        major             .tl_set:c = l_@@_info_major_ #1 _tl ,
+        fund           .clist_set:c = l_@@_info_fund_ #1 _clist ,
+        display-date      .tl_set:c = l_@@_info_date_ #1 _tl ,
+      }
   }
+\@@_info_keys_define:n { zh }
+\@@_info_keys_define:n { en }
 %    \end{macrocode}
 %
 % 定义 |sjtu/info| 键值类。
