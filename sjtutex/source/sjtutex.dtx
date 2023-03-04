@@ -3515,8 +3515,7 @@
   { \SJTU@head* {#1} [#2] }
 \cs_new:Npn \@@_head_auxb_s:nn #1#2
   { \SJTU@head* [#1] {#2} }
-\cs_generate_variant:Nn \@@_head_auxa_s:nn { Vn, VV }
-\cs_generate_variant:Nn \@@_head_auxb_s:nn { no }
+\cs_generate_variant:Nn \@@_head_auxa_s:nn { vn, vv }
 \cs_new_eq:NN \@@_pdf_bookmark:nn \use_none:nn
 \cs_new_eq:NN \@@_phantom_section: \prg_do_nothing:
 %    \end{macrocode}
@@ -4067,18 +4066,25 @@
         { \bfseries #2 } \clist_use:Nn #1 {#3}
       }
   }
+\cs_generate_variant:Nn \@@_output_keywords:Nnn { cvv }
 %<*thesis>
-\DeclareDocumentEnvironment { abstract  } { }
-  { \@@_head_auxa_s:VV \c_@@_name_abstract_zh_tl \c_@@_name_abstract_tl }
+\bool_new:N \l_@@_abstract_bookmark_bool
+\DeclareDocumentEnvironment { abstract  } { O{ zh } }
   {
-    \@@_output_keywords:Nnn \l_@@_info_keywords_zh_clist
-      { \c_@@_name_keywords_zh_tl } { \c_@@_name_item_sep_zh_tl }
+    \bool_if:NTF \l_@@_abstract_bookmark_bool
+      {
+        \@@_head_auxa_s:vn
+          { c_@@_name_abstract_ #1 _tl } { }
+      }
+      {
+        \@@_head_auxa_s:vv
+          { c_@@_name_abstract_ #1 _tl } { c_@@_name_abstract_tl }
+        \bool_gset_true:N \l_@@_abstract_bookmark_bool
+      }
   }
-\DeclareDocumentEnvironment { abstract* } { }
-  { \@@_head_auxa_s:Vn \c_@@_name_abstract_en_tl { } }
   {
-    \@@_output_keywords:Nnn \l_@@_info_keywords_en_clist
-      { \c_@@_name_keywords_en_tl } { \c_@@_name_item_sep_en_tl }
+    \@@_output_keywords:cvv { l_@@_info_keywords_ #1 _clist }
+      { c_@@_name_keywords_ #1 _tl } { c_@@_name_item_sep_ #1 _tl }
   }
 %</thesis>
 %<*!thesis>
@@ -4313,7 +4319,7 @@
         \cs_gset:Nn \@@_thepage: { \arabic { page } }
         \cs_gset_eq:NN \addcontentsline \use_none:nnn
         \@@_counter_without_chapter:
-        \@@_head_auxb_s:no { \SJTU@digestname }
+        \@@_head_auxb_s:nn { \SJTU@digestname }
           { \exp_args:NV \MakeUppercase \l_@@_info_title_aux_tl }
         #1
       }
