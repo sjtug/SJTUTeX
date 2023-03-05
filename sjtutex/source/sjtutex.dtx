@@ -1480,7 +1480,7 @@
 %    \begin{macrocode}
 \tl_new:N \g_@@_lang_tl
 \tl_new:N \g_@@_lang_aux_tl
-\tl_set:Nn \g_@@_lang_aux_tl { zh }
+\clist_new:N \g_@@_lang_clist
 %    \end{macrocode}
 % \end{variable}
 %
@@ -1632,12 +1632,17 @@
 %    \begin{macrocode}
     lang .choice: ,
     lang .value_required:n = true ,
-    lang .choices:nn =
-      { zh, en }
+    lang / zh .code:n =
       {
-        \tl_gset_eq:NN \g_@@_lang_tl \l_keys_choice_tl
-        \int_compare:nNnT { \l_keys_choice_int } = { 1 }
-          { \tl_gset:Nn \g_@@_lang_aux_tl { en } }
+        \tl_gset:Nn \g_@@_lang_tl {#1}
+        \tl_gset:Nn \g_@@_lang_aux_tl { en }
+        \clist_gset:Nn \g_@@_lang_clist { zh, en }
+      } ,
+    lang / en .code:n =
+      {
+        \tl_gset:Nn \g_@@_lang_tl {#1}
+        \tl_gset:Nn \g_@@_lang_aux_tl { zh }
+        \clist_gset:Nn \g_@@_lang_clist { zh, en }
       } ,
     lang .initial:n = { zh } ,
 %    \end{macrocode}
@@ -1648,13 +1653,13 @@
     zihao .value_required:n = true ,
     zihao / -4 .code:n =
       {
-        \tl_gset:Nn  \g_@@_zihao_tl { -4 }
+        \tl_gset:Nn  \g_@@_zihao_tl {#1}
         \dim_gset:Nn \g_@@_font_size_dim         { 12   bp }
         \dim_gset:Nn \g_@@_default_line_skip_dim { 20   bp }
       } ,
     zihao /  5 .code:n =
       {
-        \tl_gset:Nn  \g_@@_zihao_tl {  5 }
+        \tl_gset:Nn  \g_@@_zihao_tl {#1}
         \dim_gset:Nn \g_@@_font_size_dim         { 10.5 bp }
         \dim_gset:Nn \g_@@_default_line_skip_dim { 15.6 bp }
       } ,
