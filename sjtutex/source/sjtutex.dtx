@@ -3516,6 +3516,7 @@
 \cs_new:Npn \@@_head_auxb_s:nn #1#2
   { \SJTU@head* [#1] {#2} }
 \cs_generate_variant:Nn \@@_head_auxa_s:nn { vn, vv }
+\cs_generate_variant:Nn \@@_head_auxb_s:nn { nx }
 \cs_new_eq:NN \@@_pdf_bookmark:nn \use_none:nn
 \cs_new_eq:NN \@@_phantom_section: \prg_do_nothing:
 %    \end{macrocode}
@@ -4319,8 +4320,8 @@
         \cs_gset:Nn \@@_thepage: { \arabic { page } }
         \cs_gset_eq:NN \addcontentsline \use_none:nnn
         \@@_counter_without_chapter:
-        \@@_head_auxb_s:nn { \SJTU@digestname }
-          { \exp_args:NV \MakeUppercase \l_@@_info_title_aux_tl }
+        \@@_head_auxb_s:nx { \SJTU@digestname }
+          { \exp_not:N \MakeUppercase { \exp_not:V \l_@@_info_title_aux_tl } }
         #1
       }
   } { }
