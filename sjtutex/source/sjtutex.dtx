@@ -783,21 +783,6 @@
 %   如果标题过长，可以尝试使用“|\\|”手动断行。
 % \end{function}
 %
-% \begin{function}[EXP,updated=2022-12-20]{info/running-title}
-%   \begin{sjtusyntax}[emph={[2]running-title}]
-%     running-title  = (*\marg{页眉标题}*)
-%   \end{sjtusyntax}
-%   \cls{sjtuarticle} 中显示在右上角的页眉题目。默认为跟随中文标题。
-% \end{function}
-%
-%^^A \begin{function}[rEXP]{info/running-title*}
-%^^A   \begin{sjtusyntax}[emph={[2]running-title*}]
-%^^A     running-title* = (*\marg{英文页眉标题}*)
-%^^A   \end{sjtusyntax}
-%^^A   论文页眉题目（英文）。
-%^^A   该选项暂时无效。
-%^^A \end{function}
-%
 % \begin{function}[added=2022-12-17,updated=2022-12-23]{info/subject}
 %   \begin{sjtusyntax}[emph={[2]subject}]
 %     subject  = (*\marg{中文主题}*)
@@ -3452,7 +3437,7 @@
   {
     \clist_map_inline:nn
       {
-        title, display_title, running_title, subject, author, date,
+        title, display_title, subject, author, date,
         supervisor, assoc_supervisor, department,
         co_supervisor, major, degree
       }
