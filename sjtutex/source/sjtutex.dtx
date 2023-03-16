@@ -419,7 +419,8 @@
 %     文档类        & \file{sjtuthesis.cls}       & 学位论文文档类 \\
 %                   & \file{sjtureport.cls}       & 报告文档类     \\
 %                   & \file{sjtuarticle.cls}      & 文稿文档类     \\
-%                   & \file{sjtu-*.cfg}           & 文档类配置     \\
+%                   & \file{sjtu-name-*.def}      & 文档类名称配置  \\
+%                   & \file{sjtu-scheme-*.def}    & 文档类语言配置  \\
 %     \midrule
 %     视觉形象系统  & \file{sjtu-vi-logo-*.pdf}   & 校标图片       \\
 %                   & \file{sjtu-vi-badge-*.pdf}  & 校徽图片       \\
@@ -451,10 +452,10 @@
 % \documentclass[type=master]{sjtuthesis}
 % \sjtusetup{
 %   info = {
-%     title   = {上海交通大学学位论文 \LaTeX{} 模板示例文档},
-%     title*  = {A Sample Document for \LaTeX-based SJTU Thesis Template},
-%     author  = {某\quad{}某},
-%     author* = {Mo Mo},
+%     zh/title  = {上海交通大学学位论文 \LaTeX{} 模板示例文档},
+%     en/title  = {A Sample Document for \LaTeX-based SJTU Thesis Template},
+%     zh/author = {某\quad{}某},
+%     en/author = {Mo Mo},
 %   }
 % }
 % \begin{document}
@@ -467,17 +468,14 @@
 % \end{document}
 % \end{latex}
 %
-% 下面这份 \TeX{} 文档展示了 \cls{sjtureport} 文档类的基本用法，只需要指定中文名称。
-% 该文档将包含中文封面，页眉左上角为校徽校名，右上角为章节名称。
+% 下面这份 \TeX{} 文档展示了 \cls{sjtureport} 文档类的基本用法，建议使用标准命令定义中文名称。
+% 该文档将包含默认封面，页眉左上角为校徽校名，右上角为章节名称。
 % \begin{latex}
 % \documentclass{sjtureport}
-% \sjtusetup{
-%   info = {
-%     title   = {上海交通大学 \LaTeX{} 报告模板示例文档},
-%     author  = {某\quad{}某},
-%     subject = {XX课程期末论文}
-%   }
-% }
+% \title{上海交通大学 \LaTeX{} 报告模板示例文档}
+% \author{某\quad{}某}
+% \subject{XX期末课程论文}
+% \keywords{上海交大, 饮水思源, 爱国荣校}
 % \begin{document}
 %   \maketitle
 %   \chapter{欢迎}
@@ -504,7 +502,7 @@
 % 本模板中的选项、命令或环境可以分为以下三类：
 % \begin{itemize}
 %   \item 名字后面带有 \rexptarget\rexpstar{} 的，表示只能在 \cls{sjtuthesis} 文档类中使用；
-%   \item 名字后面带有 \exptarget\expstar{} 的，表示使用范围区别于 \cls{sjtuarticle}；
+%   \item 名字后面带有 \exptarget\expstar{} 的，表示只能在 \cls{sjtureport} 和 \cls{sjtuarticle} 文档类中使用；
 %   \item 名字后面不带有特殊符号的，一般表示在 \cls{sjtuthesis}、\cls{sjtureport} 和 \cls{sjtuarticle} 文档类中都可以使用，特殊情况另作说明。
 % \end{itemize}
 %
@@ -516,8 +514,8 @@
 % \documentclass(*\oarg{文档类选项}*){sjtuthesis}
 % \end{latex}
 %
-% 部分选项采用 \kvopt{\meta{key}}{\meta{value}} 的形式。当 \meta{value} 省略时，
-% 将采用默认值。在下文的说明中，将用\textbf{粗体}表示默认值。
+% 部分选项采用 \kvopt{\meta{key}}{\meta{value}} 的形式，需要使用逗号分隔各选项。
+% 当 \meta{value} 省略时，将采用默认值。在下文的说明中，将用\textbf{粗体}表示默认值。
 %
 % \subsubsection{通用选项}
 %
@@ -533,6 +531,7 @@
 %     lang = (*<(zh)|en>*)
 %   \end{sjtusyntax}
 %   论文主要语言。可选中文或英文，该选项会改变文档中的一些标题的名字。
+%   下文中 \meta{lang} 可以指定为这些选项中的其中之一。
 % \end{function}
 %
 % \begin{function}{draft, final}
@@ -577,7 +576,7 @@
 %   \end{itemize}
 % \end{function}
 %
-% \begin{function}[EXP]{openright, openany}
+% \begin{function}{openright, openany}
 %   指明论文是否奇数页开章。
 %   \opt{openright} 为从奇数页开始新章，
 %   \opt{openany} 为从任意页开始新章。
@@ -729,10 +728,10 @@
 % \begin{latex}[morekeywords={\sjtusetup}]
 % \sjtusetup{
 %   info = {
-%     title        = {上海交通大学学位论文 \LaTeX{} 模板示例文档},
-%     title*       = {A Sample Document for \LaTeX-based SJTU Thesis Template},
-%     author       = {某\quad{}某},
-%     author*      = {Mo Mo},
+%     zh/title     = {上海交通大学学位论文 \LaTeX{} 模板示例文档},
+%     en/title     = {A Sample Document for \LaTeX-based SJTU Thesis Template},
+%     zh/author    = {某\quad{}某},
+%     en/author    = {Mo Mo},
 %   },
 %   style = {
 %     float-numsep = {--},
@@ -745,196 +744,120 @@
 %
 % \subsubsection{信息域}
 %
-% \begin{function}{info}
+% \begin{function}[updated=2023-03-14]{info}
 %   \begin{sjtusyntax}[emph={[1]info}]
 %     info = (*\marg{键值列表}*)
 %   \end{sjtusyntax}
-%   该选项包含许多子项目，用于录入论文信息。
-%   具体内容见下。以下带“*”的项目表示对应的英文字段。
+%   该选项包含许多子项目，用于录入论文信息。具体内容见下。
+%   \begin{itemize}
+%     \item 在 \cls{sjtuthesis} 文档类中，现在推荐使用以语言名称子域 \meta{lang} 
+%           （比如 \opt{zh} 或 \opt{en}）开头的键来设定对应语言的论文信息；
+%           带“*”的项目表示对应的英文字段属于老用法，仍然兼容但请及时更新至新用法。
+%     \item 在 \cls{sjtureport} 和 \cls{sjtuarticle} 文档类中，不需要使用语言名称子域。
+%           此时推荐直接使用标准接口来设定这些信息，这些标准接口不属于键值列表，应当直接写在导言区内。
+%   \end{itemize}
 % \end{function}
 %
-% \begin{function}{info/title}
-%   \begin{sjtusyntax}[emph={[2]title}]
-%     title = (*\marg{标题}*)
+% \begin{function}[rEXP]{info/<lang>/title}
+%   \begin{sjtusyntax}
+%     (*\meta{lang}*)/title = (*\marg{标题}*)
 %   \end{sjtusyntax}
 %   标题。
 % \end{function}
 %
-% \begin{function}[rEXP]{info/title*}
-%   \begin{sjtusyntax}[emph={[2]title*}]
-%     title* = (*\marg{英文标题}*)
+% \begin{function}[rEXP]{info/<lang>/display-title}
+%   \begin{sjtusyntax}
+%     (*\meta{lang}*)/display-title = (*\marg{标题页标题}*)
 %   \end{sjtusyntax}
-%   英文标题。
-% \end{function}
-%
-% \begin{function}{info/display-title}
-%   \begin{sjtusyntax}[emph={[2]display-title}]
-%     display-title  = (*\marg{中文标题页标题}*)
-%   \end{sjtusyntax}
-%   中文标题页中的题目。默认为跟随中文标题。
+%   标题页中的题目。默认为跟随对应语言的标题。
 %   如果标题过长，可以尝试使用“|\\|”手动断行。
 % \end{function}
 %
-% \begin{function}[rEXP]{info/display-title*}
-%   \begin{sjtusyntax}[emph={[2]display-title*}]
-%     display-title* = (*\marg{英文标题页标题}*)
+% \begin{function}[rEXP,added=2022-12-17,updated=2022-12-23]{info/<lang>/subject}
+%   \begin{sjtusyntax}
+%     (*\meta{lang}*)/subject = (*\marg{主题}*)
 %   \end{sjtusyntax}
-%   英文标题页中的题目。默认为跟随英文标题。
-%   如果标题过长，可以尝试使用“|\\|”手动断行。
+%   文档主题。一般显示在中文标题页校徽下方。默认值类似于“上海交通大学学士学位论文” 或
+%   “A Dissertation Submitted to Shanghai Jiao Tong University for Bachelor Degree”。
 % \end{function}
 %
-% \begin{function}[added=2022-12-17,updated=2022-12-23]{info/subject}
-%   \begin{sjtusyntax}[emph={[2]subject}]
-%     subject  = (*\marg{中文主题}*)
-%   \end{sjtusyntax}
-%   文档中文主题。一般显示在中文标题页校徽下方。
-%   \begin{itemize}
-%     \item 在 \cls{sjtuthesis} 文档类中，默认值类似于“上海交通大学学士学位论文”。
-%     \item 在 \cls{sjtureport} 文档类中，默认为空。
-%   \end{itemize}
-% \end{function}
-%
-% \begin{function}[rEXP,added=2022-12-17,updated=2022-12-23]{info/subject*}
-%   \begin{sjtusyntax}[emph={[2]subject*}]
-%     subject* = (*\marg{英文主题}*)
-%   \end{sjtusyntax}
-%   文档英文主题。一般显示在英文标题页顶部。
-%   \begin{itemize}
-%     \item 在 \cls{sjtuthesis} 文档类中，默认值类似于“A Dissertation Submitted to
-%           Shanghai Jiao Tong University for Bachelor Degree”。
-%   \end{itemize}
-% \end{function}
-%
-% \begin{function}{info/keywords}
-%   \begin{sjtusyntax}[emph={[2]keywords}]
-%     keywords  = (*\marg{中文关键字}*)
+% \begin{function}[rEXP]{info/<lang>/keywords}
+%   \begin{sjtusyntax}
+%     (*\meta{lang}*)/keywords = (*\marg{中文关键字}*)
 %   \end{sjtusyntax}
 %   关键字列表。各关键字之间需使用英文逗号隔开。
 %   为防止歧义，可以用分组括号“|{...}|”把各字段括起来。
 % \end{function}
 %
-% \begin{function}[rEXP]{info/keywords*}
-%   \begin{sjtusyntax}[emph={[2]keywords*}]
-%     keywords* = (*\marg{英文关键字}*)
-%   \end{sjtusyntax}
-%   英文关键字列表。各关键字之间需使用英文逗号隔开。
-%   为防止歧义，可以用分组括号“|{...}|”把各字段括起来。
-% \end{function}
-%
-% \begin{function}{info/author}
-%   \begin{sjtusyntax}[emph={[2]author}]
-%     author  = (*\marg{姓名}*)
+% \begin{function}[rEXP]{info/<lang>/author}
+%   \begin{sjtusyntax}
+%     (*\meta{lang}*)/author = (*\marg{姓名}*)
 %   \end{sjtusyntax}
 %   作者姓名。
 % \end{function}
 %
-% \begin{function}{info/author*}
-%   \begin{sjtusyntax}[emph={[2]author*}]
-%     author* = (*\marg{英文姓名或拼音}*)
+% \begin{function}[rEXP]{info/id}
+%   \begin{sjtusyntax}
+%     id = (*\marg{学号}*)
 %   \end{sjtusyntax}
-%   作者英文姓名。
+%   学号。该键语言子域不是必须的。
 % \end{function}
 %
-% \begin{function}{info/id}
-%   \begin{sjtusyntax}[emph={[2]id}]
-%     id  = (*\marg{学号}*)
+% \begin{function}[rEXP,updated=2022-12-23]{info/<lang>/supervisor,
+%   info/<lang>/assoc-supervisor,info/<lang>/co-supervisor}
+%   \begin{sjtusyntax}
+%     (*\meta{lang}*)/supervisor       = (*\marg{导师姓名}*)
+%     (*\meta{lang}*)/assoc-supervisor = (*\marg{副导师姓名}*)
+%     (*\meta{lang}*)/co-supervisor    = (*\marg{联合导师姓名}*)
 %   \end{sjtusyntax}
-%   学号。
+%   导师、副导师、联合导师姓名。
 % \end{function}
 %
-% \begin{function}[updated=2022-12-23]{info/supervisor,info/assoc-supervisor}
-%   \vspace{-1ex}
-%   \begin{sjtusyntax}[emph={[2]supervisor,assoc-supervisor}]
-%     supervisor        = (*\marg{姓名}*)
-%     assoc-supervisor  = (*\marg{姓名}*)
-%   \end{sjtusyntax}
-%   导师、副导师中文姓名。
-% \end{function}
-%
-% \begin{function}[rEXP,updated=2022-12-23]{info/co-supervisor}
-%   \begin{sjtusyntax}[emph={[2]co-supervisor}]
-%     co-supervisor = (*\marg{姓名}*)
-%   \end{sjtusyntax}
-%   联合导师中文姓名。
-% \end{function}
-%
-% \begin{function}[rEXP,updated=2022-12-23]{info/supervisor*,info/assoc-supervisor*,
-%   info/co-supervisor*}
-%   \vspace{-1ex}
-%   \begin{sjtusyntax}[emph={[2]supervisor*,assoc-supervisor*,co-supervisor*}]
-%     supervisor*       = (*\marg{英文姓名或拼音}*)
-%     assoc-supervisor* = (*\marg{英文姓名或拼音}*)
-%     co-supervisor*    = (*\marg{英文姓名或拼音}*)
-%   \end{sjtusyntax}
-%   导师、副导师、联合导师英文姓名。
-% \end{function}
-%
-% \begin{function}[rEXP]{info/degree,info/degree*}
-%   \vspace{-1ex}
-%   \begin{sjtusyntax}[emph={[2]degree,degree*}]
-%     degree  = (*\marg{学位中文名称}*)
-%     degree* = (*\marg{学位英文名称}*)
+% \begin{function}[rEXP]{info/<lang>/degree}
+%   \begin{sjtusyntax}
+%     (*\meta{lang}*)/degree = (*\marg{学位名称}*)
 %   \end{sjtusyntax}
 %   申请学位中英文名称。
 %   包括申请的学位类别和级别，如“工学硕士”、“理学博士”等。
 %   学士论文无需标注。
 % \end{function}
 %
-% \begin{function}{info/department}
-%   \begin{sjtusyntax}[emph={[2]department}]
-%     department  = (*\marg{院系中文名称}*)
+% \begin{function}[rEXP]{info/<lang>/department}
+%   \begin{sjtusyntax}
+%     (*\meta{lang}*)/department = (*\marg{院系名称}*)
 %   \end{sjtusyntax}
-%   院系中文名称。
+%   院系名称。
 % \end{function}
 %
-% \begin{function}[rEXP]{info/department*}
-%   \begin{sjtusyntax}[emph={[2]department*}]
-%     department* = (*\marg{院系英文名称}*)
+% \begin{function}[rEXP]{info/<lang>/major}
+%   \begin{sjtusyntax}
+%     (*\meta{lang}*)/major = (*\marg{专业名称}*)
 %   \end{sjtusyntax}
-%   院系英文名称。
+%   专业名称。
 % \end{function}
 %
-% \begin{function}[rEXP]{info/major,info/major*}
-%   \vspace{-1ex}
-%   \begin{sjtusyntax}[emph={[2]major,major*}]
-%     major  = (*\marg{专业中文名称}*)
-%     major* = (*\marg{专业英文名称}*)
-%   \end{sjtusyntax}
-%   专业中英文名称。
-% \end{function}
-%
-% \begin{function}[rEXP]{info/fund,info/fund*}
-%   \vspace{-1ex}
-%   \begin{sjtusyntax}[emph={[2]fund,fund*}]
-%     fund  = (*\marg{资助基金中文名称}*)
-%     fund* = (*\marg{资助基金英文名称}*)
+% \begin{function}[rEXP]{info/<lang>/fund}
+%   \begin{sjtusyntax}
+%     (*\meta{lang}*)/fund = (*\marg{资助基金名称}*)
 %   \end{sjtusyntax}
 %   资助基金列表。各资助基金名称之间需使用英文逗号隔开。
 %   为防止歧义，可以用分组括号“|{...}|”把各字段括起来。
 % \end{function}
 %
-% \begin{function}[updated=2023-02-25]{info/date}
-%   \begin{sjtusyntax}[emph={[2]date}]
+% \begin{function}[rEXP,updated=2023-02-25]{info/date}
+%   \begin{sjtusyntax}
 %     date = (*\marg{ISO 日期}*)
 %   \end{sjtusyntax}
 %   日期。默认值为文档编译日期。也可以自己指定，要求使用 ISO 格式，
-%   即 |yyyy-mm-dd| 或 |yyyy-mm|，否则设定无效。
+%   即 |yyyy-mm-dd| 或 |yyyy-mm|，否则设定无效。该键语言子域不是必须的。
 % \end{function}
 %
-% \begin{function}[added=2022-12-17]{info/display-date}
-%   \begin{sjtusyntax}[emph={[2]display-date}]
-%     display-date  = (*\marg{日期文字}*)
+% \begin{function}[rEXP,added=2022-12-17]{info/<lang>/display-date}
+%   \begin{sjtusyntax}
+%     (*\meta{lang}*)/display-date = (*\marg{日期文字}*)
 %   \end{sjtusyntax}
 %   显示日期，可以显示不同于标准日期格式的日期，日期文字将会被原样输出。
-%   设定该键时，将会覆盖 \opt{info/date} 键在中文语境下的设定。
-% \end{function}
-%
-% \begin{function}[rEXP,added=2022-12-17,updated=2022-12-18]{info/display-date*}
-%   \begin{sjtusyntax}[emph={[2]display-date*}]
-%     display-date* = (*\marg{英文日期文字}*)
-%   \end{sjtusyntax}
-%   英文显示日期，可以显示不同于标准日期格式的日期，日期文字将会被原样输出。
-%   设定该键时，将会覆盖 \opt{info/date} 键在英文语境下的设定。
+%   设定该键时，将会覆盖 \opt{info/date} 键在对应语言下的设定。
 % \end{function}
 %
 % \subsubsection{样式域}
@@ -1004,7 +927,7 @@
 %   选择论文标题页中校徽的颜色。
 % \end{function}
 %
-% \begin{function}[updated=2022-12-20]{style/header-logo-color}
+% \begin{function}[EXP,updated=2022-12-20]{style/header-logo-color}
 %   \begin{sjtusyntax}[emph={[2]header-logo-color}]
 %     header-logo-color = (*<(red)|blue|black>*)
 %   \end{sjtusyntax}
@@ -1109,47 +1032,25 @@
 %
 % \subsection{标题页和声明页}
 %
-% \begin{function}[added=2022-12-17]{\title}
+% \begin{function}[EXP,added=2022-12-17,updated=2023-03-14]{\title}
 %   \begin{sjtusyntax}[morekeywords={\title}]
 %     \title(*\marg{标题}*)
 %   \end{sjtusyntax}
 %   设置标题，覆盖 \opt{info/title} 键的值。
 % \end{function}
 %
-% \begin{function}[rEXP,added=2022-12-17]{\title*}
-%   \begin{sjtusyntax}[morekeywords={\title*}]
-%     \title*(*\marg{英文标题}*)
-%   \end{sjtusyntax}
-%   设置英文标题，覆盖 \opt{info/title*} 键的值。
-% \end{function}
-%
-% \begin{function}[added=2022-12-17]{\author}
+% \begin{function}[EXP,added=2022-12-17,updated=2023-03-14]{\author}
 %   \begin{sjtusyntax}[morekeywords={\author}]
 %     \author(*\marg{姓名}*)
 %   \end{sjtusyntax}
 %   设置作者姓名，覆盖 \opt{info/author} 键的值。
 % \end{function}
 %
-% \begin{function}[rEXP,added=2022-12-17]{\author*}
-%   \begin{sjtusyntax}[morekeywords={\author*}]
-%     \author*(*\marg{英文姓名或拼音}*)
-%   \end{sjtusyntax}
-%   设置作者英文姓名，覆盖 \opt{info/author*} 键的值。
-% \end{function}
-%
-% \begin{function}[added=2022-12-17]{\date}
+% \begin{function}[EXP,added=2022-12-17,updated=2023-03-14]{\date}
 %   \begin{sjtusyntax}[morekeywords={\date}]
 %     \date(*\marg{日期}*)
 %   \end{sjtusyntax}
 %   设置日期，覆盖 \opt{info/display-date} 键的值。
-%   日期会被原样显示。
-% \end{function}
-%
-% \begin{function}[rEXP,added=2022-12-17]{\date*}
-%   \begin{sjtusyntax}[morekeywords={\date*}]
-%     \date*(*\marg{英文日期}*)
-%   \end{sjtusyntax}
-%   设置英文日期，覆盖 \opt{info/display-date*} 键的值。
 %   日期会被原样显示。
 % \end{function}
 %
@@ -1158,6 +1059,21 @@
 %     \today
 %   \end{sjtusyntax}
 %   文档编译日期，以对应语言的格式显示。
+% \end{function}
+%
+% \begin{function}[EXP,added=2023-03-14]{\subject}
+%   \begin{sjtusyntax}[morekeywords={\subject}]
+%     \subject(*\marg{主题}*)
+%   \end{sjtusyntax}
+%   文档主题。覆盖 \opt{info/subject} 键的值。
+%^^A 该信息暂不显示。
+% \end{function}
+%
+% \begin{function}[EXP,added=2023-03-14]{\keywords}
+%   \begin{sjtusyntax}[morekeywords={\keywords}]
+%     \keywords(*\marg{关键词}*)
+%   \end{sjtusyntax}
+%   文档关键词，使用英文逗号隔开不同的关键词。覆盖 \opt{info/keywords} 键的值。
 % \end{function}
 %
 % \begin{function}[updated=2022-12-03]{\maketitle}
@@ -1193,22 +1109,24 @@
 %   声明前文部分开始。
 % \end{function}
 %
-% \begin{function}{abstract}
-%   \begin{sjtusyntax}[emph={[2]abstract,abstract*}]
+% \begin{function}[rEXP,updated=2023-03-14]{abstract}
+%   \begin{sjtusyntax}[emph={[2]abstract}]
+%     \begin{abstract}(*\oarg{lang}*)
+%       (*\meta{摘要}*)
+%     \end{abstract}
+%   \end{sjtusyntax}
+%   \cls{sjtuthesis} 文档类中对应语言的摘要环境，使用可选参数指定语言，默认为 \opt{zh}。
+%   使用带星号的 \env{abstract*} 环境指定英文摘要属于旧用法。
+% \end{function}
+%
+% \begin{function}[EXP,updated=2023-03-14]{abstract}
+%   \begin{sjtusyntax}[emph={[2]abstract}]
 %     \begin{abstract}
 %       (*\meta{摘要}*)
 %     \end{abstract}
 %   \end{sjtusyntax}
-%   摘要环境。
-% \end{function}
-%
-% \begin{function}[rEXP]{abstract*}
-%   \begin{sjtusyntax}[emph={[2]abstract*}]
-%     \begin{abstract*}
-%       (*\meta{英文摘要}*)
-%     \end{abstract*}
-%   \end{sjtusyntax}
-%   英文摘要环境。
+%   \cls{sjtuarticle} 和 \cls{sjtureport} 文档类中摘要环境。
+%   会在结尾添加由 \cs{keywords} 命令设定的关键词。
 % \end{function}
 %
 % \begin{function}{\tableofcontents}
@@ -1392,11 +1310,11 @@
 %
 % \begin{function}[rEXP]{digest}
 %   \begin{sjtusyntax}[emph={[2]digest}]
-%     \begin{digest}
+%     \begin{digest}(*\oarg{lang}*)
 %       (*\meta{大摘要}*)
 %     \end{digest}
 %   \end{sjtusyntax}
-%   学士论文大摘要。
+%   学士论文大摘要，使用可选参数设定语言，默认为 \opt{en}。
 %^^A 论文类型为学士论文的条件下有效。
 %^^A 尚无条件限制。
 % \end{function}
