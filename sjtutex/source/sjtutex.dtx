@@ -751,12 +751,16 @@
 %   该选项包含许多子项目，用于录入论文信息。具体内容见下。
 %   \begin{itemize}
 %     \item 在 \cls{sjtuthesis} 文档类中，现在推荐使用以语言名称子域 \meta{lang} 
-%           （比如 \opt{zh} 或 \opt{en}）开头的键来设定对应语言的论文信息；
-%           带“*”的项目表示对应的英文字段属于老用法，仍然兼容但请及时更新至新用法。
+%           （比如 \opt{zh} 或 \opt{en}）下的键来设定对应语言的论文信息，见第 \ref{sec:sjtuthesiskey} 节；
+%           省略语言子域、带“*”的项目表示对应的英文字段属于老用法，仍然兼容但请及时更新至新用法。
 %     \item 在 \cls{sjtureport} 和 \cls{sjtuarticle} 文档类中，不需要使用语言名称子域。
-%           此时推荐直接使用标准接口来设定这些信息，这些标准接口不属于键值列表，应当直接写在导言区内。
+%           此时推荐直接使用标准接口来设定这些信息，这些标准接口不属于键值列表，应当直接写在导言区内，
+%           见第 \ref{sec:sjtureportcmd} 节。
 %   \end{itemize}
 % \end{function}
+%
+% \paragraph{适用于 \cls{sjtuthesis} 文档类的键}
+% \label{sec:sjtuthesiskey}
 %
 % \begin{function}[rEXP]{info/<lang>/title}
 %   \begin{sjtusyntax}
@@ -858,6 +862,46 @@
 %   \end{sjtusyntax}
 %   显示日期，可以显示不同于标准日期格式的日期，日期文字将会被原样输出。
 %   设定该键时，将会覆盖 \opt{info/date} 键在对应语言下的设定。
+% \end{function}
+%
+% \paragraph{适用于 \cls{sjtureport} 和 \cls{sjtuarticle} 文档类的命令}
+% \label{sec:sjtureportcmd}
+%
+% \begin{function}[EXP,added=2022-12-17,updated=2023-03-14]{\title}
+%   \begin{sjtusyntax}[morekeywords={\title}]
+%     \title(*\marg{标题}*)
+%   \end{sjtusyntax}
+%   设置标题，覆盖 \opt{info/title} 键的值。
+% \end{function}
+%
+% \begin{function}[EXP,added=2022-12-17,updated=2023-03-14]{\author}
+%   \begin{sjtusyntax}[morekeywords={\author}]
+%     \author(*\marg{姓名}*)
+%   \end{sjtusyntax}
+%   设置作者姓名，覆盖 \opt{info/author} 键的值。
+% \end{function}
+%
+% \begin{function}[EXP,added=2022-12-17,updated=2023-03-14]{\date}
+%   \begin{sjtusyntax}[morekeywords={\date}]
+%     \date(*\marg{日期}*)
+%   \end{sjtusyntax}
+%   设置日期，覆盖 \opt{info/display-date} 键的值。
+%   日期会被原样显示。
+% \end{function}
+%
+% \begin{function}[EXP,added=2023-03-14]{\subject}
+%   \begin{sjtusyntax}[morekeywords={\subject}]
+%     \subject(*\marg{主题}*)
+%   \end{sjtusyntax}
+%   文档主题。覆盖 \opt{info/subject} 键的值。
+%^^A 该信息暂不显示。
+% \end{function}
+%
+% \begin{function}[EXP,added=2023-03-14]{\keywords}
+%   \begin{sjtusyntax}[morekeywords={\keywords}]
+%     \keywords(*\marg{关键词}*)
+%   \end{sjtusyntax}
+%   文档关键词，使用英文逗号隔开不同的关键词。覆盖 \opt{info/keywords} 键的值。
 % \end{function}
 %
 % \subsubsection{样式域}
@@ -1031,50 +1075,6 @@
 % \end{function}
 %
 % \subsection{标题页和声明页}
-%
-% \begin{function}[EXP,added=2022-12-17,updated=2023-03-14]{\title}
-%   \begin{sjtusyntax}[morekeywords={\title}]
-%     \title(*\marg{标题}*)
-%   \end{sjtusyntax}
-%   设置标题，覆盖 \opt{info/title} 键的值。
-% \end{function}
-%
-% \begin{function}[EXP,added=2022-12-17,updated=2023-03-14]{\author}
-%   \begin{sjtusyntax}[morekeywords={\author}]
-%     \author(*\marg{姓名}*)
-%   \end{sjtusyntax}
-%   设置作者姓名，覆盖 \opt{info/author} 键的值。
-% \end{function}
-%
-% \begin{function}[EXP,added=2022-12-17,updated=2023-03-14]{\date}
-%   \begin{sjtusyntax}[morekeywords={\date}]
-%     \date(*\marg{日期}*)
-%   \end{sjtusyntax}
-%   设置日期，覆盖 \opt{info/display-date} 键的值。
-%   日期会被原样显示。
-% \end{function}
-%
-% \begin{function}[added=2022-12-17]{\today}
-%   \begin{sjtusyntax}[morekeywords={\today}]
-%     \today
-%   \end{sjtusyntax}
-%   文档编译日期，以对应语言的格式显示。
-% \end{function}
-%
-% \begin{function}[EXP,added=2023-03-14]{\subject}
-%   \begin{sjtusyntax}[morekeywords={\subject}]
-%     \subject(*\marg{主题}*)
-%   \end{sjtusyntax}
-%   文档主题。覆盖 \opt{info/subject} 键的值。
-%^^A 该信息暂不显示。
-% \end{function}
-%
-% \begin{function}[EXP,added=2023-03-14]{\keywords}
-%   \begin{sjtusyntax}[morekeywords={\keywords}]
-%     \keywords(*\marg{关键词}*)
-%   \end{sjtusyntax}
-%   文档关键词，使用英文逗号隔开不同的关键词。覆盖 \opt{info/keywords} 键的值。
-% \end{function}
 %
 % \begin{function}[updated=2022-12-03]{\maketitle}
 %   \begin{sjtusyntax}[morekeywords={\maketitle}]
