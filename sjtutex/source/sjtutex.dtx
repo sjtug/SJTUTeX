@@ -59,46 +59,58 @@
 
 \generate{
   \usedir{tex/latex/sjtutex}
-    \file{sjtuthesis.cls}            {\from{\jobname.dtx}{class,thesis}}
-    \file{sjtureport.cls}            {\from{\jobname.dtx}{class,report}}
-    \file{sjtuarticle.cls}           {\from{\jobname.dtx}{class,article}}
-    \file{sjtu-lang-thesis-zh.def}   {\from{\jobname.dtx}{lang,thesis,zh}}
-    \file{sjtu-lang-thesis-en.def}   {\from{\jobname.dtx}{lang,thesis,en}}
-    \file{sjtu-lang-thesis-ja.def}   {\from{\jobname.dtx}{lang,thesis,ja}}
-    \file{sjtu-lang-generic-zh.def}  {\from{\jobname.dtx}{lang,generic,zh}}
-    \file{sjtu-lang-generic-en.def}  {\from{\jobname.dtx}{lang,generic,en}}
-    \file{sjtu-lang-generic-ja.def}  {\from{\jobname.dtx}{lang,generic,ja}}
-    \file{sjtu-name-thesis-zh.def}   {\from{\jobname.dtx}{name,thesis,zh}}
-    \file{sjtu-name-thesis-en.def}   {\from{\jobname.dtx}{name,thesis,en}}
-    \file{sjtu-name-thesis-ja.def}   {\from{\jobname.dtx}{name,thesis,ja}}
-    \file{sjtu-name-generic-zh.def}  {\from{\jobname.dtx}{name,generic,zh}}
-    \file{sjtu-name-generic-en.def}  {\from{\jobname.dtx}{name,generic,en}}
-    \file{sjtu-name-generic-ja.def}  {\from{\jobname.dtx}{name,generic,ja}}
-    \file{sjtu-scheme-zh.def}        {\from{\jobname.dtx}{scheme,zh}}
-    \file{sjtu-scheme-en.def}        {\from{\jobname.dtx}{scheme,en}}
-    \file{sjtu-scheme-ja.def}        {\from{\jobname.dtx}{scheme,ja}}
-    \file{sjtu-text-font-newtx.def}  {\from{\jobname.dtx}{font,text,newtx}}
-    \file{sjtu-text-font-newpx.def}  {\from{\jobname.dtx}{font,text,newpx}}
-    \file{sjtu-text-font-lm.def}     {\from{\jobname.dtx}{font,text,lm}}
-    \file{sjtu-text-font-stixtwo.def}{\from{\jobname.dtx}{font,text,stixtwo}}
-    \file{sjtu-text-font-xits.def}   {\from{\jobname.dtx}{font,text,xits}}
-    \file{sjtu-text-font-newcm.def}  {\from{\jobname.dtx}{font,text,newcm}}
-    \file{sjtu-text-font-cambria.def}{\from{\jobname.dtx}{font,text,cambria}}
-    \file{sjtu-text-font-times.def}  {\from{\jobname.dtx}{font,text,times}}
-    \file{sjtu-math-font-newtx.def}  {\from{\jobname.dtx}{font,math,newtx}}
-    \file{sjtu-math-font-newpx.def}  {\from{\jobname.dtx}{font,math,newpx}}
-    \file{sjtu-math-font-lm.def}     {\from{\jobname.dtx}{font,math,lm}}
-    \file{sjtu-math-font-stixtwo.def}{\from{\jobname.dtx}{font,math,stixtwo}}
-    \file{sjtu-math-font-xits.def}   {\from{\jobname.dtx}{font,math,xits}}
-    \file{sjtu-math-font-newcm.def}  {\from{\jobname.dtx}{font,math,newcm}}
-    \file{sjtu-math-font-cambria.def}{\from{\jobname.dtx}{font,math,cambria}}
-    \file{sjtu-math-font-times.def}  {\from{\jobname.dtx}{font,math,times}}
-    \file{sjtu-cjk-font-windows.def} {\from{\jobname.dtx}{font,cjk,windows}}
-    \file{sjtu-cjk-font-mac.def}     {\from{\jobname.dtx}{font,cjk,mac}}
-    \file{sjtu-cjk-font-ubuntu.def}  {\from{\jobname.dtx}{font,cjk,ubuntu}}
-    \file{sjtu-cjk-font-adobe.def}   {\from{\jobname.dtx}{font,cjk,adobe}}
-    \file{sjtu-cjk-font-fandol.def}  {\from{\jobname.dtx}{font,cjk,fandol}}
-    \file{sjtu-cjk-font-founder.def} {\from{\jobname.dtx}{font,cjk,founder}}
+    \file{sjtuthesis.cls}               {\from{\jobname.dtx}{class,thesis}}
+    \file{sjtureport.cls}               {\from{\jobname.dtx}{class,report}}
+    \file{sjtuarticle.cls}              {\from{\jobname.dtx}{class,article}}
+    \file{sjtu-lang-thesis-zh.def}      {\from{\jobname.dtx}{lang,thesis,zh}}
+    \file{sjtu-lang-thesis-en.def}      {\from{\jobname.dtx}{lang,thesis,en}}
+    \file{sjtu-lang-thesis-ja.def}      {\from{\jobname.dtx}{lang,thesis,ja}}
+    \file{sjtu-lang-generic-zh.def}     {\from{\jobname.dtx}{lang,generic,zh}}
+    \file{sjtu-lang-generic-en.def}     {\from{\jobname.dtx}{lang,generic,en}}
+    \file{sjtu-lang-generic-ja.def}     {\from{\jobname.dtx}{lang,generic,ja}}
+    \file{sjtu-name-thesis-zh.def}      {\from{\jobname.dtx}{name,thesis,zh}}
+    \file{sjtu-name-thesis-en.def}      {\from{\jobname.dtx}{name,thesis,en}}
+    \file{sjtu-name-thesis-ja.def}      {\from{\jobname.dtx}{name,thesis,ja}}
+    \file{sjtu-name-generic-zh.def}     {\from{\jobname.dtx}{name,generic,zh}}
+    \file{sjtu-name-generic-en.def}     {\from{\jobname.dtx}{name,generic,en}}
+    \file{sjtu-name-generic-ja.def}     {\from{\jobname.dtx}{name,generic,ja}}
+    \file{sjtu-scheme-zh.def}           {\from{\jobname.dtx}{scheme,zh}}
+    \file{sjtu-scheme-en.def}           {\from{\jobname.dtx}{scheme,en}}
+    \file{sjtu-scheme-ja.def}           {\from{\jobname.dtx}{scheme,ja}}
+    \file{sjtu-text-font-newtx.def}     {\from{\jobname.dtx}{font,text,newtx}}
+    \file{sjtu-text-font-newpx.def}     {\from{\jobname.dtx}{font,text,newpx}}
+    \file{sjtu-text-font-lm.def}        {\from{\jobname.dtx}{font,text,lm}}
+    \file{sjtu-text-font-stixtwo.def}   {\from{\jobname.dtx}{font,text,stixtwo}}
+    \file{sjtu-text-font-xits.def}      {\from{\jobname.dtx}{font,text,xits}}
+    \file{sjtu-text-font-newcm.def}     {\from{\jobname.dtx}{font,text,newcm}}
+    \file{sjtu-text-font-cambria.def}   {\from{\jobname.dtx}{font,text,cambria}}
+    \file{sjtu-text-font-times.def}     {\from{\jobname.dtx}{font,text,times}}
+    \file{sjtu-math-font-newtx.def}     {\from{\jobname.dtx}{font,math,newtx}}
+    \file{sjtu-math-font-newpx.def}     {\from{\jobname.dtx}{font,math,newpx}}
+    \file{sjtu-math-font-lm.def}        {\from{\jobname.dtx}{font,math,lm}}
+    \file{sjtu-math-font-stixtwo.def}   {\from{\jobname.dtx}{font,math,stixtwo}}
+    \file{sjtu-math-font-xits.def}      {\from{\jobname.dtx}{font,math,xits}}
+    \file{sjtu-math-font-newcm.def}     {\from{\jobname.dtx}{font,math,newcm}}
+    \file{sjtu-math-font-cambria.def}   {\from{\jobname.dtx}{font,math,cambria}}
+    \file{sjtu-math-font-times.def}     {\from{\jobname.dtx}{font,math,times}}
+    \file{sjtu-cjk-font-windows.def}    {\from{\jobname.dtx}{font,cjk,windows,und}}
+    \file{sjtu-cjk-font-windows-zh.def} {\from{\jobname.dtx}{font,cjk,windows,zh}}
+    \file{sjtu-cjk-font-windows-ja.def} {\from{\jobname.dtx}{font,cjk,windows,ja}}
+    \file{sjtu-cjk-font-mac.def}        {\from{\jobname.dtx}{font,cjk,mac,und}}
+    \file{sjtu-cjk-font-mac-zh.def}     {\from{\jobname.dtx}{font,cjk,mac,zh}}
+    \file{sjtu-cjk-font-mac-ja.def}     {\from{\jobname.dtx}{font,cjk,mac,ja}}
+    \file{sjtu-cjk-font-ubuntu.def}     {\from{\jobname.dtx}{font,cjk,ubuntu,und}}
+    \file{sjtu-cjk-font-ubuntu-zh.def}  {\from{\jobname.dtx}{font,cjk,ubuntu,zh}}
+    \file{sjtu-cjk-font-ubuntu-ja.def}  {\from{\jobname.dtx}{font,cjk,ubuntu,ja}}
+    \file{sjtu-cjk-font-adobe.def}      {\from{\jobname.dtx}{font,cjk,adobe,und}}
+    \file{sjtu-cjk-font-adobe-zh.def}   {\from{\jobname.dtx}{font,cjk,adobe,zh}}
+    \file{sjtu-cjk-font-adobe-ja.def}   {\from{\jobname.dtx}{font,cjk,adobe,ja}}
+    \file{sjtu-cjk-font-fandol.def}     {\from{\jobname.dtx}{font,cjk,fandol,und}}
+    \file{sjtu-cjk-font-fandol-zh.def}  {\from{\jobname.dtx}{font,cjk,fandol,zh}}
+    \file{sjtu-cjk-font-fandol-ja.def}  {\from{\jobname.dtx}{font,cjk,fandol,ja}}
+    \file{sjtu-cjk-font-founder.def}    {\from{\jobname.dtx}{font,cjk,founder,und}}
+    \file{sjtu-cjk-font-founder-zh.def} {\from{\jobname.dtx}{font,cjk,founder,zh}}
+    \file{sjtu-cjk-font-founder-ja.def} {\from{\jobname.dtx}{font,cjk,founder,ja}}
 %</install>
 %<*internal>
   \usedir{source/latex/sjtutex}
@@ -206,18 +218,42 @@
 %<font&math&cambria>\ProvidesExplFile{sjtu-math-font-cambria.def}
 %<font&math&times>  {Times math fonts definition (SJTUTeX)}
 %<font&math&times>\ProvidesExplFile{sjtu-math-font-times.def}
-%<font&cjk&windows>  {Windows CJK fonts definition (SJTUTeX)}
-%<font&cjk&windows>\ProvidesExplFile{sjtu-cjk-font-windows.def}
-%<font&cjk&mac>  {macOS CJK fonts definition (SJTUTeX)}
-%<font&cjk&mac>\ProvidesExplFile{sjtu-cjk-font-mac.def}
-%<font&cjk&ubuntu>  {Ubuntu CJK fonts definition (SJTUTeX)}
-%<font&cjk&ubuntu>\ProvidesExplFile{sjtu-cjk-font-ubuntu.def}
-%<font&cjk&adobe>  {Adobe CJK fonts definition (SJTUTeX)}
-%<font&cjk&adobe>\ProvidesExplFile{sjtu-cjk-font-adobe.def}
-%<font&cjk&fandol>  {Fandol CJK fonts definition (SJTUTeX)}
-%<font&cjk&fandol>\ProvidesExplFile{sjtu-cjk-font-fandol.def}
-%<font&cjk&founder>  {Founder CJK fonts definition (SJTUTeX)}
-%<font&cjk&founder>\ProvidesExplFile{sjtu-cjk-font-founder.def}
+%<font&cjk&windows&und>  {Windows CJK fonts definition (SJTUTeX)}
+%<font&cjk&windows&und>\ProvidesExplFile{sjtu-cjk-font-windows.def}
+%<font&cjk&windows&zh>  {Windows CJK fonts definition for Chinese (SJTUTeX)}
+%<font&cjk&windows&zh>\ProvidesExplFile{sjtu-cjk-font-windows-zh.def}
+%<font&cjk&windows&ja>  {Windows CJK fonts definition for Japanese (SJTUTeX)}
+%<font&cjk&windows&ja>\ProvidesExplFile{sjtu-cjk-font-windows-ja.def}
+%<font&cjk&mac&und>  {macOS CJK fonts definition (SJTUTeX)}
+%<font&cjk&mac&und>\ProvidesExplFile{sjtu-cjk-font-mac.def}
+%<font&cjk&mac&zh>  {macOS CJK fonts definition for Chinese (SJTUTeX)}
+%<font&cjk&mac&zh>\ProvidesExplFile{sjtu-cjk-font-mac-zh.def}
+%<font&cjk&mac&ja>  {macOS CJK fonts definition for Japanese (SJTUTeX)}
+%<font&cjk&mac&ja>\ProvidesExplFile{sjtu-cjk-font-mac-ja.def}
+%<font&cjk&ubuntu&und>  {Ubuntu CJK fonts definition (SJTUTeX)}
+%<font&cjk&ubuntu&und>\ProvidesExplFile{sjtu-cjk-font-ubuntu.def}
+%<font&cjk&ubuntu&zh>  {Ubuntu CJK fonts definition for Chinese (SJTUTeX)}
+%<font&cjk&ubuntu&zh>\ProvidesExplFile{sjtu-cjk-font-ubuntu-zh.def}
+%<font&cjk&ubuntu&ja>  {Ubuntu CJK fonts definition for Japanese (SJTUTeX)}
+%<font&cjk&ubuntu&ja>\ProvidesExplFile{sjtu-cjk-font-ubuntu-ja.def}
+%<font&cjk&adobe&und>  {Adobe CJK fonts definition (SJTUTeX)}
+%<font&cjk&adobe&und>\ProvidesExplFile{sjtu-cjk-font-adobe.def}
+%<font&cjk&adobe&zh>  {Adobe CJK fonts definition for Chinese (SJTUTeX)}
+%<font&cjk&adobe&zh>\ProvidesExplFile{sjtu-cjk-font-adobe-zh.def}
+%<font&cjk&adobe&ja>  {Adobe CJK fonts definition for Japanese (SJTUTeX)}
+%<font&cjk&adobe&ja>\ProvidesExplFile{sjtu-cjk-font-adobe-ja.def}
+%<font&cjk&fandol&und>  {Fandol CJK fonts definition (SJTUTeX)}
+%<font&cjk&fandol&und>\ProvidesExplFile{sjtu-cjk-font-fandol.def}
+%<font&cjk&fandol&zh>  {Fandol CJK fonts definition for Chinese (SJTUTeX)}
+%<font&cjk&fandol&zh>\ProvidesExplFile{sjtu-cjk-font-fandol-zh.def}
+%<font&cjk&fandol&ja>  {Fandol CJK fonts definition for Japanese (SJTUTeX)}
+%<font&cjk&fandol&ja>\ProvidesExplFile{sjtu-cjk-font-fandol-ja.def}
+%<font&cjk&founder&und>  {Founder CJK fonts definition (SJTUTeX)}
+%<font&cjk&founder&und>\ProvidesExplFile{sjtu-cjk-font-founder.def}
+%<font&cjk&founder&zh>  {Founder CJK fonts definition for Chinese (SJTUTeX)}
+%<font&cjk&founder&zh>\ProvidesExplFile{sjtu-cjk-font-founder-zh.def}
+%<font&cjk&founder&ja>  {Founder CJK fonts definition for Japanese (SJTUTeX)}
+%<font&cjk&founder&ja>\ProvidesExplFile{sjtu-cjk-font-founder-ja.def}
 %<!driver>  {\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
 %</!(driver|install)>
 %
@@ -1349,7 +1385,7 @@
     "l3kernel"~ and~ "l3packages"~ using~ your~ TeX~ package \\
     manager~ or~ from~ CTAN.
   }
-\@ifpackagelater { expl3 } { 2020/04/06 } { }
+\@ifpackagelater { expl3 } { 2020/07/14 } { }
   { \msg_error:nnn { sjtutex } { l3-too-old } { expl3 } }
 %    \end{macrocode}
 %
@@ -1382,11 +1418,12 @@
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}{\g_@@_lang_tl}
+% \begin{variable}{\g_@@_lang_tl,\g_@@_lang_clist}
 % 论文语言。
 %    \begin{macrocode}
 \tl_new:N \g_@@_lang_tl
-\clist_new:N \g_@@_lang_clist
+%<thesis>\clist_new:N \g_@@_lang_clist
+%<thesis>\clist_set:Nn \g_@@_lang_clist { zh, en }
 %    \end{macrocode}
 % \end{variable}
 %
@@ -1538,28 +1575,15 @@
 %    \begin{macrocode}
     lang .choice: ,
     lang .value_required:n = true ,
-%<*thesis>
-    lang / zh .code:n =
-      {
-        \tl_gset:Nn \g_@@_lang_tl {#1}
-        \clist_gset:Nn \g_@@_lang_clist { zh, en }
-      } ,
-    lang / en .code:n =
-      {
-        \tl_gset:Nn \g_@@_lang_tl {#1}
-        \clist_gset:Nn \g_@@_lang_clist { zh, en }
-      } ,
-    lang / ja .code:n =
-      {
-        \tl_gset:Nn \g_@@_lang_tl {#1}
-        \clist_gset:Nn \g_@@_lang_clist { zh, en, ja }
-      } ,
-%</thesis>
-%<*!thesis>
     lang .choices:nn =
       { zh, en, ja }
-      { \tl_gset_eq:NN \g_@@_lang_tl \l_keys_choice_tl } ,
-%</!thesis>
+      {
+        \tl_gset_eq:NN \g_@@_lang_tl \l_keys_choice_tl
+%<*thesis>
+        \clist_if_in:NnF \g_@@_lang_clist {#1}
+          { \clist_gput_right:Nn \g_@@_lang_clist {#1} }
+%</thesis>
+      } ,
     lang .initial:n = { zh } ,
 %    \end{macrocode}
 %
@@ -2563,13 +2587,20 @@
 %</class>
 %    \end{macrocode}
 %
-% \subsubsection{中文字体}
+% \subsubsection{东亚字体}
 %
 % 在字体未提供对应粗体的情况下，允许使用伪粗。
 %    \begin{macrocode}
 %<*font&cjk>
 %<*windows>
+%<*und>
+\tl_if_eq:NnTF \g_@@_lang_tl { ja }
+  { \ctex_file_input:n { sjtu-cjk-font-windows-ja.def } }
+  { \ctex_file_input:n { sjtu-cjk-font-windows-zh.def } }
+%</und>
+%<*zh|ja>
 \@@_fontset_case:nn
+%<*zh>
   {
     \ctex_load_zhmap:nnnn { zhsong } { zhhei } { zhfs } { windows }
     \ctex_punct_set:n { windows }
@@ -2577,21 +2608,41 @@
     \ctex_punct_map_bfseries:nn { \CJKrmdefault } { zhhei  }
     \ctex_punct_map_itshape:nn  { \CJKrmdefault } { zhkai  }
   }
+%</zh>
+%<ja>  { \@@_fontset_error:nn { cjk } { windows } }
   {
+%<*zh>
     \setCJKmainfont { SimSun   }
-      [ AutoFakeBold = 3, ItalicFont = KaiTi ]
+      [ AutoFakeBold = 3 , ItalicFont = KaiTi ]
     \setCJKsansfont { SimHei   } [ AutoFakeBold = 3 ]
     \setCJKmonofont { FangSong }
+%</zh>
+%<*ja>
+    \setCJKmainfont { MS~Mincho } [ AutoFakeBold = 3 ]
+    \setCJKsansfont { MS~Gothic } [ AutoFakeBold = 3 ]
+    \setCJKmonofont { MS~Gothic }
+    \setCJKfamilyfont { jamin  } { MS~Mincho } [ AutoFakeBold = 3 ]
+    \setCJKfamilyfont { jagoth } { MS~Gothic } [ AutoFakeBold = 3 ]
+%</ja>
     \setCJKfamilyfont { zhsong } { SimSun   }
-      [ AutoFakeBold = 3, ItalicFont = KaiTi ]
+      [ AutoFakeBold = 3 , ItalicFont = KaiTi ]
     \setCJKfamilyfont { zhhei  } { SimHei   } [ AutoFakeBold = 3 ]
     \setCJKfamilyfont { zhkai  } { KaiTi    }
     \setCJKfamilyfont { zhfs   } { FangSong }
   }
+%</zh|ja>
 %</windows>
 %<*mac>
-\@@_fontset_case:nnn
+%<*und>
+\tl_if_eq:NnTF \g_@@_lang_tl { ja }
+  { \ctex_file_input:n { sjtu-cjk-font-mac-ja.def } }
+  { \ctex_file_input:n { sjtu-cjk-font-mac-zh.def } }
+%</und>
+%<*zh|ja>
+%<zh>\@@_fontset_case:nnn
+%<ja>\@@_fontset_case:nn
   { \@@_fontset_error:nn { cjk } { mac } }
+%<*zh>
   {
     \ctex_load_zhmap:nnnn { zhsong } { zhhei } { zhfs } { mac }
     \ctex_punct_set:n { mac }
@@ -2600,41 +2651,78 @@
     \ctex_punct_map_bfseries:nn { \CJKrmdefault } { zhpf   }
     \ctex_punct_map_itshape:nn  { \CJKrmdefault } { zhkai  }
   }
+%</zh>
   {
+%<*zh>
     \setCJKmainfont { Songti~SC  }
       [
-        UprightFont    = *~Light,
-        BoldFont       = *~Bold,
-        ItalicFont     = Kaiti~SC~Regular,
+        UprightFont    = *~Light ,
+        BoldFont       = *~Bold ,
+        ItalicFont     = Kaiti~SC~Regular ,
         BoldItalicFont = Kaiti~SC~Bold
       ]
     \setCJKsansfont { Heiti~SC   }
       [
-        UprightFont    = *~Medium,
+        UprightFont    = *~Medium ,
         AutoFakeBold   = 3
       ]
     \setCJKmonofont { STFangsong }
+%</zh>
+%<*ja>
+    \setCJKmainfont { Hiragino Mincho ProN      }
+      [
+        UprightFont    = *~W3 ,
+        BoldFont       = *~W6
+      ]
+    \setCJKsansfont { Hiragino Kaku Gothic ProN }
+      [
+        UprightFont    = *~W3 ,
+        BoldFont       = *~W6
+      ]
+    \setCJKmonofont { Hiragino Kaku Gothic ProN }
+    \setCJKfamilyfont { jamin  } { Hiragino Mincho ProN      }
+      [
+        UprightFont    = *~W3 ,
+        BoldFont       = *~W6
+      ]
+    \setCJKfamilyfont { jagoth } { Hiragino Kaku Gothic ProN }
+      [
+        UprightFont    = *~W3 ,
+        BoldFont       = *~W6
+      ]
+%</ja>
     \setCJKfamilyfont { zhsong } { Songti~SC  }
       [
-        UprightFont    = *~Light,
-        BoldFont       = *~Bold
+        UprightFont    = *~Light ,
+        BoldFont       = *~Bold ,
+        ItalicFont     = Kaiti~SC~Regular ,
+        BoldItalicFont = Kaiti~SC~Bold
       ]
     \setCJKfamilyfont { zhhei  } { Heiti~SC   }
       [
-        UprightFont    = *~Medium,
+        UprightFont    = *~Medium ,
         AutoFakeBold   = 3
       ]
     \setCJKfamilyfont { zhfs   } { STFangsong }
     \setCJKfamilyfont { zhkai  } { Kaiti~SC   }
       [
-        UprightFont    = *~Regular,
+        UprightFont    = *~Regular ,
         BoldFont       = *~Bold
       ]
   }
+%</zh|ja>
 %</mac>
 %<*ubuntu>
-\@@_fontset_case:nnn
+%<*und>
+\tl_if_eq:NnTF \g_@@_lang_tl { ja }
+  { \ctex_file_input:n { sjtu-cjk-font-ubuntu-ja.def } }
+  { \ctex_file_input:n { sjtu-cjk-font-ubuntu-zh.def } }
+%</und>
+%<*zh|ja>
+%<zh>\@@_fontset_case:nnn
+%<ja>\@@_fontset_case:nn
   { \@@_fontset_error:nn { cjk } { ubuntu } }
+%<*zh>
   {
     \ctex_load_zhmap:nnnn { zhsong } { zhhei } { zhsong } { ubuntu }
     \ctex_punct_set:n { ubuntu }
@@ -2642,36 +2730,72 @@
     \ctex_punct_map_bfseries:nn { \CJKrmdefault } { zhhei  }
     \ctex_punct_map_itshape:nn  { \CJKrmdefault } { zhkai  }
   }
+%</zh>
   {
+%<*zh>
     \setCJKmainfont { Noto~Serif~CJK~SC     }
       [
-        UprightFont = *~Light,
-        BoldFont    = *~Bold,
+        UprightFont = *~Light ,
+        BoldFont    = *~Bold ,
         ItalicFont  = AR~PL~KaitiM~GB
       ]
     \setCJKsansfont { Noto~Sans~CJK~SC      }
       [
-        UprightFont = *~Medium,
+        UprightFont = *~Medium ,
         BoldFont    = *~Bold
       ]
     \setCJKmonofont { Noto~Sans~Mono~CJK~SC }
-    \setCJKfamilyfont { zhsong } { Noto~Serif~CJK~SC }
+%</zh>
+%<*ja>
+    \setCJKmainfont { Noto~Serif~CJK~JP     }
       [
-        UprightFont = *~Light,
-        BoldFont    = *~Bold,
-        ItalicFont  = AR~PL~KaitiM~GB
-      ]
-    \setCJKfamilyfont { zhhei  } { Noto~Sans~CJK~SC  }
-      [
-        UprightFont = *~Medium,
+        UprightFont = *~Light ,
         BoldFont    = *~Bold
       ]
-    \setCJKfamilyfont { zhkai  } { AR~PL~KaitiM~GB   }
+    \setCJKsansfont { Noto~Sans~CJK~JP      }
+      [
+        UprightFont = *~Medium ,
+        BoldFont    = *~Bold
+      ]
+    \setCJKmonofont { Noto~Sans~Mono~CJK~JP }
+    \setCJKfamilyfont { jamin  } { Noto~Serif~CJK~JP }
+      [
+        UprightFont = *~Light ,
+        BoldFont    = *~Bold
+      ]
+    \setCJKfamilyfont { jagoth } { Noto~Sans~CJK~JP  }
+      [
+        UprightFont = *~Medium ,
+        BoldFont    = *~Bold
+      ]
+%</ja>
+    \setCJKfamilyfont { zhsong } { Noto~Serif~CJK~SC     }
+      [
+        UprightFont = *~Light ,
+        BoldFont    = *~Bold ,
+        ItalicFont  = AR~PL~KaitiM~GB
+      ]
+    \setCJKfamilyfont { zhhei  } { Noto~Sans~CJK~SC      }
+      [
+        UprightFont = *~Medium ,
+        BoldFont    = *~Bold
+      ]
+    \setCJKfamilyfont { zhfs   } { Noto~Sans~Mono~CJK~JP }
+    \setCJKfamilyfont { zhkai  } { AR~PL~KaitiM~GB       }
   }
+%</zh|ja>
 %</ubuntu>
 %<*adobe>
-\@@_fontset_case:nnn
+%<*und>
+\tl_if_eq:NnTF \g_@@_lang_tl { ja }
+  { \ctex_file_input:n { sjtu-cjk-font-adobe-ja.def } }
+  { \ctex_file_input:n { sjtu-cjk-font-adobe-zh.def } }
+%</und>
+%<*zh|ja>
+%<zh>\@@_fontset_case:nnn
+%<ja>\@@_fontset_case:nn
   { \@@_fontset_error:nn { cjk } { adobe } }
+%<*zh>
   {
     \ctex_load_zhmap:nnnn { zhsong } { zhhei } { zhfs } { adobe }
     \ctex_punct_set:n { adobe }
@@ -2679,21 +2803,56 @@
     \ctex_punct_map_bfseries:nn { \CJKrmdefault } { zhhei  }
     \ctex_punct_map_itshape:nn  { \CJKrmdefault } { zhkai  }
   }
+%</zh>
   {
+%<*zh>
     \setCJKmainfont { AdobeSongStd-Light       }
-      [ AutoFakeBold = 3, ItalicFont = AdobeKaitiStd-Regular ]
+      [ AutoFakeBold = 3 , ItalicFont = AdobeKaitiStd-Regular ]
     \setCJKsansfont { AdobeHeitiStd-Regular    } [ AutoFakeBold = 3 ]
     \setCJKmonofont { AdobeFangsongStd-Regular }
+%</zh>
+%<*ja>
+    \setCJKmainfont { Kozuka Mincho Pr6N }
+      [
+        UprightFont = *~L ,
+        BoldFont    = *~B
+      ]
+    \setCJKsansfont { Kozuka Gothic Pr6N }
+      [
+        UprightFont = *~M ,
+        BoldFont    = *~B
+      ]
+    \setCJKmonofont { Kozuka Gothic Pr6N }
+    \setCJKfamilyfont { jamin  } { Kozuka Mincho Pr6N }
+      [
+        UprightFont = *~L ,
+        BoldFont    = *~B
+      ]
+    \setCJKfamilyfont { jagoth } { Kozuka Gothic Pr6N }
+      [
+        UprightFont = *~M ,
+        BoldFont    = *~B
+      ]
+%</ja>
     \setCJKfamilyfont { zhsong } { AdobeSongStd-Light       }
-      [ AutoFakeBold = 3, ItalicFont = AdobeKaitiStd-Regular ]
+      [ AutoFakeBold = 3 , ItalicFont = AdobeKaitiStd-Regular ]
     \setCJKfamilyfont { zhhei  } { AdobeHeitiStd-Regular    } [ AutoFakeBold = 3 ]
     \setCJKfamilyfont { zhfs   } { AdobeFangsongStd-Regular }
     \setCJKfamilyfont { zhkai  } { AdobeKaitiStd-Regular    }
   }
+%</zh|ja>
 %</adobe>
 %<*fandol>
-\@@_fontset_case:nnn
+%<*und>
+\tl_if_eq:NnTF \g_@@_lang_tl { ja }
+  { \ctex_file_input:n { sjtu-cjk-font-fandol-ja.def } }
+  { \ctex_file_input:n { sjtu-cjk-font-fandol-zh.def } }
+%</und>
+%<*zh|ja>
+%<zh>\@@_fontset_case:nnn
+%<ja>\@@_fontset_case:nn
   { \@@_fontset_error:nn { cjk } { fandol } }
+%<*zh>
   {
     \ctex_load_zhmap:nnnn { zhsong } { zhhei } { zhfs } { fandol }
     \ctex_punct_set:n { fandol }
@@ -2701,51 +2860,94 @@
     \ctex_punct_map_bfseries:nn { \CJKrmdefault } { zhhei  }
     \ctex_punct_map_itshape:nn  { \CJKrmdefault } { zhkai  }
   }
+%</zh>
   {
+%<*zh>
     \setCJKmainfont { FandolSong }
       [
-        Extension   = .otf,
-        UprightFont = *-Regular,
-        BoldFont    = *-Bold,
+        Extension   = .otf ,
+        UprightFont = *-Regular ,
+        BoldFont    = *-Bold ,
         ItalicFont  = FandolKai-Regular
       ]
     \setCJKsansfont { FandolHei  }
       [
-        Extension   = .otf,
-        UprightFont = *-Regular,
+        Extension   = .otf ,
+        UprightFont = *-Regular ,
         BoldFont    = *-Bold
       ]
     \setCJKmonofont { FandolFang }
       [
-        Extension   = .otf,
+        Extension   = .otf ,
         UprightFont = *-Regular
       ]
+%</zh>
+%<*ja>
+    \setCJKmainfont { HaranoAjiMincho }
+      [
+        Extension   = .otf ,
+        UprightFont = *-Regular ,
+        BoldFont    = *-Bold
+      ]
+    \setCJKsansfont { HaranoAjiGothic }
+      [
+        Extension   = .otf ,
+        UprightFont = *-Medium ,
+        BoldFont    = *-Bold
+      ]
+    \setCJKmonofont { HaranoAjiGothic }
+      [
+        Extension   = .otf ,
+        UprightFont = *-Regular
+      ]
+    \setCJKfamilyfont { jamin  } { HaranoAjiMincho }
+      [
+        Extension   = .otf ,
+        UprightFont = *-Regular ,
+        BoldFont    = *-Bold
+      ]
+    \setCJKfamilyfont { jagoth } { HaranoAjiGothic }
+      [
+        Extension   = .otf ,
+        UprightFont = *-Medium ,
+        BoldFont    = *-Bold
+      ]
+%</ja>
     \setCJKfamilyfont { zhsong } { FandolSong }
       [
-        Extension   = .otf,
-        UprightFont = *-Regular,
-        BoldFont    = *-Bold
+        Extension   = .otf ,
+        UprightFont = *-Regular ,
+        BoldFont    = *-Bold ,
+        ItalicFont  = FandolKai-Regular
       ]
     \setCJKfamilyfont { zhhei  } { FandolHei  }
       [
-        Extension   = .otf,
+        Extension   = .otf ,
         UprightFont = *-Regular,
         BoldFont    = *-Bold
       ]
     \setCJKfamilyfont { zhfs   } { FandolFang }
       [
-        Extension   = .otf,
+        Extension   = .otf ,
         UprightFont = *-Regular
       ]
     \setCJKfamilyfont { zhkai  } { FandolKai  }
       [
-        Extension   = .otf,
+        Extension   = .otf ,
         UprightFont = *-Regular
       ]
   }
+%</zh|ja>
 %</fandol>
 %<*founder>
+%<*und>
+\tl_if_eq:NnTF \g_@@_lang_tl { ja }
+  { \ctex_file_input:n { sjtu-cjk-font-founder-ja.def } }
+  { \ctex_file_input:n { sjtu-cjk-font-founder-zh.def } }
+%</und>
+%<*zh|ja>
 \@@_fontset_case:nn
+%<*zh>
   {
     \ctex_load_zhmap:nnnn { zhsong } { zhhei } { zhfs } { founder }
     \ctex_punct_set:n { founder }
@@ -2753,22 +2955,38 @@
     \ctex_punct_map_bfseries:nn { \CJKrmdefault } { zhhei  }
     \ctex_punct_map_itshape:nn  { \CJKrmdefault } { zhkai  }
   }
+%</zh>
+%<ja>  { \@@_fontset_error:nn { cjk } { founder } }
   {
+%<*zh>
     \setCJKmainfont { FZShuSong-Z01  }
-      [ AutoFakeBold = 3, ItalicFont = FZKai-Z03 ]
+      [ AutoFakeBold = 3 , ItalicFont = FZKai-Z03 ]
     \setCJKsansfont { FZHei-B01      } [ AutoFakeBold = 3 ]
     \setCJKmonofont { FZFangSong-Z02 }
+%</zh>
+%<*ja>
+    \setCJKmainfont { ipam.ttf } [ AutoFakeBold = 3 ]
+    \setCJKsansfont { ipag.ttf } [ AutoFakeBold = 3 ]
+    \setCJKmonofont { ipag.ttf }
+    \setCJKfamilyfont { jamin  } { ipam.ttf } [ AutoFakeBold = 3 ]
+    \setCJKfamilyfont { jagoth } { ipag.ttf } [ AutoFakeBold = 3 ]
+%</ja>
     \setCJKfamilyfont { zhsong } { FZShuSong-Z01  }
-      [ AutoFakeBold = 3, ItalicFont = FZKai-Z03 ]
+      [ AutoFakeBold = 3 , ItalicFont = FZKai-Z03 ]
     \setCJKfamilyfont { zhhei  } { FZHei-B01      } [ AutoFakeBold = 3 ]
     \setCJKfamilyfont { zhkai  } { FZKai-Z03      }
     \setCJKfamilyfont { zhfs   } { FZFangSong-Z02 }
   }
+%</zh|ja>
 %</founder>
+%<*!und>
 \NewDocumentCommand \songti   { } { \CJKfamily { zhsong  } }
 \NewDocumentCommand \heiti    { } { \CJKfamily { zhhei   } }
 %<!ubuntu>\NewDocumentCommand \fangsong { } { \CJKfamily { zhfs    } }
 \NewDocumentCommand \kaishu   { } { \CJKfamily { zhkai   } }
+%<ja>\NewDocumentCommand \mincho   { } { \CJKfamily { jamin   } }
+%<ja>\NewDocumentCommand \gothic   { } { \CJKfamily { jagoth  } }
+%</!und>
 %</font&cjk>
 %    \end{macrocode}
 %
