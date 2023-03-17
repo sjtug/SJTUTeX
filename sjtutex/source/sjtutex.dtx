@@ -2078,7 +2078,7 @@
     bookmark      : boolean   = false ,
     bookmark-text : tokenlist = \c_empty_tl ,
     style         : tokenlist = empty ,
-    format        : tokenlist = \linespread { 1 } \selectfont ,
+    format        : tokenlist = \c_empty_tl ,
     prefix        : tokenlist ,
     components    : commalist ,
     top-skip      : skip      = \c_zero_skip ,
@@ -2980,6 +2980,9 @@
 %</zh|ja>
 %</founder>
 %<*!und>
+\NewDocumentCommand \CJKrmfamily { } { \CJKfamily { \CJKrmdefault } }
+\NewDocumentCommand \CJKsffamily { } { \CJKfamily { \CJKsfdefault } }
+\NewDocumentCommand \CJKttfamily { } { \CJKfamily { \CJKttdefault } }
 \NewDocumentCommand \songti   { } { \CJKfamily { zhsong  } }
 \NewDocumentCommand \heiti    { } { \CJKfamily { zhhei   } }
 %<!ubuntu>\NewDocumentCommand \fangsong { } { \CJKfamily { zhfs    } }
@@ -3209,14 +3212,19 @@
 %
 % 设置页眉内容。
 %    \begin{macrocode}
-%<*!thesis>
 \tl_set:Nn \l_@@_header_tl
   {
+%<*!thesis>
     \includegraphics [ height = 1.2 cm ]
       { sjtu-vi-logo- \l_@@_style_header_logo_color_tl .pdf }
-  }
 %</!thesis>
-%<thesis>\tl_set:Nn \l_@@_header_tl    { \l_@@_info_subject_zh_tl }
+%<*thesis>
+    {
+      \@@_set_cjk_default_zh: \normalfont
+      \l_@@_info_subject_zh_tl
+    }
+%</thesis>
+  }
 %<!article>\tl_set:Nn \l_@@_leftmark_tl  { \leftmark }
 %<article>\tl_set:Nn \l_@@_leftmark_tl  { \l_@@_info_subject_tl }
 \tl_set:Nn \l_@@_rightmark_tl { \leftmark }
@@ -3323,7 +3331,7 @@
     afterskip   = 18 bp ,
     lofskip     = \c_zero_skip ,
     lotskip     = \c_zero_skip ,
-    format      = \zihao { 3 } \bfseries \heiti \centering ,
+    format      = \zihao { 3 } \bfseries \CJKsffamily \centering ,
     nameformat  = ,
     titleformat = ,
     aftername   = \quad ,
@@ -3343,14 +3351,14 @@
   {
     beforeskip  = 24 bp ,
     afterskip   =  6 bp ,
-    format      = \zihao { 4 } \bfseries \heiti ,
+    format      = \zihao { 4 } \bfseries \CJKsffamily ,
     afterindent = true
   }
 \ctex_set:nn { subsection }
   {
     beforeskip  = 12 bp ,
     afterskip   =  6 bp ,
-    format      = \zihao { -4 } \bfseries \heiti ,
+    format      = \zihao { -4 } \bfseries \CJKsffamily ,
     afterindent = true
   }
 \ctex_set:nn { subsubsection }
@@ -3675,8 +3683,7 @@
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-%<*class>
-%<*!thesis>
+%<*class&!thesis>
 \tl_new:N \l_@@_info_subject_tl
 \clist_new:N \l_@@_info_keywords_clist
 \keys_define:nn { sjtu / info }
@@ -3687,105 +3694,10 @@
     subject           .tl_set:N = \l_@@_info_subject_tl ,
     keywords       .clist_set:N = \l_@@_info_keywords_clist ,
   }
-%</!thesis>
+%</class&!thesis>
 %    \end{macrocode}
 %
-% \subsubsection{定义内部函数}
-%
-% \begin{macro}{\@@_cjk_spread_box:nn}
-% 汉字分散对齐的水平盒子。
-%    \begin{macrocode}
-%<*thesis>
-\@@_engine_case:nnn
-  {
-    \cs_new_protected:Npn \@@_cjk_spread_box:nn #1#2
-      {
-        \mode_leave_vertical:
-        \group_begin:
-          \bool_set_false:N \l_@@_tmpa_bool
-          \cs_set_eq:NN \SJTU@CJK@filltwosidesSymbol \CJKsymbol
-          \cs_set:Npn \CJKsymbol ##1
-            {
-              \bool_if:NTF \l_@@_tmpa_bool
-                { \hfil \SJTU@CJK@filltwosidesSymbol { ##1 } }
-                {
-                  \SJTU@CJK@filltwosidesSymbol { ##1 }
-                  \bool_set_true:N \l_@@_tmpa_bool
-                }
-            }
-          \hbox_to_wd:nn {#1} {#2}
-        \group_end:
-      }
-  }
-  {
-    \cs_new_protected:Npn \@@_cjk_spread_box:nn #1#2
-      {
-        \mode_leave_vertical:
-        \group_begin:
-          \cs_set:Npn \CJKglue
-            { \skip_horizontal:n { \c_zero_dim plus 1 filll } }
-          \hbox_to_wd:nn {#1} {#2}
-        \group_end:
-      }
-  }
-  {
-    \cs_new_protected:Npn \@@_cjk_spread_box:nn #1#2
-      {
-        \mode_leave_vertical:
-        \group_begin:
-          \ltjsetparameter { kanjiskip = { \c_zero_dim plus 1 filll } }
-          \hbox_to_wd:nn {#1} {#2}
-        \group_end:
-      }
-  }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\@@_left_aligned_box:nn}
-% 左对齐的水平盒子。
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_left_aligned_box:nn #1#2
-  {
-    \mode_leave_vertical:
-    \hbox_to_wd:nn {#1} { #2 \hfil }
-  }
-%    \end{macrocode}
-% \end{macro}
-%
-% 信息输出。
-%    \begin{macrocode}
-\cs_new:Npn \@@_title_page_info:nnn #1#2#3
-  {
-    \group_begin:
-      \cs_set:Npn \l_@@_info_output_format:NNN ##1##2##3 {#3}
-      \clist_clear:N \l_@@_tmpa_clist
-      \clist_clear:N \l_@@_tmpb_clist
-      \dim_set:Nn \l_@@_tmpb_dim { 5 em }
-      \clist_map_inline:nn {#2}
-        {
-          \clist_put_right:No \l_@@_tmpa_clist
-            { \cs:w c_@@_name_ ##1 _ #1 _tl \cs_end: }
-          \clist_put_right:No \l_@@_tmpb_clist
-            { \cs:w l_@@_info_ ##1 _ #1 _tl \cs_end: }
-          \@@_dim_set_to_wd:Nv \l_@@_tmpa_dim { l_@@_info_ ##1 _ #1 _tl }
-          \dim_set:Nn \l_@@_tmpb_dim
-            { \dim_max:nn { \l_@@_tmpa_dim } { \l_@@_tmpb_dim } }
-        }
-      \bool_until_do:nn
-        { \clist_if_empty_p:N \l_@@_tmpa_clist }
-        {
-          \clist_pop:NN \l_@@_tmpa_clist \l_@@_tmpa_tl
-          \clist_pop:NN \l_@@_tmpb_clist \l_@@_tmpb_tl
-          \l_@@_info_output_format:NNN
-            \l_@@_tmpa_tl \l_@@_tmpb_dim \l_@@_tmpb_tl
-          \skip_vertical:N \c_zero_dim
-        }
-    \group_end:
-  }
-\cs_generate_variant:Nn \@@_title_page_info:nnn { nxn }
-%</thesis>
-%</class>
-%    \end{macrocode}
+% \subsection{多语言支持}
 %
 % 初始化主题。
 %    \begin{macrocode}
@@ -3900,6 +3812,45 @@
 %</en>
 %    \end{macrocode}
 %
+% 设置语言格式辅助命令
+%    \begin{macrocode}
+%<*zh>
+\cs_new:Nn \@@_set_cjk_default_zh:
+  {
+    \tl_set:Nn \CJKrmdefault { zhsong }
+    \tl_set:Nn \CJKsfdefault { zhhei  }
+    \tl_set:Nn \CJKttdefault { zhfs   }
+  }
+\cs_new_protected:Nn \@@_set_language_zh:
+  {
+    \ctex_set:n { autoindent = true }
+    \@@_set_cjk_default_zh:
+    \normalfont
+  }
+%</zh>
+%<*en>
+\cs_new_protected:Nn \@@_set_language_en:
+  {
+    \ctex_set:n { autoindent = true }
+    \normalfont
+  }
+%</en>
+%<*ja>
+\cs_new:Nn \@@_set_cjk_default_ja:
+  {
+    \tl_set:Nn \CJKrmdefault { jamin  }
+    \tl_set:Nn \CJKsfdefault { jagoth }
+    \tl_set:Nn \CJKttdefault { jagoth }
+  }
+\cs_new_protected:Nn \@@_set_language_ja:
+  {
+    \ctex_set:n { autoindent = 1 }
+    \@@_set_cjk_default_ja:
+    \normalfont
+  }
+%</ja>
+%    \end{macrocode}
+%
 % 标题页页面样式，页脚添加资助基金信息。
 %    \begin{macrocode}
 %<*thesis>
@@ -3923,8 +3874,168 @@
 %</lang>
 %    \end{macrocode}
 %
+% 载入语言配置。
 %    \begin{macrocode}
 %<*class>
+%<thesis>\clist_map_inline:Nn \g_@@_lang_clist
+%<thesis>  { \file_input:n { sjtu-lang-thesis- #1 .def } }
+%<!thesis>\file_input:n { sjtu-lang-generic- \g_@@_lang_tl .def }
+\file_input:n { sjtu-scheme- \g_@@_lang_tl .def }
+%    \end{macrocode}
+%
+% 初始化日期。
+%    \begin{macrocode}
+\keys_define:nn { sjtu / info }
+  {
+    date    .code:n =
+      {
+        \regex_match:neTF { \d+-\d+-\d+ } {#1}
+          {
+%<*thesis>
+            \clist_map_inline:Nn \g_@@_lang_clist
+              {
+                \tl_set:cx { l_@@_info_date_ ##1 _tl }
+                  { \exp_last_unbraced:ce { @@_date_aux_ ##1 :w } #1 \q_stop }
+              }
+%</thesis>
+%<*!thesis>
+            \tl_set:Nx \@date
+              {
+                \exp_last_unbraced:ce
+                  { @@_date_aux_ \g_@@_lang_tl :w } #1 \q_stop
+              }
+%</!thesis>
+          }
+          {
+            \regex_match:neT { \d+-\d+ } {#1}
+              {
+%<*thesis>
+                \clist_map_inline:Nn \g_@@_lang_clist
+                  {
+                    \tl_set:cx { l_@@_info_date_ ##1 _tl }
+                      { \exp_last_unbraced:ce { @@_date_aux_short_ ##1 :w } #1 \q_stop }
+                  }
+%</thesis>
+%<*!thesis>
+                \tl_set:Nx \@date
+                  {
+                    \exp_last_unbraced:ce
+                      { @@_date_aux_short_ \g_@@_lang_tl :w } #1 \q_stop
+                  }
+%</!thesis>
+              }
+          }
+      } ,
+    date .initial:x =
+      {
+        \int_to_arabic:n { \c_sys_year_int  } -
+        \int_to_arabic:n { \c_sys_month_int } -
+        \int_to_arabic:n { \c_sys_day_int   }
+      }
+  }
+%<thesis>\tl_set:Nv \today { l_@@_info_date_ \g_@@_lang_tl _tl }
+%<!thesis>\tl_set:NV \today \@date
+%    \end{macrocode}
+%
+% \subsection{标题页}
+%
+% \subsubsection{定义内部函数}
+%
+% \begin{macro}{\@@_cjk_spread_box:nn}
+% 汉字分散对齐的水平盒子。
+%    \begin{macrocode}
+%<*thesis>
+\@@_engine_case:nnn
+  {
+    \cs_new_protected:Npn \@@_cjk_spread_box:nn #1#2
+      {
+        \mode_leave_vertical:
+        \group_begin:
+          \bool_set_false:N \l_@@_tmpa_bool
+          \cs_set_eq:NN \SJTU@CJK@filltwosidesSymbol \CJKsymbol
+          \cs_set:Npn \CJKsymbol ##1
+            {
+              \bool_if:NTF \l_@@_tmpa_bool
+                { \hfil \SJTU@CJK@filltwosidesSymbol { ##1 } }
+                {
+                  \SJTU@CJK@filltwosidesSymbol { ##1 }
+                  \bool_set_true:N \l_@@_tmpa_bool
+                }
+            }
+          \hbox_to_wd:nn {#1} {#2}
+        \group_end:
+      }
+  }
+  {
+    \cs_new_protected:Npn \@@_cjk_spread_box:nn #1#2
+      {
+        \mode_leave_vertical:
+        \group_begin:
+          \cs_set:Npn \CJKglue
+            { \skip_horizontal:n { \c_zero_dim plus 1 filll } }
+          \hbox_to_wd:nn {#1} {#2}
+        \group_end:
+      }
+  }
+  {
+    \cs_new_protected:Npn \@@_cjk_spread_box:nn #1#2
+      {
+        \mode_leave_vertical:
+        \group_begin:
+          \ltjsetparameter { kanjiskip = { \c_zero_dim plus 1 filll } }
+          \hbox_to_wd:nn {#1} {#2}
+        \group_end:
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_left_aligned_box:nn}
+% 左对齐的水平盒子。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_left_aligned_box:nn #1#2
+  {
+    \mode_leave_vertical:
+    \hbox_to_wd:nn {#1} { #2 \hfil }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% 信息输出。
+%    \begin{macrocode}
+\cs_new:Npn \@@_title_page_info:nnn #1#2#3
+  {
+    \group_begin:
+      \cs_set:Npn \l_@@_info_output_format:NNN ##1##2##3 {#3}
+      \clist_clear:N \l_@@_tmpa_clist
+      \clist_clear:N \l_@@_tmpb_clist
+      \dim_set:Nn \l_@@_tmpb_dim { 5 em }
+      \clist_map_inline:nn {#2}
+        {
+          \clist_put_right:No \l_@@_tmpa_clist
+            { \cs:w c_@@_name_ ##1 _ #1 _tl \cs_end: }
+          \clist_put_right:No \l_@@_tmpb_clist
+            { \cs:w l_@@_info_ ##1 _ #1 _tl \cs_end: }
+          \@@_dim_set_to_wd:Nv \l_@@_tmpa_dim { l_@@_info_ ##1 _ #1 _tl }
+          \dim_set:Nn \l_@@_tmpb_dim
+            { \dim_max:nn { \l_@@_tmpa_dim } { \l_@@_tmpb_dim } }
+        }
+      \bool_until_do:nn
+        { \clist_if_empty_p:N \l_@@_tmpa_clist }
+        {
+          \clist_pop:NN \l_@@_tmpa_clist \l_@@_tmpa_tl
+          \clist_pop:NN \l_@@_tmpb_clist \l_@@_tmpb_tl
+          \l_@@_info_output_format:NNN
+            \l_@@_tmpa_tl \l_@@_tmpb_dim \l_@@_tmpb_tl
+          \skip_vertical:N \c_zero_dim
+        }
+    \group_end:
+  }
+\cs_generate_variant:Nn \@@_title_page_info:nnn { nxn }
+%    \end{macrocode}
+%
+% 标题页校徽颜色。
+%    \begin{macrocode}
 \keys_define:nn { sjtu / style }
   {
     title-logo-color       .choice: ,
@@ -3933,8 +4044,11 @@
       { \tl_set_eq:NN \l_@@_style_title_logo_color_tl \l_keys_choice_tl } ,
     title-logo-color       .initial:n = { red }
   }
+%</thesis>
 %</class>
 %    \end{macrocode}
+%
+% \subsubsection{构建标题页}
 %
 %    \begin{macrocode}
 %<*lang>
@@ -4003,6 +4117,7 @@
     bookmark      = true ,
     bookmark-text = \c_@@_name_title_page_tl ,
     style         = SJTU@fund@zh ,
+    format        = \linespread { 1 } \@@_set_language_zh: ,
     prefix        = title / zh ,
     components    = { logo, subject, title, info, date }
   }
@@ -4088,6 +4203,7 @@
 \@@_declare_page:nn { title / en }
   {
     style       = SJTU@fund@en ,
+    format      = \linespread { 1 } \@@_set_language_en: ,
     prefix      = title / en ,
     components  = { subject, title, info, date }
   }
@@ -4096,6 +4212,7 @@
 \@@_declare_page:nn { title / ja }
   {
     style       = SJTU@fund@ja ,
+    format      = \linespread { 1 } \@@_set_language_ja: ,
     prefix      = title / ja ,
     components  = { subject, title, info, date }
   }
@@ -4105,70 +4222,8 @@
 %</lang>
 %    \end{macrocode}
 %
-% 载入语言配置。
 %    \begin{macrocode}
 %<*class>
-%<thesis>\clist_map_inline:Nn \g_@@_lang_clist
-%<thesis>  { \file_input:n { sjtu-lang-thesis- #1 .def } }
-%<!thesis>\file_input:n { sjtu-lang-generic- \g_@@_lang_tl .def }
-\file_input:n { sjtu-scheme- \g_@@_lang_tl .def }
-%    \end{macrocode}
-%
-% 初始化日期。
-%    \begin{macrocode}
-\keys_define:nn { sjtu / info }
-  {
-    date    .code:n =
-      {
-        \regex_match:neTF { \d+-\d+-\d+ } {#1}
-          {
-%<*thesis>
-            \clist_map_inline:Nn \g_@@_lang_clist
-              {
-                \tl_set:cx { l_@@_info_date_ ##1 _tl }
-                  { \exp_last_unbraced:ce { @@_date_aux_ ##1 :w } #1 \q_stop }
-              }
-%</thesis>
-%<*!thesis>
-            \tl_set:Nx \@date
-              {
-                \exp_last_unbraced:ce
-                  { @@_date_aux_ \g_@@_lang_tl :w } #1 \q_stop
-              }
-%</!thesis>
-          }
-          {
-            \regex_match:neT { \d+-\d+ } {#1}
-              {
-%<*thesis>
-                \clist_map_inline:Nn \g_@@_lang_clist
-                  {
-                    \tl_set:cx { l_@@_info_date_ ##1 _tl }
-                      { \exp_last_unbraced:ce { @@_date_aux_short_ ##1 :w } #1 \q_stop }
-                  }
-%</thesis>
-%<*!thesis>
-                \tl_set:Nx \@date
-                  {
-                    \exp_last_unbraced:ce
-                      { @@_date_aux_short_ \g_@@_lang_tl :w } #1 \q_stop
-                  }
-%</!thesis>
-              }
-          }
-      } ,
-    date .initial:x =
-      {
-        \int_to_arabic:n { \c_sys_year_int  } -
-        \int_to_arabic:n { \c_sys_month_int } -
-        \int_to_arabic:n { \c_sys_day_int   }
-      }
-  }
-%<thesis>\tl_set:Nv \today { l_@@_info_date_ \g_@@_lang_tl _tl }
-%<!thesis>\tl_set:NV \today \@date
-%    \end{macrocode}
-%
-%    \begin{macrocode}
 %<*thesis>
 \RenewDocumentCommand \maketitle { }
   {
@@ -4258,6 +4313,7 @@
   {
     bookmark      = true ,
     bookmark-text = \c_@@_name_copyright_page_tl ,
+    format        = \linespread { 1 } \@@_set_language_zh: ,
     prefix        = copyright ,
     components    =
       {
@@ -4319,6 +4375,7 @@
   {
     \@@_if_lang_valid:nTF {#1}
       {
+        \use:c { @@_set_language_ #1 : }
         \ctex_set:nn { chapter } { format += \sffamily }
         \bool_if:NTF \l_@@_abstract_bookmark_bool
           {
@@ -4562,6 +4619,7 @@
       {
         \AtEndDocument
           {
+            \use:c { @@_set_language_ #1 : }
             \bool_if:NTF \g_@@_openright_bool
               { \cleardoublepage } { \clearpage }
             \pagenumbering { roman }
@@ -4758,13 +4816,13 @@
         \item
           [
             \skip_horizontal:N \labelsep
-            \bfseries \heiti #1 \@addpunct { \enskip }
+            \bfseries \CJKsffamily #1 \@addpunct { \enskip }
           ]
         \ignorespaces
       }
       { \popQED \endtrivlist \legacy_if_set_false:n { @endpe } }
     \newtheoremstyle { sjtu }
-      { } { } { \normalfont } { } { \bfseries \heiti } { } { \ccwd } { }
+      { } { } { \normalfont } { } { \bfseries \CJKsffamily } { } { \ccwd } { }
     \theoremstyle { sjtu }
     \@@_new_theorems:
   }
@@ -4774,9 +4832,9 @@
 %    \begin{macrocode}
 \ctex_at_end_package:nn { ntheorem }
   {
-    \theoremheaderfont { \bfseries \heiti }
-    \theorembodyfont   { \normalfont      }
-    \theoremseparator  { \enskip          }
+    \theoremheaderfont { \bfseries \CJKsffamily }
+    \theorembodyfont   { \normalfont }
+    \theoremseparator  { \enskip     }
     \theoremsymbol { \ensuremath { \QED } }
     \qedsymbol     { \ensuremath { \QED } }
     \newtheorem* { proof } { \proofname }
@@ -4923,11 +4981,10 @@
   { 学士, 修士, 博士 }
 %</ja>
 %</thesis>
-%<*zh|ja>
+%<*zh>
 \clist_map_inline:nn
   {
 %<*thesis>
-%<*zh>
     { univ             } { 上海交通大学 } ,
     { author           } { 姓名         } ,
     { id               } { 学号         } ,
@@ -4945,29 +5002,14 @@
     { decl_author      } { 学位论文作者 } ,
     { decl_supervisor  } { 指导教师     } ,
     { abstract         } { 摘 \quad 要  } ,
-%</zh>
-%<*ja>
-    { univ             } { 上海交通大學 } ,
-    { address          } { 中国・上海   } ,
-    { author           } { 著者         } ,
-    { supervisor       } { 指導教員     } ,
-    { assoc_supervisor } { 副指導教員   } ,
-    { co_supervisor    } { 共同指導     } ,
-    { thesis           } { 学位請求論文 } ,
-    { title_page       } { 標題紙       } ,
-    { copyright_page   } { 版権ページ   } ,
-    { abstract         } { 要 \quad 旨  } ,
-%</ja>
 %</thesis>
-%<zh>    { keywords         } { 关键词：     } ,
-%<ja>    { keywords         } { キーワード： } ,
+    { keywords         } { 关键词：     } ,
     { info_sep         } { ：           } ,
     { item_sep         } { ，           }
   }
-%<thesis&zh>  { \@@_define_name:nnn { zh } #1 }
-%<thesis&ja>  { \@@_define_name:nnn { ja } #1 }
+%<thesis>  { \@@_define_name:nnn { zh } #1 }
 %<!thesis>  { \@@_define_name:nn #1 }
-%</zh|ja>
+%</zh>
 %<*en>
 \clist_map_inline:nn
   {
@@ -4989,6 +5031,28 @@
 %<thesis>  { \@@_define_name:nnn { en } #1 }
 %<!thesis>  { \@@_define_name:nn #1 }
 %</en>
+%<*ja>
+\clist_map_inline:nn
+  {
+%<*thesis>
+    { univ             } { 上海交通大學 } ,
+    { address          } { 中国・上海   } ,
+    { author           } { 著者         } ,
+    { supervisor       } { 指導教員     } ,
+    { assoc_supervisor } { 副指導教員   } ,
+    { co_supervisor    } { 共同指導     } ,
+    { thesis           } { 学位請求論文 } ,
+    { title_page       } { 標題紙       } ,
+    { copyright_page   } { 版権ページ   } ,
+    { abstract         } { 要 \quad 旨  } ,
+%</thesis>
+    { keywords         } { キーワード： } ,
+    { info_sep         } { ：           } ,
+    { item_sep         } { \quad        }
+  }
+%<thesis>  { \@@_define_name:nnn { ja } #1 }
+%<!thesis>  { \@@_define_name:nn #1 }
+%</ja>
 %<*thesis>
 %<*zh>
 \tl_const:Nn \c_@@_orig_decl_text_zh_tl
