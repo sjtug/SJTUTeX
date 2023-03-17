@@ -750,7 +750,7 @@
 %   \end{sjtusyntax}
 %   该选项包含许多子项目，用于录入论文信息。具体内容见下。
 %   \begin{itemize}
-%     \item 在 \cls{sjtuthesis} 文档类中，现在推荐使用以语言名称子域 \meta{lang} 
+%     \item 在 \cls{sjtuthesis} 文档类中，现在推荐使用以语言名称子域 \meta{lang}
 %           （比如 \opt{zh} 或 \opt{en}）下的键来设定对应语言的论文信息，见第 \ref{sec:sjtuthesiskey} 节；
 %           省略语言子域不带“*”的项目表示对应的中文字段、带“*”的项目表示对应的英文字段属于老用法，
 %           仍然兼容但请及时更新至新用法。
@@ -1025,7 +1025,7 @@
 % \begin{function}[updated=2022-12-18]{name/contents,name/listfigure,name/listtable,
 %   name/figure,name/table,name/abstract,name/index,name/appendix,name/proof,name/bib,
 %   name/figure*,name/table*,name/algorithm,name/listalgorithm,
-%   name/abbr,name/nom,name/summary,name/ack,name/resume,name/digest,name/achv}
+%   name/abbr,name/nom,name/ack,name/resume,name/digest,name/achv}
 % \end{function}
 %
 % \begin{table}[hbt]
@@ -1035,30 +1035,29 @@
 %   \label{tab:names}
 %   \begin{tabular}{l|l|l}
 %     \toprule
-%     \strong{选项}          & \strong{|lang = zh|} & \strong{|lang = en|}          \\
+%     \strong{选项}         & \strong{|lang = zh|}   & \strong{|lang = en|}          \\
 %     \midrule
-%      |contents|           & 目录                  & Contents                      \\
-%      |listfigure|         & 插图                  & List of Figures               \\
-%      |listtable|          & 表格                  & List of Tables                \\
-%      |figure|             & 图                    & Figure                        \\
-%      |table|              & 表                    & Table                         \\
-%      |abstract| \rexpstar & 摘要                  & Abstract                      \\
-%      |appendix|           & 附录                  & Appendix                      \\
-%      |index|              & 索引                  & Index                         \\
-%      |proof|              & 证明                  & Proof                         \\
+%      |contents|           & 目录                   & Contents                      \\
+%      |listfigure|         & 插图                   & List of Figures               \\
+%      |listtable|          & 表格                   & List of Tables                \\
+%      |figure|             & 图                     & Figure                        \\
+%      |table|              & 表                     & Table                         \\
+%      |abstract| \rexpstar & 摘要                   & Abstract                      \\
+%      |appendix|           & 附录                   & Appendix                      \\
+%      |index|              & 索引                   & Index                         \\
+%      |proof|              & 证明                   & Proof                         \\
 %      |bib|                & 参考文献               & Bibliography                  \\
 %    \midrule
-%      |figure*|            & Figure               & 图                             \\
-%      |table*|             & Table                & 表                             \\
-%      |algorithm|          & 算法                  & Algorithm                     \\
-%      |listalgorithm|      & 算法                  & List of Algorithms            \\
+%      |figure*|            & Figure                 & 图                            \\
+%      |table*|             & Table                  & 表                            \\
+%      |algorithm|          & 算法                   & Algorithm                     \\
+%      |listalgorithm|      & 算法                   & List of Algorithms            \\
 %      |abbr| \rexpstar     & 缩略语对照表           & Abbreviation                  \\
 %      |nom| \rexpstar      & 主要符号对照表         & Nomenclature                  \\
-%      |summary| \rexpstar  & 全文总结              & Summary                       \\
-%      |ack| \rexpstar      & 致谢                  & Acknowledgements              \\
-%      |resume| \rexpstar   & 个人简历              & Resume                        \\
-%      |digest| \rexpstar   & 大摘要                & Digest                        \\
-%      |achv| \rexpstar     & 学术论文和科研成果目录   & List of Research Achievements \\
+%      |ack| \rexpstar      & 致谢                   & Acknowledgements              \\
+%      |resume| \rexpstar   & 个人简历               & Resume                        \\
+%      |digest| \rexpstar   & 大摘要                 & Digest                        \\
+%      |achv| \rexpstar     & 学术论文和科研成果目录 & List of Research Achievements \\
 %     \bottomrule
 %   \end{tabular}
 % \end{table}
@@ -1213,15 +1212,6 @@
 %     \fixedlineskip(*\marg{长度}*)
 %   \end{sjtusyntax}
 %   设置固定值行距。通过当前字体大小计算行距倍数，在字号命令之后使用。
-% \end{function}
-%
-% \begin{function}[rEXP,updated=2022-02-24]{summary}
-%   \begin{sjtusyntax}[morekeywords={summary}]
-%     \begin{summary}(*\oarg{标题}*)
-%       (*\meta{全文总结内容}*)
-%     \end{summary}
-%   \end{sjtusyntax}
-%   全文总结。可以使用可选参数手动设置标题。该环境无章编号。
 % \end{function}
 %
 % \begin{function}{\appendix}
@@ -2812,8 +2802,6 @@
     abbr          .initial:n = { Abbreviations } ,
     nom            .tl_set:N = \SJTU@nomname ,
     nom           .initial:n = { Nomenclature } ,
-    summary        .tl_set:N = \SJTU@summaryname ,
-    summary       .initial:n = { Summary } ,
     ack            .tl_set:N = \SJTU@ackname ,
     ack           .initial:n = { Acknowledgements } ,
     resume         .tl_set:N = \SJTU@resumename ,
@@ -2847,7 +2835,6 @@
     listalgorithm = { 算 \quad 法 } ,
     abbr          = { 缩略语对照表 } ,
     nom           = { 符号对照表 } ,
-    summary       = { 全文总结 } ,
     ack           = { 致 \quad 谢 } ,
     resume        = { 个人简历 } ,
     digest        = { 大摘要 } ,
@@ -4114,12 +4101,6 @@
     \@@_head_aux_s:n {#1}
     \tl_clear:N \SJTU@style@float@font
   } { }
-%    \end{macrocode}
-%
-% 全文总结。
-%    \begin{macrocode}
-\NewDocumentEnvironment { summary } { O{ \SJTU@summaryname } }
-  { \@@_head_aux:n {#1} } { }
 %    \end{macrocode}
 %
 % 致谢，盲审模式下隐藏致谢。
