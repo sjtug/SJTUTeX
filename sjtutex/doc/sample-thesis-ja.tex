@@ -1,0 +1,101 @@
+% !TeX encoding = UTF-8
+
+% 载入 SJTUThesis 模版
+\documentclass[type=master,lang=ja]{sjtuthesis}
+
+\input{common-package}
+\usepackage{bxjalipsum}
+\input{common-setup-thesis}
+\makeatletter
+\def\@biblabel#1{(#1)}
+\makeatother
+% 日语模板补充字段
+\sjtusetup{
+  info = {
+    ja / title           = {上海交通大学学位論文見本},
+    ja / display-title   = {上海交通大学学位論文見本},
+    ja / keywords        = {学位論文, 論文書式, 規範化, 見本},
+    ja / degree          = {工学修士},
+    ja / author          = {某},
+    ja / supervisor      = {某教授},
+    ja / major           = {某メジャー},
+    ja / department      = {某カレッジ},
+    % ja / fund   = {
+    %                 {国家973プロジェクト (No. 2025CB000000)},
+    %                 {中国国家自然科学基金会 (No. 81120250000)},
+    %               },
+  }
+}
+
+\begin{document}
+
+% 标题页
+\maketitle
+
+% 原创性声明及使用授权书
+\copyrightpage
+
+% 前置部分
+\frontmatter
+
+\begin{abstract}[zh]
+  \input{common-abstract-zh.tex}
+\end{abstract}
+
+\begin{abstract}[en]
+  \input{common-abstract-en.tex}
+\end{abstract}
+
+\begin{abstract}[ja]
+  \input{common-abstract-ja.tex}
+\end{abstract}
+
+% 目录
+\tableofcontents
+% 插图索引
+\listoffigures*
+% 表格索引
+\listoftables*
+% 算法索引
+% \listofalgorithms*
+
+% 主体部分
+\mainmatter
+
+\input{common-mainmatter-ja}
+
+% 参考文献
+\begin{thebibliography}{99}
+  \item 大内田鶴子「草の根の自治の技術」『社会学評論』1999(4)，513-530
+  \item Ｋ・Ｊ・アロー　長名寛明訳『社会的選択と個人的評価』日本経済新聞社　1977，94
+  \item 鈴木光男・武藤滋夫『協力ゲームの理論』東京大学出版会　1985，149
+  \item 鈴木孝夫『ことばと文化』岩波書店　1973
+  \item 舩橋晴俊「環境問題の未来と社会変動――社会の自己破壊性と自己組織性」
+        舩橋晴俊・飯島伸子編『講座社会学 12 環境』東京大学出版会 1998，191-224
+  \item 真田信治 他『社会言語学』おうふう　1992
+  \item 真木悠介『現代社会の存立構造』筑摩書房　1977a
+  \item ------『気流の鳴る音』筑摩書房　1977b
+  \item 横山紀子「インプットの効果を高める教室活動：日本語教育における実践」国際交流基金『日本語国際センター紀要』第10号　1999，37-53
+  \item http://www.ninjal.ac.jp/（国立国語研究所）（作成日時、更新日時、アクセス日時）
+\end{thebibliography}
+
+% 附录
+\appendix
+
+% 附录中图表不加入索引
+\captionsetup{list=no}
+
+\input{common-nomenclature-ja}
+
+% 结尾部分
+\backmatter
+
+% 用于盲审的论文需隐去致谢、发表论文、科研成果、简历
+
+\input{common-achievements-ja}
+
+\input{common-acknowledgements-ja}
+
+\input{common-digest}
+
+\end{document}
