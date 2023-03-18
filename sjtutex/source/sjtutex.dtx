@@ -59,41 +59,58 @@
 
 \generate{
   \usedir{tex/latex/sjtutex}
-    \file{sjtuthesis.cls}            {\from{\jobname.dtx}{class,thesis}}
-    \file{sjtureport.cls}            {\from{\jobname.dtx}{class,report}}
-    \file{sjtuarticle.cls}           {\from{\jobname.dtx}{class,article}}
-    \file{sjtu-lang-thesis-zh.def}   {\from{\jobname.dtx}{lang,thesis,zh}}
-    \file{sjtu-lang-thesis-en.def}   {\from{\jobname.dtx}{lang,thesis,en}}
-    \file{sjtu-lang-generic-zh.def}  {\from{\jobname.dtx}{lang,generic,zh}}
-    \file{sjtu-lang-generic-en.def}  {\from{\jobname.dtx}{lang,generic,en}}
-    \file{sjtu-name-thesis-zh.def}   {\from{\jobname.dtx}{name,thesis,zh}}
-    \file{sjtu-name-thesis-en.def}   {\from{\jobname.dtx}{name,thesis,en}}
-    \file{sjtu-name-generic-zh.def}  {\from{\jobname.dtx}{name,generic,zh}}
-    \file{sjtu-name-generic-en.def}  {\from{\jobname.dtx}{name,generic,en}}
-    \file{sjtu-scheme-zh.def}        {\from{\jobname.dtx}{scheme,zh}}
-    \file{sjtu-scheme-en.def}        {\from{\jobname.dtx}{scheme,en}}
-    \file{sjtu-text-font-newtx.def}  {\from{\jobname.dtx}{font,text,newtx}}
-    \file{sjtu-text-font-newpx.def}  {\from{\jobname.dtx}{font,text,newpx}}
-    \file{sjtu-text-font-lm.def}     {\from{\jobname.dtx}{font,text,lm}}
-    \file{sjtu-text-font-stixtwo.def}{\from{\jobname.dtx}{font,text,stixtwo}}
-    \file{sjtu-text-font-xits.def}   {\from{\jobname.dtx}{font,text,xits}}
-    \file{sjtu-text-font-newcm.def}  {\from{\jobname.dtx}{font,text,newcm}}
-    \file{sjtu-text-font-cambria.def}{\from{\jobname.dtx}{font,text,cambria}}
-    \file{sjtu-text-font-times.def}  {\from{\jobname.dtx}{font,text,times}}
-    \file{sjtu-math-font-newtx.def}  {\from{\jobname.dtx}{font,math,newtx}}
-    \file{sjtu-math-font-newpx.def}  {\from{\jobname.dtx}{font,math,newpx}}
-    \file{sjtu-math-font-lm.def}     {\from{\jobname.dtx}{font,math,lm}}
-    \file{sjtu-math-font-stixtwo.def}{\from{\jobname.dtx}{font,math,stixtwo}}
-    \file{sjtu-math-font-xits.def}   {\from{\jobname.dtx}{font,math,xits}}
-    \file{sjtu-math-font-newcm.def}  {\from{\jobname.dtx}{font,math,newcm}}
-    \file{sjtu-math-font-cambria.def}{\from{\jobname.dtx}{font,math,cambria}}
-    \file{sjtu-math-font-times.def}  {\from{\jobname.dtx}{font,math,times}}
-    \file{sjtu-cjk-font-windows.def} {\from{\jobname.dtx}{font,cjk,windows}}
-    \file{sjtu-cjk-font-mac.def}     {\from{\jobname.dtx}{font,cjk,mac}}
-    \file{sjtu-cjk-font-ubuntu.def}  {\from{\jobname.dtx}{font,cjk,ubuntu}}
-    \file{sjtu-cjk-font-adobe.def}   {\from{\jobname.dtx}{font,cjk,adobe}}
-    \file{sjtu-cjk-font-fandol.def}  {\from{\jobname.dtx}{font,cjk,fandol}}
-    \file{sjtu-cjk-font-founder.def} {\from{\jobname.dtx}{font,cjk,founder}}
+    \file{sjtuthesis.cls}               {\from{\jobname.dtx}{class,thesis}}
+    \file{sjtureport.cls}               {\from{\jobname.dtx}{class,report}}
+    \file{sjtuarticle.cls}              {\from{\jobname.dtx}{class,article}}
+    \file{sjtu-lang-thesis-zh.def}      {\from{\jobname.dtx}{lang,thesis,zh}}
+    \file{sjtu-lang-thesis-en.def}      {\from{\jobname.dtx}{lang,thesis,en}}
+    \file{sjtu-lang-thesis-ja.def}      {\from{\jobname.dtx}{lang,thesis,ja}}
+    \file{sjtu-lang-generic-zh.def}     {\from{\jobname.dtx}{lang,generic,zh}}
+    \file{sjtu-lang-generic-en.def}     {\from{\jobname.dtx}{lang,generic,en}}
+    \file{sjtu-lang-generic-ja.def}     {\from{\jobname.dtx}{lang,generic,ja}}
+    \file{sjtu-name-thesis-zh.def}      {\from{\jobname.dtx}{name,thesis,zh}}
+    \file{sjtu-name-thesis-en.def}      {\from{\jobname.dtx}{name,thesis,en}}
+    \file{sjtu-name-thesis-ja.def}      {\from{\jobname.dtx}{name,thesis,ja}}
+    \file{sjtu-name-generic-zh.def}     {\from{\jobname.dtx}{name,generic,zh}}
+    \file{sjtu-name-generic-en.def}     {\from{\jobname.dtx}{name,generic,en}}
+    \file{sjtu-name-generic-ja.def}     {\from{\jobname.dtx}{name,generic,ja}}
+    \file{sjtu-scheme-zh.def}           {\from{\jobname.dtx}{scheme,zh}}
+    \file{sjtu-scheme-en.def}           {\from{\jobname.dtx}{scheme,en}}
+    \file{sjtu-scheme-ja.def}           {\from{\jobname.dtx}{scheme,ja}}
+    \file{sjtu-text-font-newtx.def}     {\from{\jobname.dtx}{font,text,newtx}}
+    \file{sjtu-text-font-newpx.def}     {\from{\jobname.dtx}{font,text,newpx}}
+    \file{sjtu-text-font-lm.def}        {\from{\jobname.dtx}{font,text,lm}}
+    \file{sjtu-text-font-stixtwo.def}   {\from{\jobname.dtx}{font,text,stixtwo}}
+    \file{sjtu-text-font-xits.def}      {\from{\jobname.dtx}{font,text,xits}}
+    \file{sjtu-text-font-newcm.def}     {\from{\jobname.dtx}{font,text,newcm}}
+    \file{sjtu-text-font-cambria.def}   {\from{\jobname.dtx}{font,text,cambria}}
+    \file{sjtu-text-font-times.def}     {\from{\jobname.dtx}{font,text,times}}
+    \file{sjtu-math-font-newtx.def}     {\from{\jobname.dtx}{font,math,newtx}}
+    \file{sjtu-math-font-newpx.def}     {\from{\jobname.dtx}{font,math,newpx}}
+    \file{sjtu-math-font-lm.def}        {\from{\jobname.dtx}{font,math,lm}}
+    \file{sjtu-math-font-stixtwo.def}   {\from{\jobname.dtx}{font,math,stixtwo}}
+    \file{sjtu-math-font-xits.def}      {\from{\jobname.dtx}{font,math,xits}}
+    \file{sjtu-math-font-newcm.def}     {\from{\jobname.dtx}{font,math,newcm}}
+    \file{sjtu-math-font-cambria.def}   {\from{\jobname.dtx}{font,math,cambria}}
+    \file{sjtu-math-font-times.def}     {\from{\jobname.dtx}{font,math,times}}
+    \file{sjtu-cjk-font-windows.def}    {\from{\jobname.dtx}{font,cjk,windows,und}}
+    \file{sjtu-cjk-font-windows-zh.def} {\from{\jobname.dtx}{font,cjk,windows,zh}}
+    \file{sjtu-cjk-font-windows-ja.def} {\from{\jobname.dtx}{font,cjk,windows,ja}}
+    \file{sjtu-cjk-font-mac.def}        {\from{\jobname.dtx}{font,cjk,mac,und}}
+    \file{sjtu-cjk-font-mac-zh.def}     {\from{\jobname.dtx}{font,cjk,mac,zh}}
+    \file{sjtu-cjk-font-mac-ja.def}     {\from{\jobname.dtx}{font,cjk,mac,ja}}
+    \file{sjtu-cjk-font-ubuntu.def}     {\from{\jobname.dtx}{font,cjk,ubuntu,und}}
+    \file{sjtu-cjk-font-ubuntu-zh.def}  {\from{\jobname.dtx}{font,cjk,ubuntu,zh}}
+    \file{sjtu-cjk-font-ubuntu-ja.def}  {\from{\jobname.dtx}{font,cjk,ubuntu,ja}}
+    \file{sjtu-cjk-font-adobe.def}      {\from{\jobname.dtx}{font,cjk,adobe,und}}
+    \file{sjtu-cjk-font-adobe-zh.def}   {\from{\jobname.dtx}{font,cjk,adobe,zh}}
+    \file{sjtu-cjk-font-adobe-ja.def}   {\from{\jobname.dtx}{font,cjk,adobe,ja}}
+    \file{sjtu-cjk-font-fandol.def}     {\from{\jobname.dtx}{font,cjk,fandol,und}}
+    \file{sjtu-cjk-font-fandol-zh.def}  {\from{\jobname.dtx}{font,cjk,fandol,zh}}
+    \file{sjtu-cjk-font-fandol-ja.def}  {\from{\jobname.dtx}{font,cjk,fandol,ja}}
+    \file{sjtu-cjk-font-founder.def}    {\from{\jobname.dtx}{font,cjk,founder,und}}
+    \file{sjtu-cjk-font-founder-zh.def} {\from{\jobname.dtx}{font,cjk,founder,zh}}
+    \file{sjtu-cjk-font-founder-ja.def} {\from{\jobname.dtx}{font,cjk,founder,ja}}
 %</install>
 %<*internal>
   \usedir{source/latex/sjtutex}
@@ -143,22 +160,32 @@
 %<lang&thesis&zh>\ProvidesExplFile{sjtu-lang-thesis-zh.def}
 %<lang&thesis&en>  {English specific definition for thesis (SJTUTeX)}
 %<lang&thesis&en>\ProvidesExplFile{sjtu-lang-thesis-en.def}
+%<lang&thesis&ja>  {Japanese specific definition for thesis (SJTUTeX)}
+%<lang&thesis&ja>\ProvidesExplFile{sjtu-lang-thesis-ja.def}
 %<lang&generic&zh>  {Chinese specific definition for generic (SJTUTeX)}
 %<lang&generic&zh>\ProvidesExplFile{sjtu-lang-generic-zh.def}
 %<lang&generic&en>  {English specific definition for generic (SJTUTeX)}
 %<lang&generic&en>\ProvidesExplFile{sjtu-lang-generic-en.def}
+%<lang&generic&ja>  {Japanese specific definition for generic (SJTUTeX)}
+%<lang&generic&ja>\ProvidesExplFile{sjtu-lang-generic-ja.def}
 %<name&thesis&zh>  {Chinese name config for thesis (SJTUTeX)}
 %<name&thesis&zh>\ProvidesExplFile{sjtu-name-thesis-zh.def}
 %<name&thesis&en>  {English name config for thesis (SJTUTeX)}
 %<name&thesis&en>\ProvidesExplFile{sjtu-name-thesis-en.def}
+%<name&thesis&ja>  {Japanese name config for thesis (SJTUTeX)}
+%<name&thesis&ja>\ProvidesExplFile{sjtu-name-thesis-ja.def}
 %<name&generic&zh>  {Chinese name config for generic (SJTUTeX)}
 %<name&generic&zh>\ProvidesExplFile{sjtu-name-generic-zh.def}
 %<name&generic&en>  {English name config for generic (SJTUTeX)}
 %<name&generic&en>\ProvidesExplFile{sjtu-name-generic-en.def}
+%<name&generic&ja>  {Japanese name config for generic (SJTUTeX)}
+%<name&generic&ja>\ProvidesExplFile{sjtu-name-generic-ja.def}
 %<scheme&zh>  {Chinese scheme (SJTUTeX)}
 %<scheme&zh>\ProvidesExplFile{sjtu-scheme-zh.def}
 %<scheme&en>  {English scheme (SJTUTeX)}
 %<scheme&en>\ProvidesExplFile{sjtu-scheme-en.def}
+%<scheme&ja>  {Japanese scheme (SJTUTeX)}
+%<scheme&ja>\ProvidesExplFile{sjtu-scheme-ja.def}
 %<font&text&newtx>  {New TX text fonts definition (SJTUTeX)}
 %<font&text&newtx>\ProvidesExplFile{sjtu-text-font-newtx.def}
 %<font&text&newpx>  {New PX text fonts definition (SJTUTeX)}
@@ -191,18 +218,42 @@
 %<font&math&cambria>\ProvidesExplFile{sjtu-math-font-cambria.def}
 %<font&math&times>  {Times math fonts definition (SJTUTeX)}
 %<font&math&times>\ProvidesExplFile{sjtu-math-font-times.def}
-%<font&cjk&windows>  {Windows CJK fonts definition (SJTUTeX)}
-%<font&cjk&windows>\ProvidesExplFile{sjtu-cjk-font-windows.def}
-%<font&cjk&mac>  {macOS CJK fonts definition (SJTUTeX)}
-%<font&cjk&mac>\ProvidesExplFile{sjtu-cjk-font-mac.def}
-%<font&cjk&ubuntu>  {Ubuntu CJK fonts definition (SJTUTeX)}
-%<font&cjk&ubuntu>\ProvidesExplFile{sjtu-cjk-font-ubuntu.def}
-%<font&cjk&adobe>  {Adobe CJK fonts definition (SJTUTeX)}
-%<font&cjk&adobe>\ProvidesExplFile{sjtu-cjk-font-adobe.def}
-%<font&cjk&fandol>  {Fandol CJK fonts definition (SJTUTeX)}
-%<font&cjk&fandol>\ProvidesExplFile{sjtu-cjk-font-fandol.def}
-%<font&cjk&founder>  {Founder CJK fonts definition (SJTUTeX)}
-%<font&cjk&founder>\ProvidesExplFile{sjtu-cjk-font-founder.def}
+%<font&cjk&windows&und>  {Windows CJK fonts definition (SJTUTeX)}
+%<font&cjk&windows&und>\ProvidesExplFile{sjtu-cjk-font-windows.def}
+%<font&cjk&windows&zh>  {Windows CJK fonts definition for Chinese (SJTUTeX)}
+%<font&cjk&windows&zh>\ProvidesExplFile{sjtu-cjk-font-windows-zh.def}
+%<font&cjk&windows&ja>  {Windows CJK fonts definition for Japanese (SJTUTeX)}
+%<font&cjk&windows&ja>\ProvidesExplFile{sjtu-cjk-font-windows-ja.def}
+%<font&cjk&mac&und>  {macOS CJK fonts definition (SJTUTeX)}
+%<font&cjk&mac&und>\ProvidesExplFile{sjtu-cjk-font-mac.def}
+%<font&cjk&mac&zh>  {macOS CJK fonts definition for Chinese (SJTUTeX)}
+%<font&cjk&mac&zh>\ProvidesExplFile{sjtu-cjk-font-mac-zh.def}
+%<font&cjk&mac&ja>  {macOS CJK fonts definition for Japanese (SJTUTeX)}
+%<font&cjk&mac&ja>\ProvidesExplFile{sjtu-cjk-font-mac-ja.def}
+%<font&cjk&ubuntu&und>  {Ubuntu CJK fonts definition (SJTUTeX)}
+%<font&cjk&ubuntu&und>\ProvidesExplFile{sjtu-cjk-font-ubuntu.def}
+%<font&cjk&ubuntu&zh>  {Ubuntu CJK fonts definition for Chinese (SJTUTeX)}
+%<font&cjk&ubuntu&zh>\ProvidesExplFile{sjtu-cjk-font-ubuntu-zh.def}
+%<font&cjk&ubuntu&ja>  {Ubuntu CJK fonts definition for Japanese (SJTUTeX)}
+%<font&cjk&ubuntu&ja>\ProvidesExplFile{sjtu-cjk-font-ubuntu-ja.def}
+%<font&cjk&adobe&und>  {Adobe CJK fonts definition (SJTUTeX)}
+%<font&cjk&adobe&und>\ProvidesExplFile{sjtu-cjk-font-adobe.def}
+%<font&cjk&adobe&zh>  {Adobe CJK fonts definition for Chinese (SJTUTeX)}
+%<font&cjk&adobe&zh>\ProvidesExplFile{sjtu-cjk-font-adobe-zh.def}
+%<font&cjk&adobe&ja>  {Adobe CJK fonts definition for Japanese (SJTUTeX)}
+%<font&cjk&adobe&ja>\ProvidesExplFile{sjtu-cjk-font-adobe-ja.def}
+%<font&cjk&fandol&und>  {Fandol CJK fonts definition (SJTUTeX)}
+%<font&cjk&fandol&und>\ProvidesExplFile{sjtu-cjk-font-fandol.def}
+%<font&cjk&fandol&zh>  {Fandol CJK fonts definition for Chinese (SJTUTeX)}
+%<font&cjk&fandol&zh>\ProvidesExplFile{sjtu-cjk-font-fandol-zh.def}
+%<font&cjk&fandol&ja>  {Fandol CJK fonts definition for Japanese (SJTUTeX)}
+%<font&cjk&fandol&ja>\ProvidesExplFile{sjtu-cjk-font-fandol-ja.def}
+%<font&cjk&founder&und>  {Founder CJK fonts definition (SJTUTeX)}
+%<font&cjk&founder&und>\ProvidesExplFile{sjtu-cjk-font-founder.def}
+%<font&cjk&founder&zh>  {Founder CJK fonts definition for Chinese (SJTUTeX)}
+%<font&cjk&founder&zh>\ProvidesExplFile{sjtu-cjk-font-founder-zh.def}
+%<font&cjk&founder&ja>  {Founder CJK fonts definition for Japanese (SJTUTeX)}
+%<font&cjk&founder&ja>\ProvidesExplFile{sjtu-cjk-font-founder-ja.def}
 %<!driver>  {\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
 %</!(driver|install)>
 %
@@ -526,11 +577,11 @@
 %   论文类型。三种选项分别代表学士学位论文、硕士学位论文、博士学位论文。
 % \end{function}
 %
-% \begin{function}{lang}
+% \begin{function}[updated=2023-03-18]{lang}
 %   \begin{sjtusyntax}[emph={[1]lang}]
-%     lang = (*<(zh)|en>*)
+%     lang = (*<(zh)|en|ja>*)
 %   \end{sjtusyntax}
-%   论文主要语言。可选中文或英文，该选项会改变文档中的一些标题的名字。
+%   论文主要语言。可选中文、英文或日文，该选项会改变文档中的一些标题的名字。
 %   下文中 \meta{lang} 可以指定为这些选项中的其中之一。
 % \end{function}
 %
@@ -620,6 +671,9 @@
 %     我们建议 Linux 用户自行配置合适的字体。参见
 %     \href{https://github.com/sjtug/SJTUThesis/wiki/在线使用说明}
 %     {Wiki 页面《在线使用说明》}。}
+%
+%   \note{日语模板不支持 \pdfTeX{} 引擎，请使用 \XeLaTeX{} 或
+%     \LuaLaTeX{} 编译。}
 % \end{function}
 %
 % \begin{function}{text-font}
@@ -1022,7 +1076,7 @@
 %   具体内容见表 \ref{tab:names}。
 % \end{function}
 %
-% \begin{function}[updated=2022-12-18]{name/contents,name/listfigure,name/listtable,
+% \begin{function}[updated=2023-03-18]{name/contents,name/listfigure,name/listtable,
 %   name/figure,name/table,name/abstract,name/index,name/appendix,name/proof,name/bib,
 %   name/figure*,name/table*,name/algorithm,name/listalgorithm,
 %   name/abbr,name/nom,name/ack,name/resume,name/digest,name/achv}
@@ -1033,31 +1087,31 @@
 %   \centering\small
 %   \caption{\opt{name} 选项的默认设置}
 %   \label{tab:names}
-%   \begin{tabular}{l|l|l}
+%   \begin{tabular}{l|p{7em}|p{9em}|p{8em}}
 %     \toprule
-%     \strong{选项}         & \strong{|lang = zh|}   & \strong{|lang = en|}          \\
+%     \strong{选项}         & \strong{|lang = zh|}   & \strong{|lang = en|}          & \strong{|lang = ja|}     \\
 %     \midrule
-%      |contents|           & 目录                   & Contents                      \\
-%      |listfigure|         & 插图                   & List of Figures               \\
-%      |listtable|          & 表格                   & List of Tables                \\
-%      |figure|             & 图                     & Figure                        \\
-%      |table|              & 表                     & Table                         \\
-%      |abstract| \rexpstar & 摘要                   & Abstract                      \\
-%      |appendix|           & 附录                   & Appendix                      \\
-%      |index|              & 索引                   & Index                         \\
-%      |proof|              & 证明                   & Proof                         \\
-%      |bib|                & 参考文献               & Bibliography                  \\
+%      |contents|           & 目录                   & Contents                      & 目次                     \\
+%      |listfigure|         & 插图                   & List of Figures               & 図目次                   \\
+%      |listtable|          & 表格                   & List of Tables                & 表目次                   \\
+%      |figure|             & 图                     & Figure                        & 図                       \\
+%      |table|              & 表                     & Table                         & 表                       \\
+%      |abstract| \rexpstar & 摘要                   & Abstract                      & 概要                     \\
+%      |appendix|           & 附录                   & Appendix                      & 索引                     \\
+%      |index|              & 索引                   & Index                         & 付録                     \\
+%      |proof|              & 证明                   & Proof                         & 证明                     \\
+%      |bib|                & 参考文献               & Bibliography                  & 参考文献                 \\
 %    \midrule
-%      |figure*|            & Figure                 & 图                            \\
-%      |table*|             & Table                  & 表                            \\
-%      |algorithm|          & 算法                   & Algorithm                     \\
-%      |listalgorithm|      & 算法                   & List of Algorithms            \\
-%      |abbr| \rexpstar     & 缩略语对照表           & Abbreviation                  \\
-%      |nom| \rexpstar      & 主要符号对照表         & Nomenclature                  \\
-%      |ack| \rexpstar      & 致谢                   & Acknowledgements              \\
-%      |resume| \rexpstar   & 个人简历               & Resume                        \\
-%      |digest| \rexpstar   & 大摘要                 & Digest                        \\
-%      |achv| \rexpstar     & 学术论文和科研成果目录 & List of Research Achievements \\
+%      |figure*|            & Figure                 & 图                            & Figure                   \\
+%      |table*|             & Table                  & 表                            & Table                    \\
+%      |algorithm|          & 算法                   & Algorithm                     & アルゴリズム             \\
+%      |listalgorithm|      & 算法                   & List of Algorithms            & アルゴリズム目次         \\
+%      |abbr| \rexpstar     & 缩略语对照表           & Abbreviation                  & 略語表                   \\
+%      |nom| \rexpstar      & 主要符号对照表         & Nomenclature                  & 記号表                   \\
+%      |ack| \rexpstar      & 致谢                   & Acknowledgements              & 謝辞                     \\
+%      |resume| \rexpstar   & 个人简历               & Resume                        & 履歴書                   \\
+%      |digest| \rexpstar   & 大摘要                 & Digest                        & 要訳                     \\
+%      |achv| \rexpstar     & 学术论文和科研成果目录 & List of Research Achievements & 学術論文及び研究成果目録 \\
 %     \bottomrule
 %   \end{tabular}
 % \end{table}
@@ -1334,7 +1388,7 @@
     "l3kernel"~ and~ "l3packages"~ using~ your~ TeX~ package \\
     manager~ or~ from~ CTAN.
   }
-\@ifpackagelater { expl3 } { 2020/04/06 } { }
+\@ifpackagelater { expl3 } { 2020/07/14 } { }
   { \msg_error:nnn { sjtutex } { l3-too-old } { expl3 } }
 %    \end{macrocode}
 %
@@ -1367,11 +1421,12 @@
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}{\g_@@_lang_tl}
+% \begin{variable}{\g_@@_lang_tl,\g_@@_lang_clist}
 % 论文语言。
 %    \begin{macrocode}
 \tl_new:N \g_@@_lang_tl
-\clist_new:N \g_@@_lang_clist
+%<thesis>\clist_new:N \g_@@_lang_clist
+%<thesis>\clist_set:Nn \g_@@_lang_clist { zh, en }
 %    \end{macrocode}
 % \end{variable}
 %
@@ -1523,23 +1578,15 @@
 %    \begin{macrocode}
     lang .choice: ,
     lang .value_required:n = true ,
-%<*thesis>
-    lang / zh .code:n =
-      {
-        \tl_gset:Nn \g_@@_lang_tl {#1}
-        \clist_gset:Nn \g_@@_lang_clist { zh, en }
-      } ,
-    lang / en .code:n =
-      {
-        \tl_gset:Nn \g_@@_lang_tl {#1}
-        \clist_gset:Nn \g_@@_lang_clist { zh, en }
-      } ,
-%</thesis>
-%<*!thesis>
     lang .choices:nn =
-      { zh, en }
-      { \tl_gset_eq:NN \g_@@_lang_tl \l_keys_choice_tl } ,
-%</!thesis>
+      { zh, en, ja }
+      {
+        \tl_gset_eq:NN \g_@@_lang_tl \l_keys_choice_tl
+%<*thesis>
+        \clist_if_in:NnF \g_@@_lang_clist {#1}
+          { \clist_gput_right:Nn \g_@@_lang_clist {#1} }
+%</thesis>
+      } ,
     lang .initial:n = { zh } ,
 %    \end{macrocode}
 %
@@ -2034,7 +2081,7 @@
     bookmark      : boolean   = false ,
     bookmark-text : tokenlist = \c_empty_tl ,
     style         : tokenlist = empty ,
-    format        : tokenlist = \linespread { 1 } \selectfont ,
+    format        : tokenlist = \c_empty_tl ,
     prefix        : tokenlist ,
     components    : commalist ,
     top-skip      : skip      = \c_zero_skip ,
@@ -2543,13 +2590,20 @@
 %</class>
 %    \end{macrocode}
 %
-% \subsubsection{中文字体}
+% \subsubsection{东亚字体}
 %
 % 在字体未提供对应粗体的情况下，允许使用伪粗。
 %    \begin{macrocode}
 %<*font&cjk>
 %<*windows>
+%<*und>
+\tl_if_eq:NnTF \g_@@_lang_tl { ja }
+  { \ctex_file_input:n { sjtu-cjk-font-windows-ja.def } }
+  { \ctex_file_input:n { sjtu-cjk-font-windows-zh.def } }
+%</und>
+%<*zh|ja>
 \@@_fontset_case:nn
+%<*zh>
   {
     \ctex_load_zhmap:nnnn { zhsong } { zhhei } { zhfs } { windows }
     \ctex_punct_set:n { windows }
@@ -2557,21 +2611,41 @@
     \ctex_punct_map_bfseries:nn { \CJKrmdefault } { zhhei  }
     \ctex_punct_map_itshape:nn  { \CJKrmdefault } { zhkai  }
   }
+%</zh>
+%<ja>  { \@@_fontset_error:nn { cjk } { windows } }
   {
+%<*zh>
     \setCJKmainfont { SimSun   }
-      [ AutoFakeBold = 3, ItalicFont = KaiTi ]
+      [ AutoFakeBold = 3 , ItalicFont = KaiTi ]
     \setCJKsansfont { SimHei   } [ AutoFakeBold = 3 ]
     \setCJKmonofont { FangSong }
+%</zh>
+%<*ja>
+    \setCJKmainfont { MS~Mincho } [ AutoFakeBold = 3 ]
+    \setCJKsansfont { MS~Gothic } [ AutoFakeBold = 3 ]
+    \setCJKmonofont { MS~Gothic }
+    \setCJKfamilyfont { jamin  } { MS~Mincho } [ AutoFakeBold = 3 ]
+    \setCJKfamilyfont { jagoth } { MS~Gothic } [ AutoFakeBold = 3 ]
+%</ja>
     \setCJKfamilyfont { zhsong } { SimSun   }
-      [ AutoFakeBold = 3, ItalicFont = KaiTi ]
+      [ AutoFakeBold = 3 , ItalicFont = KaiTi ]
     \setCJKfamilyfont { zhhei  } { SimHei   } [ AutoFakeBold = 3 ]
     \setCJKfamilyfont { zhkai  } { KaiTi    }
     \setCJKfamilyfont { zhfs   } { FangSong }
   }
+%</zh|ja>
 %</windows>
 %<*mac>
-\@@_fontset_case:nnn
+%<*und>
+\tl_if_eq:NnTF \g_@@_lang_tl { ja }
+  { \ctex_file_input:n { sjtu-cjk-font-mac-ja.def } }
+  { \ctex_file_input:n { sjtu-cjk-font-mac-zh.def } }
+%</und>
+%<*zh|ja>
+%<zh>\@@_fontset_case:nnn
+%<ja>\@@_fontset_case:nn
   { \@@_fontset_error:nn { cjk } { mac } }
+%<*zh>
   {
     \ctex_load_zhmap:nnnn { zhsong } { zhhei } { zhfs } { mac }
     \ctex_punct_set:n { mac }
@@ -2580,41 +2654,78 @@
     \ctex_punct_map_bfseries:nn { \CJKrmdefault } { zhpf   }
     \ctex_punct_map_itshape:nn  { \CJKrmdefault } { zhkai  }
   }
+%</zh>
   {
+%<*zh>
     \setCJKmainfont { Songti~SC  }
       [
-        UprightFont    = *~Light,
-        BoldFont       = *~Bold,
-        ItalicFont     = Kaiti~SC~Regular,
+        UprightFont    = *~Light ,
+        BoldFont       = *~Bold ,
+        ItalicFont     = Kaiti~SC~Regular ,
         BoldItalicFont = Kaiti~SC~Bold
       ]
     \setCJKsansfont { Heiti~SC   }
       [
-        UprightFont    = *~Medium,
+        UprightFont    = *~Medium ,
         AutoFakeBold   = 3
       ]
     \setCJKmonofont { STFangsong }
+%</zh>
+%<*ja>
+    \setCJKmainfont { Hiragino~Mincho~ProN      }
+      [
+        UprightFont    = *~W3 ,
+        BoldFont       = *~W6
+      ]
+    \setCJKsansfont { Hiragino~Kaku~Gothic~ProN }
+      [
+        UprightFont    = *~W3 ,
+        BoldFont       = *~W6
+      ]
+    \setCJKmonofont { Hiragino~Kaku~Gothic~ProN }
+    \setCJKfamilyfont { jamin  } { Hiragino~Mincho~ProN      }
+      [
+        UprightFont    = *~W3 ,
+        BoldFont       = *~W6
+      ]
+    \setCJKfamilyfont { jagoth } { Hiragino~Kaku~Gothic~ProN }
+      [
+        UprightFont    = *~W3 ,
+        BoldFont       = *~W6
+      ]
+%</ja>
     \setCJKfamilyfont { zhsong } { Songti~SC  }
       [
-        UprightFont    = *~Light,
-        BoldFont       = *~Bold
+        UprightFont    = *~Light ,
+        BoldFont       = *~Bold ,
+        ItalicFont     = Kaiti~SC~Regular ,
+        BoldItalicFont = Kaiti~SC~Bold
       ]
     \setCJKfamilyfont { zhhei  } { Heiti~SC   }
       [
-        UprightFont    = *~Medium,
+        UprightFont    = *~Medium ,
         AutoFakeBold   = 3
       ]
     \setCJKfamilyfont { zhfs   } { STFangsong }
     \setCJKfamilyfont { zhkai  } { Kaiti~SC   }
       [
-        UprightFont    = *~Regular,
+        UprightFont    = *~Regular ,
         BoldFont       = *~Bold
       ]
   }
+%</zh|ja>
 %</mac>
 %<*ubuntu>
-\@@_fontset_case:nnn
+%<*und>
+\tl_if_eq:NnTF \g_@@_lang_tl { ja }
+  { \ctex_file_input:n { sjtu-cjk-font-ubuntu-ja.def } }
+  { \ctex_file_input:n { sjtu-cjk-font-ubuntu-zh.def } }
+%</und>
+%<*zh|ja>
+%<zh>\@@_fontset_case:nnn
+%<ja>\@@_fontset_case:nn
   { \@@_fontset_error:nn { cjk } { ubuntu } }
+%<*zh>
   {
     \ctex_load_zhmap:nnnn { zhsong } { zhhei } { zhsong } { ubuntu }
     \ctex_punct_set:n { ubuntu }
@@ -2622,36 +2733,72 @@
     \ctex_punct_map_bfseries:nn { \CJKrmdefault } { zhhei  }
     \ctex_punct_map_itshape:nn  { \CJKrmdefault } { zhkai  }
   }
+%</zh>
   {
+%<*zh>
     \setCJKmainfont { Noto~Serif~CJK~SC     }
       [
-        UprightFont = *~Light,
-        BoldFont    = *~Bold,
+        UprightFont = *~Light ,
+        BoldFont    = *~Bold ,
         ItalicFont  = AR~PL~KaitiM~GB
       ]
     \setCJKsansfont { Noto~Sans~CJK~SC      }
       [
-        UprightFont = *~Medium,
+        UprightFont = *~Medium ,
         BoldFont    = *~Bold
       ]
     \setCJKmonofont { Noto~Sans~Mono~CJK~SC }
-    \setCJKfamilyfont { zhsong } { Noto~Serif~CJK~SC }
+%</zh>
+%<*ja>
+    \setCJKmainfont { Noto~Serif~CJK~JP     }
       [
-        UprightFont = *~Light,
-        BoldFont    = *~Bold,
-        ItalicFont  = AR~PL~KaitiM~GB
-      ]
-    \setCJKfamilyfont { zhhei  } { Noto~Sans~CJK~SC  }
-      [
-        UprightFont = *~Medium,
+        UprightFont = *~Light ,
         BoldFont    = *~Bold
       ]
-    \setCJKfamilyfont { zhkai  } { AR~PL~KaitiM~GB   }
+    \setCJKsansfont { Noto~Sans~CJK~JP      }
+      [
+        UprightFont = *~Medium ,
+        BoldFont    = *~Bold
+      ]
+    \setCJKmonofont { Noto~Sans~Mono~CJK~JP }
+    \setCJKfamilyfont { jamin  } { Noto~Serif~CJK~JP }
+      [
+        UprightFont = *~Light ,
+        BoldFont    = *~Bold
+      ]
+    \setCJKfamilyfont { jagoth } { Noto~Sans~CJK~JP  }
+      [
+        UprightFont = *~Medium ,
+        BoldFont    = *~Bold
+      ]
+%</ja>
+    \setCJKfamilyfont { zhsong } { Noto~Serif~CJK~SC     }
+      [
+        UprightFont = *~Light ,
+        BoldFont    = *~Bold ,
+        ItalicFont  = AR~PL~KaitiM~GB
+      ]
+    \setCJKfamilyfont { zhhei  } { Noto~Sans~CJK~SC      }
+      [
+        UprightFont = *~Medium ,
+        BoldFont    = *~Bold
+      ]
+    \setCJKfamilyfont { zhfs   } { Noto~Sans~Mono~CJK~JP }
+    \setCJKfamilyfont { zhkai  } { AR~PL~KaitiM~GB       }
   }
+%</zh|ja>
 %</ubuntu>
 %<*adobe>
-\@@_fontset_case:nnn
+%<*und>
+\tl_if_eq:NnTF \g_@@_lang_tl { ja }
+  { \ctex_file_input:n { sjtu-cjk-font-adobe-ja.def } }
+  { \ctex_file_input:n { sjtu-cjk-font-adobe-zh.def } }
+%</und>
+%<*zh|ja>
+%<zh>\@@_fontset_case:nnn
+%<ja>\@@_fontset_case:nn
   { \@@_fontset_error:nn { cjk } { adobe } }
+%<*zh>
   {
     \ctex_load_zhmap:nnnn { zhsong } { zhhei } { zhfs } { adobe }
     \ctex_punct_set:n { adobe }
@@ -2659,21 +2806,56 @@
     \ctex_punct_map_bfseries:nn { \CJKrmdefault } { zhhei  }
     \ctex_punct_map_itshape:nn  { \CJKrmdefault } { zhkai  }
   }
+%</zh>
   {
+%<*zh>
     \setCJKmainfont { AdobeSongStd-Light       }
-      [ AutoFakeBold = 3, ItalicFont = AdobeKaitiStd-Regular ]
+      [ AutoFakeBold = 3 , ItalicFont = AdobeKaitiStd-Regular ]
     \setCJKsansfont { AdobeHeitiStd-Regular    } [ AutoFakeBold = 3 ]
     \setCJKmonofont { AdobeFangsongStd-Regular }
+%</zh>
+%<*ja>
+    \setCJKmainfont { Kozuka~Mincho~Pr6N }
+      [
+        UprightFont = *~L ,
+        BoldFont    = *~B
+      ]
+    \setCJKsansfont { Kozuka~Gothic~Pr6N }
+      [
+        UprightFont = *~M ,
+        BoldFont    = *~B
+      ]
+    \setCJKmonofont { Kozuka~Gothic~Pr6N }
+    \setCJKfamilyfont { jamin  } { Kozuka~Mincho~Pr6N }
+      [
+        UprightFont = *~L ,
+        BoldFont    = *~B
+      ]
+    \setCJKfamilyfont { jagoth } { Kozuka~Gothic~Pr6N }
+      [
+        UprightFont = *~M ,
+        BoldFont    = *~B
+      ]
+%</ja>
     \setCJKfamilyfont { zhsong } { AdobeSongStd-Light       }
-      [ AutoFakeBold = 3, ItalicFont = AdobeKaitiStd-Regular ]
+      [ AutoFakeBold = 3 , ItalicFont = AdobeKaitiStd-Regular ]
     \setCJKfamilyfont { zhhei  } { AdobeHeitiStd-Regular    } [ AutoFakeBold = 3 ]
     \setCJKfamilyfont { zhfs   } { AdobeFangsongStd-Regular }
     \setCJKfamilyfont { zhkai  } { AdobeKaitiStd-Regular    }
   }
+%</zh|ja>
 %</adobe>
 %<*fandol>
-\@@_fontset_case:nnn
+%<*und>
+\tl_if_eq:NnTF \g_@@_lang_tl { ja }
+  { \ctex_file_input:n { sjtu-cjk-font-fandol-ja.def } }
+  { \ctex_file_input:n { sjtu-cjk-font-fandol-zh.def } }
+%</und>
+%<*zh|ja>
+%<zh>\@@_fontset_case:nnn
+%<ja>\@@_fontset_case:nn
   { \@@_fontset_error:nn { cjk } { fandol } }
+%<*zh>
   {
     \ctex_load_zhmap:nnnn { zhsong } { zhhei } { zhfs } { fandol }
     \ctex_punct_set:n { fandol }
@@ -2681,51 +2863,94 @@
     \ctex_punct_map_bfseries:nn { \CJKrmdefault } { zhhei  }
     \ctex_punct_map_itshape:nn  { \CJKrmdefault } { zhkai  }
   }
+%</zh>
   {
+%<*zh>
     \setCJKmainfont { FandolSong }
       [
-        Extension   = .otf,
-        UprightFont = *-Regular,
-        BoldFont    = *-Bold,
+        Extension   = .otf ,
+        UprightFont = *-Regular ,
+        BoldFont    = *-Bold ,
         ItalicFont  = FandolKai-Regular
       ]
     \setCJKsansfont { FandolHei  }
       [
-        Extension   = .otf,
-        UprightFont = *-Regular,
+        Extension   = .otf ,
+        UprightFont = *-Regular ,
         BoldFont    = *-Bold
       ]
     \setCJKmonofont { FandolFang }
       [
-        Extension   = .otf,
+        Extension   = .otf ,
         UprightFont = *-Regular
       ]
+%</zh>
+%<*ja>
+    \setCJKmainfont { HaranoAjiMincho }
+      [
+        Extension   = .otf ,
+        UprightFont = *-Regular ,
+        BoldFont    = *-Bold
+      ]
+    \setCJKsansfont { HaranoAjiGothic }
+      [
+        Extension   = .otf ,
+        UprightFont = *-Medium ,
+        BoldFont    = *-Bold
+      ]
+    \setCJKmonofont { HaranoAjiGothic }
+      [
+        Extension   = .otf ,
+        UprightFont = *-Regular
+      ]
+    \setCJKfamilyfont { jamin  } { HaranoAjiMincho }
+      [
+        Extension   = .otf ,
+        UprightFont = *-Regular ,
+        BoldFont    = *-Bold
+      ]
+    \setCJKfamilyfont { jagoth } { HaranoAjiGothic }
+      [
+        Extension   = .otf ,
+        UprightFont = *-Medium ,
+        BoldFont    = *-Bold
+      ]
+%</ja>
     \setCJKfamilyfont { zhsong } { FandolSong }
       [
-        Extension   = .otf,
-        UprightFont = *-Regular,
-        BoldFont    = *-Bold
+        Extension   = .otf ,
+        UprightFont = *-Regular ,
+        BoldFont    = *-Bold ,
+        ItalicFont  = FandolKai-Regular
       ]
     \setCJKfamilyfont { zhhei  } { FandolHei  }
       [
-        Extension   = .otf,
+        Extension   = .otf ,
         UprightFont = *-Regular,
         BoldFont    = *-Bold
       ]
     \setCJKfamilyfont { zhfs   } { FandolFang }
       [
-        Extension   = .otf,
+        Extension   = .otf ,
         UprightFont = *-Regular
       ]
     \setCJKfamilyfont { zhkai  } { FandolKai  }
       [
-        Extension   = .otf,
+        Extension   = .otf ,
         UprightFont = *-Regular
       ]
   }
+%</zh|ja>
 %</fandol>
 %<*founder>
+%<*und>
+\tl_if_eq:NnTF \g_@@_lang_tl { ja }
+  { \ctex_file_input:n { sjtu-cjk-font-founder-ja.def } }
+  { \ctex_file_input:n { sjtu-cjk-font-founder-zh.def } }
+%</und>
+%<*zh|ja>
 \@@_fontset_case:nn
+%<*zh>
   {
     \ctex_load_zhmap:nnnn { zhsong } { zhhei } { zhfs } { founder }
     \ctex_punct_set:n { founder }
@@ -2733,22 +2958,41 @@
     \ctex_punct_map_bfseries:nn { \CJKrmdefault } { zhhei  }
     \ctex_punct_map_itshape:nn  { \CJKrmdefault } { zhkai  }
   }
+%</zh>
+%<ja>  { \@@_fontset_error:nn { cjk } { founder } }
   {
+%<*zh>
     \setCJKmainfont { FZShuSong-Z01  }
-      [ AutoFakeBold = 3, ItalicFont = FZKai-Z03 ]
+      [ AutoFakeBold = 3 , ItalicFont = FZKai-Z03 ]
     \setCJKsansfont { FZHei-B01      } [ AutoFakeBold = 3 ]
     \setCJKmonofont { FZFangSong-Z02 }
+%</zh>
+%<*ja>
+    \setCJKmainfont { ipam.ttf } [ AutoFakeBold = 3 ]
+    \setCJKsansfont { ipag.ttf } [ AutoFakeBold = 3 ]
+    \setCJKmonofont { ipag.ttf }
+    \setCJKfamilyfont { jamin  } { ipam.ttf } [ AutoFakeBold = 3 ]
+    \setCJKfamilyfont { jagoth } { ipag.ttf } [ AutoFakeBold = 3 ]
+%</ja>
     \setCJKfamilyfont { zhsong } { FZShuSong-Z01  }
-      [ AutoFakeBold = 3, ItalicFont = FZKai-Z03 ]
+      [ AutoFakeBold = 3 , ItalicFont = FZKai-Z03 ]
     \setCJKfamilyfont { zhhei  } { FZHei-B01      } [ AutoFakeBold = 3 ]
     \setCJKfamilyfont { zhkai  } { FZKai-Z03      }
     \setCJKfamilyfont { zhfs   } { FZFangSong-Z02 }
   }
+%</zh|ja>
 %</founder>
+%<*!und>
+\NewDocumentCommand \CJKrmfamily { } { \CJKfamily { \CJKrmdefault } }
+\NewDocumentCommand \CJKsffamily { } { \CJKfamily { \CJKsfdefault } }
+\NewDocumentCommand \CJKttfamily { } { \CJKfamily { \CJKttdefault } }
 \NewDocumentCommand \songti   { } { \CJKfamily { zhsong  } }
 \NewDocumentCommand \heiti    { } { \CJKfamily { zhhei   } }
 %<!ubuntu>\NewDocumentCommand \fangsong { } { \CJKfamily { zhfs    } }
 \NewDocumentCommand \kaishu   { } { \CJKfamily { zhkai   } }
+%<ja>\NewDocumentCommand \mincho   { } { \CJKfamily { jamin   } }
+%<ja>\NewDocumentCommand \gothic   { } { \CJKfamily { jagoth  } }
+%</!und>
 %</font&cjk>
 %    \end{macrocode}
 %
@@ -2816,7 +3060,8 @@
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-%<*scheme&zh>
+%<*scheme>
+%<*zh>
 \keys_set_known:nn { sjtu / name }
   {
     contents      = { 目 \quad 录 } ,
@@ -2840,7 +3085,36 @@
     digest        = { 大摘要 } ,
     achv          = { 学术论文和科研成果目录 }
   }
-%</scheme&zh>
+%</zh>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*ja>
+\keys_set_known:nn { sjtu / name }
+  {
+    contents      = { 目 \quad 次 } ,
+    listfigure    = { 図目次 } ,
+    listtable     = { 表目次 } ,
+    figure        = { 図 } ,
+    table         = { 表 } ,
+    abstract      = { 概 \quad 要 } ,
+    index         = { 索 \quad 引 } ,
+    appendix      = { 付録 } ,
+    proof         = { 证明 } ,
+    bib           = { 参考文献 } ,
+    figure*       = { Figure } ,
+    table*        = { Table } ,
+    algorithm     = { アルゴリズム } ,
+    listalgorithm = { アルゴリズム目次 } ,
+    abbr          = { 略語表 } ,
+    nom           = { 記号表 } ,
+    ack           = { 謝 \quad 辞 } ,
+    resume        = { 履歴書 } ,
+    digest        = { 要 \quad 訳 } ,
+    achv          = { 学術論文及び研究成果目録 }
+  }
+%</ja>
+%</scheme>
 %    \end{macrocode}
 %
 % 载入名称配置。
@@ -2941,14 +3215,20 @@
 %
 % 设置页眉内容。
 %    \begin{macrocode}
-%<*!thesis>
 \tl_set:Nn \l_@@_header_tl
   {
+%<*!thesis>
     \includegraphics [ height = 1.2 cm ]
       { sjtu-vi-logo- \l_@@_style_header_logo_color_tl .pdf }
-  }
 %</!thesis>
-%<thesis>\tl_set:Nn \l_@@_header_tl    { \l_@@_info_subject_zh_tl }
+%<*thesis>
+    {
+      \@@_set_cjk_default_zh: \normalfont
+      \l_@@_style_header_font_tl
+      \l_@@_info_subject_zh_tl
+    }
+%</thesis>
+  }
 %<!article>\tl_set:Nn \l_@@_leftmark_tl  { \leftmark }
 %<article>\tl_set:Nn \l_@@_leftmark_tl  { \l_@@_info_subject_tl }
 \tl_set:Nn \l_@@_rightmark_tl { \leftmark }
@@ -3055,7 +3335,7 @@
     afterskip   = 18 bp ,
     lofskip     = \c_zero_skip ,
     lotskip     = \c_zero_skip ,
-    format      = \zihao { 3 } \bfseries \heiti \centering ,
+    format      = \zihao { 3 } \bfseries \CJKsffamily \centering ,
     nameformat  = ,
     titleformat = ,
     aftername   = \quad ,
@@ -3063,26 +3343,26 @@
   }
 %</!article>
 %</class>
-%<*scheme&zh>
+%<*scheme&(zh|ja)>
 \keys_set_known:nn { ctex / chapter }
   {
     name        = { 第 , 章 } ,
     number      = \chinese { chapter }
   }
-%</scheme&zh>
+%</scheme&(zh|ja)>
 %<*class>
 \ctex_set:nn { section }
   {
     beforeskip  = 24 bp ,
     afterskip   =  6 bp ,
-    format      = \zihao { 4 } \bfseries \heiti ,
+    format      = \zihao { 4 } \bfseries \CJKsffamily ,
     afterindent = true
   }
 \ctex_set:nn { subsection }
   {
     beforeskip  = 12 bp ,
     afterskip   =  6 bp ,
-    format      = \zihao { -4 } \bfseries \heiti ,
+    format      = \zihao { -4 } \bfseries \CJKsffamily ,
     afterindent = true
   }
 \ctex_set:nn { subsubsection }
@@ -3131,28 +3411,34 @@
 \cs_generate_variant:Nn \@@_head_auxb_s:nn { nx }
 \cs_new_eq:NN \@@_pdf_bookmark:nn \use_none:nn
 \cs_new_eq:NN \@@_phantom_section: \prg_do_nothing:
+%</class>
 %    \end{macrocode}
 % \end{macro}
 %
 % \subsection{段落}
 %
-% 全文首行缩进 2 字符。
+% 设置全文首行缩进。
 %    \begin{macrocode}
+%<*scheme>
 \ctex_if_autoindent_touched:F
-  { \ctex_set:n { autoindent = true } }
+%<zh>  { \ctex_set:n { autoindent = true } }
+%<en>  { \ctex_set:n { autoindent = 1.5 em } }
+%<ja>  { \ctex_set:n { autoindent = 1 } }
 %    \end{macrocode}
 %
 % \begin{macro}[int]{\verse,\quotation}
 % 修改诗歌和引用环境的缩进。
 %    \begin{macrocode}
-\ctex_patch_cmd:Nnn \verse { -1.5em } { -2 \ccwd }
-\ctex_patch_cmd:Nnn \verse {  1.5em } {  2 \ccwd }
-\ctex_patch_cmd:Nnn \quotation { 1.5em } { 2 \ccwd }
+%<zh|ja>\ctex_patch_cmd:Nnn \verse { -1.5em } { -2 \ccwd }
+%<zh|ja>\ctex_patch_cmd:Nnn \verse {  1.5em } {  2 \ccwd }
+\ctex_patch_cmd:Nnn \quotation { 1.5em } { \parindent }
+%</scheme>
 %    \end{macrocode}
 % \end{macro}
 %
 % 使用 \pkg{enumitem} 调整默认列表环境的间距。
 %    \begin{macrocode}
+%<*class>
 \setlist { nosep }
 %    \end{macrocode}
 %
@@ -3387,6 +3673,11 @@
 \tl_new:N \l_@@_info_id_zh_tl
 \keys_define:nn { sjtu / info }
   { id   .tl_set:N = \l_@@_info_id_zh_tl }
+%    \end{macrocode}
+%
+% 标题中需要显示的导师列表。
+%    \begin{macrocode}
+\clist_set:Nn \l_@@_info_supervisors_clist { supervisor }
 %</thesis>
 %</class>
 %    \end{macrocode}
@@ -3394,11 +3685,11 @@
 %    \begin{macrocode}
 %<lang&thesis&zh>\@@_info_keys_define:n { zh }
 %<lang&thesis&en>\@@_info_keys_define:n { en }
+%<lang&thesis&ja>\@@_info_keys_define:n { ja }
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-%<*class>
-%<*!thesis>
+%<*class&!thesis>
 \tl_new:N \l_@@_info_subject_tl
 \clist_new:N \l_@@_info_keywords_clist
 \keys_define:nn { sjtu / info }
@@ -3409,111 +3700,17 @@
     subject           .tl_set:N = \l_@@_info_subject_tl ,
     keywords       .clist_set:N = \l_@@_info_keywords_clist ,
   }
-%</!thesis>
+%</class&!thesis>
 %    \end{macrocode}
 %
-% \subsubsection{定义内部函数}
-%
-% \begin{macro}{\@@_cjk_spread_box:nn}
-% 汉字分散对齐的水平盒子。
-%    \begin{macrocode}
-%<*thesis>
-\@@_engine_case:nnn
-  {
-    \cs_new_protected:Npn \@@_cjk_spread_box:nn #1#2
-      {
-        \mode_leave_vertical:
-        \group_begin:
-          \bool_set_false:N \l_@@_tmpa_bool
-          \cs_set_eq:NN \SJTU@CJK@filltwosidesSymbol \CJKsymbol
-          \cs_set:Npn \CJKsymbol ##1
-            {
-              \bool_if:NTF \l_@@_tmpa_bool
-                { \hfil \SJTU@CJK@filltwosidesSymbol { ##1 } }
-                {
-                  \SJTU@CJK@filltwosidesSymbol { ##1 }
-                  \bool_set_true:N \l_@@_tmpa_bool
-                }
-            }
-          \hbox_to_wd:nn {#1} {#2}
-        \group_end:
-      }
-  }
-  {
-    \cs_new_protected:Npn \@@_cjk_spread_box:nn #1#2
-      {
-        \mode_leave_vertical:
-        \group_begin:
-          \cs_set:Npn \CJKglue
-            { \skip_horizontal:n { \c_zero_dim plus 1 filll } }
-          \hbox_to_wd:nn {#1} {#2}
-        \group_end:
-      }
-  }
-  {
-    \cs_new_protected:Npn \@@_cjk_spread_box:nn #1#2
-      {
-        \mode_leave_vertical:
-        \group_begin:
-          \ltjsetparameter { kanjiskip = { \c_zero_dim plus 1 filll } }
-          \hbox_to_wd:nn {#1} {#2}
-        \group_end:
-      }
-  }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\@@_left_aligned_box:nn}
-% 左对齐的水平盒子。
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_left_aligned_box:nn #1#2
-  {
-    \mode_leave_vertical:
-    \hbox_to_wd:nn {#1} { #2 \hfil }
-  }
-%    \end{macrocode}
-% \end{macro}
-%
-% 信息输出。
-%    \begin{macrocode}
-\cs_new:Npn \@@_title_page_info:nnn #1#2#3
-  {
-    \group_begin:
-      \cs_set:Npn \l_@@_info_output_format:NNN ##1##2##3 {#3}
-      \clist_clear:N \l_@@_tmpa_clist
-      \clist_clear:N \l_@@_tmpb_clist
-      \dim_set:Nn \l_@@_tmpb_dim { 5 em }
-      \clist_map_inline:nn {#2}
-        {
-          \clist_put_right:No \l_@@_tmpa_clist
-            { \cs:w c_@@_name_ ##1 _ #1 _tl \cs_end: }
-          \clist_put_right:No \l_@@_tmpb_clist
-            { \cs:w l_@@_info_ ##1 _ #1 _tl \cs_end: }
-          \@@_dim_set_to_wd:Nv \l_@@_tmpa_dim { l_@@_info_ ##1 _ #1 _tl }
-          \dim_set:Nn \l_@@_tmpb_dim
-            { \dim_max:nn { \l_@@_tmpa_dim } { \l_@@_tmpb_dim } }
-        }
-      \bool_until_do:nn
-        { \clist_if_empty_p:N \l_@@_tmpa_clist }
-        {
-          \clist_pop:NN \l_@@_tmpa_clist \l_@@_tmpa_tl
-          \clist_pop:NN \l_@@_tmpb_clist \l_@@_tmpb_tl
-          \l_@@_info_output_format:NNN
-            \l_@@_tmpa_tl \l_@@_tmpb_dim \l_@@_tmpb_tl
-          \skip_vertical:N \c_zero_dim
-        }
-    \group_end:
-  }
-\cs_generate_variant:Nn \@@_title_page_info:nnn { nxn }
-%</thesis>
-%</class>
-%    \end{macrocode}
+% \subsection{多语言支持}
 %
 % 初始化主题。
 %    \begin{macrocode}
 %<*lang>
 %<*thesis>
 %<zh>\keys_define:nn { sjtu / info / zh }
+%<ja>\keys_define:nn { sjtu / info / ja }
 %<en>\keys_define:nn { sjtu / info / en }
   {
     subject          .initial:x =
@@ -3523,6 +3720,11 @@
         \exp_not:V \c_@@_name_degree_level_zh_tl
         \exp_not:V \c_@@_name_thesis_zh_tl
 %</zh>
+%<*ja>
+        \exp_not:V \c_@@_name_univ_ja_tl
+        \exp_not:V \c_@@_name_degree_level_ja_tl
+        \exp_not:V \c_@@_name_thesis_ja_tl
+%</ja>
 %<*en>
         A~ Dissertation~ Submitted~ to \exp_not:N \\
         { \exp_not:V \c_@@_name_univ_en_tl }~ for~
@@ -3552,6 +3754,26 @@
 \cs_new:Npn \@@_date_aux_short_zh:w #1-#2 \q_stop
   { \@@_date_aux_short_zh:nn {#1} {#2} }
 %</zh>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*ja>
+\cs_new:Npn \@@_date_aux_ja:nnn #1#2#3
+  {
+    \int_to_arabic:n {#1} ~ { \exp_not:V \c_@@_name_year_ja_tl  } ~
+    \int_to_arabic:n {#2} ~ { \exp_not:V \c_@@_name_month_ja_tl } ~
+    \int_to_arabic:n {#3} ~ { \exp_not:V \c_@@_name_day_ja_tl   }
+  }
+\cs_new:Npn \@@_date_aux_ja:w #1-#2-#3 \q_stop
+  { \@@_date_aux_ja:nnn {#1} {#2} {#3} }
+\cs_new:Npn \@@_date_aux_short_ja:nn #1#2
+  {
+    \int_to_arabic:n {#1} ~ { \exp_not:V \c_@@_name_year_ja_tl  } ~
+    \int_to_arabic:n {#2} ~ { \exp_not:V \c_@@_name_month_ja_tl }
+  }
+\cs_new:Npn \@@_date_aux_short_ja:w #1-#2 \q_stop
+  { \@@_date_aux_short_ja:nn {#1} {#2} }
+%</ja>
 %    \end{macrocode}
 %
 %    \begin{macrocode}
@@ -3596,11 +3818,51 @@
 %</en>
 %    \end{macrocode}
 %
+% 设置语言格式辅助命令
+%    \begin{macrocode}
+%<*zh>
+\cs_new:Nn \@@_set_cjk_default_zh:
+  {
+    \tl_set:Nn \CJKrmdefault { zhsong }
+    \tl_set:Nn \CJKsfdefault { zhhei  }
+    \tl_set:Nn \CJKttdefault { zhfs   }
+  }
+\cs_new_protected:Nn \@@_set_language_zh:
+  {
+    \ctex_set:n { autoindent = true }
+    \@@_set_cjk_default_zh:
+    \normalfont
+  }
+%</zh>
+%<*en>
+\cs_new_protected:Nn \@@_set_language_en:
+  {
+    \ctex_set:n { autoindent = 1.5 em }
+    \normalfont
+  }
+%</en>
+%<*ja>
+\cs_new:Nn \@@_set_cjk_default_ja:
+  {
+    \tl_set:Nn \CJKrmdefault { jamin  }
+    \tl_set:Nn \CJKsfdefault { jagoth }
+    \tl_set:Nn \CJKttdefault { jagoth }
+  }
+\cs_new_protected:Nn \@@_set_language_ja:
+  {
+    \ctex_set:n { autoindent = 1 }
+    \@@_set_cjk_default_ja:
+    \normalfont
+  }
+%</ja>
+%    \end{macrocode}
+%
 % 标题页页面样式，页脚添加资助基金信息。
 %    \begin{macrocode}
 %<*thesis>
 %<zh>\cs_new:Npn \ps@SJTU@fund@zh
 %<en>\cs_new:Npn \ps@SJTU@fund@en
+%<ja>\cs_new:Npn \ps@SJTU@fund@ja
   {
     \ps@empty
     \cs_set:Npn \@oddfoot
@@ -3609,155 +3871,11 @@
           \centering \zihao { - 5 }
 %<zh>          \clist_use:Nn \l_@@_info_fund_zh_clist { \par }
 %<en>          \clist_use:Nn \l_@@_info_fund_en_clist { \par }
+%<ja>          \clist_use:Nn \l_@@_info_fund_ja_clist { \par }
         \end{minipage}
       }
     \cs_set_eq:NN \@evenfoot \@oddfoot
   }
-%</thesis>
-%</lang>
-%    \end{macrocode}
-%
-%    \begin{macrocode}
-%<*class>
-\keys_define:nn { sjtu / style }
-  {
-    title-logo-color       .choice: ,
-    title-logo-color      .choices:nn =
-      { red, blue, black }
-      { \tl_set_eq:NN \l_@@_style_title_logo_color_tl \l_keys_choice_tl } ,
-    title-logo-color       .initial:n = { red }
-  }
-%</class>
-%    \end{macrocode}
-%
-%    \begin{macrocode}
-%<*lang>
-%<*thesis>
-%<*zh>
-\clist_map_inline:nn
-  {
-    { logo    }
-      {
-        content     =
-          {
-            \includegraphics [ width = 3 cm ]
-              { sjtu-vi-badge- \l_@@_style_title_logo_color_tl .pdf }
-          }
-      },
-    { subject }
-      {
-        format      = \zihao { -2 } \fixedlineskip { 31.2 bp } ,
-        content     = \l_@@_info_subject_zh_tl ,
-        bottom-skip = \c_zero_dim plus 2 fill
-      },
-    { title   }
-      {
-        format      = \zihao { 2 } \bfseries \fixedlineskip { 31.2 bp } ,
-        content     = \l_@@_info_display_title_zh_tl ,
-        bottom-skip = \c_zero_dim plus 3 fill
-      },
-    { info    }
-      {
-        format      = \zihao { 4 } \fixedlineskip { 31.2 bp } ,
-        content     =
-          {
-            \@@_title_page_info:nxn { zh }
-              {
-                author,
-                id,
-                supervisor,
-                \tl_if_empty:NF \l_@@_info_assoc_supervisor_zh_tl
-                  { assoc_supervisor },
-                \tl_if_empty:NF \l_@@_info_co_supervisor_zh_tl
-                  { co_supervisor },
-                department,
-                major,
-                \int_compare:nNnF { \g_@@_thesis_type_int } = { 1 }
-                  { degree }
-              }
-              {
-                \@@_cjk_spread_box:nn { 5 em } { \heiti #1 }
-                \c_@@_name_info_sep_zh_tl
-                \@@_left_aligned_box:nn {#2} {#3}
-              }
-          } ,
-        bottom-skip = 31.2 bp
-      },
-    { date    }
-      {
-        format      = \zihao { 4 } \bfseries \fixedlineskip { 31.2 bp } ,
-        content     = \l_@@_info_date_zh_tl
-      }
-  }
-  {
-    \@@_declare_component:nnn { title / zh } #1
-  }
-\@@_declare_page:nn { title / zh }
-  {
-    bookmark      = true ,
-    bookmark-text = \c_@@_name_title_page_tl ,
-    style         = SJTU@fund@zh ,
-    prefix        = title / zh ,
-    components    = { logo, subject, title, info, date }
-  }
-%</zh>
-%<*en>
-\clist_map_inline:nn
-  {
-    { subject }
-      {
-        format      = \zihao { 4 } \bfseries \fixedlineskip { 31.2 bp } ,
-        content     = \l_@@_info_subject_en_tl ,
-        bottom-skip = \c_zero_dim plus 2 fill
-      },
-    { title   }
-      {
-        format      = \zihao { -2 } \bfseries \fixedlineskip { 31.2 bp } ,
-        content     = \MakeUppercase \l_@@_info_display_title_en_tl ,
-        bottom-skip = \c_zero_dim plus 2 fill
-      },
-    { info    }
-      {
-        format      = \zihao { 3 } \fixedlineskip { 31.2 bp } ,
-        content     =
-          {
-            \@@_title_page_info:nxn { en }
-              {
-                author, supervisor,
-                \tl_if_empty:NF \l_@@_info_assoc_supervisor_en_tl
-                  { assoc_supervisor },
-                \tl_if_empty:NF \l_@@_info_co_supervisor_en_tl
-                  { co_supervisor }
-              }
-              { { \bfseries #1 \c_@@_name_info_sep_en_tl } {#3} }
-          } ,
-        bottom-skip = \c_zero_dim plus 3 fill
-      },
-    { date    }
-      {
-        format      = \zihao { 3 } \fixedlineskip { 31.2 bp } ,
-        content     =
-          {
-            \l_@@_info_department_en_tl
-            \skip_vertical:N \c_zero_skip
-            \c_@@_name_univ_en_tl
-            \skip_vertical:N \c_zero_skip
-            \c_@@_name_address_en_tl
-            \skip_vertical:N \c_zero_skip
-            \l_@@_info_date_en_tl
-          }
-      },
-  }
-  {
-    \@@_declare_component:nnn { title / en } #1
-  }
-\@@_declare_page:nn { title / en }
-  {
-    style       = SJTU@fund@en ,
-    prefix      = title / en ,
-    components  = { subject, title, info, date }
-  }
-%</en>
 %</thesis>
 %</lang>
 %    \end{macrocode}
@@ -3825,10 +3943,273 @@
 %<!thesis>\tl_set:NV \today \@date
 %    \end{macrocode}
 %
+% \subsection{标题页}
+%
+% \subsubsection{定义内部函数}
+%
+% \begin{macro}{\@@_cjk_spread_box:nn}
+% 汉字分散对齐的水平盒子。
 %    \begin{macrocode}
+%<*thesis>
+\@@_engine_case:nnn
+  {
+    \cs_new_protected:Npn \@@_cjk_spread_box:nn #1#2
+      {
+        \mode_leave_vertical:
+        \group_begin:
+          \bool_set_false:N \l_@@_tmpa_bool
+          \cs_set_eq:NN \SJTU@CJK@filltwosidesSymbol \CJKsymbol
+          \cs_set:Npn \CJKsymbol ##1
+            {
+              \bool_if:NTF \l_@@_tmpa_bool
+                { \hfil \SJTU@CJK@filltwosidesSymbol { ##1 } }
+                {
+                  \SJTU@CJK@filltwosidesSymbol { ##1 }
+                  \bool_set_true:N \l_@@_tmpa_bool
+                }
+            }
+          \hbox_to_wd:nn {#1} {#2}
+        \group_end:
+      }
+  }
+  {
+    \cs_new_protected:Npn \@@_cjk_spread_box:nn #1#2
+      {
+        \mode_leave_vertical:
+        \group_begin:
+          \cs_set:Npn \CJKglue
+            { \skip_horizontal:n { \c_zero_dim plus 1 filll } }
+          \hbox_to_wd:nn {#1} {#2}
+        \group_end:
+      }
+  }
+  {
+    \cs_new_protected:Npn \@@_cjk_spread_box:nn #1#2
+      {
+        \mode_leave_vertical:
+        \group_begin:
+          \ltjsetparameter { kanjiskip = { \c_zero_dim plus 1 filll } }
+          \hbox_to_wd:nn {#1} {#2}
+        \group_end:
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_left_aligned_box:nn}
+% 左对齐的水平盒子。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_left_aligned_box:nn #1#2
+  {
+    \mode_leave_vertical:
+    \hbox_to_wd:nn {#1} { #2 \hfil }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% 信息输出。
+%    \begin{macrocode}
+\cs_new:Npn \@@_title_page_info_i:nnn #1#2#3
+  {
+    \group_begin:
+      \cs_set:Npn \l_@@_info_output_format:NNN ##1##2##3 {#3}
+      \clist_clear:N \l_@@_tmpa_clist
+      \clist_clear:N \l_@@_tmpb_clist
+      \dim_set:Nn \l_@@_tmpb_dim { 5 em }
+      \clist_map_inline:nn {#2}
+        {
+          \clist_put_right:No \l_@@_tmpa_clist
+            { \cs:w c_@@_name_ ##1 _ #1 _tl \cs_end: }
+          \clist_put_right:No \l_@@_tmpb_clist
+            { \cs:w l_@@_info_ ##1 _ #1 _tl \cs_end: }
+          \@@_dim_set_to_wd:Nv \l_@@_tmpa_dim { l_@@_info_ ##1 _ #1 _tl }
+          \dim_set:Nn \l_@@_tmpb_dim
+            { \dim_max:nn { \l_@@_tmpa_dim } { \l_@@_tmpb_dim } }
+        }
+      \bool_until_do:nn
+        { \clist_if_empty_p:N \l_@@_tmpa_clist }
+        {
+          \clist_pop:NN \l_@@_tmpa_clist \l_@@_tmpa_tl
+          \clist_pop:NN \l_@@_tmpb_clist \l_@@_tmpb_tl
+          \l_@@_info_output_format:NNN
+            \l_@@_tmpa_tl \l_@@_tmpb_dim \l_@@_tmpb_tl
+          \skip_vertical:N \c_zero_dim
+        }
+    \group_end:
+  }
+\cs_new:Npn \@@_title_page_info_ii:n #1
+  {
+    \tl_use:c { l_@@_info_department_ #1 _tl }
+    \skip_vertical:N \c_zero_skip
+    \tl_use:c { c_@@_name_univ_ #1 _tl }
+    \skip_vertical:N \c_zero_skip
+    \tl_use:c { c_@@_name_address_ #1 _tl }
+    \skip_vertical:N \c_zero_skip
+    \tl_use:c { l_@@_info_date_ #1 _tl }
+  }
+\cs_generate_variant:Nn \@@_title_page_info_i:nnn { nxn }
+%    \end{macrocode}
+%
+% 标题页校徽颜色。
+%    \begin{macrocode}
+\keys_define:nn { sjtu / style }
+  {
+    title-logo-color       .choice: ,
+    title-logo-color      .choices:nn =
+      { red, blue, black }
+      { \tl_set_eq:NN \l_@@_style_title_logo_color_tl \l_keys_choice_tl } ,
+    title-logo-color       .initial:n = { red }
+  }
+%</thesis>
+%</class>
+%    \end{macrocode}
+%
+% \subsubsection{构建标题页}
+%
+%    \begin{macrocode}
+%<*lang>
+%<*thesis>
+%<*zh>
+\clist_map_inline:nn
+  {
+    { logo    }
+      {
+        content     =
+          {
+            \includegraphics [ width = 3 cm ]
+              { sjtu-vi-badge- \l_@@_style_title_logo_color_tl .pdf }
+          }
+      },
+    { subject }
+      {
+        format      = \zihao { -2 } \fixedlineskip { 31.2 bp } ,
+        content     = \l_@@_info_subject_zh_tl ,
+        bottom-skip = \c_zero_dim plus 2 fill
+      },
+    { title   }
+      {
+        format      = \zihao { 2 } \bfseries \fixedlineskip { 31.2 bp } ,
+        content     = \l_@@_info_display_title_zh_tl ,
+        bottom-skip = \c_zero_dim plus 3 fill
+      },
+    { info    }
+      {
+        format      = \zihao { 4 } \fixedlineskip { 31.2 bp } ,
+        content     =
+          {
+            \@@_title_page_info_i:nxn { zh }
+              {
+                author,
+                id,
+                \l_@@_info_supervisors_clist ,
+                department,
+                major,
+                \int_compare:nNnF { \g_@@_thesis_type_int } = { 1 }
+                  { degree }
+              }
+              {
+                \@@_cjk_spread_box:nn { 5 em } { \heiti #1 }
+                \c_@@_name_info_sep_zh_tl
+                \@@_left_aligned_box:nn {#2} {#3}
+              }
+          } ,
+        bottom-skip = 31.2 bp
+      },
+    { date    }
+      {
+        format      = \zihao { 4 } \bfseries \fixedlineskip { 31.2 bp } ,
+        content     = \l_@@_info_date_zh_tl
+      }
+  }
+  {
+    \@@_declare_component:nnn { title / zh } #1
+  }
+\@@_declare_page:nn { title / zh }
+  {
+    bookmark      = true ,
+    bookmark-text = \c_@@_name_title_page_tl ,
+    style         = SJTU@fund@zh ,
+    format        = \linespread { 1 } \@@_set_language_zh: ,
+    prefix        = title / zh ,
+    components    = { logo, subject, title, info, date }
+  }
+%</zh>
+%<*en|ja>
+\clist_map_inline:nn
+  {
+    { subject }
+      {
+        format      = \zihao { 4 } \bfseries \fixedlineskip { 31.2 bp } ,
+%<en>        content     = \l_@@_info_subject_en_tl ,
+%<ja>        content     = \l_@@_info_subject_ja_tl ,
+        bottom-skip = \c_zero_dim plus 2 fill
+      },
+    { title   }
+      {
+        format      = \zihao { -2 } \bfseries \fixedlineskip { 31.2 bp } ,
+%<en>        content     = \MakeUppercase \l_@@_info_display_title_en_tl ,
+%<ja>        content     = \l_@@_info_display_title_ja_tl ,
+        bottom-skip = \c_zero_dim plus 2 fill
+      },
+    { info    }
+      {
+        format      = \zihao { 3 } \fixedlineskip { 31.2 bp } ,
+        content     =
+          {
+%<en>            \@@_title_page_info_i:nxn { en }
+%<ja>            \@@_title_page_info_i:nxn { ja }
+              { author, \l_@@_info_supervisors_clist }
+%<en>              { { \bfseries #1 \c_@@_name_info_sep_en_tl } {#3} }
+%<ja>              { { \bfseries #1 \c_@@_name_info_sep_ja_tl } {#3} }
+          } ,
+        bottom-skip = \c_zero_dim plus 3 fill
+      },
+    { date    }
+      {
+        format      = \zihao { 3 } \fixedlineskip { 31.2 bp } ,
+        content     =
+%<en>          { \@@_title_page_info_ii:n { en } }
+%<ja>          { \@@_title_page_info_ii:n { ja } }
+      },
+  }
+  {
+%<en>    \@@_declare_component:nnn { title / en } #1
+%<ja>    \@@_declare_component:nnn { title / ja } #1
+  }
+%<*en>
+\@@_declare_page:nn { title / en }
+  {
+    style       = SJTU@fund@en ,
+    format      = \linespread { 1 } \@@_set_language_en: ,
+    prefix      = title / en ,
+    components  = { subject, title, info, date }
+  }
+%</en>
+%<*ja>
+\@@_declare_page:nn { title / ja }
+  {
+    style       = SJTU@fund@ja ,
+    format      = \linespread { 1 } \@@_set_language_ja: ,
+    prefix      = title / ja ,
+    components  = { subject, title, info, date }
+  }
+%</ja>
+%</en|ja>
+%</thesis>
+%</lang>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*class>
 %<*thesis>
 \RenewDocumentCommand \maketitle { }
   {
+    \clist_map_inline:nn
+      { assoc_supervisor, co_supervisor }
+      {
+        \tl_if_empty:cF { l_@@_info_ ##1 _zh_tl }
+          { \clist_put_right:Nn \l_@@_info_supervisors_clist {##1} }
+      }
     \clist_map_inline:Nn \g_@@_lang_clist
       { \UseInstance { sjtu } { title / ##1 } }
   }
@@ -3915,6 +4296,7 @@
   {
     bookmark      = true ,
     bookmark-text = \c_@@_name_copyright_page_tl ,
+    format        = \linespread { 1 } \@@_set_language_zh: ,
     prefix        = copyright ,
     components    =
       {
@@ -3976,6 +4358,7 @@
   {
     \@@_if_lang_valid:nTF {#1}
       {
+        \use:c { @@_set_language_ #1 : }
         \ctex_set:nn { chapter } { format += \sffamily }
         \bool_if:NTF \l_@@_abstract_bookmark_bool
           {
@@ -4010,10 +4393,15 @@
 %</thesis>
 %    \end{macrocode}
 %
-% 通用模板摘要后添加关键词。
+% 修复通用模板摘要段首缩进。
 %    \begin{macrocode}
 %<*!thesis>
-\@@_appto_cmd:Nn \abstract { \par }
+\bool_if:NT \g_@@_titlepage_bool
+  { \@@_appto_cmd:Nn \abstract { \par } }
+%    \end{macrocode}
+%
+% 通用模板摘要后添加关键词。
+%    \begin{macrocode}
 \@@_preto_cmd:Nn \endabstract
   {
     \@@_output_keywords:Nnn \l_@@_info_keywords_clist
@@ -4219,6 +4607,7 @@
       {
         \AtEndDocument
           {
+            \use:c { @@_set_language_ #1 : }
             \bool_if:NTF \g_@@_openright_bool
               { \cleardoublepage } { \clearpage }
             \pagenumbering { roman }
@@ -4415,13 +4804,13 @@
         \item
           [
             \skip_horizontal:N \labelsep
-            \bfseries \heiti #1 \@addpunct { \enskip }
+            \bfseries \CJKsffamily #1 \@addpunct { \enskip }
           ]
         \ignorespaces
       }
       { \popQED \endtrivlist \legacy_if_set_false:n { @endpe } }
     \newtheoremstyle { sjtu }
-      { } { } { \normalfont } { } { \bfseries \heiti } { } { \ccwd } { }
+      { } { } { \normalfont } { } { \bfseries \CJKsffamily } { } { \ccwd } { }
     \theoremstyle { sjtu }
     \@@_new_theorems:
   }
@@ -4431,9 +4820,9 @@
 %    \begin{macrocode}
 \ctex_at_end_package:nn { ntheorem }
   {
-    \theoremheaderfont { \bfseries \heiti }
-    \theorembodyfont   { \normalfont      }
-    \theoremseparator  { \enskip          }
+    \theoremheaderfont { \bfseries \CJKsffamily }
+    \theorembodyfont   { \normalfont }
+    \theoremseparator  { \enskip     }
     \theoremsymbol { \ensuremath { \QED } }
     \qedsymbol     { \ensuremath { \QED } }
     \newtheorem* { proof } { \proofname }
@@ -4545,15 +4934,16 @@
 % \subsection{名称配置}
 %    \begin{macrocode}
 %<*name>
-%<*zh>
+%<*zh|ja>
 \clist_map_inline:nn
   {
     { year  } { 年 } ,
     { month } { 月 } ,
     { day   } { 日 }
   }
-  { \__sjtu_define_name:nnn { zh } #1 }
-%</zh>
+%<zh>  { \__sjtu_define_name:nnn { zh } #1 }
+%<ja>  { \__sjtu_define_name:nnn { ja } #1 }
+%</zh|ja>
 %<*en>
 \clist_const:Nn \c_@@_name_month_en_clist
   {
@@ -4573,13 +4963,17 @@
   { degree_level } { \g_@@_thesis_type_int }
   { Bachelor, Master, Doctor }
 %</en>
+%<*ja>
+\@@_define_name_from_clist:nnnn { ja }
+  { degree_level } { \g_@@_thesis_type_int }
+  { 学士, 修士, 博士 }
+%</ja>
 %</thesis>
 %<*zh>
 \clist_map_inline:nn
   {
 %<*thesis>
     { univ             } { 上海交通大学 } ,
-    { title_page       } { 题名页       } ,
     { author           } { 姓名         } ,
     { id               } { 学号         } ,
     { supervisor       } { 导师         } ,
@@ -4589,6 +4983,7 @@
     { major            } { 学科 / 专业  } ,
     { degree           } { 申请学位     } ,
     { thesis           } { 学位论文     } ,
+    { title_page       } { 题名页       } ,
     { copyright_page   } { 版权页       } ,
     { orig_decl        } { 原创性声明   } ,
     { auth_decl        } { 使用授权书   } ,
@@ -4624,6 +5019,28 @@
 %<thesis>  { \@@_define_name:nnn { en } #1 }
 %<!thesis>  { \@@_define_name:nn #1 }
 %</en>
+%<*ja>
+\clist_map_inline:nn
+  {
+%<*thesis>
+    { univ             } { 上海交通大学 } ,
+    { address          } { 中国・上海   } ,
+    { author           } { 著者         } ,
+    { supervisor       } { 指導教員     } ,
+    { assoc_supervisor } { 副指導教員   } ,
+    { co_supervisor    } { 共同指導     } ,
+    { thesis           } { 学位請求論文 } ,
+    { title_page       } { 標題紙       } ,
+    { copyright_page   } { 版権ページ   } ,
+    { abstract         } { 要 \quad 旨  } ,
+%</thesis>
+    { keywords         } { キーワード： } ,
+    { info_sep         } { ：           } ,
+    { item_sep         } { \quad        }
+  }
+%<thesis>  { \@@_define_name:nnn { ja } #1 }
+%<!thesis>  { \@@_define_name:nn #1 }
+%</ja>
 %<*thesis>
 %<*zh>
 \tl_const:Nn \c_@@_orig_decl_text_zh_tl
@@ -4701,6 +5118,21 @@
     { solution    } { Solution    } ,
     { theorem     } { Theorem     }
 %</en>
+%<*ja>
+    { assumption  } { 仮定        } ,
+    { axiom       } { 公理        } ,
+    { conjecture  } { 推論        } ,
+    { corollary   } { 系          } ,
+    { definition  } { 定義        } ,
+    { example     } { 例          } ,
+    { exercise    } { 練習        } ,
+    { lemma       } { 補題        } ,
+    { problem     } { 問題        } ,
+    { proposition } { 命題        } ,
+    { remark      } { 記事        } ,
+    { solution    } { 解法        } ,
+    { theorem     } { 定理        }
+%</ja>
   }
   { \@@_define_name:nn #1 }
 %    \end{macrocode}

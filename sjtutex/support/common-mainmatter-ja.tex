@@ -1,0 +1,198 @@
+\chapter{序論}
+
+\section{前書き}
+
+\jalipsum[1]{kusamakura}
+
+\section{本研究の主要内容}
+
+\jalipsum[2]{kusamakura}
+
+\section{本研究の意義}
+
+\jalipsum[3]{kusamakura}
+
+\section{先行研究}
+
+\jalipsum[4]{kusamakura}
+
+
+\chapter{正文の文字書式}
+
+\section{論文の正文}
+
+論文の正文が主体で、一般的に標題、叙述、図、表、公式などからなる。
+理論分析、計算方法、実験とテスト方法などの方法を用い、...
+
+論文は一般的に十部分の内容から構成される。
+\footnote[1]{脚注 1}
+\footnote[11]{脚注 11}
+\footnote[21]{脚注 21}
+\footnote[32]{脚注 32}
+\footnote[50]{脚注 50}
+
+\section{字数要求}
+
+\subsection{学士論文の要求}
+
+日本語の論文の字数は12000字以上で、読書報告書の字数は15000字以上となる。
+
+\section{本章のまとめ}
+
+\jalipsum[5]{kusamakura}
+
+
+\chapter{図表、公式の書式}
+
+\section{図表の書式}
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=4cm]{example-image.pdf}
+  \caption{例}
+  \label{fig:example}
+\end{figure}
+
+\begin{ThreePartTable}
+  \begin{TableNotes}
+    \item[a] 脚注
+    \item[b] 脚注
+  \end{TableNotes}
+  \begin{longtable}[c]{c*{6}{r}}
+    \caption{実験データ}
+    \label{tab:performance} \\
+    \toprule
+    試験プログラム & \multicolumn{1}{c}{A} & \multicolumn{1}{c}{B}
+      & \multicolumn{1}{c}{C} & \multicolumn{1}{c}{D}
+      & \multicolumn{1}{c}{E} & \multicolumn{1}{c}{C} \\
+    & \multicolumn{1}{c}{時間 (s)} & \multicolumn{1}{c}{時間 (s)}
+      & \multicolumn{1}{c}{時間 (s)} & \multicolumn{1}{c}{時間 (s)}
+      & \multicolumn{1}{c}{時間 (s)} &  資料（KB）\\
+    \midrule
+    \endfirsthead
+    \multicolumn{7}{l}{\textbf{表のつづき~\thetable}} \\
+    \toprule
+    試験プログラム & \multicolumn{1}{c}{A} & \multicolumn{1}{c}{B}
+      & \multicolumn{1}{c}{C} & \multicolumn{1}{c}{D}
+      & \multicolumn{1}{c}{E} & \multicolumn{1}{c}{C} \\
+    & \multicolumn{1}{c}{時間 (s)} & \multicolumn{1}{c}{時間 (s)}
+      & \multicolumn{1}{c}{時間 (s)} & \multicolumn{1}{c}{時間 (s)}
+      & \multicolumn{1}{c}{時間 (s)} &  資料（KB）\\
+    \midrule
+    \endhead
+    \hline
+    \endfoot
+    \insertTableNotes
+    \endlastfoot
+    CG.A.2 & 23.05 & 0.002 & 0.116 & 0.035 & 0.589 & 32491 \\
+    CG.A.4 & 15.06 & 0.003 & 0.067 & 0.021 & 0.351 & 18211 \\
+    CG.A.8 & 13.38 & 0.004 & 0.072 & 0.023 & 0.210 & 9890 \\
+    CG.B.2 & 867.45 & 0.002 & 0.864 & 0.232 & 3.256 & 228562 \\
+    CG.B.4 & 501.61 & 0.003 & 0.438 & 0.136 & 2.075 & 123862 \\
+    CG.B.8 & 384.65 & 0.004 & 0.457 & 0.108 & 1.235 & 63777 \\
+    MG.A.2 & 112.27 & 0.002 & 0.846 & 0.237 & 3.930 & 236473 \\
+    MG.A.4 & 59.84 & 0.003 & 0.442 & 0.128 & 2.070 & 123875 \\
+    MG.A.8 & 31.38 & 0.003 & 0.476 & 0.114 & 1.041 & 60627 \\
+    MG.B.2 & 526.28 & 0.002 & 0.821 & 0.238 & 4.176 & 236635 \\
+    MG.B.4 & 280.11 & 0.003 & 0.432 & 0.130 & 1.706 & 123793 \\
+    MG.B.8 & 148.29 & 0.003 & 0.442 & 0.116 & 0.893 & 60600 \\
+    LU.A.2 & 2116.54 & 0.002 & 0.110 & 0.030 & 0.532 & 28754 \\
+    LU.A.4 & 1102.50 & 0.002 & 0.069 & 0.017 & 0.255 & 14915 \\
+    LU.A.8 & 574.47 & 0.003 & 0.067 & 0.016 & 0.192 & 8655 \\
+    LU.B.2 & 9712.87 & 0.002 & 0.357 & 0.104 & 1.734 & 101975 \\
+    LU.B.4 & 4757.80 & 0.003 & 0.190 & 0.056 & 0.808 & 53522 \\
+    LU.B.8 & 2444.05 & 0.004 & 0.222 & 0.057 & 0.548 & 30134 \\
+    EP.A.2 & 123.81 & 0.002 & 0.010 & 0.003 & 0.074 & 1834 \\
+    EP.A.4 & 61.92 & 0.003 & 0.011 & 0.004 & 0.073 & 1743 \\
+    EP.A.8 & 31.06 & 0.004 & 0.017 & 0.005 & 0.073 & 1661 \\
+    EP.B.2 & 495.49 & 0.001 & 0.009 & 0.003 & 0.196 & 2011 \\
+    EP.B.4 & 247.69 & 0.002 & 0.012 & 0.004 & 0.122 & 1663 \\
+    EP.B.8 & 126.74 & 0.003 & 0.017 & 0.005 & 0.083 & 1656 \\
+    SP.A.2 & 123.81 & 0.002 & 0.010 & 0.003 & 0.074 & 1854 \\
+    SP.A.4 & 51.92 & 0.003 & 0.011 & 0.004 & 0.073 & 1543 \\
+    SP.A.8 & 31.06 & 0.004 & 0.017 & 0.005 & 0.073 & 1671 \\
+    SP.B.2 & 495.49 & 0.001 & 0.009 & 0.003 & 0.196 & 2411 \\
+    SP.B.4 \tnote{a} & 247.69 & 0.002 & 0.014 & 0.006 & 0.152 & 2653 \\
+    SP.B.8 \tnote{b} & 126.74 & 0.003 & 0.017 & 0.005 & 0.082 & 1755 \\
+    \bottomrule
+  \end{longtable}
+\end{ThreePartTable}
+
+\section{公式の書式}
+
+\begin{equation}\label{eq:example}
+  \frac{1}{\mu}\nabla^2\mathbf{A}-j\omega\sigma\mathbf{A}
+  -\nabla\left(\frac{1}{\mu}\right)\times(\nabla\times\mathbf{A})
+  +\mathbf{J}_0=0
+\end{equation}
+
+\begin{equation}
+  \int_{a}^b f(x)\,\mathrm{d}x=\lim_{|P|\rightarrow 0}\sum_{i=1}^n f(\xi_i)\increment x_i
+\end{equation}
+
+\section{コード環境}
+
+\begin{codeblock}[language=C]
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+
+int main() {
+  pid_t pid;
+
+  switch ((pid = fork())) {
+  case -1:
+    printf("fork failed\n");
+    break;
+  case 0:
+    /* child calls exec */
+    execl("/bin/ls", "ls", "-l", (char*)0);
+    printf("execl failed\n");
+    break;
+  default:
+    /* parent uses wait to suspend execution until child finishes */
+    wait((int*)0);
+    printf("is completed\n");
+    break;
+  }
+  return 0;
+}
+\end{codeblock}
+
+\section{アルゴリズム環境}
+
+\begin{algorithm}[htb]
+  \caption{アルゴリズム例}
+  \label{algo:algorithm}
+  \small
+  \SetAlgoLined
+  \KwData{this text}
+  \KwResult{how to write algorithm with \LaTeXe }
+
+  initialization\;
+  \While{not at end of this document}{
+    read current\;
+    \eIf{understand}{
+      go to next section\;
+      current section becomes this one\;
+    }{
+      go back to the beginning of current section\;
+    }
+  }
+\end{algorithm}
+
+\section{本章のまとめ}
+
+\jalipsum[6]{kusamakura}
+
+\chapter{結論}
+
+\section{主要結論}
+
+\jalipsum[7]{kusamakura}
+
+\section{今後の展望}
+
+\jalipsum[8]{kusamakura}
+
