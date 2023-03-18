@@ -671,6 +671,9 @@
 %     我们建议 Linux 用户自行配置合适的字体。参见
 %     \href{https://github.com/sjtug/SJTUThesis/wiki/在线使用说明}
 %     {Wiki 页面《在线使用说明》}。}
+%
+%   \note{日语模板不支持 \pdfTeX{} 引擎，请使用 \XeLaTeX{} 或
+%     \LuaLaTeX{} 编译。}
 % \end{function}
 %
 % \begin{function}{text-font}
@@ -1086,29 +1089,29 @@
 %   \label{tab:names}
 %   \begin{tabular}{l|p{7em}|p{9em}|p{8em}}
 %     \toprule
-%     \strong{选项}         & \strong{|lang = zh|}   & \strong{|lang = en|}          & \strong{|lang = ja|}          \\
+%     \strong{选项}         & \strong{|lang = zh|}   & \strong{|lang = en|}          & \strong{|lang = ja|}     \\
 %     \midrule
-%      |contents|           & 目录                   & Contents                      & 目次                          \\
-%      |listfigure|         & 插图                   & List of Figures               & 図目次                        \\
-%      |listtable|          & 表格                   & List of Tables                & 表目次                        \\
-%      |figure|             & 图                     & Figure                        & 図                            \\
-%      |table|              & 表                     & Table                         & 表                            \\
-%      |abstract| \rexpstar & 摘要                   & Abstract                      & 概要                          \\
-%      |appendix|           & 附录                   & Appendix                      & 索引                          \\
-%      |index|              & 索引                   & Index                         & 付録                          \\
-%      |proof|              & 证明                   & Proof                         & 证明                          \\
-%      |bib|                & 参考文献               & Bibliography                  & 参考文献                      \\
+%      |contents|           & 目录                   & Contents                      & 目次                     \\
+%      |listfigure|         & 插图                   & List of Figures               & 図目次                   \\
+%      |listtable|          & 表格                   & List of Tables                & 表目次                   \\
+%      |figure|             & 图                     & Figure                        & 図                       \\
+%      |table|              & 表                     & Table                         & 表                       \\
+%      |abstract| \rexpstar & 摘要                   & Abstract                      & 概要                     \\
+%      |appendix|           & 附录                   & Appendix                      & 索引                     \\
+%      |index|              & 索引                   & Index                         & 付録                     \\
+%      |proof|              & 证明                   & Proof                         & 证明                     \\
+%      |bib|                & 参考文献               & Bibliography                  & 参考文献                 \\
 %    \midrule
-%      |figure*|            & Figure                 & 图                            & Figure                        \\
-%      |table*|             & Table                  & 表                            & Table                         \\
-%      |algorithm|          & 算法                   & Algorithm                     & アルゴリズム                  \\
-%      |listalgorithm|      & 算法                   & List of Algorithms            & アルゴリズム目次              \\
-%      |abbr| \rexpstar     & 缩略语对照表           & Abbreviation                  & 略語表                        \\
-%      |nom| \rexpstar      & 主要符号对照表         & Nomenclature                  & 記号表                        \\
-%      |ack| \rexpstar      & 致谢                   & Acknowledgements              & 謝辞                          \\
-%      |resume| \rexpstar   & 个人简历               & Resume                        & 履歴書                        \\
-%      |digest| \rexpstar   & 大摘要                 & Digest                        & 要訳                          \\
-%      |achv| \rexpstar     & 学术论文和科研成果目录 & List of Research Achievements & 学術論文及び研究成果目録      \\
+%      |figure*|            & Figure                 & 图                            & Figure                   \\
+%      |table*|             & Table                  & 表                            & Table                    \\
+%      |algorithm|          & 算法                   & Algorithm                     & アルゴリズム             \\
+%      |listalgorithm|      & 算法                   & List of Algorithms            & アルゴリズム目次         \\
+%      |abbr| \rexpstar     & 缩略语对照表           & Abbreviation                  & 略語表                   \\
+%      |nom| \rexpstar      & 主要符号对照表         & Nomenclature                  & 記号表                   \\
+%      |ack| \rexpstar      & 致谢                   & Acknowledgements              & 謝辞                     \\
+%      |resume| \rexpstar   & 个人简历               & Resume                        & 履歴書                   \\
+%      |digest| \rexpstar   & 大摘要                 & Digest                        & 要訳                     \\
+%      |achv| \rexpstar     & 学术论文和科研成果目录 & List of Research Achievements & 学術論文及び研究成果目録 \\
 %     \bottomrule
 %   \end{tabular}
 % \end{table}
