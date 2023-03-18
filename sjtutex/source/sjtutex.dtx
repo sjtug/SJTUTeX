@@ -3678,6 +3678,24 @@
 % 标题中需要显示的导师列表。
 %    \begin{macrocode}
 \clist_set:Nn \l_@@_info_supervisors_clist { supervisor }
+%    \end{macrocode}
+%
+% 盲审模式下隐藏作者、导师姓名等信息。
+%    \begin{macrocode}
+\ctex_at_end_preamble:n
+  {
+    \bool_if:NT \g_@@_review_bool
+      {
+        \clist_map_inline:Nn \g_@@_lang_clist
+          {
+            \clist_map_inline:nn
+              { author, supervisor, assoc_supervisor, co_supervisor }
+              { \tl_clear:c { l_@@_info_ ##1 _ #1 _tl } }
+            \clist_clear:c { l_@@_info_fund_ #1 _clist }
+          }
+        \tl_clear:N \l_@@_info_id_zh_tl
+      }
+  }
 %</thesis>
 %</class>
 %    \end{macrocode}
