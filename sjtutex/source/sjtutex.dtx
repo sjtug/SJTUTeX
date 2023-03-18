@@ -3670,6 +3670,11 @@
 \tl_new:N \l_@@_info_id_zh_tl
 \keys_define:nn { sjtu / info }
   { id   .tl_set:N = \l_@@_info_id_zh_tl }
+%    \end{macrocode}
+%
+% 标题中需要显示的导师列表。
+%    \begin{macrocode}
+\clist_set:Nn \l_@@_info_supervisors_clist { supervisor }
 %</thesis>
 %</class>
 %    \end{macrocode}
@@ -4001,7 +4006,7 @@
 %
 % 信息输出。
 %    \begin{macrocode}
-\cs_new:Npn \@@_title_page_info:nnn #1#2#3
+\cs_new:Npn \@@_title_page_info_i:nnn #1#2#3
   {
     \group_begin:
       \cs_set:Npn \l_@@_info_output_format:NNN ##1##2##3 {#3}
@@ -4029,7 +4034,17 @@
         }
     \group_end:
   }
-\cs_generate_variant:Nn \@@_title_page_info:nnn { nxn }
+\cs_new:Npn \@@_title_page_info_ii:n #1
+  {
+    \tl_use:c { l_@@_info_department_ #1 _tl }
+    \skip_vertical:N \c_zero_skip
+    \tl_use:c { c_@@_name_univ_ #1 _tl }
+    \skip_vertical:N \c_zero_skip
+    \tl_use:c { c_@@_name_address_ #1 _tl }
+    \skip_vertical:N \c_zero_skip
+    \tl_use:c { l_@@_info_date_ #1 _tl }
+  }
+\cs_generate_variant:Nn \@@_title_page_info_i:nnn { nxn }
 %    \end{macrocode}
 %
 % 标题页校徽颜色。
@@ -4079,15 +4094,11 @@
         format      = \zihao { 4 } \fixedlineskip { 31.2 bp } ,
         content     =
           {
-            \@@_title_page_info:nxn { zh }
+            \@@_title_page_info_i:nxn { zh }
               {
                 author,
                 id,
-                supervisor,
-                \tl_if_empty:NF \l_@@_info_assoc_supervisor_zh_tl
-                  { assoc_supervisor },
-                \tl_if_empty:NF \l_@@_info_co_supervisor_zh_tl
-                  { co_supervisor },
+                \l_@@_info_supervisors_clist ,
                 department,
                 major,
                 \int_compare:nNnF { \g_@@_thesis_type_int } = { 1 }
@@ -4142,28 +4153,11 @@
         format      = \zihao { 3 } \fixedlineskip { 31.2 bp } ,
         content     =
           {
-%<*en>
-            \@@_title_page_info:nxn { en }
-              {
-                author, supervisor,
-                \tl_if_empty:NF \l_@@_info_assoc_supervisor_en_tl
-                  { assoc_supervisor },
-                \tl_if_empty:NF \l_@@_info_co_supervisor_en_tl
-                  { co_supervisor }
-              }
-              { { \bfseries #1 \c_@@_name_info_sep_en_tl } {#3} }
-%</en>
-%<*ja>
-            \@@_title_page_info:nxn { ja }
-              {
-                author, supervisor,
-                \tl_if_empty:NF \l_@@_info_assoc_supervisor_ja_tl
-                  { assoc_supervisor },
-                \tl_if_empty:NF \l_@@_info_co_supervisor_ja_tl
-                  { co_supervisor }
-              }
-              { { \bfseries #1 \c_@@_name_info_sep_ja_tl } {#3} }
-%</ja>
+%<en>            \@@_title_page_info_i:nxn { en }
+%<ja>            \@@_title_page_info_i:nxn { ja }
+              { author, \l_@@_info_supervisors_clist }
+%<en>              { { \bfseries #1 \c_@@_name_info_sep_en_tl } {#3} }
+%<ja>              { { \bfseries #1 \c_@@_name_info_sep_ja_tl } {#3} }
           } ,
         bottom-skip = \c_zero_dim plus 3 fill
       },
@@ -4171,26 +4165,8 @@
       {
         format      = \zihao { 3 } \fixedlineskip { 31.2 bp } ,
         content     =
-          {
-%<*en>
-            \l_@@_info_department_en_tl
-            \skip_vertical:N \c_zero_skip
-            \c_@@_name_univ_en_tl
-            \skip_vertical:N \c_zero_skip
-            \c_@@_name_address_en_tl
-            \skip_vertical:N \c_zero_skip
-            \l_@@_info_date_en_tl
-%</en>
-%<*ja>
-            \l_@@_info_department_ja_tl
-            \skip_vertical:N \c_zero_skip
-            \c_@@_name_univ_ja_tl
-            \skip_vertical:N \c_zero_skip
-            \c_@@_name_address_ja_tl
-            \skip_vertical:N \c_zero_skip
-            \l_@@_info_date_ja_tl
-%</ja>
-          }
+%<en>          { \@@_title_page_info_ii:n { en } }
+%<ja>          { \@@_title_page_info_ii:n { ja } }
       },
   }
   {
@@ -4225,6 +4201,12 @@
 %<*thesis>
 \RenewDocumentCommand \maketitle { }
   {
+    \clist_map_inline:nn
+      { assoc_supervisor, co_supervisor }
+      {
+        \tl_if_empty:cF { l_@@_info_ ##1 _zh_tl }
+          { \clist_put_right:Nn \l_@@_info_supervisors_clist {##1} }
+      }
     \clist_map_inline:Nn \g_@@_lang_clist
       { \UseInstance { sjtu } { title / ##1 } }
   }
