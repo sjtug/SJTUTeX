@@ -3413,24 +3413,21 @@
 %
 % \subsection{段落}
 %
-% 全文首行缩进 2 字符。
+% 设置全文首行缩进。
 %    \begin{macrocode}
 %<*scheme>
-%<*!en>
 \ctex_if_autoindent_touched:F
 %<zh>  { \ctex_set:n { autoindent = true } }
+%<en>  { \ctex_set:n { autoindent = 1.5 em } }
 %<ja>  { \ctex_set:n { autoindent = 1 } }
-%</!en>
 %    \end{macrocode}
 %
 % \begin{macro}[int]{\verse,\quotation}
 % 修改诗歌和引用环境的缩进。
 %    \begin{macrocode}
-%<*zh>
-\ctex_patch_cmd:Nnn \verse { -1.5em } { -2 \ccwd }
-\ctex_patch_cmd:Nnn \verse {  1.5em } {  2 \ccwd }
-\ctex_patch_cmd:Nnn \quotation { 1.5em } { 2 \ccwd }
-%</zh>
+%<zh|ja>\ctex_patch_cmd:Nnn \verse { -1.5em } { -2 \ccwd }
+%<zh|ja>\ctex_patch_cmd:Nnn \verse {  1.5em } {  2 \ccwd }
+\ctex_patch_cmd:Nnn \quotation { 1.5em } { \parindent }
 %</scheme>
 %    \end{macrocode}
 % \end{macro}
@@ -3831,7 +3828,7 @@
 %<*en>
 \cs_new_protected:Nn \@@_set_language_en:
   {
-    \ctex_set:n { autoindent = true }
+    \ctex_set:n { autoindent = 1.5 em }
     \normalfont
   }
 %</en>
@@ -4410,10 +4407,15 @@
 %</thesis>
 %    \end{macrocode}
 %
-% 通用模板摘要后添加关键词。
+% 修复通用模板摘要段首缩进。
 %    \begin{macrocode}
 %<*!thesis>
-\@@_appto_cmd:Nn \abstract { \par }
+\bool_if:NT \g_@@_titlepage_bool
+  { \@@_appto_cmd:Nn \abstract { \par } }
+%    \end{macrocode}
+%
+% 通用模板摘要后添加关键词。
+%    \begin{macrocode}
 \@@_preto_cmd:Nn \endabstract
   {
     \@@_output_keywords:Nnn \l_@@_info_keywords_clist
