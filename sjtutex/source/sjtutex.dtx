@@ -64,18 +64,23 @@
     \file{sjtuarticle.cls}              {\from{\jobname.dtx}{class,article}}
     \file{sjtu-lang-thesis-zh.def}      {\from{\jobname.dtx}{lang,thesis,zh}}
     \file{sjtu-lang-thesis-en.def}      {\from{\jobname.dtx}{lang,thesis,en}}
+    \file{sjtu-lang-thesis-de.def}      {\from{\jobname.dtx}{lang,thesis,de}}
     \file{sjtu-lang-thesis-ja.def}      {\from{\jobname.dtx}{lang,thesis,ja}}
     \file{sjtu-lang-generic-zh.def}     {\from{\jobname.dtx}{lang,generic,zh}}
     \file{sjtu-lang-generic-en.def}     {\from{\jobname.dtx}{lang,generic,en}}
+    \file{sjtu-lang-generic-de.def}     {\from{\jobname.dtx}{lang,generic,de}}
     \file{sjtu-lang-generic-ja.def}     {\from{\jobname.dtx}{lang,generic,ja}}
     \file{sjtu-name-thesis-zh.def}      {\from{\jobname.dtx}{name,thesis,zh}}
     \file{sjtu-name-thesis-en.def}      {\from{\jobname.dtx}{name,thesis,en}}
+    \file{sjtu-name-thesis-de.def}      {\from{\jobname.dtx}{name,thesis,de}}
     \file{sjtu-name-thesis-ja.def}      {\from{\jobname.dtx}{name,thesis,ja}}
     \file{sjtu-name-generic-zh.def}     {\from{\jobname.dtx}{name,generic,zh}}
     \file{sjtu-name-generic-en.def}     {\from{\jobname.dtx}{name,generic,en}}
+    \file{sjtu-name-generic-de.def}     {\from{\jobname.dtx}{name,generic,de}}
     \file{sjtu-name-generic-ja.def}     {\from{\jobname.dtx}{name,generic,ja}}
     \file{sjtu-scheme-zh.def}           {\from{\jobname.dtx}{scheme,zh}}
     \file{sjtu-scheme-en.def}           {\from{\jobname.dtx}{scheme,en}}
+    \file{sjtu-scheme-de.def}           {\from{\jobname.dtx}{scheme,de}}
     \file{sjtu-scheme-ja.def}           {\from{\jobname.dtx}{scheme,ja}}
     \file{sjtu-text-font-newtx.def}     {\from{\jobname.dtx}{font,text,newtx}}
     \file{sjtu-text-font-newpx.def}     {\from{\jobname.dtx}{font,text,newpx}}
@@ -160,30 +165,40 @@
 %<lang&thesis&zh>\ProvidesExplFile{sjtu-lang-thesis-zh.def}
 %<lang&thesis&en>  {English specific definition for thesis (SJTUTeX)}
 %<lang&thesis&en>\ProvidesExplFile{sjtu-lang-thesis-en.def}
+%<lang&thesis&de>  {German specific definition for thesis (SJTUTeX)}
+%<lang&thesis&de>\ProvidesExplFile{sjtu-lang-thesis-de.def}
 %<lang&thesis&ja>  {Japanese specific definition for thesis (SJTUTeX)}
 %<lang&thesis&ja>\ProvidesExplFile{sjtu-lang-thesis-ja.def}
 %<lang&generic&zh>  {Chinese specific definition for generic (SJTUTeX)}
 %<lang&generic&zh>\ProvidesExplFile{sjtu-lang-generic-zh.def}
 %<lang&generic&en>  {English specific definition for generic (SJTUTeX)}
 %<lang&generic&en>\ProvidesExplFile{sjtu-lang-generic-en.def}
+%<lang&generic&de>  {German specific definition for generic (SJTUTeX)}
+%<lang&generic&de>\ProvidesExplFile{sjtu-lang-generic-de.def}
 %<lang&generic&ja>  {Japanese specific definition for generic (SJTUTeX)}
 %<lang&generic&ja>\ProvidesExplFile{sjtu-lang-generic-ja.def}
 %<name&thesis&zh>  {Chinese name config for thesis (SJTUTeX)}
 %<name&thesis&zh>\ProvidesExplFile{sjtu-name-thesis-zh.def}
 %<name&thesis&en>  {English name config for thesis (SJTUTeX)}
 %<name&thesis&en>\ProvidesExplFile{sjtu-name-thesis-en.def}
+%<name&thesis&de>  {German name config for thesis (SJTUTeX)}
+%<name&thesis&de>\ProvidesExplFile{sjtu-name-thesis-de.def}
 %<name&thesis&ja>  {Japanese name config for thesis (SJTUTeX)}
 %<name&thesis&ja>\ProvidesExplFile{sjtu-name-thesis-ja.def}
 %<name&generic&zh>  {Chinese name config for generic (SJTUTeX)}
 %<name&generic&zh>\ProvidesExplFile{sjtu-name-generic-zh.def}
 %<name&generic&en>  {English name config for generic (SJTUTeX)}
 %<name&generic&en>\ProvidesExplFile{sjtu-name-generic-en.def}
+%<name&generic&de>  {German name config for generic (SJTUTeX)}
+%<name&generic&de>\ProvidesExplFile{sjtu-name-generic-de.def}
 %<name&generic&ja>  {Japanese name config for generic (SJTUTeX)}
 %<name&generic&ja>\ProvidesExplFile{sjtu-name-generic-ja.def}
 %<scheme&zh>  {Chinese scheme (SJTUTeX)}
 %<scheme&zh>\ProvidesExplFile{sjtu-scheme-zh.def}
 %<scheme&en>  {English scheme (SJTUTeX)}
 %<scheme&en>\ProvidesExplFile{sjtu-scheme-en.def}
+%<scheme&de>  {German scheme (SJTUTeX)}
+%<scheme&de>\ProvidesExplFile{sjtu-scheme-de.def}
 %<scheme&ja>  {Japanese scheme (SJTUTeX)}
 %<scheme&ja>\ProvidesExplFile{sjtu-scheme-ja.def}
 %<font&text&newtx>  {New TX text fonts definition (SJTUTeX)}
@@ -1579,7 +1594,7 @@
     lang .choice: ,
     lang .value_required:n = true ,
     lang .choices:nn =
-      { zh, en, ja }
+      { zh, en, de, ja }
       {
         \tl_gset_eq:NN \g_@@_lang_tl \l_keys_choice_tl
 %<*thesis>
@@ -3089,6 +3104,34 @@
 %    \end{macrocode}
 %
 %    \begin{macrocode}
+%<*de>
+\keys_set_known:nn { sjtu / name }
+  {
+    contents      = {  } ,
+    listfigure    = {  } ,
+    listtable     = {  } ,
+    figure        = {  } ,
+    table         = {  } ,
+    abstract      = {  } ,
+    index         = {  } ,
+    appendix      = {  } ,
+    proof         = {  } ,
+    bib           = {  } ,
+    figure*       = {  } ,
+    table*        = {  } ,
+    algorithm     = {  } ,
+    listalgorithm = {  } ,
+    abbr          = {  } ,
+    nom           = {  } ,
+    ack           = {  } ,
+    resume        = {  } ,
+    digest        = {  } ,
+    achv          = {  }
+  }
+%</de>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
 %<*ja>
 \keys_set_known:nn { sjtu / name }
   {
@@ -3422,7 +3465,7 @@
 %<*scheme>
 \ctex_if_autoindent_touched:F
 %<zh>  { \ctex_set:n { autoindent = true } }
-%<en>  { \ctex_set:n { autoindent = 1.5 em } }
+%<en|de>  { \ctex_set:n { autoindent = 1.5 em } }
 %<ja>  { \ctex_set:n { autoindent = 1 } }
 %    \end{macrocode}
 %
@@ -3703,6 +3746,7 @@
 %    \begin{macrocode}
 %<lang&thesis&zh>\@@_info_keys_define:n { zh }
 %<lang&thesis&en>\@@_info_keys_define:n { en }
+%<lang&thesis&de>\@@_info_keys_define:n { de }
 %<lang&thesis&ja>\@@_info_keys_define:n { ja }
 %    \end{macrocode}
 %
@@ -3728,8 +3772,9 @@
 %<*lang>
 %<*thesis>
 %<zh>\keys_define:nn { sjtu / info / zh }
-%<ja>\keys_define:nn { sjtu / info / ja }
 %<en>\keys_define:nn { sjtu / info / en }
+%<de>\keys_define:nn { sjtu / info / de }
+%<ja>\keys_define:nn { sjtu / info / ja }
   {
     subject          .initial:x =
       {
@@ -3738,16 +3783,19 @@
         \exp_not:V \c_@@_name_degree_level_zh_tl
         \exp_not:V \c_@@_name_thesis_zh_tl
 %</zh>
-%<*ja>
-        \exp_not:V \c_@@_name_univ_ja_tl
-        \exp_not:V \c_@@_name_degree_level_ja_tl
-        \exp_not:V \c_@@_name_thesis_ja_tl
-%</ja>
 %<*en>
         A~ Dissertation~ Submitted~ to \exp_not:N \\
         { \exp_not:V \c_@@_name_univ_en_tl }~ for~
         { \exp_not:V \c_@@_name_degree_level_en_tl }~ Degree
 %</en>
+%<*de>
+        ~
+%</de>
+%<*ja>
+        \exp_not:V \c_@@_name_univ_ja_tl
+        \exp_not:V \c_@@_name_degree_level_ja_tl
+        \exp_not:V \c_@@_name_thesis_ja_tl
+%</ja>
       }
   }
 %</thesis>
@@ -3772,26 +3820,6 @@
 \cs_new:Npn \@@_date_aux_short_zh:w #1-#2 \q_stop
   { \@@_date_aux_short_zh:nn {#1} {#2} }
 %</zh>
-%    \end{macrocode}
-%
-%    \begin{macrocode}
-%<*ja>
-\cs_new:Npn \@@_date_aux_ja:nnn #1#2#3
-  {
-    \int_to_arabic:n {#1} ~ { \exp_not:V \c_@@_name_year_ja_tl  } ~
-    \int_to_arabic:n {#2} ~ { \exp_not:V \c_@@_name_month_ja_tl } ~
-    \int_to_arabic:n {#3} ~ { \exp_not:V \c_@@_name_day_ja_tl   }
-  }
-\cs_new:Npn \@@_date_aux_ja:w #1-#2-#3 \q_stop
-  { \@@_date_aux_ja:nnn {#1} {#2} {#3} }
-\cs_new:Npn \@@_date_aux_short_ja:nn #1#2
-  {
-    \int_to_arabic:n {#1} ~ { \exp_not:V \c_@@_name_year_ja_tl  } ~
-    \int_to_arabic:n {#2} ~ { \exp_not:V \c_@@_name_month_ja_tl }
-  }
-\cs_new:Npn \@@_date_aux_short_ja:w #1-#2 \q_stop
-  { \@@_date_aux_short_ja:nn {#1} {#2} }
-%</ja>
 %    \end{macrocode}
 %
 %    \begin{macrocode}
@@ -3836,6 +3864,45 @@
 %</en>
 %    \end{macrocode}
 %
+%    \begin{macrocode}
+%<*de>
+\cs_new:Npn \@@_date_aux_de:nnn #1#2#3
+  {
+    \clist_item:Nn \c_@@_name_month_de_clist {#2} ~
+    {#3} ,~ \int_to_arabic:n {#1}
+  }
+\cs_new:Npn \@@_date_aux_de:w #1-#2-#3 \q_stop
+  { \@@_date_aux_de:nnn {#1} {#2} {#3} }
+\cs_new:Npn \@@_date_aux_short_de:nn #1#2
+  {
+    \clist_item:Nn \c_@@_name_month_de_clist {#2} ,~
+    \int_to_arabic:n {#1}
+  }
+\cs_new:Npn \@@_date_aux_short_de:w #1-#2 \q_stop
+  { \@@_date_aux_short_de:nn {#1} {#2} }
+%</de>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*ja>
+\cs_new:Npn \@@_date_aux_ja:nnn #1#2#3
+  {
+    \int_to_arabic:n {#1} ~ { \exp_not:V \c_@@_name_year_ja_tl  } ~
+    \int_to_arabic:n {#2} ~ { \exp_not:V \c_@@_name_month_ja_tl } ~
+    \int_to_arabic:n {#3} ~ { \exp_not:V \c_@@_name_day_ja_tl   }
+  }
+\cs_new:Npn \@@_date_aux_ja:w #1-#2-#3 \q_stop
+  { \@@_date_aux_ja:nnn {#1} {#2} {#3} }
+\cs_new:Npn \@@_date_aux_short_ja:nn #1#2
+  {
+    \int_to_arabic:n {#1} ~ { \exp_not:V \c_@@_name_year_ja_tl  } ~
+    \int_to_arabic:n {#2} ~ { \exp_not:V \c_@@_name_month_ja_tl }
+  }
+\cs_new:Npn \@@_date_aux_short_ja:w #1-#2 \q_stop
+  { \@@_date_aux_short_ja:nn {#1} {#2} }
+%</ja>
+%    \end{macrocode}
+%
 % 设置语言格式辅助命令
 %    \begin{macrocode}
 %<*zh>
@@ -3852,13 +3919,14 @@
     \normalfont
   }
 %</zh>
-%<*en>
-\cs_new_protected:Nn \@@_set_language_en:
+%<*en|de>
+%<en>\cs_new_protected:Nn \@@_set_language_en:
+%<de>\cs_new_protected:Nn \@@_set_language_de:
   {
     \ctex_set:n { autoindent = 1.5 em }
     \normalfont
   }
-%</en>
+%</en|de>
 %<*ja>
 \cs_new:Nn \@@_set_cjk_default_ja:
   {
@@ -3880,6 +3948,7 @@
 %<*thesis>
 %<zh>\cs_new:Npn \ps@SJTU@fund@zh
 %<en>\cs_new:Npn \ps@SJTU@fund@en
+%<de>\cs_new:Npn \ps@SJTU@fund@de
 %<ja>\cs_new:Npn \ps@SJTU@fund@ja
   {
     \ps@empty
@@ -3889,6 +3958,7 @@
           \centering \zihao { - 5 }
 %<zh>          \clist_use:Nn \l_@@_info_fund_zh_clist { \par }
 %<en>          \clist_use:Nn \l_@@_info_fund_en_clist { \par }
+%<de>          \clist_use:Nn \l_@@_info_fund_de_clist { \par }
 %<ja>          \clist_use:Nn \l_@@_info_fund_ja_clist { \par }
         \end{minipage}
       }
@@ -4152,13 +4222,14 @@
     components    = { logo, subject, title, info, date }
   }
 %</zh>
-%<*en|ja>
+%<*en|de|ja>
 \clist_map_inline:nn
   {
     { subject }
       {
         format      = \zihao { 4 } \bfseries \fixedlineskip { 31.2 bp } ,
 %<en>        content     = \l_@@_info_subject_en_tl ,
+%<de>        content     = \l_@@_info_subject_de_tl ,
 %<ja>        content     = \l_@@_info_subject_ja_tl ,
         bottom-skip = \c_zero_dim plus 2 fill
       },
@@ -4166,6 +4237,7 @@
       {
         format      = \zihao { -2 } \bfseries \fixedlineskip { 31.2 bp } ,
 %<en>        content     = \MakeUppercase \l_@@_info_display_title_en_tl ,
+%<de>        content     = \MakeUppercase \l_@@_info_display_title_de_tl ,
 %<ja>        content     = \l_@@_info_display_title_ja_tl ,
         bottom-skip = \c_zero_dim plus 2 fill
       },
@@ -4175,9 +4247,11 @@
         content     =
           {
 %<en>            \@@_title_page_info_i:nxn { en }
+%<de>            \@@_title_page_info_i:nxn { de }
 %<ja>            \@@_title_page_info_i:nxn { ja }
               { author, \l_@@_info_supervisors_clist }
 %<en>              { { \bfseries #1 \c_@@_name_info_sep_en_tl } {#3} }
+%<de>              { { \bfseries #1 \c_@@_name_info_sep_de_tl } {#3} }
 %<ja>              { { \bfseries #1 \c_@@_name_info_sep_ja_tl } {#3} }
           } ,
         bottom-skip = \c_zero_dim plus 3 fill
@@ -4187,11 +4261,13 @@
         format      = \zihao { 3 } \fixedlineskip { 31.2 bp } ,
         content     =
 %<en>          { \@@_title_page_info_ii:n { en } }
+%<de>          { \@@_title_page_info_ii:n { de } }
 %<ja>          { \@@_title_page_info_ii:n { ja } }
       },
   }
   {
 %<en>    \@@_declare_component:nnn { title / en } #1
+%<de>    \@@_declare_component:nnn { title / de } #1
 %<ja>    \@@_declare_component:nnn { title / ja } #1
   }
 %<*en>
@@ -4203,6 +4279,15 @@
     components  = { subject, title, info, date }
   }
 %</en>
+%<*de>
+\@@_declare_page:nn { title / de }
+  {
+    style       = SJTU@fund@de ,
+    format      = \linespread { 1 } \@@_set_language_de: ,
+    prefix      = title / de ,
+    components  = { subject, title, info, date }
+  }
+%</de>
 %<*ja>
 \@@_declare_page:nn { title / ja }
   {
@@ -4212,7 +4297,7 @@
     components  = { subject, title, info, date }
   }
 %</ja>
-%</en|ja>
+%</en|de|ja>
 %</thesis>
 %</lang>
 %    \end{macrocode}
@@ -4969,6 +5054,13 @@
     July, August, September, October, November, December
   }
 %</en>
+%<*de>
+\clist_const:Nn \c_@@_name_month_de_clist
+  {
+    Januar, Februar, M\"arz, April, Mai, Juni,
+    Juli, August, September, Oktober, November, Dezember
+  }
+%</de>
 %<*thesis>
 %<*zh>
 \@@_define_symbol:nn { white_square } { "25A1 }
@@ -4981,6 +5073,11 @@
   { degree_level } { \g_@@_thesis_type_int }
   { Bachelor, Master, Doctor }
 %</en>
+%<*de>
+\@@_define_name_from_clist:nnnn { de }
+  { degree_level } { \g_@@_thesis_type_int }
+  { ?, ?, ? }
+%</de>
 %<*ja>
 \@@_define_name_from_clist:nnnn { ja }
   { degree_level } { \g_@@_thesis_type_int }
@@ -5037,6 +5134,27 @@
 %<thesis>  { \@@_define_name:nnn { en } #1 }
 %<!thesis>  { \@@_define_name:nn #1 }
 %</en>
+%<*de>
+\clist_map_inline:nn
+  {
+%<*thesis>
+    { univ             } {  } ,
+    { address          } {  } ,
+    { author           } {  } ,
+    { supervisor       } {  } ,
+    { assoc_supervisor } {  } ,
+    { co_supervisor    } {  } ,
+    { title_page       } {  } ,
+    { copyright_page   } {  } ,
+    { abstract         } {  } ,
+%</thesis>
+    { keywords         } {  } ,
+    { info_sep         } { :~ } ,
+    { item_sep         } { ,~ }
+  }
+%<thesis>  { \@@_define_name:nnn { de } #1 }
+%<!thesis>  { \@@_define_name:nn #1 }
+%</de>
 %<*ja>
 \clist_map_inline:nn
   {
@@ -5136,6 +5254,21 @@
     { solution    } { Solution    } ,
     { theorem     } { Theorem     }
 %</en>
+%<*de>
+    { assumption  } {  } ,
+    { axiom       } {  } ,
+    { conjecture  } {  } ,
+    { corollary   } {  } ,
+    { definition  } {  } ,
+    { example     } {  } ,
+    { exercise    } {  } ,
+    { lemma       } {  } ,
+    { problem     } {  } ,
+    { proposition } {  } ,
+    { remark      } {  } ,
+    { solution    } {  } ,
+    { theorem     } {  }
+%</de>
 %<*ja>
     { assumption  } { 仮定        } ,
     { axiom       } { 公理        } ,
