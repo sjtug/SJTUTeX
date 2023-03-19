@@ -3044,6 +3044,7 @@
     appendix        .meta:nn = { ctex } { appendixname   = {#1} } ,
     proof           .meta:nn = { ctex } { proofname      = {#1} } ,
     bib             .meta:nn = { ctex } { bibname        = {#1} } ,
+%<!article>    chapter        .tl_set:N = \chaptername ,
 %    \end{macrocode}
 %
 % 标准文档类中未定义的名称。
@@ -3107,19 +3108,20 @@
 %<*de>
 \keys_set_known:nn { sjtu / name }
   {
-    contents      = {  } ,
-    listfigure    = {  } ,
-    listtable     = {  } ,
-    figure        = {  } ,
-    table         = {  } ,
-    abstract      = {  } ,
-    index         = {  } ,
-    appendix      = {  } ,
-    proof         = {  } ,
-    bib           = {  } ,
-    figure*       = {  } ,
-    table*        = {  } ,
-    algorithm     = {  } ,
+    contents      = { Inhaltsverzeichnis } ,
+    listfigure    = { Abbildungsverzeichnis } ,
+    listtable     = { Tabellenverzeichnis } ,
+    figure        = { Abbildung } ,
+    table         = { Tabelle } ,
+    abstract      = { Zusammenfassung } ,
+    index         = { Index } ,
+    appendix      = { Anhang } ,
+    proof         = { Beweis } ,
+    bib           = { Literaturverzeichnis } ,
+    chapter       = { Kapitel } ,
+    figure*       = { Figure } ,
+    table*        = { Table } ,
+    algorithm     = { Algorithmus } ,
     listalgorithm = {  } ,
     abbr          = {  } ,
     nom           = {  } ,
@@ -5255,24 +5257,24 @@
     { theorem     } { Theorem     }
 %</en>
 %<*de>
-    { assumption  } {  } ,
-    { axiom       } {  } ,
-    { conjecture  } {  } ,
-    { corollary   } {  } ,
-    { definition  } {  } ,
-    { example     } {  } ,
-    { exercise    } {  } ,
-    { lemma       } {  } ,
-    { problem     } {  } ,
-    { proposition } {  } ,
-    { remark      } {  } ,
-    { solution    } {  } ,
-    { theorem     } {  }
+    { assumption  } { Annahme     } ,
+    { axiom       } { Axiom       } ,
+    { conjecture  } { Vermutung   } ,
+    { corollary   } { Korollar    } ,
+    { definition  } { Definition  } ,
+    { example     } { Beispiel    } ,
+    { exercise    } { \"Ubung     } ,
+    { lemma       } { Lemma       } ,
+    { problem     } { Problem     } ,
+    { proposition } { Proposition } ,
+    { remark      } { Bemerkung   } ,
+    { solution    } { L\"osung    } ,
+    { theorem     } { Satz        }
 %</de>
 %<*ja>
     { assumption  } { 仮定        } ,
     { axiom       } { 公理        } ,
-    { conjecture  } { 推論        } ,
+    { conjecture  } { 予想        } ,
     { corollary   } { 系          } ,
     { definition  } { 定義        } ,
     { example     } { 例          } ,
@@ -5280,7 +5282,7 @@
     { lemma       } { 補題        } ,
     { problem     } { 問題        } ,
     { proposition } { 命題        } ,
-    { remark      } { 記事        } ,
+    { remark      } { 注意        } ,
     { solution    } { 解法        } ,
     { theorem     } { 定理        }
 %</ja>
