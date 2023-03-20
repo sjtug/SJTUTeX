@@ -1968,6 +1968,14 @@
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}[int]{\@@_cs_provide_eq:NN}
+%    \begin{macrocode}
+\cs_new:Npn \@@_cs_provide_eq:NN #1#2
+  { \cs_if_exist:NF #1 { \cs_set_eq:NN #1 #2 } }
+\cs_generate_variant:Nn \@@_cs_provide_eq:NN { cc }
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}{\@@_vspace:N,\@@_vspace:n,\@@_vspace_r:N,\@@_vspace_r:n}
 % 类似 \LaTeXe{} 中的 \tn{vspace} 和 \tn{vspace*}。
 %    \begin{macrocode}
@@ -2187,8 +2195,12 @@
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_set_unimath_symbol:
   {
-    \cs_set_eq:NN \increment \upDelta
-    \cs_set_eq:NN \QED \blacksquare
+    \clist_map_inline:nn
+      {
+        { increment } { upDelta     } ,
+        { QED       } { blacksquare }
+      }
+      { \@@_cs_provide_eq:cc ##1 }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -4818,6 +4830,7 @@
   }
 \ctex_at_end_package:nn { amsthm }
   {
+    \@@_cs_provide_eq:NN \QED \openbox
     \cs_if_exist:NT \@@_save_openbox:
       { \cs_set_eq:NN \openbox \@@_save_openbox: }
     \tl_set:Nn \qedsymbol { \ensuremath { \QED } }
@@ -4845,6 +4858,7 @@
 %    \begin{macrocode}
 \ctex_at_end_package:nn { ntheorem }
   {
+    \@@_cs_provide_eq:NN \QED \c_empty_tl
     \theoremheaderfont { \bfseries \CJKsffamily }
     \theorembodyfont   { \normalfont }
     \theoremseparator  { \enskip     }
