@@ -1867,12 +1867,14 @@
 %
 % \subsubsection{内部函数}
 %
-% \begin{macro}{\cs_gset:cpo,\tl_const:Nv,
+% \begin{macro}[int]{\cs_gset:cpo,\tl_const:Nv,
+% \clist_use:NV,\clist_use:cv,
 % \exp_args:NNnv,\regex_match:neTF}
 % \LaTeX3{} 函数变体。
 %    \begin{macrocode}
 \cs_generate_variant:Nn \cs_gset:Npn { cpo }
 \cs_generate_variant:Nn \tl_const:Nn { Nv }
+\cs_generate_variant:Nn \clist_use:Nn { NV, cv }
 \exp_args_generate:n { Nnv }
 \cs_generate_variant:Nn \exp_last_unbraced:Ne { ce }
 \prg_generate_conditional_variant:Nnn \regex_match:nn { ne } { T, TF }
@@ -4442,21 +4444,6 @@
 %
 % \subsection{摘要}
 %
-% \begin{macro}{\@@_output_keywords:Nnn,\@@_output_keywords:cvv}
-% 格式化输出关键词的辅助函数。
-%    \begin{macrocode}
-\cs_new:Nn \@@_output_keywords:Nnn
-  {
-    \clist_if_empty:NF #1
-      {
-        \par \mode_leave_vertical: \par \noindent
-        { \bfseries #2 } \clist_use:Nn #1 {#3}
-      }
-  }
-\cs_generate_variant:Nn \@@_output_keywords:Nnn { cvv }
-%    \end{macrocode}
-% \end{macro}
-%
 % 学位论文摘要环境。
 %    \begin{macrocode}
 %<*thesis>
@@ -4486,8 +4473,17 @@
             \bool_gset_true:N \l_@@_abstract_bookmark_bool
           }
         #2
-        \@@_output_keywords:cvv { l_@@_info_keywords_ #1 _clist }
-          { c_@@_name_keywords_ #1 _tl } { c_@@_name_item_sep_ #1 _tl }
+        \clist_if_empty:cF { l_@@_info_keywords_ #1 _clist }
+          {
+            \par \mode_leave_vertical: \par \noindent
+            {
+              \bfseries
+              \tl_use:c { c_@@_name_keywords_ #1 _tl }
+              \tl_use:c { c_@@_name_info_sep_ #1 _tl }
+            }
+            \clist_use:cv { l_@@_info_keywords_ #1 _clist }
+              { c_@@_name_item_sep_ #1 _tl }
+          }
       }
       { \msg_error:nnn { sjtutex } { lang-validation } {#1} }
   } { }
@@ -4511,8 +4507,16 @@
 %    \begin{macrocode}
 \@@_preto_cmd:Nn \endabstract
   {
-    \@@_output_keywords:Nnn \l_@@_info_keywords_clist
-      { \c_@@_name_keywords_tl } { \c_@@_name_item_sep_tl }
+    \clist_if_empty:NF \l_@@_info_keywords_clist
+      {
+        \par \mode_leave_vertical: \par \noindent
+        {
+          \bfseries
+          \c_@@_name_keywords_tl
+          \c_@@_name_info_sep_tl
+        }
+        \clist_use:NV \l_@@_info_keywords_clist \c_@@_name_item_sep_tl
+      }
   }
 %</!thesis>
 %    \end{macrocode}
@@ -5110,7 +5114,7 @@
     { decl_supervisor  } { 指导教师               } ,
     { abstract         } { 摘 \quad 要            } ,
 %</thesis>
-    { keywords         } { 关键词：               } ,
+    { keywords         } { 关键词                 } ,
     { info_sep         } { ：                     } ,
     { item_sep         } { ，                     }
   }
@@ -5131,7 +5135,7 @@
     { declaration      } { Statutory~ Declaration           } ,
     { abstract         } { Abstract                         } ,
 %</thesis>
-    { keywords         } { Key~words:~                      } ,
+    { keywords         } { Key~words                        } ,
     { info_sep         } { :~                               } ,
     { item_sep         } { ,~                               }
   }
@@ -5152,7 +5156,7 @@
     { declaration      } { Eidesstattliche~ Erkl\"arung } ,
     { abstract         } { Zusammenfassung              } ,
 %</thesis>
-    { keywords         } { Schl\"usselw\"orter:~        } ,
+    { keywords         } { Schl\"usselw\"orter          } ,
     { info_sep         } { :~                           } ,
     { item_sep         } { ,~                           }
   }
@@ -5172,9 +5176,9 @@
     { thesis           } { 学位請求論文       } ,
     { title_page       } { 標題紙             } ,
     { declaration      } { 誓約書・公表許諾書 } ,
-    { abstract         } { 要 \quad 旨  } ,
+    { abstract         } { 要 \quad 旨        } ,
 %</thesis>
-    { keywords         } { キーワード：       } ,
+    { keywords         } { キーワード         } ,
     { info_sep         } { ：                 } ,
     { item_sep         } { \quad              }
   }
