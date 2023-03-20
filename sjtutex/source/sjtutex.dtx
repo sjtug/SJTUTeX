@@ -2265,6 +2265,7 @@
     \@@_set_slanted_greek:
 %</math>
 %<*text>
+    \tl_set:Nn \encodingdefault { T1 }
     \tl_set:Nn \rmdefault { stix2 }
     \tl_set:Nn \qhv@scale { 0.94 }
     \tl_set:Nn \sfdefault { qhv }
@@ -2361,6 +2362,7 @@
 %<*text>
 \@@_fontset_case:nn
   {
+    \tl_set:Nn \encodingdefault { T1 }
 %<newtx>    \RequirePackage { newtxtext }
 %<newpx>    \RequirePackage { newpxtext }
     \tl_set:Nn \ttdefault { qcr }
@@ -2405,9 +2407,13 @@
 %</text&(newtx|newpx)|stixtwo|xits>
 %<*lm>
 %<*text>
-\tl_set:Nn \rmdefault { lmr  }
-\tl_set:Nn \sfdefault { lmss }
-\tl_set:Nn \ttdefault { lmtt }
+\@@_fontset_case:nn
+  {
+    \tl_set:Nn \encodingdefault { T1 }
+    \tl_set:Nn \rmdefault { lmr  }
+    \tl_set:Nn \sfdefault { lmss }
+    \tl_set:Nn \ttdefault { lmtt }
+  } { }
 %</text>
 %<*math>
 \RequirePackage { amssymb, upgreek }
@@ -2453,6 +2459,7 @@
 %<*text>
 \@@_fontset_case:nn
   {
+    \tl_set:Nn \encodingdefault { T1 }
     \tl_set:Nn \rmdefault { ptm }
     \tl_set:Nn \Hv@scale { 0.94 }
     \tl_set:Nn \sfdefault { phv }
