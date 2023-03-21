@@ -3127,7 +3127,7 @@
     table*        = { Table } ,
     algorithm     = { Algorithmus } ,
     listalgorithm = { Algorithmenverzeichnis } ,
-    abbr          = { Abk\"urzungsverzeichnis } ,
+    abbr          = { Abkürzungsverzeichnis } ,
     nom           = { Symbolverzeichnis } ,
     ack           = { Danksagungen } ,
     resume        = { Lebenslauf } ,
@@ -3795,7 +3795,9 @@
         { \exp_not:V \c_@@_name_degree_level_en_tl }~ Degree
 %</en>
 %<*de>
-        ~
+        Eine~ Dissertation~ Eingereicht~ an \exp_not:N \\
+        der~ { \exp_not:V \c_@@_name_univ_de_tl }~ für~
+        { \exp_not:V \c_@@_name_degree_level_de_tl } titel
 %</de>
 %<*ja>
         \exp_not:V \c_@@_name_univ_ja_tl
@@ -5065,7 +5067,7 @@
 %<*de>
 \clist_const:Nn \c_@@_name_month_de_clist
   {
-    Januar, Februar, M\"arz, April, Mai, Juni,
+    Januar, Februar, März, April, Mai, Juni,
     Juli, August, September, Oktober, November, Dezember
   }
 %</de>
@@ -5084,7 +5086,7 @@
 %<*de>
 \@@_define_name_from_clist:nnnn { de }
   { degree_level } { \g_@@_thesis_type_int }
-  { ?, ?, ? }
+  { Bachelor, Master, Doktor }
 %</de>
 %<*ja>
 \@@_define_name_from_clist:nnnn { ja }
@@ -5146,19 +5148,19 @@
 \clist_map_inline:nn
   {
 %<*thesis>
-    { univ             } {  } ,
-    { address          } {  } ,
-    { author           } {  } ,
-    { supervisor       } {  } ,
-    { assoc_supervisor } {  } ,
-    { co_supervisor    } {  } ,
-    { title_page       } { Titelblatt                   } ,
-    { declaration      } { Eidesstattliche~ Erkl\"arung } ,
-    { abstract         } { Zusammenfassung              } ,
+    { univ             } { Shanghai~ Jiao~ Tong~ Universität } ,
+    { address          } { Shanghai,~ VR~ China              } ,
+    { author           } { Autor/in                          } ,
+    { supervisor       } { Betreuer/in                       } ,
+    { assoc_supervisor } { Zweitbetreuer/in                  } ,
+    { co_supervisor    } { Co-Betreuer/in                    } ,
+    { title_page       } { Titelblatt                        } ,
+    { declaration      } { Eidesstattliche~ Erklärung        } ,
+    { abstract         } { Abstrakt                          } ,
 %</thesis>
-    { keywords         } { Schl\"usselw\"orter          } ,
-    { info_sep         } { :~                           } ,
-    { item_sep         } { ,~                           }
+    { keywords         } { Schlüsselwörter                   } ,
+    { info_sep         } { :~                                } ,
+    { item_sep         } { ,~                                }
   }
 %<thesis>  { \@@_define_name:nnn { de } #1 }
 %<!thesis>  { \@@_define_name:nn #1 }
@@ -5269,12 +5271,12 @@
     { corollary   } { Korollar    } ,
     { definition  } { Definition  } ,
     { example     } { Beispiel    } ,
-    { exercise    } { \"Ubung     } ,
+    { exercise    } { Übung       } ,
     { lemma       } { Lemma       } ,
     { problem     } { Problem     } ,
     { proposition } { Proposition } ,
     { remark      } { Anmerkung   } ,
-    { solution    } { L\"osung    } ,
+    { solution    } { Lösung      } ,
     { theorem     } { Theorem     }
 %</de>
 %<*ja>
