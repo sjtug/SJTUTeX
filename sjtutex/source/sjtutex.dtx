@@ -594,9 +594,9 @@
 %
 % \begin{function}[updated=2023-03-18]{lang}
 %   \begin{sjtusyntax}[emph={[1]lang}]
-%     lang = (*<(zh)|en|ja>*)
+%     lang = (*<(zh)|en|de|ja>*)
 %   \end{sjtusyntax}
-%   论文主要语言。可选中文、英文或日文，该选项会改变文档中的一些标题的名字。
+%   论文主要语言。可选中文、英文、德文或日文，该选项会改变文档中的一些标题的名字。
 %   下文中 \meta{lang} 可以指定为这些选项中的其中之一。
 % \end{function}
 %
@@ -1099,34 +1099,35 @@
 %
 % \begin{table}[hbt]
 %   \vspace{-47ex}
-%   \centering\small
+%   \centering
 %   \caption{\opt{name} 选项的默认设置}
 %   \label{tab:names}
-%   \begin{tabular}{l|p{7em}|p{9em}|p{8em}}
+%   \small \tabcolsep=3pt
+%   \begin{tabular}{l|p{8em}|p{9em}|p{11em}|p{8em}}
 %     \toprule
-%     \strong{选项}         & \strong{|lang = zh|}   & \strong{|lang = en|}          & \strong{|lang = ja|}     \\
+%     \strong{选项}         & \strong{|lang = zh|}   & \strong{|lang = en|}          & \strong{|lang = de|}   & \strong{|lang = ja|} \\
 %     \midrule
-%      |contents|           & 目录                   & Contents                      & 目次                     \\
-%      |listfigure|         & 插图                   & List of Figures               & 図目次                   \\
-%      |listtable|          & 表格                   & List of Tables                & 表目次                   \\
-%      |figure|             & 图                     & Figure                        & 図                       \\
-%      |table|              & 表                     & Table                         & 表                       \\
-%      |abstract| \rexpstar & 摘要                   & Abstract                      & 概要                     \\
-%      |appendix|           & 附录                   & Appendix                      & 索引                     \\
-%      |index|              & 索引                   & Index                         & 付録                     \\
-%      |proof|              & 证明                   & Proof                         & 证明                     \\
-%      |bib|                & 参考文献               & Bibliography                  & 参考文献                 \\
+%      |contents|           & 目录                   & Contents                      & Inhaltsverzeichnis     & 目次                 \\
+%      |listfigure|         & 插图                   & List of Figures               & Abbildungsverzeichnis  & 図目次               \\
+%      |listtable|          & 表格                   & List of Tables                & Tabellenverzeichnis    & 表目次               \\
+%      |figure|             & 图                     & Figure                        & Abbildung              & 図                   \\
+%      |table|              & 表                     & Table                         & Tabelle                & 表                   \\
+%      |abstract| \rexpstar & 摘要                   & Abstract                      & Zusammenfassung        & 概要                 \\
+%      |index|              & 索引                   & Index                         & Index                  & 索引                 \\
+%      |appendix|           & 附录                   & Appendix                      & Anhang                 &     付録             \\
+%      |proof|              & 证明                   & Proof                         & Beweis                 & 证明                 \\
+%      |bib|                & 参考文献               & Bibliography                  & Literaturverzeichnis   & 参考文献             \\
 %    \midrule
-%      |figure*|            & Figure                 & 图                            & Figure                   \\
-%      |table*|             & Table                  & 表                            & Table                    \\
-%      |algorithm|          & 算法                   & Algorithm                     & アルゴリズム             \\
-%      |listalgorithm|      & 算法                   & List of Algorithms            & アルゴリズム目次         \\
-%      |abbr| \rexpstar     & 缩略语对照表           & Abbreviation                  & 略語表                   \\
-%      |nom| \rexpstar      & 主要符号对照表         & Nomenclature                  & 記号表                   \\
-%      |ack| \rexpstar      & 致谢                   & Acknowledgements              & 謝辞                     \\
-%      |resume| \rexpstar   & 个人简历               & Resume                        & 履歴書                   \\
-%      |digest| \rexpstar   & 大摘要                 & Digest                        & 要訳                     \\
-%      |achv| \rexpstar     & 学术论文和科研成果目录 & List of Research Achievements & 学術論文及び研究成果目録 \\
+%      |figure*|            & Figure                 & 图                            & Figure                 & Figure               \\
+%      |table*|             & Table                  & 表                            & Table                  & Table                \\
+%      |algorithm|          & 算法                   & Algorithm                     & Algorithmus            & アルゴリズム         \\
+%      |listalgorithm|      & 算法                   & List of Algorithms            & Algorithmenverzeichnis & アルゴリズム目次     \\
+%      |abbr| \rexpstar     & 缩略语对照表           & Abbreviation                  & Abkürzungsverzeichnis  & 略語表               \\
+%      |nom| \rexpstar      & 主要符号对照表         & Nomenclature                  & Symbolverzeichnis      & 記号表               \\
+%      |ack| \rexpstar      & 致谢                   & Acknowledgements              & Danksagungen           & 謝辞                 \\
+%      |resume| \rexpstar   & 个人简历               & Resume                        & Lebenslauf             & 履歴書               \\
+%      |digest| \rexpstar   & 大摘要                 & Digest                        & Kurzfassung            & 要訳                 \\
+%      |achv| \rexpstar     & 学术论文和科研成果目录 & List of Research Achievements & Forschungsleistungen   & 研究業績書           \\
 %     \bottomrule
 %   \end{tabular}
 % \end{table}
