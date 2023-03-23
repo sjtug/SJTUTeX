@@ -1404,7 +1404,7 @@
     "l3kernel"~ and~ "l3packages"~ using~ your~ TeX~ package \\
     manager~ or~ from~ CTAN.
   }
-\@ifpackagelater { expl3 } { 2020/07/14 } { }
+\@ifpackagelater { expl3 } { 2020/04/06 } { }
   { \msg_error:nnn { sjtutex } { l3-too-old } { expl3 } }
 %    \end{macrocode}
 %
@@ -1441,7 +1441,8 @@
 % 论文语言。
 %    \begin{macrocode}
 \tl_new:N \g_@@_lang_tl
-%<thesis>\clist_new:N \g_@@_lang_clist
+\tl_const:Nn \c_@@_lang_de_tl { de }
+\tl_const:Nn \c_@@_lang_ja_tl { ja }
 %<thesis>\clist_set:Nn \g_@@_lang_clist { zh, en }
 %    \end{macrocode}
 % \end{variable}
@@ -1503,10 +1504,6 @@
 %
 % \begin{variable}{\g_@@_options_to_ctex_class_clist}
 % 保存由 \pkg{sjtutex} 传入 \pkg{ctex} 文档类的选项列表。
-%    \begin{macrocode}
-\clist_new:N \g_@@_options_to_ctex_class_clist
-%    \end{macrocode}
-%
 % 默认 \pkg{ctex} 文档类的选项：
 % 使用 UTF8 编码，不调整基础类的版式以及不载入 \pkg{ctex} 字体预设配置。
 %    \begin{macrocode}
@@ -1779,7 +1776,9 @@
     \bool_if:NT \g_@@_upright_integral_bool
       { upint } ,
     \bool_if:NT \g_@@_integral_limits_bool
-      { intlimits }
+      { intlimits } ,
+    \tl_if_eq:NNT \g_@@_lang_tl \c_@@_lang_de_tl
+      { german, ngerman }
   }
 %    \end{macrocode}
 %
@@ -2615,7 +2614,7 @@
 %<*font&cjk>
 %<*windows>
 %<*und>
-\tl_if_eq:NnTF \g_@@_lang_tl { ja }
+\tl_if_eq:NNTF \g_@@_lang_tl \c_@@_lang_ja_tl
   { \ctex_file_input:n { sjtu-cjk-font-windows-ja.def } }
   { \ctex_file_input:n { sjtu-cjk-font-windows-zh.def } }
 %</und>
@@ -2655,7 +2654,7 @@
 %</windows>
 %<*mac>
 %<*und>
-\tl_if_eq:NnTF \g_@@_lang_tl { ja }
+\tl_if_eq:NNTF \g_@@_lang_tl \c_@@_lang_ja_tl
   { \ctex_file_input:n { sjtu-cjk-font-mac-ja.def } }
   { \ctex_file_input:n { sjtu-cjk-font-mac-zh.def } }
 %</und>
@@ -2735,7 +2734,7 @@
 %</mac>
 %<*ubuntu>
 %<*und>
-\tl_if_eq:NnTF \g_@@_lang_tl { ja }
+\tl_if_eq:NNTF \g_@@_lang_tl \c_@@_lang_ja_tl
   { \ctex_file_input:n { sjtu-cjk-font-ubuntu-ja.def } }
   { \ctex_file_input:n { sjtu-cjk-font-ubuntu-zh.def } }
 %</und>
@@ -2808,7 +2807,7 @@
 %</ubuntu>
 %<*adobe>
 %<*und>
-\tl_if_eq:NnTF \g_@@_lang_tl { ja }
+\tl_if_eq:NNTF \g_@@_lang_tl \c_@@_lang_ja_tl
   { \ctex_file_input:n { sjtu-cjk-font-adobe-ja.def } }
   { \ctex_file_input:n { sjtu-cjk-font-adobe-zh.def } }
 %</und>
@@ -2865,7 +2864,7 @@
 %</adobe>
 %<*fandol>
 %<*und>
-\tl_if_eq:NnTF \g_@@_lang_tl { ja }
+\tl_if_eq:NNTF \g_@@_lang_tl \c_@@_lang_ja_tl
   { \ctex_file_input:n { sjtu-cjk-font-fandol-ja.def } }
   { \ctex_file_input:n { sjtu-cjk-font-fandol-zh.def } }
 %</und>
@@ -2962,7 +2961,7 @@
 %</fandol>
 %<*founder>
 %<*und>
-\tl_if_eq:NnTF \g_@@_lang_tl { ja }
+\tl_if_eq:NNTF \g_@@_lang_tl \c_@@_lang_ja_tl
   { \ctex_file_input:n { sjtu-cjk-font-founder-ja.def } }
   { \ctex_file_input:n { sjtu-cjk-font-founder-zh.def } }
 %</und>
