@@ -1344,7 +1344,7 @@
 %   环境，配合不同的可选参数作为标题，展示不同类型的成果。
 % \end{function}
 %
-% \begin{function}[rEXP,updated=2022-02-24]{bibliolist,bibliolist*}
+% \begin{function}[rEXP,updated=2022-03-23]{bibliolist,bibliolist*}
 %   \begin{sjtusyntax}[emph={[2]bibliolist,bibliolist*}]
 %     \begin{bibliolist}(*\marg{最长条目编号}*)
 %        \item (*\meta{文献条目}*)
@@ -1354,7 +1354,8 @@
 %     \end{bibliolist*}
 %   \end{sjtusyntax}
 %   附录用文献环境，只允许在 \env{achievements} 环境中使用。
-%   需要指定最长条目的编号作为参数，比如 \opt{99}。
+%   需要指定最长条目的编号作为参数，比如 \opt{99}；
+%   如果将该强制参数被指定为空，将不显示编号，每条以悬挂缩进做区分。
 %   环境内部使用 \cs{item} 来分隔各条目，在同一个 \env{achievements} 环境内、不同的
 %   \env{bibliolist} 或 \env{bibliolist*} 环境中编号连续递增、不会间断。
 %   普通模式下显示 \env{bibliolist} 中的内容，盲审模式下显示 \env{bibliolist*} 中的内容。
