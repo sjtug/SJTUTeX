@@ -1,0 +1,105 @@
+% !TeX encoding = UTF-8
+
+% 载入 SJTUThesis 模版
+\documentclass[type=master,lang=de]{sjtuthesis}
+
+\input{common-package}
+% \usepackage[ngerman]{babel}
+\usepackage{ngerman}
+\usepackage[pangram]{blindtext}
+\input{common-setup-thesis}
+% 使用 MLA 引用格式
+\usepackage[backend=biber,style=mla-new]{biblatex}
+% 变更为自订的引用样式 (Kafka: 67)
+\DeclareDelimFormat{postnotedelim}{\addcolon\space}
+\renewbibmacro*{postnote}{%
+  \iffieldundef{postnote}%
+    {}
+    {\setunit{\printdelim{postnotedelim}}%%
+     \ifbool{cbx@hyperpages}%
+      {\printtext[bibhyperref]{\printfield[ibidpostnote]{postnote}}}%
+      {\printfield[ibidpostnote]{postnote}}}}%
+% 调整引用标题，不使用 Works Cited
+\AtBeginDocument{
+  \renewcommand{\bibname}{Literaturverzeichnis}
+}
+% 添加引用数据库
+\addbibresource{ref.bib}
+% 德语模板补充字段
+\sjtusetup{
+  info = {
+    de / title           = {Vorlage für Abschlussarbeiten der Shanghai Jiao Tong Universität},
+    de / display-title   = {Vorlage für Abschlussarbeiten der \\ Shanghai Jiao Tong Universität},
+    de / keywords        = {Dissertation, Dissertation-Format, Standardisierung, Vorlage},
+    de / degree          = {Master of Engineering},
+    de / author          = {Jemand},
+    de / supervisor      = {Professor Jemand},
+    de / major           = {Ein bestimmtes Fachgebiet},
+    de / department      = {Gewisse Abteilung},
+    % de / fund   = {
+    %                 {National 973 Project (No. 2025CB000000)},
+    %                 {Nationale Stiftung für Naturwissenschaften Chinas (No. 81120250000)},
+    %               },
+  }
+}
+
+\begin{document}
+
+% 标题页
+\maketitle
+
+% 原创性声明及使用授权书
+\copyrightpage
+
+% 前置部分
+\frontmatter
+
+\begin{abstract}[zh]
+  \input{common-abstract-zh.tex}
+\end{abstract}
+
+\begin{abstract}[en]
+  \input{common-abstract-en.tex}
+\end{abstract}
+
+\begin{abstract}[de]
+  \input{common-abstract-de.tex}
+\end{abstract}
+
+% 目录
+\tableofcontents
+% 插图索引
+\listoffigures*
+% 表格索引
+\listoftables*
+% 算法索引
+% \listofalgorithms*
+
+% 主体部分
+\mainmatter
+
+\input{common-mainmatter-de}
+
+% 参考文献
+\printbibliography[heading=bibintoc]
+
+% 附录
+\appendix
+
+% 附录中图表不加入索引
+\captionsetup{list=no}
+
+\input{common-nomenclature-de}
+
+% 结尾部分
+\backmatter
+
+% 用于盲审的论文需隐去致谢、发表论文、科研成果、简历
+
+\input{common-achievements-de}
+
+\input{common-acknowledgements-de}
+
+\input{common-digest}
+
+\end{document}

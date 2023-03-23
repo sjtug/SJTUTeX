@@ -64,18 +64,23 @@
     \file{sjtuarticle.cls}              {\from{\jobname.dtx}{class,article}}
     \file{sjtu-lang-thesis-zh.def}      {\from{\jobname.dtx}{lang,thesis,zh}}
     \file{sjtu-lang-thesis-en.def}      {\from{\jobname.dtx}{lang,thesis,en}}
+    \file{sjtu-lang-thesis-de.def}      {\from{\jobname.dtx}{lang,thesis,de}}
     \file{sjtu-lang-thesis-ja.def}      {\from{\jobname.dtx}{lang,thesis,ja}}
     \file{sjtu-lang-generic-zh.def}     {\from{\jobname.dtx}{lang,generic,zh}}
     \file{sjtu-lang-generic-en.def}     {\from{\jobname.dtx}{lang,generic,en}}
+    \file{sjtu-lang-generic-de.def}     {\from{\jobname.dtx}{lang,generic,de}}
     \file{sjtu-lang-generic-ja.def}     {\from{\jobname.dtx}{lang,generic,ja}}
     \file{sjtu-name-thesis-zh.def}      {\from{\jobname.dtx}{name,thesis,zh}}
     \file{sjtu-name-thesis-en.def}      {\from{\jobname.dtx}{name,thesis,en}}
+    \file{sjtu-name-thesis-de.def}      {\from{\jobname.dtx}{name,thesis,de}}
     \file{sjtu-name-thesis-ja.def}      {\from{\jobname.dtx}{name,thesis,ja}}
     \file{sjtu-name-generic-zh.def}     {\from{\jobname.dtx}{name,generic,zh}}
     \file{sjtu-name-generic-en.def}     {\from{\jobname.dtx}{name,generic,en}}
+    \file{sjtu-name-generic-de.def}     {\from{\jobname.dtx}{name,generic,de}}
     \file{sjtu-name-generic-ja.def}     {\from{\jobname.dtx}{name,generic,ja}}
     \file{sjtu-scheme-zh.def}           {\from{\jobname.dtx}{scheme,zh}}
     \file{sjtu-scheme-en.def}           {\from{\jobname.dtx}{scheme,en}}
+    \file{sjtu-scheme-de.def}           {\from{\jobname.dtx}{scheme,de}}
     \file{sjtu-scheme-ja.def}           {\from{\jobname.dtx}{scheme,ja}}
     \file{sjtu-text-font-newtx.def}     {\from{\jobname.dtx}{font,text,newtx}}
     \file{sjtu-text-font-newpx.def}     {\from{\jobname.dtx}{font,text,newpx}}
@@ -160,30 +165,40 @@
 %<lang&thesis&zh>\ProvidesExplFile{sjtu-lang-thesis-zh.def}
 %<lang&thesis&en>  {English specific definition for thesis (SJTUTeX)}
 %<lang&thesis&en>\ProvidesExplFile{sjtu-lang-thesis-en.def}
+%<lang&thesis&de>  {German specific definition for thesis (SJTUTeX)}
+%<lang&thesis&de>\ProvidesExplFile{sjtu-lang-thesis-de.def}
 %<lang&thesis&ja>  {Japanese specific definition for thesis (SJTUTeX)}
 %<lang&thesis&ja>\ProvidesExplFile{sjtu-lang-thesis-ja.def}
 %<lang&generic&zh>  {Chinese specific definition for generic (SJTUTeX)}
 %<lang&generic&zh>\ProvidesExplFile{sjtu-lang-generic-zh.def}
 %<lang&generic&en>  {English specific definition for generic (SJTUTeX)}
 %<lang&generic&en>\ProvidesExplFile{sjtu-lang-generic-en.def}
+%<lang&generic&de>  {German specific definition for generic (SJTUTeX)}
+%<lang&generic&de>\ProvidesExplFile{sjtu-lang-generic-de.def}
 %<lang&generic&ja>  {Japanese specific definition for generic (SJTUTeX)}
 %<lang&generic&ja>\ProvidesExplFile{sjtu-lang-generic-ja.def}
 %<name&thesis&zh>  {Chinese name config for thesis (SJTUTeX)}
 %<name&thesis&zh>\ProvidesExplFile{sjtu-name-thesis-zh.def}
 %<name&thesis&en>  {English name config for thesis (SJTUTeX)}
 %<name&thesis&en>\ProvidesExplFile{sjtu-name-thesis-en.def}
+%<name&thesis&de>  {German name config for thesis (SJTUTeX)}
+%<name&thesis&de>\ProvidesExplFile{sjtu-name-thesis-de.def}
 %<name&thesis&ja>  {Japanese name config for thesis (SJTUTeX)}
 %<name&thesis&ja>\ProvidesExplFile{sjtu-name-thesis-ja.def}
 %<name&generic&zh>  {Chinese name config for generic (SJTUTeX)}
 %<name&generic&zh>\ProvidesExplFile{sjtu-name-generic-zh.def}
 %<name&generic&en>  {English name config for generic (SJTUTeX)}
 %<name&generic&en>\ProvidesExplFile{sjtu-name-generic-en.def}
+%<name&generic&de>  {German name config for generic (SJTUTeX)}
+%<name&generic&de>\ProvidesExplFile{sjtu-name-generic-de.def}
 %<name&generic&ja>  {Japanese name config for generic (SJTUTeX)}
 %<name&generic&ja>\ProvidesExplFile{sjtu-name-generic-ja.def}
 %<scheme&zh>  {Chinese scheme (SJTUTeX)}
 %<scheme&zh>\ProvidesExplFile{sjtu-scheme-zh.def}
 %<scheme&en>  {English scheme (SJTUTeX)}
 %<scheme&en>\ProvidesExplFile{sjtu-scheme-en.def}
+%<scheme&de>  {German scheme (SJTUTeX)}
+%<scheme&de>\ProvidesExplFile{sjtu-scheme-de.def}
 %<scheme&ja>  {Japanese scheme (SJTUTeX)}
 %<scheme&ja>\ProvidesExplFile{sjtu-scheme-ja.def}
 %<font&text&newtx>  {New TX text fonts definition (SJTUTeX)}
@@ -579,9 +594,9 @@
 %
 % \begin{function}[updated=2023-03-18]{lang}
 %   \begin{sjtusyntax}[emph={[1]lang}]
-%     lang = (*<(zh)|en|ja>*)
+%     lang = (*<(zh)|en|de|ja>*)
 %   \end{sjtusyntax}
-%   论文主要语言。可选中文、英文或日文，该选项会改变文档中的一些标题的名字。
+%   论文主要语言。可选中文、英文、德文或日文，该选项会改变文档中的一些标题的名字。
 %   下文中 \meta{lang} 可以指定为这些选项中的其中之一。
 % \end{function}
 %
@@ -1084,34 +1099,35 @@
 %
 % \begin{table}[hbt]
 %   \vspace{-47ex}
-%   \centering\small
+%   \centering
 %   \caption{\opt{name} 选项的默认设置}
 %   \label{tab:names}
-%   \begin{tabular}{l|p{7em}|p{9em}|p{8em}}
+%   \small \tabcolsep=3pt
+%   \begin{tabular}{l|p{8em}|p{9em}|p{11em}|p{8em}}
 %     \toprule
-%     \strong{选项}         & \strong{|lang = zh|}   & \strong{|lang = en|}          & \strong{|lang = ja|}     \\
+%     \strong{选项}         & \strong{|lang = zh|}   & \strong{|lang = en|}          & \strong{|lang = de|}   & \strong{|lang = ja|} \\
 %     \midrule
-%      |contents|           & 目录                   & Contents                      & 目次                     \\
-%      |listfigure|         & 插图                   & List of Figures               & 図目次                   \\
-%      |listtable|          & 表格                   & List of Tables                & 表目次                   \\
-%      |figure|             & 图                     & Figure                        & 図                       \\
-%      |table|              & 表                     & Table                         & 表                       \\
-%      |abstract| \rexpstar & 摘要                   & Abstract                      & 概要                     \\
-%      |appendix|           & 附录                   & Appendix                      & 索引                     \\
-%      |index|              & 索引                   & Index                         & 付録                     \\
-%      |proof|              & 证明                   & Proof                         & 证明                     \\
-%      |bib|                & 参考文献               & Bibliography                  & 参考文献                 \\
+%      |contents|           & 目录                   & Contents                      & Inhaltsverzeichnis     & 目次                 \\
+%      |listfigure|         & 插图                   & List of Figures               & Abbildungsverzeichnis  & 図目次               \\
+%      |listtable|          & 表格                   & List of Tables                & Tabellenverzeichnis    & 表目次               \\
+%      |figure|             & 图                     & Figure                        & Abbildung              & 図                   \\
+%      |table|              & 表                     & Table                         & Tabelle                & 表                   \\
+%      |abstract| \rexpstar & 摘要                   & Abstract                      & Zusammenfassung        & 概要                 \\
+%      |index|              & 索引                   & Index                         & Index                  & 索引                 \\
+%      |appendix|           & 附录                   & Appendix                      & Anhang                 & 付録                 \\
+%      |proof|              & 证明                   & Proof                         & Beweis                 & 证明                 \\
+%      |bib|                & 参考文献               & Bibliography                  & Literaturverzeichnis   & 参考文献             \\
 %    \midrule
-%      |figure*|            & Figure                 & 图                            & Figure                   \\
-%      |table*|             & Table                  & 表                            & Table                    \\
-%      |algorithm|          & 算法                   & Algorithm                     & アルゴリズム             \\
-%      |listalgorithm|      & 算法                   & List of Algorithms            & アルゴリズム目次         \\
-%      |abbr| \rexpstar     & 缩略语对照表           & Abbreviation                  & 略語表                   \\
-%      |nom| \rexpstar      & 主要符号对照表         & Nomenclature                  & 記号表                   \\
-%      |ack| \rexpstar      & 致谢                   & Acknowledgements              & 謝辞                     \\
-%      |resume| \rexpstar   & 个人简历               & Resume                        & 履歴書                   \\
-%      |digest| \rexpstar   & 大摘要                 & Digest                        & 要訳                     \\
-%      |achv| \rexpstar     & 学术论文和科研成果目录 & List of Research Achievements & 学術論文及び研究成果目録 \\
+%      |figure*|            & Figure                 & 图                            & Figure                 & Figure               \\
+%      |table*|             & Table                  & 表                            & Table                  & Table                \\
+%      |algorithm|          & 算法                   & Algorithm                     & Algorithmus            & アルゴリズム         \\
+%      |listalgorithm|      & 算法                   & List of Algorithms            & Algorithmenverzeichnis & アルゴリズム目次     \\
+%      |abbr| \rexpstar     & 缩略语对照表           & Abbreviation                  & Abkürzungsverzeichnis  & 略語表               \\
+%      |nom| \rexpstar      & 主要符号对照表         & Nomenclature                  & Symbolverzeichnis      & 記号表               \\
+%      |ack| \rexpstar      & 致谢                   & Acknowledgements              & Danksagungen           & 謝辞                 \\
+%      |resume| \rexpstar   & 个人简历               & Resume                        & Lebenslauf             & 履歴書               \\
+%      |digest| \rexpstar   & 大摘要                 & Digest                        & Kurzfassung            & 要訳                 \\
+%      |achv| \rexpstar     & 学术论文和科研成果目录 & List of Research Achievements & Forschungsleistungen   & 研究業績書           \\
 %     \bottomrule
 %   \end{tabular}
 % \end{table}
@@ -1328,7 +1344,7 @@
 %   环境，配合不同的可选参数作为标题，展示不同类型的成果。
 % \end{function}
 %
-% \begin{function}[rEXP,updated=2022-02-24]{bibliolist,bibliolist*}
+% \begin{function}[rEXP,updated=2022-03-23]{bibliolist,bibliolist*}
 %   \begin{sjtusyntax}[emph={[2]bibliolist,bibliolist*}]
 %     \begin{bibliolist}(*\marg{最长条目编号}*)
 %        \item (*\meta{文献条目}*)
@@ -1338,7 +1354,8 @@
 %     \end{bibliolist*}
 %   \end{sjtusyntax}
 %   附录用文献环境，只允许在 \env{achievements} 环境中使用。
-%   需要指定最长条目的编号作为参数，比如 \opt{99}。
+%   需要指定最长条目的编号作为参数，比如 \opt{99}；
+%   如果将该强制参数被指定为空，将不显示编号，每条以悬挂缩进做区分。
 %   环境内部使用 \cs{item} 来分隔各条目，在同一个 \env{achievements} 环境内、不同的
 %   \env{bibliolist} 或 \env{bibliolist*} 环境中编号连续递增、不会间断。
 %   普通模式下显示 \env{bibliolist} 中的内容，盲审模式下显示 \env{bibliolist*} 中的内容。
@@ -1388,7 +1405,7 @@
     "l3kernel"~ and~ "l3packages"~ using~ your~ TeX~ package \\
     manager~ or~ from~ CTAN.
   }
-\@ifpackagelater { expl3 } { 2020/07/14 } { }
+\@ifpackagelater { expl3 } { 2020/04/06 } { }
   { \msg_error:nnn { sjtutex } { l3-too-old } { expl3 } }
 %    \end{macrocode}
 %
@@ -1425,7 +1442,8 @@
 % 论文语言。
 %    \begin{macrocode}
 \tl_new:N \g_@@_lang_tl
-%<thesis>\clist_new:N \g_@@_lang_clist
+\tl_const:Nn \c_@@_lang_de_tl { de }
+\tl_const:Nn \c_@@_lang_ja_tl { ja }
 %<thesis>\clist_set:Nn \g_@@_lang_clist { zh, en }
 %    \end{macrocode}
 % \end{variable}
@@ -1487,10 +1505,6 @@
 %
 % \begin{variable}{\g_@@_options_to_ctex_class_clist}
 % 保存由 \pkg{sjtutex} 传入 \pkg{ctex} 文档类的选项列表。
-%    \begin{macrocode}
-\clist_new:N \g_@@_options_to_ctex_class_clist
-%    \end{macrocode}
-%
 % 默认 \pkg{ctex} 文档类的选项：
 % 使用 UTF8 编码，不调整基础类的版式以及不载入 \pkg{ctex} 字体预设配置。
 %    \begin{macrocode}
@@ -1579,7 +1593,7 @@
     lang .choice: ,
     lang .value_required:n = true ,
     lang .choices:nn =
-      { zh, en, ja }
+      { zh, en, de, ja }
       {
         \tl_gset_eq:NN \g_@@_lang_tl \l_keys_choice_tl
 %<*thesis>
@@ -1763,7 +1777,9 @@
     \bool_if:NT \g_@@_upright_integral_bool
       { upint } ,
     \bool_if:NT \g_@@_integral_limits_bool
-      { intlimits }
+      { intlimits } ,
+    \tl_if_eq:NNT \g_@@_lang_tl \c_@@_lang_de_tl
+      { german, ngerman }
   }
 %    \end{macrocode}
 %
@@ -1852,12 +1868,14 @@
 %
 % \subsubsection{内部函数}
 %
-% \begin{macro}{\cs_gset:cpo,\tl_const:Nv,
+% \begin{macro}[int]{\cs_gset:cpo,\tl_const:Nv,
+% \clist_use:NV,\clist_use:cv,
 % \exp_args:NNnv,\regex_match:neTF}
 % \LaTeX3{} 函数变体。
 %    \begin{macrocode}
 \cs_generate_variant:Nn \cs_gset:Npn { cpo }
 \cs_generate_variant:Nn \tl_const:Nn { Nv }
+\cs_generate_variant:Nn \clist_use:Nn { NV, cv }
 \exp_args_generate:n { Nnv }
 \cs_generate_variant:Nn \exp_last_unbraced:Ne { ce }
 \prg_generate_conditional_variant:Nnn \regex_match:nn { ne } { T, TF }
@@ -2616,7 +2634,7 @@
 %<*font&cjk>
 %<*windows>
 %<*und>
-\tl_if_eq:NnTF \g_@@_lang_tl { ja }
+\tl_if_eq:NNTF \g_@@_lang_tl \c_@@_lang_ja_tl
   { \ctex_file_input:n { sjtu-cjk-font-windows-ja.def } }
   { \ctex_file_input:n { sjtu-cjk-font-windows-zh.def } }
 %</und>
@@ -2656,7 +2674,7 @@
 %</windows>
 %<*mac>
 %<*und>
-\tl_if_eq:NnTF \g_@@_lang_tl { ja }
+\tl_if_eq:NNTF \g_@@_lang_tl \c_@@_lang_ja_tl
   { \ctex_file_input:n { sjtu-cjk-font-mac-ja.def } }
   { \ctex_file_input:n { sjtu-cjk-font-mac-zh.def } }
 %</und>
@@ -2736,7 +2754,7 @@
 %</mac>
 %<*ubuntu>
 %<*und>
-\tl_if_eq:NnTF \g_@@_lang_tl { ja }
+\tl_if_eq:NNTF \g_@@_lang_tl \c_@@_lang_ja_tl
   { \ctex_file_input:n { sjtu-cjk-font-ubuntu-ja.def } }
   { \ctex_file_input:n { sjtu-cjk-font-ubuntu-zh.def } }
 %</und>
@@ -2809,7 +2827,7 @@
 %</ubuntu>
 %<*adobe>
 %<*und>
-\tl_if_eq:NnTF \g_@@_lang_tl { ja }
+\tl_if_eq:NNTF \g_@@_lang_tl \c_@@_lang_ja_tl
   { \ctex_file_input:n { sjtu-cjk-font-adobe-ja.def } }
   { \ctex_file_input:n { sjtu-cjk-font-adobe-zh.def } }
 %</und>
@@ -2866,7 +2884,7 @@
 %</adobe>
 %<*fandol>
 %<*und>
-\tl_if_eq:NnTF \g_@@_lang_tl { ja }
+\tl_if_eq:NNTF \g_@@_lang_tl \c_@@_lang_ja_tl
   { \ctex_file_input:n { sjtu-cjk-font-fandol-ja.def } }
   { \ctex_file_input:n { sjtu-cjk-font-fandol-zh.def } }
 %</und>
@@ -2963,7 +2981,7 @@
 %</fandol>
 %<*founder>
 %<*und>
-\tl_if_eq:NnTF \g_@@_lang_tl { ja }
+\tl_if_eq:NNTF \g_@@_lang_tl \c_@@_lang_ja_tl
   { \ctex_file_input:n { sjtu-cjk-font-founder-ja.def } }
   { \ctex_file_input:n { sjtu-cjk-font-founder-zh.def } }
 %</und>
@@ -3048,6 +3066,8 @@
     appendix        .meta:nn = { ctex } { appendixname   = {#1} } ,
     proof           .meta:nn = { ctex } { proofname      = {#1} } ,
     bib             .meta:nn = { ctex } { bibname        = {#1} } ,
+    part           .tl_set:N = \partname ,
+%<!article>    chapter        .tl_set:N = \chaptername ,
 %    \end{macrocode}
 %
 % 标准文档类中未定义的名称。
@@ -3108,6 +3128,36 @@
 %    \end{macrocode}
 %
 %    \begin{macrocode}
+%<*de>
+\keys_set_known:nn { sjtu / name }
+  {
+    contents      = { Inhaltsverzeichnis } ,
+    listfigure    = { Abbildungsverzeichnis } ,
+    listtable     = { Tabellenverzeichnis } ,
+    figure        = { Abbildung } ,
+    table         = { Tabelle } ,
+    abstract      = { Zusammenfassung } ,
+    index         = { Index } ,
+    appendix      = { Anhang } ,
+    proof         = { Beweis } ,
+    bib           = { Literaturverzeichnis } ,
+    part          = { Teil } ,
+    chapter       = { Kapitel } ,
+    figure*       = { Figure } ,
+    table*        = { Table } ,
+    algorithm     = { Algorithmus } ,
+    listalgorithm = { Algorithmenverzeichnis } ,
+    abbr          = { Abkürzungsverzeichnis } ,
+    nom           = { Symbolverzeichnis } ,
+    ack           = { Danksagungen } ,
+    resume        = { Lebenslauf } ,
+    digest        = { Kurzfassung } ,
+    achv          = { Forschungsleistungen }
+  }
+%</de>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
 %<*ja>
 \keys_set_known:nn { sjtu / name }
   {
@@ -3129,8 +3179,8 @@
     nom           = { 記号表 } ,
     ack           = { 謝 \quad 辞 } ,
     resume        = { 履歴書 } ,
-    digest        = { 要 \quad 訳 } ,
-    achv          = { 学術論文及び研究成果目録 }
+    digest        = { 要 \quad 約 } ,
+    achv          = { 研究業績書 }
   }
 %</ja>
 %</scheme>
@@ -3143,7 +3193,7 @@
 \clist_map_inline:Nn \g_@@_lang_clist
   { \file_input:n { sjtu-name-thesis- #1 .def } }
 \clist_map_inline:nn
-  { title_page, copyright_page, abstract }
+  { title_page, declaration, abstract }
   { \@@_define_name:nv {#1} { c_@@_name_ #1 _ \g_@@_lang_tl _tl } }
 %</thesis>
 %<!thesis> \file_input:n { sjtu-name-generic- \g_@@_lang_tl .def }
@@ -3441,7 +3491,7 @@
 %<*scheme>
 \ctex_if_autoindent_touched:F
 %<zh>  { \ctex_set:n { autoindent = true } }
-%<en>  { \ctex_set:n { autoindent = 1.5 em } }
+%<en|de>  { \ctex_set:n { autoindent = 1.5 em } }
 %<ja>  { \ctex_set:n { autoindent = 1 } }
 %    \end{macrocode}
 %
@@ -3722,6 +3772,7 @@
 %    \begin{macrocode}
 %<lang&thesis&zh>\@@_info_keys_define:n { zh }
 %<lang&thesis&en>\@@_info_keys_define:n { en }
+%<lang&thesis&de>\@@_info_keys_define:n { de }
 %<lang&thesis&ja>\@@_info_keys_define:n { ja }
 %    \end{macrocode}
 %
@@ -3747,8 +3798,9 @@
 %<*lang>
 %<*thesis>
 %<zh>\keys_define:nn { sjtu / info / zh }
-%<ja>\keys_define:nn { sjtu / info / ja }
 %<en>\keys_define:nn { sjtu / info / en }
+%<de>\keys_define:nn { sjtu / info / de }
+%<ja>\keys_define:nn { sjtu / info / ja }
   {
     subject          .initial:x =
       {
@@ -3757,16 +3809,21 @@
         \exp_not:V \c_@@_name_degree_level_zh_tl
         \exp_not:V \c_@@_name_thesis_zh_tl
 %</zh>
-%<*ja>
-        \exp_not:V \c_@@_name_univ_ja_tl
-        \exp_not:V \c_@@_name_degree_level_ja_tl
-        \exp_not:V \c_@@_name_thesis_ja_tl
-%</ja>
 %<*en>
         A~ Dissertation~ Submitted~ to \exp_not:N \\
         { \exp_not:V \c_@@_name_univ_en_tl }~ for~
         { \exp_not:V \c_@@_name_degree_level_en_tl }~ Degree
 %</en>
+%<*de>
+        Eine~ Dissertation~ Eingereicht~ an \exp_not:N \\
+        der~ { \exp_not:V \c_@@_name_univ_de_tl }~ für~
+        { \exp_not:V \c_@@_name_degree_level_de_tl } titel
+%</de>
+%<*ja>
+        \exp_not:V \c_@@_name_univ_ja_tl
+        \exp_not:V \c_@@_name_degree_level_ja_tl
+        \exp_not:V \c_@@_name_thesis_ja_tl
+%</ja>
       }
   }
 %</thesis>
@@ -3791,26 +3848,6 @@
 \cs_new:Npn \@@_date_aux_short_zh:w #1-#2 \q_stop
   { \@@_date_aux_short_zh:nn {#1} {#2} }
 %</zh>
-%    \end{macrocode}
-%
-%    \begin{macrocode}
-%<*ja>
-\cs_new:Npn \@@_date_aux_ja:nnn #1#2#3
-  {
-    \int_to_arabic:n {#1} ~ { \exp_not:V \c_@@_name_year_ja_tl  } ~
-    \int_to_arabic:n {#2} ~ { \exp_not:V \c_@@_name_month_ja_tl } ~
-    \int_to_arabic:n {#3} ~ { \exp_not:V \c_@@_name_day_ja_tl   }
-  }
-\cs_new:Npn \@@_date_aux_ja:w #1-#2-#3 \q_stop
-  { \@@_date_aux_ja:nnn {#1} {#2} {#3} }
-\cs_new:Npn \@@_date_aux_short_ja:nn #1#2
-  {
-    \int_to_arabic:n {#1} ~ { \exp_not:V \c_@@_name_year_ja_tl  } ~
-    \int_to_arabic:n {#2} ~ { \exp_not:V \c_@@_name_month_ja_tl }
-  }
-\cs_new:Npn \@@_date_aux_short_ja:w #1-#2 \q_stop
-  { \@@_date_aux_short_ja:nn {#1} {#2} }
-%</ja>
 %    \end{macrocode}
 %
 %    \begin{macrocode}
@@ -3855,6 +3892,45 @@
 %</en>
 %    \end{macrocode}
 %
+%    \begin{macrocode}
+%<*de>
+\cs_new:Npn \@@_date_aux_de:nnn #1#2#3
+  {
+    \clist_item:Nn \c_@@_name_month_de_clist {#2} ~
+    {#3} ,~ \int_to_arabic:n {#1}
+  }
+\cs_new:Npn \@@_date_aux_de:w #1-#2-#3 \q_stop
+  { \@@_date_aux_de:nnn {#1} {#2} {#3} }
+\cs_new:Npn \@@_date_aux_short_de:nn #1#2
+  {
+    \clist_item:Nn \c_@@_name_month_de_clist {#2} ,~
+    \int_to_arabic:n {#1}
+  }
+\cs_new:Npn \@@_date_aux_short_de:w #1-#2 \q_stop
+  { \@@_date_aux_short_de:nn {#1} {#2} }
+%</de>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*ja>
+\cs_new:Npn \@@_date_aux_ja:nnn #1#2#3
+  {
+    \int_to_arabic:n {#1} ~ { \exp_not:V \c_@@_name_year_ja_tl  } ~
+    \int_to_arabic:n {#2} ~ { \exp_not:V \c_@@_name_month_ja_tl } ~
+    \int_to_arabic:n {#3} ~ { \exp_not:V \c_@@_name_day_ja_tl   }
+  }
+\cs_new:Npn \@@_date_aux_ja:w #1-#2-#3 \q_stop
+  { \@@_date_aux_ja:nnn {#1} {#2} {#3} }
+\cs_new:Npn \@@_date_aux_short_ja:nn #1#2
+  {
+    \int_to_arabic:n {#1} ~ { \exp_not:V \c_@@_name_year_ja_tl  } ~
+    \int_to_arabic:n {#2} ~ { \exp_not:V \c_@@_name_month_ja_tl }
+  }
+\cs_new:Npn \@@_date_aux_short_ja:w #1-#2 \q_stop
+  { \@@_date_aux_short_ja:nn {#1} {#2} }
+%</ja>
+%    \end{macrocode}
+%
 % 设置语言格式辅助命令
 %    \begin{macrocode}
 %<*zh>
@@ -3871,13 +3947,14 @@
     \normalfont
   }
 %</zh>
-%<*en>
-\cs_new_protected:Nn \@@_set_language_en:
+%<*en|de>
+%<en>\cs_new_protected:Nn \@@_set_language_en:
+%<de>\cs_new_protected:Nn \@@_set_language_de:
   {
     \ctex_set:n { autoindent = 1.5 em }
     \normalfont
   }
-%</en>
+%</en|de>
 %<*ja>
 \cs_new:Nn \@@_set_cjk_default_ja:
   {
@@ -3899,6 +3976,7 @@
 %<*thesis>
 %<zh>\cs_new:Npn \ps@SJTU@fund@zh
 %<en>\cs_new:Npn \ps@SJTU@fund@en
+%<de>\cs_new:Npn \ps@SJTU@fund@de
 %<ja>\cs_new:Npn \ps@SJTU@fund@ja
   {
     \ps@empty
@@ -3908,6 +3986,7 @@
           \centering \zihao { - 5 }
 %<zh>          \clist_use:Nn \l_@@_info_fund_zh_clist { \par }
 %<en>          \clist_use:Nn \l_@@_info_fund_en_clist { \par }
+%<de>          \clist_use:Nn \l_@@_info_fund_de_clist { \par }
 %<ja>          \clist_use:Nn \l_@@_info_fund_ja_clist { \par }
         \end{minipage}
       }
@@ -4171,13 +4250,14 @@
     components    = { logo, subject, title, info, date }
   }
 %</zh>
-%<*en|ja>
+%<*en|de|ja>
 \clist_map_inline:nn
   {
     { subject }
       {
         format      = \zihao { 4 } \bfseries \fixedlineskip { 31.2 bp } ,
 %<en>        content     = \l_@@_info_subject_en_tl ,
+%<de>        content     = \l_@@_info_subject_de_tl ,
 %<ja>        content     = \l_@@_info_subject_ja_tl ,
         bottom-skip = \c_zero_dim plus 2 fill
       },
@@ -4185,6 +4265,7 @@
       {
         format      = \zihao { -2 } \bfseries \fixedlineskip { 31.2 bp } ,
 %<en>        content     = \MakeUppercase \l_@@_info_display_title_en_tl ,
+%<de>        content     = \MakeUppercase \l_@@_info_display_title_de_tl ,
 %<ja>        content     = \l_@@_info_display_title_ja_tl ,
         bottom-skip = \c_zero_dim plus 2 fill
       },
@@ -4194,9 +4275,11 @@
         content     =
           {
 %<en>            \@@_title_page_info_i:nxn { en }
+%<de>            \@@_title_page_info_i:nxn { de }
 %<ja>            \@@_title_page_info_i:nxn { ja }
               { author, \l_@@_info_supervisors_clist }
 %<en>              { { \bfseries #1 \c_@@_name_info_sep_en_tl } {#3} }
+%<de>              { { \bfseries #1 \c_@@_name_info_sep_de_tl } {#3} }
 %<ja>              { { \bfseries #1 \c_@@_name_info_sep_ja_tl } {#3} }
           } ,
         bottom-skip = \c_zero_dim plus 3 fill
@@ -4206,11 +4289,13 @@
         format      = \zihao { 3 } \fixedlineskip { 31.2 bp } ,
         content     =
 %<en>          { \@@_title_page_info_ii:n { en } }
+%<de>          { \@@_title_page_info_ii:n { de } }
 %<ja>          { \@@_title_page_info_ii:n { ja } }
       },
   }
   {
 %<en>    \@@_declare_component:nnn { title / en } #1
+%<de>    \@@_declare_component:nnn { title / de } #1
 %<ja>    \@@_declare_component:nnn { title / ja } #1
   }
 %<*en>
@@ -4222,6 +4307,15 @@
     components  = { subject, title, info, date }
   }
 %</en>
+%<*de>
+\@@_declare_page:nn { title / de }
+  {
+    style       = SJTU@fund@de ,
+    format      = \linespread { 1 } \@@_set_language_de: ,
+    prefix      = title / de ,
+    components  = { subject, title, info, date }
+  }
+%</de>
 %<*ja>
 \@@_declare_page:nn { title / ja }
   {
@@ -4231,7 +4325,7 @@
     components  = { subject, title, info, date }
   }
 %</ja>
-%</en|ja>
+%</en|de|ja>
 %</thesis>
 %</lang>
 %    \end{macrocode}
@@ -4332,7 +4426,7 @@
 \@@_declare_page:nn { copyright }
   {
     bookmark      = true ,
-    bookmark-text = \c_@@_name_copyright_page_tl ,
+    bookmark-text = \c_@@_name_declaration_tl ,
     format        = \linespread { 1 } \@@_set_language_zh: ,
     prefix        = copyright ,
     components    =
@@ -4357,7 +4451,7 @@
               {
                 \bool_if:NTF \g_@@_openright_bool
                   { \cleardoublepage } { \clearpage }
-                \@@_pdf_bookmark:nn { 0 } { \c_@@_name_copyright_page_tl }
+                \@@_pdf_bookmark:nn { 0 } { \c_@@_name_declaration_tl }
                 \includepdf {#1}
               }
               {
@@ -4371,21 +4465,6 @@
 %    \end{macrocode}
 %
 % \subsection{摘要}
-%
-% \begin{macro}{\@@_output_keywords:Nnn,\@@_output_keywords:cvv}
-% 格式化输出关键词的辅助函数。
-%    \begin{macrocode}
-\cs_new:Nn \@@_output_keywords:Nnn
-  {
-    \clist_if_empty:NF #1
-      {
-        \par \mode_leave_vertical: \par \noindent
-        { \bfseries #2 } \clist_use:Nn #1 {#3}
-      }
-  }
-\cs_generate_variant:Nn \@@_output_keywords:Nnn { cvv }
-%    \end{macrocode}
-% \end{macro}
 %
 % 学位论文摘要环境。
 %    \begin{macrocode}
@@ -4416,8 +4495,17 @@
             \bool_gset_true:N \l_@@_abstract_bookmark_bool
           }
         #2
-        \@@_output_keywords:cvv { l_@@_info_keywords_ #1 _clist }
-          { c_@@_name_keywords_ #1 _tl } { c_@@_name_item_sep_ #1 _tl }
+        \clist_if_empty:cF { l_@@_info_keywords_ #1 _clist }
+          {
+            \par \mode_leave_vertical: \par \noindent
+            {
+              \bfseries
+              \tl_use:c { c_@@_name_keywords_ #1 _tl }
+              \tl_use:c { c_@@_name_info_sep_ #1 _tl }
+            }
+            \clist_use:cv { l_@@_info_keywords_ #1 _clist }
+              { c_@@_name_item_sep_ #1 _tl }
+          }
       }
       { \msg_error:nnn { sjtutex } { lang-validation } {#1} }
   } { }
@@ -4441,8 +4529,16 @@
 %    \begin{macrocode}
 \@@_preto_cmd:Nn \endabstract
   {
-    \@@_output_keywords:Nnn \l_@@_info_keywords_clist
-      { \c_@@_name_keywords_tl } { \c_@@_name_item_sep_tl }
+    \clist_if_empty:NF \l_@@_info_keywords_clist
+      {
+        \par \mode_leave_vertical: \par \noindent
+        {
+          \bfseries
+          \c_@@_name_keywords_tl
+          \c_@@_name_info_sep_tl
+        }
+        \clist_use:NV \l_@@_info_keywords_clist \c_@@_name_item_sep_tl
+      }
   }
 %</!thesis>
 %    \end{macrocode}
@@ -4547,11 +4643,24 @@
   {
     \cs_if_exist_use:N \bibfont
     \list
-      { \@biblabel { \arabic{ SJTU@bib } } }
       {
-        \@@_dim_set_to_wd:Nn \labelwidth { \@biblabel {#1} }
-        \dim_set_eq:NN \leftmargin \labelwidth
-        \dim_add:Nn    \leftmargin { \labelsep }
+        \tl_if_blank:nTF {#1}
+          { \hfill }
+          { \@biblabel { \arabic{ SJTU@bib } } }
+      }
+      {
+        \tl_if_blank:nTF {#1}
+          {
+            \dim_if_exist:NTF \bibhang
+              { \dim_set_eq:NN \leftmargin \bibhang }
+              { \dim_set:Nn    \leftmargin { 1 em } }
+            \dim_set:Nn \itemindent { - \leftmargin }
+          }
+          {
+            \@@_dim_set_to_wd:Nn \labelwidth { \@biblabel {#1} }
+            \dim_set_eq:NN \leftmargin \labelwidth
+            \dim_add:Nn    \leftmargin { \labelsep }
+          }
         \dim_if_exist:NTF \bibitemsep
           {
             \dim_set_eq:NN \itemsep \bibitemsep
@@ -4990,6 +5099,13 @@
     July, August, September, October, November, December
   }
 %</en>
+%<*de>
+\clist_const:Nn \c_@@_name_month_de_clist
+  {
+    Januar, Februar, März, April, Mai, Juni,
+    Juli, August, September, Oktober, November, Dezember
+  }
+%</de>
 %<*thesis>
 %<*zh>
 \@@_define_symbol:nn { white_square } { "25A1 }
@@ -5002,6 +5118,11 @@
   { degree_level } { \g_@@_thesis_type_int }
   { Bachelor, Master, Doctor }
 %</en>
+%<*de>
+\@@_define_name_from_clist:nnnn { de }
+  { degree_level } { \g_@@_thesis_type_int }
+  { Bachelor, Master, Doktor }
+%</de>
 %<*ja>
 \@@_define_name_from_clist:nnnn { ja }
   { degree_level } { \g_@@_thesis_type_int }
@@ -5012,27 +5133,27 @@
 \clist_map_inline:nn
   {
 %<*thesis>
-    { univ             } { 上海交通大学 } ,
-    { author           } { 姓名         } ,
-    { id               } { 学号         } ,
-    { supervisor       } { 导师         } ,
-    { assoc_supervisor } { 副导师       } ,
-    { department       } { 院系         } ,
-    { co_supervisor    } { 联合导师     } ,
-    { major            } { 学科 / 专业  } ,
-    { degree           } { 申请学位     } ,
-    { thesis           } { 学位论文     } ,
-    { title_page       } { 题名页       } ,
-    { copyright_page   } { 版权页       } ,
-    { orig_decl        } { 原创性声明   } ,
-    { auth_decl        } { 使用授权书   } ,
-    { decl_author      } { 学位论文作者 } ,
-    { decl_supervisor  } { 指导教师     } ,
-    { abstract         } { 摘 \quad 要  } ,
+    { univ             } { 上海交通大学           } ,
+    { author           } { 姓名                   } ,
+    { id               } { 学号                   } ,
+    { supervisor       } { 导师                   } ,
+    { assoc_supervisor } { 副导师                 } ,
+    { department       } { 院系                   } ,
+    { co_supervisor    } { 联合导师               } ,
+    { major            } { 学科 / 专业            } ,
+    { degree           } { 申请学位               } ,
+    { thesis           } { 学位论文               } ,
+    { title_page       } { 题名页                 } ,
+    { declaration      } { 原创性声明及使用授权书 } ,
+    { orig_decl        } { 原创性声明             } ,
+    { auth_decl        } { 使用授权书             } ,
+    { decl_author      } { 学位论文作者           } ,
+    { decl_supervisor  } { 指导教师               } ,
+    { abstract         } { 摘 \quad 要            } ,
 %</thesis>
-    { keywords         } { 关键词：     } ,
-    { info_sep         } { ：           } ,
-    { item_sep         } { ，           }
+    { keywords         } { 关键词                 } ,
+    { info_sep         } { ：                     } ,
+    { item_sep         } { ，                     }
   }
 %<thesis>  { \@@_define_name:nnn { zh } #1 }
 %<!thesis>  { \@@_define_name:nn #1 }
@@ -5048,34 +5169,55 @@
     { assoc_supervisor } { Assoc.~ Supervisor               } ,
     { co_supervisor    } { Co-supervisor                    } ,
     { title_page       } { Title~ Page                      } ,
-    { copyright_page   } { Copyright~ Page                  } ,
+    { declaration      } { Statutory~ Declaration           } ,
     { abstract         } { Abstract                         } ,
 %</thesis>
-    { keywords         } { Key~words:~                      } ,
+    { keywords         } { Key~words                        } ,
     { info_sep         } { :~                               } ,
     { item_sep         } { ,~                               }
   }
 %<thesis>  { \@@_define_name:nnn { en } #1 }
 %<!thesis>  { \@@_define_name:nn #1 }
 %</en>
+%<*de>
+\clist_map_inline:nn
+  {
+%<*thesis>
+    { univ             } { Shanghai~ Jiao~ Tong~ Universität } ,
+    { address          } { Shanghai,~ VR~ China              } ,
+    { author           } { Autor/in                          } ,
+    { supervisor       } { Betreuer/in                       } ,
+    { assoc_supervisor } { Zweitbetreuer/in                  } ,
+    { co_supervisor    } { Co-Betreuer/in                    } ,
+    { title_page       } { Titelblatt                        } ,
+    { declaration      } { Eidesstattliche~ Erklärung        } ,
+    { abstract         } { Abstrakt                          } ,
+%</thesis>
+    { keywords         } { Schlüsselwörter                   } ,
+    { info_sep         } { :~                                } ,
+    { item_sep         } { ,~                                }
+  }
+%<thesis>  { \@@_define_name:nnn { de } #1 }
+%<!thesis>  { \@@_define_name:nn #1 }
+%</de>
 %<*ja>
 \clist_map_inline:nn
   {
 %<*thesis>
-    { univ             } { 上海交通大学 } ,
-    { address          } { 中国・上海   } ,
-    { author           } { 著者         } ,
-    { supervisor       } { 指導教員     } ,
-    { assoc_supervisor } { 副指導教員   } ,
-    { co_supervisor    } { 共同指導     } ,
-    { thesis           } { 学位請求論文 } ,
-    { title_page       } { 標題紙       } ,
-    { copyright_page   } { 版権ページ   } ,
-    { abstract         } { 要 \quad 旨  } ,
+    { univ             } { 上海交通大学       } ,
+    { address          } { 中国・上海         } ,
+    { author           } { 氏名               } ,
+    { supervisor       } { 指導教員           } ,
+    { assoc_supervisor } { 副指導教員         } ,
+    { co_supervisor    } { 共同指導           } ,
+    { thesis           } { 学位請求論文       } ,
+    { title_page       } { 標題紙             } ,
+    { declaration      } { 誓約書・公表許諾書 } ,
+    { abstract         } { 要 \quad 旨        } ,
 %</thesis>
-    { keywords         } { キーワード： } ,
-    { info_sep         } { ：           } ,
-    { item_sep         } { \quad        }
+    { keywords         } { キーワード         } ,
+    { info_sep         } { ：                 } ,
+    { item_sep         } { \quad              }
   }
 %<thesis>  { \@@_define_name:nnn { ja } #1 }
 %<!thesis>  { \@@_define_name:nn #1 }
@@ -5157,10 +5299,25 @@
     { solution    } { Solution    } ,
     { theorem     } { Theorem     }
 %</en>
+%<*de>
+    { assumption  } { Annahme     } ,
+    { axiom       } { Axiom       } ,
+    { conjecture  } { Hypothese   } ,
+    { corollary   } { Korollar    } ,
+    { definition  } { Definition  } ,
+    { example     } { Beispiel    } ,
+    { exercise    } { Übung       } ,
+    { lemma       } { Lemma       } ,
+    { problem     } { Problem     } ,
+    { proposition } { Proposition } ,
+    { remark      } { Anmerkung   } ,
+    { solution    } { Lösung      } ,
+    { theorem     } { Theorem     }
+%</de>
 %<*ja>
     { assumption  } { 仮定        } ,
     { axiom       } { 公理        } ,
-    { conjecture  } { 推論        } ,
+    { conjecture  } { 予想        } ,
     { corollary   } { 系          } ,
     { definition  } { 定義        } ,
     { example     } { 例          } ,
@@ -5168,7 +5325,7 @@
     { lemma       } { 補題        } ,
     { problem     } { 問題        } ,
     { proposition } { 命題        } ,
-    { remark      } { 記事        } ,
+    { remark      } { 注意        } ,
     { solution    } { 解法        } ,
     { theorem     } { 定理        }
 %</ja>
