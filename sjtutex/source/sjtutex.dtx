@@ -4623,11 +4623,24 @@
   {
     \cs_if_exist_use:N \bibfont
     \list
-      { \@biblabel { \arabic{ SJTU@bib } } }
       {
-        \@@_dim_set_to_wd:Nn \labelwidth { \@biblabel {#1} }
-        \dim_set_eq:NN \leftmargin \labelwidth
-        \dim_add:Nn    \leftmargin { \labelsep }
+        \tl_if_blank:nTF {#1}
+          { \hfill }
+          { \@biblabel { \arabic{ SJTU@bib } } }
+      }
+      {
+        \tl_if_blank:nTF {#1}
+          {
+            \dim_if_exist:NTF \bibhang
+              { \dim_set_eq:NN \leftmargin \bibhang   }
+              { \dim_set:Nn    \leftmargin { 1.5 em } }
+            \dim_set:Nn    \itemindent { -\leftmargin }
+          }
+          {
+            \@@_dim_set_to_wd:Nn \labelwidth { \@biblabel {#1} }
+            \dim_set_eq:NN \leftmargin \labelwidth
+            \dim_add:Nn    \leftmargin { \labelsep }
+          }
         \dim_if_exist:NTF \bibitemsep
           {
             \dim_set_eq:NN \itemsep \bibitemsep
