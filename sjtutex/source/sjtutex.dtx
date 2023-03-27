@@ -3020,9 +3020,6 @@
 %</zh|ja>
 %</founder>
 %<*!und>
-\NewDocumentCommand \CJKrmfamily { } { \CJKfamily { \CJKrmdefault } }
-\NewDocumentCommand \CJKsffamily { } { \CJKfamily { \CJKsfdefault } }
-\NewDocumentCommand \CJKttfamily { } { \CJKfamily { \CJKttdefault } }
 \NewDocumentCommand \songti   { } { \CJKfamily { zhsong  } }
 \NewDocumentCommand \heiti    { } { \CJKfamily { zhhei   } }
 %<!ubuntu>\NewDocumentCommand \fangsong { } { \CJKfamily { zhfs    } }
@@ -3033,9 +3030,18 @@
 %</font&cjk>
 %    \end{macrocode}
 %
-% 带圈数字使用中文字体。
+% \begin{macro}{\CJKrmfamily,\CJKsffamily,\CJKttfamily}
+% 只改变 CJK 字体族的命令。
 %    \begin{macrocode}
 %<*class>
+\NewDocumentCommand \CJKrmfamily { } { \CJKfamily { \CJKrmdefault } }
+\NewDocumentCommand \CJKsffamily { } { \CJKfamily { \CJKsfdefault } }
+\NewDocumentCommand \CJKttfamily { } { \CJKfamily { \CJKttdefault } }
+%    \end{macrocode}
+% \end{macro}
+%
+% 带圈数字使用中文字体。
+%    \begin{macrocode}
 \@@_unicode_engine_case:nn
   {
     \xeCJK_declare_char_class:nn { CJK }
