@@ -4792,37 +4792,45 @@
   }
 %    \end{macrocode}
 %
-% 兼容 \cls{sjtutheiss} |info| 域旧接口。
+% 兼容 \cls{sjtutheiss} 旧接口。
 %    \begin{macrocode}
 %<*thesis>
 \keys_define:nn { sjtu / info }
   {
-    title             .meta:nn = { sjtu / info / zh } { title            = {#1} } ,
-    title*            .meta:nn = { sjtu / info / en } { title            = {#1} } ,
-    display-title     .meta:nn = { sjtu / info / zh } { display-title    = {#1} } ,
-    display-title*    .meta:nn = { sjtu / info / en } { display-title    = {#1} } ,
-    subject           .meta:nn = { sjtu / info / zh } { subject          = {#1} } ,
-    subject*          .meta:nn = { sjtu / info / en } { subject          = {#1} } ,
-    keywords          .meta:nn = { sjtu / info / zh } { keywords         = {#1} } ,
-    keywords*         .meta:nn = { sjtu / info / en } { keywords         = {#1} } ,
-    author            .meta:nn = { sjtu / info / zh } { author           = {#1} } ,
-    author*           .meta:nn = { sjtu / info / en } { author           = {#1} } ,
-    supervisor        .meta:nn = { sjtu / info / zh } { supervisor       = {#1} } ,
-    supervisor*       .meta:nn = { sjtu / info / en } { supervisor       = {#1} } ,
-    assoc-supervisor  .meta:nn = { sjtu / info / zh } { assoc-supervisor = {#1} } ,
-    assoc-supervisor* .meta:nn = { sjtu / info / en } { assoc-supervisor = {#1} } ,
-    co-supervisor     .meta:nn = { sjtu / info / zh } { co-supervisor    = {#1} } ,
-    co-supervisor*    .meta:nn = { sjtu / info / en } { co-supervisor    = {#1} } ,
-    degree            .meta:nn = { sjtu / info / zh } { degree           = {#1} } ,
-    degree*           .meta:nn = { sjtu / info / en } { degree           = {#1} } ,
-    department        .meta:nn = { sjtu / info / zh } { department       = {#1} } ,
-    department*       .meta:nn = { sjtu / info / en } { department       = {#1} } ,
-    major             .meta:nn = { sjtu / info / zh } { major            = {#1} } ,
-    major*            .meta:nn = { sjtu / info / en } { major            = {#1} } ,
-    fund              .meta:nn = { sjtu / info / zh } { fund             = {#1} } ,
-    fund*             .meta:nn = { sjtu / info / en } { fund             = {#1} } ,
-    display-date      .meta:nn = { sjtu / info / zh } { date             = {#1} } ,
-    display-date*     .meta:nn = { sjtu / info / en } { date             = {#1} }
+    title             .meta:n = { zh / title            = {#1} } ,
+    title*            .meta:n = { en / title            = {#1} } ,
+    display-title     .meta:n = { zh / display-title    = {#1} } ,
+    display-title*    .meta:n = { en / display-title    = {#1} } ,
+    subject           .meta:n = { zh / subject          = {#1} } ,
+    subject*          .meta:n = { en / subject          = {#1} } ,
+    keywords          .meta:n = { zh / keywords         = {#1} } ,
+    keywords*         .meta:n = { en / keywords         = {#1} } ,
+    author            .meta:n = { zh / author           = {#1} } ,
+    author*           .meta:n = { en / author           = {#1} } ,
+    supervisor        .meta:n = { zh / supervisor       = {#1} } ,
+    supervisor*       .meta:n = { en / supervisor       = {#1} } ,
+    assoc-supervisor  .meta:n = { zh / assoc-supervisor = {#1} } ,
+    assoc-supervisor* .meta:n = { en / assoc-supervisor = {#1} } ,
+    co-supervisor     .meta:n = { zh / co-supervisor    = {#1} } ,
+    co-supervisor*    .meta:n = { en / co-supervisor    = {#1} } ,
+    degree            .meta:n = { zh / degree           = {#1} } ,
+    degree*           .meta:n = { en / degree           = {#1} } ,
+    department        .meta:n = { zh / department       = {#1} } ,
+    department*       .meta:n = { en / department       = {#1} } ,
+    major             .meta:n = { zh / major            = {#1} } ,
+    major*            .meta:n = { en / major            = {#1} } ,
+    fund              .meta:n = { zh / fund             = {#1} } ,
+    fund*             .meta:n = { en / fund             = {#1} } ,
+    display-date      .meta:n = { zh / date             = {#1} } ,
+    display-date*     .meta:n = { en / date             = {#1} }
+  }
+\keys_define:nn { sjtu / name }
+  {
+    abbreviation      .meta:n = { abbr  = {#1} } ,
+    nomenclature      .meta:n = { nom   = {#1} } ,
+    acknowledgements  .meta:n = { ack   = {#1} } ,
+    publications      .meta:n = { achv  = {#1} } ,
+    achievements      .meta:n = { achv  = {#1} }
   }
 %</thesis>
 %    \end{macrocode}
