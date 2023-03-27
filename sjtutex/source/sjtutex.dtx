@@ -3626,26 +3626,14 @@
 %
 % \subsection{脚注}
 %
-% \begin{macro}[int]{\@makefntext}
-% 重定义内部脚注文字命令，使脚注编号不使用上标。
-% 见 \url{https://www.zhihu.com/question/53030087}。
+% 储存原始的脚注相关命令。
 %    \begin{macrocode}
-\cs_new_protected:Nn \@@_make_fnmark:
-  { \hbox:n { \@thefnmark } }
-\ctex_at_end_preamble:n {
-  \cs_set_eq:NN \@@_orig_make_fntext:n \@makefntext
-  \cs_set:Npn \@makefntext #1
-    {
-      \group_begin:
-        \cs_set_eq:NN \@makefnmark \@@_make_fnmark:
-        \@@_orig_make_fntext:n {#1}
-      \group_end:
-    }
-}
+\cs_set_eq:NN \@@_makefnmark_plain: \@makefnmark
+\cs_set_eq:NN \@@_thefootnote_plain: \thefootnote
+\cs_set_eq:NN \@@_thempfootnote_plain: \thempfootnote
 %    \end{macrocode}
-% \end{macro}
 %
-% 脚注编号使用带圈数字。
+% 通过 Unicode 码位调用带圈数字。
 %    \begin{macrocode}
 \cs_new:Npn \@@_footnote_number:N #1
   {
@@ -3665,27 +3653,88 @@
   { Too~ many~ footnotes. }
 %    \end{macrocode}
 %
+% 重定义内部脚注文字命令，使用带圈数字编号时，脚注不使用上标。
+% 见 \url{https://www.zhihu.com/question/53030087}。
+%    \begin{macrocode}
+\cs_new:Nn \@@_makefnmark_circled: { \hbox:n { \@thefnmark } }
+%    \end{macrocode}
+%
 % 脚注编号字体。
 %    \begin{macrocode}
 \keys_define:nn { sjtu / style }
   {
-    fnmark-font  .tl_set:N = \l_@@_style_fnmark_font_tl ,
-    fnmark-font .initial:n =
+    fnmark-font           .choice: ,
+    fnmark-font / haranoaji .code:n =
+      {
+        \@@_engine_case:nn
+          { \tl_set_eq:NN \l_@@_style_fnmark_font_tl \c_empty_tl }
+          {
+            \tl_set:Nn \l_@@_style_fnmark_font_tl
+              {
+                \CJKfontspec { HaranoAjiMincho }
+                  [
+                    Extension   = .otf ,
+                    UprightFont = *-Regular ,
+                    BoldFont    = *-Bold
+                  ]
+              }
+          }
+      } ,
+    fnmark-font / unknown .tl_set:N = \l_@@_style_fnmark_font_tl ,
+    fnmark-font          .initial:V = \c_empty_tl
   }
 %    \end{macrocode}
 %
-% 脚注编号。
+% 使用带圈数字编号脚注。
 %    \begin{macrocode}
-\cs_set:Npn \thefootnote
+\cs_new:Nn \@@_thefootnote_circled:
+  { { \l_@@_style_fnmark_font_tl \@@_footnote_number:N \c@footnote } }
+\cs_new:Nn \@@_thempfootnote_circled:
+  { { \l_@@_style_fnmark_font_tl \@@_footnote_number:N \c@mpfootnote } }
+%    \end{macrocode}
+%
+% 脚注编号样式。
+%    \begin{macrocode}
+\keys_define:nn { sjtu / style }
   {
-    \hbox:n { }
-    { \l_@@_style_fnmark_font_tl \@@_footnote_number:N \c@footnote   }
+    fnmark-style           .choice: ,
+    fnmark-style / plain   .code:n =
+      {
+        \cs_set_eq:NN \@@_makefnmark: \@@_makefnmark_plain:
+        \cs_set_eq:NN \thefootnote \@@_thefootnote_plain:
+        \cs_set_eq:NN \thempfootnote \@@_thempfootnote_plain:
+      } ,
+    fnmark-style / circled .code:n =
+      {
+        \cs_set_eq:NN \@@_makefnmark: \@@_makefnmark_circled:
+        \cs_set_eq:NN \thefootnote \@@_thefootnote_circled:
+        \cs_set_eq:NN \thempfootnote \@@_thempfootnote_circled:
+      }
   }
-\cs_set:Npn \thempfootnote
-  {
-    \hbox:n { }
-    { \l_@@_style_fnmark_font_tl \@@_footnote_number:N \c@mpfootnote }
-  }
+%</class>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*scheme>
+\keys_set:nn { sjtu / style }
+%<zh|ja>  { fnmark-style = circled }
+%<en|de>  { fnmark-style = plain   }
+%</scheme>
+%    \end{macrocode}
+%
+% 在导言末尾修改 \cs{@makefntext}，支持使用 \pkg{footmisc} 修改脚注格式。
+%    \begin{macrocode}
+%<*class>
+\ctex_at_end_preamble:n {
+  \cs_set_eq:NN \@@_orig_make_fntext:n \@makefntext
+  \cs_set:Npn \@makefntext #1
+    {
+      \group_begin:
+        \cs_set_eq:NN \@makefnmark \@@_makefnmark:
+        \@@_orig_make_fntext:n {#1}
+      \group_end:
+    }
+}
 %    \end{macrocode}
 %
 % \subsection{信息录入}
