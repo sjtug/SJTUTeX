@@ -1937,7 +1937,7 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_unicode_char:n}
+% \begin{macro}[int]{\@@_unicode_char:n}
 %    \begin{macrocode}
 \@@_engine_case:nn
   {
@@ -1952,7 +1952,7 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_preto_cmd:Nn,\@@_appto_cmd:Nn}
+% \begin{macro}[int]{\@@_preto_cmd:Nn,\@@_appto_cmd:Nn}
 % 补丁工具，来自 \pkg{ctexpatch} 宏包，在宏的原本定义前后增加钩子。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_preto_cmd:Nn #1#2
@@ -2007,7 +2007,8 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_vspace:N,\@@_vspace:n,\@@_vspace_r:N,\@@_vspace_r:n}
+% \begin{macro}[int]{\@@_vspace:N,\@@_vspace:n,
+% \@@_vspace_r:N,\@@_vspace_r:n}
 % 类似 \LaTeXe{} 中的 \tn{vspace} 和 \tn{vspace*}。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_vspace:N #1
@@ -2037,7 +2038,7 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_define_name:nn,\@@_define_name:nv,\@@_define_name:nnn,
+% \begin{macro}[int]{\@@_define_name:nn,\@@_define_name:nv,\@@_define_name:nnn,
 % \@@_define_name_from_clist:nnnn}
 % 定义默认名称的辅助函数。
 %    \begin{macrocode}
@@ -2051,7 +2052,7 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_define_symbol:nn}
+% \begin{macro}[int]{\@@_define_symbol:nn}
 % 定义符号的辅助函数。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_define_symbol:nn #1#2
@@ -2059,7 +2060,7 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_if_lang_valid:nTF}
+% \begin{macro}[int]{\@@_if_lang_valid:nTF}
 % 验证语言选项的函数。
 %    \begin{macrocode}
 %<*thesis>
@@ -3467,7 +3468,7 @@
 \ctex_set:n { secnumdepth = 3 }
 %    \end{macrocode}
 %
-% \begin{macro}{\SJTU@head,\@@_pdf_bookmark:nn,\@@_phantom_section:}
+% \begin{macro}[int]{\SJTU@head,\@@_pdf_bookmark:nn,\@@_phantom_section:}
 % 定义一个灵活的章节标题命令专门处理不同的需求。
 %    \begin{macrocode}
 \NewDocumentCommand \SJTU@head { s O{#3} m O{#2} }
@@ -3514,7 +3515,7 @@
 %<ja>  { \ctex_set:n { autoindent = 1 } }
 %    \end{macrocode}
 %
-% \begin{macro}[int]{\verse,\quotation}
+% \begin{macro}{\verse,\quotation}
 % 修改诗歌和引用环境的缩进。
 %    \begin{macrocode}
 %<zh|ja>\ctex_patch_cmd:Nnn \verse { -1.5em } { -2 \ccwd }
@@ -3599,7 +3600,7 @@
   }
 %    \end{macrocode}
 %
-% \begin{macro}{\SJTU@counterwithin}
+% \begin{macro}[int]{\SJTU@counterwithin}
 %    \begin{macrocode}
 \NewDocumentCommand \SJTU@counterwithin
   { s O{ \l_@@_style_fl_num_sep_tl } O{ \arabic } m m }
@@ -4131,7 +4132,7 @@
 %
 % \subsubsection{定义内部函数}
 %
-% \begin{macro}{\@@_cjk_spread_box:nn}
+% \begin{macro}[int]{\@@_cjk_spread_box:nn}
 % 汉字分散对齐的水平盒子。
 %    \begin{macrocode}
 %<*thesis>
@@ -4180,7 +4181,7 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_left_aligned_box:nn}
+% \begin{macro}[int]{\@@_left_aligned_box:nn}
 % 左对齐的水平盒子。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_left_aligned_box:nn #1#2
@@ -4613,11 +4614,8 @@
 %
 % \subsection{目录}
 %
-% \begin{macro}{\tableofcontents}
-% \begin{macro}{\listoffigures}
-% \begin{macro}{\listoffigures*}
-% \begin{macro}{\listoftables}
-% \begin{macro}{\listoftables*}
+% \begin{macro}{\tableofcontents,\listoffigures,\listoffigures*,
+% \listoftables,\listoftables*}
 % 目录以及图表索引。
 %    \begin{macrocode}
 \DeclareDocumentCommand \tableofcontents { }
@@ -4637,10 +4635,6 @@
 \DeclareDocumentCommand \listoftables  { }
   { \SJTU@listof { \listtablename  } { table  } }
 %    \end{macrocode}
-% \end{macro}
-% \end{macro}
-% \end{macro}
-% \end{macro}
 % \end{macro}
 %
 %    \begin{macrocode}
