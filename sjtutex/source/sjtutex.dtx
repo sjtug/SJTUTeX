@@ -577,7 +577,7 @@
 % 略有不同，这里给出这三种文档类的最小使用示例。
 %
 % 下面这份 \TeX{} 文档展示了 \cls{sjtuthesis} 文档类的基本用法，一般需要指定中英文名称。
-% 该文档将包含中英文封面，页眉左上角显示“上海交通大学硕士学位论文”，右上角显示章节名称。
+% 该文档将包含中英文封面，页眉为文档主题及章节名称。
 % \begin{latex}
 % \documentclass[type=master]{sjtuthesis}
 % \sjtusetup{
@@ -599,7 +599,7 @@
 % \end{latex}
 %
 % 下面这份 \TeX{} 文档展示了 \cls{sjtureport} 文档类的基本用法，建议使用标准命令定义中文名称。
-% 该文档将包含默认封面，页眉左上角为校徽校名，右上角为章节名称。
+% 该文档将包含标题页，页眉为校标图片、文档主题及章节名称。
 % \begin{latex}
 % \documentclass{sjtureport}
 % \title{上海交通大学 \LaTeX{} 报告模板示例文档}
@@ -615,7 +615,7 @@
 % \end{latex}
 %
 % 下面这份 \TeX{} 文档展示了 \cls{sjtuarticle} 文档类的基本用法，建议使用标准命令定义中文名称，
-% 不能够使用 \cs{chapter} 这一级。该文档包含标题栏，页眉左上角为校徽校名，右上角为文档标题。
+% 不能够使用 \cs{chapter} 这一级。该文档包含标题栏，页眉为校标图片、文档主题及章节名称。
 % \begin{latex}
 % \documentclass{sjtuarticle}
 % \title{示例文档}
@@ -735,15 +735,15 @@
 %   \begin{sjtusyntax}[emph={[1]cjk-font}]
 %     cjk-font = (*<(auto)|(fandol)|windows|mac|ubuntu|adobe|founder|none>*)
 %   \end{sjtusyntax}
-%   指定中文字体集。\sjtutex{} 预定义了一些中文字体组合，
+%   指定东亚字体集。\sjtutex{} 预定义了一些东亚字体组合，
 %   默认跟随操作系统设定：
 %   Windows 系统默认使用 \opt{windows}，
 %   macOS 系统默认使用 \opt{mac}，
 %   Linux 系统默认使用 \opt{fandol}。
-%   找不到对应定义的中文字体集时的回退选项为 \opt{fandol}。
+%   找不到对应定义的东亚字体集时的回退选项为 \opt{fandol}。
 %
 %   \textbf{仅} |windows| 和 |founder| 字体集支持 \pdfLaTeX{} 直接生成 PDF。
-%   其他中文字体集使用 \pdfTeX{} 引擎需要先通过 \LaTeX{} 生成 DVI，
+%   其他东亚字体集使用 \pdfTeX{} 引擎需要先通过 \LaTeX{} 生成 DVI，
 %   然后再使用 DVIPDFM\textit{x} 转换为 PDF。
 %
 %   \note{发行版中自带的 \opt{fandol} 中文字库容易出现缺字的情况。
@@ -751,7 +751,7 @@
 %     \href{https://github.com/sjtug/SJTUThesis/wiki/在线使用说明}
 %     {Wiki 页面《在线使用说明》}。}
 %
-%   \note{日语模板不支持 \pdfTeX{} 引擎，请使用 \XeLaTeX{} 或
+%   \note{日文模板不支持 \pdfTeX{} 引擎，请使用 \XeLaTeX{} 或
 %     \LuaLaTeX{} 编译。}
 % \end{function}
 %
@@ -1028,7 +1028,6 @@
 %     \subject(*\marg{主题}*)
 %   \end{sjtusyntax}
 %   文档主题。覆盖 \opt{info/subject} 键的值。
-%^^A 该信息暂不显示。
 % \end{function}
 %
 % \begin{function}[EXP,added=2023-03-14]{\keywords}
@@ -1083,6 +1082,11 @@
 %   \opt{circled} 表示使用带圈数字编号。
 %   在 \opt{zh} 和 \opt{ja} 语言设置中，默认为 \opt{circled}；
 %   在 \opt{en} 和 \opt{de} 语言设置中，默认为 \opt{plain}。
+%
+%   使用带圈数字编号时，由于超过 50 的带圈数字没有对应的 Unicode 码位，
+%   所以每页脚注最好不要超过 50 个。
+%   带圈数字默认使用东亚字体。通常情况下默认字体不一定包含所有带圈数字的字符，
+%   此时可以设置 \opt{fnmark-font} 选项给带圈数字设置合适的字体。
 % \end{function}
 %
 % \begin{function}[added=2022-12-03,updated=2023-03-28]{style/fnmark-font}
@@ -1287,7 +1291,6 @@
 %   \listoftables,\listoftables*,\listofalgorithms,\listofalgorithms*}
 %   插图、表格和算法等索引命令如表 \ref{tab:list} 所示，将其插入到期望的
 %   位置即可。带*的命令表示对应的索引表不会出现在目录中。
-%^^A 似乎不再使用插图、表格和算法索引。
 % \end{function}
 %
 % \begin{table}[ht]
@@ -1329,10 +1332,6 @@
 %     \footnote(*\oarg{脚注编号}*)(*\marg{脚注文字}*)
 %   \end{sjtusyntax}
 %   插入脚注。其中脚注编号参数是可选的，一般不需要输入。
-%   编号采用中文字体的带圈数字，只支持 1 到 50 号，请保证每页脚注不超过 50 个，超过 50 号
-%   脚注会给出脚注过多的警告。
-%   在一些字体配置下，脚注编号不能超过 10 号或 20 号，否则字体集可能不包含该字符，而无法正
-%   常显示。
 % \end{function}
 %
 % \begin{function}{assumption,axiom,conjecture,corollary,definition,example,
@@ -1367,7 +1366,6 @@
 %     \chapter{...}
 %   \end{sjtusyntax}
 %   附录由 \cs{appendix} 命令开启，然后像正文一样书写。
-%^^A 标准新模板将附录编号置于章节标题之后。
 % \end{function}
 %
 % \begin{function}[rEXP,updated=2022-03-02]{nomenclature,nomenclature*}
@@ -1454,8 +1452,6 @@
 %     \end{digest}
 %   \end{sjtusyntax}
 %   学士论文大摘要，使用可选参数设定语言，默认为 \opt{en}。
-%^^A 论文类型为学士论文的条件下有效。
-%^^A 尚无条件限制。
 % \end{function}
 %
 % \end{documentation}
@@ -2307,7 +2303,7 @@
   { \tl_gset_eq:NN \g_@@_math_font_tl \g_@@_text_font_tl }
 %    \end{macrocode}
 %
-% 根据操作系统判断默认中文字体配置。
+% 根据操作系统判断默认东亚字体配置。
 %    \begin{macrocode}
 \tl_if_empty:NT \g_@@_cjk_font_tl
   {
@@ -3118,7 +3114,7 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% 带圈数字使用中文字体。
+% 带圈数字使用东亚字体。
 %    \begin{macrocode}
 \@@_unicode_engine_case:nn
   {
@@ -3370,20 +3366,19 @@
 %    \begin{macrocode}
 \tl_set:Nn \l_@@_header_tl
   {
+%<*thesis>
+    {
+      \@@_set_cjk_default_zh: \normalfont
+      \l_@@_info_subject_zh_tl
+    }
+%</thesis>
 %<*!thesis>
     \includegraphics [ height = 1.2 cm ]
       { sjtu-vi-logo- \l_@@_style_header_logo_color_tl .pdf }
 %</!thesis>
-%<*thesis>
-    {
-      \@@_set_cjk_default_zh: \normalfont
-      \l_@@_style_header_font_tl
-      \l_@@_info_subject_zh_tl
-    }
-%</thesis>
   }
-%<!article>\tl_set:Nn \l_@@_leftmark_tl  { \leftmark }
-%<article>\tl_set:Nn \l_@@_leftmark_tl  { \l_@@_info_subject_tl }
+%<thesis>\tl_set:Nn \l_@@_leftmark_tl  { \leftmark }
+%<!thesis>\tl_set:Nn \l_@@_leftmark_tl  { \l_@@_info_subject_tl }
 \tl_set:Nn \l_@@_rightmark_tl { \leftmark }
 %    \end{macrocode}
 %
