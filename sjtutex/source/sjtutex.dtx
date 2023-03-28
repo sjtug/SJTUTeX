@@ -1010,12 +1010,25 @@
 %   默认为 |\zihao{5}\normalfont|，正常字重五号字。
 % \end{function}
 %
-% \begin{function}[added=2022-12-03]{style/fnmark-font}
+% \begin{function}[added=2023-03-28]{style/fnmark-style}
+%   \begin{sjtusyntax}[emph={[2]fnmark-style}]
+%     fnmark-style = (*<plain|circled>*)
+%   \end{sjtusyntax}
+%   脚注数字编号样式。
+%   \opt{plain} 表示使用普通数字编号；
+%   \opt{circled} 表示使用带圈数字编号。
+%   在 \opt{zh} 和 \opt{ja} 语言设置中，默认为 \opt{circled}；
+%   在 \opt{en} 和 \opt{de} 语言设置中，默认为 \opt{plain}。
+% \end{function}
+%
+% \begin{function}[added=2022-12-03,updated=2023-03-28]{style/fnmark-font}
 %   \begin{sjtusyntax}[emph={[2]fnmark-font}]
-%     fnmark-font = (*\marg{字体设置}*)
+%     fnmark-font = (*<haranoaji|\marg{字体设置}>*)
 %   \end{sjtusyntax}
 %   脚注编号的额外字体设置。
 %   默认为空。
+%   可以使用预设 \opt{haranoaji}，支持在 Unicode 引擎中使用 HaranoAjiMincho 字体
+%   中的带圈数字。
 % \end{function}
 %
 % \begin{function}[updated=2022-12-23]{style/float-num-sep}
