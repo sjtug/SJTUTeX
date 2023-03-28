@@ -17,7 +17,7 @@ jobs:
       - uses: xu-cheng/texlive-action/full@v1
         with:
           run: |
-            sudo apt install --yes --qq fonts-noto-cjk
+            apk add fonts-noto-cjk
             cd sjtutex && l3build ctan
         name: build package with l3build
       - name: prepare upload artifacts
