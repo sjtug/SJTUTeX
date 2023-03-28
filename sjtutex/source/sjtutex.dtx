@@ -135,7 +135,69 @@
 \Msg{*     sjtuthesis.cls                                        *}
 \Msg{*     sjtureport.cls                                        *}
 \Msg{*     sjtuarticle.cls                                       *}
-\Msg{*     ...                                                   *}
+\Msg{*     sjtu-lang-generic-de.def                              *}
+\Msg{*     sjtu-lang-generic-en.def                              *}
+\Msg{*     sjtu-lang-generic-ja.def                              *}
+\Msg{*     sjtu-lang-generic-zh.def                              *}
+\Msg{*     sjtu-lang-thesis-de.def                               *}
+\Msg{*     sjtu-lang-thesis-en.def                               *}
+\Msg{*     sjtu-lang-thesis-ja.def                               *}
+\Msg{*     sjtu-lang-thesis-zh.def                               *}
+\Msg{*     sjtu-name-generic-de.def                              *}
+\Msg{*     sjtu-name-generic-en.def                              *}
+\Msg{*     sjtu-name-generic-ja.def                              *}
+\Msg{*     sjtu-name-generic-zh.def                              *}
+\Msg{*     sjtu-name-thesis-de.def                               *}
+\Msg{*     sjtu-name-thesis-en.def                               *}
+\Msg{*     sjtu-name-thesis-ja.def                               *}
+\Msg{*     sjtu-name-thesis-zh.def                               *}
+\Msg{*     sjtu-scheme-de.def                                    *}
+\Msg{*     sjtu-scheme-en.def                                    *}
+\Msg{*     sjtu-scheme-ja.def                                    *}
+\Msg{*     sjtu-scheme-zh.def                                    *}
+\Msg{*     sjtu-text-font-cambria.def                            *}
+\Msg{*     sjtu-text-font-lm.def                                 *}
+\Msg{*     sjtu-text-font-newcm.def                              *}
+\Msg{*     sjtu-text-font-newpx.def                              *}
+\Msg{*     sjtu-text-font-newtx.def                              *}
+\Msg{*     sjtu-text-font-stixtwo.def                            *}
+\Msg{*     sjtu-text-font-times.def                              *}
+\Msg{*     sjtu-text-font-xits.def                               *}
+\Msg{*     sjtu-math-font-cambria.def                            *}
+\Msg{*     sjtu-math-font-lm.def                                 *}
+\Msg{*     sjtu-math-font-newcm.def                              *}
+\Msg{*     sjtu-math-font-newpx.def                              *}
+\Msg{*     sjtu-math-font-newtx.def                              *}
+\Msg{*     sjtu-math-font-stixtwo.def                            *}
+\Msg{*     sjtu-math-font-times.def                              *}
+\Msg{*     sjtu-math-font-xits.def                               *}
+\Msg{*     sjtu-cjk-font-adobe-ja.def                            *}
+\Msg{*     sjtu-cjk-font-adobe-zh.def                            *}
+\Msg{*     sjtu-cjk-font-adobe.def                               *}
+\Msg{*     sjtu-cjk-font-fandol-ja.def                           *}
+\Msg{*     sjtu-cjk-font-fandol-zh.def                           *}
+\Msg{*     sjtu-cjk-font-fandol.def                              *}
+\Msg{*     sjtu-cjk-font-founder-ja.def                          *}
+\Msg{*     sjtu-cjk-font-founder-zh.def                          *}
+\Msg{*     sjtu-cjk-font-founder.def                             *}
+\Msg{*     sjtu-cjk-font-mac-ja.def                              *}
+\Msg{*     sjtu-cjk-font-mac-zh.def                              *}
+\Msg{*     sjtu-cjk-font-mac.def                                 *}
+\Msg{*     sjtu-cjk-font-ubuntu-ja.def                           *}
+\Msg{*     sjtu-cjk-font-ubuntu-zh.def                           *}
+\Msg{*     sjtu-cjk-font-ubuntu.def                              *}
+\Msg{*     sjtu-cjk-font-windows-ja.def                          *}
+\Msg{*     sjtu-cjk-font-windows-zh.def                          *}
+\Msg{*     sjtu-cjk-font-windows.def                             *}
+\Msg{*     sjtu-vi-badge-black.pdf                               *}
+\Msg{*     sjtu-vi-badge-blue.pdf                                *}
+\Msg{*     sjtu-vi-badge-red.pdf                                 *}
+\Msg{*     sjtu-vi-logo-black.pdf                                *}
+\Msg{*     sjtu-vi-logo-blue.pdf                                 *}
+\Msg{*     sjtu-vi-logo-red.pdf                                  *}
+\Msg{*     sjtu-vi-name-black.pdf                                *}
+\Msg{*     sjtu-vi-name-blue.pdf                                 *}
+\Msg{*     sjtu-vi-name-red.pdf                                  *}
 \Msg{*                                                           *}
 \Msg{* To produce the documentation, run the file sjtutex.dtx    *}
 \Msg{* through XeLaTeX.                                          *}
@@ -486,16 +548,17 @@
 %     文档类        & \file{sjtuthesis.cls}       & 学位论文文档类 \\
 %                   & \file{sjtureport.cls}       & 报告文档类     \\
 %                   & \file{sjtuarticle.cls}      & 文稿文档类     \\
-%                   & \file{sjtu-name-*.def}      & 文档类名称配置  \\
-%                   & \file{sjtu-scheme-*.def}    & 文档类语言配置  \\
+%                   & \file{sjtu-name-*.def}      & 文档类名称配置 \\
+%                   & \file{sjtu-lang-*.def}      & 文档类语言配置 \\
+%                   & \file{sjtu-scheme-*.def}    & 文档类语言方案 \\
+%     \midrule
+%     字体配置文件  & \file{sjtu-text-font-*.def} & 西文字体配置   \\
+%                   & \file{sjtu-math-font-*.def} & 数学字体配置   \\
+%                   & \file{sjtu-cjk-font-*.def}  & 东亚字体配置   \\
 %     \midrule
 %     视觉形象系统  & \file{sjtu-vi-logo-*.pdf}   & 校标图片       \\
 %                   & \file{sjtu-vi-badge-*.pdf}  & 校徽图片       \\
 %                   & \file{sjtu-vi-name-*.pdf}   & 校名图片       \\
-%     \midrule
-%     字体配置文件  & \file{sjtu-cjk-font-*.def}  & 中文字体配置   \\
-%                   & \file{sjtu-math-font-*.def} &  数学字体配置  \\
-%                   & \file{sjtu-text-font-*.def} &  正文字体配置  \\
 %
 %     \bottomrule
 %   \end{tabular}
