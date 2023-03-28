@@ -448,6 +448,9 @@
 %</driver>
 % \fi
 %
+% \changes{v2.0}{2021/09/10}{应用 \LaTeXiii{} 重构代码。}
+% \changes{v2.0}{2022/12/27}{新增文档类 \cls{sjtuarticle} 和 \cls{sjtureport}。}
+%
 % \GetFileInfo{\jobname.dtx}
 %
 % \title{\sjtutex{}: 上海交通大学文档类集}
@@ -656,6 +659,8 @@
 %   论文类型。三种选项分别代表学士学位论文、硕士学位论文、博士学位论文。
 % \end{function}
 %
+% \changes{v2.0}{2023/03/19}{语言选项新增 \opt{ja}，添加日文模板。}
+% \changes{v2.0}{2023/03/23}{语言选项新增 \opt{de}，添加德文模板。}
 % \begin{function}[updated=2023-03-18]{lang}
 %   \begin{sjtusyntax}[emph={[1]lang}]
 %     lang = (*<(zh)|en|de|ja>*)
@@ -4713,6 +4718,7 @@
   { \@@_update_cft_presnum: }
 %    \end{macrocode}
 %
+% \changes{v2.0}{2023/03/17}{移除 \env{summary} 环境。}
 % \subsection{预定义环境}
 %
 % 缩略语对照表。
