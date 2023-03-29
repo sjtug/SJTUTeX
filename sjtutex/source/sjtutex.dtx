@@ -340,6 +340,7 @@
 \newcommand{\sjtutex}{SJTU\TeX}
 \usepackage{graphicx}
 \usepackage{multirow}
+\usepackage{longtable}
 \usepackage{listings}
 \hypersetup{
   allcolors         = blue,
@@ -1185,40 +1186,48 @@
 %   name/abbr,name/nom,name/ack,name/resume,name/digest,name/achv}
 % \end{function}
 %
-% \begin{table}[hbt]
-%   \vspace{-47ex}
-%   \centering
-%   \caption{\opt{name} 选项的默认设置}
-%   \label{tab:names}
-%   \small \tabcolsep=3pt
-%   \begin{tabular}{l|p{8em}|p{9em}|p{11em}|p{8em}}
-%     \toprule
-%     \strong{选项}         & \strong{|lang = zh|}   & \strong{|lang = en|}          & \strong{|lang = de|}   & \strong{|lang = ja|} \\
-%     \midrule
-%      |contents|           & 目录                   & Contents                      & Inhaltsverzeichnis     & 目次                 \\
-%      |listfigure|         & 插图                   & List of Figures               & Abbildungsverzeichnis  & 図目次               \\
-%      |listtable|          & 表格                   & List of Tables                & Tabellenverzeichnis    & 表目次               \\
-%      |figure|             & 图                     & Figure                        & Abbildung              & 図                   \\
-%      |table|              & 表                     & Table                         & Tabelle                & 表                   \\
-%      |abstract| \rexpstar & 摘要                   & Abstract                      & Zusammenfassung        & 概要                 \\
-%      |index|              & 索引                   & Index                         & Index                  & 索引                 \\
-%      |appendix|           & 附录                   & Appendix                      & Anhang                 & 付録                 \\
-%      |proof|              & 证明                   & Proof                         & Beweis                 & 证明                 \\
-%      |bib|                & 参考文献               & Bibliography                  & Literaturverzeichnis   & 参考文献             \\
-%    \midrule
-%      |figure*|            & Figure                 & 图                            & Figure                 & Figure               \\
-%      |table*|             & Table                  & 表                            & Table                  & Table                \\
-%      |algorithm|          & 算法                   & Algorithm                     & Algorithmus            & アルゴリズム         \\
-%      |listalgorithm|      & 算法                   & List of Algorithms            & Algorithmenverzeichnis & アルゴリズム目次     \\
-%      |abbr| \rexpstar     & 缩略语对照表           & Abbreviation                  & Abkürzungsverzeichnis  & 略語表               \\
-%      |nom| \rexpstar      & 主要符号对照表         & Nomenclature                  & Symbolverzeichnis      & 記号表               \\
-%      |ack| \rexpstar      & 致谢                   & Acknowledgements              & Danksagungen           & 謝辞                 \\
-%      |resume| \rexpstar   & 个人简历               & Resume                        & Lebenslauf             & 履歴書               \\
-%      |digest| \rexpstar   & 大摘要                 & Digest                        & Kurzfassung            & 要訳                 \\
-%      |achv| \rexpstar     & 学术论文和科研成果目录 & List of Research Achievements & Forschungsleistungen   & 研究業績書           \\
+% \begingroup
+% \vspace{-48ex}
+% \small \tabcolsep=3pt
+% \begin{longtable}{l|p{7em}|p{9em}|p{11em}|p{8em}}
+%   \caption{\opt{name} 选项的默认设置} \label{tab:names} \\
+%   \toprule
+%     \strong{选项}        & \strong{|lang = zh|}   & \strong{|lang = en|}          & \strong{|lang = de|}   & \strong{|lang = ja|} \\
+%   \midrule
+%   \endfirsthead
+%     \multicolumn{5}{r}{续表~\thetable} \\
+%   \toprule
+%     \strong{选项}        & \strong{|lang = zh|}   & \strong{|lang = en|}          & \strong{|lang = de|}   & \strong{|lang = ja|} \\
+%   \midrule
+%   \endhead
 %     \bottomrule
-%   \end{tabular}
-% \end{table}
+%     \multicolumn{5}{r}{续下页}
+%   \endfoot
+%     \bottomrule
+%   \endlastfoot
+%     |contents|           & 目录                   & Contents                      & Inhaltsverzeichnis     & 目次                 \\
+%     |listfigure|         & 插图                   & List of Figures               & Abbildungsverzeichnis  & 図目次               \\
+%     |listtable|          & 表格                   & List of Tables                & Tabellenverzeichnis    & 表目次               \\
+%     |figure|             & 图                     & Figure                        & Abbildung              & 図                   \\
+%     |table|              & 表                     & Table                         & Tabelle                & 表                   \\
+%     |abstract| \rexpstar & 摘要                   & Abstract                      & Zusammenfassung        & 概要                 \\
+%     |index|              & 索引                   & Index                         & Index                  & 索引                 \\
+%     |appendix|           & 附录                   & Appendix                      & Anhang                 & 付録                 \\
+%     |proof|              & 证明                   & Proof                         & Beweis                 & 证明                 \\
+%     |bib|                & 参考文献               & Bibliography                  & Literaturverzeichnis   & 参考文献             \\
+%   \midrule
+%     |figure*|            & Figure                 & 图                            & Figure                 & Figure               \\
+%     |table*|             & Table                  & 表                            & Table                  & Table                \\
+%     |algorithm|          & 算法                   & Algorithm                     & Algorithmus            & アルゴリズム         \\
+%     |listalgorithm|      & 算法                   & List of Algorithms            & Algorithmenverzeichnis & アルゴリズム目次     \\
+%     |abbr| \rexpstar     & 缩略语对照表           & Abbreviation                  & Abkürzungsverzeichnis  & 略語表               \\
+%     |nom| \rexpstar      & 主要符号对照表         & Nomenclature                  & Symbolverzeichnis      & 記号表               \\
+%     |ack| \rexpstar      & 致谢                   & Acknowledgements              & Danksagungen           & 謝辞                 \\
+%     |resume| \rexpstar   & 个人简历               & Resume                        & Lebenslauf             & 履歴書               \\
+%     |digest| \rexpstar   & 大摘要                 & Digest                        & Kurzfassung            & 要訳                 \\
+%     |achv| \rexpstar     & 学术论文和科研成果目录 & List of Research Achievements & Forschungsleistungen   & 研究業績書           \\
+% \end{longtable}
+% \endgroup
 %
 % \section{内容编写}
 %
@@ -1302,6 +1311,7 @@
 % \end{function}
 %
 % \begin{table}[ht]
+% \vspace*{-8ex}
 % \centering\small
 % \begin{threeparttable}
 %   \caption{目录和索引表}
