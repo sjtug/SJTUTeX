@@ -119,7 +119,7 @@
 %</install>
 %<*internal>
   \usedir{source/latex/sjtutex}
-    \file{\jobname.ins}              {\from{\jobname.dtx}{install}}
+    \file{\jobname.ins}                 {\from{\jobname.dtx}{install}}
 %</internal>
 %<*install>
 }
@@ -135,7 +135,69 @@
 \Msg{*     sjtuthesis.cls                                        *}
 \Msg{*     sjtureport.cls                                        *}
 \Msg{*     sjtuarticle.cls                                       *}
-\Msg{*     ...                                                   *}
+\Msg{*     sjtu-lang-generic-de.def                              *}
+\Msg{*     sjtu-lang-generic-en.def                              *}
+\Msg{*     sjtu-lang-generic-ja.def                              *}
+\Msg{*     sjtu-lang-generic-zh.def                              *}
+\Msg{*     sjtu-lang-thesis-de.def                               *}
+\Msg{*     sjtu-lang-thesis-en.def                               *}
+\Msg{*     sjtu-lang-thesis-ja.def                               *}
+\Msg{*     sjtu-lang-thesis-zh.def                               *}
+\Msg{*     sjtu-name-generic-de.def                              *}
+\Msg{*     sjtu-name-generic-en.def                              *}
+\Msg{*     sjtu-name-generic-ja.def                              *}
+\Msg{*     sjtu-name-generic-zh.def                              *}
+\Msg{*     sjtu-name-thesis-de.def                               *}
+\Msg{*     sjtu-name-thesis-en.def                               *}
+\Msg{*     sjtu-name-thesis-ja.def                               *}
+\Msg{*     sjtu-name-thesis-zh.def                               *}
+\Msg{*     sjtu-scheme-de.def                                    *}
+\Msg{*     sjtu-scheme-en.def                                    *}
+\Msg{*     sjtu-scheme-ja.def                                    *}
+\Msg{*     sjtu-scheme-zh.def                                    *}
+\Msg{*     sjtu-text-font-cambria.def                            *}
+\Msg{*     sjtu-text-font-lm.def                                 *}
+\Msg{*     sjtu-text-font-newcm.def                              *}
+\Msg{*     sjtu-text-font-newpx.def                              *}
+\Msg{*     sjtu-text-font-newtx.def                              *}
+\Msg{*     sjtu-text-font-stixtwo.def                            *}
+\Msg{*     sjtu-text-font-times.def                              *}
+\Msg{*     sjtu-text-font-xits.def                               *}
+\Msg{*     sjtu-math-font-cambria.def                            *}
+\Msg{*     sjtu-math-font-lm.def                                 *}
+\Msg{*     sjtu-math-font-newcm.def                              *}
+\Msg{*     sjtu-math-font-newpx.def                              *}
+\Msg{*     sjtu-math-font-newtx.def                              *}
+\Msg{*     sjtu-math-font-stixtwo.def                            *}
+\Msg{*     sjtu-math-font-times.def                              *}
+\Msg{*     sjtu-math-font-xits.def                               *}
+\Msg{*     sjtu-cjk-font-adobe-ja.def                            *}
+\Msg{*     sjtu-cjk-font-adobe-zh.def                            *}
+\Msg{*     sjtu-cjk-font-adobe.def                               *}
+\Msg{*     sjtu-cjk-font-fandol-ja.def                           *}
+\Msg{*     sjtu-cjk-font-fandol-zh.def                           *}
+\Msg{*     sjtu-cjk-font-fandol.def                              *}
+\Msg{*     sjtu-cjk-font-founder-ja.def                          *}
+\Msg{*     sjtu-cjk-font-founder-zh.def                          *}
+\Msg{*     sjtu-cjk-font-founder.def                             *}
+\Msg{*     sjtu-cjk-font-mac-ja.def                              *}
+\Msg{*     sjtu-cjk-font-mac-zh.def                              *}
+\Msg{*     sjtu-cjk-font-mac.def                                 *}
+\Msg{*     sjtu-cjk-font-ubuntu-ja.def                           *}
+\Msg{*     sjtu-cjk-font-ubuntu-zh.def                           *}
+\Msg{*     sjtu-cjk-font-ubuntu.def                              *}
+\Msg{*     sjtu-cjk-font-windows-ja.def                          *}
+\Msg{*     sjtu-cjk-font-windows-zh.def                          *}
+\Msg{*     sjtu-cjk-font-windows.def                             *}
+\Msg{*     sjtu-vi-badge-black.pdf                               *}
+\Msg{*     sjtu-vi-badge-blue.pdf                                *}
+\Msg{*     sjtu-vi-badge-red.pdf                                 *}
+\Msg{*     sjtu-vi-logo-black.pdf                                *}
+\Msg{*     sjtu-vi-logo-blue.pdf                                 *}
+\Msg{*     sjtu-vi-logo-red.pdf                                  *}
+\Msg{*     sjtu-vi-name-black.pdf                                *}
+\Msg{*     sjtu-vi-name-blue.pdf                                 *}
+\Msg{*     sjtu-vi-name-red.pdf                                  *}
 \Msg{*                                                           *}
 \Msg{* To produce the documentation, run the file sjtutex.dtx    *}
 \Msg{* through XeLaTeX.                                          *}
@@ -154,7 +216,7 @@
 %<class>\NeedsTeXFormat{LaTeX2e}
 %<class>\RequirePackage{expl3}
 %<*!(driver|install)>
-%<+!driver>\GetIdInfo $Id: sjtutex.dtx 2.0-beta 2023-01-06 17:30:00Z Alexara Wu <alexarawu@outlook.com> $
+%<+!driver>\GetIdInfo $Id: sjtutex.dtx 2.0 2023-03-29 23:00:00Z Alexara Wu <alexarawu@outlook.com> $
 %<class&thesis>  {Thesis template for Shanghai Jiao Tong University}
 %<class&thesis>\ProvidesExplClass{sjtuthesis}
 %<class&report>  {Report template for Shanghai Jiao Tong University}
@@ -273,10 +335,12 @@
 %</!(driver|install)>
 %
 %<*driver>
+\PassOptionsToPackage{fontset=ubuntu}{ctex}
 \documentclass{ctxdoc}
 \newcommand{\sjtutex}{SJTU\TeX}
 \usepackage{graphicx}
 \usepackage{multirow}
+\usepackage{longtable}
 \usepackage{listings}
 \hypersetup{
   allcolors         = blue,
@@ -385,11 +449,14 @@
 %</driver>
 % \fi
 %
+% \changes{v2.0}{2021/09/10}{应用 \LaTeXiii{} 重构代码。}
+% \changes{v2.0}{2022/12/27}{新增文档类 \cls{sjtuarticle} 和 \cls{sjtureport}。}
+%
 % \GetFileInfo{\jobname.dtx}
 %
 % \title{\sjtutex{}: 上海交通大学文档类集}
 % \author{SJTUG}
-% \date{2023/1/6\quad v2.0-beta}
+% \date{2023/3/29\quad v2.0}
 %
 % \maketitle
 %
@@ -455,7 +522,7 @@
 % 模板的各位同学！
 %
 % \note{模板的作用在于减少论文写作过程中格式调整的时间，前提是遵守模板的用法，否
-%   则即便用了\sjtutex{} 也难以保证输出的论文符合学校规范。}
+%   则即便用了 \sjtutex{} 也难以保证输出的论文符合学校规范。}
 %
 % \section{简明教程}
 %
@@ -485,16 +552,17 @@
 %     文档类        & \file{sjtuthesis.cls}       & 学位论文文档类 \\
 %                   & \file{sjtureport.cls}       & 报告文档类     \\
 %                   & \file{sjtuarticle.cls}      & 文稿文档类     \\
-%                   & \file{sjtu-name-*.def}      & 文档类名称配置  \\
-%                   & \file{sjtu-scheme-*.def}    & 文档类语言配置  \\
+%                   & \file{sjtu-name-*.def}      & 文档类名称配置 \\
+%                   & \file{sjtu-lang-*.def}      & 文档类语言配置 \\
+%                   & \file{sjtu-scheme-*.def}    & 文档类语言方案 \\
+%     \midrule
+%     字体配置文件  & \file{sjtu-text-font-*.def} & 西文字体配置   \\
+%                   & \file{sjtu-math-font-*.def} & 数学字体配置   \\
+%                   & \file{sjtu-cjk-font-*.def}  & 东亚字体配置   \\
 %     \midrule
 %     视觉形象系统  & \file{sjtu-vi-logo-*.pdf}   & 校标图片       \\
 %                   & \file{sjtu-vi-badge-*.pdf}  & 校徽图片       \\
 %                   & \file{sjtu-vi-name-*.pdf}   & 校名图片       \\
-%     \midrule
-%     字体配置文件  & \file{sjtu-cjk-font-*.def}  & 中文字体配置   \\
-%                   & \file{sjtu-math-font-*.def} &  数学字体配置  \\
-%                   & \file{sjtu-text-font-*.def} &  正文字体配置  \\
 %
 %     \bottomrule
 %   \end{tabular}
@@ -513,7 +581,7 @@
 % 略有不同，这里给出这三种文档类的最小使用示例。
 %
 % 下面这份 \TeX{} 文档展示了 \cls{sjtuthesis} 文档类的基本用法，一般需要指定中英文名称。
-% 该文档将包含中英文封面，页眉左上角显示“上海交通大学硕士学位论文”，右上角显示章节名称。
+% 该文档将包含中英文封面，页眉为文档主题及章节名称。
 % \begin{latex}
 % \documentclass[type=master]{sjtuthesis}
 % \sjtusetup{
@@ -535,7 +603,7 @@
 % \end{latex}
 %
 % 下面这份 \TeX{} 文档展示了 \cls{sjtureport} 文档类的基本用法，建议使用标准命令定义中文名称。
-% 该文档将包含默认封面，页眉左上角为校徽校名，右上角为章节名称。
+% 该文档将包含标题页，页眉为校标图片、文档主题及章节名称。
 % \begin{latex}
 % \documentclass{sjtureport}
 % \title{上海交通大学 \LaTeX{} 报告模板示例文档}
@@ -551,7 +619,7 @@
 % \end{latex}
 %
 % 下面这份 \TeX{} 文档展示了 \cls{sjtuarticle} 文档类的基本用法，建议使用标准命令定义中文名称，
-% 不能够使用 \cs{chapter} 这一级。该文档包含标题栏，页眉左上角为校徽校名，右上角为文档标题。
+% 不能够使用 \cs{chapter} 这一级。该文档包含标题栏，页眉为校标图片、文档主题及章节名称。
 % \begin{latex}
 % \documentclass{sjtuarticle}
 % \title{示例文档}
@@ -592,7 +660,7 @@
 %   论文类型。三种选项分别代表学士学位论文、硕士学位论文、博士学位论文。
 % \end{function}
 %
-% \begin{function}[updated=2023-03-18]{lang}
+% \begin{function}[updated=2023-03-23]{lang}
 %   \begin{sjtusyntax}[emph={[1]lang}]
 %     lang = (*<(zh)|en|de|ja>*)
 %   \end{sjtusyntax}
@@ -629,7 +697,7 @@
 %   \begin{sjtusyntax}[emph={[1]lineskip}]
 %     lineskip = (*\marg{长度}*)
 %   \end{sjtusyntax}
-%   行间距。默认跟随字号设置。
+%   正文行间距。\opt{zihao=-4} 时默认为 20 磅，\opt{zihao=5} 时默认为 15.6 磅。
 % \end{function}
 %
 % \begin{function}{oneside, twoside}
@@ -671,23 +739,23 @@
 %   \begin{sjtusyntax}[emph={[1]cjk-font}]
 %     cjk-font = (*<(auto)|(fandol)|windows|mac|ubuntu|adobe|founder|none>*)
 %   \end{sjtusyntax}
-%   指定中文字体集。\sjtutex{} 预定义了一些中文字体组合，
+%   指定东亚字体集。\sjtutex{} 预定义了一些东亚字体组合，
 %   默认跟随操作系统设定：
 %   Windows 系统默认使用 \opt{windows}，
 %   macOS 系统默认使用 \opt{mac}，
 %   Linux 系统默认使用 \opt{fandol}。
-%   找不到对应定义的中文字体集时的回退选项为 \opt{fandol}。
+%   找不到对应定义的东亚字体集时的回退选项为 \opt{fandol}。
 %
-%   \textbf{仅} |windows| 和 |founder| 字体集支持 \pdfLaTeX{} 直接生成 PDF。
-%   其他中文字体集使用 \pdfTeX{} 引擎需要先通过 \LaTeX{} 生成 DVI，
+%   \textbf{仅} \opt{windows} 和 \opt{founder} 字体集支持 \pdfLaTeX{} 直接生成 PDF。
+%   其他东亚字体集使用 \pdfTeX{} 引擎需要先通过 \LaTeX{} 生成 DVI，
 %   然后再使用 DVIPDFM\textit{x} 转换为 PDF。
 %
 %   \note{发行版中自带的 \opt{fandol} 中文字库容易出现缺字的情况。
-%     我们建议 Linux 用户自行配置合适的字体。参见
+%     我们建议 Linux 用户使用 \opt{ubuntu} 或自行配置合适的字体。参见
 %     \href{https://github.com/sjtug/SJTUThesis/wiki/在线使用说明}
 %     {Wiki 页面《在线使用说明》}。}
 %
-%   \note{日语模板不支持 \pdfTeX{} 引擎，请使用 \XeLaTeX{} 或
+%   \note{日文模板不支持 \pdfTeX{} 引擎，请使用 \XeLaTeX{} 或
 %     \LuaLaTeX{} 编译。}
 % \end{function}
 %
@@ -964,7 +1032,6 @@
 %     \subject(*\marg{主题}*)
 %   \end{sjtusyntax}
 %   文档主题。覆盖 \opt{info/subject} 键的值。
-%^^A 该信息暂不显示。
 % \end{function}
 %
 % \begin{function}[EXP,added=2023-03-14]{\keywords}
@@ -1019,6 +1086,11 @@
 %   \opt{circled} 表示使用带圈数字编号。
 %   在 \opt{zh} 和 \opt{ja} 语言设置中，默认为 \opt{circled}；
 %   在 \opt{en} 和 \opt{de} 语言设置中，默认为 \opt{plain}。
+%
+%   使用带圈数字编号时，由于超过 50 的带圈数字没有对应的 Unicode 码位，
+%   所以每页脚注最好不要超过 50 个。
+%   带圈数字默认使用东亚字体。通常情况下默认字体不一定包含所有带圈数字的字符，
+%   此时可以设置 \opt{fnmark-font} 选项给带圈数字设置合适的字体。
 % \end{function}
 %
 % \begin{function}[added=2022-12-03,updated=2023-03-28]{style/fnmark-font}
@@ -1110,40 +1182,48 @@
 %   name/abbr,name/nom,name/ack,name/resume,name/digest,name/achv}
 % \end{function}
 %
-% \begin{table}[hbt]
-%   \vspace{-47ex}
-%   \centering
-%   \caption{\opt{name} 选项的默认设置}
-%   \label{tab:names}
-%   \small \tabcolsep=3pt
-%   \begin{tabular}{l|p{8em}|p{9em}|p{11em}|p{8em}}
-%     \toprule
-%     \strong{选项}         & \strong{|lang = zh|}   & \strong{|lang = en|}          & \strong{|lang = de|}   & \strong{|lang = ja|} \\
-%     \midrule
-%      |contents|           & 目录                   & Contents                      & Inhaltsverzeichnis     & 目次                 \\
-%      |listfigure|         & 插图                   & List of Figures               & Abbildungsverzeichnis  & 図目次               \\
-%      |listtable|          & 表格                   & List of Tables                & Tabellenverzeichnis    & 表目次               \\
-%      |figure|             & 图                     & Figure                        & Abbildung              & 図                   \\
-%      |table|              & 表                     & Table                         & Tabelle                & 表                   \\
-%      |abstract| \rexpstar & 摘要                   & Abstract                      & Zusammenfassung        & 概要                 \\
-%      |index|              & 索引                   & Index                         & Index                  & 索引                 \\
-%      |appendix|           & 附录                   & Appendix                      & Anhang                 & 付録                 \\
-%      |proof|              & 证明                   & Proof                         & Beweis                 & 证明                 \\
-%      |bib|                & 参考文献               & Bibliography                  & Literaturverzeichnis   & 参考文献             \\
-%    \midrule
-%      |figure*|            & Figure                 & 图                            & Figure                 & Figure               \\
-%      |table*|             & Table                  & 表                            & Table                  & Table                \\
-%      |algorithm|          & 算法                   & Algorithm                     & Algorithmus            & アルゴリズム         \\
-%      |listalgorithm|      & 算法                   & List of Algorithms            & Algorithmenverzeichnis & アルゴリズム目次     \\
-%      |abbr| \rexpstar     & 缩略语对照表           & Abbreviation                  & Abkürzungsverzeichnis  & 略語表               \\
-%      |nom| \rexpstar      & 主要符号对照表         & Nomenclature                  & Symbolverzeichnis      & 記号表               \\
-%      |ack| \rexpstar      & 致谢                   & Acknowledgements              & Danksagungen           & 謝辞                 \\
-%      |resume| \rexpstar   & 个人简历               & Resume                        & Lebenslauf             & 履歴書               \\
-%      |digest| \rexpstar   & 大摘要                 & Digest                        & Kurzfassung            & 要訳                 \\
-%      |achv| \rexpstar     & 学术论文和科研成果目录 & List of Research Achievements & Forschungsleistungen   & 研究業績書           \\
+% \begingroup
+% \vspace{-48ex}
+% \small \tabcolsep=3pt
+% \begin{longtable}{l|p{7em}|p{9em}|p{11em}|p{8em}}
+%   \caption{\opt{name} 选项的默认设置} \label{tab:names} \\
+%   \toprule
+%     \strong{选项}        & \strong{|lang = zh|}   & \strong{|lang = en|}          & \strong{|lang = de|}   & \strong{|lang = ja|} \\
+%   \midrule
+%   \endfirsthead
+%     \multicolumn{5}{r}{续表~\thetable} \\
+%   \toprule
+%     \strong{选项}        & \strong{|lang = zh|}   & \strong{|lang = en|}          & \strong{|lang = de|}   & \strong{|lang = ja|} \\
+%   \midrule
+%   \endhead
 %     \bottomrule
-%   \end{tabular}
-% \end{table}
+%     \multicolumn{5}{r}{续下页}
+%   \endfoot
+%     \bottomrule
+%   \endlastfoot
+%     |contents|           & 目录                   & Contents                      & Inhaltsverzeichnis     & 目次                 \\
+%     |listfigure|         & 插图                   & List of Figures               & Abbildungsverzeichnis  & 図目次               \\
+%     |listtable|          & 表格                   & List of Tables                & Tabellenverzeichnis    & 表目次               \\
+%     |figure|             & 图                     & Figure                        & Abbildung              & 図                   \\
+%     |table|              & 表                     & Table                         & Tabelle                & 表                   \\
+%     |abstract| \rexpstar & 摘要                   & Abstract                      & Zusammenfassung        & 概要                 \\
+%     |index|              & 索引                   & Index                         & Index                  & 索引                 \\
+%     |appendix|           & 附录                   & Appendix                      & Anhang                 & 付録                 \\
+%     |proof|              & 证明                   & Proof                         & Beweis                 & 证明                 \\
+%     |bib|                & 参考文献               & Bibliography                  & Literaturverzeichnis   & 参考文献             \\
+%   \midrule
+%     |figure*|            & Figure                 & 图                            & Figure                 & Figure               \\
+%     |table*|             & Table                  & 表                            & Table                  & Table                \\
+%     |algorithm|          & 算法                   & Algorithm                     & Algorithmus            & アルゴリズム         \\
+%     |listalgorithm|      & 算法                   & List of Algorithms            & Algorithmenverzeichnis & アルゴリズム目次     \\
+%     |abbr| \rexpstar     & 缩略语对照表           & Abbreviation                  & Abkürzungsverzeichnis  & 略語表               \\
+%     |nom| \rexpstar      & 主要符号对照表         & Nomenclature                  & Symbolverzeichnis      & 記号表               \\
+%     |ack| \rexpstar      & 致谢                   & Acknowledgements              & Danksagungen           & 謝辞                 \\
+%     |resume| \rexpstar   & 个人简历               & Resume                        & Lebenslauf             & 履歴書               \\
+%     |digest| \rexpstar   & 大摘要                 & Digest                        & Kurzfassung            & 要約                 \\
+%     |achv| \rexpstar     & 学术论文和科研成果目录 & List of Research Achievements & Forschungsleistungen   & 研究業績書           \\
+% \end{longtable}
+% \endgroup
 %
 % \section{内容编写}
 %
@@ -1223,11 +1303,10 @@
 %   \listoftables,\listoftables*,\listofalgorithms,\listofalgorithms*}
 %   插图、表格和算法等索引命令如表 \ref{tab:list} 所示，将其插入到期望的
 %   位置即可。带*的命令表示对应的索引表不会出现在目录中。
-%^^A 似乎不再使用插图、表格和算法索引。
 % \end{function}
 %
 % \begin{table}[ht]
-% \vspace{-10ex}
+% \vspace*{-8ex}
 % \centering\small
 % \begin{threeparttable}
 %   \caption{目录和索引表}
@@ -1265,10 +1344,6 @@
 %     \footnote(*\oarg{脚注编号}*)(*\marg{脚注文字}*)
 %   \end{sjtusyntax}
 %   插入脚注。其中脚注编号参数是可选的，一般不需要输入。
-%   编号采用中文字体的带圈数字，只支持 1 到 50 号，请保证每页脚注不超过 50 个，超过 50 号
-%   脚注会给出脚注过多的警告。
-%   在一些字体配置下，脚注编号不能超过 10 号或 20 号，否则字体集可能不包含该字符，而无法正
-%   常显示。
 % \end{function}
 %
 % \begin{function}{assumption,axiom,conjecture,corollary,definition,example,
@@ -1303,7 +1378,6 @@
 %     \chapter{...}
 %   \end{sjtusyntax}
 %   附录由 \cs{appendix} 命令开启，然后像正文一样书写。
-%^^A 标准新模板将附录编号置于章节标题之后。
 % \end{function}
 %
 % \begin{function}[rEXP,updated=2022-03-02]{nomenclature,nomenclature*}
@@ -1390,8 +1464,6 @@
 %     \end{digest}
 %   \end{sjtusyntax}
 %   学士论文大摘要，使用可选参数设定语言，默认为 \opt{en}。
-%^^A 论文类型为学士论文的条件下有效。
-%^^A 尚无条件限制。
 % \end{function}
 %
 % \end{documentation}
@@ -1590,6 +1662,9 @@
   {
 %    \end{macrocode}
 %
+% \changes{v2.0}{2022/10/25}{\cls{sjtuthesis} 类型选项移除 \opt{course}，
+% 不再支持课程论文。}
+% 论文类型。
 %    \begin{macrocode}
 %<*thesis>
     type .choice: ,
@@ -1601,7 +1676,9 @@
 %</thesis>
 %    \end{macrocode}
 %
-%
+% \changes{v2.0}{2023/03/19}{语言选项新增 \opt{ja}，添加日文模板。}
+% \changes{v2.0}{2023/03/23}{语言选项新增 \opt{de}，添加德文模板。}
+% 论文主要语言。
 %    \begin{macrocode}
     lang .choice: ,
     lang .value_required:n = true ,
@@ -1637,6 +1714,7 @@
 %<article>    zihao .initial:n = {  5 } ,
 %    \end{macrocode}
 %
+% \changes{v2.0}{2022/12/03}{添加 \opt{lineskip} 文档类选项。}
 % 行间距。
 %    \begin{macrocode}
     lineskip .dim_gset:N = \g_@@_line_skip_dim ,
@@ -1655,6 +1733,7 @@
     fontset .code:n = { \@@_set_deprecated_option:n { cjk-font = #1 } } ,
 %    \end{macrocode}
 %
+% \changes{v2.0}{2023/01/05}{添加 \opt{math-style} 文档类选项，默认值为 \opt{ISO}。}
 % 数学符号样式。
 %    \begin{macrocode}
     math-style .choice: ,
@@ -1937,7 +2016,7 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_unicode_char:n}
+% \begin{macro}[int]{\@@_unicode_char:n}
 %    \begin{macrocode}
 \@@_engine_case:nn
   {
@@ -1952,7 +2031,7 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_preto_cmd:Nn,\@@_appto_cmd:Nn}
+% \begin{macro}[int]{\@@_preto_cmd:Nn,\@@_appto_cmd:Nn}
 % 补丁工具，来自 \pkg{ctexpatch} 宏包，在宏的原本定义前后增加钩子。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_preto_cmd:Nn #1#2
@@ -2007,7 +2086,8 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_vspace:N,\@@_vspace:n,\@@_vspace_r:N,\@@_vspace_r:n}
+% \begin{macro}[int]{\@@_vspace:N,\@@_vspace:n,
+% \@@_vspace_r:N,\@@_vspace_r:n}
 % 类似 \LaTeXe{} 中的 \tn{vspace} 和 \tn{vspace*}。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_vspace:N #1
@@ -2037,7 +2117,7 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_define_name:nn,\@@_define_name:nv,\@@_define_name:nnn,
+% \begin{macro}[int]{\@@_define_name:nn,\@@_define_name:nv,\@@_define_name:nnn,
 % \@@_define_name_from_clist:nnnn}
 % 定义默认名称的辅助函数。
 %    \begin{macrocode}
@@ -2051,7 +2131,7 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_define_symbol:nn}
+% \begin{macro}[int]{\@@_define_symbol:nn}
 % 定义符号的辅助函数。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_define_symbol:nn #1#2
@@ -2059,7 +2139,7 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_if_lang_valid:nTF}
+% \begin{macro}[int]{\@@_if_lang_valid:nTF}
 % 验证语言选项的函数。
 %    \begin{macrocode}
 %<*thesis>
@@ -2242,7 +2322,7 @@
   { \tl_gset_eq:NN \g_@@_math_font_tl \g_@@_text_font_tl }
 %    \end{macrocode}
 %
-% 根据操作系统判断默认中文字体配置。
+% 根据操作系统判断默认东亚字体配置。
 %    \begin{macrocode}
 \tl_if_empty:NT \g_@@_cjk_font_tl
   {
@@ -3053,7 +3133,7 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% 带圈数字使用中文字体。
+% 带圈数字使用东亚字体。
 %    \begin{macrocode}
 \@@_unicode_engine_case:nn
   {
@@ -3089,6 +3169,8 @@
 %<!article>    chapter        .tl_set:N = \chaptername ,
 %    \end{macrocode}
 %
+% \changes{v2.0}{2022/12/28}{简化 \opt{sjtu/name} 中键的名称：\opt{abbr},
+%                            \opt{nom}, \opt{ack}, \opt{achv}。}
 % 标准文档类中未定义的名称。
 %    \begin{macrocode}
     figure*        .tl_set:N = \SJTU@figurename@aux ,
@@ -3305,20 +3387,19 @@
 %    \begin{macrocode}
 \tl_set:Nn \l_@@_header_tl
   {
+%<*thesis>
+    {
+      \@@_set_cjk_default_zh: \normalfont
+      \l_@@_info_subject_zh_tl
+    }
+%</thesis>
 %<*!thesis>
     \includegraphics [ height = 1.2 cm ]
       { sjtu-vi-logo- \l_@@_style_header_logo_color_tl .pdf }
 %</!thesis>
-%<*thesis>
-    {
-      \@@_set_cjk_default_zh: \normalfont
-      \l_@@_style_header_font_tl
-      \l_@@_info_subject_zh_tl
-    }
-%</thesis>
   }
-%<!article>\tl_set:Nn \l_@@_leftmark_tl  { \leftmark }
-%<article>\tl_set:Nn \l_@@_leftmark_tl  { \l_@@_info_subject_tl }
+%<thesis>\tl_set:Nn \l_@@_leftmark_tl  { \leftmark }
+%<!thesis>\tl_set:Nn \l_@@_leftmark_tl  { \l_@@_info_subject_tl }
 \tl_set:Nn \l_@@_rightmark_tl { \leftmark }
 %    \end{macrocode}
 %
@@ -3467,7 +3548,7 @@
 \ctex_set:n { secnumdepth = 3 }
 %    \end{macrocode}
 %
-% \begin{macro}{\SJTU@head,\@@_pdf_bookmark:nn,\@@_phantom_section:}
+% \begin{macro}[int]{\SJTU@head,\@@_pdf_bookmark:nn,\@@_phantom_section:}
 % 定义一个灵活的章节标题命令专门处理不同的需求。
 %    \begin{macrocode}
 \NewDocumentCommand \SJTU@head { s O{#3} m O{#2} }
@@ -3514,7 +3595,7 @@
 %<ja>  { \ctex_set:n { autoindent = 1 } }
 %    \end{macrocode}
 %
-% \begin{macro}[int]{\verse,\quotation}
+% \begin{macro}{\verse,\quotation}
 % 修改诗歌和引用环境的缩进。
 %    \begin{macrocode}
 %<zh|ja>\ctex_patch_cmd:Nnn \verse { -1.5em } { -2 \ccwd }
@@ -3599,7 +3680,7 @@
   }
 %    \end{macrocode}
 %
-% \begin{macro}{\SJTU@counterwithin}
+% \begin{macro}[int]{\SJTU@counterwithin}
 %    \begin{macrocode}
 \NewDocumentCommand \SJTU@counterwithin
   { s O{ \l_@@_style_fl_num_sep_tl } O{ \arabic } m m }
@@ -3758,6 +3839,11 @@
 %
 % \subsection{信息录入}
 %
+% \changes{v2.0}{2022/12/17}{添加 \opt{display-date} 键。}
+% \changes{v2.0}{2022/12/23}{使用 \opt{assoc-supervisor} 键表示副导师，
+%                            使用 \opt{co-supervisor} 键表示联合导师。}
+% \changes{v2.0}{2022/12/23}{添加 \opt{subject} 键。}
+% \changes{v2.0}{2023/03/17}{使用语言代码前缀区别不同语种的 \opt{sjtu/info} 键。}
 % \begin{macro}[int]{\@@_info_keys_define:n}
 % 定义 \cls{sjtuthesis} 不同语种 |sjtu/info| 键值类的辅助函数。
 %    \begin{macrocode}
@@ -4131,7 +4217,7 @@
 %
 % \subsubsection{定义内部函数}
 %
-% \begin{macro}{\@@_cjk_spread_box:nn}
+% \begin{macro}[int]{\@@_cjk_spread_box:nn}
 % 汉字分散对齐的水平盒子。
 %    \begin{macrocode}
 %<*thesis>
@@ -4180,7 +4266,7 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@@_left_aligned_box:nn}
+% \begin{macro}[int]{\@@_left_aligned_box:nn}
 % 左对齐的水平盒子。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_left_aligned_box:nn #1#2
@@ -4250,6 +4336,7 @@
 %
 % \subsubsection{构建标题页}
 %
+% \changes{v2.0}{2022/12/13}{启用新版封面。}
 %    \begin{macrocode}
 %<*lang>
 %<*thesis>
@@ -4508,6 +4595,10 @@
     Add~"\token_to_str:N \usepackage{pdfpages}"~ in~ your~ preamble \\
     before~ inserting~ pages~ of~ external~ PDF.
   }
+%    \end{macrocode}
+%
+% \changes{v2.0}{2022/12/20}{不再自动载入 \pkg{pdfpages} 宏包。}
+%    \begin{macrocode}
 \NewDocumentCommand \copyrightpage { O{ } }
   {
     \bool_if:NF \g_@@_review_bool
@@ -4534,6 +4625,7 @@
 %
 % \subsection{摘要}
 %
+% \changes{v2.0}{2023/03/17}{\env{abstract} 环境新增指定语言的可选参数。}
 % 学位论文摘要环境。
 %    \begin{macrocode}
 %<*thesis>
@@ -4613,11 +4705,8 @@
 %
 % \subsection{目录}
 %
-% \begin{macro}{\tableofcontents}
-% \begin{macro}{\listoffigures}
-% \begin{macro}{\listoffigures*}
-% \begin{macro}{\listoftables}
-% \begin{macro}{\listoftables*}
+% \begin{macro}{\tableofcontents,\listoffigures,\listoffigures*,
+% \listoftables,\listoftables*}
 % 目录以及图表索引。
 %    \begin{macrocode}
 \DeclareDocumentCommand \tableofcontents { }
@@ -4637,10 +4726,6 @@
 \DeclareDocumentCommand \listoftables  { }
   { \SJTU@listof { \listtablename  } { table  } }
 %    \end{macrocode}
-% \end{macro}
-% \end{macro}
-% \end{macro}
-% \end{macro}
 % \end{macro}
 %
 %    \begin{macrocode}
@@ -4691,6 +4776,8 @@
     \tl_clear:N \SJTU@style@float@font
   } { }
 %    \end{macrocode}
+%
+% \changes{v2.0}{2023/03/17}{移除 \env{summary} 环境。}
 %
 % 致谢，盲审模式下隐藏致谢。
 %    \begin{macrocode}
@@ -4813,6 +4900,7 @@
   } { }
 %    \end{macrocode}
 %
+% \changes{v2.0}{2023/03/17}{\env{digest} 环境新增指定语言的可选参数。}
 % 大摘要。
 %    \begin{macrocode}
 \NewDocumentEnvironment { digest } { O{ en } +b }
@@ -4850,6 +4938,7 @@
 %    \end{macrocode}
 % \end{macro}
 %
+% \changes{v2.0}{2022/12/28}{重新制定 \opt{sjtu/style} 域中的接口。}
 % 定义元（meta）键值对。
 %    \begin{macrocode}
 \keys_define:nn { sjtu }
@@ -4860,7 +4949,7 @@
   }
 %    \end{macrocode}
 %
-% 兼容 \cls{sjtutheiss} 旧接口。
+% 兼容 \cls{sjtuthesis} 旧接口。
 %    \begin{macrocode}
 %<*thesis>
 \keys_define:nn { sjtu / info }

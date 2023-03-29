@@ -16,20 +16,24 @@ SJTUTeX 和 SJTUThesis 项目共享讨论区与社区写作模式。如遇问题
 
 ```bash
 cd sjtutex
-l3build doc     # 编译示例及文档
+l3build unpack  # 解包
+l3build doc     # 编译全部示例及文档
 l3build ctan    # 生成发布包
 ```
 
+文档类还含有多个示例（比如 `sample-thesis-zh`），主要存放于 `doc` 文件夹中（支持文件存放于 `support` 文件夹），编译单个示例  `<sample>` 可使用
+
+```bash
+l3build doc <sample>
+```
+
+仅编译文档类文档可以使用
+
+```bash
+l3build doc sjtutex
+```
+
 在您提交 PR 时，GitHub Action 会自动构建文档 PDF。
-
-## 致谢
-
-* 感谢 [CTeX-kit](https://github.com/CTeX-org/ctex-kit) 提供了 LaTeX 的中文支持
-* 感谢那位最先制作出博士学位论文 LaTeX 模板的交大物理系同学
-* 感谢 William Wang 同学对模板移植做出的巨大贡献
-* 感谢 [@weijianwen](https://github.com/weijianwen) 学长一直以来的开发和维护工作
-* 感谢 [@sjtug](https://github.com/sjtug) 以及 [@dyweb](https://github.com/dyweb) 对 0.9.5 之后版本的开发和维护工作
-* 感谢所有为模板贡献过代码的[同学们](https://github.com/sjtug/SJTUThesis/graphs/contributors)，以及所有测试和使用模板的各位同学
 
 ## 软件许可证
 
