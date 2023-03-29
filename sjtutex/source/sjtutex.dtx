@@ -1714,6 +1714,7 @@
 %<article>    zihao .initial:n = {  5 } ,
 %    \end{macrocode}
 %
+% \changes{v2.0}{2022/12/03}{添加 \opt{lineskip} 文档类选项。}
 % 行间距。
 %    \begin{macrocode}
     lineskip .dim_gset:N = \g_@@_line_skip_dim ,
@@ -1732,6 +1733,7 @@
     fontset .code:n = { \@@_set_deprecated_option:n { cjk-font = #1 } } ,
 %    \end{macrocode}
 %
+% \changes{v2.0}{2023/01/05}{添加 \opt{math-style} 文档类选项，默认值为 \opt{ISO}。}
 % 数学符号样式。
 %    \begin{macrocode}
     math-style .choice: ,
@@ -3835,6 +3837,11 @@
 %
 % \subsection{信息录入}
 %
+% \changes{v2.0}{2022/12/17}{添加 \opt{display-date} 键。}
+% \changes{v2.0}{2022/12/23}{使用 \opt{assoc-supervisor} 键表示副导师，
+%                            使用 \opt{co-supervisor} 键表示联合导师。}
+% \changes{v2.0}{2022/12/23}{添加 \opt{subject} 键。}
+% \changes{v2.0}{2023/03/17}{推荐使用语言子域前缀表示 \opt{sjtu/info} 中的键。}
 % \begin{macro}[int]{\@@_info_keys_define:n}
 % 定义 \cls{sjtuthesis} 不同语种 |sjtu/info| 键值类的辅助函数。
 %    \begin{macrocode}
@@ -4327,6 +4334,7 @@
 %
 % \subsubsection{构建标题页}
 %
+% \changes{v2.0}{2022/12/13}{使用新版封面。}
 %    \begin{macrocode}
 %<*lang>
 %<*thesis>
@@ -4615,6 +4623,7 @@
 %
 % \subsection{摘要}
 %
+% \changes{v2.0}{2023/03/17}{推荐使用语言可选参数指定 \env{abstract} 环境的语言。}
 % 学位论文摘要环境。
 %    \begin{macrocode}
 %<*thesis>
@@ -4889,6 +4898,7 @@
   } { }
 %    \end{macrocode}
 %
+% \changes{v2.0}{2023/03/17}{推荐使用语言可选参数指定 \env{digest} 环境的语言。}
 % 大摘要。
 %    \begin{macrocode}
 \NewDocumentEnvironment { digest } { O{ en } +b }
@@ -4926,6 +4936,7 @@
 %    \end{macrocode}
 % \end{macro}
 %
+% \changes{v2.0}{2022/12/28}{重新制定 \opt{sjtu/style} 域中的接口。}
 % 定义元（meta）键值对。
 %    \begin{macrocode}
 \keys_define:nn { sjtu }
@@ -4936,6 +4947,8 @@
   }
 %    \end{macrocode}
 %
+% \changes{v2.0}{2022/12/28}{推荐使用 \opt{sjtu/name} 域中的新键：\opt{abbr}, 
+%                            \opt{nom}, \opt{ack}, \opt{achv}。}
 % 兼容 \cls{sjtuthesis} 旧接口。
 %    \begin{macrocode}
 %<*thesis>
