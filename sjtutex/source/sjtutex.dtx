@@ -3169,6 +3169,8 @@
 %<!article>    chapter        .tl_set:N = \chaptername ,
 %    \end{macrocode}
 %
+% \changes{v2.0}{2022/12/28}{简化 \opt{sjtu/name} 中键的名称：\opt{abbr},
+%                            \opt{nom}, \opt{ack}, \opt{achv}。}
 % 标准文档类中未定义的名称。
 %    \begin{macrocode}
     figure*        .tl_set:N = \SJTU@figurename@aux ,
@@ -3841,7 +3843,7 @@
 % \changes{v2.0}{2022/12/23}{使用 \opt{assoc-supervisor} 键表示副导师，
 %                            使用 \opt{co-supervisor} 键表示联合导师。}
 % \changes{v2.0}{2022/12/23}{添加 \opt{subject} 键。}
-% \changes{v2.0}{2023/03/17}{推荐使用语言子域前缀表示 \opt{sjtu/info} 中的键。}
+% \changes{v2.0}{2023/03/17}{使用语言代码前缀区别不同语种的 \opt{sjtu/info} 键。}
 % \begin{macro}[int]{\@@_info_keys_define:n}
 % 定义 \cls{sjtuthesis} 不同语种 |sjtu/info| 键值类的辅助函数。
 %    \begin{macrocode}
@@ -4334,7 +4336,7 @@
 %
 % \subsubsection{构建标题页}
 %
-% \changes{v2.0}{2022/12/13}{使用新版封面。}
+% \changes{v2.0}{2022/12/13}{启用新版封面。}
 %    \begin{macrocode}
 %<*lang>
 %<*thesis>
@@ -4623,7 +4625,7 @@
 %
 % \subsection{摘要}
 %
-% \changes{v2.0}{2023/03/17}{推荐使用语言可选参数指定 \env{abstract} 环境的语言。}
+% \changes{v2.0}{2023/03/17}{\env{abstract} 环境新增指定语言的可选参数。}
 % 学位论文摘要环境。
 %    \begin{macrocode}
 %<*thesis>
@@ -4898,7 +4900,7 @@
   } { }
 %    \end{macrocode}
 %
-% \changes{v2.0}{2023/03/17}{推荐使用语言可选参数指定 \env{digest} 环境的语言。}
+% \changes{v2.0}{2023/03/17}{\env{digest} 环境新增指定语言的可选参数。}
 % 大摘要。
 %    \begin{macrocode}
 \NewDocumentEnvironment { digest } { O{ en } +b }
@@ -4947,8 +4949,6 @@
   }
 %    \end{macrocode}
 %
-% \changes{v2.0}{2022/12/28}{推荐使用 \opt{sjtu/name} 域中的新键：\opt{abbr}, 
-%                            \opt{nom}, \opt{ack}, \opt{achv}。}
 % 兼容 \cls{sjtuthesis} 旧接口。
 %    \begin{macrocode}
 %<*thesis>
