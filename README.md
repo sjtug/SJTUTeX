@@ -16,8 +16,21 @@ SJTUTeX 和 SJTUThesis 项目共享讨论区与社区写作模式。如遇问题
 
 ```bash
 cd sjtutex
-l3build doc     # 编译示例及文档
+l3build unpack  # 解包
+l3build doc     # 编译全部示例及文档
 l3build ctan    # 生成发布包
+```
+
+文档类还含有多个示例（比如 `sample-thesis-zh`），主要存放于 `doc` 文件夹中（支持文件存放于 `support` 文件夹），编译单个示例  `<sample>` 可使用
+
+```bash
+l3build doc <sample>
+```
+
+仅编译文档类文档可以使用
+
+```bash
+l3build doc sjtutex
 ```
 
 在您提交 PR 时，GitHub Action 会自动构建文档 PDF。
