@@ -653,8 +653,6 @@
 %
 % \subsubsection{通用选项}
 %
-% \changes{v2.0}{2022/10/25}{\cls{sjtuthesis} 类型选项移除 \opt{course}，
-% 不再支持课程论文。}
 % \begin{function}[rEXP,updated=2022-12-03]{type}
 %   \begin{sjtusyntax}[emph={[1]type}]
 %     type = (*<bachelor|(master)|doctor>*)
@@ -662,8 +660,6 @@
 %   论文类型。三种选项分别代表学士学位论文、硕士学位论文、博士学位论文。
 % \end{function}
 %
-% \changes{v2.0}{2023/03/19}{语言选项新增 \opt{ja}，添加日文模板。}
-% \changes{v2.0}{2023/03/23}{语言选项新增 \opt{de}，添加德文模板。}
 % \begin{function}[updated=2023-03-23]{lang}
 %   \begin{sjtusyntax}[emph={[1]lang}]
 %     lang = (*<(zh)|en|de|ja>*)
@@ -1258,7 +1254,6 @@
 %   \end{itemize}
 % \end{function}
 %
-% \changes{v2.0}{2022/12/20}{不再自动载入 \pkg{pdfpages} 宏包。}
 % \begin{function}[rEXP,updated=2022-12-20]{\copyrightpage}
 %   \begin{sjtusyntax}[morekeywords={\copyrightpage}]
 %     \copyrightpage
@@ -1667,6 +1662,9 @@
   {
 %    \end{macrocode}
 %
+% \changes{v2.0}{2022/10/25}{\cls{sjtuthesis} 类型选项移除 \opt{course}，
+% 不再支持课程论文。}
+% 论文类型。
 %    \begin{macrocode}
 %<*thesis>
     type .choice: ,
@@ -1678,7 +1676,9 @@
 %</thesis>
 %    \end{macrocode}
 %
-%
+% \changes{v2.0}{2023/03/19}{语言选项新增 \opt{ja}，添加日文模板。}
+% \changes{v2.0}{2023/03/23}{语言选项新增 \opt{de}，添加德文模板。}
+% 论文主要语言。
 %    \begin{macrocode}
     lang .choice: ,
     lang .value_required:n = true ,
@@ -4585,6 +4585,10 @@
     Add~"\token_to_str:N \usepackage{pdfpages}"~ in~ your~ preamble \\
     before~ inserting~ pages~ of~ external~ PDF.
   }
+%    \end{macrocode}
+%
+% \changes{v2.0}{2022/12/20}{不再自动载入 \pkg{pdfpages} 宏包。}
+%    \begin{macrocode}
 \NewDocumentCommand \copyrightpage { O{ } }
   {
     \bool_if:NF \g_@@_review_bool
@@ -4731,7 +4735,6 @@
   { \@@_update_cft_presnum: }
 %    \end{macrocode}
 %
-% \changes{v2.0}{2023/03/17}{移除 \env{summary} 环境。}
 % \subsection{预定义环境}
 %
 % 缩略语对照表。
@@ -4762,6 +4765,8 @@
     \tl_clear:N \SJTU@style@float@font
   } { }
 %    \end{macrocode}
+%
+% \changes{v2.0}{2023/03/17}{移除 \env{summary} 环境。}
 %
 % 致谢，盲审模式下隐藏致谢。
 %    \begin{macrocode}
