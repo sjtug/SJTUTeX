@@ -3297,7 +3297,7 @@
   { title_page, declaration, abstract }
   { \@@_define_name:nv {#1} { c_@@_name_ #1 _ \g_@@_lang_tl _tl } }
 %</thesis>
-%<!thesis> \file_input:n { sjtu-name-generic- \g_@@_lang_tl .def }
+%<!thesis>\file_input:n { sjtu-name-generic- \g_@@_lang_tl .def }
 %    \end{macrocode}
 %
 % \subsection{页面布局}
@@ -4733,6 +4733,7 @@
 %<!article>\tl_set:Nn \cftchapleader { \normalfont \cftdotfill { \cftdotsep } }
 %    \end{macrocode}
 %
+% \changes{v2.0.1}{2023/03/31}{修正表格索引编号宽度。}
 % 图表清单标题前添加名称。
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_update_cft_presnum:
@@ -4740,7 +4741,7 @@
     \tl_set:Nn \cftfigpresnum { \figurename \c_space_tl }
     \@@_dim_add_to_wd:Nn \cftfignumwidth { \cftfigpresnum }
     \tl_set:Nn \cfttabpresnum { \tablename  \c_space_tl }
-    \@@_dim_add_to_wd:Nn \cfttabnumwidth { \cftfigpresnum }
+    \@@_dim_add_to_wd:Nn \cfttabnumwidth { \cfttabpresnum }
   }
 \ctex_at_end_preamble:n
   { \@@_update_cft_presnum: }
