@@ -4734,13 +4734,16 @@
 %    \end{macrocode}
 %
 % \changes{v2.0.1}{2023/03/31}{修正表格索引编号宽度。}
+% \changes{v2.0.1}{2023/03/31}{插图、表格和算法等索引不缩进。}
 % 图表清单标题前添加名称。
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_update_cft_presnum:
   {
     \tl_set:Nn \cftfigpresnum { \figurename \c_space_tl }
+    \dim_zero:N \cftfigindent
     \@@_dim_add_to_wd:Nn \cftfignumwidth { \cftfigpresnum }
     \tl_set:Nn \cfttabpresnum { \tablename  \c_space_tl }
+    \dim_zero:N \cfttabindent
     \@@_dim_add_to_wd:Nn \cfttabnumwidth { \cfttabpresnum }
   }
 \ctex_at_end_preamble:n
@@ -5153,7 +5156,7 @@
     \exp_args:Nnv \newlistentry {#2} { ext@ #3 } { 0 }
     \exp_args:Ne \newcounter { \tl_use:c { ext@ #3 } depth }
     \exp_args:Ne \setcounter { \tl_use:c { ext@ #3 } depth } { 1 }
-    \dim_set:cn { cft #2 indent   } { 1.5 em }
+    \dim_zero:c { cft #2 indent   }
     \dim_set:cn { cft #2 numwidth } { 2.3 em }
     \cs_set_eq:cc { l@ #3 } { l@ #2 }
     \@@_appto_cmd:Nn \@@_update_cft_presnum:
