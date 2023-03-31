@@ -4733,17 +4733,21 @@
 %<!article>\tl_set:Nn \cftchapleader { \normalfont \cftdotfill { \cftdotsep } }
 %    \end{macrocode}
 %
-% \changes{v2.0.1}{2023/03/31}{修正表格索引编号宽度。}
 % \changes{v2.0.1}{2023/03/31}{插图、表格和算法等索引不缩进。}
+% \changes{v2.0.1}{2023/03/31}{调整插图、表格和算法等索引编号宽度。}
 % 图表清单标题前添加名称。
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_update_cft_presnum:
   {
     \tl_set:Nn \cftfigpresnum { \figurename \c_space_tl }
     \dim_zero:N \cftfigindent
+%<article>    \dim_set:Nn \cftfignumwidth { 1.8 em }
+%<!article>    \dim_set:Nn \cftfignumwidth { 2.8 em }
     \@@_dim_add_to_wd:Nn \cftfignumwidth { \cftfigpresnum }
     \tl_set:Nn \cfttabpresnum { \tablename  \c_space_tl }
     \dim_zero:N \cfttabindent
+%<article>    \dim_set:Nn \cfttabnumwidth { 1.8 em }
+%<!article>    \dim_set:Nn \cfttabnumwidth { 2.8 em }
     \@@_dim_add_to_wd:Nn \cfttabnumwidth { \cfttabpresnum }
   }
 \ctex_at_end_preamble:n
@@ -5157,7 +5161,8 @@
     \exp_args:Ne \newcounter { \tl_use:c { ext@ #3 } depth }
     \exp_args:Ne \setcounter { \tl_use:c { ext@ #3 } depth } { 1 }
     \dim_zero:c { cft #2 indent   }
-    \dim_set:cn { cft #2 numwidth } { 2.3 em }
+%<article>    \dim_set:cn { cft #2 numwidth } { 1.8 em }
+%<!article>    \dim_set:cn { cft #2 numwidth } { 2.8 em }
     \cs_set_eq:cc { l@ #3 } { l@ #2 }
     \@@_appto_cmd:Nn \@@_update_cft_presnum:
       {
