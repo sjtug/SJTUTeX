@@ -2061,20 +2061,22 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}[int]{\@@_dim_set_to_wd:Nn,\@@_dim_add_to_wd:Nn}
+% \changes{unreleased}{2023/03/31}{区分 \texttt{dim} 与 \texttt{skip} 类型变量。}
+% \begin{macro}[int]{\@@_dim_set_to_wd:Nn,\@@_skip_add_to_wd:Nn}
+% 操作长度变量的辅助函数。
 %    \begin{macrocode}
 \cs_new:Npn \@@_dim_set_to_wd:Nn #1#2
   {
     \hbox_set:Nn \l_@@_tmpa_box {#2}
     \dim_set:Nn #1 { \box_wd:N \l_@@_tmpa_box }
   }
-\cs_new:Npn \@@_dim_add_to_wd:Nn #1#2
+\cs_new:Npn \@@_skip_add_to_wd:Nn #1#2
   {
     \hbox_set:Nn \l_@@_tmpa_box {#2}
-    \dim_add:Nn #1 { \box_wd:N \l_@@_tmpa_box }
+    \skip_add:Nn #1 { \box_wd:N \l_@@_tmpa_box }
   }
 \cs_generate_variant:Nn \@@_dim_set_to_wd:Nn { Nv }
-\cs_generate_variant:Nn \@@_dim_add_to_wd:Nn { cv }
+\cs_generate_variant:Nn \@@_skip_add_to_wd:Nn { cv }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4739,10 +4741,10 @@
 \cs_new:Npn \@@_update_cft_presnum:nn #1#2
   {
     \tl_set:cn { cft #1 presnum } { #2 \c_space_tl }
-    \dim_zero:c { cft #1 indent }
-%<article>    \dim_set:cn { cft #1 numwidth } { 1.8 em }
-%<!article>    \dim_set:cn { cft #1 numwidth } { 2.8 em }
-    \@@_dim_add_to_wd:cv { cft #1 numwidth } { cft #1 presnum }
+    \skip_zero:c { cft #1 indent }
+%<article>    \skip_set:cn { cft #1 numwidth } { 1.8 em }
+%<!article>    \skip_set:cn { cft #1 numwidth } { 2.8 em }
+    \@@_skip_add_to_wd:cv { cft #1 numwidth } { cft #1 presnum }
   }
 \ctex_at_end_preamble:n
   {
@@ -4812,7 +4814,7 @@
       {
         \tl_if_blank:nTF {#1}
           {
-            \dim_if_exist:NTF \bibhang
+            \skip_if_exist:NTF \bibhang
               { \dim_set_eq:NN \leftmargin \bibhang }
               { \dim_set:Nn    \leftmargin { 1 em } }
             \dim_set:Nn \itemindent { - \leftmargin }
@@ -4822,17 +4824,17 @@
             \dim_set_eq:NN \leftmargin \labelwidth
             \dim_add:Nn    \leftmargin { \labelsep }
           }
-        \dim_if_exist:NTF \bibitemsep
+        \skip_if_exist:NTF \bibitemsep
           {
-            \dim_set_eq:NN \itemsep \bibitemsep
-            \dim_if_exist:NT \bibparsep
-              { \dim_set_eq:NN \parsep \bibparsep }
+            \skip_set_eq:NN \itemsep \bibitemsep
+            \skip_if_exist:NT \bibparsep
+              { \skip_set_eq:NN \parsep \bibparsep }
           }
           {
-            \dim_if_exist:NT \bibsep
+            \skip_if_exist:NT \bibsep
               {
-                \dim_set_eq:NN \itemsep \bibsep
-                \dim_zero:N    \parsep
+                \skip_set_eq:NN \itemsep \bibsep
+                \skip_zero:N    \parsep
               }
           }
         \@nmbrlisttrue
@@ -5102,7 +5104,7 @@
   }
 %    \end{macrocode}
 %
-% \pkg{amsthm} 宏包
+% \pkg{amsthm} 宏包。
 %    \begin{macrocode}
 \ctex_at_begin_package:nn { amsthm }
   {
@@ -5138,7 +5140,7 @@
   }
 %    \end{macrocode}
 %
-% \pkg{ntheorem} 宏包
+% \pkg{ntheorem} 宏包。
 %    \begin{macrocode}
 \ctex_at_end_package:nn { ntheorem }
   {
@@ -5171,7 +5173,7 @@
   }
 %    \end{macrocode}
 %
-% \pkg{algorithm} 宏包
+% \pkg{algorithm} 宏包。
 %    \begin{macrocode}
 \ctex_at_end_package:nn { algorithm }
   {
@@ -5182,7 +5184,7 @@
   }
 %    \end{macrocode}
 %
-% \pkg{algorithm2e} 宏包
+% \pkg{algorithm2e} 宏包。
 %    \begin{macrocode}
 %<!article>\ctex_at_begin_package:nn { algorithm2e }
 %<!article>  { \cs_set_eq:NN \@@_save_chapter:w \@chapter }
