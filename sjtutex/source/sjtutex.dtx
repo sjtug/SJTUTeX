@@ -4332,6 +4332,7 @@
 % \subsubsection{构建标题页}
 %
 % \changes{v2.0}{2022/12/13}{启用新版封面。}
+% \changes{unreleased}{2023/04/01}{标题页日期底部增加空白。}
 %    \begin{macrocode}
 %<*lang>
 %<*thesis>
@@ -4384,7 +4385,8 @@
     { date    }
       {
         format      = \zihao { 4 } \bfseries \fixedlineskip { 31.2 bp } ,
-        content     = \l_@@_info_date_zh_tl
+        content     = \l_@@_info_date_zh_tl ,
+        bottom-skip = 15.6 bp
       }
   }
   {
@@ -4438,9 +4440,10 @@
       {
         format      = \zihao { 3 } \fixedlineskip { 31.2 bp } ,
         content     =
-%<en>          { \@@_title_page_info_ii:n { en } }
-%<de>          { \@@_title_page_info_ii:n { de } }
-%<ja>          { \@@_title_page_info_ii:n { ja } }
+%<en>          { \@@_title_page_info_ii:n { en } } ,
+%<de>          { \@@_title_page_info_ii:n { de } } ,
+%<ja>          { \@@_title_page_info_ii:n { ja } } ,
+        bottom-skip = 15.6 bp
       },
   }
   {
