@@ -3707,19 +3707,12 @@
 %</!article>
 %    \end{macrocode}
 %
-% \begin{macro}[int]{\@@_counter_without_chapter:}
-% 特殊环境各计数器不随章编号。
+% \begin{macro}[int]{\l_@@_counter_without_chapter_clist}
+% 大摘要中不需要随章编号的各计数器。
 %    \begin{macrocode}
 %<*thesis>
-\cs_new_protected:Nn \@@_counter_without_chapter:
-  {
-    \counterwithout { section } { chapter }
-    \setcounter     { section } { 0 }
-    \counterwithout { figure  } { chapter }
-    \setcounter     { figure  } { 0 }
-    \counterwithout { table   } { chapter }
-    \setcounter     { table   } { 0 }
-  }
+\clist_set:Nn \l_@@_counter_without_chapter_clist
+  { section, figure, table, equation }
 %</thesis>
 %    \end{macrocode}
 % \end{macro}
@@ -4735,24 +4728,29 @@
 %
 % \changes{v2.0.1}{2023/03/31}{插图、表格和算法等索引不缩进。}
 % \changes{v2.0.1}{2023/03/31}{调整插图、表格和算法等索引编号宽度。}
+% \begin{macro}[int]{\l_@@_cft_presnum_clist,\@@_update_cft_presnum:nn}
 % 图表清单标题前添加名称。
 %    \begin{macrocode}
-\cs_new_protected:Nn \@@_update_cft_presnum:
+\clist_set:Nn \l_@@_cft_presnum_clist
   {
-    \tl_set:Nn \cftfigpresnum { \figurename \c_space_tl }
-    \dim_zero:N \cftfigindent
-%<article>    \dim_set:Nn \cftfignumwidth { 1.8 em }
-%<!article>    \dim_set:Nn \cftfignumwidth { 2.8 em }
-    \@@_dim_add_to_wd:Nn \cftfignumwidth { \cftfigpresnum }
-    \tl_set:Nn \cfttabpresnum { \tablename  \c_space_tl }
-    \dim_zero:N \cfttabindent
-%<article>    \dim_set:Nn \cfttabnumwidth { 1.8 em }
-%<!article>    \dim_set:Nn \cfttabnumwidth { 2.8 em }
-    \@@_dim_add_to_wd:Nn \cfttabnumwidth { \cfttabpresnum }
+    { fig } { \figurename } ,
+    { tab } { \tablename  }
+  }
+\cs_new:Npn \@@_update_cft_presnum:nn #1#2
+  {
+    \tl_set:cn { cft #1 presnum } { #2 \c_space_tl }
+    \dim_zero:c { cft #1 indent }
+%<article>    \dim_set:cn { cft #1 numwidth } { 1.8 em }
+%<!article>    \dim_set:cn { cft #1 numwidth } { 2.8 em }
+    \@@_dim_add_to_wd:cv { cft #1 numwidth } { cft #1 presnum }
   }
 \ctex_at_end_preamble:n
-  { \@@_update_cft_presnum: }
+  {
+    \clist_map_inline:Nn \l_@@_cft_presnum_clist
+      { \@@_update_cft_presnum:nn #1 }
+  }
 %    \end{macrocode}
+% \end{macro}
 %
 % \subsection{预定义环境}
 %
@@ -4923,7 +4921,11 @@
             \pagenumbering { roman }
             \cs_gset:Nn \@@_thepage: { \arabic { page } }
             \cs_gset_eq:NN \addcontentsline \use_none:nnn
-            \@@_counter_without_chapter:
+            \clist_map_inline:Nn \l_@@_counter_without_chapter_clist
+              {
+                \counterwithout {##1} { chapter }
+                \setcounter     {##1} { 0 }
+              }
             \@@_head_auxb_s:nx { \SJTU@digestname }
               {
                 \exp_not:N \MakeUppercase
@@ -5160,26 +5162,12 @@
     \exp_args:Nnv \newlistentry {#2} { ext@ #3 } { 0 }
     \exp_args:Ne \newcounter { \tl_use:c { ext@ #3 } depth }
     \exp_args:Ne \setcounter { \tl_use:c { ext@ #3 } depth } { 1 }
-    \dim_zero:c { cft #2 indent   }
-%<article>    \dim_set:cn { cft #2 numwidth } { 1.8 em }
-%<!article>    \dim_set:cn { cft #2 numwidth } { 2.8 em }
+    \clist_put_right:Nn \l_@@_cft_presnum_clist { {#2} {#4} }
     \cs_set_eq:cc { l@ #3 } { l@ #2 }
-    \@@_appto_cmd:Nn \@@_update_cft_presnum:
-      {
-        \tl_set:cn { cft #2 presnum } { #4 \c_space_tl }
-        \@@_dim_add_to_wd:cv { cft #2 numwidth } { cft #2 presnum }
-      }
     \exp_args:Nc \DeclareDocumentCommand { listof #1 s } { }
       { \SJTU@listof {#5} {#3} }
-%<!article>    \cs_set:cpn { the #3 }
-%<!article>      { \thechapter \l_@@_style_fl_num_sep_tl \arabic {#3} }
-%<*thesis>
-    \@@_appto_cmd:Nn \@@_counter_without_chapter:
-      {
-        \counterwithout {#3} { chapter }
-        \setcounter     {#3} { 0 }
-      }
-%</thesis>
+%<!article>    \SJTU@counterwithin { #3 } { chapter }
+%<thesis>    \clist_put_right:Nn \l_@@_counter_without_chapter_clist {#3}
   }
 %    \end{macrocode}
 %
