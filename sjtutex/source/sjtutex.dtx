@@ -2339,7 +2339,7 @@
 %    \end{macrocode}
 %
 % \begin{macro}[int]{\@@_load_font:nn,\@@_load_fontset:}
-% 载入字体配置。如果字体配置文件不存在，则载入默认值，并给出警告。
+% 如果字体配置文件不存在，则载入默认值，并给出警告。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_load_font:nn #1#2
   {
@@ -2372,7 +2372,6 @@
   }
 \@onlypreamble \@@_load_font:nn
 \@onlypreamble \@@_load_fontset:
-\@@_load_fontset:
 %</class>
 %    \end{macrocode}
 % \end{macro}
@@ -3149,6 +3148,13 @@
   }
 %    \end{macrocode}
 %
+% \changes{unreleased}{2023/04/01}{延迟载入字体配置，修复 \pkg{unicode-math}
+% 设置不生效的问题。}
+% 载入字体配置。
+%    \begin{macrocode}
+\@@_load_fontset:
+%    \end{macrocode}
+%
 % \subsection{名称设置}
 %
 % 定义 |sjtu/name| 键值类。
@@ -3172,7 +3178,7 @@
 %    \end{macrocode}
 %
 % \changes{v2.0}{2022/12/28}{简化 \opt{sjtu/name} 中键的名称：\opt{abbr},
-%                            \opt{nom}, \opt{ack}, \opt{achv}。}
+% \opt{nom}, \opt{ack}, \opt{achv}。}
 % 标准文档类中未定义的名称。
 %    \begin{macrocode}
     figure*        .tl_set:N = \SJTU@figurename@aux ,
