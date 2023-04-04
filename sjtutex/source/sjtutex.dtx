@@ -1179,7 +1179,7 @@
 %
 % \begin{function}[updated=2023-03-18]{name/contents,name/listfigure,name/listtable,
 %   name/figure,name/table,name/abstract,name/index,name/appendix,name/proof,name/bib,
-%   name/figure*,name/table*,name/algorithm,name/listalgorithm,
+%   name/figure*,name/table*,name/listing,name/listing*,name/algorithm,name/listalgorithm,
 %   name/abbr,name/nom,name/ack,name/resume,name/digest,name/achv}
 % \end{function}
 %
@@ -1217,6 +1217,7 @@
 %     |table*|             & Table                  & 表                            & Table                  & Table                \\
 %     |algorithm|          & 算法                   & Algorithm                     & Algorithmus            & アルゴリズム         \\
 %     |listalgorithm|      & 算法                   & List of Algorithms            & Algorithmenverzeichnis & アルゴリズム目次     \\
+%     |listing|            & 代码清单                & Listing                       & Liste der Codes       & コードリスト          \\
 %     |abbr| \rexpstar     & 缩略语对照表           & Abbreviation                  & Abkürzungsverzeichnis  & 略語表               \\
 %     |nom| \rexpstar      & 主要符号对照表         & Nomenclature                  & Symbolverzeichnis      & 記号表               \\
 %     |ack| \rexpstar      & 致谢                   & Acknowledgements              & Danksagungen           & 謝辞                 \\
@@ -3187,6 +3188,10 @@
     figure*       .initial:n = { 图 } ,
     table*         .tl_set:N = \SJTU@tablename@aux ,
     table*        .initial:n = { 表 } ,
+    listing        .tl_set:N = \SJTU@listingname ,
+    listing       .initial:n = { Listing } ,
+    listing*       .tl_set:N = \SJTU@listingname@aux ,
+    listing*      .initial:n = { 代码清单 } ,
     algorithm      .tl_set:N = \SJTU@algorithmname ,
     algorithm     .initial:n = { Algorithm } ,
     listalgorithm  .tl_set:N = \SJTU@listalgorithmname ,
@@ -3219,6 +3224,7 @@
     listtable     = { 表 \quad 格 } ,
     figure        = { 图 } ,
     table         = { 表 } ,
+    listing       = { 代码清单 } ,
     abstract      = { 摘 \quad 要 } ,
     index         = { 索 \quad 引 } ,
     appendix      = { 附录 } ,
@@ -3258,6 +3264,7 @@
     table*        = { Table } ,
     algorithm     = { Algorithmus } ,
     listalgorithm = { Algorithmenverzeichnis } ,
+    listing       = { Liste der Codes } ,
     abbr          = { Abkürzungsverzeichnis } ,
     nom           = { Symbolverzeichnis } ,
     ack           = { Danksagungen } ,
@@ -3286,6 +3293,7 @@
     table*        = { Table } ,
     algorithm     = { アルゴリズム } ,
     listalgorithm = { アルゴリズム目次 } ,
+    listing       = { コードリスト } ,
     abbr          = { 略語表 } ,
     nom           = { 記号表 } ,
     ack           = { 謝 \quad 辞 } ,
@@ -5245,29 +5253,23 @@
   }
 %    \end{macrocode}
 %
+% \subsubsection{\pkg{nomencl} 宏包}
+%    \begin{macrocode}
+\ctex_at_end_package:nn { nomencl }
+  { \tl_set:Nn \nomname { \SJTU@nomname } }
+%    \end{macrocode}
+%
 % \subsubsection{\pkg{minted} 宏包}
 %    \begin{macrocode}
 \ctex_at_end_package:nn { minted }
   {
-    % Define names
-    \keys_define:nn { sjtu / name }
-      {
-        listing   .tl_set:N = \l__sjtu_name_listing_tl ,
-        listing  .initial:n = { Listing } ,
-        listing*  .tl_set:N = \l__sjtu_name_listing_aux_tl ,
-        listing* .initial:n = { 代码清单 } ,
-      }
-    % Set caption name
-    \captionsetup [ listing ] { name = \l__sjtu_name_listing_aux_tl }
-    \captionsetup [ listing ] [ bi-first  ] { name = \l__sjtu_name_listing_aux_tl }
-    \captionsetup [ listing ] [ bi-second ] { name = \l__sjtu_name_listing_tl     }
-    % Set numbering style
-    \AtBeginDocument
-      {
-        \cs_set:Npn \thelisting
-          { \thechapter \l__sjtu_style_fl_num_sep_tl \arabic { listing } }
-      }
-    % Set display style
+    \captionsetup [ listing ] { name = \SJTU@listingname }
+    \captionsetup [ listing ] [ bi-first  ] { name = \SJTU@listingname     }
+    \captionsetup [ listing ] [ bi-second ] { name = \SJTU@listingname@aux }
+
+    \cs_set:Npn \thelisting
+      { \thechapter \l__sjtu_style_fl_num_sep_tl \arabic { listing } }
+
     \setminted
       {
         frame           = lines ,
@@ -5279,18 +5281,10 @@
         stripnl ,
         tabsize         = 4
       }
-    % Remove redundant vertical space around listings
-    \let \oldminted    \minted
-    \let \oldendminted \endminted
-    \def \minted    { \vspace { -0.4cm } \oldminted }
-    \def \endminted { \oldendminted \vspace { -0.4cm } }
+
+    \@@_preto_cmd:Nn \minted    { \vspace { -0.4cm } }
+    \@@_appto_cmd:Nn \endminted { \vspace { -0.4cm } }
   }
-%    \end{macrocode}
-%
-% \subsubsection{\pkg{nomencl} 宏包}
-%    \begin{macrocode}
-\ctex_at_end_package:nn { nomencl }
-  { \tl_set:Nn \nomname { \SJTU@nomname } }
 %    \end{macrocode}
 %
 %    \begin{macrocode}
