@@ -5282,8 +5282,13 @@
         tabsize         = 4
       }
 
-    \@@_preto_cmd:Nn \minted    { \vspace { -0.4cm } }
-    \@@_appto_cmd:Nn \endminted { \vspace { -0.4cm } }
+    \makeatletter
+    \newenvironment{code}{%
+      \VerbatimEnvironment
+      \let\FV@ListVSpace\relax
+      \begin{minted}}%
+    {\end{minted}}
+    \makeatother
   }
 %    \end{macrocode}
 %
