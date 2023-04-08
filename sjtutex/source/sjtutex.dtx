@@ -919,8 +919,9 @@
 %   \begin{sjtusyntax}
 %     (*\meta{lang}*)/subject = (*\marg{主题}*)
 %   \end{sjtusyntax}
-%   文档主题。一般显示在中文标题页校徽下方。默认值类似于“上海交通大学学士学位论文” 或
-%   “A Dissertation Submitted to Shanghai Jiao Tong University for Bachelor Degree”。
+%   文档主题。一般显示在中文标题页校徽下方。
+%   默认值类似于 “上海交通大学学士学位论文” 或 “A Dissertation Submitted to
+%   Shanghai Jiao Tong University for Bachelor's Degree”。
 % \end{function}
 %
 % \begin{function}[rEXP,updated=2023-03-14]{info/<lang>/keywords}
@@ -3948,6 +3949,7 @@
 %
 % \subsection{多语言支持}
 %
+% \changes{unreleased}{2023/04/08}{更新学位论文初始英文主题。}
 % 初始化主题。
 %    \begin{macrocode}
 %<*lang>
@@ -3967,7 +3969,7 @@
 %<*en>
         A~ Dissertation~ Submitted~ to \exp_not:N \\
         { \exp_not:V \c_@@_name_univ_en_tl }~ for~
-        { \exp_not:V \c_@@_name_degree_level_en_tl }~ Degree
+        { \exp_not:V \c_@@_name_degree_level_possessive_en_tl }~ Degree
 %</en>
 %<*de>
         Eine~ Dissertation~ Eingereicht~ an \exp_not:N \\
@@ -5288,8 +5290,8 @@
 %</zh>
 %<*en>
 \@@_define_name_from_clist:nnnn { en }
-  { degree_level } { \g_@@_thesis_type_int }
-  { Bachelor, Master, Doctor }
+  { degree_level_possessive } { \g_@@_thesis_type_int }
+  { Bachelor's, Master's, Doctoral }
 %</en>
 %<*de>
 \@@_define_name_from_clist:nnnn { de }
