@@ -10,6 +10,17 @@ SJTUTeX 是 [SJTUThesis](https://github.com/sjtug/SJTUThesis) 项目使用的宏
 
 SJTUTeX 和 SJTUThesis 项目共享讨论区与社区写作模式。如遇问题，请在 [SJTUThesis](https://github.com/sjtug/SJTUThesis) 中反馈。
 
+## 安装至发行版
+
+如果你正在使用 TeX Live 或 MacTeX，可以在终端输入下面的命令安装至本地发行版中。
+
+```bash
+cd sjtutex
+l3build install
+```
+
+也可以将[发布区](https://github.com/sjtug/SJTUTeX/releases/latest)的 `sjtutex.tds.zip` 手动解压到发行版的 TDS 目录下。
+
 ## 开发指南
 
 文档类主要代码在 `sjtutex.dtx` 中，需要解包之后才能够使用。
@@ -32,6 +43,8 @@ l3build doc <sample>
 ```bash
 l3build doc sjtutex
 ```
+
+> 请注意文档类文档 `sjtutex.pdf` 的正确编译需要使用 Noto CJK 字体（即 `ctex` 字体配置中的 `fontset=ubuntu`）。
 
 在您提交 PR 时，GitHub Action 会自动构建文档 PDF。
 
