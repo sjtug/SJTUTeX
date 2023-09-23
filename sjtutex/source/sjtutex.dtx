@@ -5027,6 +5027,7 @@
 %
 % \subsection{其他宏包的设置}
 %
+% \changes{unreleased}{2023/09/23}{移除 \pkg{listings} 宏包预设。}
 % 这些宏包并非格式要求，但是为了方便同学们使用，在这里进行简单设置。
 %
 % \subsubsection{\pkg{hyperref} 宏包}
@@ -5211,36 +5212,6 @@
     \ctex_patch_cmd:Nnn \algocf@latexcaption
       { \addcontentsline }
       { \caption@iflist { \addcontentsline } { \@gobblethree } }
-  }
-%    \end{macrocode}
-%
-% \subsubsection{\pkg{listings} 宏包}
-%    \begin{macrocode}
-\ctex_at_end_package:nn { listings }
-  {
-    \lstdefinestyle { lstStyleCode }
-      {
-        aboveskip         = \medskipamount ,
-        belowskip         = \medskipamount ,
-        basicstyle        = \ttfamily \zihao { 6 } ,
-        commentstyle      = \slshape \color { black!60 } ,
-        stringstyle       = \color { green!40!black!100 } ,
-        keywordstyle      = \bfseries \color { blue!50!black } ,
-        extendedchars     = false ,
-        upquote           = true ,
-        tabsize           = 2 ,
-        showstringspaces  = false ,
-        xleftmargin       = 1 em ,
-        xrightmargin      = 1 em ,
-        breaklines        = false ,
-        framexleftmargin  = 1 em ,
-        framexrightmargin = 1 em ,
-        backgroundcolor   = \color { gray!10 } ,
-        columns           = flexible ,
-        keepspaces        = true ,
-        texcl             = true ,
-        mathescape        = true
-      }
   }
 %    \end{macrocode}
 %
