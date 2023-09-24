@@ -1910,7 +1910,6 @@
   {
     { no-math           } { fontspec     } ,
     { titles            } { tocloft      } ,
-    { perpage, bottom   } { footmisc     } ,
     { list = off        } { bicaption    } ,
     { warnings-off =
       {
@@ -3309,7 +3308,7 @@
 %<!thesis>\file_input:n { sjtu-name-generic- \g_@@_lang_tl .def }
 %    \end{macrocode}
 %
-% \subsection{页面布局}
+% \subsection{页面设置}
 %
 % 利用 \pkg{geometry} 宏包设置页面边距以及页眉高度。
 %    \begin{macrocode}
@@ -3324,6 +3323,14 @@
     headsep       = 0.5 cm,
     footskip      = 1.0 cm
   }
+%    \end{macrocode}
+%
+% \changes{unreleased}{2023/09/24}{学位论文页面纵向顶部对齐。}
+% 学位论文页面纵向顶部对齐。
+%    \begin{macrocode}
+%<*thesis>
+\AtEndOfClass { \raggedbottom }
+%</thesis>
 %    \end{macrocode}
 %
 % \subsection{页眉页脚}
