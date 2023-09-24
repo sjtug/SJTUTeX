@@ -2385,7 +2385,7 @@
   {
 %<*math>
     \PassOptionsToPackage { notext } { stix2 }
-    \RequirePackage { upgreek, stix2, bm }
+    \RequirePackage { upgreek, stix2 }
     \@@_set_slanted_greek:
 %</math>
 %<*text>
@@ -2476,7 +2476,6 @@
 \tl_set:Nn \ttdefault { qcr }
 %<newtx>\RequirePackage { newtxmath }
 %<newpx>\RequirePackage { newpxmath }
-\RequirePackage { bm }
 \tl_set_eq:NN \encodingdefault \g_@@_save_encodingdefault_tl
 \tl_set_eq:NN \rmdefault \g_@@_save_rmdefault_tl
 \tl_set_eq:NN \sfdefault \g_@@_save_sfdefault_tl
@@ -2559,7 +2558,6 @@
 \SetMathAlphabet { \mathtt } { bold   } { OT1 } { lmtt } { m  } { n  }
 \bool_if:NT \g_@@_upright_integral_bool
   { \RequirePackage { cmupint } }
-\RequirePackage { bm }
 \@@_set_slanted_greek:
 \@@_set_unimath_symbol:
 %</math>
@@ -2577,7 +2575,6 @@
 \SetMathAlphabet { \mathtt } { bold } { OT1 } { pcr } { b } { n }
 \bool_if:NT \g_@@_upright_integral_bool
   { \RequirePackage { cmupint } }
-\RequirePackage { bm }
 \@@_set_unimath_symbol:
 %</math>
 %<*text>
@@ -2696,7 +2693,7 @@
 %</font&(math|text)>
 %    \end{macrocode}
 %
-% \pkg{unicode-math} 宏包
+% \pkg{unicode-math} 宏包设置。
 %    \begin{macrocode}
 %<*class>
 \ctex_at_end_package:nn { unicode-math }
@@ -2717,6 +2714,15 @@
         \scpolint\npolint\pointint\sqint\intlarhk\intx
         \intcap\intcup\upint\lowint
       }
+  }
+%    \end{macrocode}
+%
+% 若未使用 \pkg{unicode-math} 配置数学字体，则自动调用 \pkg{bm}。
+%    \begin{macrocode}
+\ctex_at_end_preamble:n
+  {
+    \@ifpackageloaded { unicode-math }
+      { } { \RequirePackage { bm } }
   }
 %</class>
 %    \end{macrocode}
