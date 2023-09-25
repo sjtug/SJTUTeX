@@ -4194,6 +4194,7 @@
   }
 \cs_new_protected:Nn \@@_set_language_zh:
   {
+    \tl_set:Nn \languagename { chinese }
     \ctex_set:n { autoindent = true }
     \@@_set_cjk_default_zh:
     \normalfont
@@ -4203,6 +4204,8 @@
 %<en>\cs_new_protected:Nn \@@_set_language_en:
 %<de>\cs_new_protected:Nn \@@_set_language_de:
   {
+%<en>    \tl_set:Nn \languagename { english }
+%<de>    \tl_set:Nn \languagename { ngerman }
     \ctex_set:n { autoindent = 1.5 em }
     \normalfont
   }
@@ -4216,6 +4219,7 @@
   }
 \cs_new_protected:Nn \@@_set_language_ja:
   {
+    \tl_set:Nn \languagename { japanese }
     \ctex_set:n { autoindent = 1 }
     \@@_set_cjk_default_ja:
     \normalfont
@@ -4246,6 +4250,16 @@
   }
 %</thesis>
 %</lang>
+%    \end{macrocode}
+%
+% 初始化语言名称。
+%    \begin{macrocode}
+%<*scheme>
+%<zh>\tl_set:Nn \languagename { chinese  }
+%<en>\tl_set:Nn \languagename { english  }
+%<de>\tl_set:Nn \languagename { ngerman  }
+%<ja>\tl_set:Nn \languagename { japanese }
+%</scheme>
 %    \end{macrocode}
 %
 % 载入语言配置。
@@ -5314,6 +5328,30 @@
 %    \begin{macrocode}
 \ctex_at_end_package:nn { nomencl }
   { \tl_set:Nn \nomname { \SJTU@nomname } }
+%    \end{macrocode}
+%
+% \changes{unreleased}{2023/09/25}{添加 \pkg{siunitx} 本地化支持。}
+% \subsubsection{\pkg{translations} 宏包}
+%    \begin{macrocode}
+\ctex_at_end_package:nn { translations }
+  {
+    \DeclareLanguage { chinese }
+    \DeclareLanguageAlias { Chinese } { chinese }
+  }
+%    \end{macrocode}
+%
+% \subsubsection{\pkg{siunitx} 宏包}
+%    \begin{macrocode}
+\ctex_at_end_package:nn { siunitx }
+  {
+    \@ifpackageloaded { translations }
+      {
+        \DeclareTranslation { Chinese  } { and } { 和 }
+        \DeclareTranslation { Japanese } { and } { と }
+        \DeclareTranslation { Chinese  } { to~(numerical~range) } { \textasciitilde }
+        \DeclareTranslation { Japanese } { to~(numerical~range) } { \textasciitilde }
+      } { }
+  }
 %    \end{macrocode}
 %
 %    \begin{macrocode}
