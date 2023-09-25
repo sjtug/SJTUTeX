@@ -85,6 +85,7 @@
     \file{sjtu-text-font-newtx.def}     {\from{\jobname.dtx}{font,text,newtx}}
     \file{sjtu-text-font-newpx.def}     {\from{\jobname.dtx}{font,text,newpx}}
     \file{sjtu-text-font-lm.def}        {\from{\jobname.dtx}{font,text,lm}}
+    \file{sjtu-text-font-libertinus.def}{\from{\jobname.dtx}{font,text,libertinus}}
     \file{sjtu-text-font-stixtwo.def}   {\from{\jobname.dtx}{font,text,stixtwo}}
     \file{sjtu-text-font-xits.def}      {\from{\jobname.dtx}{font,text,xits}}
     \file{sjtu-text-font-newcm.def}     {\from{\jobname.dtx}{font,text,newcm}}
@@ -93,6 +94,7 @@
     \file{sjtu-math-font-newtx.def}     {\from{\jobname.dtx}{font,math,newtx}}
     \file{sjtu-math-font-newpx.def}     {\from{\jobname.dtx}{font,math,newpx}}
     \file{sjtu-math-font-lm.def}        {\from{\jobname.dtx}{font,math,lm}}
+    \file{sjtu-math-font-libertinus.def}{\from{\jobname.dtx}{font,math,libertinus}}
     \file{sjtu-math-font-stixtwo.def}   {\from{\jobname.dtx}{font,math,stixtwo}}
     \file{sjtu-math-font-xits.def}      {\from{\jobname.dtx}{font,math,xits}}
     \file{sjtu-math-font-newcm.def}     {\from{\jobname.dtx}{font,math,newcm}}
@@ -156,6 +158,7 @@
 \Msg{*     sjtu-scheme-ja.def                                    *}
 \Msg{*     sjtu-scheme-zh.def                                    *}
 \Msg{*     sjtu-text-font-cambria.def                            *}
+\Msg{*     sjtu-text-font-libertinus.def                         *}
 \Msg{*     sjtu-text-font-lm.def                                 *}
 \Msg{*     sjtu-text-font-newcm.def                              *}
 \Msg{*     sjtu-text-font-newpx.def                              *}
@@ -164,6 +167,7 @@
 \Msg{*     sjtu-text-font-times.def                              *}
 \Msg{*     sjtu-text-font-xits.def                               *}
 \Msg{*     sjtu-math-font-cambria.def                            *}
+\Msg{*     sjtu-math-font-libertinus.def                         *}
 \Msg{*     sjtu-math-font-lm.def                                 *}
 \Msg{*     sjtu-math-font-newcm.def                              *}
 \Msg{*     sjtu-math-font-newpx.def                              *}
@@ -273,6 +277,8 @@
 %<font&text&xits>\ProvidesExplFile{sjtu-text-font-xits.def}
 %<font&text&lm>  {Latin Modern text fonts definition (SJTUTeX)}
 %<font&text&lm>\ProvidesExplFile{sjtu-text-font-lm.def}
+%<font&text&libertinus>  {Libertinus text fonts definition (SJTUTeX)}
+%<font&text&libertinus>\ProvidesExplFile{sjtu-text-font-libertinus.def}
 %<font&text&newcm>  {New Computer Modern text fonts definition (SJTUTeX)}
 %<font&text&newcm>\ProvidesExplFile{sjtu-text-font-newcm.def}
 %<font&text&cambria>  {Cambria text fonts definition (SJTUTeX)}
@@ -289,6 +295,8 @@
 %<font&math&xits>\ProvidesExplFile{sjtu-math-font-xits.def}
 %<font&math&lm>  {Latin Modern math fonts definition (SJTUTeX)}
 %<font&math&lm>\ProvidesExplFile{sjtu-math-font-lm.def}
+%<font&math&libertinus>  {Libertinus math fonts definition (SJTUTeX)}
+%<font&math&libertinus>\ProvidesExplFile{sjtu-math-font-libertinus.def}
 %<font&math&newcm>  {New Computer Modern math fonts definition (SJTUTeX)}
 %<font&math&newcm>\ProvidesExplFile{sjtu-math-font-newcm.def}
 %<font&math&cambria>  {Cambria math fonts definition (SJTUTeX)}
@@ -761,7 +769,7 @@
 %
 % \begin{function}{text-font}
 %   \begin{sjtusyntax}[emph={[1]text-font}]
-%     text-font = (*<(newtx)|times|stixtwo|xits|newpx|cambria|newcm|lm|none>*)
+%     text-font = (*<(newtx)|times|stixtwo|xits|newpx|cambria|newcm|lm|libertinus|none>*)
 %   \end{sjtusyntax}
 %   指定西文字体集。\sjtutex{} 预定义了一些西文字体组合，
 %   具体配置见表 \ref{tab:latinfonts}。
@@ -770,7 +778,7 @@
 %
 % \begin{function}{math-font}
 %   \begin{sjtusyntax}[emph={[1]math-font}]
-%     math-font = (*<(auto)|(newtx)|stixtwo|xits|newpx|cambria|newcm|lm|none>*)
+%     math-font = (*<(auto)|(newtx)|times|stixtwo|xits|newpx|cambria|newcm|lm|libertinus|none>*)
 %   \end{sjtusyntax}
 %   指定数学字体集。\sjtutex{} 预定义了一些数学字体组合，
 %   具体配置见表 \ref{tab:latinfonts} 数学字体列。
@@ -789,15 +797,16 @@
 %     \toprule
 %       & \strong{正文字体} & \strong{无衬线字体} & \strong{等宽字体} & \strong{数学字体} \\
 %     \midrule
-%       |newtx|                  & TG Termes X\tnote{a}     & TG Heros    & TG Cursor   & newtx         \\
-%       \multirow{2}{*}{|times|} & Times New Roman\tnote{b} & Arial       & Courier New & \multirow{2}{*}{mathptmx} \\
-%                                & Times\tnote{c}           & Helvetica   & Courier     &               \\
-%       |stixtwo|                & STIX Two Text            & TG Heros    & TG Cursor   & STIX Two Math \\
-%       |xits|                   & XITS                     & TG Heros    & TG Cursor   & XITS Math     \\
-%       |newpx|                  & TG Pagella X             & TG Heros    & TG Cursor   & newpx         \\
-%       |cambria|                & Cambria                  & Calibri     & Consolas    & Cambria Math  \\
-%       |newcm|                  & New CM\tnote{d}          & New CM Sans & New CM Mono & New CM        \\
-%       |lm|                     & LM Roman\tnote{e}        & LM Sans     & LM Mono     & LM Math       \\
+%       |newtx|                  & TG Termes X\tnote{a}     & TG Heros        & TG Cursor   & newtx           \\
+%       \multirow{2}{*}{|times|} & Times New Roman\tnote{b} & Arial           & Courier New & \multirow{2}{*}{mathptmx} \\
+%                                & Times\tnote{c}           & Helvetica       & Courier     &                 \\
+%       |stixtwo|                & STIX Two Text            & TG Heros        & TG Cursor   & STIX Two Math   \\
+%       |xits|                   & XITS                     & TG Heros        & TG Cursor   & XITS Math       \\
+%       |newpx|                  & TG Pagella X             & TG Heros        & TG Cursor   & newpx           \\
+%       |cambria|                & Cambria                  & Calibri         & Consolas    & Cambria Math    \\
+%       |newcm|                  & New CM\tnote{d}          & New CM Sans     & New CM Mono & New CM Math     \\
+%       |lm|                     & LM Roman\tnote{e}        & LM Sans         & LM Mono     & LM Math         \\
+%       |libertinus|             & Libertinus Serif         & Libertinus Sans & LM Mono     & Libertinus Math \\
 %     \bottomrule
 %   \end{tabular}
 %   \begin{tablenotes}
@@ -1582,6 +1591,13 @@
 %    \end{macrocode}
 % \end{variable}
 %
+% \begin{variable}{\g_@@_math_font_options_clist}
+% 传入数学字体宏包的选项列表。
+%    \begin{macrocode}
+\clist_new:N \g_@@_math_font_options_clist
+%    \end{macrocode}
+% \end{variable}
+%
 % \begin{variable}{\g_@@_review_bool}
 % 盲审模式。
 %    \begin{macrocode}
@@ -1860,19 +1876,27 @@
   { \dim_ratio:nn { \g_@@_line_skip_dim } { \g_@@_font_size_dim } / 1.2 }
 %    \end{macrocode}
 %
+% 数字字体宏包选项。
+%    \begin{macrocode}
+\clist_set:Nx \g_@@_math_font_options_clist
+  {
+    \bool_if:NT \g_@@_slanted_uppercase_greek_bool
+      { slantedGreek } ,
+    \bool_if:NT \g_@@_upright_integral_bool
+      { upint }
+  }
+%    \end{macrocode}
+%
 % 追加全局选项。
 %    \begin{macrocode}
 \clist_put_right:Nx \@classoptionslist
   {
     a4paper ,
-    \bool_if:NT \g_@@_slanted_uppercase_greek_bool
-      { slantedGreek } ,
-    \bool_if:NT \g_@@_upright_integral_bool
-      { upint } ,
+    \tl_if_eq:NNT \g_@@_lang_tl \c_@@_lang_de_tl
+      { german, ngerman } ,
     \bool_if:NT \g_@@_integral_limits_bool
       { intlimits } ,
-    \tl_if_eq:NNT \g_@@_lang_tl \c_@@_lang_de_tl
-      { german, ngerman }
+    \g_@@_math_font_options_clist
   }
 %    \end{macrocode}
 %
@@ -2378,6 +2402,7 @@
 %
 % \subsubsection{西文与数学字体}
 %
+% \changes{unreleased}{2023/09/25}{新增 \opt{libertinus} 字体配置。}
 %    \begin{macrocode}
 %<*font&(math|text)>
 %<*stixtwo>
@@ -2562,6 +2587,63 @@
 \@@_set_unimath_symbol:
 %</math>
 %</lm>
+%<*libertinus>
+\@@_fontset_case:nn
+  {
+%<*text>
+    \tl_set:Nn \encodingdefault { T1 }
+    \tl_set:Nn \rmdefault { LibertinusSerif-TLF }
+    \tl_set:Nn \sfdefault { LibertinusSans-TLF  }
+    \tl_set:Nn \ttdefault { lmtt                }
+%</text>
+%<*math>
+    \exp_args:No \PassOptionsToPackage
+      { \g_@@_math_font_options_clist } { libertinust1math }
+    \RequirePackage { libertinust1math }
+%</math>
+  }
+  {
+%<*math>
+    \RequirePackage { unicode-math }
+    \bool_if:NTF \g_@@_upright_integral_bool
+      { \setmathfont { LibertinusMath-Regular.otf } }
+      {
+        \setmathfont { LibertinusMath-Regular.otf }
+          [ StylisticSet = 8 ]
+      }
+    \setmathfont { latinmodern-math.otf } [ range = \checkmark ]
+%</math>
+%<math>    \setmathrm
+%<text>    \setmainfont
+      { LibertinusSerif }
+      [
+        Extension           = .otf,
+        UprightFont         = *-Regular,
+        BoldFont            = *-Bold,
+        ItalicFont          = *-Italic,
+        BoldItalicFont      = *-BoldItalic,
+        SlantedFont         = *-Regular,
+        BoldSlantedFont     = *-Bold,
+        SlantedFeatures     = { FakeSlant = 0.2 },
+        BoldSlantedFeatures = { FakeSlant = 0.2 }
+      ]
+%<math>    \setmathsf
+%<text>    \setsansfont
+      { LibertinusSans }
+      [
+        Extension           = .otf,
+        UprightFont         = *-Regular,
+        BoldFont            = *-Bold,
+        ItalicFont          = *-Italic,
+        BoldItalicFont      = *-Italic,
+        BoldItalicFeatures  = { FakeBold  = 3   },
+        SlantedFont         = *-Regular,
+        BoldSlantedFont     = *-Bold,
+        SlantedFeatures     = { FakeSlant = 0.2 },
+        BoldSlantedFeatures = { FakeSlant = 0.2 }
+      ]
+  }
+%</libertinus>
 %<*times>
 %<*math>
 \RequirePackage { amssymb, upgreek }
