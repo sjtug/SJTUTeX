@@ -1065,9 +1065,9 @@
 %     float-font = (*\marg{字体设置}*)
 %   \end{sjtusyntax}
 %   图、表等浮动体的额外字体设置。
-%   默认为 |\zihao{5}\fixedlineskip{15.6bp}|，五号字、固定行距 15.6 磅。
+%   默认为 |\zihao{5}\setbaselineskip{15.6bp}|，五号字、固定行距 15.6 磅。
 %   若英文学位模板使用者希望符合 Word 英文模板规则，可以将该项改为
-%   |\normalsize\fixedlineskip{15.6bp}| 正常字号、固定行距 15.6 磅。
+%   |\normalsize\setbaselineskip{15.6bp}| 正常字号、固定行距 15.6 磅。
 %   其中 15.6 磅的固定行距为 Microsoft Word 文档网格的默认固定行间距。
 % \end{function}
 %
@@ -1375,11 +1375,11 @@
 % \end{tabular}
 % \end{table}
 %
-% \begin{function}[added=2022-12-27]{\fixedlineskip}
-%   \begin{sjtusyntax}[morekeywords={\fixedlineskip}]
-%     \fixedlineskip(*\marg{长度}*)
+% \begin{function}[added=2023-10-24]{\setbaselineskip}
+%   \begin{sjtusyntax}[morekeywords={\setbaselineskip}]
+%     \setbaselineskip(*\marg{长度}*)
 %   \end{sjtusyntax}
-%   设置固定值行距。通过当前字体大小计算行距倍数，在字号命令之后使用。
+%   设置基本行距，在字号命令之后使用。
 % \end{function}
 %
 % \begin{function}{\appendix}
@@ -1544,14 +1544,14 @@
 % \end{variable}
 %
 % \begin{variable}
-%   {\g_@@_zihao_tl,\g_@@_font_size_dim,\g_@@_line_skip_dim,
-%    \g_@@_default_line_skip_dim,\g_@@_line_spread_fp}
+%   {\g_@@_zihao_tl,\g_@@_font_size_int,\g_@@_font_size_dim,
+%    \g_@@_baseline_skip_dim,\g_@@_line_spread_fp}
 % 字号大小与行距。
 %    \begin{macrocode}
 \tl_new:N \g_@@_zihao_tl
+\int_new:N \g_@@_font_size_int
 \dim_new:N \g_@@_font_size_dim
-\dim_new:N \g_@@_line_skip_dim
-\dim_new:N \g_@@_default_line_skip_dim
+\dim_new:N \g_@@_baseline_skip_dim
 \fp_new:N \g_@@_line_spread_fp
 %    \end{macrocode}
 % \end{variable}
@@ -1715,26 +1715,38 @@
 %    \begin{macrocode}
     zihao .choice: ,
     zihao .value_required:n = true ,
-    zihao / -4 .code:n =
-      {
-        \tl_gset:Nn  \g_@@_zihao_tl {#1}
-        \dim_gset:Nn \g_@@_font_size_dim         { 12   bp }
-        \dim_gset:Nn \g_@@_default_line_skip_dim { 20   bp }
-      } ,
     zihao /  5 .code:n =
       {
         \tl_gset:Nn  \g_@@_zihao_tl {#1}
-        \dim_gset:Nn \g_@@_font_size_dim         { 10.5 bp }
-        \dim_gset:Nn \g_@@_default_line_skip_dim { 15.6 bp }
+        \int_gset:Nn \g_@@_font_size_int { 1 }
+        \dim_gset:Nn \g_@@_font_size_dim { 10.5 bp }
+      } ,
+    zihao / -4 .code:n =
+      {
+        \tl_gset:Nn  \g_@@_zihao_tl {#1}
+        \int_gset:Nn \g_@@_font_size_int { 2 }
+        \dim_gset:Nn \g_@@_font_size_dim { 12   bp }
       } ,
 %<!article>    zihao .initial:n = { -4 } ,
 %<article>    zihao .initial:n = {  5 } ,
 %    \end{macrocode}
 %
-% \changes{v2.0}{2022/12/03}{添加 \opt{lineskip} 文档类选项。}
-% 行间距。
+% 行距倍数。
 %    \begin{macrocode}
-    lineskip .dim_gset:N = \g_@@_line_skip_dim ,
+    linespread .fp_gset:N = \g_@@_line_spread_fp ,
+    linespread .initial:n = { \c_nan_fp } ,
+    linespread .value_required:n = true ,
+%    \end{macrocode}
+%
+% \changes{v2.0}{2022/12/03}{添加 \opt{lineskip} 文档类选项。}
+% \changes{unreleased}{2022/12/03}{添加 \opt{baselineskip} 文档类选项，
+%   替换原 \opt{lineskip} 选项。}
+% 基础行距。
+%    \begin{macrocode}
+    baselineskip .dim_gset:N = \g_@@_baseline_skip_dim ,
+%<thesis>    baselineskip .initial:n = { 20 bp } ,
+%<!thesis>    baselineskip .initial:n = { 15.6 bp } ,
+    baselineskip .value_required:n = true ,
 %    \end{macrocode}
 %
 % 字体配置。
@@ -1868,14 +1880,6 @@
   }
 %    \end{macrocode}
 %
-% 计算行距倍数。
-%    \begin{macrocode}
-\dim_compare:nNnT \g_@@_line_skip_dim < \g_@@_font_size_dim
-  { \dim_set_eq:NN \g_@@_line_skip_dim \g_@@_default_line_skip_dim }
-\fp_set:Nn \g_@@_line_spread_fp
-  { \dim_ratio:nn { \g_@@_line_skip_dim } { \g_@@_font_size_dim } / 1.2 }
-%    \end{macrocode}
-%
 % 数字字体宏包选项。
 %    \begin{macrocode}
 \clist_set:Nx \g_@@_math_font_options_clist
@@ -1905,7 +1909,8 @@
 \clist_put_right:Nx \g_@@_options_to_ctex_class_clist
   {
     zihao      = \g_@@_zihao_tl ,
-    linespread = \fp_use:N \g_@@_line_spread_fp ,
+    \fp_if_nan:nF { \g_@@_line_spread_fp }
+      { linespread = \fp_use:N \g_@@_line_spread_fp } ,
     \bool_if:NTF \g_@@_twoside_bool
       { twoside   } { oneside     } ,
 %<!article>    \bool_if:NTF \g_@@_openright_bool
@@ -2068,20 +2073,6 @@
     \ctex_appto_cmd:NnnTF #1 { } {#2}
       { } { \ctex_patch_failure:N #1 }
   }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\fixedlineskip}
-% 设置固定值行距。通过当前字体大小计算行距倍数，在字号命令之后使用。
-%    \begin{macrocode}
-\cs_new:Npn \@@_fixed_line_skip:n #1
-  {
-    \exp_args:Nx \linespread
-      { \fp_to_decimal:n { \dim_ratio:nn { #1 } { \f@size pt } / 1.2 } }
-    \selectfont
-  }
-\NewDocumentCommand \fixedlineskip { m }
-  { \exp_args:Nx \@@_fixed_line_skip:n {#1} \tex_ignorespaces:D }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -2275,6 +2266,56 @@
   { \DeclareInstance { sjtu } {#1} { page } {#2} }
 %</thesis>
 %    \end{macrocode}
+%
+% \subsection{字号行距}
+%
+% 重定义 \cs{normalsize}，设置正文的基本行距。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_set_font_size:nnNn #1#2#3#4
+  { \cs_set_protected:Npn #3 { \@setfontsize #3 {#1} {#2} #4 } }
+\tl_set:Ne \l_@@_font_size_tl
+  {
+    { \dim_to_decimal:n { \g_@@_font_size_dim     } }
+    { \dim_to_decimal:n { \g_@@_baseline_skip_dim } }
+  }
+\dim_compare:nNnT \g_@@_baseline_skip_dim > \c_zero_dim
+  {
+    \int_case:nn { \g_@@_font_size_int }
+      {
+        { 1 } {
+                \exp_after:wN \@@_set_font_size:nnNn \l_@@_font_size_tl
+                  \normalsize
+                  {
+                    \abovedisplayskip 10\p@ \@plus2\p@ \@minus5\p@
+                    \abovedisplayshortskip \z@ \@plus3\p@
+                    \belowdisplayshortskip 6\p@ \@plus3\p@ \@minus3\p@
+                    \belowdisplayskip \abovedisplayskip
+                    \let\@listi\@listI
+                  }
+              }
+        { 2 } {
+                \exp_after:wN \@@_set_font_size:nnNn \l_@@_font_size_tl
+                  \normalsize
+                  {
+                    \abovedisplayskip 12\p@ \@plus3\p@ \@minus7\p@
+                    \abovedisplayshortskip \z@ \@plus3\p@
+                    \belowdisplayshortskip 6.5\p@ \@plus3.5\p@ \@minus3\p@
+                    \belowdisplayskip \abovedisplayskip
+                    \let\@listi\@listI
+                  }
+              }
+      }
+    \normalsize
+  }
+%    \end{macrocode}
+%
+% \begin{macro}{\setbaselineskip}
+% 设置基本行距，在字号命令之后使用。
+%    \begin{macrocode}
+\NewDocumentCommand \setbaselineskip { m }
+  { \fontsize { \f@size } {#1} \selectfont }
+%    \end{macrocode}
+% \end{macro}
 %
 % \subsection{字体配置}
 %
@@ -3731,7 +3772,7 @@
 \keys_define:nn { sjtu / style }
   {
     float-font  .tl_set:N = \SJTU@style@float@font ,
-    float-font .initial:n = \zihao { 5 } \fixedlineskip { 15.6 bp }
+    float-font .initial:n = \zihao { 5 } \setbaselineskip { 15.6 bp }
   }
 \ctex_patch_cmd:Nnn \@floatboxreset
   { \normalsize } { \SJTU@style@float@font }
@@ -4466,19 +4507,19 @@
       },
     { subject }
       {
-        format      = \zihao { -2 } \fixedlineskip { 31.2 bp } ,
+        format      = \zihao { -2 } \setbaselineskip { 31.2 bp } ,
         content     = \l_@@_info_subject_zh_tl ,
         bottom-skip = \c_zero_dim plus 2 fill
       },
     { title   }
       {
-        format      = \zihao { 2 } \bfseries \fixedlineskip { 31.2 bp } ,
+        format      = \zihao { 2 } \setbaselineskip { 31.2 bp } \bfseries ,
         content     = \l_@@_info_display_title_zh_tl ,
         bottom-skip = \c_zero_dim plus 3 fill
       },
     { info    }
       {
-        format      = \zihao { 4 } \fixedlineskip { 31.2 bp } ,
+        format      = \zihao { 4 } \setbaselineskip { 31.2 bp } ,
         content     =
           {
             \@@_title_page_info_i:nxn { zh }
@@ -4501,7 +4542,7 @@
       },
     { date    }
       {
-        format      = \zihao { 4 } \bfseries \fixedlineskip { 31.2 bp } ,
+        format      = \zihao { 4 } \setbaselineskip { 31.2 bp } \bfseries ,
         content     = \l_@@_info_date_zh_tl ,
         bottom-skip = 15.6 bp
       }
@@ -4514,7 +4555,7 @@
     bookmark      = true ,
     bookmark-text = \c_@@_name_title_page_tl ,
     style         = SJTU@fund@zh ,
-    format        = \linespread { 1 } \@@_set_language_zh: ,
+    format        = \linespread { } \@@_set_language_zh: ,
     prefix        = title / zh ,
     components    = { logo, subject, title, info, date }
   }
@@ -4524,7 +4565,7 @@
   {
     { subject }
       {
-        format      = \zihao { 4 } \bfseries \fixedlineskip { 31.2 bp } ,
+        format      = \zihao { 4 } \setbaselineskip { 31.2 bp } \bfseries ,
 %<en>        content     = \l_@@_info_subject_en_tl ,
 %<de>        content     = \l_@@_info_subject_de_tl ,
 %<ja>        content     = \l_@@_info_subject_ja_tl ,
@@ -4532,7 +4573,7 @@
       },
     { title   }
       {
-        format      = \zihao { -2 } \bfseries \fixedlineskip { 31.2 bp } ,
+        format      = \zihao { -2 } \setbaselineskip { 31.2 bp } \bfseries ,
 %<en>        content     = \MakeUppercase \l_@@_info_display_title_en_tl ,
 %<de>        content     = \MakeUppercase \l_@@_info_display_title_de_tl ,
 %<ja>        content     = \l_@@_info_display_title_ja_tl ,
@@ -4540,7 +4581,7 @@
       },
     { info    }
       {
-        format      = \zihao { 3 } \fixedlineskip { 31.2 bp } ,
+        format      = \zihao { 3 } \setbaselineskip { 31.2 bp } ,
         content     =
           {
 %<en>            \@@_title_page_info_i:nxn { en }
@@ -4555,7 +4596,7 @@
       },
     { date    }
       {
-        format      = \zihao { 3 } \fixedlineskip { 31.2 bp } ,
+        format      = \zihao { 3 } \setbaselineskip { 31.2 bp } ,
         content     =
 %<en>          { \@@_title_page_info_ii:n { en } } ,
 %<de>          { \@@_title_page_info_ii:n { de } } ,
@@ -4572,7 +4613,7 @@
 \@@_declare_page:nn { title / en }
   {
     style       = SJTU@fund@en ,
-    format      = \linespread { 1 } \@@_set_language_en: ,
+    format      = \linespread { } \@@_set_language_en: ,
     prefix      = title / en ,
     components  = { subject, title, info, date }
   }
@@ -4581,7 +4622,7 @@
 \@@_declare_page:nn { title / de }
   {
     style       = SJTU@fund@de ,
-    format      = \linespread { 1 } \@@_set_language_de: ,
+    format      = \linespread { } \@@_set_language_de: ,
     prefix      = title / de ,
     components  = { subject, title, info, date }
   }
@@ -4590,7 +4631,7 @@
 \@@_declare_page:nn { title / ja }
   {
     style       = SJTU@fund@ja ,
-    format      = \linespread { 1 } \@@_set_language_ja: ,
+    format      = \linespread { } \@@_set_language_ja: ,
     prefix      = title / ja ,
     components  = { subject, title, info, date }
   }
@@ -4630,7 +4671,7 @@
   {
     { orig / title }
       {
-        format      = \zihao { 3 } \heiti \fixedlineskip { 31.2 bp } ,
+        format      = \zihao { 3 } \setbaselineskip { 31.2 bp } \heiti ,
         content     =
           {
             \c_@@_name_univ_zh_tl
@@ -4642,14 +4683,14 @@
       },
     { orig / text  }
       {
-        format      = \zihao { -4 } \fixedlineskip { 23.4 bp } ,
+        format      = \zihao { -4 } \setbaselineskip { 23.4 bp } ,
         content     = \c_@@_orig_decl_text_zh_tl ,
         bottom-skip = 15.6 bp ,
         align       = normal
       },
     { orig / sign  }
       {
-        format      = \zihao { 4 } \fixedlineskip { 31.2 bp } ,
+        format      = \zihao { 4 } \setbaselineskip { 31.2 bp } ,
         content     =
           {
             \@@_signature:N \c_@@_name_decl_author_zh_tl
@@ -4660,7 +4701,7 @@
       },
     { auth / title }
       {
-        format      = \zihao { 3 } \heiti \fixedlineskip { 31.2 bp } ,
+        format      = \zihao { 3 } \setbaselineskip { 31.2 bp } \heiti ,
         content     =
           {
             \c_@@_name_univ_zh_tl
@@ -4672,14 +4713,14 @@
       },
     { auth / text  }
       {
-        format      = \zihao { -4 } \fixedlineskip { 23.4 bp } ,
+        format      = \zihao { -4 } \setbaselineskip { 23.4 bp } ,
         content     = \c_@@_auth_decl_text_zh_tl ,
         bottom-skip = 15.6 bp ,
         align       = normal
       },
     { auth / sign  }
       {
-        format      = \zihao { 4 } \fixedlineskip { 31.2 bp } ,
+        format      = \zihao { 4 } \setbaselineskip { 31.2 bp } ,
         content     =
           {
             \@@_signature:N \c_@@_name_decl_author_zh_tl
@@ -4697,7 +4738,7 @@
   {
     bookmark      = true ,
     bookmark-text = \c_@@_name_declaration_tl ,
-    format        = \linespread { 1 } \@@_set_language_zh: ,
+    format        = \linespread { } \@@_set_language_zh: ,
     prefix        = copyright ,
     components    =
       {
