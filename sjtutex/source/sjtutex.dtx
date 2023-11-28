@@ -1065,10 +1065,7 @@
 %     float-font = (*\marg{字体设置}*)
 %   \end{sjtusyntax}
 %   图、表等浮动体的额外字体设置。
-%   默认为 |\zihao{5}\setbaselineskip{15.6bp}|，五号字、固定行距 15.6 磅。
-%   若英文学位模板使用者希望符合 Word 英文模板规则，可以将该项改为
-%   |\normalsize\setbaselineskip{15.6bp}| 正常字号、固定行距 15.6 磅。
-%   其中 15.6 磅的固定行距为 Microsoft Word 文档网格的默认固定行间距。
+%   默认为 |\zihao{5}|，五号字。
 % \end{function}
 %
 % \begin{function}[added=2022-12-20]{style/caption-font}
@@ -1740,7 +1737,7 @@
 %    \end{macrocode}
 %
 % \changes{v2.0}{2022/12/03}{添加 \opt{lineskip} 文档类选项。}
-% \changes{unreleased}{2022/12/03}{添加 \opt{baselineskip} 文档类选项，
+% \changes{unreleased}{2023/10/24}{添加 \opt{baselineskip} 文档类选项，
 %   替换原 \opt{lineskip} 选项。}
 % 基础行距。
 %    \begin{macrocode}
@@ -3499,10 +3496,11 @@
 \keys_define:nn { sjtu / style }
   {
     header-font  .tl_set:N = \l_@@_style_header_font_tl ,
-%<thesis>    header-font .initial:n = \zihao { -5 } ,
+%<thesis>    header-font .initial:n = \zihao { -5 } \setbaselineskip { 12 bp } ,
 %<!thesis>    header-font .initial:n = \zihao { -5 } \sffamily ,
     footer-font  .tl_set:N = \l_@@_style_footer_font_tl ,
-    footer-font .initial:n = \zihao { -5 }
+%<thesis>    footer-font .initial:n = \zihao { -5 } \setbaselineskip { 12 bp }
+%<!thesis>    footer-font .initial:n = \zihao { -5 }
   }
 \fancyheadinit { \l_@@_style_header_font_tl }
 \fancyfootinit { \l_@@_style_footer_font_tl }
@@ -3664,13 +3662,21 @@
   {
     pagestyle   = SJTU@null ,
     fixskip     = true ,
-    beforeskip  = 24 bp ,
-    afterskip   = 18 bp ,
-    lofskip     = \c_zero_skip ,
-    lotskip     = \c_zero_skip ,
-    format      = \zihao { 3 } \bfseries \CJKsffamily \centering ,
+%<*thesis>
+    beforeskip  = 27 bp ,
+    afterskip   = 27 bp ,
+    format      = \zihao { 3 } \setbaselineskip{ 20 bp } \bfseries
+                  \CJKsffamily \centering ,
+%</thesis>
+%<*report>
+    beforeskip  = 30 pt ,
+    afterskip   = 24 pt ,
+    format      = \Large \bfseries \CJKsffamily \centering ,
+%</report>
     nameformat  = ,
     titleformat = ,
+    lofskip     = \c_zero_skip ,
+    lotskip     = \c_zero_skip ,
     aftername   = \quad ,
     afterindent = true
   }
@@ -3686,23 +3692,34 @@
 %<*class>
 \ctex_set:nn { section }
   {
+%<*thesis>
     beforeskip  = 24 bp ,
     afterskip   =  6 bp ,
-    format      = \zihao { 4 } \bfseries \CJKsffamily ,
+    format      = \zihao { 4 } \setbaselineskip { 18 bp } \bfseries
+                  \CJKsffamily ,
+%</thesis>
+%<!thesis>    format      = \large \bfseries \CJKsffamily ,
     afterindent = true
   }
 \ctex_set:nn { subsection }
   {
+%<*thesis>
     beforeskip  = 12 bp ,
     afterskip   =  6 bp ,
-    format      = \zihao { -4 } \bfseries \CJKsffamily ,
+    format      = \zihao { -4 } \setbaselineskip { 16 bp } \bfseries
+                  \CJKsffamily ,
+%</thesis>
+%<!thesis>    format      = \normalsize \bfseries \CJKsffamily ,
     afterindent = true
   }
 \ctex_set:nn { subsubsection }
   {
+%<*thesis>
     beforeskip  =  6 bp ,
     afterskip   =  6 bp ,
-    format      = \zihao { -4 } \normalfont ,
+    format      = \zihao { -4 } \setbaselineskip { 16 bp } \normalfont ,
+%</thesis>
+%<!thesis>    format      = \normalsize \normalfont ,
     afterindent = true
   }
 \ctex_set:nn { paragraph }
@@ -3791,7 +3808,8 @@
 \keys_define:nn { sjtu / style }
   {
     float-font  .tl_set:N = \SJTU@style@float@font ,
-    float-font .initial:n = \zihao { 5 } \setbaselineskip { 15.6 bp }
+%<thesis>    float-font .initial:n = \zihao { 5 } \setbaselineskip { 14 bp }
+%<!thesis>    float-font .initial:n = \zihao { 5 }
   }
 \ctex_patch_cmd:Nnn \@floatboxreset
   { \normalsize } { \SJTU@style@float@font }
@@ -3803,10 +3821,14 @@
   {
     caption-font       .code:n =
       { \DeclareCaptionFont { SJTU@font     } {#1} } ,
-    caption-font    .initial:n = \zihao { 5 } \bfseries ,
+%<thesis>    caption-font    .initial:n = \zihao { 5 } \setbaselineskip { 14 bp }
+%<thesis>                                 \bfseries ,
+%<!thesis>    caption-font    .initial:n = \zihao { 5 } \bfseries ,
     subcaption-font    .code:n =
       { \DeclareCaptionFont { SJTU@sub@font } {#1} } ,
-    subcaption-font .initial:n = \zihao { 5 } \normalfont
+%<thesis>    subcaption-font .initial:n = \zihao { 5 } \setbaselineskip { 14 bp }
+%<thesis>                                 \normalfont
+%<!thesis>    subcaption-font .initial:n = \zihao { 5 } \normalfont
   }
 \DeclareCaptionLabelSeparator { enskip } { \enskip }
 \captionsetup
@@ -4526,19 +4548,19 @@
       },
     { subject }
       {
-        format      = \zihao { -2 } \setbaselineskip { 31.2 bp } ,
+        format      = \zihao { -2 } \setbaselineskip { 30 bp } ,
         content     = \l_@@_info_subject_zh_tl ,
-        bottom-skip = \c_zero_dim plus 2 fill
+        bottom-skip = \c_zero_dim plus 1 fill
       },
     { title   }
       {
-        format      = \zihao { 2 } \setbaselineskip { 31.2 bp } \bfseries ,
+        format      = \zihao { 2 } \setbaselineskip { 36 bp } \bfseries ,
         content     = \l_@@_info_display_title_zh_tl ,
-        bottom-skip = \c_zero_dim plus 3 fill
+        bottom-skip = 30 bp plus 1 fill
       },
     { info    }
       {
-        format      = \zihao { 4 } \setbaselineskip { 31.2 bp } ,
+        format      = \zihao { 4 } \setbaselineskip { 30 bp } ,
         content     =
           {
             \@@_title_page_info_i:nxn { zh }
@@ -4557,13 +4579,12 @@
                 \@@_left_aligned_box:nn {#2} {#3}
               }
           } ,
-        bottom-skip = 31.2 bp
+        bottom-skip = 30 bp
       },
     { date    }
       {
-        format      = \zihao { 4 } \setbaselineskip { 31.2 bp } \bfseries ,
+        format      = \zihao { 4 } \setbaselineskip { 30 bp } \bfseries ,
         content     = \l_@@_info_date_zh_tl ,
-        bottom-skip = 15.6 bp
       }
   }
   {
@@ -4584,23 +4605,23 @@
   {
     { subject }
       {
-        format      = \zihao { 4 } \setbaselineskip { 31.2 bp } \bfseries ,
+        format      = \zihao { 4 } \setbaselineskip { 24 bp } \bfseries ,
 %<en>        content     = \l_@@_info_subject_en_tl ,
 %<de>        content     = \l_@@_info_subject_de_tl ,
 %<ja>        content     = \l_@@_info_subject_ja_tl ,
-        bottom-skip = \c_zero_dim plus 2 fill
+        bottom-skip = \c_zero_dim plus 1 fill
       },
     { title   }
       {
-        format      = \zihao { -2 } \setbaselineskip { 31.2 bp } \bfseries ,
+        format      = \zihao { -2 } \setbaselineskip { 30 bp } \bfseries ,
 %<en>        content     = \MakeUppercase \l_@@_info_display_title_en_tl ,
 %<de>        content     = \MakeUppercase \l_@@_info_display_title_de_tl ,
 %<ja>        content     = \l_@@_info_display_title_ja_tl ,
-        bottom-skip = \c_zero_dim plus 2 fill
+        bottom-skip = \c_zero_dim plus 1 fill
       },
     { info    }
       {
-        format      = \zihao { 3 } \setbaselineskip { 31.2 bp } ,
+        format      = \zihao { 3 } \setbaselineskip { 30 bp } ,
         content     =
           {
 %<en>            \@@_title_page_info_i:nxn { en }
@@ -4611,16 +4632,15 @@
 %<de>              { { \bfseries #1 \c_@@_name_info_sep_de_tl } {#3} }
 %<ja>              { { \bfseries #1 \c_@@_name_info_sep_ja_tl } {#3} }
           } ,
-        bottom-skip = \c_zero_dim plus 3 fill
+        bottom-skip = 30 bp plus 1 fill
       },
     { date    }
       {
-        format      = \zihao { 3 } \setbaselineskip { 31.2 bp } ,
+        format      = \zihao { 3 } \setbaselineskip { 30 bp } ,
         content     =
 %<en>          { \@@_title_page_info_ii:n { en } } ,
 %<de>          { \@@_title_page_info_ii:n { de } } ,
 %<ja>          { \@@_title_page_info_ii:n { ja } } ,
-        bottom-skip = 15.6 bp
       },
   }
   {
@@ -4690,7 +4710,8 @@
   {
     { orig / title }
       {
-        format      = \zihao { 3 } \setbaselineskip { 31.2 bp } \heiti ,
+        format      = \zihao { 3 } \setbaselineskip { 30 bp }
+                      \bfseries \heiti ,
         content     =
           {
             \c_@@_name_univ_zh_tl
@@ -4698,18 +4719,18 @@
             \c_@@_name_thesis_zh_tl
             \c_@@_name_orig_decl_zh_tl
           } ,
-        bottom-skip = 15.6 bp
+        bottom-skip = 12 bp
       },
     { orig / text  }
       {
-        format      = \zihao { -4 } \setbaselineskip { 23.4 bp } ,
+        format      = \zihao { -4 } \setbaselineskip { 24 bp } ,
         content     = \c_@@_orig_decl_text_zh_tl ,
-        bottom-skip = 15.6 bp ,
+        bottom-skip = 24 bp ,
         align       = normal
       },
     { orig / sign  }
       {
-        format      = \zihao { 4 } \setbaselineskip { 31.2 bp } ,
+        format      = \zihao { 4 } \setbaselineskip { 30 bp } ,
         content     =
           {
             \@@_signature:N \c_@@_name_decl_author_zh_tl
@@ -4720,7 +4741,8 @@
       },
     { auth / title }
       {
-        format      = \zihao { 3 } \setbaselineskip { 31.2 bp } \heiti ,
+        format      = \zihao { 3 } \setbaselineskip { 30 bp }
+                      \bfseries \heiti ,
         content     =
           {
             \c_@@_name_univ_zh_tl
@@ -4728,23 +4750,24 @@
             \c_@@_name_thesis_zh_tl
             \c_@@_name_auth_decl_zh_tl
           } ,
-        bottom-skip = 15.6 bp
+        bottom-skip = 12 bp
       },
     { auth / text  }
       {
-        format      = \zihao { -4 } \setbaselineskip { 23.4 bp } ,
+        format      = \zihao { -4 } \setbaselineskip { 24 bp } ,
         content     = \c_@@_auth_decl_text_zh_tl ,
-        bottom-skip = 15.6 bp ,
+        bottom-skip = 24 bp ,
         align       = normal
       },
     { auth / sign  }
       {
-        format      = \zihao { 4 } \setbaselineskip { 31.2 bp } ,
+        format      = \zihao { 4 } \setbaselineskip { 30 bp } ,
         content     =
           {
             \@@_signature:N \c_@@_name_decl_author_zh_tl
             \hfill
             \@@_signature:N \c_@@_name_decl_supervisor_zh_tl
+            \skip_horizontal:n { 2 em } \hbox:n { }
           } ,
         bottom-skip = \c_zero_dim plus 1 fill ,
         align       = normal
