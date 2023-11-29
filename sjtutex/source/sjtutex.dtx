@@ -4907,14 +4907,20 @@
     \IfBooleanTF {#1}
       { \SJTU@head* { \contentsname } }
       { \SJTU@head  { \contentsname } }
-    \@starttoc { toc }
+    \group_begin:
+      \cs_set:Npn \makebox [##1][##2]##3 { \, ##3 }
+      \@starttoc { toc }
+    \group_end:
   }
 \NewDocumentCommand \SJTU@listof { m m s }
   {
     \IfBooleanTF {#3}
       { \SJTU@head* {#1} }
       { \SJTU@head  {#1} }
-    \exp_args:Nv \@starttoc { ext@ #2 }
+    \group_begin:
+      \cs_set:Npn \makebox [##1][##2]##3 { \, ##3 }
+      \exp_args:Nv \@starttoc { ext@ #2 }
+    \group_end:
   }
 \DeclareDocumentCommand \listoffigures { }
   { \SJTU@listof { \listfigurename } { figure } }
@@ -4924,8 +4930,20 @@
 % \end{macro}
 %
 %    \begin{macrocode}
-\tl_set:Nn \cftdotsep { 1 }
-%<!article>\tl_set:Nn \cftchapleader { \normalfont \cftdotfill { \cftdotsep } }
+\tl_set:Nn \cftdotsep { 0.5 }
+%<!article>\tl_set:Nn \cftchapleader { \bfseries \cftdotfill { \cftdotsep } }
+%<*thesis>
+\clist_map_inline:nn
+  {
+    { cft before chap skip } { 10 bp plus 1 pt } ,
+    { cft chap   numwidth  } { 3.5 em } ,
+    { cft sec    indent    } { 2   em } ,
+    { cft sec    numwidth  } { 1.5 em } ,
+    { cft subsec indent    } { 4   em } ,
+    { cft subsec numwidth  } { 2.3 em }
+  }
+  { \skip_set:cn #1 }
+%</thesis>
 %    \end{macrocode}
 %
 % \changes{v2.0.1}{2023/03/31}{插图、表格和算法等索引不缩进。}
