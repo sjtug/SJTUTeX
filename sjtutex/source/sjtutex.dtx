@@ -3326,9 +3326,9 @@
 % \opt{nom}, \opt{ack}, \opt{achv}。}
 % 标准文档类中未定义的名称。
 %    \begin{macrocode}
-    figure*        .tl_set:N = \SJTU@figurename@aux ,
+    figure*        .tl_set:N = \SJTU@figurename@bi@second ,
     figure*       .initial:n = { 图 } ,
-    table*         .tl_set:N = \SJTU@tablename@aux ,
+    table*         .tl_set:N = \SJTU@tablename@bi@second ,
     table*        .initial:n = { 表 } ,
     algorithm      .tl_set:N = \SJTU@algorithmname ,
     algorithm     .initial:n = { Algorithm } ,
@@ -3815,12 +3815,21 @@
   { \normalsize } { \SJTU@style@float@font }
 %    \end{macrocode}
 %
+% \changes{unreleased}{2023/11/29}{更新题注格式。}
 % 题注格式。
 %    \begin{macrocode}
 \keys_define:nn { sjtu / style }
   {
+%    \end{macrocode}
+%
+% \pkg{bicaption} 中双语标题之间的间距受 \pkg{caption} 字体定义 \opt{normalsize}
+% 的影响，这里我们直接重定义 \opt{normalsize}。
+%    \begin{macrocode}
     caption-font       .code:n =
-      { \DeclareCaptionFont { SJTU@font     } {#1} } ,
+      { \DeclareCaptionFont { normalsize    } {#1} } ,
+%    \end{macrocode}
+%
+%    \begin{macrocode}
 %<thesis>    caption-font    .initial:n = \zihao { 5 } \setbaselineskip { 14 bp }
 %<thesis>                                 \bfseries ,
 %<!thesis>    caption-font    .initial:n = \zihao { 5 } \bfseries ,
@@ -3830,29 +3839,28 @@
 %<thesis>                                 \normalfont
 %<!thesis>    subcaption-font .initial:n = \zihao { 5 } \normalfont
   }
-\DeclareCaptionLabelSeparator { enskip } { \enskip }
 \captionsetup
   {
-    labelsep      = enskip ,
-    justification = centering ,
-    font          = SJTU@font
+    bi-slc   = off ,
+    labelsep = quad ,
+%<thesis>    skip     = 6 bp
   }
 \captionsetup [ sub ]
   {
-    format        = hang ,
-    justification = justified ,
-    font          = SJTU@sub@font
+    bi-slc   = on ,
+    font     = SJTU@sub@font ,
+    format   = hang
   }
 %    \end{macrocode}
 %
 % 双语题注。
 %    \begin{macrocode}
-\DeclareCaptionOption { aux-names } [ ]
+\DeclareCaptionOption { bi-second-names } [ ]
   {
-    \tl_set:Nn \figurename { \SJTU@figurename@aux }
-    \tl_set:Nn \tablename  { \SJTU@tablename@aux  }
+    \tl_set:Nn \figurename { \SJTU@figurename@bi@second }
+    \tl_set:Nn \tablename  { \SJTU@tablename@bi@second  }
   }
-\captionsetup [ bi-second ] { aux-names }
+\captionsetup [ bi-second ] { bi-second-names }
 %    \end{macrocode}
 %
 % 图、表、公式编号中的分隔符。
