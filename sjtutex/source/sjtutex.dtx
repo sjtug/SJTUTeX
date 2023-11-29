@@ -874,16 +874,16 @@
 % \begin{latex}[morekeywords={\sjtusetup}]
 % \sjtusetup{
 %   info = {
-%     zh/title     = {上海交通大学学位论文 \LaTeX{} 模板示例文档},
-%     en/title     = {A Sample Document for \LaTeX-based SJTU Thesis Template},
-%     zh/author    = {某\quad{}某},
-%     en/author    = {Mo Mo},
+%     zh/title      = {上海交通大学学位论文 \LaTeX{} 模板示例文档},
+%     en/title      = {A Sample Document for \LaTeX-based SJTU Thesis Template},
+%     zh/author     = {某\quad{}某},
+%     en/author     = {Mo Mo},
 %   },
 %   style = {
-%     float-numsep = {--},
+%     float-num-sep = {--},
 %   },
 %   name = {
-%     achv         = {攻读学位期间完成的论文},
+%     achv          = {攻读学位期间完成的论文},
 %   },
 % }
 % \end{latex}
@@ -1110,20 +1110,20 @@
 %   中的带圈数字。
 % \end{function}
 %
-% \begin{function}[updated=2022-12-23]{style/float-num-sep}
+% \begin{function}[updated=2023-11-29]{style/float-num-sep}
 %   \begin{sjtusyntax}[emph={[2]float-num-sep}]
 %     float-num-sep = (*\marg{分隔符}*)
 %   \end{sjtusyntax}
 %   图、表等浮动体编号中的分隔符。
-%   默认为 \opt{--}。
+%   默认为 \opt{.}。
 % \end{function}
 %
-% \begin{function}[updated=2022-12-23]{style/equation-num-sep}
+% \begin{function}[updated=2023-11-29]{style/equation-num-sep}
 %   \begin{sjtusyntax}[emph={[2]equation-num-sep}]
 %     equation-num-sep = (*\marg{分隔符}*)
 %   \end{sjtusyntax}
 %   公式编号中的分隔符。
-%   默认为 \opt{--}。
+%   默认为 \opt{.}。
 % \end{function}
 %
 % \begin{function}{style/title-logo-color}
@@ -3854,17 +3854,17 @@
 %    \begin{macrocode}
 \keys_define:nn { sjtu / style }
   {
-    float-num-sep     .tl_set:N = \l_@@_style_fl_num_sep_tl ,
-    float-num-sep    .initial:n = { -- } ,
-    equation-num-sep  .tl_set:N = \l_@@_style_eq_num_sep_tl ,
-    equation-num-sep .initial:n = { -- }
+    float-num-sep     .tl_set:N = \SJTU@style@fl@num@sep ,
+    float-num-sep    .initial:n = { . } ,
+    equation-num-sep  .tl_set:N = \SJTU@style@eq@num@sep ,
+    equation-num-sep .initial:n = { . }
   }
 %    \end{macrocode}
 %
 % \begin{macro}[int]{\SJTU@counterwithin}
 %    \begin{macrocode}
 \NewDocumentCommand \SJTU@counterwithin
-  { s O{ \l_@@_style_fl_num_sep_tl } O{ \arabic } m m }
+  { s O{ \SJTU@style@fl@num@sep } O{ \arabic } m m }
   {
     \@ifbothcounters {#4} {#5}
       {
@@ -3884,7 +3884,7 @@
 %<*!article>
 \SJTU@counterwithin { figure } { chapter }
 \SJTU@counterwithin { table  } { chapter }
-\SJTU@counterwithin [ \l_@@_style_eq_num_sep_tl ] { equation } { chapter }
+\SJTU@counterwithin [ \SJTU@style@eq@num@sep ] { equation } { chapter }
 %</!article>
 %    \end{macrocode}
 %
