@@ -1279,14 +1279,14 @@
 %   声明前文部分开始。
 % \end{function}
 %
-% \begin{function}[rEXP,updated=2023-03-14]{abstract}
-%   \begin{sjtusyntax}[emph={[2]abstract}]
+% \begin{function}[rEXP,updated=2023-11-29]{abstract,abstract*}
+%   \begin{sjtusyntax}[emph={[2]abstract,abstract*}]
 %     \begin{abstract}(*\oarg{lang}*)
 %       (*\meta{摘要}*)
 %     \end{abstract}
 %   \end{sjtusyntax}
 %   \cls{sjtuthesis} 文档类中对应语言的摘要环境，使用可选参数指定语言，默认为 \opt{zh}。
-%   使用带星号的 \env{abstract*} 环境指定英文摘要属于旧用法。
+%   使用带星号的 \env{abstract*} 环境不会出现在目录中。
 % \end{function}
 %
 % \begin{function}[EXP,updated=2023-03-14]{abstract}
@@ -1299,21 +1299,13 @@
 %   会在结尾添加由 \cs{keywords} 命令设定的关键词。
 % \end{function}
 %
-% \begin{function}{\tableofcontents}
-%   \begin{sjtusyntax}[morekeywords={\tableofcontents}]
-%     \tableofcontents
-%   \end{sjtusyntax}
-%   目录。
-% \end{function}
-%
-% \begin{function}[rEXP]{\listoffigures,\listoffigures*,
+% \begin{function}{\tableofcontents,\tableofcontents*,\listoffigures,\listoffigures*,
 %   \listoftables,\listoftables*,\listofalgorithms,\listofalgorithms*}
-%   插图、表格和算法等索引命令如表 \ref{tab:list} 所示，将其插入到期望的
+%   目录、插图、表格和算法等索引命令如表 \ref{tab:list} 所示，将其插入到期望的
 %   位置即可。带*的命令表示对应的索引表不会出现在目录中。
 % \end{function}
 %
 % \begin{table}[ht]
-% \vspace*{-8ex}
 % \centering\small
 % \begin{threeparttable}
 %   \caption{目录和索引表}
@@ -1321,6 +1313,8 @@
 %   \begin{tabular}{lp{4cm}}
 %     \toprule
 %     \strong{用途}     & \strong{命令}          \\\midrule
+%     目录              & \cs{tableofcontents}   \\
+%                       & \cs{tableofcontents*}  \\\midrule
 %     插图索引          & \cs{listoffigures}     \\
 %                       & \cs{listoffigures*}    \\\midrule
 %     表格索引          & \cs{listoftables}      \\
@@ -3357,25 +3351,25 @@
 %<*zh>
 \keys_set_known:nn { sjtu / name }
   {
-    contents      = { 目 \quad 录 } ,
-    listfigure    = { 插 \quad 图 } ,
-    listtable     = { 表 \quad 格 } ,
-    figure        = { 图 } ,
-    table         = { 表 } ,
-    abstract      = { 摘 \quad 要 } ,
-    index         = { 索 \quad 引 } ,
-    appendix      = { 附录 } ,
-    proof         = { 证明 } ,
-    bib           = { 参考文献 } ,
-    figure*       = { Figure } ,
-    table*        = { Table } ,
-    algorithm     = { 算法 } ,
-    listalgorithm = { 算 \quad 法 } ,
-    abbr          = { 缩略语对照表 } ,
-    nom           = { 符号对照表 } ,
-    ack           = { 致 \quad 谢 } ,
-    resume        = { 个人简历 } ,
-    digest        = { 大摘要 } ,
+    contents      = { 目 \protect \quad 录   } ,
+    listfigure    = { 插 \protect \quad 图   } ,
+    listtable     = { 表 \protect \quad 格   } ,
+    figure        = { 图                     } ,
+    table         = { 表                     } ,
+    abstract      = { 摘 \protect \quad 要   } ,
+    index         = { 索 \protect \quad 引   } ,
+    appendix      = { 附录                   } ,
+    proof         = { 证明                   } ,
+    bib           = { 参考文献               } ,
+    figure*       = { Figure                 } ,
+    table*        = { Table                  } ,
+    algorithm     = { 算法                   } ,
+    listalgorithm = { 算 \protect \quad 法   } ,
+    abbr          = { 缩略语对照表           } ,
+    nom           = { 符号对照表             } ,
+    ack           = { 致 \protect \quad 谢   } ,
+    resume        = { 个人简历               } ,
+    digest        = { 大摘要                 } ,
     achv          = { 学术论文和科研成果目录 }
   }
 %</zh>
@@ -3385,28 +3379,28 @@
 %<*de>
 \keys_set_known:nn { sjtu / name }
   {
-    contents      = { Inhaltsverzeichnis } ,
-    listfigure    = { Abbildungsverzeichnis } ,
-    listtable     = { Tabellenverzeichnis } ,
-    figure        = { Abbildung } ,
-    table         = { Tabelle } ,
-    abstract      = { Zusammenfassung } ,
-    index         = { Index } ,
-    appendix      = { Anhang } ,
-    proof         = { Beweis } ,
-    bib           = { Literaturverzeichnis } ,
-    part          = { Teil } ,
-    chapter       = { Kapitel } ,
-    figure*       = { Figure } ,
-    table*        = { Table } ,
-    algorithm     = { Algorithmus } ,
+    contents      = { Inhaltsverzeichnis     } ,
+    listfigure    = { Abbildungsverzeichnis  } ,
+    listtable     = { Tabellenverzeichnis    } ,
+    figure        = { Abbildung              } ,
+    table         = { Tabelle                } ,
+    abstract      = { Zusammenfassung        } ,
+    index         = { Index                  } ,
+    appendix      = { Anhang                 } ,
+    proof         = { Beweis                 } ,
+    bib           = { Literaturverzeichnis   } ,
+    part          = { Teil                   } ,
+    chapter       = { Kapitel                } ,
+    figure*       = { Figure                 } ,
+    table*        = { Table                  } ,
+    algorithm     = { Algorithmus            } ,
     listalgorithm = { Algorithmenverzeichnis } ,
-    abbr          = { Abkürzungsverzeichnis } ,
-    nom           = { Symbolverzeichnis } ,
-    ack           = { Danksagungen } ,
-    resume        = { Lebenslauf } ,
-    digest        = { Kurzfassung } ,
-    achv          = { Forschungsleistungen }
+    abbr          = { Abkürzungsverzeichnis  } ,
+    nom           = { Symbolverzeichnis      } ,
+    ack           = { Danksagungen           } ,
+    resume        = { Lebenslauf             } ,
+    digest        = { Kurzfassung            } ,
+    achv          = { Forschungsleistungen   }
   }
 %</de>
 %    \end{macrocode}
@@ -3415,26 +3409,26 @@
 %<*ja>
 \keys_set_known:nn { sjtu / name }
   {
-    contents      = { 目 \quad 次 } ,
-    listfigure    = { 図目次 } ,
-    listtable     = { 表目次 } ,
-    figure        = { 図 } ,
-    table         = { 表 } ,
-    abstract      = { 概 \quad 要 } ,
-    index         = { 索 \quad 引 } ,
-    appendix      = { 付録 } ,
-    proof         = { 证明 } ,
-    bib           = { 参考文献 } ,
-    figure*       = { Figure } ,
-    table*        = { Table } ,
-    algorithm     = { アルゴリズム } ,
-    listalgorithm = { アルゴリズム目次 } ,
-    abbr          = { 略語表 } ,
-    nom           = { 記号表 } ,
-    ack           = { 謝 \quad 辞 } ,
-    resume        = { 履歴書 } ,
-    digest        = { 要 \quad 約 } ,
-    achv          = { 研究業績書 }
+    contents      = { 目 \protect \quad 次 } ,
+    listfigure    = { 図目次               } ,
+    listtable     = { 表目次               } ,
+    figure        = { 図                   } ,
+    table         = { 表                   } ,
+    abstract      = { 概 \protect \quad 要 } ,
+    index         = { 索 \protect \quad 引 } ,
+    appendix      = { 付録                 } ,
+    proof         = { 证明                 } ,
+    bib           = { 参考文献             } ,
+    figure*       = { Figure               } ,
+    table*        = { Table                } ,
+    algorithm     = { アルゴリズム         } ,
+    listalgorithm = { アルゴリズム目次     } ,
+    abbr          = { 略語表               } ,
+    nom           = { 記号表               } ,
+    ack           = { 謝 \protect \quad 辞 } ,
+    resume        = { 履歴書               } ,
+    digest        = { 要 \protect \quad 約 } ,
+    achv          = { 研究業績書           }
   }
 %</ja>
 %</scheme>
@@ -3749,16 +3743,9 @@
     \cs_set_eq:NN \CTEX@gettitle \@@_orig_ctex_gettitle:n
     \@mkboth { \MakeUppercase {#2} } { \MakeUppercase {#2} }
   }
-\cs_new:Npn \@@_head_aux:n   #1
-  { \SJTU@head  {#1} }
-\cs_new:Npn \@@_head_aux_s:n #1
-  { \SJTU@head* {#1} }
-\cs_new:Npn \@@_head_auxa_s:nn #1#2
-  { \SJTU@head* {#1} [#2] }
-\cs_new:Npn \@@_head_auxb_s:nn #1#2
+\cs_new:Npn \@@_head_aux_s:nn #1#2
   { \SJTU@head* [#1] {#2} }
-\cs_generate_variant:Nn \@@_head_auxa_s:nn { xn, xv }
-\cs_generate_variant:Nn \@@_head_auxb_s:nn { nx }
+\cs_generate_variant:Nn \@@_head_aux_s:nn { nx }
 \cs_new_eq:NN \@@_pdf_bookmark:nn \use_none:nn
 \cs_new_eq:NN \@@_phantom_section: \prg_do_nothing:
 %</class>
@@ -4832,34 +4819,17 @@
 % \subsection{摘要}
 %
 % \changes{v2.0}{2023/03/17}{\env{abstract} 环境新增指定语言的可选参数。}
+% \changes{unreleased}{2023/11/29}{\env{abstract} 环境添加目录条目，
+% \env{abstract*} 环境对应修改为不添加目录条目。}
 % 学位论文摘要环境。
 %    \begin{macrocode}
 %<*thesis>
-\bool_new:N \l_@@_abstract_bookmark_bool
 \DeclareDocumentEnvironment { abstract  } { O{ zh } +b }
   {
     \@@_if_lang_valid:nTF {#1}
       {
         \use:c { @@_set_language_ #1 : }
-        \ctex_set:nn { chapter } { format += \sffamily }
-        \bool_if:NTF \l_@@_abstract_bookmark_bool
-          {
-            \@@_head_auxa_s:xn
-              {
-                \exp_not:N \MakeUppercase
-                  { \exp_not:v { c_@@_name_abstract_ #1 _tl } }
-              }
-              { }
-          }
-          {
-            \@@_head_auxa_s:xv
-              {
-                \exp_not:N \MakeUppercase
-                  { \exp_not:v { c_@@_name_abstract_ #1 _tl } }
-              }
-              { c_@@_name_abstract_tl }
-            \bool_gset_true:N \l_@@_abstract_bookmark_bool
-          }
+        \exp_args:Nv \SJTU@head { c_@@_name_abstract_ #1 _tl }
         #2
         \clist_if_empty:cF { l_@@_info_keywords_ #1 _clist }
           {
@@ -4875,12 +4845,27 @@
       }
       { \msg_error:nnn { sjtutex } { lang-validation } {#1} }
   } { }
-%    \end{macrocode}
-%
-% 兼容旧接口。
-%    \begin{macrocode}
-\DeclareDocumentEnvironment { abstract* } { }
-  { \abstract [ en ] } { \endabstract }
+\DeclareDocumentEnvironment { abstract* } { O{ zh } +b }
+  {
+    \@@_if_lang_valid:nTF {#1}
+      {
+        \use:c { @@_set_language_ #1 : }
+        \exp_args:NNv \SJTU@head* { c_@@_name_abstract_ #1 _tl }
+        #2
+        \clist_if_empty:cF { l_@@_info_keywords_ #1 _clist }
+          {
+            \par \mode_leave_vertical: \par \noindent
+            {
+              \bfseries
+              \tl_use:c { c_@@_name_keywords_ #1 _tl }
+              \tl_use:c { c_@@_name_info_sep_ #1 _tl }
+            }
+            \clist_use:cv { l_@@_info_keywords_ #1 _clist }
+              { c_@@_name_item_sep_ #1 _tl }
+          }
+      }
+      { \msg_error:nnn { sjtutex } { lang-validation } {#1} }
+  } { }
 %</thesis>
 %    \end{macrocode}
 %
@@ -4911,20 +4896,24 @@
 %
 % \subsection{目录}
 %
-% \begin{macro}{\tableofcontents,\listoffigures,\listoffigures*,
+% \changes{unreleased}{2023/11/29}{\cs{tableofcontents} 添加目录条目，
+% \cs{tableofcontents*} 对应修改为不添加目录条目。}
+% \begin{macro}{\tableofcontents,\tableofcontents*,\listoffigures,\listoffigures*,
 % \listoftables,\listoftables*}
 % 目录以及图表索引。
 %    \begin{macrocode}
-\DeclareDocumentCommand \tableofcontents { }
+\DeclareDocumentCommand \tableofcontents { s }
   {
-    \@@_head_aux_s:n { \contentsname }
+    \IfBooleanTF {#1}
+      { \SJTU@head* { \contentsname } }
+      { \SJTU@head  { \contentsname } }
     \@starttoc { toc }
   }
 \NewDocumentCommand \SJTU@listof { m m s }
   {
     \IfBooleanTF {#3}
-      { \@@_head_aux_s:n {#1} }
-      { \@@_head_aux:n   {#1} }
+      { \SJTU@head* {#1} }
+      { \SJTU@head  {#1} }
     \exp_args:Nv \@starttoc { ext@ #2 }
   }
 \DeclareDocumentCommand \listoffigures { }
@@ -4972,12 +4961,12 @@
 %<*thesis>
 \NewDocumentEnvironment { abbreviation  } { O{ \SJTU@abbrname } }
   {
-    \chapter {#1}
+    \chapter    {#1}
     \tl_clear:N \SJTU@style@float@font
   } { }
 \NewDocumentEnvironment { abbreviation* } { O{ \SJTU@abbrname } }
   {
-    \@@_head_aux_s:n {#1}
+    \SJTU@head* {#1}
     \tl_clear:N \SJTU@style@float@font
   } { }
 %    \end{macrocode}
@@ -4986,12 +4975,12 @@
 %    \begin{macrocode}
 \NewDocumentEnvironment { nomenclature  } { O{ \SJTU@nomname } }
   {
-    \chapter {#1}
+    \chapter    {#1}
     \tl_clear:N \SJTU@style@float@font
   } { }
 \NewDocumentEnvironment { nomenclature* } { O{ \SJTU@nomname } }
   {
-    \@@_head_aux_s:n {#1}
+    \SJTU@head* {#1}
     \tl_clear:N \SJTU@style@float@font
   } { }
 %    \end{macrocode}
@@ -5004,7 +4993,7 @@
   {
     \bool_if:NF \g_@@_review_bool
       {
-        \@@_head_aux:n {#1}
+        \SJTU@head {#1}
         #2
       }
   } { }
@@ -5069,7 +5058,7 @@
 \bool_new:N \l_@@_achievements_bool
 \NewDocumentEnvironment { achievements } { O{ \SJTU@achvname } }
   {
-    \@@_head_aux:n {#1}
+    \SJTU@head {#1}
     \setcounter { SJTU@bib } { 0 }
     \bool_set_true:N \l_@@_achievements_bool
   } { }
@@ -5113,7 +5102,7 @@
   {
     \bool_if:NF \g_@@_review_bool
       {
-        \@@_head_aux:n {#1}
+        \SJTU@head {#1}
         #2
       }
   } { }
@@ -5139,7 +5128,7 @@
                 \counterwithout {##1} { chapter }
                 \setcounter     {##1} { 0 }
               }
-            \@@_head_auxb_s:nx { \SJTU@digestname }
+            \@@_head_aux_s:nx { \SJTU@digestname }
               {
                 \exp_not:N \MakeUppercase
                   { \exp_not:v { l_@@_info_title_ #1 _tl } }
@@ -5519,7 +5508,7 @@
     { auth_decl        } { 使用授权书             } ,
     { decl_author      } { 学位论文作者           } ,
     { decl_supervisor  } { 指导教师               } ,
-    { abstract         } { 摘 \quad 要            } ,
+    { abstract         } { 摘 \protect \quad 要   } ,
 %</thesis>
     { keywords         } { 关键词                 } ,
     { info_sep         } { ：                     } ,
@@ -5574,20 +5563,20 @@
 \clist_map_inline:nn
   {
 %<*thesis>
-    { univ             } { 上海交通大学       } ,
-    { address          } { 中国・上海         } ,
-    { author           } { 氏名               } ,
-    { supervisor       } { 指導教員           } ,
-    { assoc_supervisor } { 副指導教員         } ,
-    { co_supervisor    } { 共同指導           } ,
-    { thesis           } { 学位請求論文       } ,
-    { title_page       } { 標題紙             } ,
-    { declaration      } { 誓約書・公表許諾書 } ,
-    { abstract         } { 要 \quad 旨        } ,
+    { univ             } { 上海交通大学         } ,
+    { address          } { 中国・上海           } ,
+    { author           } { 氏名                 } ,
+    { supervisor       } { 指導教員             } ,
+    { assoc_supervisor } { 副指導教員           } ,
+    { co_supervisor    } { 共同指導             } ,
+    { thesis           } { 学位請求論文         } ,
+    { title_page       } { 標題紙               } ,
+    { declaration      } { 誓約書・公表許諾書   } ,
+    { abstract         } { 要 \protect \quad 旨 } ,
 %</thesis>
-    { keywords         } { キーワード         } ,
-    { info_sep         } { ：                 } ,
-    { item_sep         } { \quad              }
+    { keywords         } { キーワード           } ,
+    { info_sep         } { ：                   } ,
+    { item_sep         } { \quad                }
   }
 %<thesis>  { \@@_define_name:nnn { ja } #1 }
 %<!thesis>  { \@@_define_name:nn #1 }
