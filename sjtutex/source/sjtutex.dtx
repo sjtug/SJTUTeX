@@ -4371,13 +4371,13 @@
     \ps@empty
     \cs_set:Npn \@oddfoot
       {
-        \begin{minipage} { \textwidth }
+        \minipage [ t ] { \textwidth }
           \centering \zihao { - 5 }
 %<zh>          \clist_use:Nn \l_@@_info_fund_zh_clist { \par }
 %<en>          \clist_use:Nn \l_@@_info_fund_en_clist { \par }
 %<de>          \clist_use:Nn \l_@@_info_fund_de_clist { \par }
 %<ja>          \clist_use:Nn \l_@@_info_fund_ja_clist { \par }
-        \end{minipage}
+        \endminipage
       }
     \cs_set_eq:NN \@evenfoot \@oddfoot
   }
