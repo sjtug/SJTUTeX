@@ -1182,6 +1182,13 @@
 %   默认为 |{#1}|，即仅显示页码本身。
 % \end{function}
 %
+% \begin{function}[added=2023-11-30]{style/keywords-format}
+%   \begin{sjtusyntax}[emph={[2]keywords-format}]
+%     keywords-format = (*<(plain)|hang>*)
+%   \end{sjtusyntax}
+%   设置关键词格式。默认为 \opt{plain} 无缩进的普通段落，另可选 \opt{hang} 悬挂格式。
+% \end{function}
+%
 % \subsubsection{名称域}
 %
 % \begin{function}{name}
@@ -4845,6 +4852,20 @@
 %
 % \subsection{摘要}
 %
+% \changes{unreleased}{2023/11/30}{新增 \opt{style/keywords-format} 选项。}
+% 关键词排版样式。
+%    \begin{macrocode}
+\keys_define:nn { sjtu / style }
+  {
+    keywords-format       .choice: ,
+    keywords-format / plain .code:n =
+      { \cs_set:Nn \@@_keywords_format:n { \noindent  { \bfseries ##1 } } } ,
+    keywords-format / hang  .code:n =
+      { \cs_set:Nn \@@_keywords_format:n { \@hangfrom { \bfseries ##1 } } } ,
+    keywords-format      .initial:n = { plain }
+  }
+%    \end{macrocode}
+%
 % \changes{v2.0}{2023/03/17}{\env{abstract} 环境新增指定语言的可选参数。}
 % \changes{unreleased}{2023/11/29}{\env{abstract} 环境添加目录条目，
 % \env{abstract*} 环境对应修改为不添加目录条目。}
@@ -4860,14 +4881,15 @@
         #2
         \clist_if_empty:cF { l_@@_info_keywords_ #1 _clist }
           {
-            \par \mode_leave_vertical: \par \noindent
-            {
-              \bfseries
-              \tl_use:c { c_@@_name_keywords_ #1 _tl }
-              \tl_use:c { c_@@_name_info_sep_ #1 _tl }
-            }
+            \par \mode_leave_vertical: \par
+            \@@_keywords_format:n
+              {
+                \tl_use:c { c_@@_name_keywords_ #1 _tl }
+                \tl_use:c { c_@@_name_info_sep_ #1 _tl }
+              }
             \clist_use:cv { l_@@_info_keywords_ #1 _clist }
               { c_@@_name_item_sep_ #1 _tl }
+            \par
           }
       }
       { \msg_error:nnn { sjtutex } { lang-validation } {#1} }
@@ -4881,14 +4903,15 @@
         #2
         \clist_if_empty:cF { l_@@_info_keywords_ #1 _clist }
           {
-            \par \mode_leave_vertical: \par \noindent
-            {
-              \bfseries
-              \tl_use:c { c_@@_name_keywords_ #1 _tl }
-              \tl_use:c { c_@@_name_info_sep_ #1 _tl }
-            }
+            \par \mode_leave_vertical: \par
+            \@@_keywords_format:n
+              {
+                \tl_use:c { c_@@_name_keywords_ #1 _tl }
+                \tl_use:c { c_@@_name_info_sep_ #1 _tl }
+              }
             \clist_use:cv { l_@@_info_keywords_ #1 _clist }
               { c_@@_name_item_sep_ #1 _tl }
+            \par
           }
       }
       { \msg_error:nnn { sjtutex } { lang-validation } {#1} }
@@ -4909,13 +4932,14 @@
   {
     \clist_if_empty:NF \l_@@_info_keywords_clist
       {
-        \par \mode_leave_vertical: \par \noindent
-        {
-          \bfseries
-          \c_@@_name_keywords_tl
-          \c_@@_name_info_sep_tl
-        }
+        \par \mode_leave_vertical: \par
+        \@@_keywords_format:n
+          {
+            \c_@@_name_keywords_tl
+            \c_@@_name_info_sep_tl
+          }
         \clist_use:NV \l_@@_info_keywords_clist \c_@@_name_item_sep_tl
+        \par
       }
   }
 %</!thesis>
