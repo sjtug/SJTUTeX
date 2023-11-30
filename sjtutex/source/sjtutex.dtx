@@ -1995,6 +1995,7 @@
     geometry,
     fancyhdr,
     tocloft,
+%<thesis>    array,
     caption,
     bicaption,
     subcaption,
@@ -4453,95 +4454,71 @@
 %
 % \subsubsection{定义内部函数}
 %
-% \begin{macro}[int]{\@@_cjk_spread_box:nn}
-% 汉字分散对齐的水平盒子。
+% 汉字分散对齐的环境。
 %    \begin{macrocode}
 %<*thesis>
 \@@_engine_case:nnn
   {
-    \cs_new_protected:Npn \@@_cjk_spread_box:nn #1#2
+    \NewDocumentEnvironment { SJTU@CJK@FTS } { m b }
       {
         \mode_leave_vertical:
-        \group_begin:
-          \bool_set_false:N \l_@@_tmpa_bool
-          \cs_set_eq:NN \SJTU@CJK@filltwosidesSymbol \CJKsymbol
-          \cs_set:Npn \CJKsymbol ##1
-            {
-              \bool_if:NTF \l_@@_tmpa_bool
-                { \hfil \SJTU@CJK@filltwosidesSymbol { ##1 } }
-                {
-                  \SJTU@CJK@filltwosidesSymbol { ##1 }
-                  \bool_set_true:N \l_@@_tmpa_bool
-                }
-            }
-          \hbox_to_wd:nn {#1} {#2}
-        \group_end:
-      }
+        \bool_set_false:N \l_@@_tmpa_bool
+        \cs_set_eq:NN \SJTU@CJK@FTS@Symbol \CJKsymbol
+        \cs_set:Npn \CJKsymbol ##1
+          {
+            \bool_if:NTF \l_@@_tmpa_bool
+              { \hfil \SJTU@CJK@FTS@Symbol { ##1 } }
+              {
+                \SJTU@CJK@FTS@Symbol { ##1 }
+                \bool_set_true:N \l_@@_tmpa_bool
+              }
+          }
+        \hbox_to_wd:nn {#1} {#2}
+      } { }
   }
   {
-    \cs_new_protected:Npn \@@_cjk_spread_box:nn #1#2
+    \NewDocumentEnvironment { SJTU@CJK@FTS } { m b }
       {
         \mode_leave_vertical:
-        \group_begin:
-          \cs_set:Npn \CJKglue
-            { \skip_horizontal:n { \c_zero_dim plus 1 filll } }
-          \hbox_to_wd:nn {#1} {#2}
-        \group_end:
-      }
+        \cs_set:Npn \CJKglue
+          { \skip_horizontal:n { \c_zero_dim plus 1 filll } }
+        \hbox_to_wd:nn {#1} {#2}
+      } { }
   }
   {
-    \cs_new_protected:Npn \@@_cjk_spread_box:nn #1#2
+    \NewDocumentEnvironment { SJTU@CJK@FTS } { m b }
       {
         \mode_leave_vertical:
-        \group_begin:
-          \ltjsetparameter { kanjiskip = { \c_zero_dim plus 1 filll } }
-          \hbox_to_wd:nn {#1} {#2}
-        \group_end:
-      }
+        \ltjsetparameter { kanjiskip = { \c_zero_dim plus 1 filll } }
+        \hbox_to_wd:nn {#1} {#2}
+      } { }
   }
 %    \end{macrocode}
-% \end{macro}
 %
-% \begin{macro}[int]{\@@_left_aligned_box:nn}
-% 左对齐的水平盒子。
+% 汉字分散对齐的表格列说明符。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_left_aligned_box:nn #1#2
-  {
-    \mode_leave_vertical:
-    \hbox_to_wd:nn {#1} { #2 \hfil }
-  }
+\newcolumntype { \SJTU@CT@D } [ 1 ]
+  { >{ \begin { SJTU@CJK@FTS } {#1} } c <{ \end { SJTU@CJK@FTS } } }
 %    \end{macrocode}
-% \end{macro}
 %
+% \changes{unreleased}{2023/11/30}{标题页信息栏改用表格实现。}
 % 信息输出。
 %    \begin{macrocode}
 \cs_new:Npn \@@_title_page_info_i:nnn #1#2#3
   {
-    \group_begin:
-      \cs_set:Npn \l_@@_info_output_format:NNN ##1##2##3 {#3}
-      \clist_clear:N \l_@@_tmpa_clist
-      \clist_clear:N \l_@@_tmpb_clist
-      \dim_set:Nn \l_@@_tmpb_dim { 5 em }
-      \clist_map_inline:nn {#2}
-        {
-          \clist_put_right:No \l_@@_tmpa_clist
-            { \cs:w c_@@_name_ ##1 _ #1 _tl \cs_end: }
-          \clist_put_right:No \l_@@_tmpb_clist
-            { \cs:w l_@@_info_ ##1 _ #1 _tl \cs_end: }
-          \@@_dim_set_to_wd:Nv \l_@@_tmpa_dim { l_@@_info_ ##1 _ #1 _tl }
-          \dim_set:Nn \l_@@_tmpb_dim
-            { \dim_max:nn { \l_@@_tmpa_dim } { \l_@@_tmpb_dim } }
-        }
-      \bool_until_do:nn
-        { \clist_if_empty_p:N \l_@@_tmpa_clist }
-        {
-          \clist_pop:NN \l_@@_tmpa_clist \l_@@_tmpa_tl
-          \clist_pop:NN \l_@@_tmpb_clist \l_@@_tmpb_tl
-          \l_@@_info_output_format:NNN
-            \l_@@_tmpa_tl \l_@@_tmpb_dim \l_@@_tmpb_tl
-          \skip_vertical:N \c_zero_dim
-        }
-    \group_end:
+    \clist_clear:N \l_@@_tmpa_clist
+    \clist_map_inline:nn {#3}
+      {
+        \clist_put_right:Nx \l_@@_tmpa_clist
+          {
+            \exp_not:o { \cs:w c_@@_name_ ##1 _ #1 _tl \cs_end: }
+            &
+            \exp_not:o { \cs:w l_@@_info_ ##1 _ #1 _tl \cs_end: }
+          }
+      }
+    \tabular {#2}
+      \clist_use:Nn \l_@@_tmpa_clist { \\ }
+    \endtabular
   }
 \cs_new:Npn \@@_title_page_info_ii:n #1
   {
@@ -4553,7 +4530,7 @@
     \skip_vertical:N \c_zero_skip
     \tl_use:c { l_@@_info_date_ #1 _tl }
   }
-\cs_generate_variant:Nn \@@_title_page_info_i:nnn { nxn }
+\cs_generate_variant:Nn \@@_title_page_info_i:nnn { nxx }
 %    \end{macrocode}
 %
 % 标题页校徽颜色。
@@ -4602,10 +4579,15 @@
       },
     { info    }
       {
-        format      = \zihao { 4 } \setbaselineskip { 30 bp } ,
+        format      = \zihao { 4 } \setbaselineskip { 30 bp } \heiti ,
         content     =
           {
-            \@@_title_page_info_i:nxn { zh }
+            \@@_title_page_info_i:nxx { zh }
+              {
+                \exp_not:N \SJTU@CT@D { 5 em }
+                @ { \c_@@_name_info_sep_zh_tl }
+                >{ \exp_not:N \normalfont } l
+              }
               {
                 author,
                 id,
@@ -4614,11 +4596,6 @@
                 major,
                 \int_compare:nNnF { \g_@@_thesis_type_int } = { 1 }
                   { degree }
-              }
-              {
-                \@@_cjk_spread_box:nn { 5 em } { \heiti #1 }
-                \c_@@_name_info_sep_zh_tl
-                \@@_left_aligned_box:nn {#2} {#3}
               }
           } ,
         bottom-skip = 30 bp
@@ -4663,16 +4640,16 @@
       },
     { info    }
       {
-        format      = \zihao { 3 } \setbaselineskip { 30 bp } ,
+        format      = \zihao { 3 } \setbaselineskip { 30 bp } \bfseries ,
         content     =
           {
-%<en>            \@@_title_page_info_i:nxn { en }
-%<de>            \@@_title_page_info_i:nxn { de }
-%<ja>            \@@_title_page_info_i:nxn { ja }
+%<en>            \@@_title_page_info_i:nxx { en }
+%<de>            \@@_title_page_info_i:nxx { de }
+%<ja>            \@@_title_page_info_i:nxx { ja }
+%<en>              { r @ { \c_@@_name_info_sep_en_tl } >{ \exp_not:N \normalfont } l }
+%<de>              { r @ { \c_@@_name_info_sep_de_tl } >{ \exp_not:N \normalfont } l }
+%<ja>              { r @ { \c_@@_name_info_sep_ja_tl } >{ \exp_not:N \normalfont } l }
               { author, \l_@@_info_supervisors_clist }
-%<en>              { { \bfseries #1 \c_@@_name_info_sep_en_tl } {#3} }
-%<de>              { { \bfseries #1 \c_@@_name_info_sep_de_tl } {#3} }
-%<ja>              { { \bfseries #1 \c_@@_name_info_sep_ja_tl } {#3} }
           } ,
         bottom-skip = 30 bp plus 1 fill
       },
@@ -5576,7 +5553,7 @@
     { abstract         } { 摘 \protect \quad 要   } ,
 %</thesis>
     { keywords         } { 关键词                 } ,
-    { info_sep         } { ：                     } ,
+    { info_sep         } { ： \null               } ,
     { item_sep         } { ，                     }
   }
 %<thesis>  { \@@_define_name:nnn { zh } #1 }
@@ -5640,7 +5617,7 @@
     { abstract         } { 要 \protect \quad 旨 } ,
 %</thesis>
     { keywords         } { キーワード           } ,
-    { info_sep         } { ：                   } ,
+    { info_sep         } { ： \null             } ,
     { item_sep         } { \quad                }
   }
 %<thesis>  { \@@_define_name:nnn { ja } #1 }
