@@ -1060,6 +1060,15 @@
 %   该选项包含许多子项目，用于设置论文样式。具体内容见下。
 % \end{function}
 %
+% \begin{function}[added=2023-11-30]{style/equation-font}
+%   \begin{sjtusyntax}[emph={[2]equation-font}]
+%     equation-font = (*\marg{字体设置}*)
+%   \end{sjtusyntax}
+%   行间数学公式的字体设置，该选项主要用于调整行间公式的行距，
+%   不建议修改字号字形。
+%   \cls{sjtuthesis} 中默认数学公式的行距为字号的 1.2 倍。
+% \end{function}
+%
 % \begin{function}[added=2022-12-03,updated=2022-12-27]{style/float-font}
 %   \begin{sjtusyntax}[emph={[2]float-font}]
 %     float-font = (*\marg{字体设置}*)
@@ -3777,6 +3786,44 @@
 %    \begin{macrocode}
 %<*class>
 \setlist { nosep }
+%    \end{macrocode}
+%
+% \subsection{数学公式}
+%
+% \changes{unreleased}{2023/11/30}{新增 \opt{style/equation-font} 选项。}
+% 设置行间数学公式的字体。
+%    \begin{macrocode}
+\keys_define:nn { sjtu / style }
+  {
+    equation-font  .tl_set:N = \SJTU@style@equation@font ,
+%<thesis>    equation-font .initial:x = \exp_not:N \linespread { }
+%<thesis>                               \exp_not:N \zihao { \g_@@_zihao_tl }
+%<!thesis>    equation-font .initial:V = \c_empty_tl
+  }
+\clist_map_inline:nn
+  {
+    array, matrix, pmatrix, bmatrix, Bmatrix, vmatrix, Vmatrix,
+    matrix*, pmatrix*, bmatrix*, Bmatrix*, vmatrix*, Vmatrix*,
+    cases, cases*, dcases, dcases*, rcases, rcases*, drcases, drcases*,
+    aligned, alignedat, gathered, multlined, lgathered, rgathered
+  }
+  { \AtBeginEnvironment {#1} { \SJTU@style@equation@font } }
+\clist_map_inline:nn
+  { \start@gather, \start@align, \start@multline }
+  {
+    \ctex_patch_cmd:Nnn #1
+      { \collect@body }
+      {
+        \SJTU@style@equation@font
+        \collect@body
+      }
+  }
+\ctex_patch_cmd:Nnn \gather@split
+  { \spread@equation }
+  {
+    \SJTU@style@equation@font
+    \spread@equation
+  }
 %    \end{macrocode}
 %
 % \subsection{浮动体}
