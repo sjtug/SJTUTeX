@@ -4524,9 +4524,12 @@
             \exp_not:o { \cs:w l_@@_info_ ##1 _ #1 _tl \cs_end: }
           }
       }
-    \tabular {#2}
-      \clist_use:Nn \l_@@_tmp_clist { \\ }
-    \endtabular
+    \group_begin:
+      \tl_set:Nn \arraystretch { 1 }
+      \tabular {#2}
+        \clist_use:Nn \l_@@_tmp_clist { \\ }
+      \endtabular
+    \group_end:
   }
 \cs_new:Npn \@@_title_page_info_ii:n #1
   {
