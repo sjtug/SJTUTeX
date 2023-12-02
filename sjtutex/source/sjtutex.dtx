@@ -1119,12 +1119,21 @@
 %   中的带圈数字。
 % \end{function}
 %
+% \begin{function}[added=2023-12-02]{num-sep}
+%   \begin{sjtusyntax}[emph={[2]num-sep}]
+%     num-sep = (*\marg{分隔符}*)
+%   \end{sjtusyntax}
+%   图、表、公式以及定理编号中的分隔符。该选项将统一设定 \opt{float-num-sep}、
+%   \opt{equation-num-sep}、\opt{theorem-num-sep} 选项。
+%   用户也可以逐项修改编号分隔符。
+%   默认为 \opt{.} 句点。
+% \end{function}
+%
 % \begin{function}[updated=2023-11-29]{style/float-num-sep}
 %   \begin{sjtusyntax}[emph={[2]float-num-sep}]
 %     float-num-sep = (*\marg{分隔符}*)
 %   \end{sjtusyntax}
 %   图、表等浮动体编号中的分隔符。
-%   默认为 \opt{.}。
 % \end{function}
 %
 % \begin{function}[updated=2023-11-29]{style/equation-num-sep}
@@ -1132,7 +1141,13 @@
 %     equation-num-sep = (*\marg{分隔符}*)
 %   \end{sjtusyntax}
 %   公式编号中的分隔符。
-%   默认为 \opt{.}。
+% \end{function}
+%
+% \begin{function}[added=2023-12-02]{style/theorem-num-sep}
+%   \begin{sjtusyntax}[emph={[2]theorem-num-sep}]
+%     theorem-num-sep = (*\marg{分隔符}*)
+%   \end{sjtusyntax}
+%   定理编号中的分隔符。
 % \end{function}
 %
 % \begin{function}{style/title-logo-color}
@@ -1322,6 +1337,7 @@
 % \end{function}
 %
 % \begin{table}[ht]
+% \vspace*{-12ex}
 % \centering\small
 % \begin{threeparttable}
 %   \caption{目录和索引表}
@@ -3905,14 +3921,22 @@
 \captionsetup [ bi-second ] { bi-second-names }
 %    \end{macrocode}
 %
-% 图、表、公式编号中的分隔符。
+% \changes{unreleased}{2023/12/02}{新增 \opt{style/num-sep}、
+% \opt{style/theorem-num-sep} 选项。}
+% 图、表、公式以及定理编号中的分隔符。
 %    \begin{macrocode}
 \keys_define:nn { sjtu / style }
   {
-    float-num-sep     .tl_set:N = \SJTU@style@fl@num@sep ,
-    float-num-sep    .initial:n = { . } ,
-    equation-num-sep  .tl_set:N = \SJTU@style@eq@num@sep ,
-    equation-num-sep .initial:n = { . }
+    num-sep            .code:n =
+      {
+        \tl_set:Nn \SJTU@style@fl@num@sep {#1}
+        \tl_set:Nn \SJTU@style@eq@num@sep {#1}
+        \tl_set:Nn \@thmcountersep        {#1}
+      } ,
+    num-sep         .initial:n = { . } ,
+    float-num-sep    .tl_set:N = \SJTU@style@fl@num@sep ,
+    equation-num-sep .tl_set:N = \SJTU@style@eq@num@sep ,
+    theorem-num-sep  .tl_set:N = \@thmcountersep
   }
 %    \end{macrocode}
 %
