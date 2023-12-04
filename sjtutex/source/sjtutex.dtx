@@ -369,36 +369,35 @@
   gobble            = 2,
   lineskip          = 2 pt,
   frame             = l,
-  framerule         = 1 pt,
+  framerule         = 1.2 pt,
   framesep          = 0 pt,
   escapeinside      = {(*}{*)},
   basicstyle        = \small\ttfamily,
-  keywordstyle      = \color{sjtu-dark-red!80},
-  commentstyle      = \itshape\color{sjtu-green!60},
-  stringstyle       = \color{sjtu-amber},
   xleftmargin       = 0.5 em,
   xrightmargin      = 0.5 em,
   framexleftmargin  = 0.5 em,
   framexrightmargin = 0.5 em
 }
 \lstdefinestyle{style@shell}{
-  style           = style@base,
-  rulecolor       = \color{sjtu-dark-green},
-  backgroundcolor = \color{sjtu-dark-green!5},
-  language        = bash,
-  alsoletter      = {-},
-  emphstyle       = \color{sjtu-green}
+  style             = style@base,
+  rulecolor         = \color{sjtu-dark-green},
+  backgroundcolor   = \color{sjtu-dark-green!2},
+  language          = bash,
+  alsoletter        = {-},
+  keywordstyle      = \color{sjtu-green},
+  emphstyle         = \color{sjtu-amber}
 }
 \lstdefinestyle{style@latex}{
-  style           = style@base,
-  rulecolor       = \color{sjtu-dark-blue},
-  backgroundcolor = \color{sjtu-dark-blue!5},
-  language        = [LaTeX]TeX,
-  alsoletter      = {*, -},
-  texcsstyle      = *\color{sjtu-blue},
-  emphstyle       = [1]\color{sjtu-orange},
-  emphstyle       = [2]\color{sjtu-green},
-  emphstyle       = [3]\color{sjtu-dark-blue!80}
+  style             = style@base,
+  rulecolor         = \color{sjtu-dark-blue},
+  backgroundcolor   = \color{sjtu-dark-blue!2},
+  language          = [LaTeX]TeX,
+  alsoletter        = {*, -},
+  keywordstyle      = \color{sjtu-dark-red!80},
+  texcsstyle        = *\color{sjtu-blue},
+  emphstyle         = [1]\color{sjtu-orange},
+  emphstyle         = [2]\color{sjtu-green},
+  emphstyle         = [3]\color{sjtu-dark-blue!80}
 }
 \lstnewenvironment{shell}[1][]{%
   \lstset{style=style@shell, #1}}{}
@@ -548,7 +547,7 @@
 %
 % 下面这份 \TeX{} 文档展示了 \cls{sjtuthesis} 文档类的基本用法，一般需要指定中英文名称。
 % 该文档将包含中英文封面，页眉为文档主题及章节名称。
-% \begin{latex}[moretexcs={\sjtusetup,\maketitle,\chapter},
+% \begin{latex}[moretexcs={\sjtusetup,\maketitle,\tableofcontents*,\chapter},
 %   morekeywords={\frontmatter,\mainmatter}, emph={[1]sjtuthesis,document},
 %   emph={[2]info},emph={[3]type,zh,en,title,author}]
 % \documentclass[type=master]{sjtuthesis}
@@ -563,6 +562,7 @@
 % \begin{document}
 %   \maketitle
 %   \frontmatter
+%   \tableofcontents*
 %   \mainmatter
 %   \chapter{欢迎}
 %   \section{欢迎使用 SJTUThesis}
@@ -599,6 +599,22 @@
 %   你好，\LaTeX{}!
 % \end{document}
 % \end{latex}
+%
+% \subsection{编译文档}
+%
+% 文档类推荐使用 \XeLaTeX{} 或 \LuaLaTeX{}编译，同时也支持 \pdfTeX{} 引擎。为了
+% 生成正确的目录、脚注以及交叉引用，至少需要连续编译两次。
+%
+% 在实际使用中，一般推荐使用自动生成工具 \pkg{latexmk} 编译文档。\pkg{latexmk}
+% 命令可以自动进行多步编译，直到交叉引用都被解决。
+%
+% 假设您的 \TeX{} 源文件名为 \file{main.tex}，
+% 可在命令行中执行如下命令使用 \XeLaTeX{} 编译文档
+% \begin{shell}[morekeywords={latexmk},emph={-xelatex}]
+% latexmk -xelatex main
+% \end{shell}
+% 也可通过修改 \file{latexmkrc} 配置文件来控制 \pkg{latexmk} 的行为，
+% 具体可以参考 \pkg{latexmk} 文档。
 %
 % \section{文档配置}
 %
