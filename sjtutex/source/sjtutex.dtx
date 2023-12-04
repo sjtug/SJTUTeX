@@ -356,52 +356,56 @@
   bookmarksopen     = true,
 }
 \AtEndOfClass{\sloppy}
-\definecolor{sjtuRedPrimary}{RGB}{167,32,56}         % engred
-\definecolor{sjtuRedSecondary}{RGB}{240,131,0}       % orange
-\definecolor{sjtuRedTertiary}{RGB}{253,208,0}        % yellow
-\definecolor{sjtuBluePrimary}{RGB}{0,64,152}         % problue
-\definecolor{sjtuBlueSecondary}{RGB}{51,141,39}      % lightgreen
-\definecolor{sjtuBlueTertiary}{RGB}{0,81,78}         % lightgray
+\definecolor{sjtu-red}{RGB}{200,22,30}
+\definecolor{sjtu-dark-red}{RGB}{167,32,56}
+\definecolor{sjtu-amber}{RGB}{253,208,0}
+\definecolor{sjtu-orange}{RGB}{240,131,0}
+\definecolor{sjtu-blue}{RGB}{0,134,209}
+\definecolor{sjtu-dark-blue}{RGB}{0,64,152}
+\definecolor{sjtu-green}{RGB}{51,141,39}
+\definecolor{sjtu-dark-green}{RGB}{0,81,78}
 \lstdefinestyle{style@base}{
-  basewidth       = 0.5 em,
-  gobble          = 2,
-  lineskip        = 2 pt,
-  frame           = l,
-  framerule       = 1 pt,
-  framesep        = 0 pt,
-  escapeinside    = {(*}{*)},
-  basicstyle      = \ttfamily,
-  keywordstyle    = \bfseries\color{sjtuBluePrimary},
-  commentstyle    = \itshape\color{sjtuBlueTertiary!60},
-  stringstyle     = \color{sjtuRedPrimary},
-  backgroundcolor = \color{sjtuBlueTertiary!2},
+  basewidth         = 0.5 em,
+  gobble            = 2,
+  lineskip          = 2 pt,
+  frame             = l,
+  framerule         = 1 pt,
+  framesep          = 0 pt,
+  escapeinside      = {(*}{*)},
+  basicstyle        = \ttfamily,
+  keywordstyle      = \color{sjtu-dark-red!80},
+  commentstyle      = \itshape\color{sjtu-green!60},
+  stringstyle       = \color{sjtu-amber},
   xleftmargin       = 1em,
   xrightmargin      = 1em,
   framexleftmargin  = 1em,
   framexrightmargin = 1em
 }
 \lstdefinestyle{style@shell}{
-  style      = style@base,
-  rulecolor  = \color{sjtuBlueTertiary},
-  language   = bash,
-  alsoletter = {-},
-  emphstyle  = \color{sjtuBlueSecondary}
+  style           = style@base,
+  rulecolor       = \color{sjtu-dark-green},
+  backgroundcolor = \color{sjtu-dark-green!5},
+  language        = bash,
+  alsoletter      = {-},
+  emphstyle       = \color{sjtu-green}
 }
 \lstdefinestyle{style@latex}{
-  style      = style@base,
-  rulecolor  = \color{sjtuBluePrimary},
-  language   = [LaTeX]TeX,
-  alsoletter = {*, -},
-  texcsstyle = *\color{sjtuBluePrimary},
-  emphstyle  = [1]\color{sjtuBluePrimary!80},
-  emphstyle  = [2]\color{sjtuBlueSecondary}
+  style           = style@base,
+  rulecolor       = \color{sjtu-dark-blue},
+  backgroundcolor = \color{sjtu-dark-blue!5},
+  language        = [LaTeX]TeX,
+  alsoletter      = {*, -},
+  texcsstyle      = *\color{sjtu-blue},
+  emphstyle       = [1]\color{sjtu-orange},
+  emphstyle       = [2]\color{sjtu-green},
+  emphstyle       = [3]\color{sjtu-dark-blue!80}
 }
 \lstnewenvironment{shell}[1][]{%
   \lstset{style=style@shell, #1}}{}
 \lstnewenvironment{latex}[1][]{%
   \lstset{style=style@latex, #1}}{}
 \newcommand\note[1]{{%
-  \color{sjtuBlueTertiary}{\noindent\bfseries 说明：}~\emph{#1}}}
+  \color{sjtu-dark-green}{\noindent\bfseries 说明：}~\emph{#1}}}
 \begin{document}
   \DocInput{\jobname.dtx}
   \IndexLayout
@@ -544,13 +548,15 @@
 %
 % 下面这份 \TeX{} 文档展示了 \cls{sjtuthesis} 文档类的基本用法，一般需要指定中英文名称。
 % 该文档将包含中英文封面，页眉为文档主题及章节名称。
-% \begin{latex}
+% \begin{latex}[moretexcs={\sjtusetup,\maketitle,\chapter},
+%   morekeywords={\frontmatter,\mainmatter}, emph={[1]sjtuthesis,document},
+%   emph={[2]info},emph={[3]type,zh,en,title,author}]
 % \documentclass[type=master]{sjtuthesis}
 % \sjtusetup{
 %   info = {
-%     zh/title  = {上海交通大学学位论文 \LaTeX{} 模板示例文档},
-%     en/title  = {A Sample Document for \LaTeX-based SJTU Thesis Template},
-%     zh/author = {某\quad{}某},
+%     zh/title  = {上海交通大学学位论文模板示例文档},
+%     en/title  = {A Sample Document for SJTU Thesis Template},
+%     zh/author = {某某},
 %     en/author = {Mo Mo},
 %   }
 % }
@@ -566,10 +572,11 @@
 %
 % 下面这份 \TeX{} 文档展示了 \cls{sjtureport} 文档类的基本用法，建议使用标准命令定义中文名称。
 % 该文档将包含标题页，页眉为校标图片、文档主题及章节名称。
-% \begin{latex}
+% \begin{latex}[moretexcs={\subject,\keywords,\maketitle,\chapter},
+%   emph={[1]sjtureport,document}]
 % \documentclass{sjtureport}
-% \title{上海交通大学 \LaTeX{} 报告模板示例文档}
-% \author{某\quad{}某}
+% \title{上海交通大学报告模板示例文档}
+% \author{某某}
 % \subject{XX期末课程论文}
 % \keywords{上海交大, 饮水思源, 爱国荣校}
 % \begin{document}
@@ -582,7 +589,7 @@
 %
 % 下面这份 \TeX{} 文档展示了 \cls{sjtuarticle} 文档类的基本用法，建议使用标准命令定义中文名称，
 % 不能够使用 \tn{chapter} 这一级。该文档包含标题栏，页眉为校标图片、文档主题及章节名称。
-% \begin{latex}
+% \begin{latex}[moretexcs={\maketitle}, emph={[1]sjtuarticle,document}]
 % \documentclass{sjtuarticle}
 % \title{示例文档}
 % \author{某某}
@@ -606,7 +613,7 @@
 %
 % 本节所指“文档类选项”是指需要在引入文档类的时候指定的选项:
 %
-% \begin{latex}
+% \begin{latex}[emph={[1]sjtuthesis}]
 % \documentclass(*\oarg{文档类选项}*){sjtuthesis}
 % \end{latex}
 %
@@ -831,16 +838,17 @@
 % 层次的选项设定。键值列表中，“|=|”左右的空格不影响设置；但需注意，参数列表中不
 % 可以出现空行。
 %
-% \begin{latex}[morekeywords={\sjtusetup}]
+% \begin{latex}[moretexcs={\sjtusetup}, emph={[2]info,style,name},
+%   emph={[3]zh,en,title,author,float-num-sep,achv}]
 % \sjtusetup{
 %   info = {
-%     zh/title      = {上海交通大学学位论文 \LaTeX{} 模板示例文档},
-%     en/title      = {A Sample Document for \LaTeX-based SJTU Thesis Template},
-%     zh/author     = {某\quad{}某},
+%     zh/title      = {上海交通大学学位论文模板示例文档},
+%     en/title      = {A Sample Document for SJTU Thesis Template},
+%     zh/author     = {某某},
 %     en/author     = {Mo Mo},
 %   },
 %   style = {
-%     float-num-sep = {--},
+%     float-num-sep = {-},
 %   },
 %   name = {
 %     achv          = {攻读学位期间完成的论文},
