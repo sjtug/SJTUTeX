@@ -347,6 +347,7 @@
 \newcommand{\sjtutex}{SJTU\TeX}
 \usepackage{graphicx}
 \usepackage{multirow}
+\usepackage{float}
 \usepackage{longtable}
 \usepackage{listings}
 \hypersetup{
@@ -395,58 +396,12 @@
   emphstyle  = [1]\color{sjtuBluePrimary!80},
   emphstyle  = [2]\color{sjtuBlueSecondary}
 }
-\lstdefinestyle{style@syntax}{
-  basewidth     = 0.5 em,
-  gobble        = 6,
-  escapeinside  = {(*}{*)},
-  language      = [LaTeX]TeX,
-  alsoletter    = {*, -},
-  belowskip     = 0pt,
-  basicstyle    = \ttfamily,
-  keywordstyle  = \bfseries\color{sjtuBluePrimary},
-  commentstyle  = \itshape\color{sjtuBlueTertiary!60},
-  texcsstyle    = *\color{sjtuBluePrimary},
-  emphstyle     = [1]\color{sjtuBluePrimary!80},
-  emphstyle     = [2]\color{sjtuBlueSecondary}
-}
-\newcommand\shellcmd[1]{%
-  \colorbox{\color{gray!10}}{\lstinline[style=lstStyleShell]|#1|}}
 \lstnewenvironment{shell}[1][]{%
   \lstset{style=style@shell, #1}}{}
 \lstnewenvironment{latex}[1][]{%
   \lstset{style=style@latex, #1}}{}
-\lstnewenvironment{sjtusyntax}[1][]{%
-  \lstset{style=style@syntax, #1}\vspace{-1.8ex}}{}
 \newcommand\note[1]{{%
   \color{sjtuBlueTertiary}{\noindent\bfseries 说明：}~\emph{#1}}}
-\DeclareDocumentCommand\kvopt{mm}
-  {\texttt{#1\breakablethinspace=\breakablethinspace#2}}
-\def\breakablethinspace{\hskip 0.16667em\relax}
-\makeatletter
-\let\old@meta\meta
-\renewcommand*\meta[1]{\texttt{\old@meta{#1}}}
-\renewcommand*\marg[1]{\{\meta{#1}\}}
-\renewcommand*\oarg[1]{[\meta{#1}]}
-\renewcommand*\parg[1]{(\meta{#1})}
-\def\syntaxopt#1{\textit{#1}}
-\def\defaultval#1{\textbf{\textup{#1}}}
-\def\syntaxopt@aux#1>{\syntaxopt{#1}}
-\def\defaultval@aux#1){\defaultval{#1}}
-\def\orbar{\textup{\textbar}}
-\ExplSyntaxOn
-\AtBeginEnvironment { sjtusyntax }
-  {
-    \cs_set:Npn \lparen { \textup { ( } }
-    \cs_set:Npn \rparen { \textup { ) } }
-    \char_set_catcode_active:N |
-    \char_set_catcode_active:N <
-    \char_set_catcode_active:N (
-    \char_set_active_eq:NN | \orbar
-    \char_set_active_eq:NN < \syntaxopt@aux
-    \char_set_active_eq:NN ( \defaultval@aux
-  }
-\ExplSyntaxOff
-\makeatother
 \begin{document}
   \DocInput{\jobname.dtx}
   \IndexLayout
@@ -626,7 +581,7 @@
 % \end{latex}
 %
 % 下面这份 \TeX{} 文档展示了 \cls{sjtuarticle} 文档类的基本用法，建议使用标准命令定义中文名称，
-% 不能够使用 \cs{chapter} 这一级。该文档包含标题栏，页眉为校标图片、文档主题及章节名称。
+% 不能够使用 \tn{chapter} 这一级。该文档包含标题栏，页眉为校标图片、文档主题及章节名称。
 % \begin{latex}
 % \documentclass{sjtuarticle}
 % \title{示例文档}
@@ -655,22 +610,22 @@
 % \documentclass(*\oarg{文档类选项}*){sjtuthesis}
 % \end{latex}
 %
-% 部分选项采用 \kvopt{\meta{key}}{\meta{value}} 的形式，需要使用逗号分隔各选项。
+% 部分选项采用 \meta{key}|=|\meta{value} 的形式，需要使用逗号分隔各选项。
 % 当 \meta{value} 省略时，将采用默认值。在下文的说明中，将用\textbf{粗体}表示默认值。
 %
 % \subsubsection{通用选项}
 %
 % \begin{function}[rEXP,updated=2022-12-03]{type}
-%   \begin{sjtusyntax}[emph={[1]type}]
-%     type = (*<bachelor|(master)|doctor>*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     type = <bachelor|(master)|doctor>
+%   \end{syntax}
 %   论文类型。三种选项分别代表学士学位论文、硕士学位论文、博士学位论文。
 % \end{function}
 %
 % \begin{function}[updated=2023-03-23]{lang}
-%   \begin{sjtusyntax}[emph={[1]lang}]
-%     lang = (*<(zh)|en|de|ja>*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     lang = <(zh)|en|de|ja>
+%   \end{syntax}
 %   论文主要语言。可选中文、英文、德文或日文，该选项会改变文档中的一些标题的名字。
 %   下文中 \meta{lang} 可以指定为这些选项中的其中之一。
 % \end{function}
@@ -688,24 +643,6 @@
 % \end{function}
 %
 % \subsubsection{页面设置}
-%
-% \begin{function}[updated=2022-12-18]{zihao}
-%   \begin{sjtusyntax}[emph={[1]zihao}]
-%     zihao = (*<(-4)|5>*)
-%   \end{sjtusyntax}
-%   论文默认字号，可以设定为小四号或五号。
-%   \begin{itemize}
-%     \item 在 \cls{sjtuthesis} 和 \cls{sjtureport} 文档类中默认为小四号;
-%     \item 在 \cls{sjtuarticle} 文档类中默认为五号。
-%   \end{itemize}
-% \end{function}
-%
-% \begin{function}[added=2022-12-03]{lineskip}
-%   \begin{sjtusyntax}[emph={[1]lineskip}]
-%     lineskip = (*\marg{长度}*)
-%   \end{sjtusyntax}
-%   正文行间距。\opt{zihao=-4} 时默认为 20 磅，\opt{zihao=5} 时默认为 15.6 磅。
-% \end{function}
 %
 % \begin{function}{oneside, twoside}
 %   指明论文的单双面模式。
@@ -742,10 +679,33 @@
 % \subsubsection{字体选项}
 % \label{sec:fontsetup}
 %
+% \begin{function}[updated=2022-12-18]{zihao}
+%   \begin{syntax}
+%     zihao = <(-4)|5>
+%   \end{syntax}
+%   论文默认字号，可以设定为小四号或五号。
+%   \begin{itemize}
+%     \item 在 \cls{sjtuthesis} 和 \cls{sjtureport} 文档类中默认为小四号;
+%     \item 在 \cls{sjtuarticle} 文档类中默认为五号。
+%   \end{itemize}
+% \end{function}
+%
+% \begin{function}[added=2023-10-24]{baselineskip}
+%   \begin{syntax}
+%     baselineskip = <长度|false>
+%   \end{syntax}
+%   正文基线间距。
+%   \begin{itemize}
+%     \item 在 \cls{sjtuthesis} 文档类中，默认为 20 磅。
+%     \item 在 \cls{sjtureport} 和 \cls{sjtuarticle} 文档类中，默认为 \opt{false}；
+%           此时正文基线间距为字号的 1.2 倍。
+%   \end{itemize}
+% \end{function}
+%
 % \begin{function}{cjk-font}
-%   \begin{sjtusyntax}[emph={[1]cjk-font}]
-%     cjk-font = (*<(auto)|(fandol)|windows|mac|ubuntu|adobe|founder|none>*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     cjk-font = <(auto)|(fandol)|windows|mac|ubuntu|adobe|founder|none>
+%   \end{syntax}
 %   指定东亚字体集。\sjtutex{} 预定义了一些东亚字体组合，
 %   默认跟随操作系统设定：
 %   Windows 系统默认使用 \opt{windows}，
@@ -767,18 +727,18 @@
 % \end{function}
 %
 % \begin{function}{text-font}
-%   \begin{sjtusyntax}[emph={[1]text-font}]
-%     text-font = (*<(newtx)|times|stixtwo|xits|newpx|cambria|newcm|lm|libertinus|none>*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     text-font = <(newtx)|times|stixtwo|xits|newpx|cambria|newcm|lm|libertinus|none>
+%   \end{syntax}
 %   指定西文字体集。\sjtutex{} 预定义了一些西文字体组合，
 %   具体配置见表 \ref{tab:latinfonts}。
 %   找不到定义的西文字体集时的回退选项为 \opt{newtx}。
 % \end{function}
 %
 % \begin{function}{math-font}
-%   \begin{sjtusyntax}[emph={[1]math-font}]
-%     math-font = (*<(auto)|(newtx)|times|stixtwo|xits|newpx|cambria|newcm|lm|libertinus|none>*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     math-font = <(auto)|(newtx)|times|stixtwo|xits|newpx|cambria|newcm|lm|libertinus|none>
+%   \end{syntax}
 %   指定数学字体集。\sjtutex{} 预定义了一些数学字体组合，
 %   具体配置见表 \ref{tab:latinfonts} 数学字体列。
 %   默认跟随西文字体 \opt{text-font} 的设置。
@@ -820,9 +780,9 @@
 % \end{table}
 %
 % \begin{function}[added=2022-12-03,updated=2023-01-05]{math-style}
-%   \begin{sjtusyntax}[emph={[1]math-style}]
-%     math-style = (*<(ISO)|TeX>*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     math-style = <(ISO)|TeX>
+%   \end{syntax}
 %   数学符号样式。该选项将影响 \opt{uppercase-greek}、\opt{integral}、
 %   \opt{integral-limits} 选项。
 %   默认遵循 ISO 80000-2 标准设置，即斜体的大写希腊字母、直立的积分号
@@ -831,23 +791,23 @@
 % \end{function}
 %
 % \begin{function}[added=2023-01-05]{uppercase-greek}
-%   \begin{sjtusyntax}[emph={[1]uppercase-greek}]
-%     uppercase-greek = (*<slanted|upright>*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     uppercase-greek = <slanted|upright>
+%   \end{syntax}
 %   大写希腊字母的正/斜体。
 % \end{function}
 %
 % \begin{function}[added=2023-01-05]{integral}
-%   \begin{sjtusyntax}[emph={[1]integral}]
-%     integral = (*<slanted|upright>*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     integral = <slanted|upright>
+%   \end{syntax}
 %   积分号的正/斜体。
 % \end{function}
 %
 % \begin{function}[added=2023-01-05]{integral-limits}
-%   \begin{sjtusyntax}[emph={[1]integral-limits}]
-%     integral-limits = (*<true|false>*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     integral-limits = <true|false>
+%   \end{syntax}
 %   行间公式中积分号上下限的位置，
 %   \opt{true} 使得上下限在积分号上下方，
 %   \opt{false} 使得上下限在积分号右侧。
@@ -857,18 +817,19 @@
 % \subsection{论文信息设置}
 %
 % \begin{function}{\sjtusetup}
-%   \begin{sjtusyntax}[morekeywords={\sjtusetup}]
-%     \sjtusetup(*\marg{键值列表}*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     \tn{sjtusetup} \marg{键值列表}
+%   \end{syntax}
 %   本模板提供了一系列选项，可由您自行配置。载入文档类之后，以下
-%   所有选项均可通过统一的命令 \cs{sjtusetup} 来设置。
+%   所有选项均可通过统一的命令 \tn{sjtusetup} 来设置。
 % \end{function}
 %
-% \cs{sjtusetup} 的参数是一组由（英文）逗号隔开的选项列表，列表中的选项通常是
-% \kvopt{\meta{key}}{\meta{value}} 的形式。对于同一项，后面的设置将会覆盖前面的
-% 设置。在下文的说明中，将用\textbf{粗体}表示默认值。\cs{sjtusetup} 支持不同类型
-% 以及多种层次的选项设定。键值列表中，“|=|”左右的空格不影响设置；但需注意，参数
-% 列表中不可以出现空行。
+
+% \tn{sjtusetup} 的参数是一组由（英文）逗号隔开的选项列表，列表中的选项通常是
+% \meta{key}|=|\meta{value} 的形式。对于同一项，后面的设置将会覆盖前面的设置。在
+% 下文的说明中，将用\textbf{粗体}表示默认值。\tn{sjtusetup} 支持不同类型以及多种
+% 层次的选项设定。键值列表中，“|=|”左右的空格不影响设置；但需注意，参数列表中不
+% 可以出现空行。
 %
 % \begin{latex}[morekeywords={\sjtusetup}]
 % \sjtusetup{
@@ -890,18 +851,19 @@
 % \subsubsection{信息域}
 %
 % \begin{function}[updated=2023-03-14]{info}
-%   \begin{sjtusyntax}[emph={[1]info}]
-%     info = (*\marg{键值列表}*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     info = \marg{键值列表}
+%   \end{syntax}
 %   该选项包含许多子项目，用于录入论文信息。具体内容见下。
 %   \begin{itemize}
-%     \item 在 \cls{sjtuthesis} 文档类中，现在推荐使用以语言名称子域 \meta{lang}
-%           （比如 \opt{zh} 或 \opt{en}）下的键来设定对应语言的论文信息，见第 \ref{sec:sjtuthesiskey} 节；
-%           省略语言子域不带“*”的项目表示对应的中文字段、带“*”的项目表示对应的英文字段属于老用法，
-%           仍然兼容但请及时更新至新用法。
-%     \item 在 \cls{sjtureport} 和 \cls{sjtuarticle} 文档类中，不需要使用语言名称子域。
-%           此时推荐直接使用标准接口来设定这些信息，这些标准接口不属于键值列表，应当直接写在导言区内，
-%           见第 \ref{sec:sjtureportcmd} 节。
+%     \item 在 \cls{sjtuthesis} 文档类中，现在推荐使用以语言代码前缀 \meta{lang}
+%           （比如 \opt{zh} 或 \opt{en}）下的键来设定对应语言的论文信息，见第
+%           \ref{sec:sjtuthesiskey} 节；省略语言前缀不带“*”的项目表示对应的中文
+%           字段、带“*”的项目表示对应的英文字段属于老用法，仍然兼容但请及时更新
+%           至新用法。
+%     \item 在 \cls{sjtureport} 和 \cls{sjtuarticle} 文档类中，不需要使用语言代
+%           码前缀。此时推荐直接使用标准接口来设定这些信息，这些标准接口不属于键
+%           值列表，应当直接写在导言区内，见第\ref{sec:sjtureportcmd} 节。
 %   \end{itemize}
 % \end{function}
 %
@@ -909,104 +871,104 @@
 % \label{sec:sjtuthesiskey}
 %
 % \begin{function}[rEXP,updated=2023-03-14]{info/<lang>/title}
-%   \begin{sjtusyntax}
-%     (*\meta{lang}*)/title = (*\marg{标题}*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     \meta{lang}/title = \marg{标题}
+%   \end{syntax}
 %   标题。
 % \end{function}
 %
 % \begin{function}[rEXP,updated=2023-03-14]{info/<lang>/display-title}
-%   \begin{sjtusyntax}
-%     (*\meta{lang}*)/display-title = (*\marg{标题页标题}*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     \meta{lang}/display-title = \marg{标题页标题}
+%   \end{syntax}
 %   标题页中的题目。默认为跟随对应语言的标题。
 %   如果标题过长，可以尝试使用“|\\|”手动断行。
 % \end{function}
 %
 % \begin{function}[rEXP,added=2022-12-17,updated=2023-03-14]{info/<lang>/subject}
-%   \begin{sjtusyntax}
-%     (*\meta{lang}*)/subject = (*\marg{主题}*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     \meta{lang}/subject = \marg{主题}
+%   \end{syntax}
 %   文档主题。一般显示在中文标题页校徽下方。
 %   默认值类似于 “上海交通大学学士学位论文” 或 “A Dissertation Submitted to
 %   Shanghai Jiao Tong University for the Degree of Bachelor”。
 % \end{function}
 %
 % \begin{function}[rEXP,updated=2023-03-14]{info/<lang>/keywords}
-%   \begin{sjtusyntax}
-%     (*\meta{lang}*)/keywords = (*\marg{中文关键字}*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     \meta{lang}/keywords = \marg{中文关键字}
+%   \end{syntax}
 %   关键字列表。各关键字之间需使用英文逗号隔开。
 %   为防止歧义，可以用分组括号“|{...}|”把各字段括起来。
 % \end{function}
 %
 % \begin{function}[rEXP,updated=2023-03-14]{info/<lang>/author}
-%   \begin{sjtusyntax}
-%     (*\meta{lang}*)/author = (*\marg{姓名}*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     \meta{lang}/author = \marg{姓名}
+%   \end{syntax}
 %   作者姓名。
 % \end{function}
 %
 % \begin{function}[rEXP]{info/id}
-%   \begin{sjtusyntax}
-%     id = (*\marg{学号}*)
-%   \end{sjtusyntax}
-%   学号。该键语言子域不是必须的。
+%   \begin{syntax}
+%     id = \marg{学号}
+%   \end{syntax}
+%   学号。该键不需要语言前缀。
 % \end{function}
 %
 % \begin{function}[rEXP,updated=2023-03-14]{info/<lang>/supervisor,
 %   info/<lang>/assoc-supervisor,info/<lang>/co-supervisor}
-%   \begin{sjtusyntax}
-%     (*\meta{lang}*)/supervisor       = (*\marg{导师姓名}*)
-%     (*\meta{lang}*)/assoc-supervisor = (*\marg{副导师姓名}*)
-%     (*\meta{lang}*)/co-supervisor    = (*\marg{联合导师姓名}*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     \meta{lang}/supervisor       = \marg{导师姓名}
+%     \meta{lang}/assoc-supervisor = \marg{副导师姓名}
+%     \meta{lang}/co-supervisor    = \marg{联合导师姓名}
+%   \end{syntax}
 %   导师、副导师、联合导师姓名。
 % \end{function}
 %
 % \begin{function}[rEXP,updated=2023-03-14]{info/<lang>/degree}
-%   \begin{sjtusyntax}
-%     (*\meta{lang}*)/degree = (*\marg{学位名称}*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     \meta{lang}/degree = \marg{学位名称}
+%   \end{syntax}
 %   申请学位中英文名称。
 %   包括申请的学位类别和级别，如“工学硕士”、“理学博士”等。
 %   学士论文无需标注。
 % \end{function}
 %
 % \begin{function}[rEXP,updated=2023-03-14]{info/<lang>/department}
-%   \begin{sjtusyntax}
-%     (*\meta{lang}*)/department = (*\marg{院系名称}*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     \meta{lang}/department = \marg{院系名称}
+%   \end{syntax}
 %   院系名称。
 % \end{function}
 %
 % \begin{function}[rEXP,updated=2023-03-14]{info/<lang>/major}
-%   \begin{sjtusyntax}
-%     (*\meta{lang}*)/major = (*\marg{专业名称}*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     \meta{lang}/major = \marg{专业名称}
+%   \end{syntax}
 %   专业名称。
 % \end{function}
 %
 % \begin{function}[rEXP,updated=2023-03-14]{info/<lang>/fund}
-%   \begin{sjtusyntax}
-%     (*\meta{lang}*)/fund = (*\marg{资助基金名称}*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     \meta{lang}/fund = \marg{资助基金名称}
+%   \end{syntax}
 %   资助基金列表。各资助基金名称之间需使用英文逗号隔开。
 %   为防止歧义，可以用分组括号“|{...}|”把各字段括起来。
 % \end{function}
 %
 % \begin{function}[rEXP,updated=2023-02-25]{info/date}
-%   \begin{sjtusyntax}
-%     date = (*\marg{ISO 日期}*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     date = \marg{ISO 日期}
+%   \end{syntax}
 %   日期。默认值为文档编译日期。也可以自己指定，要求使用 ISO 格式，
-%   即 |yyyy-mm-dd| 或 |yyyy-mm|，否则设定无效。该键语言子域不是必须的。
+%   即 |yyyy-mm-dd| 或 |yyyy-mm|，否则设定无效。该键语言前缀不是必须的。
 % \end{function}
 %
 % \begin{function}[rEXP,updated=2023-03-14]{info/<lang>/display-date}
-%   \begin{sjtusyntax}
-%     (*\meta{lang}*)/display-date = (*\marg{日期文字}*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     \meta{lang}/display-date = \marg{日期文字}
+%   \end{syntax}
 %   显示日期，可以显示不同于标准日期格式的日期，日期文字将会被原样输出。
 %   设定该键时，将会覆盖 \opt{info/date} 键在对应语言下的设定。
 % \end{function}
@@ -1015,87 +977,87 @@
 % \label{sec:sjtureportcmd}
 %
 % \begin{function}[EXP,added=2022-12-17,updated=2023-03-14]{\title}
-%   \begin{sjtusyntax}[morekeywords={\title}]
-%     \title(*\marg{标题}*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     \tn{title}\marg{标题}
+%   \end{syntax}
 %   设置标题，覆盖 \opt{info/title} 键的值。
 % \end{function}
 %
 % \begin{function}[EXP,added=2022-12-17,updated=2023-03-14]{\author}
-%   \begin{sjtusyntax}[morekeywords={\author}]
-%     \author(*\marg{姓名}*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     \tn{author}\marg{姓名}
+%   \end{syntax}
 %   设置作者姓名，覆盖 \opt{info/author} 键的值。
 % \end{function}
 %
 % \begin{function}[EXP,added=2022-12-17,updated=2023-03-14]{\date}
-%   \begin{sjtusyntax}[morekeywords={\date}]
-%     \date(*\marg{日期}*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     \tn{date}\marg{日期}
+%   \end{syntax}
 %   设置日期，覆盖 \opt{info/display-date} 键的值。
 %   日期会被原样显示。
 % \end{function}
 %
 % \begin{function}[EXP,added=2023-03-14]{\subject}
-%   \begin{sjtusyntax}[morekeywords={\subject}]
-%     \subject(*\marg{主题}*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     \tn{subject}\marg{主题}
+%   \end{syntax}
 %   文档主题。覆盖 \opt{info/subject} 键的值。
 % \end{function}
 %
 % \begin{function}[EXP,added=2023-03-14]{\keywords}
-%   \begin{sjtusyntax}[morekeywords={\keywords}]
-%     \keywords(*\marg{关键词}*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     \tn{keywords}\marg{关键词}
+%   \end{syntax}
 %   文档关键词，使用英文逗号隔开不同的关键词。覆盖 \opt{info/keywords} 键的值。
 % \end{function}
 %
 % \subsubsection{样式域}
 %
 % \begin{function}{style}
-%   \begin{sjtusyntax}[emph={[1]style}]
-%     style = (*\marg{键值列表}*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     style = \marg{键值列表}
+%   \end{syntax}
 %   该选项包含许多子项目，用于设置论文样式。具体内容见下。
 % \end{function}
 %
 % \begin{function}[added=2023-11-30]{style/equation-font}
-%   \begin{sjtusyntax}[emph={[2]equation-font}]
-%     equation-font = (*\marg{字体设置}*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     equation-font = \marg{字体设置}
+%   \end{syntax}
 %   行间数学公式的字体设置，该选项主要用于调整行间公式的行距，
 %   不建议修改字号字形。
 %   \cls{sjtuthesis} 中默认数学公式的行距为字号的 1.2 倍。
 % \end{function}
 %
 % \begin{function}[added=2022-12-03,updated=2022-12-27]{style/float-font}
-%   \begin{sjtusyntax}[emph={[2]float-font}]
-%     float-font = (*\marg{字体设置}*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     float-font = \marg{字体设置}
+%   \end{syntax}
 %   图、表等浮动体的额外字体设置。
 %   默认为 |\zihao{5}|，五号字。
 % \end{function}
 %
 % \begin{function}[added=2022-12-20]{style/caption-font}
-%   \begin{sjtusyntax}[emph={[2]caption-font}]
-%     caption-font = (*\marg{字体设置}*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     caption-font = \marg{字体设置}
+%   \end{syntax}
 %   题注字体。
 %   默认为 |\zihao{5}\bfseries|，粗体五号字。
 % \end{function}
 %
 % \begin{function}[added=2022-12-20]{style/subcaption-font}
-%   \begin{sjtusyntax}[emph={[2]subcaption-font}]
-%     subcaption-font = (*\marg{字体设置}*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     subcaption-font = \marg{字体设置}
+%   \end{syntax}
 %   子图题注字体。
 %   默认为 |\zihao{5}\normalfont|，正常字重五号字。
 % \end{function}
 %
 % \begin{function}[added=2023-03-28]{style/fnmark-style}
-%   \begin{sjtusyntax}[emph={[2]fnmark-style}]
-%     fnmark-style = (*<plain|circled>*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     fnmark-style = <plain|circled>
+%   \end{syntax}
 %   脚注数字编号样式。
 %   \opt{plain} 表示使用普通数字编号；
 %   \opt{circled} 表示使用带圈数字编号。
@@ -1109,9 +1071,9 @@
 % \end{function}
 %
 % \begin{function}[added=2022-12-03,updated=2023-03-28]{style/fnmark-font}
-%   \begin{sjtusyntax}[emph={[2]fnmark-font}]
-%     fnmark-font = (*<haranoaji|\marg{字体设置}>*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     fnmark-font = <haranoaji|\marg{字体设置}>
+%   \end{syntax}
 %   脚注编号的额外字体设置。
 %   默认为空。
 %   可以使用预设 \opt{haranoaji}，支持在 Unicode 引擎中使用 HaranoAjiMincho 字体
@@ -1119,9 +1081,9 @@
 % \end{function}
 %
 % \begin{function}[added=2023-12-02]{num-sep}
-%   \begin{sjtusyntax}[emph={[2]num-sep}]
-%     num-sep = (*\marg{分隔符}*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     num-sep = \marg{分隔符}
+%   \end{syntax}
 %   图、表、公式以及定理编号中的分隔符。该选项将统一设定 \opt{float-num-sep}、
 %   \opt{equation-num-sep}、\opt{theorem-num-sep} 选项。
 %   用户也可以逐项修改编号分隔符。
@@ -1129,51 +1091,51 @@
 % \end{function}
 %
 % \begin{function}[updated=2023-11-29]{style/float-num-sep}
-%   \begin{sjtusyntax}[emph={[2]float-num-sep}]
-%     float-num-sep = (*\marg{分隔符}*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     float-num-sep = \marg{分隔符}
+%   \end{syntax}
 %   图、表等浮动体编号中的分隔符。
 % \end{function}
 %
 % \begin{function}[updated=2023-11-29]{style/equation-num-sep}
-%   \begin{sjtusyntax}[emph={[2]equation-num-sep}]
-%     equation-num-sep = (*\marg{分隔符}*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     equation-num-sep = \marg{分隔符}
+%   \end{syntax}
 %   公式编号中的分隔符。
 % \end{function}
 %
 % \begin{function}[added=2023-12-02]{style/theorem-num-sep}
-%   \begin{sjtusyntax}[emph={[2]theorem-num-sep}]
-%     theorem-num-sep = (*\marg{分隔符}*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     theorem-num-sep = \marg{分隔符}
+%   \end{syntax}
 %   定理编号中的分隔符。
 % \end{function}
 %
 % \begin{function}{style/title-logo-color}
-%   \begin{sjtusyntax}[emph={[2]title-logo-color}]
-%     title-logo-color = (*<(red)|blue|black>*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     title-logo-color = <(red)|blue|black>
+%   \end{syntax}
 %   选择论文标题页中校徽的颜色。
 % \end{function}
 %
 % \begin{function}[EXP,updated=2022-12-20]{style/header-logo-color}
-%   \begin{sjtusyntax}[emph={[2]header-logo-color}]
-%     header-logo-color = (*<(red)|blue|black>*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     header-logo-color = <(red)|blue|black>
+%   \end{syntax}
 %   选择 \cls{sjtureport} 和 \cls{sjtuarticle} 文档类中页眉的校标颜色。
 % \end{function}
 %
 % \begin{function}[added=2022-12-20,updated=2023-03-14]{style/header-uppercase}
-%   \begin{sjtusyntax}[emph={[2]header-uppercase}]
-%     header-uppercase = (*<true|(false)>*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     header-uppercase = <true|(false)>
+%   \end{syntax}
 %   页眉英文字母是否大写。默认为 \opt{false}。
 % \end{function}
 %
 % \begin{function}[added=2022-12-20]{style/header-font}
-%   \begin{sjtusyntax}[emph={[2]header-font}]
-%     header-font = (*\marg{页眉字体}*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     header-font = \marg{页眉字体}
+%   \end{syntax}
 %   页眉字体。
 %   \begin{itemize}
 %     \item 在 \cls{sjtuthesis} 文档类中，默认为 |\zihao{-5}|，小五号字。
@@ -1182,33 +1144,33 @@
 % \end{function}
 %
 % \begin{function}[added=2022-12-20]{style/footer-font}
-%   \begin{sjtusyntax}[emph={[2]footer-font}]
-%     footer-font = (*\marg{页脚字体}*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     footer-font = \marg{页脚字体}
+%   \end{syntax}
 %   页脚字体。默认为 |\zihao{-5}|，小五号字。
 % \end{function}
 %
 % \begin{function}[added=2022-12-03]{style/page-number}
-%   \begin{sjtusyntax}[emph={[2]page-number}]
-%     page-number = (*\marg{页码设置}*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     page-number = \marg{页码设置}
+%   \end{syntax}
 %   设置页码的显示样式，其中 |#1| 代表当前页码。
 %   默认为 |{#1}|，即仅显示页码本身。
 % \end{function}
 %
 % \begin{function}[added=2023-11-30]{style/keywords-format}
-%   \begin{sjtusyntax}[emph={[2]keywords-format}]
-%     keywords-format = (*<(plain)|hang>*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     keywords-format = <(plain)|hang>
+%   \end{syntax}
 %   设置关键词格式。默认为 \opt{plain} 无缩进的普通段落，另可选 \opt{hang} 悬挂格式。
 % \end{function}
 %
 % \subsubsection{名称域}
 %
 % \begin{function}{name}
-%   \begin{sjtusyntax}[emph={[1]name}]
-%     name = (*\marg{键值列表}*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     name = \marg{键值列表}
+%   \end{syntax}
 %   选项包含许多子项目，用于设置论文中一些标题的名称。部分选项只能在 \cls{sjtuthesis} 中使用。
 %   具体内容见表 \ref{tab:names}。
 % \end{function}
@@ -1267,19 +1229,19 @@
 % 在文档开始后进行内容编写，文档内容由 |document| 环境包裹。
 %
 % \begin{function}{document}
-%   \begin{sjtusyntax}[emph={[2]document}]
-%     \begin{document}
-%       (*\meta{文档内容}*)
-%     \end{document}
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     \tn{begin}\{document\}
+%     \  \meta{文档内容}
+%     \tn{end}\{document\}
+%   \end{syntax}
 % \end{function}
 %
 % \subsection{标题页和声明页}
 %
 % \begin{function}[updated=2022-12-03]{\maketitle}
-%   \begin{sjtusyntax}[morekeywords={\maketitle}]
-%     \maketitle
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     \tn{maketitle}
+%   \end{syntax}
 %   生成标题。
 %   \begin{itemize}
 %     \item 在 \cls{sjtuthesis} 文档类中，生成标题页。
@@ -1292,10 +1254,10 @@
 % \end{function}
 %
 % \begin{function}[rEXP,updated=2022-12-20]{\copyrightpage}
-%   \begin{sjtusyntax}[morekeywords={\copyrightpage}]
-%     \copyrightpage
-%     \copyrightpage(*\oarg{授权书扫描件}*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     \tn{copyrightpage}
+%     \tn{copyrightpage}\oarg{授权书扫描件}
+%   \end{syntax}
 %   生成空白版权使用授权书。
 %   接受一个可选参数用于插入版权使用授权书扫描件，使用可选参数时需要手动加载 \pkg{pdfpages} 宏包。
 % \end{function}
@@ -1303,78 +1265,75 @@
 % \subsection{前文部分}
 %
 % \begin{function}[rEXP]{\frontmatter}
-%   \begin{sjtusyntax}[morekeywords={\frontmatter}]
-%     \frontmatter
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     \tn{frontmatter}
+%   \end{syntax}
 %   声明前文部分开始。
 % \end{function}
 %
 % \begin{function}[rEXP,updated=2023-11-29]{abstract,abstract*}
-%   \begin{sjtusyntax}[emph={[2]abstract,abstract*}]
-%     \begin{abstract}(*\oarg{lang}*)
-%       (*\meta{摘要}*)
-%     \end{abstract}
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     \tn{begin}\{abstract\}\oarg{lang}
+%     \  \meta{摘要}
+%     \tn{end}\{abstract\}
+%   \end{syntax}
 %   \cls{sjtuthesis} 文档类中对应语言的摘要环境，使用可选参数指定语言，默认为 \opt{zh}。
 %   使用带星号的 \env{abstract*} 环境不会出现在目录中。
 % \end{function}
 %
 % \begin{function}[EXP,updated=2023-03-14]{abstract}
-%   \begin{sjtusyntax}[emph={[2]abstract}]
-%     \begin{abstract}
-%       (*\meta{摘要}*)
-%     \end{abstract}
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     \tn{begin}\{abstract\}
+%     \  \meta{摘要}
+%     \tn{end}\{abstract\}
+%   \end{syntax}
 %   \cls{sjtuarticle} 和 \cls{sjtureport} 文档类中摘要环境。
-%   会在结尾添加由 \cs{keywords} 命令设定的关键词。
+%   会在结尾添加由 \tn{keywords} 命令设定的关键词。
 % \end{function}
 %
 % \begin{function}{\tableofcontents,\tableofcontents*,\listoffigures,\listoffigures*,
 %   \listoftables,\listoftables*,\listofalgorithms,\listofalgorithms*}
 %   目录、插图、表格和算法等索引命令如表 \ref{tab:list} 所示，将其插入到期望的
 %   位置即可。带*的命令表示对应的索引表不会出现在目录中。
+%   \begin{table}[H]
+%     \centering
+%     \small
+%     \begin{threeparttable}
+%       \caption{目录和索引表}
+%       \label{tab:list}
+%       \begin{tabular}{lp{4cm}lp{4cm}}
+%         \toprule
+%         \strong{用途}     & \strong{命令}         & \strong{用途}     & \strong{命令}          \\
+%         \midrule
+%         目录              & \tn{tableofcontents}  & 插图索引          & \tn{listoffigures}     \\
+%                           & \tn{tableofcontents*} &                   & \tn{listoffigures*}    \\
+%         \midrule
+%         表格索引          & \tn{listoftables}     & 算法索引\tnote{a} & \tn{listofalgorithms}  \\
+%                           & \tn{listoftables*}    &                   & \tn{listofalgorithms*} \\
+%         \bottomrule
+%       \end{tabular}
+%       \begin{tablenotes}
+%         \item[a] 启用 \pkg{algorithm2e} 或 \pkg{algorithm} 后有效。
+%       \end{tablenotes}
+%     \end{threeparttable}
+%   \end{table}
 % \end{function}
-%
-% \begin{table}[ht]
-% \vspace*{-12ex}
-% \centering\small
-% \begin{threeparttable}
-%   \caption{目录和索引表}
-%   \label{tab:list}
-%   \begin{tabular}{lp{4cm}}
-%     \toprule
-%     \strong{用途}     & \strong{命令}          \\\midrule
-%     目录              & \cs{tableofcontents}   \\
-%                       & \cs{tableofcontents*}  \\\midrule
-%     插图索引          & \cs{listoffigures}     \\
-%                       & \cs{listoffigures*}    \\\midrule
-%     表格索引          & \cs{listoftables}      \\
-%                       & \cs{listoftables*}     \\\midrule
-%     算法索引\tnote{a} & \cs{listofalgorithms}  \\
-%                       & \cs{listofalgorithms*} \\
-%     \bottomrule
-%   \end{tabular}
-%   \begin{tablenotes}
-%     \item[a] 启用 \pkg{algorithm2e} 或 \pkg{algorithm} 后有效。
-%   \end{tablenotes}
-% \end{threeparttable}
-% \end{table}
 %
 %
 % \subsection{正文部分}
 %
 % \begin{function}[rEXP]{\mainmatter}
-%   \begin{sjtusyntax}[morekeywords={\mainmatter}]
-%     \mainmatter
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     \tn{mainmatter}
+%   \end{syntax}
 %   声明正文部分开始。正文部分是论文的核心，您可以分章节撰写。
 %   如有需求，也可以采用多文件编译的方式。
 % \end{function}
 %
 % \begin{function}[updated=2022-12-03]{\footnote}
-%   \begin{sjtusyntax}[morekeywords={\footnote}]
-%     \footnote(*\oarg{脚注编号}*)(*\marg{脚注文字}*)
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     \tn{footnote}\oarg{脚注编号}\marg{脚注文字}
+%   \end{syntax}
 %   插入脚注。其中脚注编号参数是可选的，一般不需要输入。
 % \end{function}
 %
@@ -1382,53 +1341,55 @@
 %   exercise,lemma,problem,proposition,theorem}
 %   \sjtutex{} 预定义了一系列数学环境。在启用 \pkg{ntheorem} 或 \pkg{amsthm}
 %   宏包后有效，环境如表 \ref{tab:theorems} 所示。
+%   \begin{table}[H]
+%     \centering
+%     \small
+%     \caption{预定义的数学环境}
+%     \label{tab:theorems}
+%     \begin{tabular}{*{7}{l}}
+%       \toprule
+%       assumption  & axiom   & conjecture & corollary    & definition  & example   & exercise  \\
+%       假设        & 公理    & 猜想       & 推论         & 定义        & 例        & 练习      \\
+%       \midrule
+%       lemma       & problem & proof      & proposition  & remark      & solution  & theorem   \\
+%       引理        & 问题    & 证明       & 命题         & 注          & 解        & 定理      \\
+%       \bottomrule
+%     \end{tabular}
+%   \end{table}
 % \end{function}
 %
-% \begin{table}[ht]
-% \vspace*{-20ex}
-% \centering\small
-% \caption{预定义的数学环境}
-% \label{tab:theorems}
-% \begin{tabular}{*{7}{l}}\toprule
-%   assumption  & axiom   & conjecture & corollary    & definition  & example   & exercise  \\
-%   假设        & 公理    & 猜想       & 推论         & 定义        & 例        & 练习      \\\midrule
-%   lemma       & problem & proof      & proposition  & remark      & solution  & theorem   \\
-%   引理        & 问题    & 证明       & 命题         & 注          & 解        & 定理      \\\bottomrule
-% \end{tabular}
-% \end{table}
-%
 % \begin{function}[added=2023-10-24]{\setbaselineskip}
-%   \begin{sjtusyntax}[morekeywords={\setbaselineskip}]
-%     \setbaselineskip(*\marg{长度}*)
-%   \end{sjtusyntax}
-%   设置基本行距，在字号命令之后使用。
+%   \begin{syntax}
+%     \tn{setbaselineskip}\marg{长度}
+%   \end{syntax}
+%   设置当前的基线间距，一般在字号命令之后使用。
 % \end{function}
 %
 % \begin{function}{\appendix}
-%   \begin{sjtusyntax}[morekeywords={\appendix}]
-%     \appendix
-%     \chapter{...}
-%   \end{sjtusyntax}
-%   附录由 \cs{appendix} 命令开启，然后像正文一样书写。
+%   \begin{syntax}
+%     \tn{appendix}
+%     \tn{chapter}\{...\}
+%   \end{syntax}
+%   附录由 \tn{appendix} 命令开启，然后像正文一样书写。
 % \end{function}
 %
 % \begin{function}[rEXP,updated=2022-03-02]{nomenclature,nomenclature*}
-%   \begin{sjtusyntax}[emph={[2]nomenclature,nomenclature*}]
-%     \begin{nomenclature}(*\oarg{标题}*)
-%       (*\meta{符号对照表}*)
-%     \end{nomenclature}
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     \tn{begin}\{nomenclature\}\oarg{标题}
+%     \  \meta{符号对照表}
+%     \tn{end}\{nomenclature\}
+%   \end{syntax}
 %   符号对照表环境。带星号的版本不会出现在目录中。可以使用可选参数手动设置标题。
 %   符号对照表环境仅设置标题，内部实现可由用户自行决定。
 %   可以使用 \pkg{longtable}，也可以使用 \pkg{nomencl} 宏包。
 % \end{function}
 %
 % \begin{function}[rEXP,updated=2022-03-02]{abbreviation,abbreviation*}
-%   \begin{sjtusyntax}[emph={[2]abbreviation,abbreviation*}]
-%     \begin{abbreviation}(*\oarg{标题}*)
-%       (*\meta{缩略语对照表}*)
-%     \end{abbreviation}
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     \tn{begin}\{abbreviation\}\oarg{标题}
+%     \  \meta{缩略语对照表}
+%     \tn{end}\{abbreviation\}
+%   \end{syntax}
 %   缩略语对照表环境。带星号的版本不会出现在目录中。可以使用可选参数手动设置标题。
 %   缩略语对照表环境仅设置标题，内部实现可由用户自行决定。
 % \end{function}
@@ -1436,27 +1397,27 @@
 % \subsection{后文部分}
 %
 % \begin{function}[rEXP]{\backmatter}
-%   \begin{sjtusyntax}[morekeywords={\backmatter}]
-%     \backmatter
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     \tn{backmatter}
+%   \end{syntax}
 %   声明后文部分开始。 后文部分包含致谢等。
 % \end{function}
 %
 % \begin{function}[rEXP,updated=2022-02-24]{acknowledgements}
-%   \begin{sjtusyntax}[emph={[2]acknowledgements}]
-%     \begin{acknowledgements}(*\oarg{标题}*)
-%       (*\meta{致谢内容}*)
-%     \end{acknowledgements}
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     \tn{begin}\{acknowledgements\}\oarg{标题}
+%     \  \meta{致谢内容}
+%     \tn{end}\{acknowledgements\}
+%   \end{syntax}
 %   致谢环境。盲审模式下致谢将被隐去。可以使用可选参数手动设置标题。
 % \end{function}
 %
 % \begin{function}[rEXP,updated=2022-02-24]{achievements}
-%   \begin{sjtusyntax}[emph={[2]achievements}]
-%     \begin{achievements}(*\oarg{标题}*)
-%       (*\meta{获得的科研成果}*)
-%     \end{achievements}
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     \tn{begin}\{achievements\}\oarg{标题}
+%     \  \meta{获得的科研成果}
+%     \tn{end}\{achievements\}
+%   \end{syntax}
 %   科研成果环境，可以使用可选参数手动设置标题。内部请配合使用下面的附录用文献列表环境
 %   \env{bibliolist} 和 \env{bibliolist*}。你可以在该环境中使用带星号的节次命令
 %   以分隔不同的类型的成果（比如学术论文、专利等）；你也可以使用多个 \env{achievements}
@@ -1464,37 +1425,37 @@
 % \end{function}
 %
 % \begin{function}[rEXP,updated=2022-03-23]{bibliolist,bibliolist*}
-%   \begin{sjtusyntax}[emph={[2]bibliolist,bibliolist*}]
-%     \begin{bibliolist}(*\marg{最长条目编号}*)
-%        \item (*\meta{文献条目}*)
-%     \end{bibliolist}
-%     \begin{bibliolist*}(*\marg{最长条目编号}*)
-%        \item (*\meta{文献条目（隐去姓名）}*)
-%     \end{bibliolist*}
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     \tn{begin}\{bibliolist\}\marg{最长条目编号}
+%     \  \tn{item} \meta{文献条目}
+%     \tn{end}\{bibliolist\}
+%     \tn{begin}\{bibliolist*\}\marg{最长条目编号}
+%     \  \tn{item} \meta{文献条目（隐去姓名）}
+%     \tn{end}\{bibliolist*\}
+%   \end{syntax}
 %   附录用文献环境，只允许在 \env{achievements} 环境中使用。
 %   需要指定最长条目的编号作为参数，比如 \opt{99}；
 %   如果将该强制参数被指定为空，将不显示编号，每条以悬挂缩进做区分。
-%   环境内部使用 \cs{item} 来分隔各条目，在同一个 \env{achievements} 环境内、不同的
+%   环境内部使用 \tn{item} 来分隔各条目，在同一个 \env{achievements} 环境内、不同的
 %   \env{bibliolist} 或 \env{bibliolist*} 环境中编号连续递增、不会间断。
 %   普通模式下显示 \env{bibliolist} 中的内容，盲审模式下显示 \env{bibliolist*} 中的内容。
 % \end{function}
 %
 % \begin{function}[rEXP,updated=2022-02-24]{resume}
-%   \begin{sjtusyntax}[emph={[2]resume}]
-%     \begin{resume}(*\oarg{标题}*)
-%       (*\meta{简历内容}*)
-%     \end{resume}
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     \tn{begin}\{resume\}\oarg{标题}
+%     \  \meta{简历内容}
+%     \tn{end}\{resume\}
+%   \end{syntax}
 %   简历环境。盲审模式下简历将被隐去。可以使用可选参数手动设置标题。
 % \end{function}
 %
 % \begin{function}[rEXP]{digest}
-%   \begin{sjtusyntax}[emph={[2]digest}]
-%     \begin{digest}(*\oarg{lang}*)
-%       (*\meta{大摘要}*)
-%     \end{digest}
-%   \end{sjtusyntax}
+%   \begin{syntax}
+%     \tn{begin}\{digest\}\oarg{lang}
+%     \  \meta{大摘要}
+%     \tn{end}\{digest\}
+%   \end{syntax}
 %   学士论文大摘要，使用可选参数设定语言，默认为 \opt{en}。
 % \end{function}
 %
@@ -2303,7 +2264,7 @@
 %
 % \subsection{字号行距}
 %
-% 重定义 \cs{normalsize}，设置正文的基本行距。
+% 重定义 \tn{normalsize}，设置正文的基线间距。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_set_font_size:nnNn #1#2#3#4
   { \cs_set_protected:Npn #3 { \@setfontsize #3 {#1} {#2} #4 } }
@@ -2344,7 +2305,7 @@
 %    \end{macrocode}
 %
 % \begin{macro}{\setbaselineskip}
-% 设置基本行距，在字号命令之后使用。
+% 设置基线间距，在字号命令之后使用。
 %    \begin{macrocode}
 \NewDocumentCommand \setbaselineskip { m }
   { \fontsize { \f@size } {#1} \selectfont }
@@ -3499,7 +3460,7 @@
 % \subsection{页眉页脚}
 %
 % \pkg{ctex} 宏包使用 \opt{heading} 选项后，会把页面格式设置为 |headings|。
-% 因此必须在 \pkg{ctex} 调用之后重新设置 \cs{pagestyle} 为 |fancy|。
+% 因此必须在 \pkg{ctex} 调用之后重新设置 \tn{pagestyle} 为 |fancy|。
 %    \begin{macrocode}
 \pagestyle { fancy }
 %    \end{macrocode}
@@ -4063,7 +4024,7 @@
 %</scheme>
 %    \end{macrocode}
 %
-% 在导言末尾修改 \cs{@makefntext}，支持使用 \pkg{footmisc} 修改脚注格式。
+% 在导言末尾修改 \tn{@makefntext}，支持使用 \pkg{footmisc} 修改脚注格式。
 %    \begin{macrocode}
 %<*class>
 \ctex_at_end_preamble:n {
@@ -4959,8 +4920,8 @@
 %
 % \subsection{目录}
 %
-% \changes{unreleased}{2023/11/29}{\cs{tableofcontents} 添加目录条目，
-% \cs{tableofcontents*} 对应修改为不添加目录条目。}
+% \changes{unreleased}{2023/11/29}{\tn{tableofcontents} 添加目录条目，
+% \tn{tableofcontents*} 对应修改为不添加目录条目。}
 % \begin{macro}{\tableofcontents,\tableofcontents*,\listoffigures,\listoffigures*,
 % \listoftables,\listoftables*}
 % 目录以及图表索引。
