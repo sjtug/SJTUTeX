@@ -399,11 +399,11 @@
   emphstyle         = [2]\color{sjtu-green},
   emphstyle         = [3]\color{sjtu-dark-blue!80}
 }
-\lstnewenvironment{shell}[1][]{%
+\lstnewenvironment{shell}[1][]{^^A
   \lstset{style=style@shell, #1}}{}
-\lstnewenvironment{latex}[1][]{%
+\lstnewenvironment{latex}[1][]{^^A
   \lstset{style=style@latex, #1}}{}
-\newcommand\note[1]{{%
+\newcommand\note[1]{{^^A
   \color{sjtu-dark-green}{\noindent\bfseries 说明：}~\emph{#1}}}
 \begin{document}
   \DocInput{\jobname.dtx}
@@ -436,11 +436,9 @@
 % \begin{enumerate}
 % \item 本模板的发布遵守 \LaTeX{} Project Public License，使用前请认真阅读
 %   协议内容。
-% \item 学位论文模板根据 \href{https://www.gs.sjtu.edu.cn/info/1143/5801.htm}
+% \item 学位论文模板根据 \href{https://www.gs.sjtu.edu.cn/post/detail/Z3MxNDc=}
 %   {《上海交通大学博士、硕士学位论文撰写指南》} ，并参考
-%   \href{https://www.gs.sjtu.edu.cn/info/1136/8374.htm}
-%   {《上海交通大学研究生学位论文写作模板》} 以及
-%   \href{https://bysj.jwc.sjtu.edu.cn/MoreNews.aspx?NewsType=zUcuaM8R5+lJLruDxDS/Fw....&TypeName=I/SElbms0OT5ZkmE84uuGg....}
+%   \href{https://bysj.jwc.sjtu.edu.cn/ShowNews.aspx?newsno=Yr2wg3ibJJhIZh0A52amXw....}
 %   {《上海交通大学本科生毕业设计（论文）撰写规范》}
 %   编写而成。旨在供上海交通大学准毕业生撰
 %   写学位论文使用。
@@ -465,16 +463,16 @@
 % 又断断续续做了一些完善模板的工作，在原有硕士学位论文模板的基础上完成了交大学士
 % 和博士学位论文模板。
 %
-% 2012 年 5 月模板开始在 GitHub%
-% \footnote{\url{https://github.com/weijianwen/SJTUThesis}，项目转移后该链接已重定向。}%
+% 2012 年 5 月模板开始在 GitHub^^A
+% \footnote{\url{https://github.com/weijianwen/SJTUThesis}，项目转移后该链接已重定向。}^^A
 % 上管理和更新，2018 年 1 月项目转移至 SJTUG 名
 % 下。2019 年 6 月 Alexara Wu 重构了整个宏包的代码，并使用 Doc\TeX{} 文档和
 % \textsc{DocStrip} 工具进行代码的管理，升级版本号为 1.0。2022 年 11 月，论文模板
 % 改版后，使用 \LaTeXiii{} 重构了代码，添加 \cls{sjtureport} 和 \cls{sjtuarticle}
 % 文档类，升级版本号为 2.0。
 %
-% 现在，\sjtutex{} 代码在 GitHub%
-% \footnote{\url{https://github.com/sjtug/SJTUTeX}}%
+% 现在，\sjtutex{} 代码在 GitHub^^A
+% \footnote{\url{https://github.com/sjtug/SJTUTeX}}^^A
 % 上维护。
 % 原 \href{https://github.com/sjtug/SJTUThesis}{SJTUThesis} 仓库则作为学位论文示例文档，提供开箱即用的模板。
 % 学位论文模板用户可以在 \href{https://github.com/sjtug/SJTUThesis/discussions}{Discussions}
@@ -1481,6 +1479,91 @@
 % \end{digest}
 %   \end{latex}
 % \end{function}
+%
+% \begin{thebibliography}{99}
+%
+% \addcontentsline{toc}{section}{\refname}
+%
+% \newcommand\urlprefix{\newline\hspace*{\fill}}
+% \let\OldUrl=\url
+% \renewcommand\url[2][]{{\small\textit{#1}~\OldUrl{#2}}}
+% \newcommand\CTANurl[2][]{{^^A
+%   \small\textit{#1}~\href{https://mirror.ctan.org/#2}{\texttt{CTAN://#2}}}}
+%
+% \subsection*{图书}
+%
+% \bibitem{Knuth1986}
+% \textsc{Knuth D E}.
+% \newblock \textit{The \TeX book: Computers \& Typesetting, volume A}\allowbreak[M].
+% \newblock Boston: Addison--Wesley Publishing Company, 1986.
+% \urlprefix \CTANurl[源代码^^A
+%   \footnote{此代码只可作为学习之用。未经 Knuth 本人同意，您不应当编译此文档。}：]^^A
+%   {systems/knuth/dist/tex/texbook.tex}
+%
+% \bibitem{LiuHY2013}
+% 刘海洋.
+% \newblock \textit{\LaTeX{} 入门} [M].
+% \newblock 北京: 电子工业出版社, 2013
+%
+% \subsection*{标准、规范}
+%
+% \bibitem{gb-t-7713.1-2006}
+% 国务院学位委员会办公室, 全国信息与文献标准化技术委员会.
+% \newblock \textit{学位论文编写规则: GB/T 7713.1--2006}\allowbreak[S].
+% \newblock 北京: 中国标准出版社, 2007
+%
+% \bibitem{cy-t-35-2001}
+% 全国信息与文献标准化技术委员会第七分委员会, 中华人民共和国新闻出版总署.
+% \newblock \textit{科技文献的章节编号方法: CY/T 35--2001}\allowbreak[S].
+% \newblock [S.l. : s.n.], 2001.
+%
+% \bibitem{SJTUGS2023}
+% 上海交通大学研究生院.
+% \newblock \textit{上海交通大学博士、硕士学位论文撰写指南}\allowbreak[EB/OL].
+% \newblock (2023-11-03)[2023-12-04].
+% \urlprefix\url{https://www.gs.sjtu.edu.cn/post/detail/Z3MxNDc=}
+%
+% \subsection*{宏包、模版}
+%
+% \bibitem{source2e}
+% \textsc{Braams J}, \textsc{Carlisle D}, \textsc{Jeffrey A}, et~al.
+% \newblock \textit{The \LaTeXe{} Sources}\allowbreak[CP/OL].
+% \newblock (2023-11-01)
+% \urlprefix\url{https://ctan.org/pkg/latex}
+% \urlprefix\CTANurl[源代码：]{macros/latex/base/source2e.pdf}
+%
+% \bibitem{interface3}
+% \textsc{The \LaTeX{} Project}.
+% \newblock \textit{The \LaTeXiii{} Interfaces}\allowbreak[EB/OL].
+% \newblock (2023-11-09)
+% \urlprefix\url{https://ctan.org/pkg/l3kernel}
+% \urlprefix\CTANurl[文档：]{macros/latex/l3kernel/interface3.pdf}
+%
+% \bibitem{CTeX}
+% \textsc{CTEX.ORG}.
+% \newblock \textit{\CTeX{} 宏集手册}\allowbreak[EB/OL].
+% \newblock version 2.5.10,
+% \newblock (2022-07-14)
+% \urlprefix\url{https://ctan.org/pkg/ctex}
+% \urlprefix\CTANurl[文档及源代码：]{language/chinese/ctex/ctex.pdf}
+%
+% \bibitem{fduthesis}
+% 曾祥东.
+% \newblock \textit{fduthesis: 复旦大学论文模板}\allowbreak[EB/OL].
+% \newblock version 0.9a,
+% \newblock (2023-05-27)
+% \urlprefix\url{https://ctan.org/pkg/fduthesis}
+% \urlprefix\CTANurl[文档及源代码：]{macros/latex/contrib/fduthesis/fduthesis-code.pdf}
+%
+% \bibitem{thuthesis}
+% 清华大学 TUNA 协会.
+% \newblock \textit{\textsc{ThuThesis}：清华大学学位论文模板}\allowbreak[EB/OL].
+% \newblock version 7.4.0,
+% \newblock (2023-05-15)
+% \urlprefix\url{https://ctan.org/pkg/thuthesis}
+% \urlprefix\CTANurl[文档及源代码：]{macros/latex/contrib/thuthesis/thuthesis.pdf}
+%
+% \end{thebibliography}
 %
 % \end{documentation}
 %
