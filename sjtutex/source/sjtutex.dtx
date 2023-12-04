@@ -372,14 +372,14 @@
   framerule         = 1 pt,
   framesep          = 0 pt,
   escapeinside      = {(*}{*)},
-  basicstyle        = \ttfamily,
+  basicstyle        = \small\ttfamily,
   keywordstyle      = \color{sjtu-dark-red!80},
   commentstyle      = \itshape\color{sjtu-green!60},
   stringstyle       = \color{sjtu-amber},
-  xleftmargin       = 1em,
-  xrightmargin      = 1em,
-  framexleftmargin  = 1em,
-  framexrightmargin = 1em
+  xleftmargin       = 0.5 em,
+  xrightmargin      = 0.5 em,
+  framexleftmargin  = 0.5 em,
+  framexrightmargin = 0.5 em
 }
 \lstdefinestyle{style@shell}{
   style           = style@base,
@@ -448,7 +448,7 @@
 % \item 学位论文模板仅为撰写指南的参考实现，不保证审查老师不提意见。任何由于使用本模板
 %   而引起的论文格式审查问题均与本模板作者无关。
 % \item 任何个人或组织以本模板为基础进行修改、扩展而生成的新的专用模板，请严格遵
-%   守  \LaTeX{} Project Public License 协议。由于违犯协议而引起的任何纠纷
+%   守 \LaTeX{} Project Public License 协议。由于违犯协议而引起的任何纠纷
 %   争端均与本模板作者无关。
 % \end{enumerate}
 % \end{abstract}
@@ -871,7 +871,7 @@
 %           至新用法。
 %     \item 在 \cls{sjtureport} 和 \cls{sjtuarticle} 文档类中，不需要使用语言代
 %           码前缀。此时推荐直接使用标准接口来设定这些信息，这些标准接口不属于键
-%           值列表，应当直接写在导言区内，见第\ref{sec:sjtureportcmd} 节。
+%           值列表，应当直接写在导言区内，见第 \ref{sec:sjtureportcmd} 节。
 %   \end{itemize}
 % \end{function}
 %
@@ -1234,14 +1234,14 @@
 %
 % \section{内容编写}
 %
-% 在文档开始后进行内容编写，文档内容由 |document| 环境包裹。
 %
 % \begin{function}{document}
-%   \begin{syntax}
-%     \tn{begin}\{document\}
-%     \  \meta{文档内容}
-%     \tn{end}\{document\}
-%   \end{syntax}
+% 在文档开始后进行内容编写，文档内容由 |document| 环境包裹。
+%   \begin{latex}[emph={[1]document}]
+% \begin{document}
+%   (*\meta{文档内容}*)
+% \end{document}
+%   \end{latex}
 % \end{function}
 %
 % \subsection{标题页和声明页}
@@ -1280,23 +1280,23 @@
 % \end{function}
 %
 % \begin{function}[rEXP,updated=2023-11-29]{abstract,abstract*}
-%   \begin{syntax}
-%     \tn{begin}\{abstract\}\oarg{lang}
-%     \  \meta{摘要}
-%     \tn{end}\{abstract\}
-%   \end{syntax}
 %   \cls{sjtuthesis} 文档类中对应语言的摘要环境，使用可选参数指定语言，默认为 \opt{zh}。
 %   使用带星号的 \env{abstract*} 环境不会出现在目录中。
+%   \begin{latex}[emph={[1]abstract}]
+% \begin{abstract}(*\oarg{lang}*)
+%   (*\meta{摘要}*)
+% \end{abstract}
+%   \end{latex}
 % \end{function}
 %
 % \begin{function}[EXP,updated=2023-03-14]{abstract}
-%   \begin{syntax}
-%     \tn{begin}\{abstract\}
-%     \  \meta{摘要}
-%     \tn{end}\{abstract\}
-%   \end{syntax}
 %   \cls{sjtuarticle} 和 \cls{sjtureport} 文档类中摘要环境。
 %   会在结尾添加由 \tn{keywords} 命令设定的关键词。
+%   \begin{latex}[emph={[1]abstract}]
+% \begin{abstract}
+%   (*\meta{摘要}*)
+% \end{abstract}
+%   \end{latex}
 % \end{function}
 %
 % \begin{function}{\tableofcontents,\tableofcontents*,\listoffigures,\listoffigures*,
@@ -1376,30 +1376,29 @@
 % \begin{function}{\appendix}
 %   \begin{syntax}
 %     \tn{appendix}
-%     \tn{chapter}\{...\}
 %   \end{syntax}
 %   附录由 \tn{appendix} 命令开启，然后像正文一样书写。
 % \end{function}
 %
 % \begin{function}[rEXP,updated=2022-03-02]{nomenclature,nomenclature*}
-%   \begin{syntax}
-%     \tn{begin}\{nomenclature\}\oarg{标题}
-%     \  \meta{符号对照表}
-%     \tn{end}\{nomenclature\}
-%   \end{syntax}
 %   符号对照表环境。带星号的版本不会出现在目录中。可以使用可选参数手动设置标题。
 %   符号对照表环境仅设置标题，内部实现可由用户自行决定。
 %   可以使用 \pkg{longtable}，也可以使用 \pkg{nomencl} 宏包。
+%   \begin{latex}[emph={[1]abbreviation}]
+% \begin{abbreviation}(*\oarg{标题}*)
+%   (*\meta{符号对照表}*)
+% \end{abbreviation}
+%   \end{latex}
 % \end{function}
 %
 % \begin{function}[rEXP,updated=2022-03-02]{abbreviation,abbreviation*}
-%   \begin{syntax}
-%     \tn{begin}\{abbreviation\}\oarg{标题}
-%     \  \meta{缩略语对照表}
-%     \tn{end}\{abbreviation\}
-%   \end{syntax}
 %   缩略语对照表环境。带星号的版本不会出现在目录中。可以使用可选参数手动设置标题。
 %   缩略语对照表环境仅设置标题，内部实现可由用户自行决定。
+%   \begin{latex}[emph={[1]abbreviation}]
+% \begin{abbreviation}(*\oarg{标题}*)
+%   (*\meta{缩略语对照表}*)
+% \end{abbreviation}
+%   \end{latex}
 % \end{function}
 %
 % \subsection{后文部分}
@@ -1412,59 +1411,59 @@
 % \end{function}
 %
 % \begin{function}[rEXP,updated=2022-02-24]{acknowledgements}
-%   \begin{syntax}
-%     \tn{begin}\{acknowledgements\}\oarg{标题}
-%     \  \meta{致谢内容}
-%     \tn{end}\{acknowledgements\}
-%   \end{syntax}
 %   致谢环境。盲审模式下致谢将被隐去。可以使用可选参数手动设置标题。
+%   \begin{latex}[emph={[1]acknowledgements}]
+% \begin{acknowledgements}(*\oarg{标题}*)
+%   (*\meta{致谢内容}*)
+% \end{acknowledgements}
+%   \end{latex}
 % \end{function}
 %
 % \begin{function}[rEXP,updated=2022-02-24]{achievements}
-%   \begin{syntax}
-%     \tn{begin}\{achievements\}\oarg{标题}
-%     \  \meta{获得的科研成果}
-%     \tn{end}\{achievements\}
-%   \end{syntax}
 %   科研成果环境，可以使用可选参数手动设置标题。内部请配合使用下面的附录用文献列表环境
 %   \env{bibliolist} 和 \env{bibliolist*}。你可以在该环境中使用带星号的节次命令
 %   以分隔不同的类型的成果（比如学术论文、专利等）；你也可以使用多个 \env{achievements}
 %   环境，配合不同的可选参数作为标题，展示不同类型的成果。
+%   \begin{latex}[emph={[1]achievements}]
+% \begin{achievements}(*\oarg{标题}*)
+%   (*\meta{获得的科研成果}*)
+% \end{achievements}
+%   \end{latex}
 % \end{function}
 %
 % \begin{function}[rEXP,updated=2022-03-23]{bibliolist,bibliolist*}
-%   \begin{syntax}
-%     \tn{begin}\{bibliolist\}\marg{最长条目编号}
-%     \  \tn{item} \meta{文献条目}
-%     \tn{end}\{bibliolist\}
-%     \tn{begin}\{bibliolist*\}\marg{最长条目编号}
-%     \  \tn{item} \meta{文献条目（隐去姓名）}
-%     \tn{end}\{bibliolist*\}
-%   \end{syntax}
 %   附录用文献环境，只允许在 \env{achievements} 环境中使用。
 %   需要指定最长条目的编号作为参数，比如 \opt{99}；
 %   如果将该强制参数被指定为空，将不显示编号，每条以悬挂缩进做区分。
 %   环境内部使用 \tn{item} 来分隔各条目，在同一个 \env{achievements} 环境内、不同的
 %   \env{bibliolist} 或 \env{bibliolist*} 环境中编号连续递增、不会间断。
 %   普通模式下显示 \env{bibliolist} 中的内容，盲审模式下显示 \env{bibliolist*} 中的内容。
+%   \begin{latex}[emph={[1]bibliolist,bibliolist*}]
+% \begin{bibliolist}(*\marg{最长条目编号}*)
+%    \item (*\meta{文献条目}*)
+% \end{bibliolist}
+% \begin{bibliolist*}(*\marg{最长条目编号}*)
+%    \item (*\meta{文献条目（隐去姓名）}*)
+% \end{bibliolist*}
+%   \end{latex}
 % \end{function}
 %
 % \begin{function}[rEXP,updated=2022-02-24]{resume}
-%   \begin{syntax}
-%     \tn{begin}\{resume\}\oarg{标题}
-%     \  \meta{简历内容}
-%     \tn{end}\{resume\}
-%   \end{syntax}
 %   简历环境。盲审模式下简历将被隐去。可以使用可选参数手动设置标题。
+%   \begin{latex}[emph={[1]resume}]
+% \begin{resume}(*\oarg{标题}*)
+%   (*\meta{简历内容}*)
+% \end{resume}
+%   \end{latex}
 % \end{function}
 %
 % \begin{function}[rEXP]{digest}
-%   \begin{syntax}
-%     \tn{begin}\{digest\}\oarg{lang}
-%     \  \meta{大摘要}
-%     \tn{end}\{digest\}
-%   \end{syntax}
 %   学士论文大摘要，使用可选参数设定语言，默认为 \opt{en}。
+%   \begin{latex}[emph={[1]digest}]
+% \begin{digest}(*\oarg{lang}*)
+%   (*\meta{大摘要}*)
+% \end{digest}
+%   \end{latex}
 % \end{function}
 %
 % \end{documentation}
