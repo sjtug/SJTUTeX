@@ -517,34 +517,37 @@
 % 表~\ref{tab:files} 列出了 \sjtutex{} 的主要文件及其功能介绍。
 %
 % \begin{table}[!hbt]
-%   \centering
+% \centering
+% \begin{threeparttable}
 %   \caption{模板的文件组成}
 %   \label{tab:files}
 %   \begin{tabular}{l|l|p{4cm}}
 %     \toprule
-%     \strong{类别} & \strong{文件}               & \strong{说明}  \\
+%     \strong{类别}               & \strong{文件}               & \strong{说明}  \\
 %     \midrule
-%     文档类        & \file{sjtuthesis.cls}       & 学位论文文档类 \\
-%                   & \file{sjtureport.cls}       & 报告文档类     \\
-%                   & \file{sjtuarticle.cls}      & 文稿文档类     \\
-%                   & \file{sjtu-name-*.def}      & 文档类名称配置 \\
-%                   & \file{sjtu-lang-*.def}      & 文档类语言配置 \\
-%                   & \file{sjtu-scheme-*.def}    & 文档类语言方案 \\
+%     文档类                      & \file{sjtuthesis.cls}       & 学位论文文档类 \\
+%                                 & \file{sjtureport.cls}       & 报告文档类     \\
+%                                 & \file{sjtuarticle.cls}      & 文稿文档类     \\
+%                                 & \file{sjtu-name-*.def}      & 文档类名称配置 \\
+%                                 & \file{sjtu-lang-*.def}      & 文档类语言配置 \\
+%                                 & \file{sjtu-scheme-*.def}    & 文档类语言方案 \\
 %     \midrule
-%     字体配置文件  & \file{sjtu-text-font-*.def} & 西文字体配置   \\
-%                   & \file{sjtu-math-font-*.def} & 数学字体配置   \\
-%                   & \file{sjtu-cjk-font-*.def}  & CJK 字体配置   \\
+%     字体配置文件                & \file{sjtu-text-font-*.def} & 西文字体配置   \\
+%                                 & \file{sjtu-math-font-*.def} & 数学字体配置   \\
+%                                 & \file{sjtu-cjk-font-*.def}  & CJK 字体配置   \\
 %     \midrule
-%     视觉形象系统  & \file{sjtu-vi-logo-*.pdf}   & 校标图片       \\
-%                   & \file{sjtu-vi-badge-*.pdf}  & 校徽图片       \\
-%                   & \file{sjtu-vi-name-*.pdf}   & 校名图片       \\
+%     视觉形象系统\tnote{\dagger} & \file{sjtu-vi-logo-*.pdf}   & 校标图片       \\
+%                                 & \file{sjtu-vi-badge-*.pdf}  & 校徽图片       \\
+%                                 & \file{sjtu-vi-name-*.pdf}   & 校名图片       \\
 %
 %     \bottomrule
 %   \end{tabular}
+%   \begin{tablenotes}
+%     \item[\dagger] \href{https://vi.sjtu.edu.cn}{交大视觉形象系统}
+%       的相关图像资源版权归上海交通大学所有。
+%   \end{tablenotes}
+% \end{threeparttable}
 % \end{table}
-%
-% \note{\href{https://vi.sjtu.edu.cn}{交大视觉形象系统}
-%   的相关图像资源版权归上海交通大学所有。}
 %
 % \subsection{使用文档类}
 %
@@ -617,7 +620,6 @@
 %
 % 在实际使用中，一般推荐使用自动生成工具 \pkg{latexmk} 编译文档。\pkg{latexmk}
 % 命令可以自动进行多步编译，直到交叉引用都被解决。
-%
 % 假设您的 \TeX{} 源文件名为 \file{main.tex}，
 % 可在命令行中执行如下命令使用 \XeLaTeX{} 编译文档
 % \begin{shell}[morekeywords={latexmk},emph={-xelatex}]
@@ -720,6 +722,17 @@
 %   \begin{itemize}
 %     \item 在 \cls{sjtuthesis} 和 \cls{sjtureport} 文档类中默认为小四号;
 %     \item 在 \cls{sjtuarticle} 文档类中默认为五号。
+%   \end{itemize}
+% \end{function}
+%
+% \begin{function}[added=2023-10-24]{linespread}
+%   \begin{syntax}
+%     \OPT{linespread} = <数值>
+%   \end{syntax}
+%   设置行距倍数。
+%   \begin{itemize}
+%     \item 在 \cls{sjtuthesis} 文档类中默认不调整行距倍数;
+%     \item 在 \cls{sjtuarticle} 和 \cls{sjtureport} 文档类中默认为 1.3。
 %   \end{itemize}
 % \end{function}
 %
@@ -1137,7 +1150,7 @@
 %   中的带圈数字。
 % \end{function}
 %
-% \begin{function}[added=2023-12-02]{num-sep}
+% \begin{function}[added=2023-12-02]{style/num-sep}
 %   \begin{syntax}
 %     \OPT{num-sep} = \marg{分隔符}
 %   \end{syntax}
@@ -1168,11 +1181,11 @@
 %   定理编号中的分隔符。
 % \end{function}
 %
-% \begin{function}{style/title-logo-color}
+% \begin{function}[rEXP]{style/title-logo-color}
 %   \begin{syntax}
 %     \OPT{title-logo-color} = <(red)|blue|black>
 %   \end{syntax}
-%   选择论文标题页中校徽的颜色。
+%   选择 \cls{sjtuthesis} 文档类中标题页校徽的颜色。
 % \end{function}
 %
 % \begin{function}[EXP,updated=2022-12-20]{style/header-logo-color}
@@ -1327,17 +1340,13 @@
 %   声明前文部分开始。
 % \end{function}
 %
-% \begin{function}[rEXP,updated=2023-11-29]{abstract,abstract*}
-%   \cls{sjtuthesis} 文档类中对应语言的摘要环境，使用可选参数指定语言，默认为 \opt{zh}。
-%   使用带星号的 \env{abstract*} 环境不会出现在目录中。
+% \begin{function}[updated=2023-11-29]{abstract}
+%   \cls{sjtuthesis} 文档类中对应语言的摘要环境，使用可选参数指定摘要语言，默认为 \opt{zh}。
 %   \begin{latex}[emph={[1]abstract}]
 % \begin{abstract}(*\oarg{lang}*)
 %   (*\meta{摘要}*)
 % \end{abstract}
 %   \end{latex}
-% \end{function}
-%
-% \begin{function}[EXP,updated=2023-03-14]{abstract}
 %   \cls{sjtuarticle} 和 \cls{sjtureport} 文档类中摘要环境。
 %   会在结尾添加由 \tn{keywords} 命令设定的关键词。
 %   \begin{latex}[emph={[1]abstract}]
@@ -1347,13 +1356,16 @@
 %   \end{latex}
 % \end{function}
 %
+% \begin{function}[rEXP,updated=2023-11-29]{abstract*}
+%   \cls{sjtuthesis} 文档类中使用带星号的 \env{abstract*} 环境不会出现在目录中。
+% \end{function}
+%
 % \begin{function}{\tableofcontents,\tableofcontents*,\listoffigures,\listoffigures*,
 %   \listoftables,\listoftables*,\listofalgorithms,\listofalgorithms*}
 %   目录、插图、表格和算法等索引命令如表 \ref{tab:list} 所示，将其插入到期望的
 %   位置即可。带*的命令表示对应的索引表不会出现在目录中。
 %   \begin{table}[H]
-%     \centering
-%     \small
+%     \centering\small
 %     \begin{threeparttable}
 %       \caption{目录和索引表}
 %       \label{tab:list}
@@ -1809,9 +1821,9 @@
   {
 %    \end{macrocode}
 %
-% \begin{macro}{zihao}
 % \changes{v2.0}{2022/10/25}{\cls{sjtuthesis} 类型选项移除 \opt{course}，
 % 不再支持课程论文。}
+% \begin{macro}{type}
 % 论文类型。
 %    \begin{macrocode}
 %<*thesis>
@@ -1825,9 +1837,9 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{lang}
 % \changes{v2.0}{2023/03/19}{语言选项新增 \opt{ja}，添加日文模板。}
 % \changes{v2.0}{2023/03/23}{语言选项新增 \opt{de}，添加德文模板。}
+% \begin{macro}{lang}
 % 论文主要语言。
 %    \begin{macrocode}
     lang .choice: ,
@@ -1876,11 +1888,11 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{baselineskip}
 % \changes{v2.0}{2022/12/03}{添加 \opt{lineskip} 文档类选项。}
 % \changes{unreleased}{2023/10/24}{添加 \opt{baselineskip} 文档类选项，
 % 替换原 \opt{lineskip} 选项。}
-% 基础行距。
+% \begin{macro}{baselineskip}
+% 正文基线间距。
 %    \begin{macrocode}
     baselineskip .choice: ,
     baselineskip .value_required:n = true ,
@@ -1911,8 +1923,8 @@
     fontset .code:n = { \@@_set_deprecated_option:n { cjk-font = #1 } } ,
 %    \end{macrocode}
 %
-% \begin{macro}{math-style}
 % \changes{v2.0}{2023/01/05}{添加 \opt{math-style} 文档类选项，默认值为 \opt{ISO}。}
+% \begin{macro}{math-style}
 % 数学符号样式。
 %    \begin{macrocode}
     math-style .choice: ,
@@ -2170,7 +2182,8 @@
 %
 % \begin{macro}[int]{\cs_gset:cpo,\tl_const:Nv,
 % \clist_use:NV,\clist_use:cv,
-% \exp_args:NNnv,\regex_match:neTF}
+% \exp_args:NNnv,\exp_last_unbraced:ce,
+% \regex_match:neTF}
 % \LaTeX3{} 函数变体。
 %    \begin{macrocode}
 \cs_generate_variant:Nn \cs_gset:Npn { cpo }
@@ -2456,6 +2469,8 @@
 %
 % \subsection{字号行距}
 %
+% \begin{macro}[int]{\@@_set_font_size:nnNn}
+% \begin{macro}{\normalsize}
 % 重定义 \tn{normalsize}，设置正文的基线间距。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_set_font_size:nnNn #1#2#3#4
@@ -2495,6 +2510,8 @@
     \normalsize
   }
 %    \end{macrocode}
+% \end{macro}
+% \end{macro}
 %
 % \begin{macro}{\setbaselineskip}
 % 设置基线间距，在字号命令之后使用。
@@ -3662,6 +3679,7 @@
 \fancyhf { }
 %    \end{macrocode}
 %
+% \begin{macro}{style/header-font,style/footer-font}
 % 设置页眉页脚字体。
 %    \begin{macrocode}
 \keys_define:nn { sjtu / style }
@@ -3676,7 +3694,10 @@
 \fancyheadinit { \l_@@_style_header_font_tl }
 \fancyfootinit { \l_@@_style_footer_font_tl }
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{style/header-uppercase}
+% \begin{macro}[int]{\@@_nouppercase:n}
 % 页眉西文是否大写。
 %    \begin{macrocode}
 \keys_define:nn { sjtu / style }
@@ -3691,7 +3712,10 @@
   }
 \cs_generate_variant:Nn \@@_nouppercase:n { V }
 %    \end{macrocode}
+% \end{macro}
+% \end{macro}
 %
+% \begin{macro}{style/header-logo-color}
 % 页眉校标颜色。
 %    \begin{macrocode}
 %<*!thesis>
@@ -3705,7 +3729,10 @@
   }
 %</!thesis>
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{style/page-number}
+% \begin{macro}[int]{\@@_page:n}
 % 页脚页码格式。
 %    \begin{macrocode}
 \cs_new:Nn \@@_thepage: { \thepage }
@@ -3715,6 +3742,8 @@
     page-number .initial:n = { {#1} }
   }
 %    \end{macrocode}
+% \end{macro}
+% \end{macro}
 %
 % 设置页眉内容。
 %    \begin{macrocode}
@@ -3751,6 +3780,7 @@
 \fancyfoot [ C ] { \@@_page:n { \@@_thepage: } }
 %    \end{macrocode}
 %
+% \begin{macro}{\headrule}
 % \cls{sjtuthesis} 的页眉线。
 %    \begin{macrocode}
 %<*thesis>
@@ -3763,6 +3793,7 @@
   }
 %</thesis>
 %    \end{macrocode}
+% \end{macro}
 %
 % 重定义 |plain| 样式。
 %    \begin{macrocode}
@@ -3790,6 +3821,7 @@
 \cs_new_eq:NN \ps@SJTU@null \prg_do_nothing:
 %    \end{macrocode}
 %
+% \begin{macro}{\cleardoublepage}
 % 空白页清空页眉页脚。
 %    \begin{macrocode}
 \RenewDocumentCommand \cleardoublepage { }
@@ -3802,6 +3834,7 @@
       }
   }
 %    \end{macrocode}
+% \end{macro}
 %
 % \subsection{页码设置}
 %
@@ -3897,7 +3930,8 @@
 \ctex_set:n { secnumdepth = 3 }
 %    \end{macrocode}
 %
-% \begin{macro}[int]{\SJTU@head,\@@_pdf_bookmark:nn,\@@_phantom_section:}
+% \begin{macro}[int]{\SJTU@head,\@@_head_aux_s:nn,\@@_head_aux_s:nx,
+% \@@_pdf_bookmark:nn,\@@_phantom_section:}
 % 定义一个灵活的章节标题命令专门处理不同的需求。
 %    \begin{macrocode}
 \NewDocumentCommand \SJTU@head { s O{#3} m O{#2} }
@@ -3956,6 +3990,7 @@
 % \subsection{数学公式}
 %
 % \changes{unreleased}{2023/11/30}{新增 \opt{style/equation-font} 选项。}
+% \begin{macro}{style/equation-font}
 % 设置行间数学公式的字体。
 %    \begin{macrocode}
 \keys_define:nn { sjtu / style }
@@ -3990,6 +4025,7 @@
     \spread@equation
   }
 %    \end{macrocode}
+% \end{macro}
 %
 % \subsection{浮动体}
 %
@@ -4002,6 +4038,7 @@
 \tl_set:Nn \floatpagefraction { 0.60 }
 %    \end{macrocode}
 %
+% \begin{macro}{style/float-font}
 % 设置浮动体内的字体。
 %    \begin{macrocode}
 \keys_define:nn { sjtu / style }
@@ -4013,8 +4050,10 @@
 \ctex_patch_cmd:Nnn \@floatboxreset
   { \normalsize } { \SJTU@style@float@font }
 %    \end{macrocode}
+% \end{macro}
 %
 % \changes{unreleased}{2023/11/29}{更新题注格式。}
+% \begin{macro}{style/caption-font,style/subcaption-font}
 % 题注格式。
 %    \begin{macrocode}
 \keys_define:nn { sjtu / style }
@@ -4051,6 +4090,7 @@
     format   = hang
   }
 %    \end{macrocode}
+% \end{macro}
 %
 % 双语题注。
 %    \begin{macrocode}
@@ -4064,6 +4104,8 @@
 %
 % \changes{unreleased}{2023/12/02}{新增 \opt{style/num-sep}、
 % \opt{style/theorem-num-sep} 选项。}
+% \begin{macro}{style/num-sep,style/float-num-sep,
+% style/equation-num-sep,style/theorem-num-sep}
 % 图、表、公式以及定理编号中的分隔符。
 %    \begin{macrocode}
 \keys_define:nn { sjtu / style }
@@ -4080,6 +4122,7 @@
     theorem-num-sep  .tl_set:N = \@thmcountersep
   }
 %    \end{macrocode}
+% \end{macro}
 %
 % \begin{macro}[int]{\SJTU@counterwithin}
 %    \begin{macrocode}
@@ -4120,13 +4163,17 @@
 %
 % \subsection{脚注}
 %
+% \begin{macro}[int]{\@@_makefnmark_plain:,\@@_thefootnote_plain:,
+% \@@_thempfootnote_plain:}
 % 储存原始的脚注相关命令。
 %    \begin{macrocode}
 \cs_set_eq:NN \@@_makefnmark_plain: \@makefnmark
 \cs_set_eq:NN \@@_thefootnote_plain: \thefootnote
 \cs_set_eq:NN \@@_thempfootnote_plain: \thempfootnote
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}[int]{\@@_footnote_number:N}
 % 通过 Unicode 码位调用带圈数字。
 %    \begin{macrocode}
 \cs_new:Npn \@@_footnote_number:N #1
@@ -4146,13 +4193,17 @@
 \msg_new:nnn { sjtutex } { too-many-footnotes }
   { Too~ many~ footnotes. }
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}[int]{\@@_makefnmark_circled:}
 % 重定义内部脚注文字命令，使用带圈数字编号时，脚注不使用上标。
 % 见 \url{https://www.zhihu.com/question/53030087}。
 %    \begin{macrocode}
 \cs_new:Nn \@@_makefnmark_circled: { \hbox:n { \@thefnmark } }
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{style/fnmark-font}
 % 脚注编号字体。
 %    \begin{macrocode}
 \keys_define:nn { sjtu / style }
@@ -4178,7 +4229,9 @@
     fnmark-font          .initial:V = \c_empty_tl
   }
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}[int]{\@@_thefootnote_circled:,\@@_thempfootnote_circled:}
 % 使用带圈数字编号脚注。
 %    \begin{macrocode}
 \cs_new:Nn \@@_thefootnote_circled:
@@ -4186,7 +4239,9 @@
 \cs_new:Nn \@@_thempfootnote_circled:
   { { \l_@@_style_fnmark_font_tl \@@_footnote_number:N \c@mpfootnote } }
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{style/fnmark-style}
 % 脚注编号样式。
 %    \begin{macrocode}
 \keys_define:nn { sjtu / style }
@@ -4207,6 +4262,7 @@
   }
 %</class>
 %    \end{macrocode}
+% \end{macro}
 %
 %    \begin{macrocode}
 %<*scheme>
@@ -4285,17 +4341,21 @@
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{variable}{\l_@@_info_id_zh_tl}
 % 单独处理学号。
 %    \begin{macrocode}
 \tl_new:N \l_@@_info_id_zh_tl
 \keys_define:nn { sjtu / info }
   { id   .tl_set:N = \l_@@_info_id_zh_tl }
 %    \end{macrocode}
+% \end{variable}
 %
+% \begin{variable}{\l_@@_info_supervisors_clist}
 % 标题中需要显示的导师列表。
 %    \begin{macrocode}
 \clist_set:Nn \l_@@_info_supervisors_clist { supervisor }
 %    \end{macrocode}
+% \end{variable}
 %
 % 盲审模式下隐藏作者、导师姓名等信息。
 %    \begin{macrocode}
@@ -4324,6 +4384,7 @@
 %<lang&thesis&ja>\@@_info_keys_define:n { ja }
 %    \end{macrocode}
 %
+% \begin{variable}{\l_@@_info_subject_tl,\l_@@_info_keywords_clist}
 %    \begin{macrocode}
 %<*class&!thesis>
 \tl_new:N \l_@@_info_subject_tl
@@ -4338,6 +4399,7 @@
   }
 %</class&!thesis>
 %    \end{macrocode}
+% \end{variable}
 %
 % \subsection{多语言支持}
 %
@@ -4379,6 +4441,10 @@
 %    \end{macrocode}
 %
 % 将形如 |yyyy-mm-dd| 或 |yyyy-mm| 的 ISO 日期格式字符串转化为日期表示。
+%
+% \begin{macro}[int]{\@@_date_aux_zh:nnn,\@@_date_aux_zh:w,
+% \@@_date_aux_short_zh:nn,\@@_date_aux_short_zh:w}
+% 中文日期。
 %    \begin{macrocode}
 %<*zh>
 \cs_new:Npn \@@_date_aux_zh:nnn #1#2#3
@@ -4398,7 +4464,10 @@
   { \@@_date_aux_short_zh:nn {#1} {#2} }
 %</zh>
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}[int]{\@@_ordinal_en:n}
+% 上标形式的序数词。
 %    \begin{macrocode}
 %<*en>
 \cs_new:Npn \@@_ordinal_en:n #1
@@ -4423,6 +4492,13 @@
           }
       }
   }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}[int]{\@@_date_aux_en:nnn,\@@_date_aux_en:w,
+% \@@_date_aux_short_en:nn,\@@_date_aux_short_en:w}
+% 英文日期。
+%    \begin{macrocode}
 \cs_new:Npn \@@_date_aux_en:nnn #1#2#3
   {
     \clist_item:Nn \c_@@_name_month_en_clist {#2} ~
@@ -4440,7 +4516,11 @@
   { \@@_date_aux_short_en:nn {#1} {#2} }
 %</en>
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}[int]{\@@_date_aux_de:nnn,\@@_date_aux_de:w,
+% \@@_date_aux_short_de:nn,\@@_date_aux_short_de:w}
+% 德文日期。
 %    \begin{macrocode}
 %<*de>
 \cs_new:Npn \@@_date_aux_de:nnn #1#2#3
@@ -4459,7 +4539,11 @@
   { \@@_date_aux_short_de:nn {#1} {#2} }
 %</de>
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}[int]{\@@_date_aux_ja:nnn,\@@_date_aux_ja:w,
+% \@@_date_aux_short_ja:nn,\@@_date_aux_short_ja:w}
+% 日文日期。
 %    \begin{macrocode}
 %<*ja>
 \cs_new:Npn \@@_date_aux_ja:nnn #1#2#3
@@ -4479,7 +4563,11 @@
   { \@@_date_aux_short_ja:nn {#1} {#2} }
 %</ja>
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}[int]{\@@_set_language_zh:,\@@_set_language_en:,
+% \@@_set_language_de:,\@@_set_language_ja:,
+% \@@_set_cjk_default_zh:,\@@_set_cjk_default_ja:}
 % 设置语言格式辅助命令
 %    \begin{macrocode}
 %<*zh>
@@ -4523,6 +4611,7 @@
   }
 %</ja>
 %    \end{macrocode}
+% \end{macro}
 %
 % 标题页页面样式，页脚添加资助基金信息。
 %    \begin{macrocode}
@@ -4568,6 +4657,7 @@
 \file_input:n { sjtu-scheme- \g_@@_lang_tl .def }
 %    \end{macrocode}
 %
+% \begin{macro}{info/date}
 % 初始化日期。
 %    \begin{macrocode}
 \keys_define:nn { sjtu / info }
@@ -4621,6 +4711,7 @@
 %<thesis>\tl_set:Nv \today { l_@@_info_date_ \g_@@_lang_tl _tl }
 %<!thesis>\tl_set:NV \today \@date
 %    \end{macrocode}
+% \end{macro}
 %
 % \subsection{标题页}
 %
@@ -4674,6 +4765,8 @@
 %    \end{macrocode}
 %
 % \changes{unreleased}{2023/11/30}{标题页信息栏改用表格实现。}
+% \begin{macro}[int]{\@@_title_page_info_i:nnn,\@@_title_page_info_i:nxx,
+% \@@_title_page_info_ii:n}
 % 信息输出。
 %    \begin{macrocode}
 \cs_new:Npn \@@_title_page_info_i:nnn #1#2#3
@@ -4707,7 +4800,9 @@
   }
 \cs_generate_variant:Nn \@@_title_page_info_i:nnn { nxx }
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{style/title-logo-color}
 % 标题页校徽颜色。
 %    \begin{macrocode}
 \keys_define:nn { sjtu / style }
@@ -4721,6 +4816,7 @@
 %</thesis>
 %</class>
 %    \end{macrocode}
+% \end{macro}
 %
 % \subsubsection{构建标题页}
 %
@@ -4874,6 +4970,8 @@
 %</lang>
 %    \end{macrocode}
 %
+% \begin{macro}{\maketitle}
+% 生成标题页，输出前先确定需要显示的导师列表。
 %    \begin{macrocode}
 %<*class>
 %<*thesis>
@@ -4890,6 +4988,7 @@
   }
 %</thesis>
 %    \end{macrocode}
+% \end{macro}
 %
 % \subsection{原创性声明及使用授权书}
 %
@@ -4990,6 +5089,7 @@
 %    \end{macrocode}
 %
 % \changes{v2.0}{2022/12/20}{不再自动载入 \pkg{pdfpages} 宏包。}
+% \begin{macro}{\copyrightpage}
 %    \begin{macrocode}
 \NewDocumentCommand \copyrightpage { O{ } }
   {
@@ -5014,10 +5114,12 @@
   }
 %</thesis>
 %    \end{macrocode}
+% \end{macro}
 %
 % \subsection{摘要}
 %
 % \changes{unreleased}{2023/11/30}{新增 \opt{style/keywords-format} 选项。}
+% \begin{macro}{style/keywords-format}
 % 关键词排版样式。
 %    \begin{macrocode}
 \keys_define:nn { sjtu / style }
@@ -5030,10 +5132,12 @@
     keywords-format      .initial:n = { plain }
   }
 %    \end{macrocode}
+% \end{macro}
 %
 % \changes{v2.0}{2023/03/17}{\env{abstract} 环境新增指定语言的可选参数。}
 % \changes{unreleased}{2023/11/29}{\env{abstract} 环境添加目录条目，
 % \env{abstract*} 环境对应修改为不添加目录条目。}
+% \begin{macro}{abstract,abstract*}
 % 学位论文摘要环境。
 %    \begin{macrocode}
 %<*thesis>
@@ -5109,14 +5213,14 @@
   }
 %</!thesis>
 %    \end{macrocode}
+% \end{macro}
 %
 % \subsection{目录}
 %
 % \changes{unreleased}{2023/11/29}{\tn{tableofcontents} 添加目录条目，
 % \tn{tableofcontents*} 对应修改为不添加目录条目。}
-% \begin{macro}{\tableofcontents,\tableofcontents*,\listoffigures,\listoffigures*,
-% \listoftables,\listoftables*}
-% 目录以及图表索引。
+% \begin{macro}{\tableofcontents,\tableofcontents*}
+% 目录。
 %    \begin{macrocode}
 \DeclareDocumentCommand \tableofcontents { s }
   {
@@ -5128,6 +5232,13 @@
       \@starttoc { toc }
     \group_end:
   }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}[int]{\SJTU@listof}
+% \begin{macro}{\listoffigures,\listoffigures*,\listoftables,\listoftables*}
+% 图表索引。
+%    \begin{macrocode}
 \NewDocumentCommand \SJTU@listof { m m s }
   {
     \IfBooleanTF {#3}
@@ -5143,6 +5254,7 @@
 \DeclareDocumentCommand \listoftables  { }
   { \SJTU@listof { \listtablename  } { table  } }
 %    \end{macrocode}
+% \end{macro}
 % \end{macro}
 %
 %    \begin{macrocode}
@@ -5164,7 +5276,8 @@
 %
 % \changes{v2.0.1}{2023/03/31}{插图、表格和算法等索引不缩进。}
 % \changes{v2.0.1}{2023/03/31}{调整插图、表格和算法等索引编号宽度。}
-% \begin{macro}[int]{\l_@@_cft_presnum_clist,\@@_update_cft_presnum:nn}
+% \begin{macro}[int]{\@@_update_cft_presnum:nn}
+% \begin{variable}{\l_@@_cft_presnum_clist}
 % 图表清单标题前添加名称。
 %    \begin{macrocode}
 \clist_set:Nn \l_@@_cft_presnum_clist
@@ -5186,10 +5299,12 @@
       { \@@_update_cft_presnum:nn #1 }
   }
 %    \end{macrocode}
+% \end{variable}
 % \end{macro}
 %
 % \subsection{预定义环境}
 %
+% \begin{macro}{abbreviation,abbreviation*}
 % 缩略语对照表。
 %    \begin{macrocode}
 %<*thesis>
@@ -5204,7 +5319,9 @@
     \tl_clear:N \SJTU@style@float@font
   } { }
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{nomenclature,nomenclature*}
 % 符号对照表。
 %    \begin{macrocode}
 \NewDocumentEnvironment { nomenclature  } { O{ \SJTU@nomname } }
@@ -5218,9 +5335,11 @@
     \tl_clear:N \SJTU@style@float@font
   } { }
 %    \end{macrocode}
+% \end{macro}
 %
 % \changes{v2.0}{2023/03/17}{移除 \env{summary} 环境。}
 %
+% \begin{macro}{acknowledgements}
 % 致谢，盲审模式下隐藏致谢。
 %    \begin{macrocode}
 \NewDocumentEnvironment { acknowledgements } { O{ \SJTU@ackname } +b }
@@ -5232,7 +5351,9 @@
       }
   } { }
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{achievements,bibliolist,bibliolist*}
 % 发表论文与学术成果。
 %    \begin{macrocode}
 \newcounter { SJTU@bib }
@@ -5329,7 +5450,9 @@
 \msg_new:nnn { sjtutex } { environment-validation }
   { `#1'~ is~ only~ valid~ in~ `#2'~ environment. }
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{resume}
 % 简历。
 %    \begin{macrocode}
 \NewDocumentEnvironment { resume } { O{ \SJTU@resumename } +b }
@@ -5341,8 +5464,10 @@
       }
   } { }
 %    \end{macrocode}
+% \end{macro}
 %
 % \changes{v2.0}{2023/03/17}{\env{digest} 环境新增指定语言的可选参数。}
+% \begin{macro}{digest}
 % 大摘要。
 %    \begin{macrocode}
 \NewDocumentEnvironment { digest } { O{ en } +b }
@@ -5374,6 +5499,7 @@
   } { }
 %</thesis>
 %    \end{macrocode}
+% \end{macro}
 %
 % \subsection{设置接口}
 %
@@ -5438,6 +5564,7 @@
 %</thesis>
 %    \end{macrocode}
 %
+% \begin{macro}{\subject,\keywords}
 % 通用模板新接口。
 %    \begin{macrocode}
 %<*!thesis>
@@ -5447,6 +5574,7 @@
   { \keys_set:nn { sjtu / info } { keywords = {#1} } }
 %</!thesis>
 %    \end{macrocode}
+% \end{macro}
 %
 % \subsection{其他宏包的设置}
 %
