@@ -1492,7 +1492,8 @@
 %    \begin{macrocode}
 %<@@=sjtu>
 %<*class>
-\RequirePackage { xparse, xtemplate }
+%<thesis>\RequirePackage { xparse, xtemplate }
+%<!thesis>\RequirePackage { xparse }
 \msg_new:nnn { sjtutex } { l3-too-old }
   {
     Package~ "#1"~ is~ too~ old. \\\\
@@ -1506,23 +1507,15 @@
 %
 % \subsection{内部变量}
 %
-% \begin{variable}{\l_@@_tmpa_bool,\l_@@_tmpa_int,
-% \l_@@_tmpa_tl,\l_@@_tmpb_tl,
-% \l_@@_tmpa_clist,\l_@@_tmpb_clist,
-% \l_@@_tmpa_dim,\l_@@_tmpb_dim,
-% \l_@@_tmpa_skip,\l_@@_tmpa_box}
+% \begin{variable}{\l_@@_tmp_bool,\l_@@_tmp_clist,\l_@@_tmp_dim,
+% \l_@@_tmp_skip,\l_@@_tmp_box}
 % 临时变量。
 %    \begin{macrocode}
-\bool_new:N \l_@@_tmpa_bool
-\int_new:N \l_@@_tmpa_int
-\tl_new:N \l_@@_tmpa_tl
-\tl_new:N \l_@@_tmpb_tl
-\clist_new:N \l_@@_tmpa_clist
-\clist_new:N \l_@@_tmpb_clist
-\dim_new:N \l_@@_tmpa_dim
-\dim_new:N \l_@@_tmpb_dim
-\skip_new:N \l_@@_tmpa_skip
-\box_new:N \l_@@_tmpa_box
+%<thesis>\bool_new:N \l_@@_tmp_bool
+%<thesis>\clist_new:N \l_@@_tmp_clist
+\dim_new:N \l_@@_tmp_dim
+\skip_new:N \l_@@_tmp_skip
+\box_new:N \l_@@_tmp_box
 %    \end{macrocode}
 % \end{variable}
 %
@@ -2083,6 +2076,7 @@
 % \begin{macro}[int]{\@@_preto_cmd:Nn,\@@_appto_cmd:Nn}
 % 补丁工具，来自 \pkg{ctexpatch} 宏包，在宏的原本定义前后增加钩子。
 %    \begin{macrocode}
+%<*!thesis>
 \cs_new_protected:Npn \@@_preto_cmd:Nn #1#2
   {
     \ctex_preto_cmd:NnnTF #1 { } {#2}
@@ -2093,6 +2087,7 @@
     \ctex_appto_cmd:NnnTF #1 { } {#2}
       { } { \ctex_patch_failure:N #1 }
   }
+%</!thesis>
 %    \end{macrocode}
 % \end{macro}
 %
@@ -2100,17 +2095,19 @@
 % \begin{macro}[int]{\@@_dim_set_to_wd:Nn,\@@_skip_add_to_wd:Nn}
 % 操作长度变量的辅助函数。
 %    \begin{macrocode}
+%<*thesis>
 \cs_new:Npn \@@_dim_set_to_wd:Nn #1#2
   {
-    \hbox_set:Nn \l_@@_tmpa_box {#2}
-    \dim_set:Nn #1 { \box_wd:N \l_@@_tmpa_box }
+    \hbox_set:Nn \l_@@_tmp_box {#2}
+    \dim_set:Nn #1 { \box_wd:N \l_@@_tmp_box }
   }
+%</thesis>
 \cs_new:Npn \@@_skip_add_to_wd:Nn #1#2
   {
-    \hbox_set:Nn \l_@@_tmpa_box {#2}
-    \skip_add:Nn #1 { \box_wd:N \l_@@_tmpa_box }
+    \hbox_set:Nn \l_@@_tmp_box {#2}
+    \skip_add:Nn #1 { \box_wd:N \l_@@_tmp_box }
   }
-\cs_generate_variant:Nn \@@_dim_set_to_wd:Nn { Nv }
+%<thesis>\cs_generate_variant:Nn \@@_dim_set_to_wd:Nn { Nv }
 \cs_generate_variant:Nn \@@_skip_add_to_wd:Nn { cv }
 %    \end{macrocode}
 % \end{macro}
@@ -2127,6 +2124,7 @@
 % \@@_vspace_r:N,\@@_vspace_r:n}
 % 类似 \LaTeXe{} 中的 \tn{vspace} 和 \tn{vspace*}。
 %    \begin{macrocode}
+%<*thesis>
 \cs_new_protected:Npn \@@_vspace:N #1
   {
     \skip_vertical:N #1
@@ -2134,23 +2132,24 @@
   }
 \cs_new_protected:Npn \@@_vspace:n #1
   {
-    \skip_set:Nn \l_@@_tmpa_skip {#1}
-    \@@_vspace:N \l_@@_tmpa_skip
+    \skip_set:Nn \l_@@_tmp_skip {#1}
+    \@@_vspace:N \l_@@_tmp_skip
   }
 \cs_new_protected:Npn \@@_vspace_r:N #1
   {
-    \dim_set_eq:NN \l_@@_tmpa_dim \prevdepth
+    \dim_set_eq:NN \l_@@_tmp_dim \prevdepth
     \hrule height \c_zero_dim
     \nobreak
     \skip_vertical:N #1
     \skip_vertical:N \c_zero_skip
-    \dim_set_eq:NN \prevdepth \l_@@_tmpa_dim
+    \dim_set_eq:NN \prevdepth \l_@@_tmp_dim
   }
 \cs_new_protected:Npn \@@_vspace_r:n #1
   {
-    \skip_set:Nn   \l_@@_tmpa_skip {#1}
-    \@@_vspace_r:N \l_@@_tmpa_skip
+    \skip_set:Nn   \l_@@_tmp_skip {#1}
+    \@@_vspace_r:N \l_@@_tmp_skip
   }
+%</thesis>
 %    \end{macrocode}
 % \end{macro}
 %
@@ -2162,9 +2161,11 @@
   { \tl_const:cn { c_@@_name_ #1 _tl } {#2} }
 \cs_new_protected:Npn \@@_define_name:nnn #1#2#3
   { \tl_const:cn { c_@@_name_ #2 _ #1 _tl } {#3} }
+%<*thesis>
 \cs_new_protected:Npn \@@_define_name_from_clist:nnnn #1#2#3#4
   { \tl_const:cx { c_@@_name_ #2 _ #1 _tl } { \clist_item:nn {#4} {#3} } }
 \cs_generate_variant:Nn \@@_define_name:nn { nv }
+%</thesis>
 %    \end{macrocode}
 % \end{macro}
 %
@@ -3753,9 +3754,11 @@
     \cs_set_eq:NN \CTEX@gettitle \@@_orig_ctex_gettitle:n
     \@mkboth { \MakeUppercase {#2} } { \MakeUppercase {#2} }
   }
+%<*thesis>
 \cs_new:Npn \@@_head_aux_s:nn #1#2
   { \SJTU@head* [#1] {#2} }
 \cs_generate_variant:Nn \@@_head_aux_s:nn { nx }
+%</thesis>
 \cs_new_eq:NN \@@_pdf_bookmark:nn \use_none:nn
 \cs_new_eq:NN \@@_phantom_section: \prg_do_nothing:
 %</class>
@@ -4462,15 +4465,15 @@
     \NewDocumentEnvironment { SJTU@CJK@FTS } { m b }
       {
         \mode_leave_vertical:
-        \bool_set_false:N \l_@@_tmpa_bool
+        \bool_set_false:N \l_@@_tmp_bool
         \cs_set_eq:NN \SJTU@CJK@FTS@Symbol \CJKsymbol
         \cs_set:Npn \CJKsymbol ##1
           {
-            \bool_if:NTF \l_@@_tmpa_bool
+            \bool_if:NTF \l_@@_tmp_bool
               { \hfil \SJTU@CJK@FTS@Symbol { ##1 } }
               {
                 \SJTU@CJK@FTS@Symbol { ##1 }
-                \bool_set_true:N \l_@@_tmpa_bool
+                \bool_set_true:N \l_@@_tmp_bool
               }
           }
         \hbox_to_wd:nn {#1} {#2}
@@ -4506,10 +4509,10 @@
 %    \begin{macrocode}
 \cs_new:Npn \@@_title_page_info_i:nnn #1#2#3
   {
-    \clist_clear:N \l_@@_tmpa_clist
+    \clist_clear:N \l_@@_tmp_clist
     \clist_map_inline:nn {#3}
       {
-        \clist_put_right:Nx \l_@@_tmpa_clist
+        \clist_put_right:Nx \l_@@_tmp_clist
           {
             \exp_not:o { \cs:w c_@@_name_ ##1 _ #1 _tl \cs_end: }
             &
@@ -4517,7 +4520,7 @@
           }
       }
     \tabular {#2}
-      \clist_use:Nn \l_@@_tmpa_clist { \\ }
+      \clist_use:Nn \l_@@_tmp_clist { \\ }
     \endtabular
   }
 \cs_new:Npn \@@_title_page_info_ii:n #1
