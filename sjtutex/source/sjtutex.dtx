@@ -1637,18 +1637,10 @@
 % \clearpage
 % \section{代码实现}
 %
-% 本模板使用 \LaTeXiii{} 语法编写，依赖 \pkg{expl3} 环境，
-% 并需调用 \pkg{l3packages} 中的相关宏包。
-%
-% \subsection{准备}
-%
 % \changes{unreleased}{2023/12/05}{同步 \LaTeX{} 2020/10/01，无需显式调用
 % \pkg{expl3} 和 \pkg{xparse} 宏包。}
-%    \begin{macrocode}
-%<@@=sjtu>
-%<*class>
-%<thesis>\RequirePackage { xtemplate }
-%    \end{macrocode}
+% 本模板使用 \LaTeXiii{} 语法编写，依赖 \pkg{expl3} 环境，
+% 并需调用 \pkg{l3packages} 中的相关宏包。
 %
 % \subsection{内部变量}
 %
@@ -1656,6 +1648,8 @@
 % \l_@@_tmp_skip,\l_@@_tmp_box}
 % 临时变量。
 %    \begin{macrocode}
+%<@@=sjtu>
+%<*class>
 %<thesis>\bool_new:N \l_@@_tmp_bool
 %<thesis>\clist_new:N \l_@@_tmp_clist
 \dim_new:N \l_@@_tmp_dim
@@ -2128,11 +2122,12 @@
 %    \begin{macrocode}
 \RequirePackage
   {
+%<thesis>    xtemplate,
+%<thesis>    array,
     mathtools,
     geometry,
     fancyhdr,
     tocloft,
-%<thesis>    array,
     caption,
     bicaption,
     subcaption,
