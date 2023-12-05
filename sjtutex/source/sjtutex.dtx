@@ -350,11 +350,6 @@
 \usepackage{float}
 \usepackage{longtable}
 \usepackage{listings}
-\hypersetup{
-  allcolors         = blue,
-  bookmarksnumbered = true,
-  bookmarksopen     = true,
-}
 \AtEndOfClass{\sloppy}
 \definecolor{sjtu-red}{RGB}{200,22,30}
 \definecolor{sjtu-dark-red}{RGB}{167,32,56}
@@ -364,7 +359,7 @@
 \definecolor{sjtu-dark-blue}{RGB}{0,64,152}
 \definecolor{sjtu-green}{RGB}{51,141,39}
 \definecolor{sjtu-dark-green}{RGB}{0,81,78}
-\lstdefinestyle{style@base}{
+\lstdefinestyle{style@base}{^^A
   basewidth         = 0.5 em,
   gobble            = 2,
   lineskip          = 2 pt,
@@ -378,7 +373,7 @@
   framexleftmargin  = 0.5 em,
   framexrightmargin = 0.5 em
 }
-\lstdefinestyle{style@shell}{
+\lstdefinestyle{style@shell}{^^A
   style             = style@base,
   rulecolor         = \color{sjtu-dark-green},
   backgroundcolor   = \color{sjtu-dark-green!2},
@@ -387,7 +382,7 @@
   keywordstyle      = \color{sjtu-green},
   emphstyle         = \color{sjtu-amber}
 }
-\lstdefinestyle{style@latex}{
+\lstdefinestyle{style@latex}{^^A
   style             = style@base,
   rulecolor         = \color{sjtu-dark-blue},
   backgroundcolor   = \color{sjtu-dark-blue!2},
@@ -409,6 +404,14 @@
 \newcommand\OPS[1]{\textcolor{sjtu-green}{#1}}
 \newcommand\note[1]{{^^A
   \color{sjtu-dark-green}{\noindent\bfseries 说明：}~\emph{#1}}}
+\hypersetup{^^A
+  bookmarksnumbered = true,
+  bookmarksopen     = true,
+}
+\makeatletter
+\pdfstringdefDisableCommands{^^A
+  \let\color\@gobble}
+\makeatother
 \begin{document}
   \DocInput{\jobname.dtx}
   \IndexLayout
@@ -423,9 +426,14 @@
 %
 % \GetFileInfo{\jobname.dtx}
 %
-% \title{\sjtutex{}: 上海交通大学文档类集}
+% \title{\bfseries\color{sjtu-red}\sjtutex{}: 上海交通大学文档类集}
 % \author{SJTUG}
 % \date{2023/9/25\quad v2.0.3}
+%
+% \hypersetup{
+%   pdfsubject  = {上海交通大学文档类集使用说明},
+%   pdfkeywords = {模板; 上海交通大学; 使用说明},
+% }
 %
 % \maketitle
 %
@@ -438,8 +446,8 @@
 % \begin{abstract}
 % \noindent
 % \begin{enumerate}
-% \item 本模板的发布遵守 \LaTeX{} Project Public License，使用前请认真阅读
-%   协议内容。
+% \item 本模板的发布遵守 \href{https://www.latex-project.org/lppl/lppl-1-3c.txt}
+%   {\LaTeX{} Project Public License (1.3c)}，使用前请认真阅读协议内容。
 % \item 学位论文模板根据 \href{https://www.gs.sjtu.edu.cn/post/detail/Z3MxNDc=}
 %   {《上海交通大学博士、硕士学位论文撰写指南》} ，并参考
 %   \href{https://bysj.jwc.sjtu.edu.cn/ShowNews.aspx?newsno=Yr2wg3ibJJhIZh0A52amXw....}
