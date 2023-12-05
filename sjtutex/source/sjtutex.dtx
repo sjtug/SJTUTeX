@@ -1225,27 +1225,27 @@
 %   \endfoot
 %     \bottomrule
 %   \endlastfoot
-%     \OPT{|contents|}           & 目录                   & Contents                      & Inhaltsverzeichnis     & 目次                 \\
-%     \OPT{|listfigure|}         & 插图                   & List of Figures               & Abbildungsverzeichnis  & 図目次               \\
-%     \OPT{|listtable|}          & 表格                   & List of Tables                & Tabellenverzeichnis    & 表目次               \\
-%     \OPT{|figure|}             & 图                     & Figure                        & Abbildung              & 図                   \\
-%     \OPT{|table|}              & 表                     & Table                         & Tabelle                & 表                   \\
-%     \OPT{|abstract|} \rexpstar & 摘要                   & Abstract                      & Zusammenfassung        & 概要                 \\
-%     \OPT{|index|}              & 索引                   & Index                         & Index                  & 索引                 \\
-%     \OPT{|appendix|}           & 附录                   & Appendix                      & Anhang                 & 付録                 \\
-%     \OPT{|proof|}              & 证明                   & Proof                         & Beweis                 & 证明                 \\
-%     \OPT{|bib|}                & 参考文献               & Bibliography                  & Literaturverzeichnis   & 参考文献             \\
+%     |contents|           & 目录                   & Contents                      & Inhaltsverzeichnis     & 目次                 \\
+%     |listfigure|         & 插图                   & List of Figures               & Abbildungsverzeichnis  & 図目次               \\
+%     |listtable|          & 表格                   & List of Tables                & Tabellenverzeichnis    & 表目次               \\
+%     |figure|             & 图                     & Figure                        & Abbildung              & 図                   \\
+%     |table|              & 表                     & Table                         & Tabelle                & 表                   \\
+%     |abstract| \rexpstar & 摘要                   & Abstract                      & Zusammenfassung        & 概要                 \\
+%     |index|              & 索引                   & Index                         & Index                  & 索引                 \\
+%     |appendix|           & 附录                   & Appendix                      & Anhang                 & 付録                 \\
+%     |proof|              & 证明                   & Proof                         & Beweis                 & 证明                 \\
+%     |bib|                & 参考文献               & Bibliography                  & Literaturverzeichnis   & 参考文献             \\
 %   \midrule
-%     \OPT{|figure*|}            & Figure                 & 图                            & Figure                 & Figure               \\
-%     \OPT{|table*|}             & Table                  & 表                            & Table                  & Table                \\
-%     \OPT{|algorithm|}          & 算法                   & Algorithm                     & Algorithmus            & アルゴリズム         \\
-%     \OPT{|listalgorithm|}      & 算法                   & List of Algorithms            & Algorithmenverzeichnis & アルゴリズム目次     \\
-%     \OPT{|abbr|} \rexpstar     & 缩略语对照表           & Abbreviation                  & Abkürzungsverzeichnis  & 略語表               \\
-%     \OPT{|nom|} \rexpstar      & 主要符号对照表         & Nomenclature                  & Symbolverzeichnis      & 記号表               \\
-%     \OPT{|ack|} \rexpstar      & 致谢                   & Acknowledgements              & Danksagungen           & 謝辞                 \\
-%     \OPT{|resume|} \rexpstar   & 个人简历               & Resume                        & Lebenslauf             & 履歴書               \\
-%     \OPT{|digest|} \rexpstar   & 大摘要                 & Digest                        & Kurzfassung            & 要約                 \\
-%     \OPT{|achv|} \rexpstar     & 学术论文和科研成果目录 & List of Research Achievements & Forschungsleistungen   & 研究業績書           \\
+%     |figure*|            & Figure                 & 图                            & Figure                 & Figure               \\
+%     |table*|             & Table                  & 表                            & Table                  & Table                \\
+%     |algorithm|          & 算法                   & Algorithm                     & Algorithmus            & アルゴリズム         \\
+%     |listalgorithm|      & 算法                   & List of Algorithms            & Algorithmenverzeichnis & アルゴリズム目次     \\
+%     |abbr| \rexpstar     & 缩略语对照表           & Abbreviation                  & Abkürzungsverzeichnis  & 略語表               \\
+%     |nom| \rexpstar      & 主要符号对照表         & Nomenclature                  & Symbolverzeichnis      & 記号表               \\
+%     |ack| \rexpstar      & 致谢                   & Acknowledgements              & Danksagungen           & 謝辞                 \\
+%     |resume| \rexpstar   & 个人简历               & Resume                        & Lebenslauf             & 履歴書               \\
+%     |digest| \rexpstar   & 大摘要                 & Digest                        & Kurzfassung            & 要約                 \\
+%     |achv| \rexpstar     & 学术论文和科研成果目录 & List of Research Achievements & Forschungsleistungen   & 研究業績書           \\
 % \end{longtable}
 % \endgroup
 %
@@ -1328,13 +1328,13 @@
 %       \label{tab:list}
 %       \begin{tabular}{lp{4cm}lp{4cm}}
 %         \toprule
-%         \strong{用途}     & \strong{命令}          & \strong{用途}     & \strong{命令}           \\
+%         \strong{用途}     & \strong{命令}         & \strong{用途}     & \strong{命令}          \\
 %         \midrule
-%         目录              & \TNA{tableofcontents}  & 插图索引          & \TNA{listoffigures}     \\
-%                           & \TNA{tableofcontents*} &                   & \TNA{listoffigures*}    \\
+%         目录              & \tn{tableofcontents}  & 插图索引          & \tn{listoffigures}     \\
+%                           & \tn{tableofcontents*} &                   & \tn{listoffigures*}    \\
 %         \midrule
-%         表格索引          & \TNA{listoftables}     & 算法索引\tnote{a} & \TNA{listofalgorithms}  \\
-%                           & \TNA{listoftables*}    &                   & \TNA{listofalgorithms*} \\
+%         表格索引          & \tn{listoftables}     & 算法索引\tnote{a} & \tn{listofalgorithms}  \\
+%                           & \tn{listoftables*}    &                   & \tn{listofalgorithms*} \\
 %         \bottomrule
 %       \end{tabular}
 %       \begin{tablenotes}
@@ -1373,10 +1373,10 @@
 %     \label{tab:theorems}
 %     \begin{tabular}{*{7}{l}}
 %       \toprule
-%       assumption  & axiom   & conjecture & corollary    & definition  & example   & exercise  \\
+%       \env{assumption}  & \env{axiom}   & \env{conjecture} & \env{corollary}    & \env{definition}  & \env{example}   & \env{exercise}  \\
 %       假设        & 公理    & 猜想       & 推论         & 定义        & 例        & 练习      \\
 %       \midrule
-%       lemma       & problem & proof      & proposition  & remark      & solution  & theorem   \\
+%       \env{lemma}       & \env{problem} & \env{proof}      & \env{proposition}  & \env{remark}      & \env{solution}  & \env{theorem}   \\
 %       引理        & 问题    & 证明       & 命题         & 注          & 解        & 定理      \\
 %       \bottomrule
 %     \end{tabular}
@@ -1531,14 +1531,14 @@
 % \bibitem{source2e}
 % \textsc{Braams J}, \textsc{Carlisle D}, \textsc{Jeffrey A}, et~al.
 % \newblock \textit{The \LaTeXe{} Sources}\allowbreak[CP/OL].
-% \newblock (2023-11-01)
+% \newblock (2023-11-01).
 % \urlprefix\url{https://ctan.org/pkg/latex}
 % \urlprefix\CTANurl[源代码：]{macros/latex/base/source2e.pdf}
 %
 % \bibitem{interface3}
 % \textsc{The \LaTeX{} Project}.
 % \newblock \textit{The \LaTeXiii{} Interfaces}\allowbreak[EB/OL].
-% \newblock (2023-11-09)
+% \newblock (2023-11-09).
 % \urlprefix\url{https://ctan.org/pkg/l3kernel}
 % \urlprefix\CTANurl[文档：]{macros/latex/l3kernel/interface3.pdf}
 %
@@ -1546,7 +1546,7 @@
 % \textsc{CTEX.ORG}.
 % \newblock \textit{\CTeX{} 宏集手册}\allowbreak[EB/OL].
 % \newblock version 2.5.10,
-% \newblock (2022-07-14)
+% \newblock (2022-07-14).
 % \urlprefix\url{https://ctan.org/pkg/ctex}
 % \urlprefix\CTANurl[文档及源代码：]{language/chinese/ctex/ctex.pdf}
 %
@@ -1554,7 +1554,7 @@
 % 曾祥东.
 % \newblock \textit{fduthesis: 复旦大学论文模板}\allowbreak[EB/OL].
 % \newblock version 0.9a,
-% \newblock (2023-05-27)
+% \newblock (2023-05-27).
 % \urlprefix\url{https://ctan.org/pkg/fduthesis}
 % \urlprefix\CTANurl[文档及源代码：]{macros/latex/contrib/fduthesis/fduthesis-code.pdf}
 %
@@ -1562,7 +1562,7 @@
 % 清华大学 TUNA 协会.
 % \newblock \textit{\textsc{ThuThesis}：清华大学学位论文模板}\allowbreak[EB/OL].
 % \newblock version 7.4.0,
-% \newblock (2023-05-15)
+% \newblock (2023-05-15).
 % \urlprefix\url{https://ctan.org/pkg/thuthesis}
 % \urlprefix\CTANurl[文档及源代码：]{macros/latex/contrib/thuthesis/thuthesis.pdf}
 %
