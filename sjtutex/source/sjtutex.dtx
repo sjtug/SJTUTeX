@@ -774,22 +774,23 @@
 %   \tabcolsep=3pt
 %   \begin{tabular}{ccccccc}
 %     \toprule
-%     	                   & \strong{宋体}     & \strong{黑体}    & \strong{仿宋} & \strong{楷体}   & \strong{明朝体}\tnote{b} & \strong{哥特体}\tnote{b}  \\
+%     	                   & \strong{宋体}     & \strong{黑体}    & \strong{仿宋} & \strong{楷体}   & \strong{明朝体}\tnote{c} & \strong{哥特体}\tnote{c}  \\
 %     \midrule
 %       |fandol|\tnote{a}  & Fandol 宋体       & Fandol 黑体      & Fandol 仿宋   & Fandol 楷体     & HaranoAjiMincho          & HaranoAjiGothic           \\
 %       |windows|          & （中易）宋体      & （中易）黑体     & （中易）仿宋  & （中易）楷体    & MS Mincho                & MS Gothic                 \\
 %       |mac|              & （华文）宋体-简   & （华文）黑体-简  & 华文仿宋      & （华文）楷体-简 & Hiragino Mincho ProN     & Hiragino Kaku Gothic ProN \\
 %       |ubuntu|           & Noto Serif CJK SC & Noto Sans CJK SC & ---           & 文鼎 PL 简中楷  & Noto Serif CJK JP        & Noto Sans CJK JP          \\
 %       |adobe|            & Adobe 宋体        & Adobe  黑体      & Adobe  仿宋   & Adobe 楷体      & Kozuka Mincho Pr6N       & Kozuka Gothic Pr6N        \\
-%       |founder|          & 方正书宋          & 方正黑体         & 方正仿宋      & 方正楷体        & IPAMincho                & IPAGothic                 \\
+%       |founder|\tnote{b} & 方正书宋          & 方正黑体         & 方正仿宋      & 方正楷体        & IPAMincho                & IPAGothic                 \\
 %     \bottomrule
 %   \end{tabular}
 %   \begin{tablenotes}
-%     \item[a] 发行版中自带的 \opt{fandol} 中文字库容易出现缺字的情况；
-%       我们建议 Linux 用户使用 \opt{ubuntu} 或自行配置合适的字体；参见
+%     \item[a] 发行版中自带的 Fandol 中文字库容易出现缺字的情况；
+%       我们建议 Linux 用户使用 \opt{ubuntu} 选项或自行配置合适的字体；参见
 %       \href{https://github.com/sjtug/SJTUThesis/wiki/在线使用说明}
 %       {Wiki 页面《在线使用说明》}。
-%     \item[b] 日文模板才需要日文明朝体与哥特体；日文字体使用 \pkg{fontspec}
+%     \item[b] 配置 \opt{founder} 选项使用方正简繁扩展版（即 GBK 版）字体。
+%     \item[c] 日文模板才需要日文明朝体与哥特体；日文字体使用 \pkg{fontspec}
 %       宏包设置，故日文模板不支持 \pdfTeX{} 引擎，请使用 \XeLaTeX{} 或
 %       \LuaLaTeX{} 编译。
 %   \end{tablenotes}
