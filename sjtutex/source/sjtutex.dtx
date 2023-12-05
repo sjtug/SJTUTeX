@@ -1665,13 +1665,14 @@
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}{\g_@@_lang_tl,\g_@@_lang_clist}
+% \begin{variable}{\g_@@_lang_tl,\g_@@_lang_clist,
+% \c_@@_lang_de_tl,\c_@@_lang_ja_tl }
 % 论文语言。
 %    \begin{macrocode}
 \tl_new:N \g_@@_lang_tl
+%<thesis>\clist_set:Nn \g_@@_lang_clist { zh, en }
 \tl_const:Nn \c_@@_lang_de_tl { de }
 \tl_const:Nn \c_@@_lang_ja_tl { ja }
-%<thesis>\clist_set:Nn \g_@@_lang_clist { zh, en }
 %    \end{macrocode}
 % \end{variable}
 %
@@ -1696,10 +1697,6 @@
 \tl_new:N \g_@@_text_font_tl
 \tl_new:N \g_@@_math_font_tl
 \tl_new:N \g_@@_cjk_font_tl
-\tl_new:N \g_@@_save_encodingdefault_tl
-\tl_new:N \g_@@_save_rmdefault_tl
-\tl_new:N \g_@@_save_sfdefault_tl
-\tl_new:N \g_@@_save_ttdefault_tl
 %    \end{macrocode}
 % \end{variable}
 %
@@ -1812,6 +1809,7 @@
   {
 %    \end{macrocode}
 %
+% \begin{macro}{zihao}
 % \changes{v2.0}{2022/10/25}{\cls{sjtuthesis} 类型选项移除 \opt{course}，
 % 不再支持课程论文。}
 % 论文类型。
@@ -1825,7 +1823,9 @@
     type .initial:n = { master } ,
 %</thesis>
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{lang}
 % \changes{v2.0}{2023/03/19}{语言选项新增 \opt{ja}，添加日文模板。}
 % \changes{v2.0}{2023/03/23}{语言选项新增 \opt{de}，添加德文模板。}
 % 论文主要语言。
@@ -1843,7 +1843,9 @@
       } ,
     lang .initial:n = { zh } ,
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{zihao}
 % 字号大小。
 %    \begin{macrocode}
     zihao .choice: ,
@@ -1863,14 +1865,18 @@
 %<!article>    zihao .initial:n = { -4 } ,
 %<article>    zihao .initial:n = {  5 } ,
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{linespread}
 % 行距倍数。
 %    \begin{macrocode}
     linespread .fp_gset:N = \g_@@_line_spread_fp ,
     linespread .initial:n = { \c_nan_fp } ,
     linespread .value_required:n = true ,
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{baselineskip}
 % \changes{v2.0}{2022/12/03}{添加 \opt{lineskip} 文档类选项。}
 % \changes{unreleased}{2023/10/24}{添加 \opt{baselineskip} 文档类选项，
 % 替换原 \opt{lineskip} 选项。}
@@ -1888,7 +1894,9 @@
 %<thesis>    baselineskip .initial:n = { 20 bp } ,
 %<!thesis>    baselineskip .initial:n = { false } ,
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{text-font,math-font,cjk-font}
 % 字体配置。
 %    \begin{macrocode}
     text-font .tl_gset:N = \g_@@_text_font_tl ,
@@ -1896,12 +1904,14 @@
     math-font .tl_gset:N = \g_@@_math_font_tl ,
     cjk-font  .tl_gset:N = \g_@@_cjk_font_tl ,
 %    \end{macrocode}
+% \end{macro}
 %
 % \opt{fontset} 是过时选项。
 %    \begin{macrocode}
     fontset .code:n = { \@@_set_deprecated_option:n { cjk-font = #1 } } ,
 %    \end{macrocode}
 %
+% \begin{macro}{math-style}
 % \changes{v2.0}{2023/01/05}{添加 \opt{math-style} 文档类选项，默认值为 \opt{ISO}。}
 % 数学符号样式。
 %    \begin{macrocode}
@@ -1921,7 +1931,9 @@
       } ,
     math-style .initial:n = { ISO } ,
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{uppercase-greek}
 % 大写希腊字母的正/斜体。
 %    \begin{macrocode}
     uppercase-greek .choice: ,
@@ -1931,7 +1943,9 @@
     uppercase-greek / upright .code:n =
       { \bool_gset_false:N \g_@@_slanted_uppercase_greek_bool } ,
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{integral}
 % 积分号的正/斜体。
 %    \begin{macrocode}
     integral .choice: ,
@@ -1941,7 +1955,9 @@
     integral / upright .code:n =
       { \bool_gset_true:N  \g_@@_upright_integral_bool } ,
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{integral-limits}
 % 积分号上下限的位置。
 %    \begin{macrocode}
     integral-limits .choice: ,
@@ -1951,7 +1967,9 @@
     integral-limits / true  .code:n =
       { \bool_gset_true:N  \g_@@_integral_limits_bool } ,
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{oneside,twoside}
 % 单面或双面模式。
 %    \begin{macrocode}
     oneside .value_forbidden:n = true,
@@ -1961,7 +1979,9 @@
     twoside .code:n =
       { \bool_gset_true:N  \g_@@_twoside_bool } ,
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{openany,openright}
 % 是否奇数页开章。
 %    \begin{macrocode}
 %<*!article>
@@ -1973,7 +1993,9 @@
       { \bool_gset_true:N  \g_@@_openright_bool } ,
 %</!article>
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{titlepage,notitlepage}
 % 是否生成标题页。
 %    \begin{macrocode}
 %<*!thesis>
@@ -1985,7 +2007,9 @@
       { \bool_gset_false:N \g_@@_titlepage_bool } ,
 %</!thesis>
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{draft,final}
 % 是否开启草稿模式。
 %    \begin{macrocode}
     draft .value_forbidden:n = true,
@@ -1995,12 +2019,15 @@
     final .code:n =
       { \bool_gset_false:N \g_@@_draft_bool } ,
 %    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{review}
 % 盲审模式。
 %    \begin{macrocode}
 %<thesis>    review .bool_gset:N = \g_@@_review_bool ,
 %<thesis>    review .initial:n = false ,
 %    \end{macrocode}
+% \end{macro}
 %
 % 处理未知选项。
 %    \begin{macrocode}
@@ -2690,10 +2717,10 @@
 %</xits>
 %<*newtx|newpx>
 %<*math>
-\tl_set_eq:NN \g_@@_save_encodingdefault_tl \encodingdefault
-\tl_set_eq:NN \g_@@_save_rmdefault_tl \rmdefault
-\tl_set_eq:NN \g_@@_save_sfdefault_tl \sfdefault
-\tl_set_eq:NN \g_@@_save_ttdefault_tl \ttdefault
+\tl_set_eq:NN \l_@@_save_encodingdefault_tl \encodingdefault
+\tl_set_eq:NN \l_@@_save_rmdefault_tl \rmdefault
+\tl_set_eq:NN \l_@@_save_sfdefault_tl \sfdefault
+\tl_set_eq:NN \l_@@_save_ttdefault_tl \ttdefault
 \tl_set:Nn \encodingdefault { OT1 }
 %<newtx>\tl_set:Nn \rmdefault { ntxtlf }
 %<newpx>\tl_set:Nn \rmdefault { zplTLF }
@@ -2702,10 +2729,10 @@
 \tl_set:Nn \ttdefault { qcr }
 %<newtx>\RequirePackage { newtxmath }
 %<newpx>\RequirePackage { newpxmath }
-\tl_set_eq:NN \encodingdefault \g_@@_save_encodingdefault_tl
-\tl_set_eq:NN \rmdefault \g_@@_save_rmdefault_tl
-\tl_set_eq:NN \sfdefault \g_@@_save_sfdefault_tl
-\tl_set_eq:NN \ttdefault \g_@@_save_ttdefault_tl
+\tl_set_eq:NN \encodingdefault \l_@@_save_encodingdefault_tl
+\tl_set_eq:NN \rmdefault \l_@@_save_rmdefault_tl
+\tl_set_eq:NN \sfdefault \l_@@_save_sfdefault_tl
+\tl_set_eq:NN \ttdefault \l_@@_save_ttdefault_tl
 \@@_set_unimath_symbol:
 %</math>
 %<*text>
@@ -2848,9 +2875,9 @@
 %<*times>
 %<*math>
 \RequirePackage { amssymb, upgreek }
-\tl_set_eq:NN \g_@@_save_rmdefault_tl \rmdefault
+\tl_set_eq:NN \l_@@_save_rmdefault_tl \rmdefault
   \RequirePackage { mathptmx }
-\tl_set_eq:NN \rmdefault \g_@@_save_rmdefault_tl
+\tl_set_eq:NN \rmdefault \l_@@_save_rmdefault_tl
 \tl_set:Nn \Hv@scale { 0.94 }
 \DeclareMathAlphabet { \mathsf } { OT1 } { phv } { m } { n }
 \DeclareMathAlphabet { \mathtt } { OT1 } { pcr } { m } { n }
