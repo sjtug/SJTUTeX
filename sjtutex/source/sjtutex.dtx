@@ -403,6 +403,10 @@
   \lstset{style=style@shell, #1}}{}
 \lstnewenvironment{latex}[1][]{^^A
   \lstset{style=style@latex, #1}}{}
+\newcommand\TNA[1]{\textcolor{sjtu-blue}{\tn{#1}}}
+\newcommand\TNB[1]{\textcolor{sjtu-dark-red!80}{\tn{#1}}}
+\newcommand\OPT[1]{\textcolor{sjtu-dark-blue!80}{#1}}
+\newcommand\OPS[1]{\textcolor{sjtu-green}{#1}}
 \newcommand\note[1]{{^^A
   \color{sjtu-dark-green}{\noindent\bfseries 说明：}~\emph{#1}}}
 \begin{document}
@@ -638,14 +642,14 @@
 %
 % \begin{function}[rEXP,updated=2022-12-03]{type}
 %   \begin{syntax}
-%     type = <bachelor|(master)|doctor>
+%     \OPT{type} = <bachelor|(master)|doctor>
 %   \end{syntax}
 %   论文类型。三种选项分别代表学士学位论文、硕士学位论文、博士学位论文。
 % \end{function}
 %
 % \begin{function}[updated=2023-03-23]{lang}
 %   \begin{syntax}
-%     lang = <(zh)|en|de|ja>
+%     \OPT{lang} = <(zh)|en|de|ja>
 %   \end{syntax}
 %   论文主要语言。可选中文、英文、德文或日文，该选项会改变文档中的一些标题的名字。
 %   下文中 \meta{lang} 可以指定为这些选项中的其中之一。
@@ -702,7 +706,7 @@
 %
 % \begin{function}[updated=2022-12-18]{zihao}
 %   \begin{syntax}
-%     zihao = <(-4)|5>
+%     \OPT{zihao} = <(-4)|5>
 %   \end{syntax}
 %   论文默认字号，可以设定为小四号或五号。
 %   \begin{itemize}
@@ -713,7 +717,7 @@
 %
 % \begin{function}[added=2023-10-24]{baselineskip}
 %   \begin{syntax}
-%     baselineskip = <长度|false>
+%     \OPT{baselineskip} = <长度|false>
 %   \end{syntax}
 %   正文基线间距。
 %   \begin{itemize}
@@ -725,7 +729,7 @@
 %
 % \begin{function}{cjk-font}
 %   \begin{syntax}
-%     cjk-font = <(auto)|(fandol)|windows|mac|ubuntu|adobe|founder|none>
+%     \OPT{cjk-font} = <(auto)|(fandol)|windows|mac|ubuntu|adobe|founder|none>
 %   \end{syntax}
 %   指定东亚字体集。\sjtutex{} 预定义了一些东亚字体组合，
 %   默认跟随操作系统设定：
@@ -749,7 +753,7 @@
 %
 % \begin{function}{text-font}
 %   \begin{syntax}
-%     text-font = <(newtx)|times|stixtwo|xits|newpx|cambria|newcm|lm|libertinus|none>
+%     \OPT{text-font} = <(newtx)|times|stixtwo|xits|newpx|cambria|newcm|lm|libertinus|none>
 %   \end{syntax}
 %   指定西文字体集。\sjtutex{} 预定义了一些西文字体组合，
 %   具体配置见表 \ref{tab:latinfonts}。
@@ -758,7 +762,7 @@
 %
 % \begin{function}{math-font}
 %   \begin{syntax}
-%     math-font = <(auto)|(newtx)|times|stixtwo|xits|newpx|cambria|newcm|lm|libertinus|none>
+%     \OPT{math-font} = <(auto)|(newtx)|times|stixtwo|xits|newpx|cambria|newcm|lm|libertinus|none>
 %   \end{syntax}
 %   指定数学字体集。\sjtutex{} 预定义了一些数学字体组合，
 %   具体配置见表 \ref{tab:latinfonts} 数学字体列。
@@ -802,7 +806,7 @@
 %
 % \begin{function}[added=2022-12-03,updated=2023-01-05]{math-style}
 %   \begin{syntax}
-%     math-style = <(ISO)|TeX>
+%     \OPT{math-style} = <(ISO)|TeX>
 %   \end{syntax}
 %   数学符号样式。该选项将影响 \opt{uppercase-greek}、\opt{integral}、
 %   \opt{integral-limits} 选项。
@@ -813,21 +817,21 @@
 %
 % \begin{function}[added=2023-01-05]{uppercase-greek}
 %   \begin{syntax}
-%     uppercase-greek = <slanted|upright>
+%     \OPT{uppercase-greek} = <slanted|upright>
 %   \end{syntax}
 %   大写希腊字母的正/斜体。
 % \end{function}
 %
 % \begin{function}[added=2023-01-05]{integral}
 %   \begin{syntax}
-%     integral = <slanted|upright>
+%     \OPT{integral} = <slanted|upright>
 %   \end{syntax}
 %   积分号的正/斜体。
 % \end{function}
 %
 % \begin{function}[added=2023-01-05]{integral-limits}
 %   \begin{syntax}
-%     integral-limits = <true|false>
+%     \OPT{integral-limits} = <true|false>
 %   \end{syntax}
 %   行间公式中积分号上下限的位置，
 %   \opt{true} 使得上下限在积分号上下方，
@@ -839,7 +843,7 @@
 %
 % \begin{function}{\sjtusetup}
 %   \begin{syntax}
-%     \tn{sjtusetup} \marg{键值列表}
+%     \TNA{sjtusetup}\marg{键值列表}
 %   \end{syntax}
 %   本模板提供了一系列选项，可由您自行配置。载入文档类之后，以下
 %   所有选项均可通过统一的命令 \tn{sjtusetup} 来设置。
@@ -873,7 +877,7 @@
 %
 % \begin{function}[updated=2023-03-14]{info}
 %   \begin{syntax}
-%     info = \marg{键值列表}
+%     \OPS{info} = \marg{键值列表}
 %   \end{syntax}
 %   该选项包含许多子项目，用于录入论文信息。具体内容见下。
 %   \begin{itemize}
@@ -893,14 +897,14 @@
 %
 % \begin{function}[rEXP,updated=2023-03-14]{info/<lang>/title}
 %   \begin{syntax}
-%     \meta{lang}/title = \marg{标题}
+%     \OPT{\meta{lang}/title} = \marg{标题}
 %   \end{syntax}
 %   标题。
 % \end{function}
 %
 % \begin{function}[rEXP,updated=2023-03-14]{info/<lang>/display-title}
 %   \begin{syntax}
-%     \meta{lang}/display-title = \marg{标题页标题}
+%     \OPT{\meta{lang}/display-title} = \marg{标题页标题}
 %   \end{syntax}
 %   标题页中的题目。默认为跟随对应语言的标题。
 %   如果标题过长，可以尝试使用“|\\|”手动断行。
@@ -908,7 +912,7 @@
 %
 % \begin{function}[rEXP,added=2022-12-17,updated=2023-03-14]{info/<lang>/subject}
 %   \begin{syntax}
-%     \meta{lang}/subject = \marg{主题}
+%     \OPT{\meta{lang}/subject} = \marg{主题}
 %   \end{syntax}
 %   文档主题。一般显示在中文标题页校徽下方。
 %   默认值类似于 “上海交通大学学士学位论文” 或 “A Dissertation Submitted to
@@ -917,7 +921,7 @@
 %
 % \begin{function}[rEXP,updated=2023-03-14]{info/<lang>/keywords}
 %   \begin{syntax}
-%     \meta{lang}/keywords = \marg{中文关键字}
+%     \OPT{\meta{lang}/keywords} = \marg{中文关键字}
 %   \end{syntax}
 %   关键字列表。各关键字之间需使用英文逗号隔开。
 %   为防止歧义，可以用分组括号“|{...}|”把各字段括起来。
@@ -925,14 +929,14 @@
 %
 % \begin{function}[rEXP,updated=2023-03-14]{info/<lang>/author}
 %   \begin{syntax}
-%     \meta{lang}/author = \marg{姓名}
+%     \OPT{\meta{lang}/author} = \marg{姓名}
 %   \end{syntax}
 %   作者姓名。
 % \end{function}
 %
 % \begin{function}[rEXP]{info/id}
 %   \begin{syntax}
-%     id = \marg{学号}
+%     \OPT{id} = \marg{学号}
 %   \end{syntax}
 %   学号。该键不需要语言前缀。
 % \end{function}
@@ -940,16 +944,16 @@
 % \begin{function}[rEXP,updated=2023-03-14]{info/<lang>/supervisor,
 %   info/<lang>/assoc-supervisor,info/<lang>/co-supervisor}
 %   \begin{syntax}
-%     \meta{lang}/supervisor       = \marg{导师姓名}
-%     \meta{lang}/assoc-supervisor = \marg{副导师姓名}
-%     \meta{lang}/co-supervisor    = \marg{联合导师姓名}
+%     \OPT{\meta{lang}/supervisor}       = \marg{导师姓名}
+%     \OPT{\meta{lang}/assoc-supervisor} = \marg{副导师姓名}
+%     \OPT{\meta{lang}/co-supervisor}    = \marg{联合导师姓名}
 %   \end{syntax}
 %   导师、副导师、联合导师姓名。
 % \end{function}
 %
 % \begin{function}[rEXP,updated=2023-03-14]{info/<lang>/degree}
 %   \begin{syntax}
-%     \meta{lang}/degree = \marg{学位名称}
+%     \OPT{\meta{lang}/degree} = \marg{学位名称}
 %   \end{syntax}
 %   申请学位中英文名称。
 %   包括申请的学位类别和级别，如“工学硕士”、“理学博士”等。
@@ -958,21 +962,21 @@
 %
 % \begin{function}[rEXP,updated=2023-03-14]{info/<lang>/department}
 %   \begin{syntax}
-%     \meta{lang}/department = \marg{院系名称}
+%     \OPT{\meta{lang}/department} = \marg{院系名称}
 %   \end{syntax}
 %   院系名称。
 % \end{function}
 %
 % \begin{function}[rEXP,updated=2023-03-14]{info/<lang>/major}
 %   \begin{syntax}
-%     \meta{lang}/major = \marg{专业名称}
+%     \OPT{\meta{lang}/major} = \marg{专业名称}
 %   \end{syntax}
 %   专业名称。
 % \end{function}
 %
 % \begin{function}[rEXP,updated=2023-03-14]{info/<lang>/fund}
 %   \begin{syntax}
-%     \meta{lang}/fund = \marg{资助基金名称}
+%     \OPT{\meta{lang}/fund} = \marg{资助基金名称}
 %   \end{syntax}
 %   资助基金列表。各资助基金名称之间需使用英文逗号隔开。
 %   为防止歧义，可以用分组括号“|{...}|”把各字段括起来。
@@ -980,7 +984,7 @@
 %
 % \begin{function}[rEXP,updated=2023-02-25]{info/date}
 %   \begin{syntax}
-%     date = \marg{ISO 日期}
+%     \OPT{date} = \marg{ISO 日期}
 %   \end{syntax}
 %   日期。默认值为文档编译日期。也可以自己指定，要求使用 ISO 格式，
 %   即 |yyyy-mm-dd| 或 |yyyy-mm|，否则设定无效。该键语言前缀不是必须的。
@@ -988,7 +992,7 @@
 %
 % \begin{function}[rEXP,updated=2023-03-14]{info/<lang>/display-date}
 %   \begin{syntax}
-%     \meta{lang}/display-date = \marg{日期文字}
+%     \OPT{\meta{lang}/display-date} = \marg{日期文字}
 %   \end{syntax}
 %   显示日期，可以显示不同于标准日期格式的日期，日期文字将会被原样输出。
 %   设定该键时，将会覆盖 \opt{info/date} 键在对应语言下的设定。
@@ -999,21 +1003,21 @@
 %
 % \begin{function}[EXP,added=2022-12-17,updated=2023-03-14]{\title}
 %   \begin{syntax}
-%     \tn{title}\marg{标题}
+%     \TNA{title}\marg{标题}
 %   \end{syntax}
 %   设置标题，覆盖 \opt{info/title} 键的值。
 % \end{function}
 %
 % \begin{function}[EXP,added=2022-12-17,updated=2023-03-14]{\author}
 %   \begin{syntax}
-%     \tn{author}\marg{姓名}
+%     \TNA{author}\marg{姓名}
 %   \end{syntax}
 %   设置作者姓名，覆盖 \opt{info/author} 键的值。
 % \end{function}
 %
 % \begin{function}[EXP,added=2022-12-17,updated=2023-03-14]{\date}
 %   \begin{syntax}
-%     \tn{date}\marg{日期}
+%     \TNA{date}\marg{日期}
 %   \end{syntax}
 %   设置日期，覆盖 \opt{info/display-date} 键的值。
 %   日期会被原样显示。
@@ -1021,14 +1025,14 @@
 %
 % \begin{function}[EXP,added=2023-03-14]{\subject}
 %   \begin{syntax}
-%     \tn{subject}\marg{主题}
+%     \TNA{subject}\marg{主题}
 %   \end{syntax}
 %   文档主题。覆盖 \opt{info/subject} 键的值。
 % \end{function}
 %
 % \begin{function}[EXP,added=2023-03-14]{\keywords}
 %   \begin{syntax}
-%     \tn{keywords}\marg{关键词}
+%     \TNA{keywords}\marg{关键词}
 %   \end{syntax}
 %   文档关键词，使用英文逗号隔开不同的关键词。覆盖 \opt{info/keywords} 键的值。
 % \end{function}
@@ -1037,14 +1041,14 @@
 %
 % \begin{function}{style}
 %   \begin{syntax}
-%     style = \marg{键值列表}
+%     \OPS{style} = \marg{键值列表}
 %   \end{syntax}
 %   该选项包含许多子项目，用于设置论文样式。具体内容见下。
 % \end{function}
 %
 % \begin{function}[added=2023-11-30]{style/equation-font}
 %   \begin{syntax}
-%     equation-font = \marg{字体设置}
+%     \OPT{equation-font} = \marg{字体设置}
 %   \end{syntax}
 %   行间数学公式的字体设置，该选项主要用于调整行间公式的行距，
 %   不建议修改字号字形。
@@ -1053,7 +1057,7 @@
 %
 % \begin{function}[added=2022-12-03,updated=2022-12-27]{style/float-font}
 %   \begin{syntax}
-%     float-font = \marg{字体设置}
+%     \OPT{float-font} = \marg{字体设置}
 %   \end{syntax}
 %   图、表等浮动体的额外字体设置。
 %   默认为 |\zihao{5}|，五号字。
@@ -1061,7 +1065,7 @@
 %
 % \begin{function}[added=2022-12-20]{style/caption-font}
 %   \begin{syntax}
-%     caption-font = \marg{字体设置}
+%     \OPT{caption-font} = \marg{字体设置}
 %   \end{syntax}
 %   题注字体。
 %   默认为 |\zihao{5}\bfseries|，粗体五号字。
@@ -1069,7 +1073,7 @@
 %
 % \begin{function}[added=2022-12-20]{style/subcaption-font}
 %   \begin{syntax}
-%     subcaption-font = \marg{字体设置}
+%     \OPT{subcaption-font} = \marg{字体设置}
 %   \end{syntax}
 %   子图题注字体。
 %   默认为 |\zihao{5}\normalfont|，正常字重五号字。
@@ -1077,7 +1081,7 @@
 %
 % \begin{function}[added=2023-03-28]{style/fnmark-style}
 %   \begin{syntax}
-%     fnmark-style = <plain|circled>
+%     \OPT{fnmark-style} = <plain|circled>
 %   \end{syntax}
 %   脚注数字编号样式。
 %   \opt{plain} 表示使用普通数字编号；
@@ -1093,7 +1097,7 @@
 %
 % \begin{function}[added=2022-12-03,updated=2023-03-28]{style/fnmark-font}
 %   \begin{syntax}
-%     fnmark-font = <haranoaji|\marg{字体设置}>
+%     \OPT{fnmark-font} = <haranoaji|\marg{字体设置}>
 %   \end{syntax}
 %   脚注编号的额外字体设置。
 %   默认为空。
@@ -1103,7 +1107,7 @@
 %
 % \begin{function}[added=2023-12-02]{num-sep}
 %   \begin{syntax}
-%     num-sep = \marg{分隔符}
+%     \OPT{num-sep} = \marg{分隔符}
 %   \end{syntax}
 %   图、表、公式以及定理编号中的分隔符。该选项将统一设定 \opt{float-num-sep}、
 %   \opt{equation-num-sep}、\opt{theorem-num-sep} 选项。
@@ -1113,49 +1117,49 @@
 %
 % \begin{function}[updated=2023-11-29]{style/float-num-sep}
 %   \begin{syntax}
-%     float-num-sep = \marg{分隔符}
+%     \OPT{float-num-sep} = \marg{分隔符}
 %   \end{syntax}
 %   图、表等浮动体编号中的分隔符。
 % \end{function}
 %
 % \begin{function}[updated=2023-11-29]{style/equation-num-sep}
 %   \begin{syntax}
-%     equation-num-sep = \marg{分隔符}
+%     \OPT{equation-num-sep} = \marg{分隔符}
 %   \end{syntax}
 %   公式编号中的分隔符。
 % \end{function}
 %
 % \begin{function}[added=2023-12-02]{style/theorem-num-sep}
 %   \begin{syntax}
-%     theorem-num-sep = \marg{分隔符}
+%     \OPT{theorem-num-sep} = \marg{分隔符}
 %   \end{syntax}
 %   定理编号中的分隔符。
 % \end{function}
 %
 % \begin{function}{style/title-logo-color}
 %   \begin{syntax}
-%     title-logo-color = <(red)|blue|black>
+%     \OPT{title-logo-color} = <(red)|blue|black>
 %   \end{syntax}
 %   选择论文标题页中校徽的颜色。
 % \end{function}
 %
 % \begin{function}[EXP,updated=2022-12-20]{style/header-logo-color}
 %   \begin{syntax}
-%     header-logo-color = <(red)|blue|black>
+%     \OPT{header-logo-color} = <(red)|blue|black>
 %   \end{syntax}
 %   选择 \cls{sjtureport} 和 \cls{sjtuarticle} 文档类中页眉的校标颜色。
 % \end{function}
 %
 % \begin{function}[added=2022-12-20,updated=2023-03-14]{style/header-uppercase}
 %   \begin{syntax}
-%     header-uppercase = <true|(false)>
+%     \OPT{header-uppercase} = <true|(false)>
 %   \end{syntax}
 %   页眉英文字母是否大写。默认为 \opt{false}。
 % \end{function}
 %
 % \begin{function}[added=2022-12-20]{style/header-font}
 %   \begin{syntax}
-%     header-font = \marg{页眉字体}
+%     \OPT{header-font} = \marg{页眉字体}
 %   \end{syntax}
 %   页眉字体。
 %   \begin{itemize}
@@ -1166,14 +1170,14 @@
 %
 % \begin{function}[added=2022-12-20]{style/footer-font}
 %   \begin{syntax}
-%     footer-font = \marg{页脚字体}
+%     \OPT{footer-font} = \marg{页脚字体}
 %   \end{syntax}
 %   页脚字体。默认为 |\zihao{-5}|，小五号字。
 % \end{function}
 %
 % \begin{function}[added=2022-12-03]{style/page-number}
 %   \begin{syntax}
-%     page-number = \marg{页码设置}
+%     \OPT{page-number} = \marg{页码设置}
 %   \end{syntax}
 %   设置页码的显示样式，其中 |#1| 代表当前页码。
 %   默认为 |{#1}|，即仅显示页码本身。
@@ -1181,7 +1185,7 @@
 %
 % \begin{function}[added=2023-11-30]{style/keywords-format}
 %   \begin{syntax}
-%     keywords-format = <(plain)|hang>
+%     \OPT{keywords-format} = <(plain)|hang>
 %   \end{syntax}
 %   设置关键词格式。默认为 \opt{plain} 无缩进的普通段落，另可选 \opt{hang} 悬挂格式。
 % \end{function}
@@ -1190,7 +1194,7 @@
 %
 % \begin{function}{name}
 %   \begin{syntax}
-%     name = \marg{键值列表}
+%     \OPS{name} = \marg{键值列表}
 %   \end{syntax}
 %   选项包含许多子项目，用于设置论文中一些标题的名称。部分选项只能在 \cls{sjtuthesis} 中使用。
 %   具体内容见表 \ref{tab:names}。
@@ -1205,7 +1209,7 @@
 % \begingroup
 % \vspace{-48ex}
 % \small \tabcolsep=3pt
-% \begin{longtable}{l|p{7em}|p{9em}|p{11em}|p{8em}}
+% \begin{longtable}{l|p{7em}|>{\raggedright\arraybackslash}p{9em}|p{11em}|p{8em}}
 %   \caption{\opt{name} 选项的默认设置} \label{tab:names} \\
 %   \toprule
 %     \strong{选项}        & \strong{|lang = zh|}   & \strong{|lang = en|}          & \strong{|lang = de|}   & \strong{|lang = ja|} \\
@@ -1221,27 +1225,27 @@
 %   \endfoot
 %     \bottomrule
 %   \endlastfoot
-%     |contents|           & 目录                   & Contents                      & Inhaltsverzeichnis     & 目次                 \\
-%     |listfigure|         & 插图                   & List of Figures               & Abbildungsverzeichnis  & 図目次               \\
-%     |listtable|          & 表格                   & List of Tables                & Tabellenverzeichnis    & 表目次               \\
-%     |figure|             & 图                     & Figure                        & Abbildung              & 図                   \\
-%     |table|              & 表                     & Table                         & Tabelle                & 表                   \\
-%     |abstract| \rexpstar & 摘要                   & Abstract                      & Zusammenfassung        & 概要                 \\
-%     |index|              & 索引                   & Index                         & Index                  & 索引                 \\
-%     |appendix|           & 附录                   & Appendix                      & Anhang                 & 付録                 \\
-%     |proof|              & 证明                   & Proof                         & Beweis                 & 证明                 \\
-%     |bib|                & 参考文献               & Bibliography                  & Literaturverzeichnis   & 参考文献             \\
+%     \OPT{|contents|}           & 目录                   & Contents                      & Inhaltsverzeichnis     & 目次                 \\
+%     \OPT{|listfigure|}         & 插图                   & List of Figures               & Abbildungsverzeichnis  & 図目次               \\
+%     \OPT{|listtable|}          & 表格                   & List of Tables                & Tabellenverzeichnis    & 表目次               \\
+%     \OPT{|figure|}             & 图                     & Figure                        & Abbildung              & 図                   \\
+%     \OPT{|table|}              & 表                     & Table                         & Tabelle                & 表                   \\
+%     \OPT{|abstract|} \rexpstar & 摘要                   & Abstract                      & Zusammenfassung        & 概要                 \\
+%     \OPT{|index|}              & 索引                   & Index                         & Index                  & 索引                 \\
+%     \OPT{|appendix|}           & 附录                   & Appendix                      & Anhang                 & 付録                 \\
+%     \OPT{|proof|}              & 证明                   & Proof                         & Beweis                 & 证明                 \\
+%     \OPT{|bib|}                & 参考文献               & Bibliography                  & Literaturverzeichnis   & 参考文献             \\
 %   \midrule
-%     |figure*|            & Figure                 & 图                            & Figure                 & Figure               \\
-%     |table*|             & Table                  & 表                            & Table                  & Table                \\
-%     |algorithm|          & 算法                   & Algorithm                     & Algorithmus            & アルゴリズム         \\
-%     |listalgorithm|      & 算法                   & List of Algorithms            & Algorithmenverzeichnis & アルゴリズム目次     \\
-%     |abbr| \rexpstar     & 缩略语对照表           & Abbreviation                  & Abkürzungsverzeichnis  & 略語表               \\
-%     |nom| \rexpstar      & 主要符号对照表         & Nomenclature                  & Symbolverzeichnis      & 記号表               \\
-%     |ack| \rexpstar      & 致谢                   & Acknowledgements              & Danksagungen           & 謝辞                 \\
-%     |resume| \rexpstar   & 个人简历               & Resume                        & Lebenslauf             & 履歴書               \\
-%     |digest| \rexpstar   & 大摘要                 & Digest                        & Kurzfassung            & 要約                 \\
-%     |achv| \rexpstar     & 学术论文和科研成果目录 & List of Research Achievements & Forschungsleistungen   & 研究業績書           \\
+%     \OPT{|figure*|}            & Figure                 & 图                            & Figure                 & Figure               \\
+%     \OPT{|table*|}             & Table                  & 表                            & Table                  & Table                \\
+%     \OPT{|algorithm|}          & 算法                   & Algorithm                     & Algorithmus            & アルゴリズム         \\
+%     \OPT{|listalgorithm|}      & 算法                   & List of Algorithms            & Algorithmenverzeichnis & アルゴリズム目次     \\
+%     \OPT{|abbr|} \rexpstar     & 缩略语对照表           & Abbreviation                  & Abkürzungsverzeichnis  & 略語表               \\
+%     \OPT{|nom|} \rexpstar      & 主要符号对照表         & Nomenclature                  & Symbolverzeichnis      & 記号表               \\
+%     \OPT{|ack|} \rexpstar      & 致谢                   & Acknowledgements              & Danksagungen           & 謝辞                 \\
+%     \OPT{|resume|} \rexpstar   & 个人简历               & Resume                        & Lebenslauf             & 履歴書               \\
+%     \OPT{|digest|} \rexpstar   & 大摘要                 & Digest                        & Kurzfassung            & 要約                 \\
+%     \OPT{|achv|} \rexpstar     & 学术论文和科研成果目录 & List of Research Achievements & Forschungsleistungen   & 研究業績書           \\
 % \end{longtable}
 % \endgroup
 %
@@ -1261,7 +1265,7 @@
 %
 % \begin{function}[updated=2022-12-03]{\maketitle}
 %   \begin{syntax}
-%     \tn{maketitle}
+%     \TNA{maketitle}
 %   \end{syntax}
 %   生成标题。
 %   \begin{itemize}
@@ -1276,8 +1280,8 @@
 %
 % \begin{function}[rEXP,updated=2022-12-20]{\copyrightpage}
 %   \begin{syntax}
-%     \tn{copyrightpage}
-%     \tn{copyrightpage}\oarg{授权书扫描件}
+%     \TNA{copyrightpage}
+%     \TNA{copyrightpage}\oarg{授权书扫描件}
 %   \end{syntax}
 %   生成空白版权使用授权书。
 %   接受一个可选参数用于插入版权使用授权书扫描件，使用可选参数时需要手动加载 \pkg{pdfpages} 宏包。
@@ -1287,7 +1291,7 @@
 %
 % \begin{function}[rEXP]{\frontmatter}
 %   \begin{syntax}
-%     \tn{frontmatter}
+%     \TNB{frontmatter}
 %   \end{syntax}
 %   声明前文部分开始。
 % \end{function}
@@ -1324,13 +1328,13 @@
 %       \label{tab:list}
 %       \begin{tabular}{lp{4cm}lp{4cm}}
 %         \toprule
-%         \strong{用途}     & \strong{命令}         & \strong{用途}     & \strong{命令}          \\
+%         \strong{用途}     & \strong{命令}          & \strong{用途}     & \strong{命令}           \\
 %         \midrule
-%         目录              & \tn{tableofcontents}  & 插图索引          & \tn{listoffigures}     \\
-%                           & \tn{tableofcontents*} &                   & \tn{listoffigures*}    \\
+%         目录              & \TNA{tableofcontents}  & 插图索引          & \TNA{listoffigures}     \\
+%                           & \TNA{tableofcontents*} &                   & \TNA{listoffigures*}    \\
 %         \midrule
-%         表格索引          & \tn{listoftables}     & 算法索引\tnote{a} & \tn{listofalgorithms}  \\
-%                           & \tn{listoftables*}    &                   & \tn{listofalgorithms*} \\
+%         表格索引          & \TNA{listoftables}     & 算法索引\tnote{a} & \TNA{listofalgorithms}  \\
+%                           & \TNA{listoftables*}    &                   & \TNA{listofalgorithms*} \\
 %         \bottomrule
 %       \end{tabular}
 %       \begin{tablenotes}
@@ -1345,7 +1349,7 @@
 %
 % \begin{function}[rEXP]{\mainmatter}
 %   \begin{syntax}
-%     \tn{mainmatter}
+%     \TNB{mainmatter}
 %   \end{syntax}
 %   声明正文部分开始。正文部分是论文的核心，您可以分章节撰写。
 %   如有需求，也可以采用多文件编译的方式。
@@ -1353,7 +1357,7 @@
 %
 % \begin{function}[updated=2022-12-03]{\footnote}
 %   \begin{syntax}
-%     \tn{footnote}\oarg{脚注编号}\marg{脚注文字}
+%     \TNA{footnote}\oarg{脚注编号}\marg{脚注文字}
 %   \end{syntax}
 %   插入脚注。其中脚注编号参数是可选的，一般不需要输入。
 % \end{function}
@@ -1381,14 +1385,14 @@
 %
 % \begin{function}[added=2023-10-24]{\setbaselineskip}
 %   \begin{syntax}
-%     \tn{setbaselineskip}\marg{长度}
+%     \TNA{setbaselineskip}\marg{长度}
 %   \end{syntax}
 %   设置当前的基线间距，一般在字号命令之后使用。
 % \end{function}
 %
 % \begin{function}{\appendix}
 %   \begin{syntax}
-%     \tn{appendix}
+%     \TNA{appendix}
 %   \end{syntax}
 %   附录由 \tn{appendix} 命令开启，然后像正文一样书写。
 % \end{function}
@@ -1418,7 +1422,7 @@
 %
 % \begin{function}[rEXP]{\backmatter}
 %   \begin{syntax}
-%     \tn{backmatter}
+%     \TNB{backmatter}
 %   \end{syntax}
 %   声明后文部分开始。 后文部分包含致谢等。
 % \end{function}
