@@ -1283,7 +1283,6 @@
 %
 % \section{内容编写}
 %
-%
 % \begin{function}{document}
 % 在文档开始后进行内容编写，文档内容由 |document| 环境包裹。
 %   \begin{latex}[emph={[1]document}]
@@ -1375,7 +1374,6 @@
 %     \end{threeparttable}
 %   \end{table}
 % \end{function}
-%
 %
 % \subsection{正文部分}
 %
@@ -1514,6 +1512,38 @@
 % \end{digest}
 %   \end{latex}
 % \end{function}
+%
+% \section{宏包依赖情况}
+%
+% 使用不同编译方式、指定不同选项，会导致宏包依赖情况有所不同。
+% 具体如下：
+% \begin{itemize}
+%   \item 在任何情况下，文档类都会\emph{显式}调用以下宏包
+%     （或文档类）：
+%     \begin{itemize}
+%       \item \cls{ctexbook}、\cls{ctexrep} 和 \cls{ctexart}，
+%         提供中文排版的通用框架。属于 \CTeX{} 宏集 \cite{CTeX}。
+%       \item \pkg{mathtools}，对 \LaTeX{} 的数学排版功能进行了全面扩展。
+%         是 \pkg{amsmath} 的扩充。
+%       \item \pkg{geometry}，用于调整页面尺寸。
+%       \item \pkg{fancyhdr}，处理页眉页脚。
+%       \item \pkg{tocloft}，设置目录格式。
+%       \item \pkg{caption}、\cls{bicaption} 和 \cls{subcaption}，用于设置题注。
+%       \item \pkg{xcolor}，提供彩色支持。
+%       \item \pkg{graphicx}，提供图形插入的接口。
+%       \item \pkg{enumitem}，设置列表环境格式。
+%     \end{itemize}
+%   \item \cls{sjtuthesis} 会调用 \pkg{xtemplate} 和 \pkg{array}，用于辅助
+%     标题页等特殊页面的排版。
+%   \item 部分西文与数学字体预设会调用相关的字体宏包，具体调用情况请参见对应的
+%     字体预设文件。
+%   \item 部分数字字体预设会调用 \pkg{unicode-math} 处理 Unicode 编码的
+%     OpenType 数学字体。在未启用 \pkg{unicode-math} 的情况下，会调用 \pkg{bm}
+%     来选择粗体数学符号。
+% \end{itemize}
+%
+% 这里只列出了本模板直接调用的宏包。这些宏包自身的调用情况，
+% 此处不再具体展开。如有需要，请参阅相关文档。
 %
 % \begin{thebibliography}{99}
 %
@@ -2005,7 +2035,6 @@
   }
 %</!thesis>
 %    \end{macrocode}
-%
 %
 % 数字字体宏包选项。
 %    \begin{macrocode}
