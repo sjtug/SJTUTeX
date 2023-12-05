@@ -533,7 +533,7 @@
 %     \midrule
 %     字体配置文件  & \file{sjtu-text-font-*.def} & 西文字体配置   \\
 %                   & \file{sjtu-math-font-*.def} & 数学字体配置   \\
-%                   & \file{sjtu-cjk-font-*.def}  & 东亚字体配置   \\
+%                   & \file{sjtu-cjk-font-*.def}  & CJK 字体配置   \\
 %     \midrule
 %     视觉形象系统  & \file{sjtu-vi-logo-*.pdf}   & 校标图片       \\
 %                   & \file{sjtu-vi-badge-*.pdf}  & 校徽图片       \\
@@ -739,25 +739,49 @@
 %   \begin{syntax}
 %     \OPT{cjk-font} = <(auto)|(fandol)|windows|mac|ubuntu|adobe|founder|none>
 %   \end{syntax}
-%   指定东亚字体集。\sjtutex{} 预定义了一些东亚字体组合，
-%   默认跟随操作系统设定：
+%   指定 CJK 字体集。\sjtutex{} 预定义了一些 CJK 字体组合，
+%   具体配置见表 \ref{tab:cjkfonts}。
+%   默认情况下会根据操作系统自动配置：
 %   Windows 系统默认使用 \opt{windows}，
 %   macOS 系统默认使用 \opt{mac}，
 %   Linux 系统默认使用 \opt{fandol}。
-%   找不到对应定义的东亚字体集时的回退选项为 \opt{fandol}。
+%   找不到对应定义的 CJK 字体集时的回退选项为 \opt{fandol}。
 %
 %   \textbf{仅} \opt{windows} 和 \opt{founder} 字体集支持 \pdfLaTeX{} 直接生成 PDF。
-%   其他东亚字体集使用 \pdfTeX{} 引擎需要先通过 \LaTeX{} 生成 DVI，
+%   其他 CJK 字体集使用 \pdfTeX{} 引擎需要先通过 \LaTeX{} 生成 DVI，
 %   然后再使用 DVIPDFM\textit{x} 转换为 PDF。
-%
-%   \note{发行版中自带的 \opt{fandol} 中文字库容易出现缺字的情况。
-%     我们建议 Linux 用户使用 \opt{ubuntu} 或自行配置合适的字体。参见
-%     \href{https://github.com/sjtug/SJTUThesis/wiki/在线使用说明}
-%     {Wiki 页面《在线使用说明》}。}
-%
-%   \note{日文模板不支持 \pdfTeX{} 引擎，请使用 \XeLaTeX{} 或
-%     \LuaLaTeX{} 编译。}
 % \end{function}
+%
+% \begin{table}[ht]
+% \centering\small
+% \setlength\leftskip{0pt plus 1 fil minus \marginparwidth}
+% \begin{threeparttable}
+%   \caption{CJK 字体配置}
+%   \label{tab:cjkfonts}
+%   \tabcolsep=3pt
+%   \begin{tabular}{ccccccc}
+%     \toprule
+%     	                   & \strong{宋体}     & \strong{黑体}    & \strong{仿宋} & \strong{楷体}   & \strong{明朝体}\tnote{b} & \strong{哥特体}\tnote{b}  \\
+%     \midrule
+%       |fandol|\tnote{a}  & Fandol 宋体       & Fandol 黑体      & Fandol 仿宋   & Fandol 楷体     & HaranoAjiMincho          & HaranoAjiGothic           \\
+%       |windows|          & （中易）宋体      & （中易）黑体     & （中易）仿宋  & （中易）楷体    & MS Mincho                & MS Gothic                 \\
+%       |mac|              & （华文）宋体-简   & （华文）黑体-简  & 华文仿宋      & （华文）楷体-简 & Hiragino Mincho ProN     & Hiragino Kaku Gothic ProN \\
+%       |ubuntu|           & Noto Serif CJK SC & Noto Sans CJK SC & ---           & 文鼎 PL 简中楷  & Noto Serif CJK JP        & Noto Sans CJK JP          \\
+%       |adobe|            & Adobe 宋体        & Adobe  黑体      & Adobe  仿宋   & Adobe 楷体      & Kozuka Mincho Pr6N       & Kozuka Gothic Pr6N        \\
+%       |founder|          & 方正书宋          & 方正黑体         & 方正仿宋      & 方正楷体        & IPAMincho                & IPAGothic                 \\
+%     \bottomrule
+%   \end{tabular}
+%   \begin{tablenotes}
+%     \item[a] 发行版中自带的 \opt{fandol} 中文字库容易出现缺字的情况；
+%       我们建议 Linux 用户使用 \opt{ubuntu} 或自行配置合适的字体；参见
+%       \href{https://github.com/sjtug/SJTUThesis/wiki/在线使用说明}
+%       {Wiki 页面《在线使用说明》}。
+%     \item[b] 日文模板才需要日文明朝体与哥特体；日文字体使用 \pkg{fontspec}
+%       宏包设置，故日文模板不支持 \pdfTeX{} 引擎，请使用 \XeLaTeX{} 或
+%       \LuaLaTeX{} 编译。
+%   \end{tablenotes}
+% \end{threeparttable}
+% \end{table}
 %
 % \begin{function}{text-font}
 %   \begin{syntax}
@@ -1099,7 +1123,7 @@
 %
 %   使用带圈数字编号时，由于超过 50 的带圈数字没有对应的 Unicode 码位，
 %   所以每页脚注最好不要超过 50 个。
-%   带圈数字默认使用东亚字体。通常情况下默认字体不一定包含所有带圈数字的字符，
+%   带圈数字默认使用 CJK 字体。通常情况下默认字体不一定包含所有带圈数字的字符，
 %   此时可以设置 \opt{fnmark-font} 选项给带圈数字设置合适的字体。
 % \end{function}
 %
@@ -2501,7 +2525,7 @@
   { \tl_gset_eq:NN \g_@@_math_font_tl \g_@@_text_font_tl }
 %    \end{macrocode}
 %
-% 根据操作系统判断默认东亚字体配置。
+% 根据操作系统判断默认 CJK 字体配置。
 %    \begin{macrocode}
 \tl_if_empty:NT \g_@@_cjk_font_tl
   {
@@ -2962,7 +2986,7 @@
 %</class>
 %    \end{macrocode}
 %
-% \subsubsection{东亚字体}
+% \subsubsection{CJK 字体}
 %
 % 在字体未提供对应粗体的情况下，允许使用伪粗。
 %    \begin{macrocode}
@@ -3375,7 +3399,7 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% 带圈数字使用东亚字体。
+% 带圈数字使用 CJK 字体。
 %    \begin{macrocode}
 \@@_unicode_engine_case:nn
   {
