@@ -5799,13 +5799,39 @@
 %    \begin{macrocode}
 \ctex_at_end_package:nn { siunitx }
   {
-    \@ifpackageloaded { translations }
+    \RequirePackage { translations }
+    \DeclareTranslation { Chinese  } { and } { 和 }
+    \DeclareTranslation { Japanese } { and } { と }
+    \DeclareTranslation { Chinese  }
+      { to~(numerical~range) } { \textasciitilde }
+    \DeclareTranslation { Japanese }
+      { to~(numerical~range) } { \textasciitilde }
+    \IfPackageAtLeastTF { siunitx } { 2021/05/17 } { }
       {
-        \DeclareTranslation { Chinese  } { and } { 和 }
-        \DeclareTranslation { Japanese } { and } { と }
-        \DeclareTranslation { Chinese  } { to~(numerical~range) } { \textasciitilde }
-        \DeclareTranslation { Japanese } { to~(numerical~range) } { \textasciitilde }
-      } { }
+        \DeclareTranslation { English } { to~(numerical~range) } { to  }
+        \DeclareTranslation { German }  { to~(numerical~range) } { bis }
+        \keys_set:nn { siunitx }
+          {
+            list-final-separator =
+              {
+                \ifmmode \  \else \space \fi
+                \text { \GetTranslation { and } }
+                \ifmmode \  \else \space \fi
+              } ,
+            list-pair-separator  =
+              {
+                \ifmmode \  \else \space \fi
+                \text { \GetTranslation { and } }
+                \ifmmode \  \else \space \fi
+              } ,
+            range-phrase         =
+              {
+                \ifmmode \  \else \space \fi
+                \text { \GetTranslation { to~(numerical~range) } }
+                \ifmmode \  \else \space \fi
+              }
+          }
+      }
   }
 %    \end{macrocode}
 %
