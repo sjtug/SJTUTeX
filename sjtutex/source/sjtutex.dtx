@@ -217,7 +217,16 @@
 \fi
 %</internal>
 %
-%<class>\NeedsTeXFormat{LaTeX2e}[2020/10/01]
+%<*class>
+\NeedsTeXFormat{LaTeX2e}[2020/10/01]
+\providecommand\IfFormatAtLeastTF{\@ifl@t@r\fmtversion}
+\IfFormatAtLeastTF{2020/10/01}{}
+ {\PackageError{sjtutex}
+   {Your LaTeX format is outdated!\MessageBreak\MessageBreak
+    Release `2020/10/01' or newer is required to\MessageBreak
+    compile this document.\MessageBreak\MessageBreak
+    Please update your TeX distribution}{}}
+%</class>
 %<*!(driver|install)>
 %<+!driver>\GetIdInfo $Id: sjtutex.dtx 2.0.3 2023-09-25 19:50:00Z Alexara Wu <alexarawu@outlook.com> $
 %<class&thesis>  {Thesis template for Shanghai Jiao Tong University}
