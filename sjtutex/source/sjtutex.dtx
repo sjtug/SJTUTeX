@@ -4869,7 +4869,7 @@
             \@@_title_page_info_i:nxx { zh }
               {
                 \exp_not:N \SJTU@CT@D { 5 em }
-                @ { \c_@@_name_info_sep_zh_tl }
+                @ { \exp_not:V \c_@@_name_info_sep_zh_tl }
                 >{ \exp_not:N \normalfont } l
               }
               {
@@ -4930,9 +4930,12 @@
 %<en>            \@@_title_page_info_i:nxx { en }
 %<de>            \@@_title_page_info_i:nxx { de }
 %<ja>            \@@_title_page_info_i:nxx { ja }
-%<en>              { r @ { \c_@@_name_info_sep_en_tl } >{ \exp_not:N \normalfont } l }
-%<de>              { r @ { \c_@@_name_info_sep_de_tl } >{ \exp_not:N \normalfont } l }
-%<ja>              { r @ { \c_@@_name_info_sep_ja_tl } >{ \exp_not:N \normalfont } l }
+              {
+%<en>                r @ { \exp_not:V \c_@@_name_info_sep_en_tl }
+%<de>                r @ { \exp_not:V \c_@@_name_info_sep_de_tl }
+%<ja>                r @ { \exp_not:V \c_@@_name_info_sep_ja_tl }
+                >{ \exp_not:N \normalfont } l
+              }
               { author, \l_@@_info_supervisors_clist }
           } ,
         bottom-skip = 30 bp plus 1 fill
