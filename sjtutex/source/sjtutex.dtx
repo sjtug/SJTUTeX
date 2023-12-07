@@ -217,8 +217,7 @@
 \fi
 %</internal>
 %
-%<class>\NeedsTeXFormat{LaTeX2e}
-%<class>\RequirePackage{expl3}
+%<class>\NeedsTeXFormat{LaTeX2e}[2020/10/01]
 %<*!(driver|install)>
 %<+!driver>\GetIdInfo $Id: sjtutex.dtx 2.0.3 2023-09-25 19:50:00Z Alexara Wu <alexarawu@outlook.com> $
 %<class&thesis>  {Thesis template for Shanghai Jiao Tong University}
@@ -1511,21 +1510,12 @@
 %
 % \subsection{准备}
 %
-% 检查 \LaTeXiii{} 编程环境。
+% \changes{unreleased}{2023/12/05}{同步 \LaTeX{} 2020/10/01，无需显式调用
+% \pkg{expl3} 和 \pkg{xparse} 宏包。}
 %    \begin{macrocode}
 %<@@=sjtu>
 %<*class>
-%<thesis>\RequirePackage { xparse, xtemplate }
-%<!thesis>\RequirePackage { xparse }
-\msg_new:nnn { sjtutex } { l3-too-old }
-  {
-    Package~ "#1"~ is~ too~ old. \\\\
-    Please~ update~ an~ up-to-date~ version~ of~ the~ bundles \\
-    "l3kernel"~ and~ "l3packages"~ using~ your~ TeX~ package \\
-    manager~ or~ from~ CTAN.
-  }
-\@ifpackagelater { expl3 } { 2020/04/06 } { }
-  { \msg_error:nnn { sjtutex } { l3-too-old } { expl3 } }
+%<thesis>\RequirePackage { xtemplate }
 %    \end{macrocode}
 %
 % \subsection{内部变量}
@@ -1757,7 +1747,7 @@
 %
 % \changes{v2.0}{2022/12/03}{添加 \opt{lineskip} 文档类选项。}
 % \changes{unreleased}{2023/10/24}{添加 \opt{baselineskip} 文档类选项，
-%   替换原 \opt{lineskip} 选项。}
+% 替换原 \opt{lineskip} 选项。}
 % 基础行距。
 %    \begin{macrocode}
     baselineskip .choice: ,
@@ -5426,7 +5416,7 @@
           ]
         \ignorespaces
       }
-      { \popQED \endtrivlist \legacy_if_set_false:n { @endpe } }
+      { \popQED \endtrivlist \@endpefalse }
     \newtheoremstyle { sjtu }
       { } { } { \normalfont } { } { \bfseries \CJKsffamily } { } { \ccwd } { }
     \theoremstyle { sjtu }
