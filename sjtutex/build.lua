@@ -19,6 +19,10 @@ unpackfiles        = {"sjtutex.dtx"}
 unpacksuppfiles    = {"sjtutex.id"}
 gitverfiles        = {"sjtutex.dtx"}
 
+checkengines       = {"xetex"}
+recordstatus       = true
+lvtext             = ".tex"
+
 packtdszip         = true
 
 tdslocations = {
