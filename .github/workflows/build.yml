@@ -29,16 +29,9 @@ jobs:
           sudo rm -r sjtutex/build/distrib/tds/*/
           sudo unzip -d sjtutex/build/distrib/tds/ sjtutex/build/distrib/tds/sjtutex.tds.zip
           sudo rm sjtutex/build/distrib/tds/sjtutex.tds.zip
-          sudo rm sjtutex/doc/sjtutex.pdf
       - uses: actions/upload-artifact@v3
         with:
           path: |
             sjtutex/build/distrib/tds/
           name: sjtutex.tds
         name: upload build tds artifacts
-      - uses: actions/upload-artifact@v3
-        with:
-          path: |
-            sjtutex/doc/
-          name: samples
-        name: upload build samples artifacts
