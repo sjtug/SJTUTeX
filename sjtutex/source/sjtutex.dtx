@@ -31,7 +31,7 @@
 %</internal>
 %
 %<*install>
-\input l3docstrip.tex
+\input ctxdocstrip.tex
 \keepsilent
 \askforoverwritefalse
 
@@ -228,7 +228,7 @@
     Please update your TeX distribution}{}}
 %</class>
 %<*!(driver|install)>
-%<+!driver>\GetIdInfo $Id: sjtutex.dtx 2.0.3 2023-09-25 19:50:00Z Alexara Wu <alexarawu@outlook.com> $
+%<+!driver>\GetIdInfo$Id$
 %<class&thesis>  {Thesis template for Shanghai Jiao Tong University}
 %<class&thesis>\ProvidesExplClass{sjtuthesis}
 %<class&report>  {Report template for Shanghai Jiao Tong University}
@@ -347,13 +347,15 @@
 %<font&cjk&founder&zh>\ProvidesExplFile{sjtu-cjk-font-founder-zh.def}
 %<font&cjk&founder&ja>  {Founder CJK fonts definition for Japanese (SJTUTeX)}
 %<font&cjk&founder&ja>\ProvidesExplFile{sjtu-cjk-font-founder-ja.def}
-%<!driver>  {\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
+%<!driver>  {\ExplFileDate}{2.0.3}{\ExplFileDescription}
 %</!(driver|install)>
 %
 %<*driver>
 \PassOptionsToPackage{fontset=ubuntu}{ctex}
 \documentclass{ctxdoc}
 \newcommand{\sjtutex}{SJTU\TeX}
+\expandafter\def\csname ver@\jobname.sty\endcsname
+  {9999/99/99 v2.0.3 SJTUTeX}
 \usepackage{float}
 \usepackage{multirow}
 \usepackage{longtable}
@@ -412,6 +414,8 @@
 \newcommand\EEV[1]{\TNA{end}\{\ENV{#1}\}}
 \newcommand\note[1]{{^^A
   \color{sjtu-dark-green}{\noindent\bfseries 说明：}~\emph{#1}}}
+\newcommand\sjtutexrev[1]{^^A
+  \href{https://github.com/sjtug/SJTUTeX/commit/#1}{\texttt{sjtutex} rev. #1}}
 \hypersetup{^^A
   bookmarksnumbered = true,
   bookmarksopen     = true}
@@ -431,11 +435,11 @@
 % \changes{v2.0}{2021/09/10}{应用 \LaTeXiii{} 重构代码。}
 % \changes{v2.0}{2022/12/27}{新增文档类 \cls{sjtuarticle} 和 \cls{sjtureport}。}
 %
-% \GetFileInfo{\jobname.dtx}
+% \GetFileId{\jobname.sty}
 %
 % \title{\bfseries\color{sjtu-red}\sjtutex{}: 上海交通大学文档类集}
 % \author{SJTUG}
-% \date{2023/9/25\quad v2.0.3}
+% \date{\ExplFileDate\quad\fileversion\thanks{\sjtutexrev{\ExplFileVersion}.}}
 %
 % \hypersetup{^^A
 %   pdfsubject  = {上海交通大学文档类集使用说明},
