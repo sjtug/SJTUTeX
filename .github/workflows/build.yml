@@ -20,7 +20,7 @@ jobs:
         with:
           scheme: full
           run: |
-            apk add font-noto-cjk
+            apk add zip diffutils font-noto-cjk
             git config --global --add safe.directory /github/workspace
             cd sjtutex && l3build ctan
         name: build package with l3build
