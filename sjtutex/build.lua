@@ -87,6 +87,16 @@ function replace_git_id (path, file)
   end
 end
 
+function update_tag(file, content, tagname, tagdate)
+  local content, date = content, tagdate:gsub("%-", "/")
+  if file:match("%.dtx$") then
+    content = content:gsub("({\\ExplFileDate})%b{}", "%1{" .. tagname .. "}")
+    content = content:gsub("{%d%d%d%d/%d%d/%d%d v%S+", "{" .. date .. " v" .. tagname)
+    content = content:gsub("(\\changes){unreleased}", "%1{v" .. tagname .. "}")
+  end
+  return content
+end
+
 null_function = function() return 0 end
 
 unpack_prehook  = unpack_prehook  or null_function
