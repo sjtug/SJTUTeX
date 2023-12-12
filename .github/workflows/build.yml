@@ -24,11 +24,6 @@ jobs:
             git config --global --add safe.directory /github/workspace
             cd sjtutex && l3build ctan
         name: build package with l3build
-      - name: prepare upload artifacts
-        run: |
-          sudo rm -r sjtutex/build/distrib/tds/*/
-          sudo unzip -d sjtutex/build/distrib/tds/ sjtutex/build/distrib/tds/sjtutex.tds.zip
-          sudo rm sjtutex/build/distrib/tds/sjtutex.tds.zip
       - uses: actions/upload-artifact@v3
         with:
           path: |

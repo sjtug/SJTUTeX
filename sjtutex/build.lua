@@ -33,8 +33,6 @@ tdslocations = {
   "tex/latex/sjtutex/vi/sjtu-vi-*.pdf"
 }
 
-excludefiles       = {"*~","sample-*.tex","sample-*.pdf"}
-
 shellescape = os.type == "windows"
   and function (s) return s end
   or  function (s)
