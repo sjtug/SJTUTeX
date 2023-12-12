@@ -18,6 +18,7 @@ jobs:
         with:
           run: |
             apk add zip diffutils font-noto-cjk
+            git config --global --add safe.directory /github/workspace
             cd sjtutex && l3build ctan
         name: build package
       - uses: actions/create-release@latest
