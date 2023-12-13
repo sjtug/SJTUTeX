@@ -97,6 +97,11 @@ function update_tag(file, content, tagname, tagdate)
   return content
 end
 
+function tag_hook(tagname)
+  os.execute("git commit -a -m \"Bump version to " .. tagname .. "\"")
+  os.execute("git tag v" .. tagname)
+end
+
 null_function = function() return 0 end
 
 unpack_prehook  = unpack_prehook  or null_function
