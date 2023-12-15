@@ -2568,6 +2568,16 @@
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}[int]{\@@_declare_math_symbol:nnNn}
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_declare_math_symbol:nnNn
+  {
+    \cs_undefine:N #3
+    \DeclareMathSymbol {#3} {#1} {#2} {#4}
+  }
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}[int]{\@@_set_slanted_greek:}
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_set_slanted_greek:
@@ -2669,12 +2679,49 @@
 \@@_fontset_case:nn
   {
 %<*math>
+    \DeclareSizeFunction { sub } { \sub@sfcnt \@font@info }
     \PassOptionsToPackage { notext } { stix2 }
-    \RequirePackage { upgreek, stix2 }
+    \RequirePackage { stix2 }
+    \clist_map_inline:nn
+      {
+        \upalpha      { "0B } ,
+        \upbeta       { "0C } ,
+        \upgamma      { "0D } ,
+        \updelta      { "0E } ,
+        \upepsilon    { "0F } ,
+        \upzeta       { "10 } ,
+        \upeta        { "11 } ,
+        \uptheta      { "12 } ,
+        \upiota       { "13 } ,
+        \upkappa      { "14 } ,
+        \uplambda     { "15 } ,
+        \upmu         { "16 } ,
+        \upnu         { "17 } ,
+        \upxi         { "18 } ,
+        \uppi         { "19 } ,
+        \uprho        { "1A } ,
+        \upsigma      { "1B } ,
+        \uptau        { "1C } ,
+        \upupsilon    { "1D } ,
+        \upphi        { "1E } ,
+        \upchi        { "1F } ,
+        \uppsi        { "20 } ,
+        \upomega      { "21 } ,
+        \upvarepsilon { "22 } ,
+        \upvartheta   { "23 } ,
+        \upvarpi      { "24 } ,
+        \upvarrho     { "25 } ,
+        \upvarsigma   { "26 } ,
+        \upvarphi     { "27 }
+      }
+      { \@@_declare_math_symbol:nnNn { \stix@lcgc } { operators } #1 }
     \@@_set_slanted_greek:
 %</math>
 %<*text>
     \tl_set:Nn \encodingdefault { T1 }
+    \DeclareEncodingSubset { TS1 } { ? } { 0 }
+    \UndeclareTextCommand { \textpertenthousand } { T1 }
+    \DeclareTextSymbolDefault { \textpertenthousand } { TS1 }
     \tl_set:Nn \rmdefault { stix2 }
     \tl_set:Nn \qhv@scale { 0.94 }
     \tl_set:Nn \sfdefault { qhv }
@@ -2916,6 +2963,8 @@
 \DeclareMathAlphabet { \mathtt } { OT1 } { pcr } { m } { n }
 \SetMathAlphabet { \mathsf } { bold } { OT1 } { phv } { b } { n }
 \SetMathAlphabet { \mathtt } { bold } { OT1 } { pcr } { b } { n }
+\DeclareSymbolFont { SJTU@ptm } { OML } { ptmcm } { m } { it }
+\@@_declare_math_symbol:nnNn { \mathord } { SJTU@ptm } \upvarsigma { "26 }
 \bool_if:NT \g_@@_upright_integral_bool
   { \RequirePackage { cmupint } }
 \@@_set_unimath_symbol:
