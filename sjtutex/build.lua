@@ -13,6 +13,8 @@ typesetfiles       = {"sample-*.tex","sjtutex.dtx"}
 typesetsuppfiles   = {"ctxdoc.cls"}
 
 bibtexexe          = "bibtex"
+biberexe           = "biber"
+biberopts          = "--quiet"
 
 unpackexe          = "luatex"
 unpackfiles        = {"sjtutex.dtx"}
@@ -20,8 +22,17 @@ unpacksuppfiles    = {"sjtutex.id"}
 gitverfiles        = {"sjtutex.dtx"}
 
 checkengines       = {"xetex", "luatex"}
+checkopts          = "-file-line-error -halt-on-error -interaction=nonstopmode"
 recordstatus       = true
 lvtext             = ".tex"
+
+function runtest_tasks(name, run)
+  if run == 1 then
+    return biberexe .. " " .. name .. " " .. biberopts
+  else
+    return ""
+  end
+end
 
 packtdszip         = true
 
