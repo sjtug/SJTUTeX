@@ -19,7 +19,7 @@ unpackfiles        = {"sjtutex.dtx"}
 unpacksuppfiles    = {"sjtutex.id"}
 gitverfiles        = {"sjtutex.dtx"}
 
-checkengines       = {"xetex"}
+checkengines       = {"xetex", "luatex"}
 recordstatus       = true
 lvtext             = ".tex"
 
