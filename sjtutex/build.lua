@@ -21,6 +21,7 @@ unpackfiles        = {"sjtutex.dtx"}
 unpacksuppfiles    = {"sjtutex.id"}
 gitverfiles        = {"sjtutex.dtx"}
 
+checkruns          = 3
 checkengines       = {"xetex", "luatex"}
 checkopts          = "-file-line-error -halt-on-error -interaction=nonstopmode"
 recordstatus       = true
