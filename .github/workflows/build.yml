@@ -30,3 +30,9 @@ jobs:
             sjtutex/build/distrib/tds/
           name: sjtutex.tds
         name: upload build tds artifacts
+      - uses: actions/upload-artifact@v3
+        with:
+          path: |
+            sjtutex/build/result
+          name: samples
+        name: upload build samples artifacts

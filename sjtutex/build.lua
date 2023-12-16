@@ -31,6 +31,10 @@ function runtest_tasks(name, run)
   if run == 1 and fileexists(testdir .. "/" .. name .. ".bcf") then
     return biberexe .. " " .. name .. " " .. biberopts
   else
+    if run == 3 and fileexists(testdir .. "/" .. name .. ".pdf") then
+      -- save the pdf to the result dir
+      cp(name .. pdfext,testdir,resultdir)
+    end
     return ""
   end
 end
