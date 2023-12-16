@@ -27,7 +27,7 @@ recordstatus       = true
 lvtext             = ".tex"
 
 function runtest_tasks(name, run)
-  if run == 1 then
+  if run == 1 and fileexists(testdir .. "/" .. name .. ".bcf") then
     return biberexe .. " " .. name .. " " .. biberopts
   else
     return ""
