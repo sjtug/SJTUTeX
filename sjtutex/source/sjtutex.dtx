@@ -3152,7 +3152,7 @@
 %<*ja>
     \setCJKmainfont { MS~Mincho } [ AutoFakeBold = 3 ]
     \setCJKsansfont { MS~Gothic } [ AutoFakeBold = 3 ]
-    \setCJKmonofont { MS~Gothic }
+    \setCJKmonofont { MS~Mincho }
     \setCJKfamilyfont { jamin  } { MS~Mincho } [ AutoFakeBold = 3 ]
     \setCJKfamilyfont { jagoth } { MS~Gothic } [ AutoFakeBold = 3 ]
 %</ja>
@@ -3201,26 +3201,26 @@
     \setCJKmonofont { STFangsong }
 %</zh>
 %<*ja>
-    \setCJKmainfont { Hiragino~Mincho~ProN      }
+    \setCJKmainfont { HiraMinProN  }
       [
-        UprightFont    = *~W3 ,
-        BoldFont       = *~W6
+        UprightFont    = *-W3 ,
+        BoldFont       = *-W6
       ]
-    \setCJKsansfont { Hiragino~Kaku~Gothic~ProN }
+    \setCJKsansfont { HiraKakuProN }
       [
-        UprightFont    = *~W3 ,
-        BoldFont       = *~W6
+        UprightFont    = *-W3 ,
+        BoldFont       = *-W6
       ]
-    \setCJKmonofont { Hiragino~Kaku~Gothic~ProN }
-    \setCJKfamilyfont { jamin  } { Hiragino~Mincho~ProN      }
+    \setCJKmonofont { HiraMinProN-W3 }
+    \setCJKfamilyfont { jamin  } { HiraMinProN  }
       [
-        UprightFont    = *~W3 ,
-        BoldFont       = *~W6
+        UprightFont    = *-W3 ,
+        BoldFont       = *-W6
       ]
-    \setCJKfamilyfont { jagoth } { Hiragino~Kaku~Gothic~ProN }
+    \setCJKfamilyfont { jagoth } { HiraKakuProN }
       [
-        UprightFont    = *~W3 ,
-        BoldFont       = *~W6
+        UprightFont    = *-W3 ,
+        BoldFont       = *-W6
       ]
 %</ja>
     \setCJKfamilyfont { zhsong } { Songti~SC  }
@@ -3276,7 +3276,11 @@
         UprightFont = *~Medium ,
         BoldFont    = *~Bold
       ]
-    \setCJKmonofont { Noto~Sans~Mono~CJK~SC }
+    \setCJKmonofont { Noto~Serif~CJK~SC     }
+      [
+        UprightFont = *~Light ,
+        BoldFont    = *~Bold
+      ]
 %</zh>
 %<*ja>
     \setCJKmainfont { Noto~Serif~CJK~JP     }
@@ -3289,7 +3293,11 @@
         UprightFont = *~Medium ,
         BoldFont    = *~Bold
       ]
-    \setCJKmonofont { Noto~Sans~Mono~CJK~JP }
+    \setCJKmonofont { Noto~Serif~CJK~JP     }
+      [
+        UprightFont = *~Light ,
+        BoldFont    = *~Bold
+      ]
     \setCJKfamilyfont { jamin  } { Noto~Serif~CJK~JP }
       [
         UprightFont = *~Light ,
@@ -3344,26 +3352,26 @@
     \setCJKmonofont { AdobeFangsongStd-Regular }
 %</zh>
 %<*ja>
-    \setCJKmainfont { Kozuka~Mincho~Pr6N }
+    \setCJKmainfont { KozMinPr6N }
       [
-        UprightFont = *~L ,
-        BoldFont    = *~B
+        UprightFont = *-Light ,
+        BoldFont    = *-Bold
       ]
-    \setCJKsansfont { Kozuka~Gothic~Pr6N }
+    \setCJKsansfont { KozGoPr6N  }
       [
-        UprightFont = *~M ,
-        BoldFont    = *~B
+        UprightFont = *-Medium ,
+        BoldFont    = *-Bold
       ]
-    \setCJKmonofont { Kozuka~Gothic~Pr6N }
-    \setCJKfamilyfont { jamin  } { Kozuka~Mincho~Pr6N }
+    \setCJKmonofont { KozMinPr6N-Light }
+    \setCJKfamilyfont { jamin  } { KozMinPr6N }
       [
-        UprightFont = *~L ,
-        BoldFont    = *~B
+        UprightFont = *-Light ,
+        BoldFont    = *-Bold
       ]
-    \setCJKfamilyfont { jagoth } { Kozuka~Gothic~Pr6N }
+    \setCJKfamilyfont { jagoth } { KozGoPr6N  }
       [
-        UprightFont = *~M ,
-        BoldFont    = *~B
+        UprightFont = *-Medium ,
+        BoldFont    = *-Bold
       ]
 %</ja>
     \setCJKfamilyfont { zhsong } { AdobeSongStd-Light       }
