@@ -20,7 +20,7 @@ unpacksuppfiles    = {"sjtutex.id"}
 gitverfiles        = {"sjtutex.dtx"}
 
 checkruns          = 3
-checkengines       = {"luatex","xetex"}
+checkengines       = {"luatex","xetex"}  -- do not reorder this
 checkopts          = "-file-line-error -halt-on-error -interaction=nonstopmode"
 recordstatus       = true
 lvtext             = ".tex"
