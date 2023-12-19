@@ -4,7 +4,7 @@
 
 SOURCE_DIR=sjtutex
 
-all: build
+all: build-ctan
 
 # Clean all temporary files and generated files
 clean:
@@ -18,8 +18,11 @@ build-ctan:
 build:
 	cd $(SOURCE_DIR) && l3build doc
 
+test:
+	cd $(SOURCE_DIR) && l3build check
+
 # Generate `.sty` files and copy resources
 generate:
 	cd $(SOURCE_DIR) && l3build unpack && cd ..
 
-.PHONY: build build-ctan format clean generate
+.PHONY: build test build-ctan clean generate
