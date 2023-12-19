@@ -21,8 +21,12 @@ build:
 test:
 	cd $(SOURCE_DIR) && l3build check
 
+# For TeX Live/MacTeX users to install the package
+install:
+	cd $(SOURCE_DIR) && l3build install
+
 # Generate `.sty` files and copy resources
 generate:
 	cd $(SOURCE_DIR) && l3build unpack && cd ..
 
-.PHONY: build test build-ctan clean generate
+.PHONY: build test build-ctan install clean generate
