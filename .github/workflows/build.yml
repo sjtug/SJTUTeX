@@ -21,7 +21,7 @@ jobs:
           scheme: full
           run: |
             apk add zip diffutils font-noto-cjk
-            git config --global --add safe.directory /github/workspace
+            git config --global --add safe.directory /home/runner/work/SJTUTeX/SJTUTeX
             cd sjtutex && l3build ctan
         name: build package with l3build
       - name: prepare upload artifacts
