@@ -6,8 +6,6 @@ sourcefiledir      = "source"
 sourcefiles        = {"sjtutex.dtx","sjtu-vi-*.pdf"}
 installfiles       = {"*.cls","*.def","*.pdf"}
 
-docfiledir         = "doc"
-
 typesetexe         = "xelatex"
 typesetfiles       = {"sample-*.tex","sjtutex.dtx"}
 typesetsuppfiles   = {"ctxdoc.cls"}

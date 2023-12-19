@@ -43,13 +43,11 @@ l3build unpack
 
 ### 文档
 
-编译文档类文档可以使用
+编译文档类文档 `sjtutex.pdf` 可以使用
 
 ```
 l3build doc
 ```
-
-生成结果将置于 `doc/sjtutex.pdf`。
 
 > 请注意文档类文档 `sjtutex.pdf` 的正确编译需要使用 Noto CJK 字体（即 `ctex` 字体配置中的 `fontset=ubuntu`）。
 

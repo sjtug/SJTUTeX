@@ -5,7 +5,7 @@ build/
 *.zip
 
 # sjtutex
-sjtutex/doc/*.pdf
+sjtutex/*.pdf
 sjtutex/support/*.id
 
 ## Editors
