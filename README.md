@@ -28,25 +28,47 @@ l3build install
 ```bash
 cd sjtutex
 l3build unpack  # 解包
-l3build doc     # 编译全部示例及文档
+l3build doc     # 文档
+l3build check   # 测试
 l3build ctan    # 生成发布包
 ```
 
-文档类还含有多个示例（比如 `sample-thesis-zh`），主要存放于 `doc` 文件夹中（支持文件存放于 `support` 文件夹），编译单个示例  `<sample>` 可使用
+### 解包
 
-```bash
-l3build doc <sample>
+解包 `source/sjtutex.dtx` 使用
+```
+l3build unpack
+```
+解包结果将置于 `build/unpacked` 和 `build/local` 文件夹下。
+
+### 文档
+
+编译文档类文档可以使用
+
+```
+l3build doc
 ```
 
-仅编译文档类文档可以使用
-
-```bash
-l3build doc sjtutex
-```
+生成结果将置于 `doc/sjtutex.pdf`。
 
 > 请注意文档类文档 `sjtutex.pdf` 的正确编译需要使用 Noto CJK 字体（即 `ctex` 字体配置中的 `fontset=ubuntu`）。
 
-在您提交 PR 时，GitHub Action 会自动构建文档 PDF。
+### 测试
+
+文档类还含有多个测试用例（比如 `sample-thesis-zh`），主要存放于 `testfiles` 文件夹中（支持文件存放于 `testfiles/support` 文件夹）。
+
+测试全部示例使用
+```
+l3build check
+```
+
+上面的过程默认隐藏编译细节。为了查看单个测试用例 `<sample>` 的编译细节，可以使用
+
+```
+l3build check <sample>
+```
+
+请使用尽可能新版本的 [l3build](https://github.com/latex3/l3build)，更多细节请参见 [l3build 文档](https://mirrors.sjtug.sjtu.edu.cn/CTAN/macros/latex/contrib/l3build/l3build.pdf)（`texdoc l3build`）。
 
 ## 软件许可证
 
