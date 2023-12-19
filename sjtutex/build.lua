@@ -22,18 +22,40 @@ unpacksuppfiles    = {"sjtutex.id"}
 gitverfiles        = {"sjtutex.dtx"}
 
 checkruns          = 3
-checkengines       = {"xetex", "luatex"}
+checkengines       = {"xetex","luatex"}
 checkopts          = "-file-line-error -halt-on-error -interaction=nonstopmode"
 recordstatus       = true
 lvtext             = ".tex"
+xdvext             = ".xdv"
+
+-- Similar to dvitopdf()
+function xdvtopdf(name, dir)
+  runcmd(
+    "xdvipdfmx -E -q " .. name .. xdvext,
+    dir
+  )
+end
 
 function runtest_tasks(name, run)
   if run == 1 and fileexists(testdir .. "/" .. name .. ".bcf") then
     return biberexe .. " " .. name .. " " .. biberopts
   else
-    if run == checkruns and fileexists(testdir .. "/" .. name .. ".pdf") then
+    if run == checkruns then
+      local engine
+      if fileexists(testdir .. "/" .. name .. xdvext) then
+        -- it is xetex engine
+        engine = "xetex"
+        -- convert xdv to pdf
+        xdvtopdf(name, testdir)
+        -- remove xdv file to avoid confusing luatex judgement
+        rm(testdir, name .. xdvext)
+      else
+        -- it is luatex engine
+        engine = "luatex"
+      end
       -- save the pdf to the result dir
       cp(name .. pdfext,testdir,resultdir)
+      ren(resultdir, name .. pdfext, name .. "." .. engine .. pdfext)
     end
     return ""
   end
