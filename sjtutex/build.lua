@@ -20,7 +20,7 @@ unpacksuppfiles    = {"sjtutex.id"}
 gitverfiles        = {"sjtutex.dtx"}
 
 checkruns          = 3
-checkengines       = {"luatex","xetex"}  -- do not reorder this
+checkengines       = {"luatex","xetex"}  -- do not reorder this, related to runtest_tasks()
 checkopts          = "-file-line-error -halt-on-error -interaction=nonstopmode"
 recordstatus       = true
 lvtext             = ".tex"
@@ -41,15 +41,11 @@ function runtest_tasks(name, run)
     if run == checkruns then
       local engine
       if not(fileexists(testdir .. "/" .. name .. xdvext)) then
-        -- it is luatex engine
         engine = "luatex"
       else
-        -- it is xetex engine
         engine = "xetex"
-        -- convert xdv to pdf
         xdvtopdf(name, testdir)
       end
-      -- save the pdf to the result dir
       cp(name .. pdfext,testdir,resultdir)
       ren(resultdir, name .. pdfext, name .. "." .. engine .. pdfext)
     end
