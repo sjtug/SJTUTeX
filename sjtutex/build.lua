@@ -26,37 +26,10 @@ recordstatus       = true
 lvtext             = ".tex"
 xdvext             = ".xdv"
 
--- Similar to dvitopdf()
-function xdvtopdf(name, dir)
-  runcmd(
-    "xdvipdfmx -E -q " .. name .. xdvext,
-    dir
-  )
-end
-
-function runtest_tasks(name, run)
-  if run == 1 and fileexists(testdir .. "/" .. name .. ".bcf") then
-    return biberexe .. " " .. name .. " " .. biberopts
-  else
-    if run == checkruns then
-      local engine
-      if not(fileexists(testdir .. "/" .. name .. xdvext)) then
-        engine = "luatex"
-      else
-        engine = "xetex"
-        xdvtopdf(name, testdir)
-      end
-      cp(name .. pdfext,testdir,resultdir)
-      ren(resultdir, name .. pdfext, name .. "." .. engine .. pdfext)
-    end
-    return ""
-  end
-end
-
 packtdszip         = true
 
 tdslocations = {
-  "tex/latex/sjtutex/fd/sjtu-*-font-*.def",
+  "tex/latex/sjtutex/font/sjtu-*-font-*.def",
   "tex/latex/sjtutex/lang/sjtu-lang-*.def",
   "tex/latex/sjtutex/name/sjtu-name-*.def",
   "tex/latex/sjtutex/scheme/sjtu-scheme-*.def",
@@ -132,6 +105,33 @@ end
 function tag_hook(tagname)
   os.execute("git commit -a -m \"Bump version to " .. tagname .. "\"")
   os.execute("git tag v" .. tagname)
+end
+
+-- Similar to dvitopdf()
+function xdvtopdf(name, dir)
+  runcmd(
+    "xdvipdfmx -E -q " .. name .. xdvext,
+    dir
+  )
+end
+
+function runtest_tasks(name, run)
+  if run == 1 and fileexists(testdir .. "/" .. name .. ".bcf") then
+    return biberexe .. " " .. name .. " " .. biberopts
+  else
+    if run == checkruns then
+      local engine
+      if not(fileexists(testdir .. "/" .. name .. xdvext)) then
+        engine = "luatex"
+      else
+        engine = "xetex"
+        xdvtopdf(name, testdir)
+      end
+      cp(name .. pdfext,testdir,resultdir)
+      ren(resultdir, name .. pdfext, name .. "." .. engine .. pdfext)
+    end
+    return ""
+  end
 end
 
 null_function = function() return 0 end
