@@ -20,16 +20,12 @@ jobs:
         with:
           scheme: full
           run: |
-            apk add font-noto-cjk
-            git config --global --add safe.directory /github/workspace
+            apk add zip diffutils font-noto-cjk
+            git config --global --add safe.directory /home/runner/work/SJTUTeX/SJTUTeX
             cd sjtutex && l3build ctan
         name: build package with l3build
       - name: prepare upload artifacts
-        run: |
-          sudo rm -r sjtutex/build/distrib/tds/*/
-          sudo unzip -d sjtutex/build/distrib/tds/ sjtutex/build/distrib/tds/sjtutex.tds.zip
-          sudo rm sjtutex/build/distrib/tds/sjtutex.tds.zip
-          sudo rm sjtutex/doc/sjtutex.pdf
+        run: sudo rm sjtutex/build/distrib/tds/sjtutex.tds.zip
       - uses: actions/upload-artifact@v3
         with:
           path: |
@@ -39,6 +35,6 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           path: |
-            sjtutex/doc/
+            sjtutex/build/result
           name: samples
         name: upload build samples artifacts

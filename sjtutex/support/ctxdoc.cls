@@ -295,7 +295,7 @@
       { \use:n }
       {
         \tl_set:Nn \l__codedoc_tmpa_tl {#1}
-        \tl_replace_all:Non \l__codedoc_tmpa_tl
+        \tl_replace_all:Nen \l__codedoc_tmpa_tl
           { \c_catcode_other_space_tl }
           { \fontspec_visible_space: }
         \__codedoc_macroname_prefix:o \l__codedoc_tmpa_tl

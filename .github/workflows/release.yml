@@ -19,7 +19,7 @@ jobs:
           scheme: full
           run: |
             apk add zip diffutils font-noto-cjk
-            git config --global --add safe.directory /github/workspace
+            git config --global --add safe.directory /home/runner/work/SJTUTeX/SJTUTeX
             cd sjtutex && l3build ctan
         name: build package
       - uses: actions/create-release@latest
@@ -37,7 +37,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: sjtutex/doc/sjtutex.pdf
+          asset_path: sjtutex/sjtutex.pdf
           asset_name: sjtutex.pdf
           asset_content_type: application/pdf
       - name: add sjtutex.tds.zip
