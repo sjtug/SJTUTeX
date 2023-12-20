@@ -19,11 +19,11 @@ cd sjtutex
 l3build install
 ```
 
-也可以将[发布区](https://github.com/sjtug/SJTUTeX/releases/latest)的 `sjtutex.tds.zip` 手动解压到发行版的 TDS 目录下。
+也可以将 [发布区](https://github.com/sjtug/SJTUTeX/releases/latest) 的 `sjtutex.tds.zip` 手动解压到发行版的 TDS 目录下。
 
 ## 开发指南
 
-文档类主要代码在 `sjtutex.dtx` 中，需要解包之后才能够使用。
+开发主要在 `sjtutex` 文件夹中进行，生成发布包会进行解包、测试、文档等全部流程。
 
 ```bash
 cd sjtutex
@@ -35,15 +35,15 @@ l3build ctan    # 生成发布包
 
 ### 解包
 
-解包 `source/sjtutex.dtx` 使用
+文档类主要代码在 `source/sjtutex.dtx` 中，需要解包之后才能够使用。
 ```
 l3build unpack
 ```
-解包结果将置于 `build/unpacked` 和 `build/local` 文件夹下。
+解包结果将置于 `build/unpacked`（含有 dtx 文件）和 `build/local`（不含 dtx 文件） 文件夹下。
 
 ### 文档
 
-编译文档类文档 `sjtutex.pdf` 可以使用
+从 `source/sjtutex.dtx` 编译出文档类文档 `sjtutex.pdf` 可以使用
 
 ```
 l3build doc
@@ -66,7 +66,9 @@ l3build check
 l3build check <sample>
 ```
 
-请使用尽可能新版本的 [l3build](https://github.com/latex3/l3build)，更多细节请参见 [l3build 文档](https://mirrors.sjtug.sjtu.edu.cn/CTAN/macros/latex/contrib/l3build/l3build.pdf)（`texdoc l3build`）。
+测试的 PDF 结果生成于 `build/result` 文件夹。
+
+> 请使用尽可能新版本的 [l3build](https://github.com/latex3/l3build)，更多细节请参见 [l3build 文档](https://mirrors.sjtug.sjtu.edu.cn/CTAN/macros/latex/contrib/l3build/l3build.pdf)（`texdoc l3build`）。
 
 ## 软件许可证
 
