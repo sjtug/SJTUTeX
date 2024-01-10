@@ -1102,6 +1102,13 @@
 %   该选项包含许多子项目，用于设置论文样式。具体内容见下。
 % \end{function}
 %
+% \begin{function}[added=2024-01-10]{style/indent-first}
+%   \begin{syntax}
+%     \OPT{indent-first} = <(true)|false>
+%   \end{syntax}
+%   章节标题后首段是否缩进。
+% \end{function}
+%
 % \begin{function}[added=2023-11-30]{style/equation-font}
 %   \begin{syntax}
 %     \OPT{equation-font} = \marg{字体设置}
@@ -3954,8 +3961,7 @@
     titleformat = ,
     lofskip     = \c_zero_skip ,
     lotskip     = \c_zero_skip ,
-    aftername   = \quad ,
-    afterindent = true
+    aftername   = \quad
   }
 %</!article>
 %</class>
@@ -3965,43 +3971,61 @@
 %</scheme&(zh|ja)>
 %<*class>
 \ctex_set:nn { section }
-  {
 %<*thesis>
+  {
     beforeskip  = 24 bp ,
     afterskip   =  6 bp ,
     format      = \zihao { 4 } \setbaselineskip { 18 bp } \bfseries
-                  \CJKsffamily ,
-%</thesis>
-%<!thesis>    format      = \large \bfseries \CJKsffamily ,
-    afterindent = true
+                  \CJKsffamily
   }
+%</thesis>
+%<!thesis>  { format = \large \bfseries \CJKsffamily }
 \ctex_set:nn { subsection }
-  {
 %<*thesis>
+  {
     beforeskip  = 12 bp ,
     afterskip   =  6 bp ,
     format      = \zihao { -4 } \setbaselineskip { 16 bp } \bfseries
-                  \CJKsffamily ,
-%</thesis>
-%<!thesis>    format      = \normalsize \bfseries \CJKsffamily ,
-    afterindent = true
+                  \CJKsffamily
   }
+%</thesis>
+%<!thesis>  { format = \normalsize \bfseries \CJKsffamily }
 \ctex_set:nn { subsubsection }
-  {
 %<*thesis>
+  {
     beforeskip  =  6 bp ,
     afterskip   =  6 bp ,
-    format      = \zihao { -4 } \setbaselineskip { 16 bp } \normalfont ,
-%</thesis>
-%<!thesis>    format      = \normalsize \normalfont ,
-    afterindent = true
+    format      = \zihao { -4 } \setbaselineskip { 16 bp } \normalfont
   }
-\ctex_set:nn { paragraph }
-  { afterindent = true }
-\ctex_set:nn { subparagraph }
-  { afterindent = true }
+%</thesis>
+%<!thesis>  { format = \normalsize \normalfont }
 \ctex_set:n { secnumdepth = 3 }
 %    \end{macrocode}
+%
+% \changes{unreleased}{2024/01/10}{新增 \opt{style/indent-first} 选项。}
+% \begin{macro}{style/indent-first}
+% 章节标题后首段是否缩进。
+%    \begin{macrocode}
+\keys_define:nn { sjtu / style }
+  {
+    indent-first    .choice: ,
+    indent-first   .choices:nn =
+      { true, false }
+      {
+        \clist_map_inline:nn
+          {
+%<article>            part,
+%<!article>            chapter,
+            section, subsection, subsubsection,
+            paragraph, subparagraph
+          }
+          { \ctex_set:nn {####1} { afterindent = #1 } }
+      } ,
+    indent-first   .default:n = { true } ,
+    indent-first   .initial:n = { true }
+  }
+%    \end{macrocode}
+% \end{macro}
 %
 % \begin{macro}[int]{\SJTU@head,\@@_head_aux_s:nn,\@@_head_aux_s:nx,
 % \@@_pdf_bookmark:nn,\@@_phantom_section:}
