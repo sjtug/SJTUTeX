@@ -193,14 +193,10 @@
 \Msg{*     sjtu-cjk-font-windows-ja.def                          *}
 \Msg{*     sjtu-cjk-font-windows-zh.def                          *}
 \Msg{*     sjtu-cjk-font-windows.def                             *}
-\Msg{*     sjtu-vi-badge-black.pdf                               *}
-\Msg{*     sjtu-vi-badge-blue.pdf                                *}
 \Msg{*     sjtu-vi-badge-red.pdf                                 *}
-\Msg{*     sjtu-vi-logo-black.pdf                                *}
-\Msg{*     sjtu-vi-logo-blue.pdf                                 *}
+\Msg{*     sjtu-vi-badge-small-red.pdf                           *}
 \Msg{*     sjtu-vi-logo-red.pdf                                  *}
-\Msg{*     sjtu-vi-name-black.pdf                                *}
-\Msg{*     sjtu-vi-name-blue.pdf                                 *}
+\Msg{*     sjtu-vi-logo-small-red.pdf                            *}
 \Msg{*     sjtu-vi-name-red.pdf                                  *}
 \Msg{*                                                           *}
 \Msg{* To produce the documentation, run the file sjtutex.dtx    *}
@@ -1197,20 +1193,6 @@
 %     \OPT{theorem-num-sep} = \marg{分隔符}
 %   \end{syntax}
 %   定理编号中的分隔符。
-% \end{function}
-%
-% \begin{function}[rEXP]{style/title-logo-color}
-%   \begin{syntax}
-%     \OPT{title-logo-color} = <(red)|blue|black>
-%   \end{syntax}
-%   选择 \cls{sjtuthesis} 文档类中标题页校徽的颜色。
-% \end{function}
-%
-% \begin{function}[EXP,updated=2022-12-20]{style/header-logo-color}
-%   \begin{syntax}
-%     \OPT{header-logo-color} = <(red)|blue|black>
-%   \end{syntax}
-%   选择 \cls{sjtureport} 和 \cls{sjtuarticle} 文档类中页眉的校标颜色。
 % \end{function}
 %
 % \begin{function}[added=2022-12-20,updated=2023-03-14]{style/header-uppercase}
@@ -3795,22 +3777,6 @@
 % \end{macro}
 % \end{macro}
 %
-% \begin{macro}{style/header-logo-color}
-% 页眉校标颜色。
-%    \begin{macrocode}
-%<*!thesis>
-\keys_define:nn { sjtu / style }
-  {
-    header-logo-color       .choice: ,
-    header-logo-color     .choices:nn =
-      { red, blue, black }
-      { \tl_set_eq:NN \l_@@_style_header_logo_color_tl \l_keys_choice_tl } ,
-    header-logo-color      .initial:n = { red } ,
-  }
-%</!thesis>
-%    \end{macrocode}
-% \end{macro}
-%
 % \begin{macro}{style/page-number}
 % \begin{macro}[int]{\@@_page:n}
 % 页脚页码格式。
@@ -3837,7 +3803,7 @@
 %</thesis>
 %<*!thesis>
     \includegraphics [ height = 1.2 cm ]
-      { sjtu-vi-logo- \l_@@_style_header_logo_color_tl .pdf }
+      { sjtu-vi-logo-small-red.pdf }
 %</!thesis>
   }
 %<thesis>\tl_set:Nn \l_@@_leftmark_tl  { \leftmark }
@@ -4898,20 +4864,6 @@
     \tl_use:c { l_@@_info_date_ #1 _tl }
   }
 \cs_generate_variant:Nn \@@_title_page_info_i:nnn { nxx }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{style/title-logo-color}
-% 标题页校徽颜色。
-%    \begin{macrocode}
-\keys_define:nn { sjtu / style }
-  {
-    title-logo-color       .choice: ,
-    title-logo-color      .choices:nn =
-      { red, blue, black }
-      { \tl_set_eq:NN \l_@@_style_title_logo_color_tl \l_keys_choice_tl } ,
-    title-logo-color       .initial:n = { red }
-  }
 %</thesis>
 %</class>
 %    \end{macrocode}
@@ -4932,7 +4884,7 @@
         content     =
           {
             \includegraphics [ width = 3 cm ]
-              { sjtu-vi-badge- \l_@@_style_title_logo_color_tl .pdf }
+              { sjtu-vi-badge-red.pdf }
           }
       },
     { subject }
