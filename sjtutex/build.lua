@@ -7,7 +7,7 @@ sourcefiles        = {"sjtutex.dtx","sjtu-vi-*.pdf"}
 installfiles       = {"*.cls","*.def","*.pdf"}
 
 typesetexe         = "xelatex"
-typesetfiles       = {"sample-*.tex","sjtutex.dtx"}
+typesetfiles       = {"sjtutex.dtx"}
 typesetsuppfiles   = {"ctxdoc.cls"}
 
 bibtexexe          = "bibtex"
