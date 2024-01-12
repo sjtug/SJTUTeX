@@ -34,7 +34,7 @@ jobs:
           path: |
             sjtutex/build/distrib/ctan/
           name: sjtutex-ctan
-        name: upload build tds artifacts
+        name: upload build ctan artifacts
       - uses: actions/upload-artifact@v3
         with:
           path: |
