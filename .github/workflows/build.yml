@@ -25,7 +25,16 @@ jobs:
             cd sjtutex && l3build ctan
         name: build package with l3build
       - name: prepare upload artifacts
-        run: sudo rm sjtutex/build/distrib/tds/sjtutex.tds.zip
+        run: |
+          sudo rm sjtutex/build/distrib/tds/sjtutex.tds.zip
+          sudo rm sjtutex/build/distrib/ctan/sjtutex-ctan.zip
+          sudo rm sjtutex/build/distrib/ctan/sjtutex.tds.zip
+      - uses: actions/upload-artifact@v3
+        with:
+          path: |
+            sjtutex/build/distrib/ctan/
+          name: sjtutex-ctan
+        name: upload build tds artifacts
       - uses: actions/upload-artifact@v3
         with:
           path: |
