@@ -335,7 +335,7 @@
 %<font&cjk&founder&zh>\ProvidesExplFile{sjtu-cjk-font-founder-zh.def}
 %<font&cjk&founder&ja>  {Founder CJK fonts definition for Japanese (SJTUTeX)}
 %<font&cjk&founder&ja>\ProvidesExplFile{sjtu-cjk-font-founder-ja.def}
-%<!driver>  {\ExplFileDate}{2.0.3}{\ExplFileDescription}
+%<!driver>  {\ExplFileDate}{2.1}{\ExplFileDescription}
 %</!(driver|install)>
 %
 %<*driver>
@@ -343,7 +343,7 @@
 \documentclass{ctxdoc}
 \newcommand{\sjtutex}{SJTU\TeX}
 \expandafter\def\csname ver@\jobname.dtx\endcsname
-  {9999/99/99 v2.0.3 SJTUTeX}
+  {2024/02/18 v2.1 SJTUTeX}
 \usepackage{float}
 \usepackage{multirow}
 \usepackage{longtable}
@@ -1642,7 +1642,7 @@
 % \clearpage
 % \section{代码实现}
 %
-% \changes{unreleased}{2023/12/05}{同步 \LaTeX{} 2020/10/01，无需显式调用
+% \changes{v2.1}{2023/12/05}{同步 \LaTeX{} 2020/10/01，无需显式调用
 % \pkg{expl3} 和 \pkg{xparse} 宏包。}
 % 本模板使用 \LaTeXiii{} 语法编写，依赖 \pkg{expl3} 环境，
 % 并需调用 \pkg{l3packages} 中的相关宏包。
@@ -1885,7 +1885,7 @@
 % \end{macro}
 %
 % \changes{v2.0}{2022/12/03}{添加 \opt{lineskip} 文档类选项。}
-% \changes{unreleased}{2023/10/24}{添加 \opt{baselineskip} 文档类选项，
+% \changes{v2.1}{2023/10/24}{添加 \opt{baselineskip} 文档类选项，
 % 替换原 \opt{lineskip} 选项。}
 % \begin{macro}{baselineskip}
 % 正文基线间距。
@@ -3960,7 +3960,7 @@
 \ctex_set:n { secnumdepth = 3 }
 %    \end{macrocode}
 %
-% \changes{unreleased}{2024/01/10}{新增 \opt{style/indent-first} 选项。}
+% \changes{v2.1}{2024/01/10}{新增 \opt{style/indent-first} 选项。}
 % \begin{macro}{style/indent-first}
 % 章节标题后首段是否缩进。
 %    \begin{macrocode}
@@ -4046,7 +4046,7 @@
 %
 % \subsection{数学公式}
 %
-% \changes{unreleased}{2023/11/30}{新增 \opt{style/equation-font} 选项。}
+% \changes{v2.1}{2023/11/30}{新增 \opt{style/equation-font} 选项。}
 % \begin{macro}{style/equation-font}
 % 设置行间数学公式的字体。
 %    \begin{macrocode}
@@ -4109,7 +4109,7 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \changes{unreleased}{2023/11/29}{更新题注格式。}
+% \changes{v2.1}{2023/11/29}{更新题注格式。}
 % \begin{macro}{style/caption-font,style/subcaption-font}
 % 题注格式。
 %    \begin{macrocode}
@@ -4159,7 +4159,7 @@
 \captionsetup [ bi-second ] { bi-second-names }
 %    \end{macrocode}
 %
-% \changes{unreleased}{2023/12/02}{新增 \opt{style/num-sep}、
+% \changes{v2.1}{2023/12/02}{新增 \opt{style/num-sep}、
 % \opt{style/theorem-num-sep} 选项。}
 % \begin{macro}{style/num-sep,style/float-num-sep,
 % style/equation-num-sep,style/theorem-num-sep}
@@ -4821,7 +4821,7 @@
   { >{ \begin { SJTU@CJK@FTS } {#1} } c <{ \end { SJTU@CJK@FTS } } }
 %    \end{macrocode}
 %
-% \changes{unreleased}{2023/11/30}{标题页信息栏改用表格实现。}
+% \changes{v2.1}{2023/11/30}{标题页信息栏改用表格实现。}
 % \begin{macro}[int]{\@@_title_page_info_i:nnn,\@@_title_page_info_i:nxx,
 % \@@_title_page_info_ii:n}
 % 信息输出。
@@ -5164,7 +5164,7 @@
 %
 % \subsection{摘要}
 %
-% \changes{unreleased}{2023/11/30}{新增 \opt{style/keywords-format} 选项。}
+% \changes{v2.1}{2023/11/30}{新增 \opt{style/keywords-format} 选项。}
 % \begin{macro}{style/keywords-format}
 % 关键词排版样式。
 %    \begin{macrocode}
@@ -5181,7 +5181,7 @@
 % \end{macro}
 %
 % \changes{v2.0}{2023/03/17}{\env{abstract} 环境新增指定语言的可选参数。}
-% \changes{unreleased}{2023/11/29}{\env{abstract} 环境添加目录条目，
+% \changes{v2.1}{2023/11/29}{\env{abstract} 环境添加目录条目，
 % \env{abstract*} 环境对应修改为不添加目录条目。}
 % \begin{macro}{abstract,abstract*}
 % 学位论文摘要环境。
@@ -5263,7 +5263,7 @@
 %
 % \subsection{目录}
 %
-% \changes{unreleased}{2023/11/29}{\tn{tableofcontents} 添加目录条目，
+% \changes{v2.1}{2023/11/29}{\tn{tableofcontents} 添加目录条目，
 % \tn{tableofcontents*} 对应修改为不添加目录条目。}
 % \begin{macro}{\tableofcontents,\tableofcontents*}
 % 目录。
