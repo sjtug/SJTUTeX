@@ -1,5 +1,7 @@
 # SJTUTeX
 
+[![CTAN](https://img.shields.io/ctan/v/sjtutex)](https://www.ctan.org/pkg/sjtutex)
+
 ## 简介
 
 SJTUTeX 是 [SJTUThesis](https://github.com/sjtug/SJTUThesis) 项目使用的文档类集，
