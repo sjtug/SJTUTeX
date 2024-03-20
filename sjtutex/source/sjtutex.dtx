@@ -5744,8 +5744,6 @@
       { \popQED \endtrivlist \@endpefalse }
     \newtheoremstyle { sjtu }
       { } { } { \normalfont } { } { \bfseries \CJKsffamily } { } { \ccwd } { }
-    \theoremstyle { sjtu }
-    \@@_new_theorems:
   }
 %    \end{macrocode}
 %
@@ -5761,7 +5759,23 @@
     \qedsymbol     { \ensuremath { \QED } }
     \newtheorem* { proof } { \proofname }
     \theoremsymbol { }
-    \@@_new_theorems:
+  }
+%    \end{macrocode}
+%
+% 如果 \pkg{amsthm} 宏包或 \pkg{ntheorem} 宏包被加载，则定义定理环境。
+%    \begin{macrocode}
+\ctex_at_end_preamble:n
+  {
+    \@ifpackageloaded { amsthm }
+      { 
+        \theoremstyle { sjtu }
+        \@@_new_theorems: 
+      }
+      {
+        \@ifpackageloaded { ntheorem }
+          { \@@_new_theorems: }
+          {}
+      }
   }
 %    \end{macrocode}
 %
