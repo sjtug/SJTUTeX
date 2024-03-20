@@ -5767,14 +5767,13 @@
 \ctex_at_end_preamble:n
   {
     \@ifpackageloaded { amsthm }
-      { 
+      {
         \theoremstyle { sjtu }
         \@@_new_theorems:
       }
       {
         \@ifpackageloaded { ntheorem }
-          { \@@_new_theorems: }
-          {}
+          { \@@_new_theorems: } { }
       }
   }
 %    \end{macrocode}
