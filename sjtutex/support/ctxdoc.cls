@@ -28,7 +28,7 @@
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{l3doc}}
 \PassOptionsToClass{a4paper,full}{l3doc}
 \ProcessOptions
-\LoadClass{l3doc}
+\LoadClass{l3doc}[2023-10-10]
 \RequirePackage[UTF8, punct=kaiming, heading, linespread=1.2, sub3section]{ctex}
 \ctexset{
   abstractname   = 简介,
@@ -295,11 +295,11 @@
       { \use:n }
       {
         \tl_set:Nn \l__codedoc_tmpa_tl {#1}
-        \tl_replace_all:Nen \l__codedoc_tmpa_tl
-          { \c_catcode_other_space_tl }
+        \tl_replace_all:NVn \l__codedoc_tmpa_tl
+          \c_catcode_other_space_tl 
           { \fontspec_visible_space: }
-        \__codedoc_macroname_prefix:o \l__codedoc_tmpa_tl
-        \__codedoc_macroname_suffix:N #2
+        \__codedoc_print_macroname_aux:on
+          \l__codedoc_tmpa_tl { \bool_if:NT #2 { \__codedoc_typeset_TF: } }
       }
   }
 \AtBeginEnvironment { syntax }
