@@ -1130,6 +1130,22 @@
 %   默认为 |\zihao{5}\normalfont|，正常字重五号字。
 % \end{function}
 %
+% \begin{function}[added=2024-03-21]{style/theorem-header-font}
+%   \begin{syntax}
+%     \OPT{theorem-header-font} = \marg{字体设置}
+%   \end{syntax}
+%   定理头（即标题）字体。
+%   默认为 |\bfseries\CJKsffamily|，黑体加粗。
+% \end{function}
+%
+% \begin{function}[added=2024-03-21]{style/theorem-body-font}
+%   \begin{syntax}
+%     \OPT{theorem-body-font} = \marg{字体设置}
+%   \end{syntax}
+%   定理内容字体。
+%   默认为 |\normalfont|，和正文字体相同。
+% \end{function}
+%
 % \begin{function}[added=2023-03-28]{style/fnmark-style}
 %   \begin{syntax}
 %     \OPT{fnmark-style} = <plain|circled>
@@ -1399,20 +1415,19 @@
 %
 % \begin{function}{assumption,axiom,conjecture,corollary,definition,example,
 %   exercise,lemma,problem,proposition,theorem}
-%   \sjtutex{} 预定义了一系列数学环境。在启用 \pkg{ntheorem} 或 \pkg{amsthm}
-%   宏包后有效，环境如表 \ref{tab:theorems} 所示。
+%   \sjtutex{} 预定义了一系列数学环境，如表 \ref{tab:theorems} 所示，
+%   在启用 \pkg{amsthm} 或 \pkg{ntheorem} 宏包后有效。
 %   \begin{table}[H]
-%     \centering
-%     \small
+%     \centering\small
 %     \caption{预定义的数学环境}
 %     \label{tab:theorems}
 %     \begin{tabular}{*{7}{l}}
 %       \toprule
-%       \env{assumption}  & \env{axiom}   & \env{conjecture} & \env{corollary}    & \env{definition}  & \env{example}   & \env{exercise}  \\
-%       假设        & 公理    & 猜想       & 推论         & 定义        & 例        & 练习      \\
+%       \env{assumption} & \env{axiom}   & \env{conjecture} & \env{corollary}   & \env{definition} & \env{example}  & \env{exercise} \\
+%       假设             & 公理          & 猜想             & 推论              & 定义             & 例             & 练习           \\
 %       \midrule
-%       \env{lemma}       & \env{problem} & \env{proof}      & \env{proposition}  & \env{remark}      & \env{solution}  & \env{theorem}   \\
-%       引理        & 问题    & 证明       & 命题         & 注          & 解        & 定理      \\
+%       \env{lemma}      & \env{problem} & \env{proof}      & \env{proposition} & \env{remark}     & \env{solution} & \env{theorem}  \\
+%       引理             & 问题          & 证明             & 命题              & 注               & 解             & 定理           \\
 %       \bottomrule
 %     \end{tabular}
 %   \end{table}
@@ -4084,6 +4099,26 @@
 %    \end{macrocode}
 % \end{macro}
 %
+% \subsection{数学环境}
+%
+% 可以选用 \pkg{amsthm} 或 \pkg{ntheorem} 宏包控制数学环境样式，
+% 并提供对证明环境 \env{proof} 的支持。
+%
+% \changes{unreleased}{2024/03/21}{新增 \opt{style/theorem-header-font}、
+% \opt{style/theorem-body-font} 选项。}
+% \begin{macro}{style/theorem-header-font,style/theorem-body-font}
+% 预定义的数学环境的定理头（即标题）以及定理内容的字体。
+%    \begin{macrocode}
+\keys_define:nn { sjtu / style }
+  {
+    theorem-header-font  .tl_set:N = \SJTU@style@thm@header@font ,
+    theorem-header-font .initial:n = \bfseries \CJKsffamily ,
+    theorem-body-font    .tl_set:N = \SJTU@style@thm@body@font ,
+    theorem-body-font   .initial:n = \normalfont ,
+  }
+%    \end{macrocode}
+% \end{macro}
+%
 % \subsection{浮动体}
 %
 % 下面这组命令使浮动对象的缺省值稍微宽松一点，从而防止幅度对象占据过多的
@@ -5695,8 +5730,12 @@
   { \AtBeginEnvironment { longtable } { \SJTU@style@float@font } }
 %    \end{macrocode}
 %
+% \changes{unreleased}{2024/03/21}{预定义的数学环境声明移至导言区末尾，
+% 且不会覆盖重名的已定义环境。}
 % \subsubsection{\pkg{amsthm} 宏包和 \pkg{ntheorem} 宏包}
 %
+% 预定义的数学环境，不包括证明环境 \env{proof}。
+% 定义前会检测环境是否已经存在，避免覆盖用户的定义。
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_new_theorems:
   {
@@ -5705,15 +5744,27 @@
         assumption, axiom, conjecture, corollary, definition, example,
         exercise, lemma, problem, proposition, theorem
       }
-%<!article>      { \exp_args:Nnv  \newtheorem  {##1} { c_@@_name_ ##1 _tl } [ chapter ] }
-%<article>      { \exp_args:Nnv  \newtheorem  {##1} { c_@@_name_ ##1 _tl } }
+      {
+        \cs_if_exist:cF {##1}
+%<*!article>
+          {
+            \exp_args:Nnv  \newtheorem  {##1} { c_@@_name_ ##1 _tl }
+              [ chapter ]
+          }
+%</!article>
+%<article>          { \exp_args:Nnv  \newtheorem  {##1} { c_@@_name_ ##1 _tl } }
+      }
     \clist_map_inline:nn
       { remark, solution }
-      { \exp_args:NNnv \newtheorem* {##1} { c_@@_name_ ##1 _tl } }
+      {
+        \cs_if_exist:cF {##1}
+          { \exp_args:NNnv \newtheorem* {##1} { c_@@_name_ ##1 _tl } }
+      }
   }
 %    \end{macrocode}
 %
-% \pkg{amsthm} 宏包。
+% \pkg{amsthm} 会定义 \tn{openbox}，为避免与一些宏包冲突，
+% 我们先保存 \tn{openbox}，然后取消定义。
 %    \begin{macrocode}
 \ctex_at_begin_package:nn { amsthm }
   {
@@ -5732,37 +5783,24 @@
     \RenewDocumentEnvironment { proof } { O{ \proofname } }
       {
         \par \pushQED { \qed }
-        \normalfont \dim_zero:N \topsep
+        \SJTU@style@thm@body@font \dim_zero:N \topsep
         \trivlist
         \item
           [
             \skip_horizontal:N \labelsep
-            \bfseries \CJKsffamily #1 \@addpunct { \enskip }
+            \SJTU@style@thm@header@font #1 \@addpunct { \enskip }
           ]
         \ignorespaces
       }
       { \popQED \endtrivlist \@endpefalse }
     \newtheoremstyle { sjtu }
-      { } { } { \normalfont } { } { \bfseries \CJKsffamily } { } { \ccwd } { }
+      { } { } { \SJTU@style@thm@body@font } { }
+      { \SJTU@style@thm@header@font } { } { \ccwd } { }
   }
 %    \end{macrocode}
 %
-% \pkg{ntheorem} 宏包。
-%    \begin{macrocode}
-\ctex_at_end_package:nn { ntheorem }
-  {
-    \@@_cs_provide_eq:NN \QED \c_empty_tl
-    \theoremheaderfont { \bfseries \CJKsffamily }
-    \theorembodyfont   { \normalfont }
-    \theoremseparator  { \enskip     }
-    \theoremsymbol { \ensuremath { \QED } }
-    \qedsymbol     { \ensuremath { \QED } }
-    \newtheorem* { proof } { \proofname }
-    \theoremsymbol { }
-  }
-%    \end{macrocode}
-%
-% 如果用户加载了 \pkg{amsthm} 或 \pkg{ntheorem} 宏包，则定义所有的定理环境。
+% 如果用户加载了 \pkg{amsthm} 或 \pkg{ntheorem} 宏包，
+% 则在导言区末尾应用预设的样式定义定理环境。
 %    \begin{macrocode}
 \ctex_at_end_preamble:n
   {
@@ -5773,10 +5811,22 @@
       }
       {
         \@ifpackageloaded { ntheorem }
-          { \@@_new_theorems: } { }
+          {
+            \@@_cs_provide_eq:NN \QED \c_empty_tl
+            \theoremheaderfont { \SJTU@style@thm@header@font }
+            \theorembodyfont   { \SJTU@style@thm@body@font   }
+            \theoremseparator  { \enskip }
+            \theoremsymbol { \ensuremath { \QED } }
+            \qedsymbol     { \ensuremath { \QED } }
+            \cs_if_exist:NF \proof
+              { \newtheorem* { proof } { \proofname } }
+            \theoremsymbol { }
+            \@@_new_theorems:
+          } { }
       }
   }
 %    \end{macrocode}
+%
 % \subsubsection{\pkg{algorithm} 宏包和 \pkg{algorithm2e} 宏包}
 %
 %    \begin{macrocode}
