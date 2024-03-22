@@ -5827,6 +5827,54 @@
   }
 %    \end{macrocode}
 %
+% \changes{unreleased}{2024/03/22}{添加 \pkg{thmtools} 宏包支持。}
+% \subsubsection{\pkg{thmtools} 宏包}
+%
+% 使用 \pkg{tocloft} 包设置 \tn{listoftheorems} 的样式。
+%    \begin{macrocode}
+\ctex_at_end_package:nn { thmtools }
+  {
+    \newlistentry { thm } { loe } { 0 }
+    \newcounter { loedepth }
+    \setcounter { loedepth } { 1 }
+    \skip_set:Nn \cftthmnumwidth { 2.3 em }
+    \define@key { thmt-listof } { numwidth }
+      { \skip_set:Nn \cftthmnumwidth {#1} }
+    \cs_set:Npn \thmtlo@newentry
+      { \cs_set_eq:cN { l@ \thmt@envname } \l@thm }
+    \cs_set:Npn \thmtlo@chaptervspacehack { }
+    \RenewDocumentCommand \listoftheorems { s O{ } }
+      {
+        \group_begin:
+          \setlisttheoremstyle {#2}
+          \IfBooleanTF {#1}
+            { \SJTU@head* { \listtheoremname } }
+            { \SJTU@head  { \listtheoremname } }
+          \cs_set:Npn \contentsline ##1
+            { \use:c { thmt@contentsline@ ##1 } {##1} }
+          \clist_map_inline:Nn \thmt@allenvs
+            {
+              \tl_set:Nn \thmt@envname {##1}
+              \thmtlo@newentry
+            }
+          \@fileswfalse
+          \AddToHook { enddocument / afterlastpage }
+            {
+              \if@filesw
+                \@ifundefined { tf@loe }
+                  {
+                    \expandafter\newwrite\csname tf@loe\endcsname
+                    \immediate\openout \csname tf@loe\endcsname \jobname.loe\relax
+                  } { }
+              \fi
+            }
+          \cs_set:Npn \makebox [##1][##2]##3 { \, ##3 }
+          \@starttoc { loe }
+        \group_end:
+      }
+  }
+%    \end{macrocode}
+%
 % \subsubsection{\pkg{algorithm} 宏包和 \pkg{algorithm2e} 宏包}
 %
 %    \begin{macrocode}
