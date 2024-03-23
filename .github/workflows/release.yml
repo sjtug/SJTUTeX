@@ -7,6 +7,9 @@ on:
 
 name: Release
 
+permissions:
+  contents: write
+
 jobs:
   release:
     name: Release
@@ -22,39 +25,14 @@ jobs:
             git config --global --add safe.directory /home/runner/work/SJTUTeX/SJTUTeX
             cd sjtutex && l3build ctan
         name: build package
-      - uses: actions/create-release@latest
-        id: create_release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: create release
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          name: Release ${{ github.ref }}
           body: ${{ github.event.head_commit.message }}
           draft: true
-      - name: add sjtutex.pdf
-        uses: actions/upload-release-asset@v1.0.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: sjtutex/sjtutex.pdf
-          asset_name: sjtutex.pdf
-          asset_content_type: application/pdf
-      - name: add sjtutex-ctan.zip
-        uses: actions/upload-release-asset@v1.0.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: sjtutex/sjtutex-ctan.zip
-          asset_name: sjtutex-ctan.zip
-          asset_content_type: application/x-zip
-      - name: add sjtutex.tds.zip
-        uses: actions/upload-release-asset@v1.0.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: sjtutex/sjtutex.tds.zip
-          asset_name: sjtutex.tds.zip
-          asset_content_type: application/x-zip
+          files: |
+            sjtutex/sjtutex.pdf
+            sjtutex/sjtutex-ctan.zip
+            sjtutex/sjtutex.tds.zip
