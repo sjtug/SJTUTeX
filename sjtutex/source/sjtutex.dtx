@@ -335,7 +335,7 @@
 %<font&cjk&founder&zh>\ProvidesExplFile{sjtu-cjk-font-founder-zh.def}
 %<font&cjk&founder&ja>  {Founder CJK fonts definition for Japanese (SJTUTeX)}
 %<font&cjk&founder&ja>\ProvidesExplFile{sjtu-cjk-font-founder-ja.def}
-%<!driver>  {\ExplFileDate}{2.1}{\ExplFileDescription}
+%<!driver>  {\ExplFileDate}{2.1.1}{\ExplFileDescription}
 %</!(driver|install)>
 %
 %<*driver>
@@ -343,7 +343,7 @@
 \documentclass{ctxdoc}
 \newcommand{\sjtutex}{SJTU\TeX}
 \expandafter\def\csname ver@\jobname.dtx\endcsname
-  {2024/02/18 v2.1 SJTUTeX}
+  {2024/03/23 v2.1.1 SJTUTeX}
 \usepackage{float}
 \usepackage{multirow}
 \usepackage{longtable}
@@ -4104,7 +4104,7 @@
 % 可以选用 \pkg{amsthm} 或 \pkg{ntheorem} 宏包控制数学环境样式，
 % 并提供对证明环境 \env{proof} 的支持。
 %
-% \changes{unreleased}{2024/03/21}{新增 \opt{style/theorem-header-font}、
+% \changes{v2.1.1}{2024/03/21}{新增 \opt{style/theorem-header-font}、
 % \opt{style/theorem-body-font} 选项。}
 % \begin{macro}{style/theorem-header-font,style/theorem-body-font}
 % 预定义的数学环境的定理头（即标题）以及定理内容的字体。
@@ -5730,7 +5730,7 @@
   { \AtBeginEnvironment { longtable } { \SJTU@style@float@font } }
 %    \end{macrocode}
 %
-% \changes{unreleased}{2024/03/21}{预定义的数学环境声明移至导言区末尾，
+% \changes{v2.1.1}{2024/03/21}{预定义的数学环境声明移至导言区末尾，
 % 且不会覆盖重名的已定义环境。}
 % \subsubsection{\pkg{amsthm} 宏包和 \pkg{ntheorem} 宏包}
 %
@@ -5827,7 +5827,7 @@
   }
 %    \end{macrocode}
 %
-% \changes{unreleased}{2024/03/22}{添加 \pkg{thmtools} 宏包支持。}
+% \changes{v2.1.1}{2024/03/22}{添加 \pkg{thmtools} 宏包支持。}
 % \subsubsection{\pkg{thmtools} 宏包}
 %
 % 使用 \pkg{tocloft} 包设置 \tn{listoftheorems} 的样式。
