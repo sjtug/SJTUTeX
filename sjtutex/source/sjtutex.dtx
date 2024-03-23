@@ -2200,7 +2200,7 @@
 \cs_generate_variant:Nn \cs_gset:Npn { cpo }
 \cs_generate_variant:Nn \tl_const:Nn { Nv }
 \cs_generate_variant:Nn \clist_use:Nn { NV, cv }
-\exp_args_generate:n { Nnv }
+\exp_args_generate:n { Nnv, nvv }
 \cs_generate_variant:Nn \exp_last_unbraced:Ne { ce }
 \prg_generate_conditional_variant:Nnn \regex_match:nn { ne } { T, TF }
 %    \end{macrocode}
@@ -5980,6 +5980,35 @@
 %
 %    \begin{macrocode}
 %</class>
+%    \end{macrocode}
+%
+% \subsubsection{\pkg{cleveref} 宏包}
+%
+%    \begin{macrocode}
+%<*scheme>
+%<*zh|ja>
+\ctex_at_end_package:nn { cleveref }
+  {
+    \clist_map_inline:nn
+      {
+        assumption, axiom, conjecture, corollary, definition, example,
+        exercise, lemma, problem, proposition, theorem
+      }
+      {
+        \exp_args:Nnvv  \crefname {#1} { c__sjtu_name_ #1 _tl } { c__sjtu_name_ #1 _tl }
+        \exp_args:Nnvv  \Crefname {#1} { c__sjtu_name_ #1 _tl } { c__sjtu_name_ #1 _tl }
+      }
+    \crefname{figure}{\figurename}{\figurename}
+    \crefname{table}{\tablename}{\tablename}
+    \crefname{appendix}{\appendixname}{\appendixname}
+    \crefname{chapter}{\chaptername}{\chaptername}
+  }
+%</zh|ja>
+%<*zh>
+%</zh>
+%<*ja>
+%</ja>
+%</scheme>
 %    \end{macrocode}
 %
 % \subsection{名称配置}
