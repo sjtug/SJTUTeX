@@ -5984,30 +5984,117 @@
 %
 % \subsubsection{\pkg{cleveref} 宏包}
 %
+% 为 \pkg{cleveref} 宏包添加中文和日文支持。
+% 其中定理环境和一些已定义好的名称可共用代码。
 %    \begin{macrocode}
 %<*scheme>
-%<*zh|ja>
 \ctex_at_end_package:nn { cleveref }
   {
+%<*zh|ja>
     \clist_map_inline:nn
       {
         assumption, axiom, conjecture, corollary, definition, example,
         exercise, lemma, problem, proposition, theorem
       }
       {
-        \exp_args:Nnvv  \crefname {#1} { c__sjtu_name_ #1 _tl } { c__sjtu_name_ #1 _tl }
-        \exp_args:Nnvv  \Crefname {#1} { c__sjtu_name_ #1 _tl } { c__sjtu_name_ #1 _tl }
+        \exp_args:Nnvv
+          \crefname { #1 }  { c__sjtu_name_ #1 _tl }  { c__sjtu_name_ #1 _tl }
+        \exp_args:Nnvv
+          \Crefname { #1 }  { c__sjtu_name_ #1 _tl }  { c__sjtu_name_ #1 _tl }
       }
-    \crefname{figure}{\figurename}{\figurename}
-    \crefname{table}{\tablename}{\tablename}
-    \crefname{appendix}{\appendixname}{\appendixname}
-    \crefname{chapter}{\chaptername}{\chaptername}
-  }
+    \crefname { chapter   } { \chaptername        } { \chaptername        }
+    \crefname { appendix  } { \appendixname       } { \appendixname       }
+    \crefname { figure    } { \figurename         } { \figurename         }
+    \crefname { table     } { \tablename          } { \tablename          }
+    \crefname { algorithm } { \SJTU@algorithmname } { \SJTU@algorithmname }
 %</zh|ja>
 %<*zh>
+    \crefname { equation }  { 式 }  { 式 }
+
+    \crefformat { chapter       } { 第#2#1#3章  }
+    \crefformat { section       } { 第#2#1#3节  }
+    \crefformat { subsection    } { 第#2#1#3节  }
+    \crefformat { subsubsection } { 第#2#1#3节  }
+
+    \crefrangeformat  { chapter       } { 第#3#1#4章至第#5#2#6章  }
+    \crefrangeformat  { section       } { 第#3#1#4节至第#5#2#6节  }
+    \crefrangeformat  { subsection    } { 第#3#1#4节至第#5#2#6节  }
+    \crefrangeformat  { subsubsection } { 第#3#1#4节至第#5#2#6节  }
+
+    \crefmultiformat  { chapter }
+      { 第#2#1#3章 }  { 和第#2#1#3章 }  { ，第#2#1#3章 }  { 和第#2#1#3章 }
+    \crefmultiformat  { section }
+      { 第#2#1#3节 }  { 和第#2#1#3节 }  { ，第#2#1#3节 }  { 和第#2#1#3节 }
+    \crefmultiformat  { subsection }
+      { 第#2#1#3节 }  { 和第#2#1#3节 }  { ，第#2#1#3节 }  { 和第#2#1#3节 }
+    \crefmultiformat  { subsubsection }
+      { 第#2#1#3节 }  { 和第#2#1#3节 }  { ，第#2#1#3节 }  { 和第#2#1#3节 }
+
+    \crefrangemultiformat { chapter }
+      { 第#3#1#4章至第#5#2#6章    }  { 和第#3#1#4章至第#5#2#6章 }  
+      { ，第#3#1#4章至第#5#2#6章  }  { 和第#3#1#4章至第#5#2#6章 }
+    \crefrangemultiformat { section }
+      { 第#3#1#4节至第#5#2#6节    }  { 和第#3#1#4节至第#5#2#6节 }  
+      { ，第#3#1#4节至第#5#2#6节  }  { 和第#3#1#4节至第#5#2#6节 }
+    \crefrangemultiformat { subsection }
+      { 第#3#1#4节至第#5#2#6节    }  { 和第#3#1#4节至第#5#2#6节 }
+      { ，第#3#1#4节至第#5#2#6节  }  { 和第#3#1#4节至第#5#2#6节 }
+    \crefrangemultiformat { subsubsection }
+      { 第#3#1#4节至第#5#2#6节    }  { 和第#3#1#4节至第#5#2#6节 }
+      { ，第#3#1#4节至第#5#2#6节  }  { 和第#3#1#4节至第#5#2#6节 }
+
+    \NewDocumentCommand { \crefpairconjunction        } { } { ~和~  }
+    \NewDocumentCommand { \crefmiddleconjunction      } { } { ,     }
+    \NewDocumentCommand { \creflastconjunction        } { } { ~和~  }
+    \NewDocumentCommand { \crefpairgroupconjunction   } { } { ~和~  }
+    \NewDocumentCommand { \crefmiddlegroupconjunction } { } { ,     }
+    \NewDocumentCommand { \creflastgroupconjunction   } { } { ~和~  }
+    \NewDocumentCommand { \crefrangeconjunction       } { } { ~至~  }
 %</zh>
 %<*ja>
+    \crefname { equation }  { 式 }  { 式 }
+
+    \crefformat { chapter       } { 第#2#1#3章  }
+    \crefformat { section       } { 第#2#1#3節  }
+    \crefformat { subsection    } { 第#2#1#3節  }
+    \crefformat { subsubsection } { 第#2#1#3節  }
+
+    \crefrangeformat  { chapter       } { 第#3#1#4章から第#5#2#6章  }
+    \crefrangeformat  { section       } { 第#3#1#4節から第#5#2#6節  }
+    \crefrangeformat  { subsection    } { 第#3#1#4節から第#5#2#6節  }
+    \crefrangeformat  { subsubsection } { 第#3#1#4節から第#5#2#6節  }
+
+    \crefmultiformat  { chapter }
+      { 第#2#1#3章 }  { と第#2#1#3章 }  { ，第#2#1#3章 }  { と第#2#1#3章 }
+    \crefmultiformat  { section }
+      { 第#2#1#3節 }  { と第#2#1#3節 }  { ，第#2#1#3節 }  { と第#2#1#3節 }
+    \crefmultiformat  { subsection }
+      { 第#2#1#3節 }  { と第#2#1#3節 }  { ，第#2#1#3節 }  { と第#2#1#3節 }
+    \crefmultiformat  { subsubsection }
+      { 第#2#1#3節 }  { と第#2#1#3節 }  { ，第#2#1#3節 }  { と第#2#1#3節 }
+
+    \crefrangemultiformat { chapter }
+      { 第#3#1#4章から第#5#2#6章    }  { と第#3#1#4章から第#5#2#6章 }
+      { ，第#3#1#4章から第#5#2#6章  }  { と第#3#1#4章から第#5#2#6章 }
+    \crefrangemultiformat { section }
+      { 第#3#1#4節から第#5#2#6節    }  { と第#3#1#4節から第#5#2#6節 }
+      { ，第#3#1#4節から第#5#2#6節  }  { と第#3#1#4節から第#5#2#6節 }
+    \crefrangemultiformat { subsection }
+      { 第#3#1#4節から第#5#2#6節    }  { と第#3#1#4節から第#5#2#6節 }
+      { ，第#3#1#4節から第#5#2#6節  }  { と第#3#1#4節から第#5#2#6節 }
+    \crefrangemultiformat { subsubsection }
+      { 第#3#1#4節から第#5#2#6節    }  { と第#3#1#4節から第#5#2#6節 }
+      { ，第#3#1#4節から第#5#2#6節  }  { と第#3#1#4節から第#5#2#6節 }
+
+    \NewDocumentCommand { \crefpairconjunction        } { } { ~と~  }
+    \NewDocumentCommand { \crefmiddleconjunction      } { } { ,     }
+    \NewDocumentCommand { \creflastconjunction        } { } { ~と~  }
+    \NewDocumentCommand { \crefpairgroupconjunction   } { } { ~と~  }
+    \NewDocumentCommand { \crefmiddlegroupconjunction } { } { ,     }
+    \NewDocumentCommand { \creflastgroupconjunction   } { } { ~と~  }
+    \NewDocumentCommand { \crefrangeconjunction       } { } { ~から~  }
 %</ja>
+  }
 %</scheme>
 %    \end{macrocode}
 %
