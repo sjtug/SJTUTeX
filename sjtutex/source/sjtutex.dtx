@@ -1547,7 +1547,7 @@
 %         是 \pkg{amsmath} 的扩充。
 %       \item \pkg{geometry}，用于调整页面尺寸。
 %       \item \pkg{fancyhdr}，处理页眉页脚。
-%       \item \pkg{tocloft}，设置目录格式。
+%       \item \pkg{titletoc}，设置目录格式。
 %       \item \pkg{caption}、\cls{bicaption} 和 \cls{subcaption}，用于设置题注。
 %       \item \pkg{xcolor}，提供彩色支持。
 %       \item \pkg{graphicx}，提供图形插入的接口。
@@ -1584,6 +1584,12 @@
 % \urlprefix \CTANurl[源代码^^A
 %   \footnote{此代码只可作为学习之用。未经 Knuth 本人同意，您不应当编译此文档。}：]^^A
 %   {systems/knuth/dist/tex/texbook.tex}
+%
+% \bibitem{MittelbachF2023}
+% \textsc{Mittelbach F} and \textsc{Fischer U}.
+% \newblock \textit{The \LaTeX{} Companion} [M].
+% \newblock 3rd ed.
+% \newblock Boston: Addison--Wesley Publishing Company, 2023.
 %
 % \bibitem{LiuHY2013}
 % 刘海洋.
@@ -2138,7 +2144,6 @@
 \clist_set:Nx \g_@@_options_to_packages_clist
   {
     { no-math           } { fontspec     } ,
-    { titles            } { tocloft      } ,
     { list = off        } { bicaption    } ,
     { warnings-off =
       {
@@ -2177,7 +2182,7 @@
     mathtools,
     geometry,
     fancyhdr,
-    tocloft,
+    titletoc,
     caption,
     bicaption,
     subcaption,
@@ -5308,15 +5313,35 @@
     \IfBooleanTF {#1}
       { \SJTU@head* { \contentsname } }
       { \SJTU@head  { \contentsname } }
-    \group_begin:
-      \cs_set:Npn \makebox [##1][##2]##3 { \, ##3 }
-      \@starttoc { toc }
-    \group_end:
+    \@starttoc { toc }
   }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}[int]{\SJTU@listof}
+% \changes{unreleased}{2024/03/31}{改用 \pkg{titletoc} 设置目录格式。}
+%    \begin{macrocode}
+\tl_set:Nn \SJTU@leaders { \titlerule* [ 4bp ] { . } }
+\contentsmargin [ 2.55 em ] { 0 pt }
+%<article>\titlecontents { section }
+%<!article>\titlecontents { chapter }
+  [ 0 pt ] { \addvspace { 6 bp } \bfseries }
+  { \contentspush { \thecontentslabel \quad } } { }
+  { \SJTU@leaders \thecontentspage }
+%<article>\titlecontents { subsection }
+%<!article>\titlecontents { section }
+  [ 2 em ] { }
+  { \contentspush { \thecontentslabel \quad } } { }
+  { \SJTU@leaders \thecontentspage }
+%<article>\titlecontents { subsubsection }
+%<!article>\titlecontents { subsection }
+  [ 4 em ] { }
+  { \contentspush { \thecontentslabel \quad } } { }
+  { \SJTU@leaders \thecontentspage }
+%    \end{macrocode}
+%
+% \changes{v2.0.1}{2023/03/31}{插图、表格和算法等索引不缩进。}
+% \changes{v2.0.1}{2023/03/31}{调整插图、表格和算法等索引编号宽度。}
+% \begin{macro}[int]{\SJTU@listof,\@@_new_list_of:Nnnn}
 % \begin{macro}{\listoffigures,\listoffigures*,\listoftables,\listoftables*}
 % 图表索引。
 %    \begin{macrocode}
@@ -5325,62 +5350,24 @@
     \IfBooleanTF {#3}
       { \SJTU@head* {#1} }
       { \SJTU@head  {#1} }
-    \group_begin:
-      \cs_set:Npn \makebox [##1][##2]##3 { \, ##3 }
-      \exp_args:Nv \@starttoc { ext@ #2 }
-    \group_end:
+    \exp_args:Nv \@starttoc { ext@ #2 }
   }
-\DeclareDocumentCommand \listoffigures { }
-  { \SJTU@listof { \listfigurename } { figure } }
-\DeclareDocumentCommand \listoftables  { }
-  { \SJTU@listof { \listtablename  } { table  } }
+\cs_new_protected:Npn \@@_new_list_of:Nnnn #1#2#3#4
+  {
+    \DeclareDocumentCommand #1 { }
+      { \SJTU@listof {#4} {#2} }
+    \titlecontents {#2}
+      [ 0 pt ] { }
+      { \contentspush { #3 \space \thecontentslabel \quad } } { }
+      { \SJTU@leaders \thecontentspage }
+    \exp_args:Nnv \contentsuse {#2} { ext@ #2 }
+  }
+\@@_new_list_of:Nnnn \listoffigures { figure }
+  { \figurename } { \listfigurename }
+\@@_new_list_of:Nnnn \listoftables  { table  }
+  { \tablename  } { \listtablename  }
 %    \end{macrocode}
 % \end{macro}
-% \end{macro}
-%
-%    \begin{macrocode}
-\tl_set:Nn \cftdotsep { 0.5 }
-%<!article>\tl_set:Nn \cftchapleader { \bfseries \cftdotfill { \cftdotsep } }
-%<*thesis>
-\clist_map_inline:nn
-  {
-    { cft before chap skip } { 10 bp plus 1 pt } ,
-    { cft chap   numwidth  } { 3.5 em } ,
-    { cft sec    indent    } { 2   em } ,
-    { cft sec    numwidth  } { 1.5 em } ,
-    { cft subsec indent    } { 4   em } ,
-    { cft subsec numwidth  } { 2.3 em }
-  }
-  { \skip_set:cn #1 }
-%</thesis>
-%    \end{macrocode}
-%
-% \changes{v2.0.1}{2023/03/31}{插图、表格和算法等索引不缩进。}
-% \changes{v2.0.1}{2023/03/31}{调整插图、表格和算法等索引编号宽度。}
-% \begin{macro}[int]{\@@_update_cft_presnum:nn}
-% \begin{variable}{\l_@@_cft_presnum_clist}
-% 图表清单标题前添加名称。
-%    \begin{macrocode}
-\clist_set:Nn \l_@@_cft_presnum_clist
-  {
-    { fig } { \figurename } ,
-    { tab } { \tablename  }
-  }
-\cs_new:Npn \@@_update_cft_presnum:nn #1#2
-  {
-    \tl_set:cn { cft #1 presnum } { #2 \c_space_tl }
-    \skip_zero:c { cft #1 indent }
-%<article>    \skip_set:cn { cft #1 numwidth } { 1.8 em }
-%<!article>    \skip_set:cn { cft #1 numwidth } { 2.8 em }
-    \@@_skip_add_to_wd:cv { cft #1 numwidth } { cft #1 presnum }
-  }
-\ctex_at_end_preamble:n
-  {
-    \clist_map_inline:Nn \l_@@_cft_presnum_clist
-      { \@@_update_cft_presnum:nn #1 }
-  }
-%    \end{macrocode}
-% \end{variable}
 % \end{macro}
 %
 % \subsection{预定义环境}
@@ -5830,18 +5817,19 @@
 % \changes{v2.1.1}{2024/03/22}{添加 \pkg{thmtools} 宏包支持。}
 % \subsubsection{\pkg{thmtools} 宏包}
 %
-% 使用 \pkg{tocloft} 包设置 \tn{listoftheorems} 的样式。
+% 使用 \pkg{titletoc} 包设置 \tn{listoftheorems} 的样式。
 %    \begin{macrocode}
 \ctex_at_end_package:nn { thmtools }
   {
-    \newlistentry { thm } { loe } { 0 }
-    \newcounter { loedepth }
-    \setcounter { loedepth } { 1 }
-    \skip_set:Nn \cftthmnumwidth { 2.3 em }
-    \define@key { thmt-listof } { numwidth }
-      { \skip_set:Nn \cftthmnumwidth {#1} }
     \cs_set:Npn \thmtlo@newentry
-      { \cs_set_eq:cN { l@ \thmt@envname } \l@thm }
+      {
+        \exp_args:NV \titlecontents \thmt@envname
+          [ \thmt@listnumwidth ] { }
+          { \contentslabel { \thmt@listnumwidth } }
+          { \hspace* { - \thmt@listnumwidth } }
+          { \SJTU@leaders \thecontentspage }
+        \exp_args:NV \contentsuse \thmt@envname { loe }
+      }
     \cs_set:Npn \thmtlo@chaptervspacehack { }
     \RenewDocumentCommand \listoftheorems { s O{ } }
       {
@@ -5868,7 +5856,6 @@
                   } { }
               \fi
             }
-          \cs_set:Npn \makebox [##1][##2]##3 { \, ##3 }
           \@starttoc { loe }
         \group_end:
       }
@@ -5877,28 +5864,15 @@
 %
 % \subsubsection{\pkg{algorithm} 宏包和 \pkg{algorithm2e} 宏包}
 %
-%    \begin{macrocode}
-\cs_new_protected:Npn \@@_newlistof:nnnnn #1#2#3#4#5
-  {
-    \exp_args:Nnv \newlistentry {#2} { ext@ #3 } { 0 }
-    \exp_args:Ne \newcounter { \tl_use:c { ext@ #3 } depth }
-    \exp_args:Ne \setcounter { \tl_use:c { ext@ #3 } depth } { 1 }
-    \clist_put_right:Nn \l_@@_cft_presnum_clist { {#2} {#4} }
-    \cs_set_eq:cc { l@ #3 } { l@ #2 }
-    \exp_args:Nc \DeclareDocumentCommand { listof #1 s } { }
-      { \SJTU@listof {#5} {#3} }
-%<!article>    \SJTU@counterwithin { #3 } { chapter }
-%<thesis>    \clist_put_right:Nn \l_@@_counter_without_chapter_clist {#3}
-  }
-%    \end{macrocode}
-%
 % \pkg{algorithm} 宏包。
 %    \begin{macrocode}
 \ctex_at_end_package:nn { algorithm }
   {
     \tl_set:Nn \fname@algorithm   { \SJTU@algorithmname     }
     \tl_set:Nn \listalgorithmname { \SJTU@listalgorithmname }
-    \@@_newlistof:nnnnn { algorithm } { alg } { algorithm }
+%<!article>    \SJTU@counterwithin { algorithm } { chapter }
+%<thesis>    \clist_put_right:Nn \l_@@_counter_without_chapter_clist { algorithm }
+    \@@_new_list_of:Nnnn \listofalgorithms { algorithm }
       { \fname@algorithm } { \listalgorithmname }
   }
 %    \end{macrocode}
@@ -5914,7 +5888,9 @@
                       { \SJTU@algorithmname     }
                       { \SJTU@listalgorithmname }
     \SetAlgoCaptionSeparator { \enskip }
-    \@@_newlistof:nnnnn { algorithm } { alg } { algocf }
+%<!article>    \SJTU@counterwithin { algocf } { chapter }
+%<thesis>    \clist_put_right:Nn \l_@@_counter_without_chapter_clist { algocf }
+    \@@_new_list_of:Nnnn \listofalgorithms { algocf }
       { \algorithmcfname } { \listalgorithmcfname }
     \ctex_patch_cmd:Nnn \algocf@latexcaption
       { \addcontentsline }
