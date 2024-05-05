@@ -18,7 +18,7 @@ jobs:
         name: checkout code
       - uses: xu-cheng/texlive-action@v2
         with:
-          docker_image: ghcr.io/xu-cheng/texlive-full:20240315
+          scheme: full
           run: |
             apk add zip diffutils font-noto-cjk
             git config --global --add safe.directory /home/runner/work/SJTUTeX/SJTUTeX
