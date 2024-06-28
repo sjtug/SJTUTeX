@@ -5318,23 +5318,24 @@
 % \end{macro}
 %
 % \changes{v2.1.2}{2024/03/31}{改用 \pkg{titletoc} 设置目录格式。}
+% \changes{unreleased}{2024/06/28}{更新目录样式。}
 %    \begin{macrocode}
 \tl_set:Nn \SJTU@leaders { \titlerule* [ 4bp ] { . } }
 \contentsmargin [ 2.55 em ] { 0 pt }
 %<article>\titlecontents { section }
 %<!article>\titlecontents { chapter }
   [ 0 pt ] { \addvspace { 6 bp } \bfseries }
-  { \contentspush { \thecontentslabel \quad } } { }
+  { \contentspush { \thecontentslabel \enskip } } { }
   { \SJTU@leaders \thecontentspage }
 %<article>\titlecontents { subsection }
 %<!article>\titlecontents { section }
   [ 2 em ] { }
-  { \contentspush { \thecontentslabel \quad } } { }
+  { \contentspush { \thecontentslabel \enskip } } { }
   { \SJTU@leaders \thecontentspage }
 %<article>\titlecontents { subsubsection }
 %<!article>\titlecontents { subsection }
   [ 4 em ] { }
-  { \contentspush { \thecontentslabel \quad } } { }
+  { \contentspush { \thecontentslabel \enskip } } { }
   { \SJTU@leaders \thecontentspage }
 %    \end{macrocode}
 %
@@ -5357,7 +5358,7 @@
       { \SJTU@listof {#4} {#2} }
     \titlecontents {#2}
       [ 0 pt ] { }
-      { \contentspush { #3 \space \thecontentslabel \quad } } { }
+      { \contentspush { #3 \space \thecontentslabel \enskip } } { }
       { \SJTU@leaders \thecontentspage }
     \exp_args:Nnv \contentsuse {#2} { ext@ #2 }
   }
