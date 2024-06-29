@@ -5,7 +5,7 @@
 ## 简介
 
 SJTUTeX 是 [SJTUThesis](https://github.com/sjtug/SJTUThesis) 项目使用的文档类集，
-包含上海交通大学（非官方）学位论文文档类 `sjtuthesis`，以及普通文档类  `sjtuarticle` 和 `sjtureport`。
+包含上海交通大学学位论文文档类 `sjtuthesis`，以及普通文档类  `sjtuarticle` 和 `sjtureport`。
 对于 LaTeX 模版的更改，都应该在这个 repo 中进行，而后把解包后的结果同步到 SJTUThesis。
 
 本文档类集基于 LaTeX3 编写，使用说明详见 [发布区](https://github.com/sjtug/SJTUTeX/releases) 文档。
