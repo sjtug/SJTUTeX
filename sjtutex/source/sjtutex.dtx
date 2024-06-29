@@ -1638,6 +1638,14 @@
 % \urlprefix\url{https://ctan.org/pkg/ctex}
 % \urlprefix\CTANurl[文档及源代码：]{language/chinese/ctex/ctex.pdf}
 %
+% \bibitem{zhlineskip}
+% 张瑞熹.
+% \newblock \textit{zhlineskip 宏包}\allowbreak[EB/OL].
+% \newblock version 1.0e,
+% \newblock (2019-05-15).
+% \urlprefix\url{https://ctan.org/pkg/zhlineskip}
+% \urlprefix\CTANurl[文档：]{language/chinese/zhlineskip/zhlineskip.pdf}
+%
 % \bibitem{fduthesis}
 % 曾祥东.
 % \newblock \textit{fduthesis: 复旦大学论文模板}\allowbreak[EB/OL].
@@ -4076,6 +4084,11 @@
 %<thesis>                               \exp_not:N \zihao { \g_@@_zihao_tl }
 %<!thesis>    equation-font .initial:V = \c_empty_tl
   }
+%    \end{macrocode}
+% \end{macro}
+%
+% 借用 \pkg{zhlineskip} 宏包的代码设置行间公式字体。
+%    \begin{macrocode}
 \clist_map_inline:nn
   {
     array, matrix, pmatrix, bmatrix, Bmatrix, vmatrix, Vmatrix,
@@ -4101,7 +4114,6 @@
     \spread@equation
   }
 %    \end{macrocode}
-% \end{macro}
 %
 % \subsection{数学环境}
 %
