@@ -4873,6 +4873,7 @@
 %    \end{macrocode}
 %
 % \changes{v2.1}{2023/11/30}{标题页信息栏改用表格实现。}
+% \changes{unreleased}{2024/08/14}{标题页信息栏允许手动换行。}
 % \begin{macro}[int]{\@@_title_page_info_i:nnn,\@@_title_page_info_i:nxx,
 % \@@_title_page_info_ii:n}
 % 信息输出。
@@ -4886,7 +4887,13 @@
           {
             \exp_not:o { \cs:w c_@@_name_ ##1 _ #1 _tl \cs_end: }
             &
-            \exp_not:o { \cs:w l_@@_info_ ##1 _ #1 _tl \cs_end: }
+            \exp_not:N \hbox:n
+              {
+                \exp_not:N \linespread { 0.75 } \exp_not:N \selectfont
+                \exp_not:N \tabular [ t ] { @{} l @{} }
+                  \exp_not:o { \cs:w l_@@_info_ ##1 _ #1 _tl \cs_end: }
+                \exp_not:N \endtabular
+              }
           }
       }
     \group_begin:
