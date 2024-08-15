@@ -4869,7 +4869,7 @@
 % 汉字分散对齐的表格列说明符。
 %    \begin{macrocode}
 \newcolumntype { \SJTU@CT@D } [ 1 ]
-  { >{ \begin { SJTU@CJK@FTS } {#1} } c <{ \end { SJTU@CJK@FTS } } }
+  { > { \begin { SJTU@CJK@FTS } {#1} } c < { \end { SJTU@CJK@FTS } } }
 %    \end{macrocode}
 %
 % \changes{v2.1}{2023/11/30}{标题页信息栏改用表格实现。}
@@ -4889,7 +4889,6 @@
             &
             \exp_not:N \hbox:n
               {
-                \exp_not:N \linespread { 0.75 } \exp_not:N \selectfont
                 \exp_not:N \tabular [ t ] { @{} l @{} }
                   \exp_not:o { \cs:w l_@@_info_ ##1 _ #1 _tl \cs_end: }
                 \exp_not:N \endtabular
@@ -4958,7 +4957,7 @@
               {
                 \exp_not:N \SJTU@CT@D { 5 em }
                 @ { \exp_not:V \c_@@_name_info_sep_zh_tl }
-                >{ \exp_not:N \normalfont } l
+                > { \exp_not:N \setbaselineskip { 22.5 bp } \exp_not:N \normalfont } l
               }
               {
                 author,
@@ -5022,7 +5021,7 @@
 %<en>                r @ { \exp_not:V \c_@@_name_info_sep_en_tl }
 %<de>                r @ { \exp_not:V \c_@@_name_info_sep_de_tl }
 %<ja>                r @ { \exp_not:V \c_@@_name_info_sep_ja_tl }
-                >{ \exp_not:N \normalfont } l
+                > { \exp_not:N \setbaselineskip { 22.5 bp } \exp_not:N \normalfont } l
               }
               { author, \l_@@_info_supervisors_clist }
           } ,
