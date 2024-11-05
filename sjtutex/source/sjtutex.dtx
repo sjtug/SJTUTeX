@@ -4830,7 +4830,7 @@
 %<*thesis>
 \@@_engine_case:nnn
   {
-    \NewDocumentEnvironment { SJTU@CJK@FTS } { m b }
+    \NewDocumentEnvironment { SJTU@CJK@FTS } { m }
       {
         \mode_leave_vertical:
         \bool_set_false:N \l_@@_tmp_bool
@@ -4844,25 +4844,31 @@
                 \bool_set_true:N \l_@@_tmp_bool
               }
           }
-        \hbox_to_wd:nn {#1} {#2}
-      } { }
+        \use:e { \exp_not:N \tex_hbox:D to \dim_eval:n {#1} }
+        \bgroup \ignorespaces
+      }
+      { \egroup }
   }
   {
-    \NewDocumentEnvironment { SJTU@CJK@FTS } { m b }
+    \NewDocumentEnvironment { SJTU@CJK@FTS } { m }
       {
         \mode_leave_vertical:
         \cs_set:Npn \CJKglue
           { \skip_horizontal:n { \c_zero_dim plus 1 filll } }
-        \hbox_to_wd:nn {#1} {#2}
-      } { }
+        \use:e { \exp_not:N \tex_hbox:D to \dim_eval:n {#1} }
+        \bgroup \ignorespaces
+      }
+      { \egroup }
   }
   {
-    \NewDocumentEnvironment { SJTU@CJK@FTS } { m b }
+    \NewDocumentEnvironment { SJTU@CJK@FTS } { m }
       {
         \mode_leave_vertical:
         \ltjsetparameter { kanjiskip = { \c_zero_dim plus 1 filll } }
-        \hbox_to_wd:nn {#1} {#2}
-      } { }
+        \use:e { \exp_not:N \tex_hbox:D to \dim_eval:n {#1} }
+        \bgroup \ignorespaces
+      }
+      { \egroup }
   }
 %    \end{macrocode}
 %
