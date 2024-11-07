@@ -3860,6 +3860,8 @@
 %    \end{macrocode}
 % \end{macro}
 %
+% \changes{unreleased}{2024/11/08}{更新 \cls{sjtureport} 和 \cls{sjtuarticle} 的
+% \texttt{plain} 页面样式。}
 % 重定义 |plain| 样式。
 %    \begin{macrocode}
 %<*!thesis>
@@ -3867,14 +3869,16 @@
   {
     \fancypagestyle { plain }
       {
-        \fancyhead [ LE, RO ] { }
+        \fancyhead { }
+        \fancyhead [ LO, RE ] { \l_@@_header_tl }
         \tl_set:Nn \headrulewidth { 0 pt }
       }
   }
   {
     \fancypagestyle { plain }
       {
-        \fancyhead [ R ] { }
+        \fancyhead { }
+        \fancyhead [ L ] { \l_@@_header_tl }
         \tl_set:Nn \headrulewidth { 0 pt }
       }
   }
