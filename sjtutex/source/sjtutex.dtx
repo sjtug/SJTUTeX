@@ -1228,12 +1228,12 @@
 %   页脚字体。默认为 |\zihao{-5}|，小五号字。
 % \end{function}
 %
-% \begin{function}[added=2022-12-03]{style/page-number}
+% \begin{function}[updated=2024-11-22]{style/page-number}
 %   \begin{syntax}
-%     \OPT{page-number} = \marg{页码设置}
+%     \OPT{page-number} = \marg{格式定义}
 %   \end{syntax}
-%   设置页码的显示样式，其中 |#1| 代表当前页码。
-%   默认为 |{#1}|，即仅显示页码本身。
+%   设置页码的显示格式，\meta{格式定义} 有两个参数：参数 |#1| 是当前页码，参数 |#2| 是当前编码的总页码数。
+%   默认为 |{#1}|，即仅显示当前页码。
 % \end{function}
 %
 % \begin{function}[added=2023-11-30]{style/keywords-format}
@@ -1547,6 +1547,7 @@
 %         是 \pkg{amsmath} 的扩充。
 %       \item \pkg{geometry}，用于调整页面尺寸。
 %       \item \pkg{fancyhdr}，处理页眉页脚。
+%       \item \pkg{pageslts}，处理页码。
 %       \item \pkg{titletoc}，设置目录格式。
 %       \item \pkg{caption}、\cls{bicaption} 和 \cls{subcaption}，用于设置题注。
 %       \item \pkg{xcolor}，提供彩色支持。
@@ -2182,6 +2183,7 @@
 %<article>\LoadClass { ctexart }
 %    \end{macrocode}
 %
+% \changes{unreleased}{2024/11/22}{使用 \pkg{pageslts} 宏包获取总页码。}
 % 载入各宏包。
 %    \begin{macrocode}
 \RequirePackage
@@ -2190,6 +2192,7 @@
     mathtools,
     geometry,
     fancyhdr,
+    pageslts,
     titletoc,
     caption,
     bicaption,
@@ -3746,13 +3749,14 @@
 % \end{macro}
 %
 % \begin{macro}{style/page-number}
-% \begin{macro}[int]{\@@_page:n}
+% \begin{macro}[int]{\@@_page:nn}
 % 页脚页码格式。
 %    \begin{macrocode}
-\cs_new:Nn \@@_thepage: { \thepage }
+\tl_set:Nn \@@_the_page_tl { \thepage }
+\tl_set:Nn \@@_the_last_page_tl { \lastpageref { pagesLTS.\pagesLTS@pnc } }
 \keys_define:nn { sjtu / style }
   {
-    page-number .cs_set:Np = \@@_page:n #1 ,
+    page-number .cs_set:Np = \@@_page:nn #1#2 ,
     page-number .initial:n = { {#1} }
   }
 %    \end{macrocode}
@@ -3791,7 +3795,7 @@
     \fancyhead [ L ] { \l_@@_header_tl }
     \fancyhead [ R ] { \@@_nouppercase:V \l_@@_rightmark_tl }
   }
-\fancyfoot [ C ] { \@@_page:n { \@@_thepage: } }
+\fancyfoot [ C ] { \@@_page:nn { \@@_the_page_tl } { \@@_the_last_page_tl } }
 %    \end{macrocode}
 %
 % \begin{macro}{\headrule}
@@ -3859,6 +3863,7 @@
 % 文档初始页码编码设置。
 %    \begin{macrocode}
 %<thesis>\pagenumbering { Alph }
+%<!thesis>\pagenumbering { arabic }
 %    \end{macrocode}
 %
 % \begin{macro}{\frontmatter}
@@ -5526,7 +5531,8 @@
             \bool_if:NTF \g_@@_openright_bool
               { \cleardoublepage } { \clearpage }
             \pagenumbering { roman }
-            \cs_gset:Nn \@@_thepage: { \arabic { page } }
+            \tl_gset:Nn \@@_the_page_tl { \arabic { page } }
+            \tl_gset:Nn \@@_the_last_page_tl { \lastpageref { pagesLTS.roman.local } }
             \cs_gset_eq:NN \addcontentsline \use_none:nnn
             \clist_map_inline:Nn \l_@@_counter_without_chapter_clist
               {
