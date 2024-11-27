@@ -1664,24 +1664,6 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}[int]{\@@_preto_cmd:Nn,\@@_appto_cmd:Nn}
-% 补丁工具，来自 \pkg{ctexpatch} 宏包，在宏的原本定义前后增加钩子。
-%    \begin{macrocode}
-%<*!thesis>
-\cs_new_protected:Npn \@@_preto_cmd:Nn #1#2
-  {
-    \ctex_preto_cmd:NnnTF #1 { } {#2}
-      { } { \ctex_patch_failure:N #1 }
-  }
-\cs_new_protected:Npn \@@_appto_cmd:Nn #1#2
-  {
-    \ctex_appto_cmd:NnnTF #1 { } {#2}
-      { } { \ctex_patch_failure:N #1 }
-  }
-%</!thesis>
-%    \end{macrocode}
-% \end{macro}
-%
 % \changes{v2.0.2}{2023/03/31}{区分 \texttt{dim} 与 \texttt{skip} 类型变量。}
 % \begin{macro}[int]{\@@_dim_set_to_wd:Nn}
 % 操作长度变量的辅助函数。
@@ -5230,12 +5212,12 @@
 %    \begin{macrocode}
 %<*!thesis>
 \bool_if:NT \g_@@_titlepage_bool
-  { \@@_appto_cmd:Nn \abstract { \par } }
+  { \AddToHook { cmd / abstract / after } { \par } }
 %    \end{macrocode}
 %
 % 通用模板摘要后添加关键词。
 %    \begin{macrocode}
-\@@_preto_cmd:Nn \endabstract
+\AddToHook { env / abstract / end }
   {
     \clist_if_empty:NF \l_@@_info_keywords_clist
       {
