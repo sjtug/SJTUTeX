@@ -110,6 +110,9 @@
     \file{sjtu-cjk-font-founder.def}    {\from{\jobname.dtx}{font,cjk,founder,und}}
     \file{sjtu-cjk-font-founder-zh.def} {\from{\jobname.dtx}{font,cjk,founder,zh}}
     \file{sjtu-cjk-font-founder-ja.def} {\from{\jobname.dtx}{font,cjk,founder,ja}}
+    \file{sjtu-cjk-font-hanyi.def}      {\from{\jobname.dtx}{font,cjk,hanyi,und}}
+    \file{sjtu-cjk-font-hanyi-zh.def}   {\from{\jobname.dtx}{font,cjk,hanyi,zh}}
+    \file{sjtu-cjk-font-hanyi-ja.def}   {\from{\jobname.dtx}{font,cjk,hanyi,ja}}
 %</install>
 %<*internal>
   \usedir{source/latex/sjtutex}
@@ -176,6 +179,9 @@
 \Msg{*     sjtu-cjk-font-founder-ja.def                          *}
 \Msg{*     sjtu-cjk-font-founder-zh.def                          *}
 \Msg{*     sjtu-cjk-font-founder.def                             *}
+\Msg{*     sjtu-cjk-font-hanyi-ja.def                            *}
+\Msg{*     sjtu-cjk-font-hanyi-zh.def                            *}
+\Msg{*     sjtu-cjk-font-hanyi.def                               *}
 \Msg{*     sjtu-cjk-font-mac-ja.def                              *}
 \Msg{*     sjtu-cjk-font-mac-zh.def                              *}
 \Msg{*     sjtu-cjk-font-mac.def                                 *}
@@ -335,6 +341,12 @@
 %<font&cjk&founder&zh>\ProvidesExplFile{sjtu-cjk-font-founder-zh.def}
 %<font&cjk&founder&ja>  {Founder CJK fonts definition for Japanese (SJTUTeX)}
 %<font&cjk&founder&ja>\ProvidesExplFile{sjtu-cjk-font-founder-ja.def}
+%<font&cjk&hanyi&und>  {Hanyi CJK fonts definition (SJTUTeX)}
+%<font&cjk&hanyi&und>\ProvidesExplFile{sjtu-cjk-font-hanyi.def}
+%<font&cjk&hanyi&zh>  {Hanyi CJK fonts definition for Chinese (SJTUTeX)}
+%<font&cjk&hanyi&zh>\ProvidesExplFile{sjtu-cjk-font-hanyi-zh.def}
+%<font&cjk&hanyi&ja>  {Hanyi CJK fonts definition for Japanese (SJTUTeX)}
+%<font&cjk&hanyi&ja>\ProvidesExplFile{sjtu-cjk-font-hanyi-ja.def}
 %<!driver>  {\ExplFileDate}{2.1.5}{\ExplFileDescription}
 %</!(driver|install)>
 %
@@ -748,7 +760,7 @@
 %
 % \begin{function}{cjk-font}
 %   \begin{syntax}
-%     \OPT{cjk-font} = <(auto)|(fandol)|windows|mac|ubuntu|adobe|founder|none>
+%     \OPT{cjk-font} = <(auto)|windows|mac|ubuntu|adobe|(fandol)|founder|hanyi|none>
 %   \end{syntax}
 %   指定 CJK 字体集。\sjtutex{} 预定义了一些 CJK 字体组合，
 %   具体配置见表 \ref{tab:cjkfonts}。
@@ -758,7 +770,7 @@
 %   Linux 系统默认使用 \opt{fandol}。
 %   找不到对应定义的 CJK 字体集时的回退选项为 \opt{fandol}。
 %
-%   \textbf{仅} \opt{windows} 和 \opt{founder} 字体集支持 \pdfLaTeX{} 直接生成 PDF。
+%   \textbf{仅} \opt{windows}、\opt{founder} 和 \opt{hanyi} 字体集支持 \pdfLaTeX{} 直接生成 PDF。
 %   其他 CJK 字体集使用 \pdfTeX{} 引擎需要先通过 \LaTeX{} 生成 DVI，
 %   然后再使用 DVIPDFM\textit{x} 转换为 PDF。
 % \end{function}
@@ -774,12 +786,13 @@
 %     \toprule
 %     	                   & \strong{宋体}     & \strong{黑体}    & \strong{仿宋} & \strong{楷体}   & \strong{明朝体}\tnote{c} & \strong{哥特体}\tnote{c}  \\
 %     \midrule
-%       |fandol|\tnote{a}  & Fandol 宋体       & Fandol 黑体      & Fandol 仿宋   & Fandol 楷体     & HaranoAjiMincho          & HaranoAjiGothic           \\
 %       |windows|          & （中易）宋体      & （中易）黑体     & （中易）仿宋  & （中易）楷体    & MS Mincho                & MS Gothic                 \\
 %       |mac|              & （华文）宋体-简   & （华文）黑体-简  & 华文仿宋      & （华文）楷体-简 & Hiragino Mincho ProN     & Hiragino Kaku Gothic ProN \\
 %       |ubuntu|           & Noto Serif CJK SC & Noto Sans CJK SC & ---           & 文鼎 PL 简中楷  & Noto Serif CJK JP        & Noto Sans CJK JP          \\
-%       |adobe|            & Adobe 宋体        & Adobe  黑体      & Adobe  仿宋   & Adobe 楷体      & Kozuka Mincho Pr6N       & Kozuka Gothic Pr6N        \\
+%       |adobe|            & Adobe 宋体        & Adobe 黑体       & Adobe 仿宋    & Adobe 楷体      & Kozuka Mincho Pr6N       & Kozuka Gothic Pr6N        \\
+%       |fandol|\tnote{a}  & Fandol 宋体       & Fandol 黑体      & Fandol 仿宋   & Fandol 楷体     & HaranoAjiMincho          & HaranoAjiGothic           \\
 %       |founder|\tnote{b} & 方正书宋          & 方正黑体         & 方正仿宋      & 方正楷体        & IPAMincho                & IPAGothic                 \\
+%       |hanyi|            & 汉仪书宋二 S      & 汉仪中黑 S       & 汉仪仿宋 S    & 汉仪楷体 S      & HaranoAjiMincho          & HaranoAjiGothic           \\
 %     \bottomrule
 %   \end{tabular}
 %   \begin{tablenotes}
@@ -3082,6 +3095,7 @@
 %
 % \subsubsection{CJK 字体}
 %
+% \changes{unreleased}{2024/11/28}{新增 \opt{hanyi} 字体配置。}
 % 在字体未提供对应粗体的情况下，允许使用伪粗。
 %    \begin{macrocode}
 %<*font&cjk>
@@ -3479,6 +3493,71 @@
   }
 %</zh|ja>
 %</founder>
+%<*hanyi>
+%<*und>
+\tl_if_eq:NNTF \g_@@_lang_tl \c_@@_lang_ja_tl
+  { \ctex_file_input:n { sjtu-cjk-font-hanyi-ja.def } }
+  { \ctex_file_input:n { sjtu-cjk-font-hanyi-zh.def } }
+%</und>
+%<*zh|ja>
+\@@_fontset_case:nn
+%<*zh>
+  {
+    \ctex_load_zhmap:nnnn { zhsong } { zhhei } { zhfs } { hanyi }
+    \ctex_punct_set:n { hanyi }
+    \ctex_punct_map_family:nn   { \CJKrmdefault } { zhsong }
+    \ctex_punct_map_bfseries:nn { \CJKrmdefault } { zhhei  }
+    \ctex_punct_map_itshape:nn  { \CJKrmdefault } { zhkai  }
+  }
+%</zh>
+%<ja>  { \@@_fontset_error:nn { cjk } { hanyi } }
+  {
+%<*zh>
+    \setCJKmainfont { HYShuSongEr~S }
+      [ BoldFont = HYZhongSong~S, ItalicFont = HYKaiTi~S ]
+    \setCJKsansfont { HYZhongHei~S  } [ BoldFont = HYDaHei~S ]
+    \setCJKmonofont { HYFangSong~S  }
+%</zh>
+%<*ja>
+    \setCJKmainfont { HaranoAjiMincho }
+      [
+        Extension   = .otf ,
+        UprightFont = *-Regular ,
+        BoldFont    = *-Medium
+      ]
+    \setCJKsansfont { HaranoAjiGothic }
+      [
+        Extension   = .otf ,
+        UprightFont = *-Medium ,
+        BoldFont    = *-Bold
+      ]
+    \setCJKmonofont { HaranoAjiGothic }
+      [
+        Extension   = .otf ,
+        UprightFont = *-Regular
+      ]
+    \setCJKfamilyfont { jamin  } { HaranoAjiMincho }
+      [
+        Extension   = .otf ,
+        UprightFont = *-Regular ,
+        BoldFont    = *-Medium
+      ]
+    \setCJKfamilyfont { jagoth } { HaranoAjiGothic }
+      [
+        Extension   = .otf ,
+        UprightFont = *-Medium ,
+        BoldFont    = *-Bold
+      ]
+%</ja>
+    \setCJKfamilyfont { zhsong } { HYShuSongEr~S }
+      [ BoldFont = HYZhongSong~S ]
+    \setCJKfamilyfont { zhhei  } { HYZhongHei~S  }
+      [ BoldFont = HYDaHei~S     ]
+    \setCJKfamilyfont { zhkai  } { HYKaiTi~S     }
+    \setCJKfamilyfont { zhfs   } { HYFangSong~S  }
+  }
+%</zh|ja>
+%</hanyi>
 %<*!und>
 \NewDocumentCommand \songti   { } { \CJKfamily { zhsong  } }
 \NewDocumentCommand \heiti    { } { \CJKfamily { zhhei   } }
