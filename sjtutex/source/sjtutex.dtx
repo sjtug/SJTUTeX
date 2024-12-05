@@ -1794,7 +1794,7 @@
   { \tl_const:cn { c_@@_name_ #2 _ #1 _tl } {#3} }
 %<*thesis>
 \cs_new_protected:Npn \@@_name_const_from_clist:nnnn #1#2#3#4
-  { \tl_const:cx { c_@@_name_ #2 _ #1 _tl } { \clist_item:nn {#4} {#3} } }
+  { \tl_const:ce { c_@@_name_ #2 _ #1 _tl } { \clist_item:nn {#4} {#3} } }
 %</thesis>
 %    \end{macrocode}
 % \end{macro}
@@ -3157,7 +3157,7 @@
 % 定义符号的辅助函数。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_symbol_const:nn #1#2
-  { \tl_const:cx { c_@@_symbol_ #1 _tl } { \@@_unicode_char:n {#2} } }
+  { \tl_const:ce { c_@@_symbol_ #1 _tl } { \@@_unicode_char:n {#2} } }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4161,7 +4161,7 @@
 %<de>\keys_define:nn { sjtu / info / de }
 %<ja>\keys_define:nn { sjtu / info / ja }
   {
-    subject          .initial:x =
+    subject          .initial:e =
       {
 %<*zh>
         \exp_not:V \c_@@_name_univ_zh_tl
@@ -4519,12 +4519,12 @@
 %<*thesis>
             \clist_map_inline:Nn \g_@@_lang_clist
               {
-                \tl_set:cx { l_@@_info_date_ ##1 _tl }
+                \tl_set:ce { l_@@_info_date_ ##1 _tl }
                   { \exp_last_unbraced:ce { @@_date_aux_ ##1 :w } #1 \q_stop }
               }
 %</thesis>
 %<*!thesis>
-            \tl_set:Nx \@date
+            \tl_set:Ne \@date
               {
                 \exp_last_unbraced:ce
                   { @@_date_aux_ \g_@@_lang_tl :w } #1 \q_stop
@@ -4537,12 +4537,12 @@
 %<*thesis>
                 \clist_map_inline:Nn \g_@@_lang_clist
                   {
-                    \tl_set:cx { l_@@_info_date_ ##1 _tl }
+                    \tl_set:ce { l_@@_info_date_ ##1 _tl }
                       { \exp_last_unbraced:ce { @@_date_aux_short_ ##1 :w } #1 \q_stop }
                   }
 %</thesis>
 %<*!thesis>
-                \tl_set:Nx \@date
+                \tl_set:Ne \@date
                   {
                     \exp_last_unbraced:ce
                       { @@_date_aux_short_ \g_@@_lang_tl :w } #1 \q_stop
@@ -4551,7 +4551,7 @@
               }
           }
       } ,
-    date .initial:x =
+    date .initial:e =
       {
         \int_to_arabic:n { \c_sys_year_int  } -
         \int_to_arabic:n { \c_sys_month_int } -
