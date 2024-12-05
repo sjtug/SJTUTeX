@@ -2097,7 +2097,7 @@
 %
 % 数字字体宏包选项。
 %    \begin{macrocode}
-\clist_set:Nx \g_@@_math_font_options_clist
+\clist_set:Ne \g_@@_math_font_options_clist
   {
     \bool_if:NT \g_@@_slanted_uppercase_greek_bool
       { slantedGreek } ,
@@ -2108,7 +2108,7 @@
 %
 % 追加全局选项。
 %    \begin{macrocode}
-\clist_put_right:Nx \@classoptionslist
+\clist_put_right:Ne \@classoptionslist
   {
     a4paper ,
     \tl_if_eq:NNT \g_@@_lang_tl \c_@@_lang_de_tl
@@ -2121,7 +2121,7 @@
 %
 % 设置传入 \pkg{ctex} 文档类的选项。
 %    \begin{macrocode}
-\clist_put_right:Nx \g_@@_options_to_ctex_class_clist
+\clist_put_right:Ne \g_@@_options_to_ctex_class_clist
   {
     zihao      = \g_@@_zihao_tl ,
     \fp_if_nan:nF { \g_@@_line_spread_fp }
@@ -2150,7 +2150,7 @@
 %
 % 传入各宏包选项。
 %    \begin{macrocode}
-\clist_set:Nx \g_@@_options_to_packages_clist
+\clist_set:Ne \g_@@_options_to_packages_clist
   {
     { no-math           } { fontspec     } ,
     { list = off        } { bicaption    } ,
@@ -2222,7 +2222,7 @@
 % \begin{macro}[int]{\@@_engine_case:nn}
 % 2 个参数依次为 \pdfTeX 和 \XeTeX/\LuaTeX。
 %    \begin{macrocode}
-\cs_new:Npx \@@_engine_case:nn #1#2
+\cs_new:Npe \@@_engine_case:nn #1#2
   {
     \bool_lazy_or:nnTF
       { \sys_if_engine_xetex_p:  }
@@ -2236,7 +2236,7 @@
 % \begin{macro}[int]{\@@_engine_case:nnn}
 % 3 个参数依次为 \pdfTeX、 \XeTeX 和 \LuaTeX。
 %    \begin{macrocode}
-\cs_new:Npx \@@_engine_case:nnn #1#2#3
+\cs_new:Npe \@@_engine_case:nnn #1#2#3
   {
     \sys_if_engine_xetex:TF
       {#2}
@@ -2252,7 +2252,7 @@
 % \begin{macro}[int]{\@@_unicode_engine_case:nn}
 % 2 个参数依次为 \XeTeX 和 \LuaTeX。
 %    \begin{macrocode}
-\cs_new:Npx \@@_unicode_engine_case:nn #1#2
+\cs_new:Npe \@@_unicode_engine_case:nn #1#2
   {
     \sys_if_engine_xetex:TF
       {#1}
@@ -2366,7 +2366,7 @@
   { \tl_const:cn { c_@@_name_ #2 _ #1 _tl } {#3} }
 %<*thesis>
 \cs_new_protected:Npn \@@_define_name_from_clist:nnnn #1#2#3#4
-  { \tl_const:cx { c_@@_name_ #2 _ #1 _tl } { \clist_item:nn {#4} {#3} } }
+  { \tl_const:ce { c_@@_name_ #2 _ #1 _tl } { \clist_item:nn {#4} {#3} } }
 \cs_generate_variant:Nn \@@_define_name:nn { nv }
 %</thesis>
 %    \end{macrocode}
@@ -2376,7 +2376,7 @@
 % 定义符号的辅助函数。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_define_symbol:nn #1#2
-  { \tl_const:cx { c_@@_symbol_ #1 _tl } { \@@_unicode_char:n {#2} } }
+  { \tl_const:ce { c_@@_symbol_ #1 _tl } { \@@_unicode_char:n {#2} } }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -2499,7 +2499,7 @@
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_set_font_size:nnNn #1#2#3#4
   { \cs_set_protected:Npn #3 { \@setfontsize #3 {#1} {#2} #4 } }
-\tl_set:Nx \l_@@_font_size_tl
+\tl_set:Ne \l_@@_font_size_tl
   {
     { \dim_to_decimal:n { \g_@@_font_size_dim     } }
     { \dim_to_decimal:n { \g_@@_baseline_skip_dim } }
@@ -2568,7 +2568,7 @@
 % 3 个参数依次为 \pdfTeX（生成 PDF）、\pdfTeX（生成 DVI） 和
 % \XeTeX/\LuaTeX。
 %    \begin{macrocode}
-\cs_new:Npx \@@_fontset_case:nnn #1#2#3
+\cs_new:Npe \@@_fontset_case:nnn #1#2#3
   {
     \@@_engine_case:nn
       { \sys_if_output_pdf:TF {#1} {#2} }
@@ -4016,7 +4016,7 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}[int]{\SJTU@head,\@@_head_aux_s:nn,\@@_head_aux_s:nx,
+% \begin{macro}[int]{\SJTU@head,\@@_head_aux_s:nn,\@@_head_aux_s:ne,
 % \@@_pdf_bookmark:nn,\@@_phantom_section:}
 % 定义一个灵活的章节标题命令专门处理不同的需求。
 %    \begin{macrocode}
@@ -4040,7 +4040,7 @@
 %<*thesis>
 \cs_new:Npn \@@_head_aux_s:nn #1#2
   { \SJTU@head* [#1] {#2} }
-\cs_generate_variant:Nn \@@_head_aux_s:nn { nx }
+\cs_generate_variant:Nn \@@_head_aux_s:nn { ne }
 %</thesis>
 \cs_new_eq:NN \@@_pdf_bookmark:nn \use_none:nn
 \cs_new_eq:NN \@@_phantom_section: \prg_do_nothing:
@@ -4084,7 +4084,7 @@
 \keys_define:nn { sjtu / style }
   {
     equation-font  .tl_set:N = \SJTU@style@equation@font ,
-%<thesis>    equation-font .initial:x = \exp_not:N \linespread { }
+%<thesis>    equation-font .initial:e = \exp_not:N \linespread { }
 %<thesis>                               \exp_not:N \zihao { \g_@@_zihao_tl }
 %<!thesis>    equation-font .initial:V = \c_empty_tl
   }
@@ -4525,7 +4525,7 @@
 %<de>\keys_define:nn { sjtu / info / de }
 %<ja>\keys_define:nn { sjtu / info / ja }
   {
-    subject          .initial:x =
+    subject          .initial:e =
       {
 %<*zh>
         \exp_not:V \c_@@_name_univ_zh_tl
@@ -4781,12 +4781,12 @@
 %<*thesis>
             \clist_map_inline:Nn \g_@@_lang_clist
               {
-                \tl_set:cx { l_@@_info_date_ ##1 _tl }
+                \tl_set:ce { l_@@_info_date_ ##1 _tl }
                   { \exp_last_unbraced:ce { @@_date_aux_ ##1 :w } #1 \q_stop }
               }
 %</thesis>
 %<*!thesis>
-            \tl_set:Nx \@date
+            \tl_set:Ne \@date
               {
                 \exp_last_unbraced:ce
                   { @@_date_aux_ \g_@@_lang_tl :w } #1 \q_stop
@@ -4799,12 +4799,12 @@
 %<*thesis>
                 \clist_map_inline:Nn \g_@@_lang_clist
                   {
-                    \tl_set:cx { l_@@_info_date_ ##1 _tl }
+                    \tl_set:ce { l_@@_info_date_ ##1 _tl }
                       { \exp_last_unbraced:ce { @@_date_aux_short_ ##1 :w } #1 \q_stop }
                   }
 %</thesis>
 %<*!thesis>
-                \tl_set:Nx \@date
+                \tl_set:Ne \@date
                   {
                     \exp_last_unbraced:ce
                       { @@_date_aux_short_ \g_@@_lang_tl :w } #1 \q_stop
@@ -4813,7 +4813,7 @@
               }
           }
       } ,
-    date .initial:x =
+    date .initial:e =
       {
         \int_to_arabic:n { \c_sys_year_int  } -
         \int_to_arabic:n { \c_sys_month_int } -
@@ -4885,7 +4885,7 @@
 %
 % \changes{v2.1}{2023/11/30}{标题页信息栏改用表格实现。}
 % \changes{v2.1.4}{2024/08/14}{标题页信息栏允许手动换行。}
-% \begin{macro}[int]{\@@_title_page_info_i:nnn,\@@_title_page_info_i:nxx,
+% \begin{macro}[int]{\@@_title_page_info_i:nnn,\@@_title_page_info_i:nee,
 % \@@_title_page_info_ii:n}
 % 信息输出。
 %    \begin{macrocode}
@@ -4894,7 +4894,7 @@
     \clist_clear:N \l_@@_tmp_clist
     \clist_map_inline:nn {#3}
       {
-        \clist_put_right:Nx \l_@@_tmp_clist
+        \clist_put_right:Ne \l_@@_tmp_clist
           {
             \exp_not:o { \cs:w c_@@_name_ ##1 _ #1 _tl \cs_end: }
             &
@@ -4923,7 +4923,7 @@
     \skip_vertical:N \c_zero_skip
     \tl_use:c { l_@@_info_date_ #1 _tl }
   }
-\cs_generate_variant:Nn \@@_title_page_info_i:nnn { nxx }
+\cs_generate_variant:Nn \@@_title_page_info_i:nnn { nee }
 %</thesis>
 %</class>
 %    \end{macrocode}
@@ -4964,7 +4964,7 @@
         format      = \zihao { 4 } \setbaselineskip { 30 bp } \heiti ,
         content     =
           {
-            \@@_title_page_info_i:nxx { zh }
+            \@@_title_page_info_i:nee { zh }
               {
                 \exp_not:N \SJTU@CT@D { 5 em }
                 @ { \exp_not:V \c_@@_name_info_sep_zh_tl }
@@ -5025,9 +5025,9 @@
         format      = \zihao { 3 } \setbaselineskip { 30 bp } \bfseries ,
         content     =
           {
-%<en>            \@@_title_page_info_i:nxx { en }
-%<de>            \@@_title_page_info_i:nxx { de }
-%<ja>            \@@_title_page_info_i:nxx { ja }
+%<en>            \@@_title_page_info_i:nee { en }
+%<de>            \@@_title_page_info_i:nee { de }
+%<ja>            \@@_title_page_info_i:nee { ja }
               {
 %<en>                r @ { \exp_not:V \c_@@_name_info_sep_en_tl }
 %<de>                r @ { \exp_not:V \c_@@_name_info_sep_de_tl }
@@ -5584,7 +5584,7 @@
                 \counterwithout {##1} { chapter }
                 \setcounter     {##1} { 0 }
               }
-            \@@_head_aux_s:nx { \SJTU@digestname }
+            \@@_head_aux_s:ne { \SJTU@digestname }
               {
                 \exp_not:N \MakeUppercase
                   { \exp_not:v { l_@@_info_title_ #1 _tl } }
