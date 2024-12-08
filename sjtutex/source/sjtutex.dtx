@@ -1511,7 +1511,7 @@
 %   环境，配合不同的可选参数作为标题，展示不同类型的成果。
 % \end{function}
 %
-% \begin{function}[rEXP,updated=2022-03-23]{bibliolist,bibliolist*}
+% \begin{function}[rEXP,updated=2024-12-08]{bibliolist,bibliolist*}
 %   \begin{syntax}
 %     \BEV{bibliolist}\marg{最长条目编号}
 %     \  \TNA{item} \meta{文献条目}
@@ -1520,11 +1520,11 @@
 %     \  \TNA{item} \meta{文献条目（隐去姓名）}
 %     \EEV{bibliolist*}
 %   \end{syntax}
-%   附录用文献环境，只允许在 \env{achievements} 环境中使用。
+%   用于展示科研成果的文献列表，比如学术论文、专利等。
 %   需要指定最长条目的编号作为参数，比如 \opt{99}；
 %   如果将该强制参数被指定为空，将不显示编号，每条以悬挂缩进做区分。
-%   环境内部使用 \tn{item} 来分隔各条目，在同一个 \env{achievements} 环境内、不同的
-%   \env{bibliolist} 或 \env{bibliolist*} 环境中编号连续递增、不会间断。
+%   可以使用可选参数 \opt{resume} 设置连续编号。
+%   环境内部使用 \tn{item} 来分隔各条目。
 %   普通模式下显示 \env{bibliolist} 中的内容，盲审模式下显示 \env{bibliolist*} 中的内容。
 % \end{function}
 %
@@ -5483,21 +5483,31 @@
 %    \end{macrocode}
 % \end{macro}
 %
+% \changes{unreleased}{2024/12/08}{移除 \env{bibliolist} 环境的使用限制，
+% 默认重置计数，新增 \opt{resume} 选项。}
 % \begin{macro}{achievements,bibliolist,bibliolist*}
 % 发表论文与学术成果。
 %    \begin{macrocode}
 \newcounter { SJTU@bib }
-\NewDocumentEnvironment { @bibliolist } { m }
+\bool_new:N \l_@@_bibliolist_resume_bool
+\keys_define:nn { sjtu / private / bibliolist }
   {
+    resume .value_forbidden:n = true,
+    resume .code:n =
+      { \bool_set_true:N \l_@@_bibliolist_resume_bool }
+  }
+\NewDocumentEnvironment { @bibliolist } { m m }
+  {
+    \keys_set_known:nn { sjtu / private / bibliolist } {#1}
     \cs_if_exist_use:N \bibfont
     \list
       {
-        \tl_if_blank:nTF {#1}
+        \tl_if_blank:nTF {#2}
           { \hfill }
           { \@biblabel { \arabic{ SJTU@bib } } }
       }
       {
-        \tl_if_blank:nTF {#1}
+        \tl_if_blank:nTF {#2}
           {
             \skip_if_exist:NTF \bibhang
               { \dim_set_eq:NN \leftmargin \bibhang }
@@ -5505,7 +5515,7 @@
             \dim_set:Nn \itemindent { - \leftmargin }
           }
           {
-            \@@_dim_set_to_wd:Nn \labelwidth { \@biblabel {#1} }
+            \@@_dim_set_to_wd:Nn \labelwidth { \@biblabel {#2} }
             \dim_set_eq:NN \leftmargin \labelwidth
             \dim_add:Nn    \leftmargin { \labelsep }
           }
@@ -5523,9 +5533,11 @@
               }
           }
         \@nmbrlisttrue
-        \tl_set:Nn  \@listctr    { SJTU@bib }
-        \cs_set:Npn \p@SJTU@bib  { }
-        \cs_set:Npn \theSJTU@bib { \arabic { SJTU@bib } }
+        \tl_set:Nn \@listctr { SJTU@bib }
+        \tl_clear:N \p@SJTU@bib
+        \bool_if:NF \l_@@_bibliolist_resume_bool
+          { \setcounter { SJTU@bib } { 0 } }
+        \tl_set:Nn \theSJTU@bib { \arabic { SJTU@bib } }
       }
       \sloppy
       \int_set:Nn \clubpenalty  { 4000 }
@@ -5540,45 +5552,30 @@
   }
 \msg_new:nnn { sjtutex } { empty-environment }
   { Empty~ `#1'~ environment. }
-\bool_new:N \l_@@_achievements_bool
 \NewDocumentEnvironment { achievements } { O{ \SJTU@achvname } }
   {
     \SJTU@head {#1}
-    \setcounter { SJTU@bib } { 0 }
-    \bool_set_true:N \l_@@_achievements_bool
   } { }
-\NewDocumentEnvironment { bibliolist  } { m +b }
+\NewDocumentEnvironment { bibliolist  } { O{ } m +b }
   {
-    \bool_if:NF \l_@@_achievements_bool
-      {
-        \msg_error:nnnn { sjtutex } { environment-validation }
-          { bibliolist  } { achievements }
-      }
     \bool_if:NF \g_@@_review_bool
       {
         \cs_set:Npn \@noitemerr { }
-        \begin { @bibliolist } {#1}
-        #2
+        \begin { @bibliolist } {#1} {#2}
+          #3
         \end { @bibliolist }
       }
   } { }
-\NewDocumentEnvironment { bibliolist* } { m +b }
+\NewDocumentEnvironment { bibliolist* } { O{ } m +b }
   {
-    \bool_if:NF \l_@@_achievements_bool
-      {
-        \msg_error:nnnn { sjtutex } { environment-validation }
-          { bibliolist* } { achievements }
-      }
     \bool_if:NT \g_@@_review_bool
       {
         \cs_set:Npn \@noitemerr { }
-        \begin { @bibliolist } {#1}
-        #2
+        \begin { @bibliolist } {#1} {#2}
+          #3
         \end { @bibliolist }
       }
   } { }
-\msg_new:nnn { sjtutex } { environment-validation }
-  { `#1'~ is~ only~ valid~ in~ `#2'~ environment. }
 %    \end{macrocode}
 % \end{macro}
 %
