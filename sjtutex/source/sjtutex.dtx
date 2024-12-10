@@ -1343,6 +1343,16 @@
 %   \end{itemize}
 % \end{function}
 %
+% \begin{function}[added=2024-12-10]{\CJKfilltwosides}
+%   \begin{syntax}
+%     \BEV{tabular}\{\TNA{CJKfilltwosides}\marg{宽度}...\}
+%     \  \meta{表格内容}
+%     \EEV{tabular}
+%   \end{syntax}
+%   汉字分散对齐的表格列说明符，用于排版标题页信息表项。
+%   \marg{宽度} 为表格列宽，表格内为水平盒子，不可换行。
+% \end{function}
+%
 % \begin{function}[rEXP,updated=2022-12-20]{\copyrightpage}
 %   \begin{syntax}
 %     \TNA{copyrightpage}
@@ -1556,6 +1566,7 @@
 %     \begin{itemize}
 %       \item \cls{ctexbook}、\cls{ctexrep} 和 \cls{ctexart}，
 %         提供中文排版的通用框架。属于 \CTeX{} 宏集 \cite{CTeX}。
+%       \item \pkg{array}，提供表格环境的增强功能。
 %       \item \pkg{mathtools}，对 \LaTeX{} 的数学排版功能进行了全面扩展。
 %         是 \pkg{amsmath} 的扩充。
 %       \item \pkg{geometry}，用于调整页面尺寸。
@@ -1567,7 +1578,6 @@
 %       \item \pkg{graphicx}，提供图形插入的接口。
 %       \item \pkg{enumitem}，设置列表环境格式。
 %     \end{itemize}
-%   \item \cls{sjtuthesis} 会调用 \pkg{array}，用于辅助标题页的排版。
 %   \item 部分西文与数学字体预设会调用相关的字体宏包，具体调用情况请参见对应的
 %     字体预设文件。
 %   \item 部分数字字体预设会调用 \pkg{unicode-math} 处理 Unicode 编码的
@@ -2201,7 +2211,7 @@
 %    \begin{macrocode}
 \RequirePackage
   {
-%<thesis>    array,
+    array,
     mathtools,
     geometry,
     fancyhdr,
@@ -4864,8 +4874,8 @@
 %
 % \changes{v2.1.5}{2024/11/06}{修复了 \pkg{array} 更新造成的标题页生成失败的问题。}
 % 汉字分散对齐的环境。
+% \begin{macro}[int]{SJTU@CJK@FTS}
 %    \begin{macrocode}
-%<*thesis>
 \@@_engine_case:nnn
   {
     \NewDocumentEnvironment { SJTU@CJK@FTS } { m }
@@ -4909,12 +4919,16 @@
       { \egroup }
   }
 %    \end{macrocode}
+% \end{macro}
 %
+% \changes{unreleased}{2024/12/10}{标准文档类中可用 \cs{CJKfilltwosides} 列说明符。}
 % 汉字分散对齐的表格列说明符。
+% \begin{macro}{\CJKfilltwosides}
 %    \begin{macrocode}
-\newcolumntype { \SJTU@CT@D } [ 1 ]
+\newcolumntype { \CJKfilltwosides } [ 1 ]
   { > { \begin { SJTU@CJK@FTS } {#1} } c < { \end { SJTU@CJK@FTS } } }
 %    \end{macrocode}
+% \end{macro}
 %
 % \changes{v2.1}{2023/11/30}{标题页信息栏改用表格实现。}
 % \changes{v2.1.4}{2024/08/14}{标题页信息栏允许手动换行。}
@@ -4922,6 +4936,7 @@
 % \@@_title_page_info_ii:n}
 % 信息输出。
 %    \begin{macrocode}
+%<*thesis>
 \cs_new:Npn \@@_title_page_info_i:nnn #1#2#3
   {
     \clist_clear:N \l_@@_tmp_clist
@@ -4999,7 +5014,7 @@
           {
             \@@_title_page_info_i:nee { zh }
               {
-                \exp_not:N \SJTU@CT@D { 5 em }
+                \exp_not:N \CJKfilltwosides { 5 em }
                 @ { \exp_not:V \c_@@_name_info_sep_zh_tl }
                 > { \exp_not:N \setbaselineskip { 22.5 bp } \exp_not:N \normalfont } l
               }
