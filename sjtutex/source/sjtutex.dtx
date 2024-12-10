@@ -594,9 +594,11 @@
 %   默认为 \opt{final}。
 % \end{function}
 %
-% \begin{function}[rEXP]{review}
-%   盲审模式。开启盲审模式将隐去作者姓名、导师姓名、班级、学号等个人信息，
-%   删去版权使用授权书、原创性声明和致谢页。默认关闭。
+% \begin{function}[rEXP,updated=2025-01-14]{review}
+%   盲审模式。开启盲审模式会将作者姓名、导师姓名、学号、基金等个人信息留空，
+%   并使得标题页的信息表格强制显示相关字段，
+%   相关说明详见第 \ref{sec:sjtuthesiskey} 节；
+%   开启盲审模式还会删去版权使用授权书、原创性声明和致谢页。默认关闭。
 % \end{function}
 %
 % \subsubsection{页面设置}
@@ -849,7 +851,7 @@
 %
 % \subsubsection{信息域}
 %
-% \begin{function}[updated=2023-03-14]{info}
+% \begin{function}[updated=2025-01-14]{info}
 %   \begin{syntax}
 %     \OPS{info} = \marg{键值列表}
 %   \end{syntax}
@@ -859,7 +861,13 @@
 %           （比如 \opt{zh} 或 \opt{en}）的键来设定对应语言的论文信息，见第
 %           \ref{sec:sjtuthesiskey} 节；省略语言前缀不带“*”的项目表示对应的中文
 %           字段、带“*”的项目表示对应的英文字段属于老用法，仍然兼容但请及时更新
-%           至新用法。
+%           至新用法；各标题页中的信息表格会根据设定信息的顺序进行显示与排列，
+%           未设置的信息将不会显示，但在盲审模式开启时会例外地强制显示相关字段，
+%           中文标题页会强制显示 \texttt{info/zh} 中的 \texttt{author, id,
+%           supervisor, assoc_supervisor, co_supervisor, department, major, degree}
+%           字段，其他语言标题页会强制显示 \texttt{info/<lang>} 中的
+%           \texttt{author, supervisor, assoc_supervisor, co_supervisor} 字段，
+%           这种顺序也是这些信息的推荐设置顺序。
 %     \item 在 \cls{sjtureport} 和 \cls{sjtuarticle} 文档类中，不需要使用语言代
 %           码前缀。此时推荐直接使用标准接口来设定这些信息，这些标准接口不属于键
 %           值列表，应当直接写在导言区内，见第 \ref{sec:sjtureportcmd} 节。
@@ -925,15 +933,6 @@
 %   导师、副导师、联合导师姓名。
 % \end{function}
 %
-% \begin{function}[rEXP,updated=2023-03-14]{info/<lang>/degree}
-%   \begin{syntax}
-%     \OPT{\meta{lang}}/\OPT{degree} = \marg{学位名称}
-%   \end{syntax}
-%   申请学位中英文名称。
-%   包括申请的学位类别和级别，如“工学硕士”、“理学博士”等。
-%   学士论文无需标注。
-% \end{function}
-%
 % \begin{function}[rEXP,updated=2023-03-14]{info/<lang>/department}
 %   \begin{syntax}
 %     \OPT{\meta{lang}}/\OPT{department} = \marg{院系名称}
@@ -946,6 +945,14 @@
 %     \OPT{\meta{lang}}/\OPT{major} = \marg{专业名称}
 %   \end{syntax}
 %   专业名称。
+% \end{function}
+%
+% \begin{function}[rEXP,updated=2023-03-14]{info/<lang>/degree}
+%   \begin{syntax}
+%     \OPT{\meta{lang}}/\OPT{degree} = \marg{学位名称}
+%   \end{syntax}
+%   申请学位中英文名称。
+%   包括申请的学位类别和级别，如“工学硕士”、“理学博士”等。
 % \end{function}
 %
 % \begin{function}[rEXP,updated=2023-03-14]{info/<lang>/fund}
@@ -970,6 +977,19 @@
 %   \end{syntax}
 %   显示日期，可以显示不同于标准日期格式的日期，日期文字将会被原样输出。
 %   设定该键时，将会覆盖 \opt{info/date} 键在对应语言下的设定。
+% \end{function}
+%
+% \begin{function}[rEXP,added=2025-01-14]{info/<lang>/custom}
+%   \begin{syntax}
+%     \OPT{\meta{lang}}/\OPT{custom}/\OPT{\meta{变量名}} = \marg{第一列内容}\marg{第二列内容}
+%   \end{syntax}
+%   对应语言标题页信息表格中显示的额外信息，可以设置多个变量。
+%   需要使用一个变量名作为索引键（变量名应当由英文字母、数字、
+%   连字符 \texttt{-} 组成，且第一个位置只能为英文字母）；
+%   并赋予两个参数来设置信息表格中两列的内容：
+%   通常第一列作为该信息的属性名称会被加粗，第二列作为该信息的内容。
+%   该信息会根据在 \cmd{\sjtusetup} 中的设置相对位置显示在对应的位置上。
+%   当 \opt{review} 选项开启时，该选项的设置不会生效。
 % \end{function}
 %
 % \paragraph{适用于 \cls{sjtureport} 和 \cls{sjtuarticle} 文档类的命令}
@@ -1677,15 +1697,11 @@
 %
 % \subsection{内部定义}
 %
-% \begin{variable}{\l_@@_tmp_tl,\l_@@_tmp_clist,\l_@@_tmp_bool,\l_@@_tmp_dim,
-% \l_@@_tmp_skip,\l_@@_tmp_box}
+% \begin{variable}{\l_@@_tmp_tl,\l_@@_tmp_clist,\l_@@_tmp_box}
 % 临时变量。
 %    \begin{macrocode}
 \tl_new:N \l_@@_tmp_tl
 \clist_new:N \l_@@_tmp_clist
-%<thesis>\bool_new:N \l_@@_tmp_bool
-\dim_new:N \l_@@_tmp_dim
-\skip_new:N \l_@@_tmp_skip
 %<thesis>\box_new:N \l_@@_tmp_box
 %    \end{macrocode}
 % \end{variable}
@@ -1752,39 +1768,6 @@
 \cs_new_protected:Npn \@@_cs_provide_eq:NN #1#2
   { \cs_if_exist:NF #1 { \cs_set_eq:NN #1 #2 } }
 \cs_generate_variant:Nn \@@_cs_provide_eq:NN { cc }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}[int]{\@@_vspace:N,\@@_vspace:n,
-% \@@_vspace_r:N,\@@_vspace_r:n}
-% 类似 \LaTeXe{} 中的 \tn{vspace} 和 \tn{vspace*}。
-%    \begin{macrocode}
-%<*thesis>
-\cs_new_protected:Npn \@@_vspace:N #1
-  {
-    \skip_vertical:N #1
-    \skip_vertical:N \c_zero_skip
-  }
-\cs_new_protected:Npn \@@_vspace:n #1
-  {
-    \skip_set:Nn \l_@@_tmp_skip {#1}
-    \@@_vspace:N \l_@@_tmp_skip
-  }
-\cs_new_protected:Npn \@@_vspace_r:N #1
-  {
-    \dim_set_eq:NN \l_@@_tmp_dim \prevdepth
-    \hrule height \c_zero_dim
-    \nobreak
-    \skip_vertical:N #1
-    \skip_vertical:N \c_zero_skip
-    \dim_set_eq:NN \prevdepth \l_@@_tmp_dim
-  }
-\cs_new_protected:Npn \@@_vspace_r:n #1
-  {
-    \skip_set:Nn   \l_@@_tmp_skip {#1}
-    \@@_vspace_r:N \l_@@_tmp_skip
-  }
-%</thesis>
 %    \end{macrocode}
 % \end{macro}
 %
@@ -2135,6 +2118,19 @@
 \clist_concat:NNN \@classoptionslist
   \@classoptionslist \g_@@_math_font_options_clist
 %    \end{macrocode}
+%
+% 内部设置接口。
+%    \begin{macrocode}
+%<*thesis>
+\cs_set_protected:Npe \@@_setup:n
+  {
+    \bool_if:NTF \g_@@_review_bool
+      { \exp_not:N \keys_set_exclude_groups:nnn { sjtu } { sensitive } }
+      { \exp_not:N \keys_set:nn { sjtu } }
+  }
+%</thesis>
+%    \end{macrocode}
+%
 %
 % \subsection{载入宏包、文档类}
 %
@@ -3929,12 +3925,21 @@
 %<ja>    ja .meta:n = { lang = ja } ,
 %<ja>    ja .groups:n = { lang }
   }
-%</lang>
 %    \end{macrocode}
+%
+% \begin{macro}[int]{\@@_title_case_aux_zh:n,\@@_title_case_aux_en:n,
+% \@@_title_case_aux_de:n,\@@_title_case_aux_ja:n}
+% 设置标题大小写转换的辅助命令。
+%    \begin{macrocode}
+%<zh>\cs_set_eq:NN \@@_title_case_aux_zh:n \use:n
+%<en>\cs_set_eq:NN \@@_title_case_aux_en:n \MakeUppercase
+%<de>\cs_set_eq:NN \@@_title_case_aux_de:n \MakeUppercase
+%<ja>\cs_set_eq:NN \@@_title_case_aux_ja:n \use:n
+%    \end{macrocode}
+% \end{macro}
 %
 % 通用名称常量。
 %    \begin{macrocode}
-%<*lang>
 \clist_map_inline:nn
   {
 %<zh>    { keywords } { 关键词          } ,
@@ -4058,6 +4063,7 @@
   {
 %<*zh>
     { univ             } { 上海交通大学           } ,
+    { address          } { 中国・上海             } ,
     { thesis           } { 学位论文               } ,
     { title_page       } { 题名页                 } ,
     { declaration      } { 原创性声明及使用授权书 } ,
@@ -4333,87 +4339,137 @@
 %    \begin{macrocode}
 %<*class>
 %<*thesis>
+\msg_new:nnn { sjtutex } { key-already-defined }
+  { Key~'#1'~is~already~defined~and~redefination~is~being~ignored. }
+\msg_new:nnn { sjtutex } { key-invalid }
+  { Key~'#1'~is~invalid~and~ignored. }
+\msg_new:nnn { sjtutex } { key-needs-two-arguments }
+  { Key~'#1'~needs~two~arguments~otherwise~ignored. }
 \cs_new_protected:Npn \@@_info_keys_define:n #1
   {
     \clist_map_inline:nn
       {
-        title, display_title, subject, author, date,
-        supervisor, assoc_supervisor, department,
-        co_supervisor, major, degree
+        title, display_title, subject, date, department, major,
+        author, supervisor, assoc_supervisor, co_supervisor, degree
       }
       { \tl_new:c { l_@@_info_ ##1 _ #1 _tl } }
     \clist_map_inline:nn
       { keywords, fund }
       { \clist_new:c { l_@@_info_ ##1 _ #1 _clist } }
+    \bool_if:NTF \g_@@_review_bool
+      {
+        \seq_set_from_clist:cn { l_@@_info_show_ #1 _seq }
+          { author, id, supervisor, department, major, degree }
+      }
+      { \seq_new:c { l_@@_info_show_ #1 _seq } }
     \keys_define:nn { sjtu }
       { info / #1 .meta:nn = { sjtu / info / #1 } {##1} }
     \keys_define:nn { sjtu / info }
       {        #1 .meta:nn = { sjtu / info / #1 } {##1} }
     \keys_define:nn { sjtu / info / #1 }
       {
+        display-title       .code:n =
+          {
+            \tl_set:co { l_@@_info_display_title_ #1 _tl }
+              { \cs:w @@_title_case_aux_ #1 :n \cs_end: {##1} }
+          } ,
         title               .code:n =
           {
             \tl_set:cn { l_@@_info_title_ #1 _tl } {##1}
             \tl_if_empty:cT { l_@@_info_display_title_ #1 _tl }
-              { \tl_set:cn { l_@@_info_display_title_ #1 _tl } {##1} }
+              { \keys_set:nn { sjtu / info / #1 } { display-title = {##1} } }
           } ,
-        display-title     .tl_set:c = l_@@_info_display_title_ #1 _tl ,
-        subject           .tl_set:c = l_@@_info_subject_ #1 _tl ,
-        keywords       .clist_set:c = l_@@_info_keywords_ #1 _clist ,
-        author            .tl_set:c = l_@@_info_author_ #1 _tl ,
-        id                 .meta:nn = { sjtu / info } { id = {##1} } ,
-        supervisor        .tl_set:c = l_@@_info_supervisor_ #1 _tl ,
-        assoc-supervisor  .tl_set:c = l_@@_info_assoc_supervisor_ #1 _tl ,
-        co-supervisor     .tl_set:c = l_@@_info_co_supervisor_ #1 _tl ,
-        degree            .tl_set:c = l_@@_info_degree_ #1 _tl ,
-        department        .tl_set:c = l_@@_info_department_ #1 _tl ,
-        major             .tl_set:c = l_@@_info_major_ #1 _tl ,
-        fund           .clist_set:c = l_@@_info_fund_ #1 _clist ,
+        subject           .tl_set:c = { l_@@_info_subject_ #1 _tl } ,
+        keywords       .clist_set:c = { l_@@_info_keywords_ #1 _clist } ,
+        fund           .clist_set:c = { l_@@_info_fund_ #1 _clist } ,
+        fund              .groups:n = { sensitive } ,
         date               .meta:nn = { sjtu / info } { date = {##1} } ,
-        display-date      .tl_set:c = l_@@_info_date_ #1 _tl ,
+        display-date      .tl_set:c = { l_@@_info_date_ #1 _tl } ,
+        @show+              .code:n =
+          {
+            \seq_if_in:cnF { l_@@_info_show_ #1 _seq } {##1}
+              { \seq_put_right:cn { l_@@_info_show_ #1 _seq } {##1} }
+          } ,
+        @show+            .groups:n = { sensitive } ,
+        custom             .meta:nn = { sjtu / info / #1 / custom } {##1} ,
+        custom / unknown    .code:n =
+          {
+            \regex_match:nVTF { \A [a-z] [a-z0-9\-]* \Z } \l_keys_key_str
+              {
+                \keys_if_exist:neTF { sjtu / info / #1 } \l_keys_key_str
+                  {
+                    \msg_warning:nne { sjtutex } { key-already-defined }
+                      \l_keys_path_str
+                  }
+                  {
+                    \int_compare:nNnTF { \tl_count:n {##1} } = { 2 }
+                      {
+                        \tl_set_eq:NN \l_@@_tmp_tl \l_keys_key_str
+                        \tl_replace_all:Nnn \l_@@_tmp_tl { - } { _ }
+                        \tl_set:co { l_@@_name_ \l_@@_tmp_tl _ #1 _tl }
+                          { \use_i:nn  ##1 }
+                        \tl_set:co { l_@@_info_ \l_@@_tmp_tl _ #1 _tl }
+                          { \use_ii:nn ##1 }
+                        \exp_args:Ne \@@_setup:n
+                          { info / #1 / @show+ = \l_@@_tmp_tl }
+                      }
+                      {
+                        \msg_warning:nne { sjtutex } { key-needs-two-arguments }
+                          \l_keys_path_str
+                      }
+                  }
+              }
+              { \msg_warning:nne { sjtutex } { key-invalid } \l_keys_path_str }
+          }
       }
+    \clist_map_inline:nn
+      {
+        author, supervisor, assoc-supervisor, co-supervisor,
+        department, major, degree
+      }
+      {
+        \tl_set:Nn \l_@@_tmp_tl {##1}
+        \tl_replace_all:Nnn \l_@@_tmp_tl { - } { _ }
+        \keys_define:ne { sjtu / info / #1 }
+          {
+            ##1 .code:n =
+              {
+                \exp_not:N \tl_set:cn
+                  { l_@@_info_ \l_@@_tmp_tl _ #1 _tl } {####1}
+                \exp_not:N \@@_setup:n
+                  { info / #1 / @show+ = \l_@@_tmp_tl }
+              }
+          }
+      }
+    \clist_map_inline:nn
+      { author, supervisor, assoc-supervisor, co-supervisor }
+      { \keys_define:nn { sjtu / info / #1 } { ##1 .groups:n = { sensitive } } }
   }
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{info/id}
 % \begin{variable}{\l_@@_info_id_zh_tl}
 % 单独处理学号。
 %    \begin{macrocode}
 \tl_new:N \l_@@_info_id_zh_tl
 \keys_define:nn { sjtu / info }
-  { id   .tl_set:N = \l_@@_info_id_zh_tl }
+  {
+    id   .code:n =
+      {
+        \tl_set:Nn \l_@@_info_id_zh_tl {#1}
+        \@@_setup:n { info / zh / @show+ = id }
+      } ,
+    id .groups:n = { sensitive }
+  }
 %    \end{macrocode}
 % \end{variable}
+% \end{macro}
 %
 % 定义 \cls{sjtuthesis} 中不同语种的信息键值类。
 %    \begin{macrocode}
 \clist_map_inline:Nn \g_@@_lang_clist
   { \@@_info_keys_define:n {#1} }
-%    \end{macrocode}
-%
-% \begin{variable}{\l_@@_info_supervisors_clist}
-% 标题中需要显示的导师列表。
-%    \begin{macrocode}
-\clist_set:Nn \l_@@_info_supervisors_clist { supervisor }
-%    \end{macrocode}
-% \end{variable}
-%
-% 盲审模式下隐藏作者、导师姓名等信息。
-%    \begin{macrocode}
-\ctex_at_end_preamble:n
-  {
-    \bool_if:NT \g_@@_review_bool
-      {
-        \clist_map_inline:Nn \g_@@_lang_clist
-          {
-            \clist_map_inline:nn
-              { author, supervisor, assoc_supervisor, co_supervisor }
-              { \tl_clear:c { l_@@_info_ ##1 _ #1 _tl } }
-            \clist_clear:c { l_@@_info_fund_ #1 _clist }
-          }
-        \tl_clear:N \l_@@_info_id_zh_tl
-      }
-  }
 %</thesis>
 %    \end{macrocode}
 %
@@ -4497,217 +4553,171 @@
 %
 % 使用 \pkg{lttemplates} 构建页面模板，用于绘制标题页与版权页。
 %
-% 页面部件模板。
+% 页面元素模板。
 %    \begin{macrocode}
 %<*thesis>
-\NewTemplateType { sjtu } { 0 }
-\DeclareTemplateInterface { sjtu } { component } { 0 }
+\NewTemplateType { sjtu / element } { 0 }
+\DeclareTemplateInterface { sjtu / element } { plain } { 0 }
   {
     format      : tokenlist = \c_empty_tl ,
     content     : tokenlist = \c_empty_tl ,
     bottom-skip : skip      = \c_zero_skip ,
     align       : choice { left, right, center, normal } = center
   }
-\DeclareTemplateCode { sjtu } { component } { 0 }
+\DeclareTemplateCode { sjtu / element } { plain } { 0 }
   {
-    format      = \l_@@_component_format_tl ,
-    content     = \l_@@_component_content_tl ,
-    bottom-skip = \l_@@_component_bottom_skip ,
+    format      = \l_@@_element_format_tl ,
+    content     = \l_@@_element_content_tl ,
+    bottom-skip = \l_@@_element_bottom_skip ,
     align       =
       {
         left    =
-          \cs_set_eq:NN \l_@@_component_align: \raggedright ,
+          \cs_set_eq:NN \l_@@_element_align: \raggedright ,
         right   =
-          \cs_set_eq:NN \l_@@_component_align: \raggedleft ,
+          \cs_set_eq:NN \l_@@_element_align: \raggedleft ,
         center  =
-          \cs_set_eq:NN \l_@@_component_align: \centering ,
+          \cs_set_eq:NN \l_@@_element_align: \centering ,
         normal  =
-          \cs_set_eq:NN \l_@@_component_align: \prg_do_nothing:
+          \cs_set_eq:NN \l_@@_element_align: \prg_do_nothing:
       }
   }
   {
     \AssignTemplateKeys
     \group_begin:
-      \l_@@_component_align:
-      \l_@@_component_format_tl
-      \l_@@_component_content_tl
+      \l_@@_element_align:
+      \l_@@_element_format_tl
+      \l_@@_element_content_tl
       \par
     \group_end:
-    \@@_vspace:N \l_@@_component_bottom_skip
+    \skip_vertical:N \l_@@_element_bottom_skip
+    \skip_vertical:N \c_zero_skip
   }
 %    \end{macrocode}
 %
 % 页面模板。
 %    \begin{macrocode}
-\DeclareTemplateInterface { sjtu } { page } { 0 }
+\NewTemplateType { sjtu / page } { 1 }
+\DeclareTemplateInterface { sjtu / page } { title } { 1 }
   {
-    bookmark      : boolean   = false ,
-    bookmark-text : tokenlist = \c_empty_tl ,
-    style         : tokenlist = empty ,
-    format        : tokenlist = \c_empty_tl ,
-    prefix        : tokenlist ,
-    components    : commalist ,
-    top-skip      : skip      = \c_zero_skip ,
-    bottom-skip   : skip      = \c_zero_skip
+    bookmark : tokenlist ,
+    style    : tokenlist = empty ,
+    format   : tokenlist = \linespread { } \selectfont ,
+    prefix   : tokenlist ,
+    elements : commalist
   }
-\DeclareTemplateCode { sjtu } { page } { 0 }
+\DeclareTemplateCode { sjtu / page } { title } { 1 }
   {
-    bookmark      = \l_@@_page_bookmark_bool ,
-    bookmark-text = \l_@@_page_bookmark_text_tl ,
-    style         = \l_@@_page_style_tl ,
-    format        = \l_@@_page_format_tl ,
-    prefix        = \l_@@_page_prefix_tl ,
-    components    = \l_@@_page_components_clist ,
-    top-skip      = \l_@@_page_top_skip ,
-    bottom-skip   = \l_@@_page_bottom_skip
+    bookmark = \l_@@_page_bookmark_tl ,
+    style    = \l_@@_page_style_tl ,
+    format   = \l_@@_page_format_tl ,
+    prefix   = \l_@@_page_prefix_tl ,
+    elements = \l_@@_page_elements_clist
   }
   {
+    \tl_set_eq:NN \l_@@_page_bookmark_tl \c_novalue_tl
     \AssignTemplateKeys
-    \legacy_if:nTF { @openright }
-      { \cleardoublepage } { \clearpage }
-    \bool_if:NT \l_@@_page_bookmark_bool
-      { \@@_pdf_bookmark:nn { 0 } { \l_@@_page_bookmark_text_tl } }
-    \exp_args:No \thispagestyle { \l_@@_page_style_tl }
-%    \end{macrocode}
-% 移除页面顶部 \tn{vspace*} 的多余空白。
-% 见 \url{https://tex.stackexchange.com/questions/247513}。
-%    \begin{macrocode}
-    \@@_vspace_r:N \l_@@_page_top_skip
-    \@@_vspace:n { - \tex_parskip:D      }
-    \@@_vspace:n { - \tex_baselineskip:D }
     \group_begin:
+      \@@_select_language:n {#1}
+      \clist_gset_eq:Nc \l_@@_info_fund_clist
+        { l_@@_info_fund_ \l_@@_lang_tl _clist }
+      \legacy_if:nTF { @openright }
+        { \cleardoublepage } { \clearpage }
+      \exp_args:No \tl_if_novalue:nF { \l_@@_page_bookmark_tl }
+        { \@@_pdf_bookmark:nn { 0 } { \l_@@_page_bookmark_tl } }
+      \exp_args:No \thispagestyle { \l_@@_page_style_tl }
       \l_@@_page_format_tl
-      \clist_map_inline:Nn \l_@@_page_components_clist
-        { \UseInstance { sjtu } { \l_@@_page_prefix_tl / ##1 } }
+      \clist_map_inline:Nn \l_@@_page_elements_clist
+        { \UseInstance { sjtu / element } { \l_@@_page_prefix_tl / ##1 } }
     \group_end:
-    \@@_vspace:N \l_@@_page_bottom_skip
     \clearpage
   }
 %    \end{macrocode}
 %
-% 辅助函数。
+% 声明模板实例的辅助函数。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_declare_component:nnn #1#2#3
-  { \DeclareInstance { sjtu } {#1/#2} { component } {#3} }
-\cs_new_protected:Npn \@@_declare_page:nn #1#2
-  { \DeclareInstance { sjtu } {#1} { page } {#2} }
+\cs_new_protected:Npn \@@_declare_element_instance:nnn #1#2#3
+  { \DeclareInstance { sjtu / element } {#1/#2} { plain } {#3} }
+\cs_new_protected:Npn \@@_declare_page_instance:nnn #1#2
+  { \DeclareInstance { sjtu / page } {#1} { title } {#2} }
 %    \end{macrocode}
 %
 % \subsubsection{标题页}
 %
 % \changes{v2.0}{2022/12/13}{启用新版封面。}
-% \changes{v2.1.5}{2024/11/06}{修复了 \pkg{array} 更新造成的标题页生成失败的问题。}
-% 汉字分散对齐的环境。
-%    \begin{macrocode}
-\@@_engine_case:nnn
-  {
-    \NewDocumentEnvironment { SJTU@CJK@FTS } { m }
-      {
-        \mode_leave_vertical:
-        \bool_set_false:N \l_@@_tmp_bool
-        \cs_set_eq:NN \SJTU@CJK@FTS@Symbol \CJKsymbol
-        \cs_set:Npn \CJKsymbol ##1
-          {
-            \bool_if:NTF \l_@@_tmp_bool
-              { \hfil \SJTU@CJK@FTS@Symbol { ##1 } }
-              {
-                \SJTU@CJK@FTS@Symbol { ##1 }
-                \bool_set_true:N \l_@@_tmp_bool
-              }
-          }
-        \use:e { \exp_not:N \tex_hbox:D to \dim_eval:n {#1} }
-        \bgroup \ignorespaces
-      }
-      { \egroup }
-  }
-  {
-    \NewDocumentEnvironment { SJTU@CJK@FTS } { m }
-      {
-        \mode_leave_vertical:
-        \cs_set:Npn \CJKglue
-          { \skip_horizontal:n { \c_zero_dim plus 1 filll } }
-        \use:e { \exp_not:N \tex_hbox:D to \dim_eval:n {#1} }
-        \bgroup \ignorespaces
-      }
-      { \egroup }
-  }
-  {
-    \NewDocumentEnvironment { SJTU@CJK@FTS } { m }
-      {
-        \mode_leave_vertical:
-        \ltjsetparameter { kanjiskip = { \c_zero_dim plus 1 filll } }
-        \use:e { \exp_not:N \tex_hbox:D to \dim_eval:n {#1} }
-        \bgroup \ignorespaces
-      }
-      { \egroup }
-  }
-%    \end{macrocode}
-%
-% 汉字分散对齐的表格列说明符。
-%    \begin{macrocode}
-\newcolumntype { \SJTU@CT@D } [ 1 ]
-  { > { \begin { SJTU@CJK@FTS } {#1} } c < { \end { SJTU@CJK@FTS } } }
-%    \end{macrocode}
-%
+% \changes{v2.0.2}{2023/04/01}{标题页日期底部增加空白。}
 % \changes{v2.1}{2023/11/30}{标题页信息栏改用表格实现。}
 % \changes{v2.1.4}{2024/08/14}{标题页信息栏允许手动换行。}
-% \begin{macro}[int]{\@@_title_page_info_i:nnn,\@@_title_page_info_i:nxx,
-% \@@_title_page_info_ii:n}
+% \changes{v2.1.5}{2024/11/06}{修复了 \pkg{array} 更新造成的标题页生成失败的问题。}
+%
+% \begin{variable}{\SJTU@CT@W@width}
+%    \begin{macrocode}
+\tl_set:Nn \SJTU@CT@W@width { 5 em }
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{macro}[int]{\SJTU@CT@W,\SJTU@CT@R,\SJTU@CT@L}
+%    \begin{macrocode}
+\newcolumntype { \SJTU@CT@W } [ 1 ]
+  {
+    w {#1} { \SJTU@CT@W@width }
+    @{ \tl_use:c { c_@@_name_info_sep_ \l_@@_lang_tl _tl } }
+  }
+\newcolumntype { \SJTU@CT@R }
+  { r @{ \tl_use:c { c_@@_name_info_sep_ \l_@@_lang_tl _tl } } }
+\newcolumntype { \SJTU@CT@L }
+  { >{ \linespread { 0.75 } \normalfont } l }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}[int]{\@@_info_table_row:nn,\@@_info_table_row:vv,
+% \@@_title_page_info_table:n}
 % 信息输出。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_title_page_info_i:nnn #1#2#3
+\cs_new:Npn \@@_info_table_row:nn #1#2
   {
-    \clist_clear:N \l_@@_tmp_clist
-    \clist_map_inline:nn {#3}
+    \exp_not:n {#1}
+    &
+    \exp_not:N \hbox:n
       {
-        \clist_put_right:Nx \l_@@_tmp_clist
-          {
-            \exp_not:o { \cs:w l_@@_name_ ##1 _ #1 _tl \cs_end: }
-            &
-            \exp_not:N \hbox:n
-              {
-                \exp_not:N \tabular [ t ] { @{} l @{} }
-                  \exp_not:o { \cs:w l_@@_info_ ##1 _ #1 _tl \cs_end: }
-                \exp_not:N \endtabular
-              }
-          }
+        \exp_not:N \tabular [ t ] { @{} l @{} }
+          \exp_not:n {#2}
+        \exp_not:N \endtabular
       }
+  }
+\cs_generate_variant:Nn \@@_info_table_row:nn { vv }
+\cs_new_protected:Npn \@@_title_page_info_table:n #1
+  {
     \group_begin:
+      \clist_clear:N \l_@@_tmp_clist
+      \seq_map_inline:cn { l_@@_info_show_ \l_@@_lang_tl _seq }
+        {
+          \bool_lazy_all:nT
+            {
+              { \tl_if_exist_p:c { l_@@_name_ ##1 _ \l_@@_lang_tl _tl } }
+              { \tl_if_exist_p:c { l_@@_info_ ##1 _ \l_@@_lang_tl _tl } }
+            }
+            {
+              \clist_put_right:Ne \l_@@_tmp_clist
+                {
+                  \@@_info_table_row:vv
+                    { l_@@_name_ ##1 _ \l_@@_lang_tl _tl }
+                    { l_@@_info_ ##1 _ \l_@@_lang_tl _tl }
+                }
+            }
+        }
       \tl_set:Nn \arraystretch { 1 }
-      \tabular {#2}
+      \int_set_eq:NN \hbadness \c_max_int
+      \tabular {#1}
         \clist_use:Nn \l_@@_tmp_clist { \\ }
       \endtabular
     \group_end:
   }
-\cs_new_protected:Npn \@@_title_page_info_ii:n #1
-  {
-    \tl_use:c { l_@@_info_department_ #1 _tl }
-    \skip_vertical:N \c_zero_skip
-    \tl_use:c { c_@@_name_univ_ #1 _tl }
-    \skip_vertical:N \c_zero_skip
-    \tl_use:c { c_@@_name_address_ #1 _tl }
-    \skip_vertical:N \c_zero_skip
-    \tl_use:c { l_@@_info_date_ #1 _tl }
-  }
-\cs_generate_variant:Nn \@@_title_page_info_i:nnn { nxx }
 %    \end{macrocode}
 % \end{macro}
 %
-% 载入学位论文语言配置文件。
-%    \begin{macrocode}
-\clist_map_inline:Nn \g_@@_lang_clist
-  { \file_input:n { sjtu-thesis- #1 .def } }
-%</thesis>
-%</class>
-%    \end{macrocode}
-%
 % 标题页页面样式，页脚添加资助基金信息。
 %    \begin{macrocode}
-%<*thesis-i18n>
-%<zh>\cs_new:Npn \ps@SJTU@fund@zh
-%<en>\cs_new:Npn \ps@SJTU@fund@en
-%<de>\cs_new:Npn \ps@SJTU@fund@de
-%<ja>\cs_new:Npn \ps@SJTU@fund@ja
+\cs_new:Npn \ps@SJTU@fund
   {
     \ps@empty
     \tl_set:Nn \@oddfoot
@@ -4715,10 +4725,7 @@
         \hfil
         \minipage [ t ] { \textwidth }
           \centering \zihao { - 5 }
-%<zh>          \clist_use:Nn \l_@@_info_fund_zh_clist { \par }
-%<en>          \clist_use:Nn \l_@@_info_fund_en_clist { \par }
-%<de>          \clist_use:Nn \l_@@_info_fund_de_clist { \par }
-%<ja>          \clist_use:Nn \l_@@_info_fund_ja_clist { \par }
+          \clist_use:Nn \l_@@_info_fund_clist { \par }
         \endminipage
         \hfil
       }
@@ -4726,10 +4733,10 @@
   }
 %    \end{macrocode}
 %
-% \changes{v2.0.2}{2023/04/01}{标题页日期底部增加空白。}
 % 构建标题页。
+%
+% 样式 A 标题页元素实例。
 %    \begin{macrocode}
-%<*zh>
 \clist_map_inline:nn
   {
     { logo    }
@@ -4739,159 +4746,126 @@
             \includegraphics [ width = 3 cm ]
               { sjtu-vi-badge-red.pdf }
           }
-      },
+      } ,
     { subject }
       {
         format      = \zihao { -2 } \setbaselineskip { 30 bp } ,
-        content     = \l_@@_info_subject_zh_tl ,
+        content     = \tl_use:c { l_@@_info_subject_ \l_@@_lang_tl _tl } ,
         bottom-skip = \c_zero_dim plus 1 fill
-      },
+      } ,
     { title   }
       {
         format      = \zihao { 2 } \setbaselineskip { 36 bp } \bfseries ,
-        content     = \l_@@_info_display_title_zh_tl ,
+        content     = \tl_use:c { l_@@_info_display_title_ \l_@@_lang_tl _tl } ,
         bottom-skip = 30 bp plus 1 fill
-      },
+      } ,
     { info    }
       {
         format      = \zihao { 4 } \setbaselineskip { 30 bp } \heiti ,
-        content     =
-          {
-            \@@_title_page_info_i:nxx { zh }
-              {
-                \exp_not:N \SJTU@CT@D { 5 em }
-                @ { \exp_not:V \c_@@_name_info_sep_zh_tl }
-                > { \exp_not:N \setbaselineskip { 22.5 bp } \exp_not:N \normalfont } l
-              }
-              {
-                author,
-                id,
-                \l_@@_info_supervisors_clist ,
-                department,
-                major,
-                \int_compare:nNnF { \g_@@_thesis_type_int } = { 1 }
-                  { degree }
-              }
-          } ,
+        content     = \@@_title_page_info_table:n
+                        { \SJTU@CT@W { s } \SJTU@CT@L } ,
         bottom-skip = 30 bp
-      },
+      } ,
     { date    }
       {
         format      = \zihao { 4 } \setbaselineskip { 30 bp } \bfseries ,
-        content     = \l_@@_info_date_zh_tl ,
+        content     = \tl_use:c { l_@@_info_date_ \l_@@_lang_tl _tl } ,
       }
   }
+  { \@@_declare_element_instance:nnn { title a } #1 }
+%    \end{macrocode}
+%
+% 样式 A 标题页实例。
+%    \begin{macrocode}
+\@@_declare_page_instance:nnn { title a }
   {
-    \@@_declare_component:nnn { title / zh } #1
+    bookmark = \tl_use:c { c_@@_name_title_page_ \g_@@_lang_tl _tl } ,
+    style    = SJTU@fund ,
+    prefix   = title a ,
+    elements = { logo, subject, title, info, date }
   }
-\@@_declare_page:nn { title / zh }
-  {
-    bookmark      = true ,
-    bookmark-text = \tl_use:c { c_@@_name_title_page_ \g_@@_lang_tl _tl } ,
-    style         = SJTU@fund@zh ,
-    format        = \linespread { } \@@_select_language:n { zh } ,
-    prefix        = title / zh ,
-    components    = { logo, subject, title, info, date }
-  }
-%</zh>
-%<*en|de|ja>
+%    \end{macrocode}
+%
+% 样式 B 标题页元素实例。
+%    \begin{macrocode}
 \clist_map_inline:nn
   {
     { subject }
       {
         format      = \zihao { 4 } \setbaselineskip { 24 bp } \bfseries ,
-%<en>        content     = \l_@@_info_subject_en_tl ,
-%<de>        content     = \l_@@_info_subject_de_tl ,
-%<ja>        content     = \l_@@_info_subject_ja_tl ,
+        content     = \tl_use:c { l_@@_info_subject_ \l_@@_lang_tl _tl } ,
         bottom-skip = \c_zero_dim plus 1 fill
-      },
+      } ,
     { title   }
       {
         format      = \zihao { -2 } \setbaselineskip { 30 bp } \bfseries ,
-%<en>        content     = \MakeUppercase \l_@@_info_display_title_en_tl ,
-%<de>        content     = \MakeUppercase \l_@@_info_display_title_de_tl ,
-%<ja>        content     = \l_@@_info_display_title_ja_tl ,
+        content     = \tl_use:c { l_@@_info_display_title_ \l_@@_lang_tl _tl } ,
         bottom-skip = \c_zero_dim plus 1 fill
-      },
+      } ,
     { info    }
       {
         format      = \zihao { 3 } \setbaselineskip { 30 bp } \bfseries ,
-        content     =
-          {
-%<en>            \@@_title_page_info_i:nxx { en }
-%<de>            \@@_title_page_info_i:nxx { de }
-%<ja>            \@@_title_page_info_i:nxx { ja }
-              {
-%<en>                r @ { \exp_not:V \c_@@_name_info_sep_en_tl }
-%<de>                r @ { \exp_not:V \c_@@_name_info_sep_de_tl }
-%<ja>                r @ { \exp_not:V \c_@@_name_info_sep_ja_tl }
-                > { \exp_not:N \setbaselineskip { 22.5 bp } \exp_not:N \normalfont } l
-              }
-              { author, \l_@@_info_supervisors_clist }
-          } ,
+        content     = \@@_title_page_info_table:n
+                        { \SJTU@CT@R \SJTU@CT@L } ,
         bottom-skip = 30 bp plus 1 fill
-      },
+      } ,
     { date    }
       {
         format      = \zihao { 3 } \setbaselineskip { 30 bp } ,
         content     =
-%<en>          { \@@_title_page_info_ii:n { en } } ,
-%<de>          { \@@_title_page_info_ii:n { de } } ,
-%<ja>          { \@@_title_page_info_ii:n { ja } } ,
-      },
+          {
+            \tl_use:c { l_@@_info_department_ \l_@@_lang_tl _tl }
+            \skip_vertical:N \c_zero_skip
+            \tl_use:c { c_@@_name_univ_ \l_@@_lang_tl _tl }
+            \skip_vertical:N \c_zero_skip
+            \tl_use:c { c_@@_name_address_ \l_@@_lang_tl _tl }
+            \skip_vertical:N \c_zero_skip
+            \tl_use:c { l_@@_info_date_ \l_@@_lang_tl _tl }
+          }
+      }
   }
+  { \@@_declare_element_instance:nnn { title b } #1 }
+%    \end{macrocode}
+%
+% 样式 B 标题页实例。
+%    \begin{macrocode}
+\@@_declare_page_instance:nnn { title b }
   {
-%<en>    \@@_declare_component:nnn { title / en } #1
-%<de>    \@@_declare_component:nnn { title / de } #1
-%<ja>    \@@_declare_component:nnn { title / ja } #1
+    prefix   = title b ,
+    style    = SJTU@fund ,
+    elements = { subject, title, info, date }
   }
-%<*en>
-\@@_declare_page:nn { title / en }
-  {
-    style       = SJTU@fund@en ,
-    format      = \linespread { } \@@_select_language:n { en } ,
-    prefix      = title / en ,
-    components  = { subject, title, info, date }
-  }
-%</en>
-%<*de>
-\@@_declare_page:nn { title / de }
-  {
-    style       = SJTU@fund@de ,
-    format      = \linespread { } \@@_select_language:n { de } ,
-    prefix      = title / de ,
-    components  = { subject, title, info, date }
-  }
-%</de>
-%<*ja>
-\@@_declare_page:nn { title / ja }
-  {
-    style       = SJTU@fund@ja ,
-    format      = \linespread { } \@@_select_language:n { ja } ,
-    prefix      = title / ja ,
-    components  = { subject, title, info, date }
-  }
-%</ja>
-%</en|de|ja>
+%    \end{macrocode}
+%
+% 载入学位论文语言配置文件。
+%    \begin{macrocode}
+\clist_map_inline:Nn \g_@@_lang_clist
+  { \file_input:n { sjtu-thesis- #1 .def } }
+%</thesis>
+%</class>
+%    \end{macrocode}
+%
+% 中文标题页使用样式 A，其他语种使用样式 B。
+%    \begin{macrocode}
+%<*thesis-i18n>
+\DeclareInstanceCopy { sjtu / page }
+%<zh>  { title / zh } { title a }
+%<en>  { title / en } { title b }
+%<de>  { title / de } { title b }
+%<ja>  { title / ja } { title b }
 %</thesis-i18n>
 %    \end{macrocode}
 %
 % \begin{macro}{\maketitle}
-% 生成标题页，输出前先确定需要显示的导师列表。
+% 生成标题页。
 %    \begin{macrocode}
-%<*class&thesis>
+%<*class>
+%<*thesis>
 \RenewDocumentCommand \maketitle { }
   {
-    \clist_map_inline:nn
-      { assoc_supervisor, co_supervisor }
-      {
-        \tl_if_empty:cF { l_@@_info_ ##1 _zh_tl }
-          { \clist_put_right:Nn \l_@@_info_supervisors_clist {##1} }
-      }
     \clist_map_inline:Nn \g_@@_lang_clist
-      { \UseInstance { sjtu } { title / ##1 } }
+      { \UseInstance { sjtu / page } { title / ##1 } { ##1 } }
   }
-%</class&thesis>
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4899,7 +4873,6 @@
 %
 % 声明及授权书文本。
 %    \begin{macrocode}
-%<*thesis-i18n&zh>
 \tl_const:Nn \c_@@_orig_decl_text_zh_tl
   {
     本人郑重声明：所呈交的学位论文，是本人在导师的指导下，独立进行研究工
@@ -4947,7 +4920,7 @@
   }
 %    \end{macrocode}
 %
-% 构建声明及授权书。
+% 声明及授权书元素实例。
 %    \begin{macrocode}
 \clist_map_inline:nn
   {
@@ -5017,39 +4990,42 @@
       }
   }
   {
-    \@@_declare_component:nnn { copyright } #1
+    \@@_declare_element_instance:nnn { copyright } #1
   }
-\@@_declare_page:nn { copyright }
+%    \end{macrocode}
+%
+% 声明及授权书模板实例。
+%    \begin{macrocode}
+\@@_declare_page_instance:nnn { copyright }
   {
-    bookmark      = true ,
-    bookmark-text = \tl_use:c { c_@@_name_declaration_ \g_@@_lang_tl _tl } ,
-    format        = \linespread { } \@@_select_language:n { zh } ,
-    prefix        = copyright ,
-    components    =
+    bookmark = \tl_use:c { c_@@_name_declaration_ \g_@@_lang_tl _tl } ,
+    prefix   = copyright ,
+    elements =
       {
         orig / title, orig / text, orig / sign,
         auth / title, auth / text, auth / sign
       }
   }
-%</thesis-i18n&zh>
 %    \end{macrocode}
 %
 % \changes{v2.0}{2022/12/20}{不再自动载入 \pkg{pdfpages} 宏包。}
-% \begin{macro}{\copyrightpage}
 %    \begin{macrocode}
-%<*class>
-%<*thesis>
 \msg_new:nnn { sjtutex } { require-pdfpages }
   {
     Add~"\token_to_str:N \usepackage{pdfpages}"~ in~ your~ preamble \\
     before~ inserting~ pages~ of~ external~ PDF.
   }
+%    \end{macrocode}
+%
+% \begin{macro}{\copyrightpage}
+% 生成声明及授权书。
+%    \begin{macrocode}
 \NewDocumentCommand \copyrightpage { O{ } }
   {
     \bool_if:NF \g_@@_review_bool
       {
         \tl_if_blank:nTF {#1}
-          { \UseInstance { sjtu } { copyright } }
+          { \UseInstance { sjtu / page } { copyright } { zh } }
           {
             \cs_if_exist:NTF \includepdf
               {
@@ -5060,7 +5036,7 @@
               }
               {
                 \msg_warning:nn { sjtutex } { require-pdfpages }
-                \UseInstance { sjtu } { copyright }
+                \UseInstance { sjtu / page } { copyright } { zh }
               }
           }
       }
@@ -5477,11 +5453,8 @@
               \counterwithout {##1} { chapter }
               \setcounter     {##1} { 0 }
             }
-          \tl_set:Ne \l_@@_heading_title_tl
-            {
-              \exp_not:N \MakeUppercase
-                { \exp_not:v { l_@@_info_title_ \l_@@_lang_tl _tl } }
-            }
+          \tl_set_eq:Nc \l_@@_heading_title_tl
+            { l_@@_info_display_title_ \l_@@_lang_tl _tl }
           \@@_make_heading:n { marking = \SJTU@digestname, #1, notintoc }
           #2
         \group_end:
@@ -5495,8 +5468,10 @@
 %
 % \begin{macro}{\sjtusetup}
 % 用户设置接口。
+% 盲审模式下不会设置敏感信息。
 %    \begin{macrocode}
-\NewDocumentCommand \sjtusetup { } { \keys_set:nn { sjtu } }
+%<!thesis>\NewDocumentCommand \sjtusetup { } { \keys_set:nn { sjtu } }
+%<thesis>\NewDocumentCommand \sjtusetup { } { \@@_setup:n }
 %    \end{macrocode}
 % \end{macro}
 %
