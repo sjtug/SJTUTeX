@@ -206,12 +206,12 @@
 %</internal>
 %
 %<*class>
-\NeedsTeXFormat{LaTeX2e}[2020/10/01]
+\NeedsTeXFormat{LaTeX2e}[2024-06-01]
 \providecommand\IfFormatAtLeastTF{\@ifl@t@r\fmtversion}
-\IfFormatAtLeastTF{2020/10/01}{}
+\IfFormatAtLeastTF{2024-06-01}{}
  {\PackageError{sjtutex}
    {Your LaTeX format is outdated!\MessageBreak\MessageBreak
-    Release `2020/10/01' or newer is required to\MessageBreak
+    Release `2024-06-01' or newer is required to\MessageBreak
     compile this document.\MessageBreak\MessageBreak
     Please update your TeX distribution}{}}
 %</class>
@@ -1553,8 +1553,7 @@
 %       \item \pkg{graphicx}，提供图形插入的接口。
 %       \item \pkg{enumitem}，设置列表环境格式。
 %     \end{itemize}
-%   \item \cls{sjtuthesis} 会调用 \pkg{xtemplate} 和 \pkg{array}，用于辅助
-%     标题页等特殊页面的排版。
+%   \item \cls{sjtuthesis} 会调用 \pkg{array}，用于辅助标题页的排版。
 %   \item 部分西文与数学字体预设会调用相关的字体宏包，具体调用情况请参见对应的
 %     字体预设文件。
 %   \item 部分数字字体预设会调用 \pkg{unicode-math} 处理 Unicode 编码的
@@ -1671,8 +1670,10 @@
 % \clearpage
 % \section{代码实现}
 %
-% \changes{v2.1}{2023/12/05}{同步 \LaTeX{} 2020/10/01，无需显式调用
+% \changes{v2.1}{2023/12/05}{同步 \LaTeX{} 2020-10-01，无需显式调用
 % \pkg{expl3} 和 \pkg{xparse} 宏包。}
+% \changes{unreleased}{2024/11/22}{同步 \LaTeX{} 2024-06-01，无需显式调用
+% \pkg{xtemplate} 宏包。}
 % 本模板使用 \LaTeXiii{} 语法编写，依赖 \pkg{expl3} 环境，
 % 并需调用 \pkg{l3packages} 中的相关宏包。
 %
@@ -2185,7 +2186,6 @@
 %    \begin{macrocode}
 \RequirePackage
   {
-%<thesis>    xtemplate,
 %<thesis>    array,
     mathtools,
     geometry,
@@ -2393,11 +2393,11 @@
 %
 % \subsubsection{页面模板}
 %
-% 使用 \pkg{xtemplate} 构建页面模板，用于绘制标题页与版权页。
+% 使用 \pkg{lttemplates} 构建页面模板，用于绘制标题页与版权页。
 %
 % 页面部件模板。
 %    \begin{macrocode}
-\DeclareObjectType { sjtu } { 0 }
+\NewTemplateType { sjtu } { 0 }
 \DeclareTemplateInterface { sjtu } { component } { 0 }
   {
     format      : tokenlist = \c_empty_tl ,
@@ -3122,7 +3122,7 @@
 %    \begin{macrocode}
 \ctex_at_end_preamble:n
   {
-    \@ifpackageloaded { unicode-math }
+    \IfPackageLoadedTF { unicode-math }
       { } { \RequirePackage { bm } }
   }
 %</class>
@@ -5820,13 +5820,13 @@
 %    \begin{macrocode}
 \ctex_at_end_preamble:n
   {
-    \@ifpackageloaded { amsthm }
+    \IfPackageLoadedTF { amsthm }
       {
         \theoremstyle { sjtu }
         \@@_new_theorems:
       }
       {
-        \@ifpackageloaded { ntheorem }
+        \IfPackageLoadedTF { ntheorem }
           {
             \@@_cs_provide_eq:NN \QED \c_empty_tl
             \theoremheaderfont { \SJTU@style@thm@header@font }
