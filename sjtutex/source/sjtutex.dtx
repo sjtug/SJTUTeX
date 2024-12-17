@@ -808,6 +808,11 @@
 %   该选项只影响行间公式，行内公式统一居右侧，不受影响。
 % \end{function}
 %
+% \subsubsection{其他选项}
+%
+% 其他的文档类选项会被传递给对应的 \CTeX{} 文档类，
+% 请注意 \opt{GBK}、\opt{scheme} 等选项不受 \sjtutex{} 支持。
+%
 % \subsection{论文信息设置}
 %
 % \begin{function}{\sjtusetup}
@@ -1779,22 +1784,15 @@
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}
-%   {\g_@@_zihao_tl,\g_@@_font_size_int,\g_@@_font_size_dim,
-%    \g_@@_baseline_skip_dim,\g_@@_fixed_baselineskip_bool,\g_@@_line_spread_fp}
-% 字号大小与行距。
+% \begin{variable}{\g_@@_baseline_skip_dim,\g_@@_fixed_baselineskip_bool}
+% 固定行距。
 %    \begin{macrocode}
-\tl_new:N \g_@@_zihao_tl
-\int_new:N \g_@@_font_size_int
-\dim_new:N \g_@@_font_size_dim
 \dim_new:N \g_@@_baseline_skip_dim
 \bool_new:N \g_@@_fixed_baselineskip_bool
-\fp_new:N \g_@@_line_spread_fp
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}
-%   {\g_@@_text_font_tl,\g_@@_math_font_tl,\g_@@_cjk_font_tl}
+% \begin{variable}{\g_@@_text_font_tl,\g_@@_math_font_tl,\g_@@_cjk_font_tl}
 % 字体配置。
 %    \begin{macrocode}
 \tl_new:N \g_@@_text_font_tl
@@ -1842,67 +1840,57 @@
 % 保存由 \pkg{sjtutex} 传入 \pkg{ctex} 文档类的选项列表。
 % 默认 \pkg{ctex} 文档类的选项：
 % 使用 UTF8 编码，不调整基础类的版式以及不载入 \pkg{ctex} 字体预设配置。
+% \cls{sjtuthesis} 和 \cls{sjtureport} 文档类默认字号为小四号。
+% \cls{sjtureport} 和 \cls{sjtuarticle} 文档类默认使用 1.3 行距倍数。
 %    \begin{macrocode}
 \clist_set:Nn \g_@@_options_to_ctex_class_clist
-  { a4paper, UTF8, scheme = plain, fontset = none }
+  {
+    UTF8,
+%<!article>    zihao = -4,
+%<!thesis>    linespread = 1.3,
+    scheme = plain,
+    fontset = none
+  }
 %    \end{macrocode}
 % \end{variable}
 %
 % \begin{variable}{\g_@@_options_to_packages_clist}
 % 保存由传入其他宏包的选项列表。
 %    \begin{macrocode}
-\clist_new:N \g_@@_options_to_packages_clist
+\clist_set:Nn \g_@@_options_to_packages_clist
+  {
+    { no-math           } { fontspec     } ,
+    { list = off        } { bicaption    } ,
+    { warnings-off =
+      {
+        mathtools-overbracket,
+        mathtools-colon
+      }
+    }                     { unicode-math } ,
+%<!article>    { chapter           } { algorithm    } ,
+%<!article>    { algochapter       } { algorithm2e  } ,
+    { amsmath, thmmarks } { ntheorem     }
+  }
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}{\g_@@_twoside_bool}
-% 是否开启双页模式。
-%    \begin{macrocode}
-\bool_new:N \g_@@_twoside_bool
-%<thesis>\bool_set_true:N \g_@@_twoside_bool
-%<!thesis>\bool_set_false:N \g_@@_twoside_bool
-%    \end{macrocode}
-% \end{variable}
-%
-% \begin{variable}{\g_@@_openright_bool}
-% 是否在奇数页开始新章。
-%    \begin{macrocode}
-%<!article>\bool_new:N \g_@@_openright_bool
-%<thesis>\bool_set_true:N \g_@@_openright_bool
-%<report>\bool_set_false:N \g_@@_openright_bool
-%    \end{macrocode}
-% \end{variable}
-%
-% \begin{variable}{\g_@@_titlepage_bool}
-% 是否生成标题页。
-%    \begin{macrocode}
-%<!thesis>\bool_new:N \g_@@_titlepage_bool
-%<report>\bool_set_true:N \g_@@_titlepage_bool
-%<article>\bool_set_false:N \g_@@_titlepage_bool
-%    \end{macrocode}
-% \end{variable}
-%
-% \begin{variable}{\g_@@_draft_bool}
-% 是否开启草稿模式。
-%    \begin{macrocode}
-\bool_new:N \g_@@_draft_bool
-%    \end{macrocode}
-% \end{variable}
-%
-% \begin{macro}[int]{\@@_deprecated_option:n,\@@_set_deprecated_option:n}
+% \begin{macro}[int]{\@@_set_deprecated_option:n}
 % 对过时选项给出警告。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_deprecated_option:n
-  { \msg_warning:nnn { sjtutex } { deprecated-option } }
+\msg_new:nnn { sjtutex } { deprecated-option }
+  { Option~'\l_keys_key_str'~is~deprecated! \\ #1 }
 \cs_new_protected:Npn \@@_set_deprecated_option:n #1
   {
-    \@@_deprecated_option:n { Option~ `#1'~ is~ set. }
+    \msg_warning:nnn { sjtutex } { deprecated-option } { Option~'#1'~is~set. }
     \keys_set:nn { sjtu / option } {#1}
   }
-\msg_new:nnn { sjtutex } { deprecated-option }
-  { Option~ `\l_keys_key_str'~ is~ deprecated. \\ #1 }
 %    \end{macrocode}
 % \end{macro}
+%
+%    \begin{macrocode}
+\msg_new:nnn { sjtutex } { unsupported-option }
+  { Option~'\l_keys_key_str'~is~not~supported! \\ Will~be~ignored. }
+%    \end{macrocode}
 %
 % 定义 |sjtu/option| 键值类。
 %    \begin{macrocode}
@@ -1946,37 +1934,6 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{zihao}
-% 字号大小。
-%    \begin{macrocode}
-    zihao .choice: ,
-    zihao .value_required:n = true ,
-    zihao /  5 .code:n =
-      {
-        \tl_gset:Nn  \g_@@_zihao_tl {#1}
-        \int_gset:Nn \g_@@_font_size_int { 1 }
-        \dim_gset:Nn \g_@@_font_size_dim { 10.5 bp }
-      } ,
-    zihao / -4 .code:n =
-      {
-        \tl_gset:Nn  \g_@@_zihao_tl {#1}
-        \int_gset:Nn \g_@@_font_size_int { 2 }
-        \dim_gset:Nn \g_@@_font_size_dim { 12   bp }
-      } ,
-%<!article>    zihao .initial:n = { -4 } ,
-%<article>    zihao .initial:n = {  5 } ,
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{linespread}
-% 行距倍数。
-%    \begin{macrocode}
-    linespread .fp_gset:N = \g_@@_line_spread_fp ,
-    linespread .initial:n = { \c_nan_fp } ,
-    linespread .value_required:n = true ,
-%    \end{macrocode}
-% \end{macro}
-%
 % \changes{v2.0}{2022/12/03}{添加 \opt{lineskip} 文档类选项。}
 % \changes{v2.1}{2023/10/24}{添加 \opt{baselineskip} 文档类选项，
 % 替换原 \opt{lineskip} 选项。}
@@ -2007,9 +1964,12 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \opt{fontset} 是过时选项。
+% \opt{fontset} 等是过时选项。
 %    \begin{macrocode}
-    fontset .code:n = { \@@_set_deprecated_option:n { cjk-font = #1 } } ,
+    fontset    .code:n = { \@@_set_deprecated_option:n { cjk-font = #1 } } ,
+    nofonts    .code:n = { \@@_set_deprecated_option:n { cjk-font = none } } ,
+    adobefonts .code:n = { \@@_set_deprecated_option:n { cjk-font = adobe } } ,
+    winfonts   .code:n = { \@@_set_deprecated_option:n { cjk-font = windows } } ,
 %    \end{macrocode}
 %
 % \changes{v2.0}{2023/01/05}{添加 \opt{math-style} 文档类选项，默认值为 \opt{ISO}。}
@@ -2070,58 +2030,6 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{oneside,twoside}
-% 单面或双面模式。
-%    \begin{macrocode}
-    oneside .value_forbidden:n = true,
-    twoside .value_forbidden:n = true,
-    oneside .code:n =
-      { \bool_gset_false:N \g_@@_twoside_bool } ,
-    twoside .code:n =
-      { \bool_gset_true:N  \g_@@_twoside_bool } ,
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{openany,openright}
-% 是否奇数页开章。
-%    \begin{macrocode}
-%<*!article>
-    openany   .value_forbidden:n = true,
-    openright .value_forbidden:n = true,
-    openany   .code:n =
-      { \bool_gset_false:N \g_@@_openright_bool } ,
-    openright .code:n =
-      { \bool_gset_true:N  \g_@@_openright_bool } ,
-%</!article>
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{titlepage,notitlepage}
-% 是否生成标题页。
-%    \begin{macrocode}
-%<*!thesis>
-    titlepage   .value_forbidden:n = true,
-    notitlepage .value_forbidden:n = true,
-    titlepage   .code:n =
-      { \bool_gset_true:N  \g_@@_titlepage_bool } ,
-    notitlepage .code:n =
-      { \bool_gset_false:N \g_@@_titlepage_bool } ,
-%</!thesis>
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{draft,final}
-% 是否开启草稿模式。
-%    \begin{macrocode}
-    draft .value_forbidden:n = true,
-    final .value_forbidden:n = true,
-    draft .code:n =
-      { \bool_gset_true:N  \g_@@_draft_bool } ,
-    final .code:n =
-      { \bool_gset_false:N \g_@@_draft_bool } ,
-%    \end{macrocode}
-% \end{macro}
-%
 % \begin{macro}{review}
 % 盲审模式。
 %    \begin{macrocode}
@@ -2130,28 +2038,29 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% 处理未知选项。
+% 将未知选项传给标准文档类。
 %    \begin{macrocode}
-    unknown .code:n = { \msg_error:nn { sjtutex } { unknown-option } }
+    unknown .code:n =
+      { \clist_gput_right:No \g_@@_options_to_ctex_class_clist { \CurrentOption } }
   }
-\msg_new:nnn { sjtutex } { unknown-option }
-  { Class~ option~ "\l_keys_key_str"~ is~ unknown. }
+%    \end{macrocode}
+%
+% 屏蔽不支持的 \pkg{ctex} 选项。
+%    \begin{macrocode}
+\clist_map_inline:nn
+  { GBK, scheme, cap, nocap }
+  {
+    \keys_define:nn { sjtu / option }
+      {
+        #1 .code:n =
+          { \msg_warning:nn { sjtutex } { unsupported-option } }
+      }
+  }
 %    \end{macrocode}
 %
 % 将文档类选项传给 |sjtu/option|。
 %    \begin{macrocode}
 \ProcessKeyOptions [ sjtu / option ]
-%    \end{macrocode}
-%
-% \cls{sjtureport} 和 \cls{sjtuarticle} 文档类默认使用 1.3 行距倍数。
-%    \begin{macrocode}
-%<*!thesis>
-\bool_if:NF \g_@@_fixed_baselineskip_bool
-  {
-    \fp_if_nan:nT { \g_@@_line_spread_fp }
-      { \fp_set:Nn \g_@@_line_spread_fp { 1.3 } }
-  }
-%</!thesis>
 %    \end{macrocode}
 %
 % \begin{macro}[int,pTF]{\@@_if_main_lang_de:,\@@_if_main_lang_ja:}
@@ -2166,44 +2075,29 @@
 %
 % 数字字体宏包选项。
 %    \begin{macrocode}
-\clist_set:Nx \g_@@_math_font_options_clist
-  {
-    \bool_if:NT \g_@@_slanted_uppercase_greek_bool
-      { slantedGreek } ,
-    \bool_if:NT \g_@@_upright_integral_bool
-      { upint }
-  }
+\bool_if:NT \g_@@_slanted_uppercase_greek_bool
+  { \clist_put_right:Nn \g_@@_math_font_options_clist { slantedGreek } }
+\bool_if:NT \g_@@_upright_integral_bool
+  { \clist_put_right:Nn \g_@@_math_font_options_clist { upint } }
 %    \end{macrocode}
 %
-% 追加全局选项。
+% 追加选项。
 %    \begin{macrocode}
-\clist_put_right:Nx \@classoptionslist
+\clist_put_left:Nn \@classoptionslist { a4paper }
+\@@_if_main_lang_de:T
+  { \clist_put_right:Nn \@classoptionslist { german, ngerman } }
+\bool_if:NTF \g_@@_integral_limits_bool
   {
-    a4paper ,
-    \@@_if_main_lang_de:T
-      { german, ngerman } ,
-    \bool_if:NT \g_@@_integral_limits_bool
-      { intlimits } ,
-    \g_@@_math_font_options_clist
+    \clist_put_right:Nn \@classoptionslist { intlimits }
+    \clist_put_right:Nn \g_@@_options_to_packages_clist
+      { { displaylimits } { cmupint } }
   }
-%    \end{macrocode}
-%
-% 设置传入 \pkg{ctex} 文档类的选项。
-%    \begin{macrocode}
-\clist_put_right:Nx \g_@@_options_to_ctex_class_clist
   {
-    zihao      = \g_@@_zihao_tl ,
-    \fp_if_nan:nF { \g_@@_line_spread_fp }
-      { linespread = \fp_use:N \g_@@_line_spread_fp } ,
-    \bool_if:NTF \g_@@_twoside_bool
-      { twoside   } { oneside     } ,
-%<!article>    \bool_if:NTF \g_@@_openright_bool
-%<!article>      { openright } { openany     } ,
-%<!thesis>    \bool_if:NTF \g_@@_titlepage_bool
-%<!thesis>      { titlepage } { notitlepage } ,
-    \bool_if:NTF \g_@@_draft_bool
-      { draft     } { final       }
+    \clist_put_right:Nn \g_@@_options_to_packages_clist
+      { { nolimits      } { cmupint } }
   }
+\clist_concat:NNN \@classoptionslist
+  \@classoptionslist \g_@@_math_font_options_clist
 %    \end{macrocode}
 %
 % \subsection{载入宏包、文档类}
@@ -2219,24 +2113,6 @@
 %
 % 传入各宏包选项。
 %    \begin{macrocode}
-\clist_set:Nx \g_@@_options_to_packages_clist
-  {
-    { no-math           } { fontspec     } ,
-    { list = off        } { bicaption    } ,
-    { warnings-off =
-      {
-        mathtools-overbracket,
-        mathtools-colon
-      }
-    }                     { unicode-math } ,
-    { amsmath, thmmarks } { ntheorem     } ,
-%<!article>    { chapter           } { algorithm    } ,
-%<!article>    { algochapter       } { algorithm2e  } ,
-    {
-      \bool_if:NTF \g_@@_integral_limits_bool
-        { displaylimits } { nolimits }
-    }                     { cmupint      }
-  }
 \clist_map_inline:Nn \g_@@_options_to_packages_clist
   { \PassOptionsToPackage #1 }
 %    \end{macrocode}
@@ -2273,22 +2149,37 @@
 %
 % \subsubsection{字号行距}
 %
+% \begin{macro}[int]{\SJTU@orig@normalsize}
+% 保存原始 \tn{normalsize} 字号大小。
+%    \begin{macrocode}
+\normalsize
+\cs_set_protected:Npe \SJTU@orig@normalsize
+  { \exp_not:N \fontsize { \f@size } { \f@baselineskip } \exp_not:N \selectfont }
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}[int]{\@@_set_font_size:nnNn}
 % \begin{macro}{\normalsize}
 % 重定义 \tn{normalsize}，设置正文的基线间距。
 %    \begin{macrocode}
+\msg_new:nnn { sjtutex } { baselineskip-invalid }
+  { Invalid~baselineskip~value~'#1'! \\ Using~default~value~instead. }
 \cs_new_protected:Npn \@@_set_font_size:nnNn #1#2#3#4
   { \cs_set_protected:Npn #3 { \@setfontsize #3 {#1} {#2} #4 } }
-\tl_set:Nx \l_@@_font_size_tl
-  {
-    { \dim_to_decimal:n { \g_@@_font_size_dim     } }
-    { \dim_to_decimal:n { \g_@@_baseline_skip_dim } }
-  }
 \bool_if:NT \g_@@_fixed_baselineskip_bool
   {
-    \int_case:nn { \g_@@_font_size_int }
+    \dim_compare:nNnTF { \f@size pt } > { \g_@@_baseline_skip_dim }
       {
-        { 1 } {
+        \msg_warning:nne { sjtutex } { baselineskip-invalid }
+          { \dim_to_decimal:n { \g_@@_baseline_skip_dim } pt }
+      }
+      {
+        \tl_set:Ne \l_@@_font_size_tl
+          { { \f@size } { \dim_to_decimal:n { \g_@@_baseline_skip_dim } } }
+        \int_case:nn { \@ptsize }
+          {
+            { 0 }
+              {
                 \exp_after:wN \@@_set_font_size:nnNn \l_@@_font_size_tl
                   \normalsize
                   {
@@ -2299,7 +2190,20 @@
                     \let\@listi\@listI
                   }
               }
-        { 2 } {
+            { 1 }
+              {
+                \exp_after:wN \@@_set_font_size:nnNn \l_@@_font_size_tl
+                  \normalsize
+                  {
+                    \abovedisplayskip 11\p@ \@plus3\p@ \@minus6\p@
+                    \abovedisplayshortskip \z@ \@plus3\p@
+                    \belowdisplayshortskip 6.5\p@ \@plus3.5\p@ \@minus3\p@
+                    \belowdisplayskip \abovedisplayskip
+                    \let\@listi\@listI
+                  }
+              }
+            { 2 }
+              {
                 \exp_after:wN \@@_set_font_size:nnNn \l_@@_font_size_tl
                   \normalsize
                   {
@@ -2310,8 +2214,9 @@
                     \let\@listi\@listI
                   }
               }
+          }
+        \normalsize
       }
-    \normalsize
   }
 %    \end{macrocode}
 % \end{macro}
@@ -3371,7 +3276,7 @@
 %
 % 设置页眉页脚。
 %    \begin{macrocode}
-\bool_if:NTF \g_@@_twoside_bool
+\legacy_if:nTF { @twoside }
   {
     \fancyhead [ LO, RE ] { \l_@@_header_tl }
     \fancyhead [ LE ]     { \@@_nouppercase:V \l_@@_leftmark_tl  }
@@ -3404,7 +3309,7 @@
 % 重定义 |plain| 样式。
 %    \begin{macrocode}
 %<*!thesis>
-\bool_if:NTF \g_@@_twoside_bool
+\legacy_if:nTF { @twoside }
   {
     \fancypagestyle { plain }
       {
@@ -3435,7 +3340,7 @@
 \RenewDocumentCommand \cleardoublepage { }
   {
     \clearpage
-    \bool_if:NT \g_@@_twoside_bool
+    \legacy_if:nT { @twoside }
       {
         \int_if_odd:nF \c@page
           { \hbox:n { } \thispagestyle { empty } \newpage }
@@ -3517,7 +3422,7 @@
                   \CJKsffamily
   }
 %</thesis>
-%<!thesis>  { format = \normalsize \bfseries \CJKsffamily }
+%<!thesis>  { format = \SJTU@orig@normalsize \bfseries \CJKsffamily }
 \ctex_set:nn { subsubsection }
 %<*thesis>
   {
@@ -3526,7 +3431,7 @@
     format      = \zihao { -4 } \setbaselineskip { 16 bp } \normalfont
   }
 %</thesis>
-%<!thesis>  { format = \normalsize \normalfont }
+%<!thesis>  { format = \SJTU@orig@normalsize \normalfont }
 \ctex_set:n { secnumdepth = 3 }
 %    \end{macrocode}
 %
@@ -3600,8 +3505,7 @@
 \keys_define:nn { sjtu / style }
   {
     equation-font  .tl_set:N = \SJTU@style@equation@font ,
-%<thesis>    equation-font .initial:x = \exp_not:N \linespread { }
-%<thesis>                               \exp_not:N \zihao { \g_@@_zihao_tl }
+%<thesis>    equation-font .initial:n = \linespread { } \SJTU@orig@normalsize
 %<!thesis>    equation-font .initial:V = \c_empty_tl
   }
 %    \end{macrocode}
@@ -4589,7 +4493,7 @@
   }
   {
     \AssignTemplateKeys
-    \bool_if:NTF \g_@@_openright_bool
+    \legacy_if:nTF { @openright }
       { \cleardoublepage } { \clearpage }
     \bool_if:NT \l_@@_page_bookmark_bool
       { \@@_pdf_bookmark:nn { 0 } { \l_@@_page_bookmark_text_tl } }
@@ -5079,7 +4983,7 @@
           {
             \cs_if_exist:NTF \includepdf
               {
-                \bool_if:NTF \g_@@_openright_bool
+                \legacy_if:nTF { @openright }
                   { \cleardoublepage } { \clearpage }
                 \@@_pdf_bookmark:nn { 0 } { \c_@@_name_declaration_tl }
                 \includepdf {#1}
@@ -5200,7 +5104,7 @@
 % 修复通用模板摘要段首缩进。
 %    \begin{macrocode}
 %<*!thesis>
-\bool_if:NT \g_@@_titlepage_bool
+\legacy_if:nT { @titlepage }
   { \AddToHook { cmd / abstract / after } { \par } }
 %    \end{macrocode}
 %
@@ -5470,7 +5374,7 @@
         \AtEndDocument
           {
             \use:c { @@_set_language_ #1 : }
-            \bool_if:NTF \g_@@_openright_bool
+            \legacy_if:nTF { @openright }
               { \cleardoublepage } { \clearpage }
             \pagenumbering { roman }
             \cs_gset:Nn \@@_thepage: { \arabic { page } }
