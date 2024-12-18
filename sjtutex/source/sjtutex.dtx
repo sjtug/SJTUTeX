@@ -1603,8 +1603,23 @@
 %
 % \subsection{前置准备}
 %
+% 目前 \pkg{sjtutex} 文档类仅支持 \XeLaTeX{}、\LuaLaTeX{} 和 \pdfLaTeX{} 编译。
 %    \begin{macrocode}
 %<@@=sjtu>
+%<*class>
+\msg_new:nnn { sjtutex } { unsupported-engine }
+  {
+    The~sjtutex~classes~does~NOT~support~'#1'~engine. \\\\
+    Please~set~your~typesetting~program~to~either~
+    'xelatex'~or~'lualatex'.
+  }
+\bool_lazy_any:nF
+  {
+    { \sys_if_engine_xetex_p:  }
+    { \sys_if_engine_luatex_p: }
+    { \sys_if_engine_pdftex_p: }
+  }
+  { \msg_fatal:nnV { sjtutex } { unsupported-engine } \c_sys_engine_str }
 %    \end{macrocode}
 %
 % \subsection{内部定义}
@@ -1613,7 +1628,6 @@
 % \l_@@_tmp_skip,\l_@@_tmp_box}
 % 临时变量。
 %    \begin{macrocode}
-%<*class>
 %<thesis>\bool_new:N \l_@@_tmp_bool
 %<thesis>\clist_new:N \l_@@_tmp_clist
 \dim_new:N \l_@@_tmp_dim
