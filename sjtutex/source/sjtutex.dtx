@@ -90,6 +90,7 @@
     \file{sjtu-cjk-font-adobe.def}      {\from{\jobname.dtx}{font,cjk,adobe}}
     \file{sjtu-cjk-font-fandol.def}     {\from{\jobname.dtx}{font,cjk,fandol}}
     \file{sjtu-cjk-font-founder.def}    {\from{\jobname.dtx}{font,cjk,founder}}
+    \file{sjtu-cjk-font-hanyi.def}      {\from{\jobname.dtx}{font,cjk,hanyi}}
 %</install>
 %<*internal>
   \usedir{source/latex/sjtutex}
@@ -142,6 +143,7 @@
 \Msg{*     sjtu-cjk-font-adobe.def                               *}
 \Msg{*     sjtu-cjk-font-fandol.def                              *}
 \Msg{*     sjtu-cjk-font-founder.def                             *}
+\Msg{*     sjtu-cjk-font-hanyi.def                               *}
 \Msg{*     sjtu-cjk-font-mac.def                                 *}
 \Msg{*     sjtu-cjk-font-ubuntu.def                              *}
 \Msg{*     sjtu-cjk-font-windows.def                             *}
@@ -255,6 +257,8 @@
 %<font&cjk&fandol>\ProvidesExplFile{sjtu-cjk-font-fandol.def}
 %<font&cjk&founder>  {Founder CJK fonts definition (SJTUTeX)}
 %<font&cjk&founder>\ProvidesExplFile{sjtu-cjk-font-founder.def}
+%<font&cjk&hanyi>  {Hanyi CJK fonts definition (SJTUTeX)}
+%<font&cjk&hanyi>\ProvidesExplFile{sjtu-cjk-font-hanyi.def}
 %<!driver>  {\ExplFileDate}{2.1.5}{\ExplFileDescription}
 %</!(driver|install)>
 %
@@ -668,7 +672,7 @@
 %
 % \begin{function}{cjk-font}
 %   \begin{syntax}
-%     \OPT{cjk-font} = <(auto)|windows|mac|ubuntu|adobe|(fandol)|founder|none>
+%     \OPT{cjk-font} = <(auto)|windows|mac|ubuntu|adobe|(fandol)|founder|hanyi|none>
 %   \end{syntax}
 %   指定 CJK 字体集。\sjtutex{} 预定义了一些 CJK 字体组合，
 %   具体配置见表 \ref{tab:cjkfonts}。
@@ -678,7 +682,7 @@
 %   Linux 系统默认使用 \opt{fandol}。
 %   找不到对应定义的 CJK 字体集时的回退选项为 \opt{fandol}。
 %
-%   \textbf{仅} \opt{windows} 和 \opt{founder} 字体集支持 \pdfLaTeX{} 直接生成 PDF。
+%   \textbf{仅} \opt{windows}、\opt{founder} 和 \opt{hanyi} 字体集支持 \pdfLaTeX{} 直接生成 PDF。
 %   其他 CJK 字体集使用 \pdfTeX{} 引擎需要先通过 \LaTeX{} 生成 DVI，
 %   然后再使用 DVIPDFM\textit{x} 转换为 PDF。
 % \end{function}
@@ -700,6 +704,7 @@
 %       |adobe|            & Adobe 宋体        & Adobe 黑体       & Adobe 仿宋    & Adobe 楷体      & Kozuka Mincho Pr6N       & Kozuka Gothic Pr6N        \\
 %       |fandol|\tnote{a}  & Fandol 宋体       & Fandol 黑体      & Fandol 仿宋   & Fandol 楷体     & HaranoAjiMincho          & HaranoAjiGothic           \\
 %       |founder|\tnote{b} & 方正书宋          & 方正黑体         & 方正仿宋      & 方正楷体        & IPAMincho                & IPAGothic                 \\
+%       |hanyi|            & 汉仪书宋二 S      & 汉仪中黑 S       & 汉仪仿宋 S    & 汉仪楷体 S      & HaranoAjiMincho          & HaranoAjiGothic           \\
 %     \bottomrule
 %   \end{tabular}
 %   \begin{tablenotes}
@@ -2846,6 +2851,7 @@
 %
 % \paragraph{CJK 字体}
 %
+% \changes{unreleased}{2024/11/28}{新增 \opt{hanyi} 字体配置。}
 % 在字体未提供对应粗体的情况下，允许使用伪粗。
 %    \begin{macrocode}
 %<*font&cjk>
@@ -2933,12 +2939,13 @@
             BoldFont    = *-Bold
           ]
 %</adobe>
-%<*fandol>
+%<*fandol|hanyi>
         \setCJKmainfont { HaranoAjiMincho }
           [
             Extension   = .otf ,
             UprightFont = *-Regular ,
-            BoldFont    = *-Bold
+%<fandol>            BoldFont    = *-Bold
+%<hanyi>            BoldFont    = *-Medium
           ]
         \setCJKsansfont { HaranoAjiGothic }
           [
@@ -2954,7 +2961,8 @@
         \setCJKfamilyfont { jamin  } { HaranoAjiMincho }
           [
             Extension   = .otf ,
-            BoldFont    = *-Bold
+%<fandol>            BoldFont    = *-Bold
+%<hanyi>            BoldFont    = *-Medium
           ]
         \setCJKfamilyfont { jagoth } { HaranoAjiGothic }
           [
@@ -2962,7 +2970,7 @@
             UprightFont = *-Medium ,
             BoldFont    = *-Bold
           ]
-%</fandol>
+%</fandol|hanyi>
 %<*founder>
         \setCJKmainfont { ipam.ttf } [ AutoFakeBold = 3 ]
         \setCJKsansfont { ipag.ttf } [ AutoFakeBold = 3 ]
@@ -3124,6 +3132,20 @@
     \setCJKfamilyfont { zhkai  } { FZKai-Z03      }
     \setCJKfamilyfont { zhfs   } { FZFangSong-Z02 }
 %</founder>
+%<*hanyi>
+      {
+        \setCJKmainfont { HYShuSongEr~S }
+          [ BoldFont = HYZhongSong~S, ItalicFont = HYKaiTi~S ]
+        \setCJKsansfont { HYZhongHei~S  } [ BoldFont = HYDaHei~S ]
+        \setCJKmonofont { HYFangSong~S  }
+      }
+    \setCJKfamilyfont { zhsong } { HYShuSongEr~S }
+      [ BoldFont = HYZhongSong~S ]
+    \setCJKfamilyfont { zhhei  } { HYZhongHei~S  }
+      [ BoldFont = HYDaHei~S     ]
+    \setCJKfamilyfont { zhkai  } { HYKaiTi~S     }
+    \setCJKfamilyfont { zhfs   } { HYFangSong~S  }
+%</hanyi>
     \NewDocumentCommand \songti   { } { \CJKfamily { zhsong  } }
     \NewDocumentCommand \heiti    { } { \CJKfamily { zhhei   } }
 %<!ubuntu>    \NewDocumentCommand \fangsong { } { \CJKfamily { zhfs    } }
@@ -3143,6 +3165,8 @@
 %<fandol>      { \ctex_file_input:n { ctex-fontset-fandol.def } }
 %<founder>      { \@@_fontset_error:nn { cjk } { founder } }
 %<founder>      { \ctex_file_input:n { ctex-fontset-founder.def } }
+%<hanyi>      { \@@_fontset_error:nn { cjk } { hanyi } }
+%<hanyi>      { \ctex_file_input:n { ctex-fontset-hanyi.def } }
   }
 %</font&cjk>
 %    \end{macrocode}
