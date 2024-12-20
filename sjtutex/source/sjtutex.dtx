@@ -480,9 +480,9 @@
 % 注意在使用文档类时，需要将涉及到的所有源文件使用 UTF-8 编码保存。对于不同的文档类，使用方法
 % 略有不同，这里给出这三种文档类的最小使用示例。
 %
-% 下面这份 \TeX{} 文档展示了 \cls{sjtuthesis} 文档类的基本用法，一般需要指定中英文名称。
-% 该文档将包含中英文封面，页眉为文档主题及章节名称。
-% \begin{latex}[moretexcs={\sjtusetup,\maketitle,\tableofcontents*,\chapter},
+% 下面这份 \TeX{} 文档展示了 \cls{sjtuthesis} 文档类的基本用法，一般需要指定
+% 中英文名称。该文档将包含中英文封面，页眉为文档主题及章节名称。
+% \begin{latex}[moretexcs={\sjtusetup,\maketitle,\tableofcontents,\chapter},
 %   morekeywords={\frontmatter,\mainmatter}, emph={[1]sjtuthesis,document},
 %   emph={[2]info},emph={[3]type,zh,en,title,author}]
 % \documentclass[type=master]{sjtuthesis}
@@ -497,7 +497,7 @@
 % \begin{document}
 %   \maketitle
 %   \frontmatter
-%   \tableofcontents*
+%   \tableofcontents
 %   \mainmatter
 %   \chapter{欢迎}
 %   \section{欢迎使用 SJTUThesis}
@@ -1240,8 +1240,55 @@
 %     \  \meta{文档内容}
 %     \EEV{document}
 %   \end{syntax}
-% 在文档开始后进行内容编写，文档内容由 |document| 环境包裹。
+%   在文档开始后进行内容编写，文档内容由 |document| 环境包裹。
 % \end{function}
+%
+% \subsection{用于本节环境或命令的参数}
+%
+% 本节描述的部分环境和命令提供 \meta{标题参数}，用于进行局部的标题相关设置。
+% 可以使用逗号分隔的选项列表作为可选参数传入该环境，例如：
+% \begin{latex}
+% \begin{acknowledgements}[intoc,title={自定义标题}]
+% \end{acknowledgements}
+% \end{latex}
+%
+% \begin{function}[added=2025-01-12]{intoc, notintoc}
+%   指明该环境的小标题是否在目录中出现。
+%   \opt{intoc} 表示出现在目录中，
+%   \opt{notintoc} 表示不出现在目录中。
+%   默认 \tn{mainmatter} 之前的环境为 \opt{notintoc}，
+%   \tn{mainmatter} 之后的环境为 \opt{intoc}。
+% \end{function}
+%
+% \begin{function}[added=2025-01-12]{title}
+%   \begin{syntax}
+%     \OPT{title} = \marg{小标题}
+%   \end{syntax}
+%   设置该环境的小标题，默认是全局语言下的小标题。
+% \end{function}
+%
+% \begin{function}[added=2025-01-12]{marking}
+%   \begin{syntax}
+%     \OPT{marking} = \marg{目录中的小标题}
+%   \end{syntax}
+%   设置该环境在目录中的小标题，默认与小标题相同。
+%   只有在设置 \opt{intoc} 小标题出现在目录中才会显示。
+% \end{function}
+%
+% 部分环境还提供了参数 \opt{lang}，用于设置环境的语言。
+% \begin{function}[added=2025-01-12,label=]{lang}
+%   \begin{syntax}
+%     \OPT{lang} = <(zh)|en|de|ja>
+%   \end{syntax}
+%   设置该环境的局部语言选项，默认与全局语言选项相同。
+%   该选项会设置该环境的局部语言排版设置。
+% \end{function}
+%
+% 对于同时提供了 \meta{标题参数} 和 \opt{lang} 参数的环境，二者可以一同使用，例如：
+% \begin{latex}
+% \begin{abstract}[lang=en,intoc,title={自定义标题},marking={目录中的标题}]
+% \end{abstract}
+% \end{latex}
 %
 % \subsection{标题页和声明页}
 %
@@ -1278,31 +1325,32 @@
 %   声明前文部分开始。
 % \end{function}
 %
-% \begin{function}[updated=2023-11-29]{abstract}
+% \begin{function}[updated=2024-12-20]{abstract}
 %   \begin{syntax}
-%     \BEV{abstract}\oarg{lang}
-%     \  \meta{摘要}
+%     \BEV{abstract}\oarg{lang=<(zh)|en|de|ja>,标题参数}
+%     \  \meta{\textup{\cls{sjtuthesis}} 中的摘要}
 %     \EEV{abstract}
 %     \BEV{abstract}
-%     \  \meta{摘要}
+%     \  \meta{\textup{\cls{sjtuarticle}} 和 \textup{\cls{sjtureport}} 中的摘要}
 %     \EEV{abstract}
 %   \end{syntax}
 %   摘要环境。会在结尾添加关键词。
 %   \begin{itemize}
-%     \item \cls{sjtuthesis} 文档类中，可以设置可选参数指定摘要的语言，
-%           默认为 \opt{zh}。
-%     \item \cls{sjtuarticle} 和 \cls{sjtureport} 文档类中，不需要可选参数。
+%     \item \cls{sjtuthesis} 文档类中，可以设置可选参数，
+%           指定摘要的局部语言会同步更改小标题为对应语言设置。
+%     \item \cls{sjtuarticle} 和 \cls{sjtureport} 文档类中，不设置可选参数。
 %   \end{itemize}
 % \end{function}
 %
-% \begin{function}[rEXP,updated=2023-11-29]{abstract*}
-%   \cls{sjtuthesis} 文档类中使用带星号的 \env{abstract*} 环境不会出现在目录中。
-% \end{function}
-%
-% \begin{function}{\tableofcontents,\tableofcontents*,\listoffigures,\listoffigures*,
-%   \listoftables,\listoftables*,\listofalgorithms,\listofalgorithms*}
+% \begin{function}[updated=2024-12-20]{\tableofcontents,\listoffigures,\listoftables,\listofalgorithms}
+%   \begin{syntax}
+%     \TNA{tableofcontents}\oarg{标题参数}
+%     \TNA{listoffigures}\oarg{标题参数}
+%     \TNA{listoftables}\oarg{标题参数}
+%     \TNA{listofalgorithms}\oarg{标题参数}
+%   \end{syntax}
 %   目录、插图、表格和算法等索引命令如表 \ref{tab:list} 所示，将其插入到期望的
-%   位置即可。带*的命令表示对应的索引表不会出现在目录中。
+%   位置即可，这些命令可以使用可选的 \meta{标题参数} 来调整标题相关设置。
 %   \begin{table}[H]
 %     \centering\small
 %     \begin{threeparttable}
@@ -1313,10 +1361,8 @@
 %         \strong{用途}     & \strong{命令}         & \strong{用途}     & \strong{命令}          \\
 %         \midrule
 %         目录              & \tn{tableofcontents}  & 插图索引          & \tn{listoffigures}     \\
-%                           & \tn{tableofcontents*} &                   & \tn{listoffigures*}    \\
 %         \midrule
 %         表格索引          & \tn{listoftables}     & 算法索引\tnote{a} & \tn{listofalgorithms}  \\
-%                           & \tn{listoftables*}    &                   & \tn{listofalgorithms*} \\
 %         \bottomrule
 %       \end{tabular}
 %       \begin{tablenotes}
@@ -1377,24 +1423,24 @@
 %   附录由 \tn{appendix} 命令开启，然后像正文一样书写。
 % \end{function}
 %
-% \begin{function}[rEXP,updated=2022-03-02]{nomenclature,nomenclature*}
+% \begin{function}[rEXP,updated=2024-12-20]{nomenclature}
 %   \begin{syntax}
-%     \BEV{nomenclature}\oarg{标题}
+%     \BEV{nomenclature}\oarg{标题参数}
 %     \  \meta{符号对照表}
 %     \EEV{nomenclature}
 %   \end{syntax}
-%   符号对照表环境。带星号的版本不会出现在目录中。可以使用可选参数手动设置标题。
-%   符号对照表环境仅设置标题，内部实现可由用户自行决定。
+%   符号对照表环境。可以使用 \meta{标题参数} 手动设置标题。
+%   符号对照表环境仅设置标题，内部实现可由用户自行决定：
 %   可以使用 \pkg{longtable}，也可以使用 \pkg{nomencl} 宏包。
 % \end{function}
 %
-% \begin{function}[rEXP,updated=2022-03-02]{abbreviation,abbreviation*}
+% \begin{function}[rEXP,updated=2024-12-20]{abbreviation}
 %   \begin{syntax}
-%     \BEV{abbreviation}\oarg{标题}
+%     \BEV{abbreviation}\oarg{标题参数}
 %     \  \meta{缩略语对照表}
 %     \EEV{abbreviation}
 %   \end{syntax}
-%   缩略语对照表环境。带星号的版本不会出现在目录中。可以使用可选参数手动设置标题。
+%   缩略语对照表环境。可以使用可选参数手动设置标题。
 %   缩略语对照表环境仅设置标题，内部实现可由用户自行决定。
 % \end{function}
 %
@@ -1407,33 +1453,33 @@
 %   声明后文部分开始。 后文部分包含致谢等。
 % \end{function}
 %
-% \begin{function}[rEXP,updated=2022-02-24]{acknowledgements}
+% \begin{function}[rEXP,updated=2024-12-20]{acknowledgements}
 %   \begin{syntax}
-%     \BEV{acknowledgements}\oarg{标题}
+%     \BEV{acknowledgements}\oarg{标题参数}
 %     \  \meta{致谢内容}
 %     \EEV{acknowledgements}
 %   \end{syntax}
-%   致谢环境。盲审模式下致谢将被隐去。可以使用可选参数手动设置标题。
+%   致谢环境。盲审模式下致谢将被隐去。可以使用 \meta{标题参数} 手动设置标题。
 % \end{function}
 %
-% \begin{function}[rEXP,updated=2022-02-24]{achievements}
+% \begin{function}[rEXP,updated=2024-12-20]{achievements}
 %   \begin{syntax}
-%     \BEV{achievements}\oarg{标题}
+%     \BEV{achievements}\oarg{标题参数}
 %     \  \meta{获得的科研成果}
 %     \EEV{achievements}
 %   \end{syntax}
-%   科研成果环境，可以使用可选参数手动设置标题。内部请配合使用下面的附录用文献列表环境
+%   科研成果环境，可以使用 \meta{标题参数} 手动设置标题。内部请配合使用下面的附录用文献列表环境
 %   \env{bibliolist} 和 \env{bibliolist*}。你可以在该环境中使用带星号的节次命令
 %   以分隔不同的类型的成果（比如学术论文、专利等）；你也可以使用多个 \env{achievements}
-%   环境，配合不同的可选参数作为标题，展示不同类型的成果。
+%   环境，配合不同的 \meta{标题参数}，展示不同类型的成果。
 % \end{function}
 %
 % \begin{function}[rEXP,updated=2022-03-23]{bibliolist,bibliolist*}
 %   \begin{syntax}
-%     \BEV{bibliolist}\marg{最长条目编号}
+%     \BEV{bibliolist}\oarg{可选参数}\marg{最长条目编号}
 %     \  \TNA{item} \meta{文献条目}
 %     \EEV{bibliolist}
-%     \BEV{bibliolist*}\marg{最长条目编号}
+%     \BEV{bibliolist*}\oarg{可选参数}\marg{最长条目编号}
 %     \  \TNA{item} \meta{文献条目（隐去姓名）}
 %     \EEV{bibliolist*}
 %   \end{syntax}
@@ -1445,22 +1491,23 @@
 %   普通模式下显示 \env{bibliolist} 中的内容，盲审模式下显示 \env{bibliolist*} 中的内容。
 % \end{function}
 %
-% \begin{function}[rEXP,updated=2022-02-24]{resume}
+% \begin{function}[rEXP,updated=2024-12-20]{resume}
 %   \begin{syntax}
-%     \BEV{resume}\oarg{标题}
+%     \BEV{resume}\oarg{标题参数}
 %     \  \meta{简历内容}
 %     \EEV{resume}
 %   \end{syntax}
-%   简历环境。盲审模式下简历将被隐去。可以使用可选参数手动设置标题。
+%   简历环境。盲审模式下简历将被隐去。可以使用 \meta{标题参数} 手动设置标题。
 % \end{function}
 %
-% \begin{function}[rEXP]{digest}
+% \begin{function}[rEXP,updated=2024-12-20]{digest}
 %   \begin{syntax}
-%     \BEV{digest}\oarg{lang}
+%     \BEV{digest}\oarg{lang=<zh|(en)|de|ja>,标题参数}
 %     \  \meta{大摘要}
 %     \EEV{digest}
 %   \end{syntax}
-%   学士论文大摘要，使用可选参数设定语言，默认为 \opt{en}。
+%   学士论文大摘要，可以设置可选参数，指定大摘要的局部语言会同步更改小标题
+%   为对应语言设置，默认为 \opt{lang=en}。
 % \end{function}
 %
 % \section{宏包依赖情况}
@@ -1630,12 +1677,13 @@
 %
 % \subsection{内部定义}
 %
-% \begin{variable}{\l_@@_tmp_bool,\l_@@_tmp_clist,\l_@@_tmp_dim,
+% \begin{variable}{\l_@@_tmp_tl,\l_@@_tmp_clist,\l_@@_tmp_bool,\l_@@_tmp_dim,
 % \l_@@_tmp_skip,\l_@@_tmp_box}
 % 临时变量。
 %    \begin{macrocode}
+\tl_new:N \l_@@_tmp_tl
+\clist_new:N \l_@@_tmp_clist
 %<thesis>\bool_new:N \l_@@_tmp_bool
-%<thesis>\clist_new:N \l_@@_tmp_clist
 \dim_new:N \l_@@_tmp_dim
 \skip_new:N \l_@@_tmp_skip
 %<thesis>\box_new:N \l_@@_tmp_box
@@ -1751,18 +1799,6 @@
 %<*thesis>
 \cs_new_protected:Npn \@@_name_const_from_clist:nnnn #1#2#3#4
   { \tl_const:cx { c_@@_name_ #2 _ #1 _tl } { \clist_item:nn {#4} {#3} } }
-%</thesis>
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}[int]{\@@_if_lang_valid:nTF}
-% 验证语言选项的函数。
-%    \begin{macrocode}
-%<*thesis>
-\cs_new_protected:Npn \@@_if_lang_valid:nTF #1
-  { \clist_if_in:NnTF \g_@@_lang_clist {#1} }
-\msg_new:nnn { sjtutex } { lang-validation }
-  { Invalid~ language~ argument~ `#1'! }
 %</thesis>
 %    \end{macrocode}
 % \end{macro}
@@ -3805,6 +3841,33 @@
 %
 % \subsection{多语言支持}
 %
+% \begin{variable}{\l_@@_lang_tl}
+%    \begin{macrocode}
+\tl_set_eq:NN \l_@@_lang_tl \g_@@_lang_tl
+%    \end{macrocode}
+% \end{variable}
+%
+%    \begin{macrocode}
+\msg_new:nnn { sjtutex } { lang-validation }
+  { Invalid~language~argument~'#1'! }
+\keys_define:nn { sjtu / private }
+  {
+    lang .choice: ,
+    lang .value_required:n = true ,
+    lang .groups:n = { lang } ,
+    lang / unknown .code:n =
+      { \msg_warning:nnn { sjtutex } { lang-validation } {#1} }
+  }
+%    \end{macrocode}
+%
+% \begin{macro}[int]{\@@_select_language:n}
+% 选择局部语言。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_select_language:n
+  { \keys_set_groups:nnn { sjtu / private } { lang } }
+%    \end{macrocode}
+% \end{macro}
+%
 % 载入语言配置文件。
 %    \begin{macrocode}
 %<thesis>\clist_map_inline:Nn \g_@@_lang_clist
@@ -3814,10 +3877,8 @@
 %</class>
 %    \end{macrocode}
 %
-% \begin{macro}[int]{\@@_set_language_zh:,\@@_set_language_en:,
-% \@@_set_language_de:,\@@_set_language_ja:,
-% \@@_set_cjk_default_zh:,\@@_set_cjk_default_ja:}
-% 设置语言格式辅助命令
+% \begin{macro}[int]{\@@_set_cjk_default_zh:,\@@_set_cjk_default_ja:}
+% 设置 CJK 默认字体族的辅助命令。
 %    \begin{macrocode}
 %<*lang>
 %<*zh>
@@ -3827,24 +3888,7 @@
     \tl_set:Nn \CJKsfdefault { zhhei  }
     \tl_set:Nn \CJKttdefault { zhfs   }
   }
-\cs_new_protected:Nn \@@_set_language_zh:
-  {
-    \tl_set:Nn \languagename { chinese }
-    \ctex_set:n { autoindent = true }
-    \@@_set_cjk_default_zh:
-    \normalfont
-  }
 %</zh>
-%<*en|de>
-%<en>\cs_new_protected:Nn \@@_set_language_en:
-%<de>\cs_new_protected:Nn \@@_set_language_de:
-  {
-%<en>    \tl_set:Nn \languagename { english }
-%<de>    \tl_set:Nn \languagename { ngerman }
-    \ctex_set:n { autoindent = 1.5 em }
-    \normalfont
-  }
-%</en|de>
 %<*ja>
 \cs_new_protected:Nn \@@_set_cjk_default_ja:
   {
@@ -3852,19 +3896,45 @@
     \tl_set:Nn \CJKsfdefault { jagoth }
     \tl_set:Nn \CJKttdefault { jagoth }
   }
-\cs_new_protected:Nn \@@_set_language_ja:
-  {
-    \tl_set:Nn \languagename { japanese }
-    \ctex_set:n { autoindent = 1 }
-    \@@_set_cjk_default_ja:
-    \normalfont
-  }
 %</ja>
 %    \end{macrocode}
 % \end{macro}
 %
+%    \begin{macrocode}
+\keys_define:nn { sjtu / private }
+  {
+%<zh>    lang / zh .code:n =
+%<en>    lang / en .code:n =
+%<de>    lang / de .code:n =
+%<ja>    lang / ja .code:n =
+      {
+        \tl_set_eq:NN \l_@@_lang_tl \l_keys_value_tl
+%<zh>        \tl_set:Nn \languagename { chinese }
+%<en>        \tl_set:Nn \languagename { english }
+%<de>        \tl_set:Nn \languagename { ngerman }
+%<ja>        \tl_set:Nn \languagename { japanese }
+%<zh>        \@@_set_cjk_default_zh:
+%<ja>        \@@_set_cjk_default_ja:
+        \normalfont
+%<zh>        \ctex_set:n { autoindent = true }
+%<en|de>        \ctex_set:n { autoindent = 1.5 em }
+%<ja>        \ctex_set:n { autoindent = 1 }
+      } ,
+%<zh>    zh .meta:n = { lang = zh } ,
+%<zh>    zh .groups:n = { lang }
+%<en>    en .meta:n = { lang = en } ,
+%<en>    en .groups:n = { lang }
+%<de>    de .meta:n = { lang = de } ,
+%<de>    de .groups:n = { lang }
+%<ja>    ja .meta:n = { lang = ja } ,
+%<ja>    ja .groups:n = { lang }
+  }
+%</lang>
+%    \end{macrocode}
+%
 % 通用名称常量。
 %    \begin{macrocode}
+%<*lang>
 \clist_map_inline:nn
   {
 %<zh>    { keywords } { 关键词          } ,
@@ -4719,7 +4789,7 @@
     bookmark      = true ,
     bookmark-text = \tl_use:c { c_@@_name_title_page_ \g_@@_lang_tl _tl } ,
     style         = SJTU@fund@zh ,
-    format        = \linespread { } \@@_set_language_zh: ,
+    format        = \linespread { } \@@_select_language:n { zh } ,
     prefix        = title / zh ,
     components    = { logo, subject, title, info, date }
   }
@@ -4779,7 +4849,7 @@
 \@@_declare_page:nn { title / en }
   {
     style       = SJTU@fund@en ,
-    format      = \linespread { } \@@_set_language_en: ,
+    format      = \linespread { } \@@_select_language:n { en } ,
     prefix      = title / en ,
     components  = { subject, title, info, date }
   }
@@ -4788,7 +4858,7 @@
 \@@_declare_page:nn { title / de }
   {
     style       = SJTU@fund@de ,
-    format      = \linespread { } \@@_set_language_de: ,
+    format      = \linespread { } \@@_select_language:n { de } ,
     prefix      = title / de ,
     components  = { subject, title, info, date }
   }
@@ -4797,7 +4867,7 @@
 \@@_declare_page:nn { title / ja }
   {
     style       = SJTU@fund@ja ,
-    format      = \linespread { } \@@_set_language_ja: ,
+    format      = \linespread { } \@@_select_language:n { ja } ,
     prefix      = title / ja ,
     components  = { subject, title, info, date }
   }
@@ -4953,7 +5023,7 @@
   {
     bookmark      = true ,
     bookmark-text = \tl_use:c { c_@@_name_declaration_ \g_@@_lang_tl _tl } ,
-    format        = \linespread { } \@@_set_language_zh: ,
+    format        = \linespread { } \@@_select_language:n { zh } ,
     prefix        = copyright ,
     components    =
       {
@@ -5001,31 +5071,83 @@
 %
 % \subsection{文档组成}
 %
-% \begin{macro}[int]{\SJTU@head,\@@_head_aux_s:nn,\@@_head_aux_s:nx}
+% \changes{unreleased}{2024/12/20}{内置文档命令与环境修改为使用键值对参数，废弃对应的带星号版本。}
+%
+% \subsubsection{统一接口}
+%
+% 定义文档组成部分的统一键值对接口。
+%
+% \begin{variable}{\l_@@_heading_numbering_bool,\l_@@_heading_in_toc_bool,
+% \l_@@_heading_title_tl,\l_@@_heading_marking_tl}
+%    \begin{macrocode}
+\bool_new:N \l_@@_heading_numbering_bool
+\bool_new:N \l_@@_heading_in_toc_bool
+\tl_new:N \l_@@_heading_title_tl
+\tl_new:N \l_@@_heading_marking_tl
+%    \end{macrocode}
+% \end{variable}
+%
+% 默认 \tn{mainmatter} 之后的章节标题加入目录。
+%    \begin{macrocode}
+%<*thesis>
+\AddToHook { cmd / mainmatter / after }
+  { \bool_set_true:N \l_@@_heading_in_toc_bool }
+%</thesis>
+%    \end{macrocode}
+%
+% \begin{macro}{intoc,notintoc,title,marking}
+%    \begin{macrocode}
+\keys_define:nn { sjtu / private }
+  {
+    intoc    .value_forbidden:n = true,
+    intoc    .groups:n = { heading } ,
+    intoc    .code:n = { \bool_set_true:N  \l_@@_heading_in_toc_bool } ,
+    notintoc .value_forbidden:n = true,
+    notintoc .groups:n = { heading } ,
+    notintoc .code:n = { \bool_set_false:N \l_@@_heading_in_toc_bool } ,
+    title    .tl_set:N = \l_@@_heading_title_tl ,
+    title    .groups:n = { heading } ,
+    marking  .tl_set:N = \l_@@_heading_marking_tl ,
+    marking  .groups:n = { heading }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}[int]{\SJTU@heading,\@@_heading:nn,\@@_heading:VV,
+% \@@_make_heading:n}
 % 定义一个灵活的章节标题命令专门处理不同的需求。
 %    \begin{macrocode}
-\NewDocumentCommand \SJTU@head { s O{#3} m O{#2} }
+\NewDocumentCommand \SJTU@heading { O{#2} m }
   {
-%<!article>    \CTEX@chapter@break
-    \IfBooleanTF {#1}
-      { \tl_if_empty:nF {#4} { \@@_pdf_bookmark:nn { 0 } {#4} } }
+    \bool_if:nTF
+      { \l_@@_heading_numbering_bool && \l_@@_heading_in_toc_bool }
+%<!article>      { \chapter [#1] {#2} }
+%<article>      { \section [#1] {#2} }
       {
-        \@@_phantom_section:
-%<!article>        \addcontentsline { toc } { chapter } {#4}
-%<article>        \addcontentsline { toc } { section } {#4}
+%<!article>        \CTEX@chapter@break
+        \bool_if:NTF \l_@@_heading_in_toc_bool
+          {
+            \@@_phantom_section:
+%<!article>            \addcontentsline { toc } { chapter } {#1}
+%<article>            \addcontentsline { toc } { section } {#1}
+          }
+          { \@@_pdf_bookmark:nn { 0 } {#1} }
+%<!article>        \chapter* {#2}
+%<article>        \section* {#2}
+        \CTEX@gettitle {#1}
+        \@mkboth { \MakeUppercase {#1} } { \MakeUppercase {#1} }
       }
-    \cs_set_eq:NN \@@_orig_ctex_gettitle:n \CTEX@gettitle
-    \cs_set:Npn \CTEX@gettitle ##1 { \@@_orig_ctex_gettitle:n {#2} }
-%<!article>    \chapter* {#3}
-%<article>    \section* {#3}
-    \cs_set_eq:NN \CTEX@gettitle \@@_orig_ctex_gettitle:n
-    \@mkboth { \MakeUppercase {#2} } { \MakeUppercase {#2} }
   }
-%<*thesis>
-\cs_new:Npn \@@_head_aux_s:nn #1#2
-  { \SJTU@head* [#1] {#2} }
-\cs_generate_variant:Nn \@@_head_aux_s:nn { nx }
-%</thesis>
+\cs_new_protected:Npn \@@_heading:nn #1#2
+  { \SJTU@heading [#1] {#2} }
+\cs_generate_variant:Nn \@@_heading:nn { VV }
+\cs_new_protected:Npn \@@_make_heading:n #1
+  {
+    \tl_set_eq:NN \l_@@_heading_marking_tl \c_novalue_tl
+    \keys_set_groups:nnn { sjtu / private } { heading } {#1}
+    \@@_heading:VV
+      \l_@@_heading_marking_tl \l_@@_heading_title_tl
+  }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -5050,54 +5172,31 @@
 % \changes{v2.0}{2023/03/17}{\env{abstract} 环境新增指定语言的可选参数。}
 % \changes{v2.1}{2023/11/29}{\env{abstract} 环境添加目录条目，
 % \env{abstract*} 环境对应修改为不添加目录条目。}
-% \begin{macro}{abstract,abstract*}
+% \begin{macro}{abstract}
 % 学位论文摘要环境。
 %    \begin{macrocode}
 %<*thesis>
-\DeclareDocumentEnvironment { abstract  } { O{ zh } +b }
+\DeclareDocumentEnvironment { abstract } { O{ } }
   {
-    \@@_if_lang_valid:nTF {#1}
-      {
-        \use:c { @@_set_language_ #1 : }
-        \exp_args:Nv \SJTU@head { c_@@_name_abstract_ #1 _tl }
-        #2
-        \clist_if_empty:cF { l_@@_info_keywords_ #1 _clist }
-          {
-            \par \mode_leave_vertical: \par
-            \@@_keywords_format:n
-              {
-                \tl_use:c { c_@@_name_keywords_ #1 _tl }
-                \tl_use:c { c_@@_name_info_sep_ #1 _tl }
-              }
-            \clist_use:cv { l_@@_info_keywords_ #1 _clist }
-              { c_@@_name_item_sep_ #1 _tl }
-            \par
-          }
-      }
-      { \msg_error:nnn { sjtutex } { lang-validation } {#1} }
-  } { }
-\DeclareDocumentEnvironment { abstract* } { O{ zh } +b }
+    \@@_select_language:n {#1}
+    \tl_set_eq:Nc \l_@@_heading_title_tl
+      { c_@@_name_abstract_ \l_@@_lang_tl _tl }
+    \@@_make_heading:n {#1}
+  }
   {
-    \@@_if_lang_valid:nTF {#1}
+    \clist_if_empty:cF { l_@@_info_keywords_ \l_@@_lang_tl _clist }
       {
-        \use:c { @@_set_language_ #1 : }
-        \exp_args:NNv \SJTU@head* { c_@@_name_abstract_ #1 _tl }
-        #2
-        \clist_if_empty:cF { l_@@_info_keywords_ #1 _clist }
+        \par \mode_leave_vertical: \par
+        \@@_keywords_format:n
           {
-            \par \mode_leave_vertical: \par
-            \@@_keywords_format:n
-              {
-                \tl_use:c { c_@@_name_keywords_ #1 _tl }
-                \tl_use:c { c_@@_name_info_sep_ #1 _tl }
-              }
-            \clist_use:cv { l_@@_info_keywords_ #1 _clist }
-              { c_@@_name_item_sep_ #1 _tl }
-            \par
+            \tl_use:c { c_@@_name_keywords_ \l_@@_lang_tl _tl }
+            \tl_use:c { c_@@_name_info_sep_ \l_@@_lang_tl _tl }
           }
+        \clist_use:cv { l_@@_info_keywords_ \l_@@_lang_tl _clist }
+          { c_@@_name_item_sep_ \l_@@_lang_tl _tl }
+        \par
       }
-      { \msg_error:nnn { sjtutex } { lang-validation } {#1} }
-  } { }
+  }
 %</thesis>
 %    \end{macrocode}
 %
@@ -5133,15 +5232,15 @@
 %
 % \changes{v2.1}{2023/11/29}{\tn{tableofcontents} 添加目录条目，
 % \tn{tableofcontents*} 对应修改为不添加目录条目。}
-% \begin{macro}{\tableofcontents,\tableofcontents*}
+% \begin{macro}{\tableofcontents}
 % 目录。
 %    \begin{macrocode}
-\DeclareDocumentCommand \tableofcontents { s }
+\DeclareDocumentCommand \tableofcontents { O{ } }
   {
-    \IfBooleanTF {#1}
-      { \SJTU@head* { \contentsname } }
-      { \SJTU@head  { \contentsname } }
-    \@starttoc { toc }
+    \group_begin:
+      \@@_make_heading:n { title = \contentsname, #1 }
+      \@starttoc { toc }
+    \group_end:
   }
 %    \end{macrocode}
 % \end{macro}
@@ -5171,15 +5270,15 @@
 % \changes{v2.0.1}{2023/03/31}{插图、表格和算法等索引不缩进。}
 % \changes{v2.0.1}{2023/03/31}{调整插图、表格和算法等索引编号宽度。}
 % \begin{macro}[int]{\SJTU@listof,\@@_new_list_of:Nnnn}
-% \begin{macro}{\listoffigures,\listoffigures*,\listoftables,\listoftables*}
+% \begin{macro}{\listoffigures,\listoftables}
 % 图表索引。
 %    \begin{macrocode}
-\NewDocumentCommand \SJTU@listof { m m s }
+\NewDocumentCommand \SJTU@listof { m m O{ } }
   {
-    \IfBooleanTF {#3}
-      { \SJTU@head* {#1} }
-      { \SJTU@head  {#1} }
-    \exp_args:Nv \@starttoc { ext@ #2 }
+    \group_begin:
+      \@@_make_heading:n { title = #1, #3 }
+      \exp_args:Nv \@starttoc { ext@ #2 }
+    \group_end:
   }
 \cs_new_protected:Npn \@@_new_list_of:Nnnn #1#2#3#4
   {
@@ -5201,34 +5300,26 @@
 %
 % \subsubsection{预定义环境}
 %
-% \begin{macro}{abbreviation,abbreviation*}
+% \begin{macro}{abbreviation}
 % 缩略语对照表。
 %    \begin{macrocode}
 %<*thesis>
-\NewDocumentEnvironment { abbreviation  } { O{ \SJTU@abbrname } }
+\NewDocumentEnvironment { abbreviation } { O{ } }
   {
-    \chapter    {#1}
-    \tl_clear:N \SJTU@style@float@font
-  } { }
-\NewDocumentEnvironment { abbreviation* } { O{ \SJTU@abbrname } }
-  {
-    \SJTU@head* {#1}
+    \bool_set_true:N \l_@@_heading_numbering_bool
+    \@@_make_heading:n { title = \SJTU@abbrname, #1 }
     \tl_clear:N \SJTU@style@float@font
   } { }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{nomenclature,nomenclature*}
+% \begin{macro}{nomenclature}
 % 符号对照表。
 %    \begin{macrocode}
-\NewDocumentEnvironment { nomenclature  } { O{ \SJTU@nomname } }
+\NewDocumentEnvironment { nomenclature } { O{ } }
   {
-    \chapter    {#1}
-    \tl_clear:N \SJTU@style@float@font
-  } { }
-\NewDocumentEnvironment { nomenclature* } { O{ \SJTU@nomname } }
-  {
-    \SJTU@head* {#1}
+    \bool_set_true:N \l_@@_heading_numbering_bool
+    \@@_make_heading:n { title = \SJTU@nomname, #1 }
     \tl_clear:N \SJTU@style@float@font
   } { }
 %    \end{macrocode}
@@ -5239,11 +5330,12 @@
 % \begin{macro}{acknowledgements}
 % 致谢，盲审模式下隐藏致谢。
 %    \begin{macrocode}
-\NewDocumentEnvironment { acknowledgements } { O{ \SJTU@ackname } +b }
+\NewDocumentEnvironment { acknowledgements } { O{ } +b }
   {
     \bool_if:NF \g_@@_review_bool
       {
-        \SJTU@head {#1}
+        \@@_select_language:n {#1}
+        \@@_make_heading:n { title = \SJTU@ackname, #1 }
         #2
       }
   } { }
@@ -5308,9 +5400,10 @@
 \msg_new:nnn { sjtutex } { empty-environment }
   { Empty~ `#1'~ environment. }
 \bool_new:N \l_@@_achievements_bool
-\NewDocumentEnvironment { achievements } { O{ \SJTU@achvname } }
+\NewDocumentEnvironment { achievements } { O{ } }
   {
-    \SJTU@head {#1}
+    \@@_select_language:n {#1}
+    \@@_make_heading:n { title = \SJTU@achvname, #1 }
     \setcounter { SJTU@bib } { 0 }
     \bool_set_true:N \l_@@_achievements_bool
   } { }
@@ -5352,11 +5445,12 @@
 % \begin{macro}{resume}
 % 简历。
 %    \begin{macrocode}
-\NewDocumentEnvironment { resume } { O{ \SJTU@resumename } +b }
+\NewDocumentEnvironment { resume } { O{ } +b }
   {
     \bool_if:NF \g_@@_review_bool
       {
-        \SJTU@head {#1}
+        \@@_select_language:n {#1}
+        \@@_make_heading:n { title = \SJTU@resumename, #1 }
         #2
       }
   } { }
@@ -5367,32 +5461,31 @@
 % \begin{macro}{digest}
 % 大摘要。
 %    \begin{macrocode}
-\NewDocumentEnvironment { digest } { O{ en } +b }
+\NewDocumentEnvironment { digest } { O{ } +b }
   {
-    \@@_if_lang_valid:nTF {#1}
+    \AtEndDocument
       {
-        \AtEndDocument
-          {
-            \use:c { @@_set_language_ #1 : }
-            \legacy_if:nTF { @openright }
-              { \cleardoublepage } { \clearpage }
-            \pagenumbering { roman }
-            \cs_gset:Nn \@@_thepage: { \arabic { page } }
-            \cs_gset_eq:NN \addcontentsline \use_none:nnn
-            \clist_map_inline:Nn \l_@@_counter_without_chapter_clist
-              {
-                \counterwithout {##1} { chapter }
-                \setcounter     {##1} { 0 }
-              }
-            \@@_head_aux_s:nx { \SJTU@digestname }
-              {
-                \exp_not:N \MakeUppercase
-                  { \exp_not:v { l_@@_info_title_ #1 _tl } }
-              }
-            #2
-          }
+        \group_begin:
+          \@@_select_language:n { en, #1 }
+          \legacy_if:nTF { @openright }
+            { \cleardoublepage } { \clearpage }
+          \pagenumbering { roman }
+          \cs_gset:Nn \@@_thepage: { \arabic { page } }
+          \cs_gset_eq:NN \addcontentsline \use_none:nnn
+          \clist_map_inline:Nn \l_@@_counter_without_chapter_clist
+            {
+              \counterwithout {##1} { chapter }
+              \setcounter     {##1} { 0 }
+            }
+          \tl_set:Ne \l_@@_heading_title_tl
+            {
+              \exp_not:N \MakeUppercase
+                { \exp_not:v { l_@@_info_title_ \l_@@_lang_tl _tl } }
+            }
+          \@@_make_heading:n { marking = \SJTU@digestname, #1, notintoc }
+          #2
+        \group_end:
       }
-      { \msg_error:nnn { sjtutex } { lang-validation } {#1} }
   } { }
 %</thesis>
 %    \end{macrocode}
@@ -5738,13 +5831,16 @@
         \exp_args:NV \contentsuse \thmt@envname { loe }
       }
     \cs_set:Npn \thmtlo@chaptervspacehack { }
-    \RenewDocumentCommand \listoftheorems { s O{ } }
+    \RenewDocumentCommand \listoftheorems { O{ } }
       {
         \group_begin:
-          \setlisttheoremstyle {#2}
-          \IfBooleanTF {#1}
-            { \SJTU@head* { \listtheoremname } }
-            { \SJTU@head  { \listtheoremname } }
+          \tl_set_eq:NN \l_@@_heading_marking_tl \c_novalue_tl
+          \keys_set_groups:nnnN { sjtu / private } { heading }
+            { title = \listtheoremname, #1 } \l_@@_tmp_tl
+          \tl_set_rescan:NnV \l_@@_tmp_tl { } \l_@@_tmp_tl
+          \@@_heading:VV
+            \l_@@_heading_marking_tl \l_@@_heading_title_tl
+          \exp_args:No \setlisttheoremstyle { \l_@@_tmp_tl }
           \cs_set:Npn \contentsline ##1
             { \use:c { thmt@contentsline@ ##1 } {##1} }
           \clist_map_inline:Nn \thmt@allenvs
