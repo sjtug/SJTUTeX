@@ -1327,13 +1327,14 @@
 %   \end{itemize}
 % \end{function}
 %
-% \begin{function}[rEXP,updated=2022-12-20]{\copyrightpage}
+% \begin{function}[rEXP,updated=2024-12-21]{\copyrightpage}
 %   \begin{syntax}
 %     \TNA{copyrightpage}
-%     \TNA{copyrightpage}\oarg{授权书扫描件}
+%     \TNA{copyrightpage}\oarg{file=授权书扫描件,额外选项}
 %   \end{syntax}
 %   生成空白版权使用授权书。
-%   接受一个可选参数用于插入版权使用授权书扫描件，使用可选参数时需要手动加载 \pkg{pdfpages} 宏包。
+%   接受可选参数用于插入版权使用授权书扫描件，插入外置 PDF 页时需要手动加载 \pkg{pdfpages} 宏包。
+%   额外选项将传递给 \tn{includepdf} 命令。
 % \end{function}
 %
 % \subsection{前文部分}
@@ -5008,12 +5009,27 @@
   }
 %    \end{macrocode}
 %
+% \begin{variable}{\l_@@_copyright_page_file_tl}
+%    \begin{macrocode}
+\tl_new:N \l_@@_copyright_page_file_tl
+%    \end{macrocode}
+% \end{variable}
+%
+%    \begin{macrocode}
+\keys_define:nn { sjtu / private / copyright }
+  {
+    file .tl_set:N = \l_@@_copyright_page_file_tl ,
+    file .value_required:n = true ,
+    filename .meta:n = { file = #1 }
+  }
+%    \end{macrocode}
+%
 % \changes{v2.0}{2022/12/20}{不再自动载入 \pkg{pdfpages} 宏包。}
 %    \begin{macrocode}
 \msg_new:nnn { sjtutex } { require-pdfpages }
   {
-    Add~"\token_to_str:N \usepackage{pdfpages}"~ in~ your~ preamble \\
-    before~ inserting~ pages~ of~ external~ PDF.
+    Add~'\token_to_str:N \usepackage{pdfpages}'~in~your~preamble \\
+    before~inserting~pages~of~external~PDF.
   }
 %    \end{macrocode}
 %
@@ -5024,21 +5040,27 @@
   {
     \bool_if:NF \g_@@_review_bool
       {
-        \tl_if_blank:nTF {#1}
-          { \UseInstance { sjtu / page } { copyright } { zh } }
-          {
-            \cs_if_exist:NTF \includepdf
-              {
-                \legacy_if:nTF { @openright }
-                  { \cleardoublepage } { \clearpage }
-                \@@_pdf_bookmark:nn { 0 } { \c_@@_name_declaration_tl }
-                \includepdf {#1}
-              }
-              {
-                \msg_warning:nn { sjtutex } { require-pdfpages }
-                \UseInstance { sjtu / page } { copyright } { zh }
-              }
-          }
+        \group_begin:
+          \keys_set_known:nnN { sjtu / private / copyright }
+            {#1} \l_@@_tmp_tl
+          \tl_if_empty:NTF \l_@@_copyright_page_file_tl
+            { \UseInstance { sjtu / page } { copyright } { zh } }
+            {
+              \cs_if_exist:NTF \includepdf
+                {
+                  \legacy_if:nTF { @openright }
+                    { \cleardoublepage } { \clearpage }
+                  \@@_pdf_bookmark:nn { 0 } { \c_@@_name_declaration_tl }
+                  \tl_set_rescan:NnV \l_@@_tmp_tl { } \l_@@_tmp_tl
+                  \exp_args:NNo \includepdf [ \l_@@_tmp_tl ]
+                    { \l_@@_copyright_page_file_tl }
+                }
+                {
+                  \msg_warning:nn { sjtutex } { require-pdfpages }
+                  \UseInstance { sjtu / page } { copyright } { zh }
+                }
+            }
+        \group_end:
       }
   }
 %</thesis>
