@@ -2785,10 +2785,20 @@
   }
 %    \end{macrocode}
 %
-% 若未使用 \pkg{unicode-math} 配置数学字体，则自动调用 \pkg{bm}。
+% 若未使用 \pkg{unicode-math} 配置数学字体，则自动调用 \pkg{bm}，
+% 并在未定义 \tn{uppi} 和 \tn{checkmark} 时分别调用 \pkg{upgreek} 和 \pkg{amsfonts}。
 %    \begin{macrocode}
 \ctex_at_end_preamble:n
-  { \IfPackageLoadedF { unicode-math } { \RequirePackage { bm } } }
+  {
+    \IfPackageLoadedF { unicode-math }
+      {
+        \RequirePackage { bm }
+        \cs_if_exist:NF \uppi
+          { \RequirePackage { upgreek  } }
+        \cs_if_exist:NF \checkmark
+          { \RequirePackage { amsfonts } }
+      }
+  }
 %</class>
 %    \end{macrocode}
 %
