@@ -5586,20 +5586,23 @@
         pdfdisplaydoctitle = true
       }
     \int_new:N \g_@@_bookmark_int
-    \cs_gset_protected:Npn \@@_pdf_bookmark:nn #1#2
+    \cs_set_protected:Npn \@@_pdf_bookmark:nn #1#2
       {
         \phantomsection
         \int_gincr:N \g_@@_bookmark_int
         \pdfbookmark [#1] {#2}
           { sjtubookmark. \int_use:N \g_@@_bookmark_int }
       }
-    \cs_gset_eq:NN \@@_phantom_section: \phantomsection
+    \cs_set_eq:NN \@@_phantom_section: \phantomsection
+    \DeclareExpandableDocumentCommand
+      { \@@_pdfstring_newline:w } { s o m } {#3}
     \pdfstringdefDisableCommands
       {
-        \cs_set_eq:NN \\       \prg_do_nothing:
-        \cs_set_eq:NN \quad    \c_empty_tl
-        \cs_set_eq:NN \qquad   \c_empty_tl
+        \cs_set_eq:NN \\       \@@_pdfstring_newline:w
         \cs_set_eq:NN \hspace  \use_none:n
+        \cs_set_eq:NN \zihao   \use_none:n
+        \tl_set_eq:NN \quad    \c_empty_tl
+        \tl_set_eq:NN \qquad   \c_empty_tl
       }
     \ctex_after_end_preamble:n
       {
