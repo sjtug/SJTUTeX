@@ -1749,6 +1749,18 @@
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}[int]{\@@_disable_package_load:n}
+%    \begin{macrocode}
+\msg_new:nnn { sjtutex } { package-disabled }
+  { The~loading~of~package~'#1'~is~disabled. }
+\cs_new_protected:Npn \@@_disable_package_load:n #1
+  {
+    \disable@package@load {#1}
+      { \msg_warning:nnn { sjtutex } { package-disabled } {#1} }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
 % \changes{v2.0.2}{2023/03/31}{区分 \texttt{dim} 与 \texttt{skip} 类型变量。}
 % \begin{macro}[int]{\@@_dim_set_to_wd:Nn}
 % 操作长度变量的辅助函数。
@@ -2765,6 +2777,9 @@
         \scpolint\npolint\pointint\sqint\intlarhk\intx
         \intcap\intcup\upint\lowint
       }
+    \clist_map_inline:nn
+      { amsfonts, amssymb, bm, upgreek }
+      { \@@_disable_package_load:n {#1} }
   }
 %    \end{macrocode}
 %
@@ -5775,33 +5790,32 @@
     \newtheoremstyle { sjtu }
       { } { } { \SJTU@style@thm@body@font } { }
       { \SJTU@style@thm@header@font } { } { \ccwd } { }
-  }
-%    \end{macrocode}
-%
-% 如果用户加载了 \pkg{amsthm} 或 \pkg{ntheorem} 宏包，
-% 则在导言区末尾应用预设的样式定义定理环境。
-%    \begin{macrocode}
-\ctex_at_end_preamble:n
-  {
-    \IfPackageLoadedTF { amsthm }
+    \@@_disable_package_load:n { ntheorem }
+    \ctex_at_end_preamble:n
       {
         \theoremstyle { sjtu }
         \@@_new_theorems:
       }
+  }
+%    \end{macrocode}
+%
+% \pkg{ntheorem} 宏包。
+%    \begin{macrocode}
+\ctex_at_end_package:nn { ntheorem }
+  {
+    \@@_disable_package_load:n { amsthm }
+    \ctex_at_end_preamble:n
       {
-        \IfPackageLoadedT { ntheorem }
-          {
-            \@@_cs_provide_eq:NN \QED \c_empty_tl
-            \theoremheaderfont { \SJTU@style@thm@header@font }
-            \theorembodyfont   { \SJTU@style@thm@body@font   }
-            \theoremseparator  { \enskip }
-            \theoremsymbol { \ensuremath { \QED } }
-            \qedsymbol     { \ensuremath { \QED } }
-            \cs_if_exist:NF \proof
-              { \newtheorem* { proof } { \proofname } }
-            \theoremsymbol { }
-            \@@_new_theorems:
-          }
+        \@@_cs_provide_eq:NN \QED \c_empty_tl
+        \theoremheaderfont { \SJTU@style@thm@header@font }
+        \theorembodyfont   { \SJTU@style@thm@body@font   }
+        \theoremseparator  { \enskip }
+        \theoremsymbol { \ensuremath { \QED } }
+        \qedsymbol     { \ensuremath { \QED } }
+        \cs_if_exist:NF \proof
+          { \newtheorem* { proof } { \proofname } }
+        \theoremsymbol { }
+        \@@_new_theorems:
       }
   }
 %    \end{macrocode}
