@@ -31,8 +31,8 @@ packtdszip         = true
 tdslocations = {
   "tex/latex/sjtutex/font/sjtu-*-font-*.def",
   "tex/latex/sjtutex/lang/sjtu-lang-*.def",
-  "tex/latex/sjtutex/name/sjtu-name-*.def",
   "tex/latex/sjtutex/scheme/sjtu-scheme-*.def",
+  "tex/latex/sjtutex/thesis/sjtu-thesis-*.def",
   "tex/latex/sjtutex/vi/sjtu-vi-*.pdf"
 }
 
