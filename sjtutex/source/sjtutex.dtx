@@ -372,15 +372,14 @@
 %   {\LaTeX{} Project Public License (1.3c)}，使用前请认真阅读协议内容。
 % \item 学位论文模板根据 \href{https://www.gs.sjtu.edu.cn/post/detail/Z3MxNDc=}
 %   {《上海交通大学博士、硕士学位论文撰写指南》} ，并参考
-%   \href{https://bysj.jwc.sjtu.edu.cn/ShowNews.aspx?newsno=Yr2wg3ibJJhIZh0A52amXw....}
+%   \href{https://www.jwc.sjtu.edu.cn/info/1041/117021.htm}
 %   {《上海交通大学本科生毕业设计（论文）撰写规范》}
-%   编写而成。旨在供上海交通大学准毕业生撰
-%   写学位论文使用。
-% \item 学位论文模板仅为撰写指南的参考实现，不保证审查老师不提意见。任何由于使用本模板
-%   而引起的论文格式审查问题均与本模板作者无关。
+%   编写而成。旨在供上海交通大学准毕业生撰写学位论文使用。
+% \item 学位论文模板仅为撰写指南的参考实现，不保证审查老师不提意见。任何由于使用
+%   本模板而引起的论文格式审查问题均与本模板作者无关。
 % \item 任何个人或组织以本模板为基础进行修改、扩展而生成的新的专用模板，请严格遵
-%   守 \LaTeX{} Project Public License 协议。由于违犯协议而引起的任何纠纷
-%   争端均与本模板作者无关。
+%   守 \LaTeX{} Project Public License 协议。由于违犯协议而引起的任何纠纷争端均
+%   与本模板作者无关。
 % \end{enumerate}
 % \end{abstract}
 %
@@ -390,33 +389,35 @@
 %
 % \section{介绍}
 %
-% 最早的一版 \LaTeX{} 学位论文模板由一位热心的物理系同学制作，中文字符处理采用了当时最为流行的
-% CJK--\LaTeX{} 方案。在此基础上，weijianwen 根据交大研究生院对学位论文的要求，完成
-% 了一份基本可用的交大 \LaTeX{} 学位论文模板。由于 CJK--\LaTeX{} 方案不易使用，
-% weijianwen 与 William Wang 开始着手把模板向 \XeTeX{} 引擎移植。之后 weijianwen
-% 又断断续续做了一些完善模板的工作，在原有硕士学位论文模板的基础上完成了交大学士
-% 和博士学位论文模板。
+% 最早的一版 \LaTeX{} 学位论文模板由一位热心的物理系同学制作，中文字符处理采用了
+% 当时最为流行的 CJK--\LaTeX{} 方案。在此基础上，weijianwen 根据交大研究生院对学
+% 位论文的要求，完成了一份基本可用的交大 \LaTeX{} 学位论文模板。由于 CJK--\LaTeX{}
+% 方案不易使用，weijianwen 与 William Wang 开始着手把模板向 \XeTeX{} 引擎移植。
+% 之后 weijianwen又断断续续做了一些完善模板的工作，在原有硕士学位论文模板的基础
+% 上完成了交大学士和博士学位论文模板。
 %
 % 2012 年 5 月模板开始在 GitHub^^A
 % \footnote{\url{https://github.com/weijianwen/SJTUThesis}，项目转移后该链接已重定向。}^^A
-% 上管理和更新，2018 年 1 月项目转移至 SJTUG 名
-% 下。2019 年 6 月 Alexara Wu 重构了整个宏包的代码，并使用 Doc\TeX{} 文档和
-% \textsc{DocStrip} 工具进行代码的管理，升级版本号为 1.0。2022 年 11 月，论文模板
-% 改版后，使用 \LaTeXiii{} 重构了代码，添加 \cls{sjtureport} 和 \cls{sjtuarticle}
-% 文档类，升级版本号为 2.0。
+% 上管理和更新，2018 年 1 月项目转移至 SJTUG 名下。2019 年 6 月 Alexara Wu 重构
+% 了整个宏包的代码，并使用 Doc\TeX{} 文档和\textsc{DocStrip} 工具进行代码的管理，
+% 升级版本号为 1.0。2022 年 11 月，论文模板改版后，使用 \LaTeXiii{} 重构了代码，
+% 添加 \cls{sjtureport} 和 \cls{sjtuarticle} 文档类，升级版本号为 2.0。
+% 2024 年 2 月，\pkg{sjtutex} 文档类集在 CTAN 上发布，被 \TeX{} Live 2024 及之后
+% 的版本收录。
 %
 % 现在，\sjtutex{} 代码在 GitHub^^A
 % \footnote{\url{https://github.com/sjtug/SJTUTeX}}^^A
-% 上维护。
-% 原 \href{https://github.com/sjtug/SJTUThesis}{SJTUThesis} 仓库则作为学位论文示例文档，提供开箱即用的模板。
-% 学位论文模板用户可以在 \href{https://github.com/sjtug/SJTUThesis/discussions}{Discussions}
-% 上提问使用问题，也可以在 \href{https://github.com/sjtug/SJTUThesis/issues}{Issues}
+% 上维护，并同步发布至 CTAN\footnote{\url{https://www.ctan.org/pkg/sjtutex}} 上。
+% 原 \href{https://github.com/sjtug/SJTUThesis}{SJTUThesis} 仓库则作为学位论文
+% 示例文档，提供开箱即用的模板。学位论文模板用户可以在
+% \href{https://github.com/sjtug/SJTUThesis/discussions}{Discussions}
+% 上提问使用问题，也可以在
+% \href{https://github.com/sjtug/SJTUThesis/issues}{Issues}
 % 中进行 Bug 反馈与新功能提案。如果需要对文档类代码进行修改，欢迎前往
 % \href{https://github.com/sjtug/SJTUTeX}{\sjtutex} 仓库进行 Pull Request。
 % \sjtutex{} 模板的许多实现细节离不开
-% \href{https://github.com/sjtug/SJTUThesis/graphs/contributors}
-% {热心同学们} 的贡献，在此感谢所有为模板贡献过代码的同学们，以及所有测试和使用
-% 模板的各位同学！
+% \href{https://github.com/sjtug/SJTUThesis/graphs/contributors}{热心同学们}
+% 的贡献，在此感谢所有为模板贡献过代码的同学们，以及所有测试和使用模板的各位同学！
 %
 % \note{模板的作用在于减少论文写作过程中格式调整的时间，前提是遵守模板的用法，否
 %   则即便用了 \sjtutex{} 也难以保证输出的论文符合学校规范。}
@@ -431,8 +432,8 @@
 % \href{https://github.com/sjtug/SJTUThesis/wiki/TeX-发行版及其安装}
 % {Wiki 页面《\TeX{} 发行版及其安装》}。
 %
-% \sjtutex{} 最低支持至 2021 年发行的 \TeX{} 发行版，\pkg{ctex} 宏包版本应当在
-% v2.5 及以上。版本过低将无法正常编译。
+% \sjtutex{} 需要 \LaTeXe{} 内核 2024-06-01 或以上版本，\pkg{ctex} 宏包版本应当
+% 在 v2.5 及以上。版本过低将无法正常编译。
 %
 % \subsection{文件组成}
 %
@@ -473,12 +474,17 @@
 %
 % \subsection{使用文档类}
 %
-% 共有 3 种文档类，\cls{sjtuthesis} 用于学位论文的排版，\cls{sjtureport} 用于课程大报告的排版，
-% \cls{sjtuarticle} 用于课程小论文的排版。
+% 共有 3 种文档类，\cls{sjtuthesis} 用于学位论文的排版，\cls{sjtureport}
+% 用于课程大报告的排版，\cls{sjtuarticle} 用于课程小论文的排版。
 %
-% 将文档保存在下载好的 \sjtutex{} 模板根目录下，文件以 \texttt{.tex} 后缀结尾。
-% 注意在使用文档类时，需要将涉及到的所有源文件使用 UTF-8 编码保存。对于不同的文档类，使用方法
-% 略有不同，这里给出这三种文档类的最小使用示例。
+% 将文档保存在下载好的 \sjtutex{} 模板根目录下，或者直接使用 \TeX{} 发行版
+% 中的 \pkg{sjtutex} 文档类集^^A
+% \footnote{为了使用最新版本的 \sjtutex{}，请及时更新发行版至最新的版本：^^A
+% \TeX{} Live 用户请使用命令 \texttt{tlmgr update --self --all} 来更新全部宏包；^^A
+% \hologo{MiKTeX} 用户请在 MiKTeX Console 更新选项卡中更新所有宏包。}，
+% 文件以 \texttt{.tex} 后缀结尾。
+% 注意在使用文档类时，需要将涉及到的所有源文件使用 UTF-8 编码保存。
+% 对于不同的文档类，使用方法略有不同，这里给出这三种文档类的最小使用示例。
 %
 % 下面这份 \TeX{} 文档展示了 \cls{sjtuthesis} 文档类的基本用法，一般需要指定
 % 中英文名称。该文档将包含中英文封面，页眉为文档主题及章节名称。
@@ -505,8 +511,8 @@
 % \end{document}
 % \end{latex}
 %
-% 下面这份 \TeX{} 文档展示了 \cls{sjtureport} 文档类的基本用法，建议使用标准命令定义中文名称。
-% 该文档将包含标题页，页眉为校标图片、文档主题及章节名称。
+% 下面这份 \TeX{} 文档展示了 \cls{sjtureport} 文档类的基本用法，建议使用标准命令
+% 定义中文名称。该文档将包含标题页，页眉为校标图片、文档主题及章节名称。
 % \begin{latex}[moretexcs={\subject,\keywords,\maketitle,\chapter},
 %   emph={[1]sjtureport,document}]
 % \documentclass{sjtureport}
@@ -522,8 +528,9 @@
 % \end{document}
 % \end{latex}
 %
-% 下面这份 \TeX{} 文档展示了 \cls{sjtuarticle} 文档类的基本用法，建议使用标准命令定义中文名称，
-% 不能够使用 \tn{chapter} 这一级。该文档包含标题栏，页眉为校标图片、文档主题及章节名称。
+% 下面这份 \TeX{} 文档展示了 \cls{sjtuarticle} 文档类的基本用法，建议使用标准
+% 命令定义中文名称，不能够使用 \tn{chapter} 这一级。该文档包含标题栏，页眉为
+% 校标图片、文档主题及章节名称。
 % \begin{latex}[moretexcs={\maketitle}, emph={[1]sjtuarticle,document}]
 % \documentclass{sjtuarticle}
 % \title{示例文档}
@@ -543,7 +550,7 @@
 % 在实际使用中，一般推荐使用自动生成工具 \pkg{latexmk} 编译文档。\pkg{latexmk}
 % 命令可以自动进行多步编译，直到交叉引用都被解决。
 % 假设您的 \TeX{} 源文件名为 \file{main.tex}，
-% 可在命令行中执行如下命令使用 \XeLaTeX{} 编译文档
+% 可在命令行中执行如下命令使用 \XeLaTeX{} 编译文档：
 % \begin{shell}[morekeywords={latexmk},emph={-xelatex}]
 % latexmk -xelatex main
 % \end{shell}
@@ -554,9 +561,12 @@
 %
 % 本模板中的选项、命令或环境可以分为以下三类：
 % \begin{itemize}
-%   \item 名字后面带有 \rexptarget\rexpstar{} 的，表示只能在 \cls{sjtuthesis} 文档类中使用；
-%   \item 名字后面带有 \exptarget\expstar{} 的，表示只能在 \cls{sjtureport} 和 \cls{sjtuarticle} 文档类中使用；
-%   \item 名字后面不带有特殊符号的，一般表示在 \cls{sjtuthesis}、\cls{sjtureport} 和 \cls{sjtuarticle} 文档类中都可以使用，特殊情况另作说明。
+%   \item 名字后面带有 \rexptarget\rexpstar{} 的，表示只能在 \cls{sjtuthesis}
+%     文档类中使用；
+%   \item 名字后面带有 \exptarget\expstar{} 的，表示只能在 \cls{sjtureport}
+%     和 \cls{sjtuarticle} 文档类中使用；
+%   \item 名字后面不带有特殊符号的，一般表示在 \cls{sjtuthesis}、\cls{sjtureport}
+%     和 \cls{sjtuarticle} 文档类中都可以使用，特殊情况另作说明。
 % \end{itemize}
 %
 % \subsection{文档类选项}
@@ -568,7 +578,8 @@
 % \end{latex}
 %
 % 部分选项采用 \meta{key}|=|\meta{value} 的形式，需要使用逗号分隔各选项。
-% 当 \meta{value} 省略时，将采用默认值。在下文的说明中，将用\textbf{粗体}表示默认值。
+% 当 \meta{value} 省略时，将采用默认值。
+% 在下文的说明中，将用\textbf{粗体}表示默认值。
 %
 % \subsubsection{通用选项}
 %
@@ -1618,14 +1629,14 @@
 % \bibitem{source2e}
 % \textsc{Braams J}, \textsc{Carlisle D}, \textsc{Jeffrey A}, et~al.
 % \newblock \textit{The \LaTeXe{} Sources}\allowbreak[CP/OL].
-% \newblock (2023-11-01).
+% \newblock (2024-11-01).
 % \urlprefix\url{https://ctan.org/pkg/latex}
 % \urlprefix\CTANurl[源代码：]{macros/latex/base/source2e.pdf}
 %
 % \bibitem{interface3}
 % \textsc{The \LaTeX{} Project}.
 % \newblock \textit{The \LaTeXiii{} Interfaces}\allowbreak[EB/OL].
-% \newblock (2023-11-09).
+% \newblock (2024-11-02).
 % \urlprefix\url{https://ctan.org/pkg/l3kernel}
 % \urlprefix\CTANurl[文档：]{macros/latex/l3kernel/interface3.pdf}
 %
@@ -1656,8 +1667,8 @@
 % \bibitem{thuthesis}
 % 清华大学 TUNA 协会.
 % \newblock \textit{\textsc{ThuThesis}：清华大学学位论文模板}\allowbreak[EB/OL].
-% \newblock version 7.4.0,
-% \newblock (2023-05-15).
+% \newblock version 7.5.2,
+% \newblock (2025-07-01).
 % \urlprefix\url{https://ctan.org/pkg/thuthesis}
 % \urlprefix\CTANurl[文档及源代码：]{macros/latex/contrib/thuthesis/thuthesis.pdf}
 %
