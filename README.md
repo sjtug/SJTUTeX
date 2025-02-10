@@ -74,6 +74,6 @@ l3build check <sample>
 
 ## 软件许可证
 
-上海交通大学校徽图片（`sjtu-vi-logo-red.pdf` 等）的版权归上海交通大学所有。
+上海交通大学校徽图片（`sjtu-vi-badge-cor-red.pdf` 等）的版权归上海交通大学所有。
 
 其他部分使用 [LPPL](LICENSE) 授权。
