@@ -3,7 +3,7 @@
 module             = "sjtutex"
 
 sourcefiledir      = "source"
-sourcefiles        = {"sjtutex.dtx","sjtu-vi-*.pdf"}
+sourcefiles        = {"sjtutex.dtx","vi/sjtu-vi-*.pdf"}
 installfiles       = {"*.cls","*.def","*.pdf"}
 
 typesetexe         = "xelatex"
