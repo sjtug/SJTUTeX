@@ -1,8 +1,9 @@
 % \iffalse meta-comment
 %
 % Copyright (C) SJTUG
-%   2018--2024 Weijian Wu   <alexarawu@outlook.com>
-%   2022--2024 Zilong Li    <logcreative@outlook.com>
+%   2018--2025 Weijian Wu   <alexarawu@outlook.com>
+%   2022--2025 Zilong Li    <logcreative@outlook.com>
+%   2024--2025 Boshi Yuan   <nemoyuan2008@outlook.com>
 %
 % This work may be distributed and/or modified under the
 % conditions of the LaTeX Project Public License, either
@@ -34,8 +35,9 @@
 \preamble
 
     Copyright (C) SJTUG
-      2018--2024 Weijian Wu   <alexarawu@outlook.com>
-      2022--2024 Zilong Li    <logcreative@outlook.com>
+      2018--2025 Weijian Wu   <alexarawu@outlook.com>
+      2022--2025 Zilong Li    <logcreative@outlook.com>
+      2024--2025 Boshi Yuan   <nemoyuan2008@outlook.com>
 
     This work may be distributed and/or modified under the
     conditions of the LaTeX Project Public License, either
@@ -264,7 +266,7 @@
 %<font&cjk&founder>\ProvidesExplFile{sjtu-cjk-font-founder.def}
 %<font&cjk&hanyi>  {Hanyi CJK fonts definition (SJTUTeX)}
 %<font&cjk&hanyi>\ProvidesExplFile{sjtu-cjk-font-hanyi.def}
-%<!driver>  {\ExplFileDate}{2.1.5}{\ExplFileDescription}
+%<!driver>  {\ExplFileDate}{2.2}{\ExplFileDescription}
 %</!(driver|install)>
 %
 %<*driver>
@@ -272,7 +274,7 @@
 \documentclass{ctxdoc}
 \newcommand{\sjtutex}{SJTU\TeX}
 \expandafter\def\csname ver@\jobname.dtx\endcsname
-  {2024/11/06 v2.1.5 SJTUTeX}
+  {2025/02/12 v2.2 SJTUTeX}
 \usepackage{float}
 \usepackage{multirow}
 \usepackage{longtable}
@@ -1687,9 +1689,9 @@
 %
 % \changes{v2.1}{2023/12/05}{同步 \LaTeX{} 2020-10-01，无需显式调用
 % \pkg{expl3} 和 \pkg{xparse} 宏包。}
-% \changes{unreleased}{2024/11/22}{同步 \LaTeX{} 2024-06-01，无需显式调用
+% \changes{v2.2}{2024/11/22}{同步 \LaTeX{} 2024-06-01，无需显式调用
 % \pkg{xtemplate} 宏包。}
-% \changes{unreleased}{2025/02/10}{重命名视觉形象系统文件名称。}
+% \changes{v2.2}{2025/02/10}{重命名视觉形象系统文件名称。}
 % 本模板使用 \LaTeXiii{} 语法编写，依赖 \pkg{expl3} 环境，
 % 并需调用 \pkg{l3packages} 中的相关宏包。
 %
@@ -2820,7 +2822,7 @@
 %
 % \paragraph{CJK 字体}
 %
-% \changes{unreleased}{2024/11/28}{新增 \opt{hanyi} 字体配置。}
+% \changes{v2.2}{2024/11/28}{新增 \opt{hanyi} 字体配置。}
 % 在字体未提供对应粗体的情况下，允许使用伪粗。
 %    \begin{macrocode}
 %<*font&cjk>
@@ -3399,7 +3401,7 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \changes{unreleased}{2024/11/08}{更新 \cls{sjtureport} 和 \cls{sjtuarticle} 的
+% \changes{v2.2}{2024/11/08}{更新 \cls{sjtureport} 和 \cls{sjtuarticle} 的
 % \texttt{plain} 页面样式。}
 % 重定义 |plain| 样式。
 %    \begin{macrocode}
@@ -5131,7 +5133,7 @@
 %
 % \subsection{文档组成}
 %
-% \changes{unreleased}{2024/12/20}{内置文档命令与环境修改为使用键值对参数，废弃对应的带星号版本。}
+% \changes{v2.2}{2024/12/20}{内置文档命令与环境修改为使用键值对参数，废弃对应的带星号版本。}
 %
 % \subsubsection{统一接口}
 %
@@ -5402,7 +5404,7 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \changes{unreleased}{2024/12/08}{移除 \env{bibliolist} 环境的使用限制，
+% \changes{v2.2}{2024/12/08}{移除 \env{bibliolist} 环境的使用限制，
 % 默认重置计数，新增 \opt{resume} 选项。}
 % \begin{macro}{achievements,bibliolist,bibliolist*}
 % 发表论文与学术成果。
@@ -5684,7 +5686,7 @@
   }
 %    \end{macrocode}
 %
-% \changes{unreleased}{2024/12/30}{使用 \pkg{pageslts} 宏包获取总页码。}
+% \changes{v2.2}{2024/12/30}{使用 \pkg{pageslts} 宏包获取总页码。}
 % \subsubsection{\pkg{pageslts} 宏包}
 %
 %    \begin{macrocode}
