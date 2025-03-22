@@ -1345,13 +1345,14 @@
 %   \end{itemize}
 % \end{function}
 %
-% \begin{function}[rEXP,updated=2024-12-21]{\copyrightpage}
+% \begin{function}[rEXP,updated=2025-03-22]{\copyrightpage}
 %   \begin{syntax}
 %     \TNA{copyrightpage}
-%     \TNA{copyrightpage}\oarg{file=授权书扫描件,额外选项}
+%     \TNA{copyrightpage}\oarg{file=授权书扫描件,variant=<a|b>,额外选项}
 %   \end{syntax}
 %   生成空白版权使用授权书。
-%   接受可选参数用于插入版权使用授权书扫描件，插入外置 PDF 页时需要手动加载 \pkg{pdfpages} 宏包。
+%   接受可选参数 \opt{file} 用于插入版权使用授权书扫描件，插入外置 PDF 页时需要手动加载 \pkg{pdfpages} 宏包。
+%   接受可选参数 \opt{variant} 用于选择版权使用授权书的文本变种，\opt{a} 为硕士及博士学位论文的默认变种，\opt{b} 为学士学位论文的默认变种。
 %   额外选项将传递给 \tn{includepdf} 命令。
 % \end{function}
 %
@@ -3255,13 +3256,11 @@
 %    \begin{macrocode}
 \geometry
   {
-    top           = 3.5 cm,
-    bottom        = 4.0 cm,
-    left          = 2.5 cm,
-    right         = 2.5 cm,
-%<thesis>    bindingoffset = 0.5 cm,
-    headheight    = 1.5 cm,
-    headsep       = 0.5 cm,
+    vmargin       = { 3.5 cm , 4.0 cm } ,
+    hmargin       = 2.5 cm ,
+%<thesis>    bindingoffset = 0.5 cm ,
+    headheight    = 1.5 cm ,
+    headsep       = 0.5 cm ,
     footskip      = 1.0 cm
   }
 %    \end{macrocode}
@@ -4667,6 +4666,7 @@
     bookmark : tokenlist ,
     style    : tokenlist = empty ,
     format   : tokenlist = \linespread { } \selectfont ,
+    precode  : tokenlist ,
     prefix   : tokenlist ,
     elements : commalist
   }
@@ -4675,26 +4675,29 @@
     bookmark = \l_@@_page_bookmark_tl ,
     style    = \l_@@_page_style_tl ,
     format   = \l_@@_page_format_tl ,
+    precode  = \l_@@_page_precode_tl ,
     prefix   = \l_@@_page_prefix_tl ,
     elements = \l_@@_page_elements_clist
   }
   {
     \tl_set_eq:NN \l_@@_page_bookmark_tl \c_novalue_tl
     \AssignTemplateKeys
+    \legacy_if:nTF { @openright }
+      { \cleardoublepage } { \clearpage }
+    \l_@@_page_precode_tl
+    \exp_args:No \thispagestyle { \l_@@_page_style_tl }
     \group_begin:
       \@@_select_language:n {#1}
       \clist_gset_eq:Nc \l_@@_info_fund_clist
         { l_@@_info_fund_ \l_@@_lang_tl _clist }
-      \legacy_if:nTF { @openright }
-        { \cleardoublepage } { \clearpage }
       \exp_args:No \tl_if_novalue:nF { \l_@@_page_bookmark_tl }
         { \@@_pdf_bookmark:nn { 0 } { \l_@@_page_bookmark_tl } }
-      \exp_args:No \thispagestyle { \l_@@_page_style_tl }
       \l_@@_page_format_tl
       \clist_map_inline:Nn \l_@@_page_elements_clist
         { \UseInstance { sjtu / element } { \l_@@_page_prefix_tl / ##1 } }
+      \clearpage
     \group_end:
-    \clearpage
+    \restoregeometry
   }
 %    \end{macrocode}
 %
@@ -4924,27 +4927,43 @@
 % \begin{macro}{\maketitle}
 % 生成标题页。
 %    \begin{macrocode}
-%<*class>
-%<*thesis>
+%<*class&thesis>
 \RenewDocumentCommand \maketitle { }
   {
     \clist_map_inline:Nn \g_@@_lang_clist
       { \UseInstance { sjtu / page } { title / ##1 } { ##1 } }
   }
+%</class&thesis>
 %    \end{macrocode}
 % \end{macro}
 %
 % \subsubsection{原创性声明及使用授权书}
 %
+% \changes{unreleased}{2025/03/22}{添加原创性声明变体。}
+%
 % 声明及授权书文本。
 %    \begin{macrocode}
-\tl_const:Nn \c_@@_orig_decl_text_zh_tl
+%<*thesis-i18n&zh>
+\tl_const:Nn \c_@@_orig_decl_text_a_zh_tl
   {
     本人郑重声明：所呈交的学位论文，是本人在导师的指导下，独立进行研究工
-    作所取得的成果。除文中已经注明引用的内容外，本论文不包含任何其他个人
-    或集体已经发表或撰写过的作品成果。对本文的研究做出重要贡献的个人和集
-    体，均已在文中以明确方式标明。本人完全知晓本声明的法律后果由本人承
-    担。
+    作所取得的成果。
+    除文中已经注明引用的内容外，本论文不包含任何其他个人或集体已经发表或
+    撰写过的作品成果。
+    对本文的研究做出重要贡献的个人和集体，均已在文中以明确方式标明。
+    本人完全知晓本声明的法律后果由本人承担。
+  }
+\tl_const:Nn \c_@@_orig_decl_text_b_zh_tl
+  {
+    本人郑重声明：所呈交的学位论文，是本人在导师的指导下，独立进行研究工
+    作所取得的成果。
+    除文中已经注明引用的内容外，本论文不包含任何其他个人或集体已经发表或
+    撰写过的作品成果。
+    对本文的研究做出重要贡献的个人和集体，已在文中以适当方式予以致谢。
+    若在论文撰写过程中使用了人工智能工具，本人已遵循《上海交通大学关于在
+    教育教学中使用~ AI~ 的规范》，确保人工智能生成内容的应用场景、引用范
+    围及标注方式均符合规定，并杜绝学术不端行为。
+    本人完全知晓本声明的法律后果由本人承担。
   }
 \tl_const:Nn \c_@@_auth_decl_text_zh_tl
   {
@@ -4983,10 +5002,13 @@
     \parbox [ t ] { 12 em }
       { #1 \c_@@_signature_text_zh_tl }
   }
+%</thesis-i18n&zh>
 %    \end{macrocode}
 %
 % 声明及授权书元素实例。
 %    \begin{macrocode}
+%<*class>
+%<*thesis>
 \clist_map_inline:nn
   {
     { orig / title }
@@ -5005,7 +5027,6 @@
     { orig / text  }
       {
         format      = \zihao { -4 } \setbaselineskip { 24 bp } ,
-        content     = \c_@@_orig_decl_text_zh_tl ,
         bottom-skip = 24 bp ,
         align       = normal
       },
@@ -5015,9 +5036,9 @@
         content     =
           {
             \@@_signature:N \c_@@_name_decl_author_zh_tl
-            \skip_horizontal:n { 4 em } \hbox:n { }
+            \skip_horizontal:n { 2 em } \hbox:n { }
           } ,
-        bottom-skip = \c_zero_dim plus 2 fill ,
+        bottom-skip = 24 bp plus 1 fill ,
         align       = right
       },
     { auth / title }
@@ -5048,7 +5069,6 @@
             \@@_signature:N \c_@@_name_decl_author_zh_tl
             \hfill
             \@@_signature:N \c_@@_name_decl_supervisor_zh_tl
-            \skip_horizontal:n { 2 em } \hbox:n { }
           } ,
         bottom-skip = \c_zero_dim plus 1 fill ,
         align       = normal
@@ -5063,9 +5083,14 @@
 %    \begin{macrocode}
 \@@_declare_page_instance:nnn { copyright }
   {
-    bookmark = \tl_use:c { c_@@_name_declaration_ \g_@@_lang_tl _tl } ,
-    prefix   = copyright ,
-    elements =
+    bookmark  = \tl_use:c { c_@@_name_declaration_ \g_@@_lang_tl _tl } ,
+    precode   = \newgeometry
+                  {
+                    margin        = 3.0 cm ,
+                    bindingoffset = 0.5 cm
+                  } ,
+    prefix    = copyright ,
+    elements  =
       {
         orig / title, orig / text, orig / sign,
         auth / title, auth / text, auth / sign
@@ -5084,7 +5109,16 @@
   {
     file .tl_set:N = \l_@@_copyright_page_file_tl ,
     file .value_required:n = true ,
-    filename .meta:n = { file = #1 }
+    filename .meta:n = { file = #1 } ,
+    variant .choice: ,
+    variant .choices:nn =
+      { a, b }
+      {
+        \EditInstance { sjtu / element } { copyright / orig / text }
+          { content = \tl_use:c { c_@@_orig_decl_text_ #1 _zh_tl } }
+      } ,
+    variant  .initial:e = \int_compare:nNnTF { \g_@@_thesis_type_int } > { 1 }
+                            { a } { b }
   }
 %    \end{macrocode}
 %
