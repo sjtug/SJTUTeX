@@ -1345,13 +1345,14 @@
 %   \end{itemize}
 % \end{function}
 %
-% \begin{function}[rEXP,updated=2024-12-21]{\copyrightpage}
+% \begin{function}[rEXP,updated=2025-03-22]{\copyrightpage}
 %   \begin{syntax}
 %     \TNA{copyrightpage}
-%     \TNA{copyrightpage}\oarg{file=授权书扫描件,额外选项}
+%     \TNA{copyrightpage}\oarg{file=授权书扫描件,variant=<a|b>,额外选项}
 %   \end{syntax}
 %   生成空白版权使用授权书。
-%   接受可选参数用于插入版权使用授权书扫描件，插入外置 PDF 页时需要手动加载 \pkg{pdfpages} 宏包。
+%   接受可选参数 \opt{file} 用于插入版权使用授权书扫描件，插入外置 PDF 页时需要手动加载 \pkg{pdfpages} 宏包。
+%   接受可选参数 \opt{variant} 用于选择版权使用授权书的文本变种，\opt{a} 为硕士及博士学位论文的默认变种，\opt{b} 为学士学位论文的默认变种。
 %   额外选项将传递给 \tn{includepdf} 命令。
 % \end{function}
 %
