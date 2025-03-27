@@ -3959,6 +3959,15 @@
 %    \end{macrocode}
 % \end{macro}
 %
+% \changes{unreleased}{2025/03/27}{新增语言设置钩子。}
+% 语言设置钩子。
+%    \begin{macrocode}
+%<zh>\NewHook { sjtutex / lang / zh }
+%<en>\NewHook { sjtutex / lang / en }
+%<de>\NewHook { sjtutex / lang / de }
+%<ja>\NewHook { sjtutex / lang / ja }
+%    \end{macrocode}
+%
 %    \begin{macrocode}
 \keys_define:nn { sjtu / private }
   {
@@ -3968,16 +3977,13 @@
 %<ja>    lang / ja .code:n =
       {
         \tl_set_eq:NN \l_@@_lang_tl \l_keys_value_tl
-%<zh>        \tl_set:Nn \languagename { chinese }
-%<en>        \tl_set:Nn \languagename { english }
-%<de>        \tl_set:Nn \languagename { ngerman }
-%<ja>        \tl_set:Nn \languagename { japanese }
 %<zh>        \@@_set_cjk_default_zh:
 %<ja>        \@@_set_cjk_default_ja:
         \normalfont
-%<zh>        \ctex_set:n { autoindent = true }
-%<en|de>        \ctex_set:n { autoindent = 1.5 em }
-%<ja>        \ctex_set:n { autoindent = 1 }
+%<zh>        \UseHook { sjtutex / lang / zh }
+%<en>        \UseHook { sjtutex / lang / en }
+%<de>        \UseHook { sjtutex / lang / de }
+%<ja>        \UseHook { sjtutex / lang / ja }
       } ,
 %<zh>    zh .meta:n = { lang = zh } ,
 %<zh>    zh .groups:n = { lang }
@@ -3987,6 +3993,22 @@
 %<de>    de .groups:n = { lang }
 %<ja>    ja .meta:n = { lang = ja } ,
 %<ja>    ja .groups:n = { lang }
+  }
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<zh>\AddToHook { sjtutex / lang / zh }
+%<en>\AddToHook { sjtutex / lang / en }
+%<de>\AddToHook { sjtutex / lang / de }
+%<ja>\AddToHook { sjtutex / lang / ja }
+  {
+%<zh>    \tl_set:Nn \languagename { chinese }
+%<en>    \tl_set:Nn \languagename { english }
+%<de>    \tl_set:Nn \languagename { ngerman }
+%<ja>    \tl_set:Nn \languagename { japanese }
+%<zh>    \ctex_set:n { autoindent = true }
+%<en|de>    \ctex_set:n { autoindent = 1.5 em }
+%<ja>    \ctex_set:n { autoindent = 1 }
   }
 %    \end{macrocode}
 %
