@@ -1567,7 +1567,6 @@
 %       \item \pkg{fancyhdr}，处理页眉页脚。
 %       \item \pkg{titletoc}，设置目录格式。
 %       \item \pkg{caption}、\cls{bicaption} 和 \cls{subcaption}，用于设置题注。
-%       \item \pkg{xcolor}，提供彩色支持。
 %       \item \pkg{graphicx}，提供图形插入的接口。
 %       \item \pkg{enumitem}，设置列表环境格式。
 %     \end{itemize}
@@ -2193,6 +2192,7 @@
 %<article>\LoadClass { ctexart }
 %    \end{macrocode}
 %
+% \changes{unreleased}{2025/03/27}{不再自动载入 \pkg{xcolor} 宏包。}
 % 载入各宏包。
 %    \begin{macrocode}
 \RequirePackage
@@ -2205,7 +2205,6 @@
     caption,
     bicaption,
     subcaption,
-    xcolor,
     graphicx,
     enumitem
   }
