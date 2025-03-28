@@ -5169,7 +5169,8 @@
                 {
                   \legacy_if:nTF { @openright }
                     { \cleardoublepage } { \clearpage }
-                  \@@_pdf_bookmark:nn { 0 } { \c_@@_name_declaration_tl }
+                  \exp_args:Nnv \@@_pdf_bookmark:nn
+                    { 0 } { c_@@_name_declaration_ \g_@@_lang_tl _tl }
                   \tl_set_rescan:NnV \l_@@_tmp_tl { } \l_@@_tmp_tl
                   \exp_args:NNo \includepdf [ \l_@@_tmp_tl ]
                     { \l_@@_copyright_page_file_tl }
