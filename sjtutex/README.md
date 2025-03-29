@@ -27,5 +27,5 @@ This project is also used by the [SJTUThesis](https://github.com/sjtug/SJTUThesi
 ## License
 
 This work may be distributed and/or modified under the
-conditions of the [LaTeX Project Public License](http://www.latex-project.org/lppl.txt), either version 1.3
+conditions of the [LaTeX Project Public License](https://www.latex-project.org/lppl.txt), either version 1.3c
 of this license or (at your option) any later version.
