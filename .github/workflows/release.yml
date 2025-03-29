@@ -1,35 +1,30 @@
+name: Release
+
 on:
   push:
-    branches:
-    - release
     tags:
-    - "v*"
-
-name: Release
+      - "v*"
 
 permissions:
   contents: write
 
 jobs:
   release:
-    name: Release
     runs-on: ubuntu-latest
-    steps: 
-      - uses: actions/checkout@v4
-        name: checkout code
-      - uses: xu-cheng/texlive-action@v2
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build
+        uses: xu-cheng/texlive-action@v2
         with:
           scheme: full
           run: |
             apk add zip diffutils font-noto-cjk
-            git config --global --add safe.directory /home/runner/work/SJTUTeX/SJTUTeX
+            git config --global --add safe.directory "${GITHUB_WORKSPACE}"
             cd sjtutex && l3build ctan
-        name: build package
-      - name: create release
+      - name: Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ github.ref }}
-          name: Release ${{ github.ref }}
           body: ${{ github.event.head_commit.message }}
           draft: true
           files: |
