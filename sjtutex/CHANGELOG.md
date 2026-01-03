@@ -7,6 +7,10 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- 修复浮动体环境中 `cases` 环境中的字体问题，在浮动体中将 `\SJTU@style@equation@font` 置空。
+
 ## [v2.2.1] - 2025-03-28
 
 ### Added
