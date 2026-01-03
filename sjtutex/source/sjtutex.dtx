@@ -3661,6 +3661,7 @@
 \tl_set:Nn \floatpagefraction { 0.60 }
 %    \end{macrocode}
 %
+% \changes{unreleased}{2026/01/03}{修复浮动体中 \env{cases} 环境中的字体问题。}
 % \begin{macro}{style/float-font}
 % 设置浮动体内的字体。
 %    \begin{macrocode}
@@ -3671,7 +3672,16 @@
 %<!thesis>    float-font .initial:n = \zihao { 5 }
   }
 \ctex_patch_cmd:Nnn \@floatboxreset
-  { \normalsize } { \SJTU@style@float@font }
+  { \normalsize }
+  {
+    \SJTU@style@float@font
+%    \end{macrocode}
+% 为修复浮动体环境中 \env{cases} 环境中的字体问题（见
+% \href{https://github.com/sjtug/SJTUThesis/issues/1130}{SJTUThesis Issue 1130}），
+% 在浮动体中将 \cs{SJTU@style@equation@font} 置空。
+%    \begin{macrocode}
+    \let \SJTU@style@equation@font \@empty
+  }
 %    \end{macrocode}
 % \end{macro}
 %
