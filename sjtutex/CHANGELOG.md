@@ -10,6 +10,11 @@
 ### Added
 
 - 新增 `\SetInfoEntry` 命令设置 `sjtu/info` 键。
+- 新增 `preset` 文档选项，分离非必要设置；同时支持载入用户预设，方便自定义模板。
+
+### Changed
+
+- 原创性声明变体默认值固定为样式 `a`。
 
 ### Removed
 
