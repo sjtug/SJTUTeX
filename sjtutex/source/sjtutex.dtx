@@ -49,9 +49,12 @@
 
 \generate{
   \usedir{tex/latex/sjtutex}
-    \file{sjtuthesis.cls}               {\from{\jobname.dtx}{class,thesis}}
-    \file{sjtureport.cls}               {\from{\jobname.dtx}{class,report}}
     \file{sjtuarticle.cls}              {\from{\jobname.dtx}{class,article}}
+    \file{sjtureport.cls}               {\from{\jobname.dtx}{class,report}}
+    \file{sjtuthesis.cls}               {\from{\jobname.dtx}{class,thesis}}
+    \file{sjtu-article-preset-base.def} {\from{\jobname.dtx}{preset,article}}
+    \file{sjtu-report-preset-base.def}  {\from{\jobname.dtx}{preset,report}}
+    \file{sjtu-thesis-preset-base.def}  {\from{\jobname.dtx}{preset,thesis}}
     \file{sjtu-lang-zh.def}             {\from{\jobname.dtx}{lang,zh}}
     \file{sjtu-lang-en.def}             {\from{\jobname.dtx}{lang,en}}
     \file{sjtu-lang-de.def}             {\from{\jobname.dtx}{lang,de}}
@@ -101,9 +104,12 @@
 \Msg{*                                                           *}
 \Msg{* The recommended directory is TDS:tex/latex/sjtutex        *}
 \Msg{*                                                           *}
-\Msg{*     sjtuthesis.cls                                        *}
-\Msg{*     sjtureport.cls                                        *}
 \Msg{*     sjtuarticle.cls                                       *}
+\Msg{*     sjtureport.cls                                        *}
+\Msg{*     sjtuthesis.cls                                        *}
+\Msg{*     sjtu-article-preset-base.def                          *}
+\Msg{*     sjtu-report-preset-base.def                           *}
+\Msg{*     sjtu-thesis-preset-base.def                           *}
 \Msg{*     sjtu-lang-de.def                                      *}
 \Msg{*     sjtu-lang-en.def                                      *}
 \Msg{*     sjtu-lang-ja.def                                      *}
@@ -174,12 +180,18 @@
 %</class>
 %<*!(driver|install)>
 %<+!driver>\GetIdInfo$Id$
-%<class&thesis>  {Thesis document class for Shanghai Jiao Tong University (SJTUTeX)}
-%<class&thesis>\ProvidesExplClass{sjtuthesis}
-%<class&report>  {Report document class for Shanghai Jiao Tong University (SJTUTeX)}
-%<class&report>\ProvidesExplClass{sjtureport}
 %<class&article>  {Article document class for Shanghai Jiao Tong University (SJTUTeX)}
 %<class&article>\ProvidesExplClass{sjtuarticle}
+%<class&report>  {Report document class for Shanghai Jiao Tong University (SJTUTeX)}
+%<class&report>\ProvidesExplClass{sjtureport}
+%<class&thesis>  {Thesis document class for Shanghai Jiao Tong University (SJTUTeX)}
+%<class&thesis>\ProvidesExplClass{sjtuthesis}
+%<preset&article>  {Article document preset for Shanghai Jiao Tong University (SJTUTeX)}
+%<preset&article>\ProvidesExplFile{sjtu-article-preset-base.def}
+%<preset&report>  {Report document preset for Shanghai Jiao Tong University (SJTUTeX)}
+%<preset&report>\ProvidesExplFile{sjtu-report-preset-base.def}
+%<preset&thesis>  {Thesis document preset for Shanghai Jiao Tong University (SJTUTeX)}
+%<preset&thesis>\ProvidesExplFile{sjtu-thesis-preset-base.def}
 %<lang&zh>  {Chinese specific definition (SJTUTeX)}
 %<lang&zh>\ProvidesExplFile{sjtu-lang-zh.def}
 %<lang&en>  {English specific definition (SJTUTeX)}
@@ -435,11 +447,12 @@
 %     \toprule
 %     \strong{类别}         & \strong{文件}               & \strong{说明}  \\
 %     \midrule
-%     文档类                & \file{sjtuthesis.cls}       & 学位论文文档类 \\
+%     文档类                & \file{sjtuarticle.cls}      & 文稿文档类     \\
 %                           & \file{sjtureport.cls}       & 报告文档类     \\
-%                           & \file{sjtuarticle.cls}      & 文稿文档类     \\
+%                           & \file{sjtuthesis.cls}       & 学位论文文档类 \\
 %                           & \file{sjtu-lang-*.def}      & 文档类语言配置 \\
 %                           & \file{sjtu-scheme-*.def}    & 文档类语言方案 \\
+%                           & \file{sjtu-*-preset-*.def}  & 文档类预设配置 \\
 %     \midrule
 %     字体配置文件          & \file{sjtu-text-font-*.def} & 西文字体配置   \\
 %                           & \file{sjtu-math-font-*.def} & 数学字体配置   \\
@@ -808,8 +821,16 @@
 %
 % \subsubsection{其他选项}
 %
-% 其他的文档类选项会被传递给对应的 \CTeX{} 文档类，
-% 请注意 \opt{GBK}、\opt{scheme} 等选项不受 \sjtutex{} 支持。
+% \begin{function}[added=2026-02-22]{preset}
+%   \begin{syntax}
+%     \OPT{preset} = <(base)>
+%   \end{syntax}
+%   预设配置名称。可以通过指定预设配置名称来快速应用一系列相关设置或自定义模板。
+%   默认为内置预设 |base|，该预设包含了参照学校规范的默认设置。
+% \end{function}
+%
+% \note{其他上述未提到的文档类选项会被传递给对应的 \CTeX{} 文档类，
+% 请注意 \opt{GBK}、\opt{scheme} 等选项不受 \sjtutex{} 支持。}
 %
 % \subsection{论文信息设置}
 %
@@ -1866,6 +1887,13 @@
 %    \end{macrocode}
 % \end{variable}
 %
+% \begin{variable}{\g_@@_preset_tl}
+% 预设配置。
+%    \begin{macrocode}
+\tl_new:N \g_@@_preset_tl
+%    \end{macrocode}
+% \end{variable}
+%
 % \begin{variable}{\g_@@_options_to_ctex_class_clist}
 % 保存由 \pkg{sjtutex} 传入 \pkg{ctex} 文档类的选项列表。
 % 默认 \pkg{ctex} 文档类的选项：
@@ -2068,6 +2096,15 @@
 %    \end{macrocode}
 % \end{macro}
 %
+% \changes{unreleased}{2026/02/21}{新增 \opt{preset} 文档选项。}
+% \begin{macro}{preset}
+% 预设配置。
+%    \begin{macrocode}
+    preset .tl_gset:N = \g_@@_preset_tl,
+    preset .initial:n = { base } ,
+%    \end{macrocode}
+% \end{macro}
+%
 % 将未知选项传给标准文档类。
 %    \begin{macrocode}
     unknown .code:n =
@@ -2165,9 +2202,12 @@
 % 宏包；而在使用 \LuaLaTeX{} 编译时，则将调用 \pkg{LuaTeX-ja} 宏包。
 % 两种情况下 \pkg{ctex} 均会调用 \pkg{fontspec} 宏包。
 %    \begin{macrocode}
-%<thesis>\LoadClass { ctexbook }
-%<report>\LoadClass { ctexrep }
+%<article>\tl_const:Nn \c_@@_class_tl { article }
 %<article>\LoadClass { ctexart }
+%<report>\tl_const:Nn \c_@@_class_tl { report }
+%<report>\LoadClass { ctexrep }
+%<thesis>\tl_const:Nn \c_@@_class_tl { thesis }
+%<thesis>\LoadClass { ctexbook }
 %    \end{macrocode}
 %
 % \changes{v2.2.1}{2025/03/27}{不再自动载入 \pkg{xcolor} 宏包。}
@@ -3335,7 +3375,7 @@
 %    \begin{macrocode}
 \tl_set:Nn \l_@@_header_tl
   {
-%<thesis>    { \songti \l_@@_info_subject_zh_tl }
+%<thesis>    { \songti \c_@@_name_subject_zh_tl }
 %<*!thesis>
     \includegraphics [ height = 1.2 cm ]
       { sjtu-vi-logo-std-h-cor-red.pdf }
@@ -4379,8 +4419,8 @@
 % \begin{macro}{\SetInfoEntry}
 % 设置 \cls{sjtuthesis} 普通 |sjtu/info| 键值类的用户接口。
 %    \begin{macrocode}
-%<*class>
 %<*thesis>
+%<*class>
 \msg_new:nnn { sjtutex } { key-already-defined }
   { Key~'#1'~is~already~defined~and~redefinition~is~being~ignored. }
 \msg_new:nnn { sjtutex } { key-invalid }
@@ -4435,12 +4475,14 @@
       { \@@_new_tl_info_entry:nn  {#1} }
       { \@@_new_tl_info_entry:nnn {#1} }
   }
+%</class>
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}[int]{\@@_info_keys_define:n}
 % 定义 \cls{sjtuthesis} 不同语种 |sjtu/info| 键值类的辅助函数。
 %    \begin{macrocode}
+%<*preset>
 \cs_new_protected:Npn \@@_info_keys_define:n #1
   {
     \clist_map_inline:nn
@@ -4543,14 +4585,26 @@
     id   .meta:n = { zh / id = {#1} } ,
     id .groups:n = { sensitive }
   }
-%</thesis>
 %    \end{macrocode}
 % \end{macro}
+%
+% 设置页眉主题。
+%    \begin{macrocode}
+\tl_set:Nn \l_@@_header_tl { \songti \l_@@_info_subject_zh_tl }
+%    \end{macrocode}
+%
+% 设置 \tn{@title} 和 \tn{@author} 以供标题页使用。
+%    \begin{macrocode}
+\tl_set:Nn \@title  { \l_@@_info_title_zh_tl }
+\tl_set:Nn \@author { \l_@@_info_author_zh_tl }
+%</preset>
+%</thesis>
+%    \end{macrocode}
 %
 % 定义 \cls{sjtureport} 和 \cls{sjtuarticle} 中的信息键值类。
 % \begin{variable}{\l_@@_info_subject_tl,\l_@@_info_keywords_clist}
 %    \begin{macrocode}
-%<*!thesis>
+%<*preset&!thesis>
 \tl_new:N \l_@@_info_subject_tl
 \clist_new:N \l_@@_info_keywords_clist
 \keys_define:nn { sjtu / info }
@@ -4561,63 +4615,56 @@
     subject           .tl_set:N = \l_@@_info_subject_tl ,
     keywords       .clist_set:N = \l_@@_info_keywords_clist ,
   }
-%</!thesis>
+%</preset&!thesis>
 %    \end{macrocode}
 % \end{variable}
+%
+%    \begin{macrocode}
+%<*class>
+\cs_new_protected:Npn \@@_date_set:Nnn #1#2#3
+  {
+    \regex_match:nnTF { \A \d+ \- \d+ \- \d+ \Z } {#3}
+      {
+        \tl_set:Ne #1
+          { \exp_last_unbraced:ce { @@_date_aux_ #2 :w } #3 \q_stop }
+      }
+      {
+        \regex_match:nnT { \A \d+ \- \d+ \Z } {#3}
+          {
+            \tl_set:Ne #1
+              { \exp_last_unbraced:ce { @@_date_aux_short_ #2 :w } #3 \q_stop }
+          }
+      }
+  }
+\cs_generate_variant:Nn \@@_date_set:Nnn { cnn, NVn, NVV }
+\tl_const:Ne \c_@@_date_tl
+  {
+    \int_to_arabic:n { \c_sys_year_int  } -
+    \int_to_arabic:n { \c_sys_month_int } -
+    \int_to_arabic:n { \c_sys_day_int   }
+  }
+\@@_date_set:NVV \today \g_@@_lang_tl \c_@@_date_tl
+%</class>
+%    \end{macrocode}
 %
 % \begin{macro}{info/date}
 % 日期。
 %    \begin{macrocode}
+%<*preset>
 \keys_define:nn { sjtu / info }
   {
-    date    .code:n =
+    date .code:n =
+%<!thesis>      { \@@_date_set:NVn \@date \g_@@_lang_tl {#1} }
+%<*thesis>
       {
-        \regex_match:nnTF { \A \d+ \- \d+ \- \d+ \Z } {#1}
-          {
-%<*thesis>
-            \clist_map_inline:Nn \g_@@_lang_clist
-              {
-                \tl_set:ce { l_@@_info_date_ ##1 _tl }
-                  { \exp_last_unbraced:ce { @@_date_aux_ ##1 :w } #1 \q_stop }
-              }
-%</thesis>
-%<*!thesis>
-            \tl_set:Ne \@date
-              {
-                \exp_last_unbraced:ce
-                  { @@_date_aux_ \g_@@_lang_tl :w } #1 \q_stop
-              }
-%</!thesis>
-          }
-          {
-            \regex_match:nnT { \A \d+ \- \d+ \Z } {#1}
-              {
-%<*thesis>
-                \clist_map_inline:Nn \g_@@_lang_clist
-                  {
-                    \tl_set:ce { l_@@_info_date_ ##1 _tl }
-                      { \exp_last_unbraced:ce { @@_date_aux_short_ ##1 :w } #1 \q_stop }
-                  }
-%</thesis>
-%<*!thesis>
-                \tl_set:Ne \@date
-                  {
-                    \exp_last_unbraced:ce
-                      { @@_date_aux_short_ \g_@@_lang_tl :w } #1 \q_stop
-                  }
-%</!thesis>
-              }
-          }
+        \clist_map_inline:Nn \g_@@_lang_clist
+          { \@@_date_set:cnn { l_@@_info_date_ ##1 _tl } {##1} {#1} }
+
       } ,
-    date .initial:e =
-      {
-        \int_to_arabic:n { \c_sys_year_int  } -
-        \int_to_arabic:n { \c_sys_month_int } -
-        \int_to_arabic:n { \c_sys_day_int   }
-      }
+    date .initial:V = \c_@@_date_tl
+%</thesis>
   }
-%<thesis>\tl_set_eq:Nc \today { l_@@_info_date_ \g_@@_lang_tl _tl }
-%<!thesis>\tl_set_eq:NN \today \@date
+%</preset>
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4630,6 +4677,7 @@
 % 页面元素模板。
 %    \begin{macrocode}
 %<*thesis>
+%<*class>
 \NewTemplateType { sjtu / element } { 0 }
 \DeclareTemplateInterface { sjtu / element } { plain } { 0 }
   {
@@ -4698,8 +4746,6 @@
     \exp_args:No \thispagestyle { \l_@@_page_style_tl }
     \group_begin:
       \@@_select_language:n {#1}
-      \clist_gset_eq:Nc \l_@@_info_fund_clist
-        { l_@@_info_fund_ \l_@@_lang_tl _clist }
       \exp_args:No \tl_if_novalue:nF { \l_@@_page_bookmark_tl }
         { \@@_pdf_bookmark:nn { 0 } { \l_@@_page_bookmark_tl } }
       \l_@@_page_format_tl
@@ -4726,26 +4772,6 @@
 % \changes{v2.1}{2023/11/30}{标题页信息栏改用表格实现。}
 % \changes{v2.1.4}{2024/08/14}{标题页信息栏允许手动换行。}
 % \changes{v2.1.5}{2024/11/06}{修复了 \pkg{array} 更新造成的标题页生成失败的问题。}
-%
-% \begin{variable}{\SJTU@CT@W@width}
-%    \begin{macrocode}
-\tl_set:Nn \SJTU@CT@W@width { 5 em }
-%    \end{macrocode}
-% \end{variable}
-%
-% \begin{macro}[int]{\SJTU@CT@W,\SJTU@CT@R,\SJTU@CT@L}
-%    \begin{macrocode}
-\newcolumntype { \SJTU@CT@W } [ 1 ]
-  {
-    w {#1} { \SJTU@CT@W@width }
-    @{ \tl_use:c { c_@@_name_info_sep_ \l_@@_lang_tl _tl } }
-  }
-\newcolumntype { \SJTU@CT@R }
-  { r @{ \tl_use:c { c_@@_name_info_sep_ \l_@@_lang_tl _tl } } }
-\newcolumntype { \SJTU@CT@L }
-  { >{ \linespread { 0.75 } \normalfont } l }
-%    \end{macrocode}
-% \end{macro}
 %
 % \begin{macro}[int]{\@@_info_table_row:nn,\@@_info_table_row:vv,
 % \@@_title_page_info_table:n}
@@ -4790,6 +4816,31 @@
       \endtabular
     \group_end:
   }
+%</class>
+%    \end{macrocode}
+% \end{macro}
+%
+% 构建标题页。
+%
+% 标题页信息栏表格列参数。
+% \begin{variable}{\SJTU@CT@W@width}
+%    \begin{macrocode}
+%<*preset>
+\tl_set:Nn \SJTU@CT@W@width { 5 em }
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{macro}[int]{\SJTU@CT@W,\SJTU@CT@R,\SJTU@CT@L}
+%    \begin{macrocode}
+\newcolumntype { \SJTU@CT@W } [ 1 ]
+  {
+    w {#1} { \SJTU@CT@W@width }
+    @{ \tl_use:c { c_@@_name_info_sep_ \l_@@_lang_tl _tl } }
+  }
+\newcolumntype { \SJTU@CT@R }
+  { r @{ \tl_use:c { c_@@_name_info_sep_ \l_@@_lang_tl _tl } } }
+\newcolumntype { \SJTU@CT@L }
+  { >{ \linespread { 0.75 } \normalfont } l }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4803,15 +4854,13 @@
         \hfil
         \minipage [ t ] { \textwidth }
           \centering \zihao { - 5 }
-          \clist_use:Nn \l_@@_info_fund_clist { \par }
+          \clist_use:cn { l_@@_info_fund_ \l_@@_lang_tl _clist } { \par }
         \endminipage
         \hfil
       }
     \tl_set_eq:NN \@evenfoot \@oddfoot
   }
 %    \end{macrocode}
-%
-% 构建标题页。
 %
 % 样式 A 标题页元素实例。
 %    \begin{macrocode}
@@ -4939,8 +4988,6 @@
     \clist_map_inline:Nn \g_@@_lang_clist
       { \UseInstance { sjtu / page } { title / ##1 } { ##1 } }
   }
-%</thesis>
-%</class>
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4950,7 +4997,6 @@
 %
 % 声明及授权书文本。
 %    \begin{macrocode}
-%<*lang&zh>
 \tl_const:Nn \c_@@_orig_decl_text_a_zh_tl
   {
     本人郑重声明：所呈交的学位论文，是本人在导师的指导下，独立进行研究工
@@ -5009,13 +5055,10 @@
     \parbox [ t ] { 12 em }
       { #1 \c_@@_signature_text_zh_tl }
   }
-%</lang&zh>
 %    \end{macrocode}
 %
 % 声明及授权书元素实例。
 %    \begin{macrocode}
-%<*class>
-%<*thesis>
 \clist_map_inline:nn
   {
     { orig / title }
@@ -5124,8 +5167,7 @@
         \EditInstance { sjtu / element } { copyright / orig / text }
           { content = \tl_use:c { c_@@_orig_decl_text_ #1 _zh_tl } }
       } ,
-    variant  .initial:e = \int_compare:nNnTF { \g_@@_thesis_type_int } > { 1 }
-                            { a } { b }
+    variant  .initial:n = a
   }
 %    \end{macrocode}
 %
@@ -5141,7 +5183,7 @@
 % \begin{macro}{\copyrightpage}
 % 生成声明及授权书。
 %    \begin{macrocode}
-\NewDocumentCommand \copyrightpage { O{ } }
+\RenewDocumentCommand \copyrightpage { O{ } }
   {
     \bool_if:NF \g_@@_review_bool
       {
@@ -5169,7 +5211,12 @@
         \group_end:
       }
   }
+%</preset>
 %</thesis>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<class&thesis>\ProvideDocumentCommand \copyrightpage { O{ } } { }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -5184,6 +5231,7 @@
 % \begin{variable}{\l_@@_heading_numbering_bool,\l_@@_heading_in_toc_bool,
 % \l_@@_heading_title_tl,\l_@@_heading_marking_tl}
 %    \begin{macrocode}
+%<*class>
 \bool_new:N \l_@@_heading_numbering_bool
 \bool_new:N \l_@@_heading_in_toc_bool
 \tl_new:N \l_@@_heading_title_tl
@@ -5286,7 +5334,22 @@
     \tl_set_eq:Nc \l_@@_heading_title_tl
       { c_@@_name_abstract_ \l_@@_lang_tl _tl }
     \@@_make_heading:n {#1}
-  }
+  } { }
+%</thesis>
+%    \end{macrocode}
+%
+% 修复通用模板摘要段首缩进。
+%    \begin{macrocode}
+%<!thesis>\legacy_if:nT { @titlepage }
+%<!thesis>  { \AddToHook { cmd / abstract / after } { \par } }
+%</class>
+%    \end{macrocode}
+%
+% 学位论文模板摘要后添加关键词。
+%    \begin{macrocode}
+%<*preset>
+%<*thesis>
+\AddToHook { env / abstract / end }
   {
     \clist_if_empty:cF { l_@@_info_keywords_ \l_@@_lang_tl _clist }
       {
@@ -5304,15 +5367,9 @@
 %</thesis>
 %    \end{macrocode}
 %
-% 修复通用模板摘要段首缩进。
-%    \begin{macrocode}
-%<*!thesis>
-\legacy_if:nT { @titlepage }
-  { \AddToHook { cmd / abstract / after } { \par } }
-%    \end{macrocode}
-%
 % 通用模板摘要后添加关键词。
 %    \begin{macrocode}
+%<*!thesis>
 \AddToHook { env / abstract / end }
   {
     \clist_if_empty:NF \l_@@_info_keywords_clist
@@ -5329,6 +5386,7 @@
       }
   }
 %</!thesis>
+%</preset>
 %    \end{macrocode}
 % \end{macro}
 %
@@ -5339,6 +5397,7 @@
 % \begin{macro}{\tableofcontents}
 % 目录。
 %    \begin{macrocode}
+%<*class>
 \DeclareDocumentCommand \tableofcontents { O{ } }
   {
     \group_begin:
@@ -5560,8 +5619,16 @@
 % \begin{macro}{digest}
 % 大摘要。
 %    \begin{macrocode}
+\ProvideDocumentEnvironment { digest } { O{ } +b }
+  { } { }
+%</thesis>
+%</class>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*preset&thesis>
 \NewHook { sjtutex / digest }
-\NewDocumentEnvironment { digest } { O{ } +b }
+\RenewDocumentEnvironment { digest } { O{ } +b }
   {
     \AtEndDocument
       {
@@ -5585,7 +5652,7 @@
         \group_end:
       }
   } { }
-%</thesis>
+%</preset&thesis>
 %    \end{macrocode}
 % \end{macro}
 %
@@ -5595,6 +5662,7 @@
 % 用户设置接口。
 % 盲审模式下不会设置敏感信息。
 %    \begin{macrocode}
+%<*class>
 %<!thesis>\NewDocumentCommand \sjtusetup { } { \keys_set:nn { sjtu } }
 %<thesis>\NewDocumentCommand \sjtusetup { } { \@@_setup:n }
 %    \end{macrocode}
@@ -5666,6 +5734,21 @@
 %    \end{macrocode}
 % \end{macro}
 %
+% 载入预设文件。
+%    \begin{macrocode}
+\msg_new:nnn { sjtutex } { invalid-preset }
+  { Invalid~value~'preset~=~\g_@@_preset_tl'! }
+\str_if_eq:VnF \g_@@_preset_tl { none }
+  {
+    \file_if_exist:nTF { sjtu- \c_@@_class_tl -preset- \g_@@_preset_tl .def }
+      {
+        \ctex_file_input:n
+          { sjtu- \c_@@_class_tl -preset- \g_@@_preset_tl .def }
+      }
+      { \msg_error:nn { sjtutex } { invalid-preset } }
+  }
+%    \end{macrocode}
+%
 % \subsection{其他宏包的设置}
 %
 % \changes{v2.0.3}{2023/09/23}{移除 \pkg{listings} 宏包预设。}
@@ -5711,46 +5794,64 @@
       {
         \hypersetup
           {
-%<*thesis>
-            pdftitle    = \l_@@_info_title_zh_tl ,
-            pdfauthor   = \l_@@_info_author_zh_tl ,
-            pdfsubject  = \l_@@_info_subject_zh_tl ,
-            pdfkeywords = \l_@@_info_keywords_zh_clist
-%</thesis>
-%<*!thesis>
             pdftitle    = \@title ,
             pdfauthor   = \@author ,
-            pdfsubject  = \l_@@_info_subject_tl ,
-            pdfkeywords = \l_@@_info_keywords_clist
-%</!thesis>
           }
       }
   }
+%</class>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*preset>
+\ctex_at_end_package:nn { hyperref }
+  {
+    \ctex_after_end_preamble:n
+      {
+        \hypersetup
+          {
+%<!thesis>            pdfsubject  = \l_@@_info_subject_tl ,
+%<!thesis>            pdfkeywords = \l_@@_info_keywords_clist
+%<thesis>            pdfsubject  = \l_@@_info_subject_zh_tl ,
+%<thesis>            pdfkeywords = \l_@@_info_keywords_zh_clist
+          }
+      }
+  }
+%</preset>
 %    \end{macrocode}
 %
 % \changes{v2.2}{2024/12/30}{使用 \pkg{pageslts} 宏包获取总页码。}
 % \subsubsection{\pkg{pageslts} 宏包}
 %
 %    \begin{macrocode}
+%<*class>
 \ctex_at_end_package:nn { pageslts }
   {
 %<thesis>    \pagenumbering { Alph }
 %<!thesis>    \pagenumbering { arabic }
     \tl_set:Nn \@@_the_last_page_tl
       { \lastpageref { pagesLTS.\pagesLTS@pnc } }
-%<*thesis>
+  }
+%</class>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*preset&thesis>
+\ctex_at_end_package:nn { pageslts }
+  {
     \AddToHook { sjtutex / digest }
       {
         \tl_gset:Nn \@@_the_last_page_tl
           { \lastpageref { pagesLTS.roman.local } }
       }
-%</thesis>
   }
+%</preset&thesis>
 %    \end{macrocode}
 %
 % \subsubsection{\pkg{threeparttable} 宏包}
 %
 %    \begin{macrocode}
+%<*class>
 \ctex_at_end_package:nn { threeparttable }
   { \tl_put_right:Nn \TPTnoteSettings { \footnotesize } }
 %    \end{macrocode}
