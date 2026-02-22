@@ -7,6 +7,14 @@
 
 ## [Unreleased]
 
+### Added
+
+- 新增 `\SetInfoEntry` 命令设置 `sjtu/info` 键。
+
+### Removed
+
+- 移除 `info/<lang>/custom` 键。
+
 ### Fixed
 
 - 修复浮动体环境中 `cases` 环境中的字体问题，在浮动体中将 `\SJTU@style@equation@font` 置空（[#77](https://github.com/sjtug/SJTUTeX/pull/77)）。
