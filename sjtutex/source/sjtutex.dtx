@@ -5417,12 +5417,14 @@
       \@starttoc { toc }
     \group_end:
   }
+%</class>
 %    \end{macrocode}
 % \end{macro}
 %
 % \changes{v2.1.2}{2024/03/31}{改用 \pkg{titletoc} 设置目录格式。}
 % \changes{v2.1.3}{2024/06/28}{更新目录样式。}
 %    \begin{macrocode}
+%<*preset>
 \tl_set:Nn \SJTU@leaders { \titlerule* [ 4bp ] { . } }
 \contentsmargin [ 2.55 em ] { 0 pt }
 %<article>\titlecontents { section }
@@ -5440,38 +5442,66 @@
   [ 4 em ] { }
   { \contentspush { \thecontentslabel \enskip } } { }
   { \SJTU@leaders \thecontentspage }
+%</preset>
 %    \end{macrocode}
 %
 % \changes{v2.0.1}{2023/03/31}{插图、表格和算法等索引不缩进。}
 % \changes{v2.0.1}{2023/03/31}{调整插图、表格和算法等索引编号宽度。}
-% \begin{macro}[int]{\SJTU@listof,\@@_new_list_of:Nnnn}
-% \begin{macro}{\listoffigures,\listoftables}
+% \begin{macro}[int]{\SJTU@listof}
 % 图表索引。
 %    \begin{macrocode}
+%<*class>
 \NewDocumentCommand \SJTU@listof { m m O{ } }
   {
     \group_begin:
-      \@@_make_heading:n { title = #1, #3 }
-      \exp_args:Nv \@starttoc { ext@ #2 }
+      \@@_make_heading:n { title = #2, #3 }
+      \exp_args:Nv \@starttoc { ext@ #1 }
     \group_end:
   }
-\cs_new_protected:Npn \@@_new_list_of:Nnnn #1#2#3#4
-  {
-    \DeclareDocumentCommand #1 { }
-      { \SJTU@listof {#4} {#2} }
-    \titlecontents {#2}
-      [ 0 pt ] { }
-      { \contentspush { #3 \space \thecontentslabel \enskip } } { }
-      { \SJTU@leaders \thecontentspage }
-    \exp_args:Nnv \contentsuse {#2} { ext@ #2 }
-  }
-\@@_new_list_of:Nnnn \listoffigures { figure }
-  { \figurename } { \listfigurename }
-\@@_new_list_of:Nnnn \listoftables  { table  }
-  { \tablename  } { \listtablename  }
 %    \end{macrocode}
 % \end{macro}
+%
+% \begin{macro}{\listoffigures,\listoftables}
+%    \begin{macrocode}
+\RenewDocumentCommand \listoffigures { }
+  { \SJTU@listof { figure } { \listfigurename } }
+\RenewDocumentCommand \listoftables  { }
+  { \SJTU@listof { table  } { \listtablename  } }
+%</class>
+%    \end{macrocode}
 % \end{macro}
+%
+% \begin{macro}[int]{\SJTU@titlecontents}
+% 设置索引格式的辅助函数，参数 |#3| 为编号前缀，
+% 参数 |#4| 为编号统一宽度，不设置时取编号实际宽度。
+%    \begin{macrocode}
+%<*preset>
+\NewDocumentCommand \SJTU@titlecontents { m O{\csname ext@#1\endcsname} m o }
+  {
+    \IfNoValueTF {#4}
+      {
+        \titlecontents {#1}
+          [ 0 pt ] { }
+          { \contentspush { #3 \thecontentslabel \enskip } } { }
+          { \SJTU@leaders \thecontentspage }
+      }
+      {
+        \titlecontents {#1}
+          [#4] { }
+          { \contentslabel [ #3 \thecontentslabel ] {#4} }
+          { \hspace* { - #4 } }
+          { \SJTU@leaders \thecontentspage }
+      }
+    \contentsuse {#1} {#2}
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+%    \begin{macrocode}
+\SJTU@titlecontents { figure } { \figurename \space }
+\SJTU@titlecontents { table  } { \tablename  \space }
+%</preset>
+%    \end{macrocode}
 %
 % \subsubsection{预定义环境}
 %
@@ -5479,6 +5509,7 @@
 % 缩略语对照表。
 %    \begin{macrocode}
 %<*thesis>
+%<*class>
 \NewDocumentEnvironment { abbreviation } { O{ } }
   {
     \bool_set_true:N \l_@@_heading_numbering_bool
@@ -5633,12 +5664,11 @@
 %    \begin{macrocode}
 \ProvideDocumentEnvironment { digest } { O{ } +b }
   { } { }
-%</thesis>
 %</class>
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-%<*preset&thesis>
+%<*preset>
 \NewHook { sjtutex / digest }
 \RenewDocumentEnvironment { digest } { O{ } +b }
   {
@@ -5664,7 +5694,8 @@
         \group_end:
       }
   } { }
-%</preset&thesis>
+%</preset>
+%</thesis>
 %    \end{macrocode}
 % \end{macro}
 %
@@ -6053,15 +6084,6 @@
 %    \begin{macrocode}
 \ctex_at_end_package:nn { thmtools }
   {
-    \cs_set:Npn \thmtlo@newentry
-      {
-        \exp_args:NV \titlecontents \thmt@envname
-          [ \thmt@listnumwidth ] { }
-          { \contentslabel { \thmt@listnumwidth } }
-          { \hspace* { - \thmt@listnumwidth } }
-          { \SJTU@leaders \thecontentspage }
-        \exp_args:NV \contentsuse \thmt@envname { loe }
-      }
     \cs_set:Npn \thmtlo@chaptervspacehack { }
     \RenewDocumentCommand \listoftheorems { O{ } }
       {
@@ -6095,46 +6117,79 @@
         \group_end:
       }
   }
+%</class>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*preset>
+\ctex_at_end_package:nn { thmtools }
+  {
+    \cs_set:Npn \thmtlo@newentry
+      {
+        \exp_args:NV \SJTU@titlecontents \thmt@envname [ loe ]
+          { } [ \thmt@listnumwidth ]
+      }
+  }
+%</preset>
 %    \end{macrocode}
 %
 % \subsubsection{\pkg{algorithm} 宏包和 \pkg{algorithm2e} 宏包}
 %
 % \pkg{algorithm} 宏包。
 %    \begin{macrocode}
+%<*class>
 \ctex_at_end_package:nn { algorithm }
   {
-    \tl_set:Nn \fname@algorithm   { \SJTU@algorithmname     }
-    \tl_set:Nn \listalgorithmname { \SJTU@listalgorithmname }
 %<!article>    \SJTU@counterwithin { algorithm } { chapter }
 %<thesis>    \clist_put_right:Nn \l_@@_counter_without_chapter_clist { algorithm }
-    \@@_new_list_of:Nnnn \listofalgorithms { algorithm }
-      { \fname@algorithm } { \listalgorithmname }
+    \floatname { algorithm } { \SJTU@algorithmname }
+    \tl_set:Nn \listalgorithmname { \SJTU@listalgorithmname }
+    \RenewDocumentCommand \listofalgorithms { }
+      { \SJTU@listof { algorithm } { \listalgorithmname } }
   }
+%</class>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*preset>
+\ctex_at_end_package:nn { algorithm }
+  { \SJTU@titlecontents { algorithm } { \fname@algorithm \space } }
+%</preset>
 %    \end{macrocode}
 %
 % \pkg{algorithm2e} 宏包。
 %    \begin{macrocode}
+%<*class>
 %<!article>\ctex_at_begin_package:nn { algorithm2e }
 %<!article>  { \cs_set_eq:NN \SJTU@orig@at@chapter \@chapter }
 \ctex_at_end_package:nn { algorithm2e }
   {
 %<!article>    \cs_set_eq:NN \@chapter \SJTU@orig@at@chapter
+%<!article>    \SJTU@counterwithin { algocf } { chapter }
+%<thesis>    \clist_put_right:Nn \l_@@_counter_without_chapter_clist { algocf }
+    \ctex_patch_cmd:Nnn \algocf@latexcaption
+      { \addcontentsline }
+      { \caption@iflist { \addcontentsline } { \@gobblethree } }
     \SetAlgorithmName { \SJTU@algorithmname     }
                       { \SJTU@algorithmname     }
                       { \SJTU@listalgorithmname }
     \SetAlgoCaptionSeparator { \enskip }
-%<!article>    \SJTU@counterwithin { algocf } { chapter }
-%<thesis>    \clist_put_right:Nn \l_@@_counter_without_chapter_clist { algocf }
-    \@@_new_list_of:Nnnn \listofalgorithms { algocf }
-      { \algorithmcfname } { \listalgorithmcfname }
-    \ctex_patch_cmd:Nnn \algocf@latexcaption
-      { \addcontentsline }
-      { \caption@iflist { \addcontentsline } { \@gobblethree } }
+    \RenewDocumentCommand \listofalgorithms { }
+      { \SJTU@listof { algocf } { \listalgorithmcfname } }
   }
+%</class>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*preset>
+\ctex_at_end_package:nn { algorithm2e }
+  { \SJTU@titlecontents { algocf } { \algorithmcfname \space } }
+%</preset>
 %    \end{macrocode}
 %
 % \subsubsection{\pkg{nomencl} 宏包}
 %    \begin{macrocode}
+%<*class>
 \ctex_at_end_package:nn { nomencl }
   { \tl_set:Nn \nomname { \SJTU@nomname } }
 %    \end{macrocode}
