@@ -868,7 +868,7 @@
 %
 % \subsubsection{信息域}
 %
-% \begin{function}[updated=2025-12-12]{info}
+% \begin{function}[updated=2026-01-08]{info}
 %   \begin{syntax}
 %     \OPS{info} = \marg{键值列表}
 %   \end{syntax}
@@ -876,9 +876,8 @@
 %   \begin{itemize}
 %     \item 在 \cls{sjtuthesis} 文档类中，推荐使用带语言代码前缀 \meta{lang}
 %           （比如 \opt{zh} 或 \opt{en}）的键来设定对应语言的论文信息，见第
-%           \ref{sec:sjtuthesiskey} 节；省略语言前缀不带“*”的项目表示对应的中文
-%           字段、带“*”的项目表示对应的英文字段属于老用法，仍然兼容但请及时更新
-%           至新用法；各标题页中的信息表格会根据设定信息的顺序进行显示与排列，
+%           \ref{sec:sjtuthesiskey} 节；
+%           各标题页中的信息表格会根据设定信息的顺序进行显示与排列，
 %           未设置的信息将不会显示，但在盲审模式开启时会例外地强制显示相关字段，
 %           中文标题页会强制显示 \texttt{info/zh} 中的 \texttt{author, id,
 %           supervisor, assoc_supervisor, co_supervisor, department, major, degree}
@@ -5710,38 +5709,10 @@
   }
 %    \end{macrocode}
 %
+% \changes{unreleased}{2026/01/08}{移除过时 \opt{sjtu/info} 键。}
 % 兼容 \cls{sjtuthesis} 旧接口。
 %    \begin{macrocode}
 %<*thesis>
-\keys_define:nn { sjtu / info }
-  {
-    title             .meta:n = { zh / title            = {#1} } ,
-    title*            .meta:n = { en / title            = {#1} } ,
-    display-title     .meta:n = { zh / display-title    = {#1} } ,
-    display-title*    .meta:n = { en / display-title    = {#1} } ,
-    subject           .meta:n = { zh / subject          = {#1} } ,
-    subject*          .meta:n = { en / subject          = {#1} } ,
-    keywords          .meta:n = { zh / keywords         = {#1} } ,
-    keywords*         .meta:n = { en / keywords         = {#1} } ,
-    author            .meta:n = { zh / author           = {#1} } ,
-    author*           .meta:n = { en / author           = {#1} } ,
-    supervisor        .meta:n = { zh / supervisor       = {#1} } ,
-    supervisor*       .meta:n = { en / supervisor       = {#1} } ,
-    assoc-supervisor  .meta:n = { zh / assoc-supervisor = {#1} } ,
-    assoc-supervisor* .meta:n = { en / assoc-supervisor = {#1} } ,
-    co-supervisor     .meta:n = { zh / co-supervisor    = {#1} } ,
-    co-supervisor*    .meta:n = { en / co-supervisor    = {#1} } ,
-    degree            .meta:n = { zh / degree           = {#1} } ,
-    degree*           .meta:n = { en / degree           = {#1} } ,
-    department        .meta:n = { zh / department       = {#1} } ,
-    department*       .meta:n = { en / department       = {#1} } ,
-    major             .meta:n = { zh / major            = {#1} } ,
-    major*            .meta:n = { en / major            = {#1} } ,
-    fund              .meta:n = { zh / fund             = {#1} } ,
-    fund*             .meta:n = { en / fund             = {#1} } ,
-    display-date      .meta:n = { zh / date             = {#1} } ,
-    display-date*     .meta:n = { en / date             = {#1} }
-  }
 \keys_define:nn { sjtu / name }
   {
     abbreviation      .meta:n = { abbr  = {#1} } ,
