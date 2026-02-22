@@ -19,6 +19,7 @@
 ### Removed
 
 - 移除 `info/<lang>/custom` 键。
+- 移除过时 `sjtu/info` 键。
 
 ### Fixed
 
