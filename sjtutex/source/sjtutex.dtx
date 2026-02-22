@@ -60,10 +60,6 @@
     \file{sjtu-scheme-en.def}           {\from{\jobname.dtx}{scheme,en}}
     \file{sjtu-scheme-de.def}           {\from{\jobname.dtx}{scheme,de}}
     \file{sjtu-scheme-ja.def}           {\from{\jobname.dtx}{scheme,ja}}
-    \file{sjtu-thesis-zh.def}           {\from{\jobname.dtx}{thesis-i18n,zh}}
-    \file{sjtu-thesis-en.def}           {\from{\jobname.dtx}{thesis-i18n,en}}
-    \file{sjtu-thesis-de.def}           {\from{\jobname.dtx}{thesis-i18n,de}}
-    \file{sjtu-thesis-ja.def}           {\from{\jobname.dtx}{thesis-i18n,ja}}
     \file{sjtu-text-font-newtx.def}     {\from{\jobname.dtx}{font,text,type1,newtx}}
     \file{sjtu-text-font-newpx.def}     {\from{\jobname.dtx}{font,text,type1,newpx}}
     \file{sjtu-text-font-lm.def}        {\from{\jobname.dtx}{font,text,type1,lm}}
@@ -116,10 +112,6 @@
 \Msg{*     sjtu-scheme-en.def                                    *}
 \Msg{*     sjtu-scheme-ja.def                                    *}
 \Msg{*     sjtu-scheme-zh.def                                    *}
-\Msg{*     sjtu-thesis-de.def                                    *}
-\Msg{*     sjtu-thesis-en.def                                    *}
-\Msg{*     sjtu-thesis-ja.def                                    *}
-\Msg{*     sjtu-thesis-zh.def                                    *}
 \Msg{*     sjtu-text-font-cambria.def                            *}
 \Msg{*     sjtu-text-font-libertinus.def                         *}
 \Msg{*     sjtu-text-font-lm.def                                 *}
@@ -204,14 +196,6 @@
 %<scheme&de>\ProvidesExplFile{sjtu-scheme-de.def}
 %<scheme&ja>  {Japanese scheme (SJTUTeX)}
 %<scheme&ja>\ProvidesExplFile{sjtu-scheme-ja.def}
-%<thesis-i18n&zh>  {Chinese config for thesis (SJTUTeX)}
-%<thesis-i18n&zh>\ProvidesExplFile{sjtu-thesis-zh.def}
-%<thesis-i18n&en>  {English config for thesis (SJTUTeX)}
-%<thesis-i18n&en>\ProvidesExplFile{sjtu-thesis-en.def}
-%<thesis-i18n&de>  {German config for thesis (SJTUTeX)}
-%<thesis-i18n&de>\ProvidesExplFile{sjtu-thesis-de.def}
-%<thesis-i18n&ja>  {Japanese config for thesis (SJTUTeX)}
-%<thesis-i18n&ja>\ProvidesExplFile{sjtu-thesis-ja.def}
 %<font&text&newtx>  {New TX text fonts definition (SJTUTeX)}
 %<font&text&newtx>\ProvidesExplFile{sjtu-text-font-newtx.def}
 %<font&text&newpx>  {New PX text fonts definition (SJTUTeX)}
@@ -449,21 +433,20 @@
 %   \label{tab:files}
 %   \begin{tabular}{l|l|p{4cm}}
 %     \toprule
-%     \strong{类别}         & \strong{文件}               & \strong{说明}    \\
+%     \strong{类别}         & \strong{文件}               & \strong{说明}  \\
 %     \midrule
-%     文档类                & \file{sjtuthesis.cls}       & 学位论文文档类   \\
-%                           & \file{sjtureport.cls}       & 报告文档类       \\
-%                           & \file{sjtuarticle.cls}      & 文稿文档类       \\
-%                           & \file{sjtu-lang-*.def}      & 文档类语言配置   \\
-%                           & \file{sjtu-scheme-*.def}    & 文档类语言方案   \\
-%                           & \file{sjtu-thesis-*.def}    & 学位论文语言配置 \\
+%     文档类                & \file{sjtuthesis.cls}       & 学位论文文档类 \\
+%                           & \file{sjtureport.cls}       & 报告文档类     \\
+%                           & \file{sjtuarticle.cls}      & 文稿文档类     \\
+%                           & \file{sjtu-lang-*.def}      & 文档类语言配置 \\
+%                           & \file{sjtu-scheme-*.def}    & 文档类语言方案 \\
 %     \midrule
-%     字体配置文件          & \file{sjtu-text-font-*.def} & 西文字体配置     \\
-%                           & \file{sjtu-math-font-*.def} & 数学字体配置     \\
-%                           & \file{sjtu-cjk-font-*.def}  & CJK 字体配置     \\
+%     字体配置文件          & \file{sjtu-text-font-*.def} & 西文字体配置   \\
+%                           & \file{sjtu-math-font-*.def} & 数学字体配置   \\
+%                           & \file{sjtu-cjk-font-*.def}  & CJK 字体配置   \\
 %     \midrule
-%     视觉形象系统\tnote{a} & \file{sjtu-vi-logo-*.pdf}   & 校标图片         \\
-%                           & \file{sjtu-vi-badge-*.pdf}  & 校徽图片         \\
+%     视觉形象系统\tnote{a} & \file{sjtu-vi-logo-*.pdf}   & 校标图片       \\
+%                           & \file{sjtu-vi-badge-*.pdf}  & 校徽图片       \\
 %
 %     \bottomrule
 %   \end{tabular}
@@ -4028,253 +4011,10 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% 通用名称常量。
-%    \begin{macrocode}
-\clist_map_inline:nn
-  {
-%<zh>    { keywords } { 关键词          } ,
-%<en>    { keywords } { Key~words       } ,
-%<de>    { keywords } { Schlüsselwörter } ,
-%<ja>    { keywords } { キーワード      } ,
-%<zh|ja>    { info_sep } { ： \null        } ,
-%<en|de>    { info_sep } { \hbox { :~ }    } ,
-%<zh>    { item_sep } { ，              }
-%<en|de>    { item_sep } { ,~              }
-%<ja>    { item_sep } { \quad           }
-  }
-%<zh>  { \@@_name_const:nnn { zh } #1 }
-%<en>  { \@@_name_const:nnn { en } #1 }
-%<de>  { \@@_name_const:nnn { de } #1 }
-%<ja>  { \@@_name_const:nnn { ja } #1 }
-%</lang>
-%    \end{macrocode}
-%
-% 初始化语言名称。
-%    \begin{macrocode}
-%<*scheme>
-%<zh>\tl_set:Nn \languagename { chinese  }
-%<en>\tl_set:Nn \languagename { english  }
-%<de>\tl_set:Nn \languagename { ngerman  }
-%<ja>\tl_set:Nn \languagename { japanese }
-%    \end{macrocode}
-%
-% 设置名称选项。默认值为英文，只需修改其他语种。
-%    \begin{macrocode}
-%<*!en>
-\keys_set_known:nn { sjtu / name }
-  {
-%<*zh>
-    contents      = { 目 \protect \quad 录   } ,
-    listfigure    = { 插 \protect \quad 图   } ,
-    listtable     = { 表 \protect \quad 格   } ,
-    figure        = { 图                     } ,
-    table         = { 表                     } ,
-    abstract      = { 摘 \protect \quad 要   } ,
-    index         = { 索 \protect \quad 引   } ,
-    appendix      = { 附录                   } ,
-    proof         = { 证明                   } ,
-    bib           = { 参考文献               } ,
-    figure*       = { Figure                 } ,
-    table*        = { Table                  } ,
-    algorithm     = { 算法                   } ,
-    listalgorithm = { 算 \protect \quad 法   } ,
-    abbr          = { 缩略语对照表           } ,
-    nom           = { 符号对照表             } ,
-    ack           = { 致 \protect \quad 谢   } ,
-    resume        = { 个人简历               } ,
-    digest        = { 大摘要                 } ,
-    achv          = { 学术论文和科研成果目录 }
-%</zh>
-%<*de>
-    contents      = { Inhaltsverzeichnis     } ,
-    listfigure    = { Abbildungsverzeichnis  } ,
-    listtable     = { Tabellenverzeichnis    } ,
-    figure        = { Abbildung              } ,
-    table         = { Tabelle                } ,
-    abstract      = { Zusammenfassung        } ,
-    index         = { Index                  } ,
-    appendix      = { Anhang                 } ,
-    proof         = { Beweis                 } ,
-    bib           = { Literaturverzeichnis   } ,
-    part          = { Teil                   } ,
-    chapter       = { Kapitel                } ,
-    figure*       = { Figure                 } ,
-    table*        = { Table                  } ,
-    algorithm     = { Algorithmus            } ,
-    listalgorithm = { Algorithmenverzeichnis } ,
-    abbr          = { Abkürzungsverzeichnis  } ,
-    nom           = { Symbolverzeichnis      } ,
-    ack           = { Danksagungen           } ,
-    resume        = { Lebenslauf             } ,
-    digest        = { Kurzfassung            } ,
-    achv          = { Forschungsleistungen   }
-%</de>
-%<*ja>
-    contents      = { 目 \protect \quad 次 } ,
-    listfigure    = { 図目次               } ,
-    listtable     = { 表目次               } ,
-    figure        = { 図                   } ,
-    table         = { 表                   } ,
-    abstract      = { 概 \protect \quad 要 } ,
-    index         = { 索 \protect \quad 引 } ,
-    appendix      = { 付録                 } ,
-    proof         = { 证明                 } ,
-    bib           = { 参考文献             } ,
-    figure*       = { Figure               } ,
-    table*        = { Table                } ,
-    algorithm     = { アルゴリズム         } ,
-    listalgorithm = { アルゴリズム目次     } ,
-    abbr          = { 略語表               } ,
-    nom           = { 記号表               } ,
-    ack           = { 謝 \protect \quad 辞 } ,
-    resume        = { 履歴書               } ,
-    digest        = { 要 \protect \quad 約 } ,
-    achv          = { 研究業績書           }
-%</ja>
-  }
-%</!en>
-%</scheme>
-%    \end{macrocode}
-%
-% 学位论文名称常量。
-%    \begin{macrocode}
-%<*thesis-i18n>
-%<zh>\@@_symbol_const:nn { white_square } { "25A1 }
-%<zh>\@@_name_const_from_clist:nnnn { zh }
-%<en>\@@_name_const_from_clist:nnnn { en }
-%<de>\@@_name_const_from_clist:nnnn { de }
-%<ja>\@@_name_const_from_clist:nnnn { ja }
-  { degree_level } { \g_@@_thesis_type_int }
-%<zh>  { 学士, 硕士, 博士 }
-%<en>  { Bachelor, Master, Doctor }
-%<de>  { Bachelor, Master, Doktor }
-%<ja>  { 学士, 修士, 博士 }
-\clist_map_inline:nn
-  {
-%<*zh>
-    { univ             } { 上海交通大学           } ,
-    { address          } { 中国・上海             } ,
-    { thesis           } { 学位论文               } ,
-    { title_page       } { 题名页                 } ,
-    { declaration      } { 原创性声明及使用授权书 } ,
-    { orig_decl        } { 原创性声明             } ,
-    { auth_decl        } { 使用授权书             } ,
-    { decl_author      } { 学位论文作者           } ,
-    { decl_supervisor  } { 指导教师               } ,
-    { abstract         } { 摘 \protect \quad 要   }
-%</zh>
-%<*en>
-    { univ             } { Shanghai~ Jiao~ Tong~ University } ,
-    { address          } { Shanghai,~ P.R.~ China           } ,
-    { title_page       } { Title~ Page                      } ,
-    { declaration      } { Statutory~ Declaration           } ,
-    { abstract         } { Abstract                         }
-%</en>
-%<*de>
-    { univ             } { Shanghai~ Jiao~ Tong~ Universität } ,
-    { address          } { Shanghai,~ VR~ China              } ,
-    { title_page       } { Titelblatt                        } ,
-    { declaration      } { Eidesstattliche~ Erklärung        } ,
-    { abstract         } { Abstrakt                          }
-%</de>
-%<*ja>
-    { univ             } { 上海交通大学         } ,
-    { address          } { 中国・上海           } ,
-    { thesis           } { 学位請求論文         } ,
-    { title_page       } { 標題紙               } ,
-    { declaration      } { 誓約書・公表許諾書   } ,
-    { abstract         } { 要 \protect \quad 旨 }
-%</ja>
-  }
-%<zh>  { \@@_name_const:nnn { zh } #1 }
-%<en>  { \@@_name_const:nnn { en } #1 }
-%<de>  { \@@_name_const:nnn { de } #1 }
-%<ja>  { \@@_name_const:nnn { ja } #1 }
-%<*zh>
-\SetInfoEntry { zh }
-  {
-    author*           = { 姓名              } ,
-    id*               = { 学号              } ,
-    supervisor*       = { 导师              } ,
-    assoc-supervisor* = { 副导师            } ,
-    co-supervisor*    = { 联合导师          } ,
-    department        = { 院系              } ,
-    major             = { 学科 \, / \, 专业 } ,
-    degree            = { 申请学位          }
-  }
-%</zh>
-%<*en>
-\SetInfoEntry { en }
-  {
-    author*           = { Author             } ,
-    supervisor*       = { Supervisor         } ,
-    assoc-supervisor* = { Assoc.\ Supervisor } ,
-    co-supervisor*    = { Co-supervisor      } ,
-    department , major , degree
-  }
-%</en>
-%<*de>
-\SetInfoEntry { de }
-  {
-    author*           = { Autor/in         } ,
-    supervisor*       = { Betreuer/in      } ,
-    assoc-supervisor* = { Zweitbetreuer/in } ,
-    co-supervisor*    = { Co-Betreuer/in   } ,
-    department , major , degree
-  }
-%</de>
-%<*ja>
-\SetInfoEntry { ja }
-  {
-    author*           = { 氏名       } ,
-    supervisor*       = { 指導教員   } ,
-    assoc-supervisor* = { 副指導教員 } ,
-    co-supervisor*    = { 共同指導   } ,
-    department , major , degree
-  }
-%</ja>
-%    \end{macrocode}
-%
-% \changes{v2.0.3}{2023/04/08}{更新学位论文初始英文主题。}
-% 初始化主题。
-%    \begin{macrocode}
-%<zh>\keys_define:nn { sjtu / info / zh }
-%<en>\keys_define:nn { sjtu / info / en }
-%<de>\keys_define:nn { sjtu / info / de }
-%<ja>\keys_define:nn { sjtu / info / ja }
-  {
-    subject          .initial:n =
-      {
-%<*zh>
-        \c_@@_name_univ_zh_tl
-        \c_@@_name_degree_level_zh_tl
-        \c_@@_name_thesis_zh_tl
-%</zh>
-%<*en>
-        A~ Dissertation~ Submitted~ to \\
-        { \c_@@_name_univ_en_tl }~ for~
-        the~ Degree~ of~ { \c_@@_name_degree_level_en_tl }
-%</en>
-%<*de>
-        Eine~ Dissertation~ Eingereicht~ an \\
-        der~ { \c_@@_name_univ_de_tl }~ für~
-        { \c_@@_name_degree_level_de_tl } titel
-%</de>
-%<*ja>
-        \c_@@_name_univ_ja_tl
-        \c_@@_name_degree_level_ja_tl
-        \c_@@_name_thesis_ja_tl
-%</ja>
-      }
-  }
-%</thesis-i18n>
-%    \end{macrocode}
-%
 % 将形如 |yyyy-mm-dd| 或 |yyyy-mm| 的 ISO 日期格式字符串转化为日期表示。
 %
 % 日期常量。
 %    \begin{macrocode}
-%<*lang>
 %<*zh|ja>
 \clist_map_inline:nn
   {
@@ -4425,6 +4165,208 @@
 %    \end{macrocode}
 % \end{macro}
 %
+% 初始化语言名称。
+%    \begin{macrocode}
+%<*scheme>
+%<zh>\tl_set:Nn \languagename { chinese  }
+%<en>\tl_set:Nn \languagename { english  }
+%<de>\tl_set:Nn \languagename { ngerman  }
+%<ja>\tl_set:Nn \languagename { japanese }
+%    \end{macrocode}
+%
+% 设置名称选项。默认值为英文，只需修改其他语种。
+%    \begin{macrocode}
+%<*!en>
+\keys_set_known:nn { sjtu / name }
+  {
+%<*zh>
+    contents      = { 目 \protect \quad 录   } ,
+    listfigure    = { 插 \protect \quad 图   } ,
+    listtable     = { 表 \protect \quad 格   } ,
+    figure        = { 图                     } ,
+    table         = { 表                     } ,
+    abstract      = { 摘 \protect \quad 要   } ,
+    index         = { 索 \protect \quad 引   } ,
+    appendix      = { 附录                   } ,
+    proof         = { 证明                   } ,
+    bib           = { 参考文献               } ,
+    figure*       = { Figure                 } ,
+    table*        = { Table                  } ,
+    algorithm     = { 算法                   } ,
+    listalgorithm = { 算 \protect \quad 法   } ,
+    abbr          = { 缩略语对照表           } ,
+    nom           = { 符号对照表             } ,
+    ack           = { 致 \protect \quad 谢   } ,
+    resume        = { 个人简历               } ,
+    digest        = { 大摘要                 } ,
+    achv          = { 学术论文和科研成果目录 }
+%</zh>
+%<*de>
+    contents      = { Inhaltsverzeichnis     } ,
+    listfigure    = { Abbildungsverzeichnis  } ,
+    listtable     = { Tabellenverzeichnis    } ,
+    figure        = { Abbildung              } ,
+    table         = { Tabelle                } ,
+    abstract      = { Zusammenfassung        } ,
+    index         = { Index                  } ,
+    appendix      = { Anhang                 } ,
+    proof         = { Beweis                 } ,
+    bib           = { Literaturverzeichnis   } ,
+    part          = { Teil                   } ,
+    chapter       = { Kapitel                } ,
+    figure*       = { Figure                 } ,
+    table*        = { Table                  } ,
+    algorithm     = { Algorithmus            } ,
+    listalgorithm = { Algorithmenverzeichnis } ,
+    abbr          = { Abkürzungsverzeichnis  } ,
+    nom           = { Symbolverzeichnis      } ,
+    ack           = { Danksagungen           } ,
+    resume        = { Lebenslauf             } ,
+    digest        = { Kurzfassung            } ,
+    achv          = { Forschungsleistungen   }
+%</de>
+%<*ja>
+    contents      = { 目 \protect \quad 次 } ,
+    listfigure    = { 図目次               } ,
+    listtable     = { 表目次               } ,
+    figure        = { 図                   } ,
+    table         = { 表                   } ,
+    abstract      = { 概 \protect \quad 要 } ,
+    index         = { 索 \protect \quad 引 } ,
+    appendix      = { 付録                 } ,
+    proof         = { 证明                 } ,
+    bib           = { 参考文献             } ,
+    figure*       = { Figure               } ,
+    table*        = { Table                } ,
+    algorithm     = { アルゴリズム         } ,
+    listalgorithm = { アルゴリズム目次     } ,
+    abbr          = { 略語表               } ,
+    nom           = { 記号表               } ,
+    ack           = { 謝 \protect \quad 辞 } ,
+    resume        = { 履歴書               } ,
+    digest        = { 要 \protect \quad 約 } ,
+    achv          = { 研究業績書           }
+%</ja>
+  }
+%</!en>
+%</scheme>
+%    \end{macrocode}
+%
+% 通用名称常量。
+%    \begin{macrocode}
+%<*lang>
+\clist_map_inline:nn
+  {
+%<zh>    { keywords } { 关键词          } ,
+%<en>    { keywords } { Key~words       } ,
+%<de>    { keywords } { Schlüsselwörter } ,
+%<ja>    { keywords } { キーワード      } ,
+%<zh|ja>    { info_sep } { ： \null        } ,
+%<en|de>    { info_sep } { \hbox { :~ }    } ,
+%<zh>    { item_sep } { ，              }
+%<en|de>    { item_sep } { ,~              }
+%<ja>    { item_sep } { \quad           }
+  }
+%<zh>  { \@@_name_const:nnn { zh } #1 }
+%<en>  { \@@_name_const:nnn { en } #1 }
+%<de>  { \@@_name_const:nnn { de } #1 }
+%<ja>  { \@@_name_const:nnn { ja } #1 }
+%    \end{macrocode}
+%
+% 学位论文名称常量。
+%    \begin{macrocode}
+\IfClassLoadedF { sjtuthesis } { \endinput }
+%<zh>\@@_symbol_const:nn { white_square } { "25A1 }
+%<zh>\@@_name_const_from_clist:nnnn { zh }
+%<en>\@@_name_const_from_clist:nnnn { en }
+%<de>\@@_name_const_from_clist:nnnn { de }
+%<ja>\@@_name_const_from_clist:nnnn { ja }
+  { degree_level } { \g_@@_thesis_type_int }
+%<zh>  { 学士, 硕士, 博士 }
+%<en>  { Bachelor, Master, Doctor }
+%<de>  { Bachelor, Master, Doktor }
+%<ja>  { 学士, 修士, 博士 }
+\clist_map_inline:nn
+  {
+%<*zh>
+    { univ             } { 上海交通大学           } ,
+    { address          } { 中国・上海             } ,
+    { thesis           } { 学位论文               } ,
+    { title_page       } { 题名页                 } ,
+    { declaration      } { 原创性声明及使用授权书 } ,
+    { orig_decl        } { 原创性声明             } ,
+    { auth_decl        } { 使用授权书             } ,
+    { decl_author      } { 学位论文作者           } ,
+    { decl_supervisor  } { 指导教师               } ,
+    { abstract         } { 摘 \protect \quad 要   }
+%</zh>
+%<*en>
+    { univ             } { Shanghai~ Jiao~ Tong~ University } ,
+    { address          } { Shanghai,~ P.R.~ China           } ,
+    { title_page       } { Title~ Page                      } ,
+    { declaration      } { Statutory~ Declaration           } ,
+    { abstract         } { Abstract                         }
+%</en>
+%<*de>
+    { univ             } { Shanghai~ Jiao~ Tong~ Universität } ,
+    { address          } { Shanghai,~ VR~ China              } ,
+    { title_page       } { Titelblatt                        } ,
+    { declaration      } { Eidesstattliche~ Erklärung        } ,
+    { abstract         } { Abstrakt                          }
+%</de>
+%<*ja>
+    { univ             } { 上海交通大学         } ,
+    { address          } { 中国・上海           } ,
+    { thesis           } { 学位請求論文         } ,
+    { title_page       } { 標題紙               } ,
+    { declaration      } { 誓約書・公表許諾書   } ,
+    { abstract         } { 要 \protect \quad 旨 }
+%</ja>
+  }
+%<zh>  { \@@_name_const:nnn { zh } #1 }
+%<en>  { \@@_name_const:nnn { en } #1 }
+%<de>  { \@@_name_const:nnn { de } #1 }
+%<ja>  { \@@_name_const:nnn { ja } #1 }
+%    \end{macrocode}
+%
+% \changes{v2.0.3}{2023/04/08}{更新学位论文初始英文主题。}
+% 初始化主题。
+%    \begin{macrocode}
+%<*zh>
+\tl_const:Nn \c_@@_name_subject_zh_tl
+  {
+    \c_@@_name_univ_zh_tl
+    \c_@@_name_degree_level_zh_tl
+    \c_@@_name_thesis_zh_tl
+  }
+%</zh>
+%<*en>
+\tl_const:Nn \c_@@_name_subject_en_tl
+  {
+    A~ Dissertation~ Submitted~ to \\
+    { \c_@@_name_univ_en_tl }~ for~
+    the~ Degree~ of~ { \c_@@_name_degree_level_en_tl }
+  }
+%</en>
+%<*de>
+\tl_const:Nn \c_@@_name_subject_de_tl
+  {
+    Eine~ Dissertation~ Eingereicht~ an \\
+    der~ { \c_@@_name_univ_de_tl }~ für~
+    { \c_@@_name_degree_level_de_tl } titel
+  }
+%</de>
+%<*ja>
+\tl_const:Nn \c_@@_name_subject_ja_tl
+  {
+    \c_@@_name_univ_ja_tl
+    \c_@@_name_degree_level_ja_tl
+    \c_@@_name_thesis_ja_tl
+  }
+%</ja>
+%</lang>
+%    \end{macrocode}
+%
 % \subsection{信息录入}
 %
 % \changes{v2.0}{2022/12/17}{添加 \opt{display-date} 键。}
@@ -4502,7 +4444,7 @@
 \cs_new_protected:Npn \@@_info_keys_define:n #1
   {
     \clist_map_inline:nn
-      { title, display_title, subject, date }
+      { title, display_title, subject }
       { \tl_new:c { l_@@_info_ ##1 _ #1 _tl } }
     \clist_map_inline:nn
       { keywords, fund }
@@ -4531,6 +4473,7 @@
               { \keys_set:nn { sjtu / info / #1 } { display-title = {##1} } }
           } ,
         subject           .tl_set:c = { l_@@_info_subject_ #1 _tl } ,
+        subject          .initial:o = { \cs:w c_@@_name_subject_ #1 _tl \cs_end: } ,
         keywords       .clist_set:c = { l_@@_info_keywords_ #1 _clist } ,
         fund           .clist_set:c = { l_@@_info_fund_ #1 _clist } ,
         fund              .groups:n = { sensitive } ,
@@ -4547,27 +4490,62 @@
 %    \end{macrocode}
 % \end{macro}
 %
+% 定义标题页信息栏条目。
+%    \begin{macrocode}
+\clist_const:Nn \c_@@_info_entries_zh_clist
+  {
+    author*           = { 姓名              } ,
+    id*               = { 学号              } ,
+    supervisor*       = { 导师              } ,
+    assoc-supervisor* = { 副导师            } ,
+    co-supervisor*    = { 联合导师          } ,
+    department        = { 院系              } ,
+    major             = { 学科 \, / \, 专业 } ,
+    degree            = { 申请学位          }
+  }
+\clist_const:Nn \c_@@_info_entries_en_clist
+  {
+    author*           = { Author             } ,
+    supervisor*       = { Supervisor         } ,
+    assoc-supervisor* = { Assoc.\ Supervisor } ,
+    co-supervisor*    = { Co-supervisor      } ,
+    department , major , degree
+  }
+\clist_const:Nn \c_@@_info_entries_de_clist
+  {
+    author*           = { Autor/in         } ,
+    supervisor*       = { Betreuer/in      } ,
+    assoc-supervisor* = { Zweitbetreuer/in } ,
+    co-supervisor*    = { Co-Betreuer/in   } ,
+    department , major , degree
+  }
+\clist_const:Nn \c_@@_info_entries_ja_clist
+  {
+    author*           = { 氏名       } ,
+    supervisor*       = { 指導教員   } ,
+    assoc-supervisor* = { 副指導教員 } ,
+    co-supervisor*    = { 共同指導   } ,
+    department , major , degree
+  }
+\clist_map_inline:Nn \g_@@_lang_clist
+  {
+    \@@_info_keys_define:n {#1}
+    \exp_args:Nnv \SetInfoEntry { #1 }
+      { c_@@_info_entries_ #1 _clist }
+  }
+%    \end{macrocode}
+%
 % \begin{macro}{info/id}
 % 单独处理学号。
 %    \begin{macrocode}
 \keys_define:nn { sjtu / info }
   {
-    id   .code:n =
-      {
-        \tl_set:Nn \l_@@_info_id_zh_tl {#1}
-        \@@_setup:n { info / zh / @show+ = id }
-      } ,
+    id   .meta:n = { zh / id = {#1} } ,
     id .groups:n = { sensitive }
   }
-%    \end{macrocode}
-% \end{macro}
-%
-% 定义 \cls{sjtuthesis} 中不同语种的信息键值类。
-%    \begin{macrocode}
-\clist_map_inline:Nn \g_@@_lang_clist
-  { \@@_info_keys_define:n {#1} }
 %</thesis>
 %    \end{macrocode}
+% \end{macro}
 %
 % 定义 \cls{sjtureport} 和 \cls{sjtuarticle} 中的信息键值类。
 % \begin{variable}{\l_@@_info_subject_tl,\l_@@_info_keywords_clist}
@@ -4937,35 +4915,32 @@
   }
 %    \end{macrocode}
 %
-% 载入学位论文语言配置文件。
-%    \begin{macrocode}
-\clist_map_inline:Nn \g_@@_lang_clist
-  { \file_input:n { sjtu-thesis- #1 .def } }
-%</thesis>
-%</class>
-%    \end{macrocode}
-%
 % 中文标题页使用样式 A，其他语种使用样式 B。
 %    \begin{macrocode}
-%<*thesis-i18n>
-\DeclareInstanceCopy { sjtu / page }
-%<zh>  { title / zh } { title a }
-%<en>  { title / en } { title b }
-%<de>  { title / de } { title b }
-%<ja>  { title / ja } { title b }
-%</thesis-i18n>
+\prop_const_from_keyval:Nn \c_@@_title_page_style_prop
+  {
+    zh = { title a } ,
+    en = { title b } ,
+    de = { title b } ,
+    ja = { title b }
+  }
+\clist_map_inline:Nn \g_@@_lang_clist
+  {
+    \prop_get:NnN \c_@@_title_page_style_prop {#1} \l_@@_tmp_tl
+    \DeclareInstanceCopy { sjtu / page } { title / #1 } { \l_@@_tmp_tl }
+  }
 %    \end{macrocode}
 %
 % \begin{macro}{\maketitle}
 % 生成标题页。
 %    \begin{macrocode}
-%<*class&thesis>
 \RenewDocumentCommand \maketitle { }
   {
     \clist_map_inline:Nn \g_@@_lang_clist
       { \UseInstance { sjtu / page } { title / ##1 } { ##1 } }
   }
-%</class&thesis>
+%</thesis>
+%</class>
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4975,7 +4950,7 @@
 %
 % 声明及授权书文本。
 %    \begin{macrocode}
-%<*thesis-i18n&zh>
+%<*lang&zh>
 \tl_const:Nn \c_@@_orig_decl_text_a_zh_tl
   {
     本人郑重声明：所呈交的学位论文，是本人在导师的指导下，独立进行研究工
@@ -5034,7 +5009,7 @@
     \parbox [ t ] { 12 em }
       { #1 \c_@@_signature_text_zh_tl }
   }
-%</thesis-i18n&zh>
+%</lang&zh>
 %    \end{macrocode}
 %
 % 声明及授权书元素实例。
