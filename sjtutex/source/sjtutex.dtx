@@ -1835,11 +1835,11 @@
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}{\g_@@_baseline_skip_dim,\g_@@_fixed_baselineskip_bool}
+% \begin{variable}{\g_@@_baseline_skip_dim,\@@_if_fixed_baselineskip:T}
 % 固定行距。
 %    \begin{macrocode}
 \dim_new:N \g_@@_baseline_skip_dim
-\bool_new:N \g_@@_fixed_baselineskip_bool
+\cs_set_eq:NN \@@_if_fixed_baselineskip:T \use_none:n
 %    \end{macrocode}
 % \end{variable}
 %
@@ -2001,10 +2001,10 @@
     baselineskip .choice: ,
     baselineskip .value_required:n = true ,
     baselineskip / false   .code:n =
-      { \bool_gset_false:N \g_@@_fixed_baselineskip_bool } ,
+      { \cs_gset_eq:NN \@@_if_fixed_baselineskip:T \use_none:n } ,
     baselineskip / unknown .code:n =
       {
-        \bool_gset_true:N  \g_@@_fixed_baselineskip_bool
+        \cs_gset_eq:NN \@@_if_fixed_baselineskip:T \use:n
         \dim_gset:Nn \g_@@_baseline_skip_dim {#1}
       } ,
 %<thesis>    baselineskip .initial:n = { 20 bp } ,
@@ -2232,12 +2232,28 @@
 %
 % \subsubsection{字号行距}
 %
+% \begin{macro}{\setbaselineskip}
+% 设置基线间距，在字号命令之后使用。
+%    \begin{macrocode}
+\NewDocumentCommand \setbaselineskip { m }
+  { \fontsize { \f@size } {#1} \selectfont }
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}[int]{\SJTU@orig@normalsize}
 % 保存原始 \tn{normalsize} 字号大小。
 %    \begin{macrocode}
 \normalsize
 \cs_set_protected:Npe \SJTU@orig@normalsize
   { \exp_not:N \fontsize { \f@size } { \f@baselineskip } \exp_not:N \selectfont }
+%    \end{macrocode}
+% \end{macro}
+%
+% \changes{unreleased}{2026/02/23}{设置标题行距与正文一致。}
+% \begin{macro}{\SJTU@set@sec@lineskip}
+% 设置标题行距的辅助变量。
+%    \begin{macrocode}
+\tl_new:N \SJTU@set@sec@lineskip
 %    \end{macrocode}
 % \end{macro}
 %
@@ -2249,7 +2265,7 @@
   { Invalid~baselineskip~value~'#1'! \\ Using~default~value~instead. }
 \cs_new_protected:Npn \@@_set_font_size:nnNn #1#2#3#4
   { \cs_set_protected:Npn #3 { \@setfontsize #3 {#1} {#2} #4 } }
-\bool_if:NT \g_@@_fixed_baselineskip_bool
+\@@_if_fixed_baselineskip:T
   {
     \dim_compare:nNnTF { \f@size pt } > { \g_@@_baseline_skip_dim }
       {
@@ -2259,6 +2275,11 @@
       {
         \tl_set:Ne \l_@@_font_size_tl
           { { \f@size } { \dim_to_decimal:n { \g_@@_baseline_skip_dim } } }
+        \tl_set:Ne \SJTU@set@sec@lineskip
+          {
+            \exp_not:N \setbaselineskip
+              { \dim_to_decimal:n { \g_@@_baseline_skip_dim } }
+          }
         \int_case:nn { \@ptsize }
           {
             { 0 }
@@ -2303,14 +2324,6 @@
   }
 %    \end{macrocode}
 % \end{macro}
-% \end{macro}
-%
-% \begin{macro}{\setbaselineskip}
-% 设置基线间距，在字号命令之后使用。
-%    \begin{macrocode}
-\NewDocumentCommand \setbaselineskip { m }
-  { \fontsize { \f@size } {#1} \selectfont }
-%    \end{macrocode}
 % \end{macro}
 %
 % \subsubsection{字体配置}
@@ -3521,7 +3534,7 @@
   {
     beforeskip  = 24 bp ,
     afterskip   =  6 bp ,
-    format      = \zihao { 4 } \setbaselineskip { 18 bp } \bfseries
+    format      = \zihao { 4 } \SJTU@set@sec@lineskip \bfseries
                   \CJKsffamily
   }
 %</thesis>
@@ -3531,7 +3544,7 @@
   {
     beforeskip  = 12 bp ,
     afterskip   =  6 bp ,
-    format      = \zihao { -4 } \setbaselineskip { 16 bp } \bfseries
+    format      = \zihao { -4 } \SJTU@set@sec@lineskip \bfseries
                   \CJKsffamily
   }
 %</thesis>
@@ -3541,7 +3554,7 @@
   {
     beforeskip  =  6 bp ,
     afterskip   =  6 bp ,
-    format      = \zihao { -4 } \setbaselineskip { 16 bp } \normalfont
+    format      = \zihao { -4 } \SJTU@set@sec@lineskip \normalfont
   }
 %</thesis>
 %<!thesis>  { format = \SJTU@orig@normalsize \normalfont }
