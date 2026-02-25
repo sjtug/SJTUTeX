@@ -197,7 +197,8 @@
 SJTUTeX 使用 LaTeX3 进行了重构，并对学校新毕业设计模版的要求做了适配。与此同时，新增了 `sjtuarticle` 和 `sjtureport` 文档类，可以用在实验报告等短文中。欢迎使用！
 
 
-[Unreleased]: https://github.com/sjtug/SJTUTeX/compare/v2.2.1...HEAD
+[Unreleased]: https://github.com/sjtug/SJTUTeX/compare/v2.3...HEAD
+[v2.3]:       https://github.com/sjtug/SJTUTeX/compare/v2.2.1...v2.3
 [v2.2.1]:     https://github.com/sjtug/SJTUTeX/compare/v2.2...v2.2.1
 [v2.2]:       https://github.com/sjtug/SJTUTeX/compare/v2.1.5...v2.2
 [v2.1.5]:     https://github.com/sjtug/SJTUTeX/compare/v2.1.4...v2.1.5
