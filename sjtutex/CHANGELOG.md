@@ -23,7 +23,7 @@
 
 ### Fixed
 
-- 修复浮动体环境中 `cases` 环境中的字体问题，在浮动体中将 `\SJTU@style@equation@font` 置空（[#72](https://github.com/sjtug/SJTUTeX/pull/72)）。
+- 修复浮动体环境中 `cases` 环境中的字体问题，在浮动体中将 `\SJTU@style@equation@font` 置空（[#77](https://github.com/sjtug/SJTUTeX/pull/77)）。
 
 ## [v2.2.1] - 2025-03-28
 
