@@ -4639,9 +4639,20 @@
     subject           .tl_set:N = \l_@@_info_subject_tl ,
     keywords       .clist_set:N = \l_@@_info_keywords_clist ,
   }
-%</preset&!thesis>
 %    \end{macrocode}
 % \end{variable}
+%
+% \changes{unreleased}{2026/02/26}{将非标准接口移入预设文件。}
+% \begin{macro}{\subject,\keywords}
+% 通用模板新接口。
+%    \begin{macrocode}
+\NewDocumentCommand \subject  { m }
+  { \keys_set:nn { sjtu / info } { subject  = {#1} } }
+\NewDocumentCommand \keywords { m }
+  { \keys_set:nn { sjtu / info } { keywords = {#1} } }
+%</preset&!thesis>
+%    \end{macrocode}
+% \end{macro}
 %
 %    \begin{macrocode}
 %<*class>
@@ -5749,18 +5760,6 @@
   }
 %</thesis>
 %    \end{macrocode}
-%
-% \begin{macro}{\subject,\keywords}
-% 通用模板新接口。
-%    \begin{macrocode}
-%<*!thesis>
-\NewDocumentCommand \subject  { m }
-  { \keys_set:nn { sjtu / info } { subject  = {#1} } }
-\NewDocumentCommand \keywords { m }
-  { \keys_set:nn { sjtu / info } { keywords = {#1} } }
-%</!thesis>
-%    \end{macrocode}
-% \end{macro}
 %
 % 载入预设文件。
 %    \begin{macrocode}
