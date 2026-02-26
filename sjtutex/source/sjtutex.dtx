@@ -902,11 +902,11 @@
 %   \begin{syntax}
 %     \TNA{SetInfoEntry}\marg{lang}\marg{键值列表}
 %   \end{syntax}
-%   用于新建或修改 \cls{sjtuthesis} 文档类中 |info| 选项的子项。
+%   用于新建或修改 \cls{sjtuthesis} 文档类中 |info| 选项的子项，
+%   需要在 \tn{maketitle} 之前使用该命令。
 %   第一个参数指定语言，
 %   第二个参数使用键值列表指定字段的键名称和显示名称，各键值对间用英文逗号隔开，
 %   如 |supervisor={校内导师},co-supervisor={行业导师}|。
-%   需要在 \tn{maketitle} 之前使用该命令。
 % \end{function}
 %
 % \paragraph{适用于 \cls{sjtuthesis} 文档类的键}
@@ -5189,7 +5189,7 @@
 %    \end{macrocode}
 % \end{variable}
 %
-% \changes{v2.3}{2026/02/22}{原创性声明变体默认值固定为样式 |a|。}
+% \changes{v2.3}{2026/02/22}{原创性声明变体默认值固定为样式 \opt{a}。}
 %    \begin{macrocode}
 \keys_define:nn { sjtu / private / copyright }
   {
