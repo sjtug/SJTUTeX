@@ -1838,11 +1838,12 @@
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}{\g_@@_lang_tl,\g_@@_lang_clist}
+% \begin{variable}{\g_@@_lang_tl,\g_@@_lang_clist,\c_@@_lang_clist}
 % 论文主要语言。
 %    \begin{macrocode}
 \tl_new:N \g_@@_lang_tl
 %<thesis>\clist_set:Nn \g_@@_lang_clist { zh, en }
+\clist_const:Nn \c_@@_lang_clist { zh, en, de, ja }
 %    \end{macrocode}
 % \end{variable}
 %
@@ -1990,8 +1991,7 @@
 %    \begin{macrocode}
     lang .choice: ,
     lang .value_required:n = true ,
-    lang .choices:nn =
-      { zh, en, de, ja }
+    lang .choices:Vn = \c_@@_lang_clist
       {
         \tl_gset_eq:NN \g_@@_lang_tl \l_keys_choice_tl
 %<*thesis>
@@ -2141,13 +2141,15 @@
 \ProcessKeyOptions [ sjtu / option ]
 %    \end{macrocode}
 %
-% \begin{macro}[int,pTF]{\@@_if_main_lang_de:,\@@_if_main_lang_ja:}
+% \begin{macro}[int,pTF]{\@@_if_main_lang_zh:,\@@_if_main_lang_en:,
+% \@@_if_main_lang_de:,\@@_if_main_lang_ja:}
 % 快捷判断主要语言。
 %    \begin{macrocode}
-\@@_conditional_const:nn { main_lang_de }
-  { \str_if_eq_p:Vn \g_@@_lang_tl { de } }
-\@@_conditional_const:nn { main_lang_ja }
-  { \str_if_eq_p:Vn \g_@@_lang_tl { ja } }
+\clist_map_inline:Nn \c_@@_lang_clist
+  {
+    \@@_conditional_const:nn { main_lang_ #1 }
+      { \str_if_eq_p:Vn \g_@@_lang_tl {#1} }
+  }
 %    \end{macrocode}
 % \end{macro}
 %
