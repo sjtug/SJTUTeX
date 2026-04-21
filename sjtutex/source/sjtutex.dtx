@@ -4709,6 +4709,7 @@
 %
 % 使用 \pkg{lttemplates} 构建页面模板，用于绘制标题页与版权页。
 %
+% \changes{unreleased}{2026/04/21}{修复页面模板后页面布局未恢复的问题。}
 % 页面元素模板。
 %    \begin{macrocode}
 %<*thesis>
@@ -4788,7 +4789,7 @@
         { \UseInstance { sjtu / element } { \l_@@_page_prefix_tl / ##1 } }
       \clearpage
     \group_end:
-    \restoregeometry
+    \group_insert_after:N \restoregeometry
   }
 %    \end{macrocode}
 %
