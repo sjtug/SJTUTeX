@@ -596,6 +596,13 @@
 %   下文中 \meta{lang} 可以指定为这些选项中的其中之一。
 % \end{function}
 %
+% 德语（|lang=de|）文档会自动载入 \pkg{babel} 提供德语断词规则，无需手动加载。
+% 如需注册其他 \pkg{babel} 语言，请在引入文档类之前使用 \tn{PassOptionsToPackage}，例如：
+% \begin{latex}
+% \PassOptionsToPackage{ngerman}{babel}
+% \documentclass[type=master,lang=de]{sjtuthesis}
+% \end{latex}
+%
 % \begin{function}{draft, final}
 %   是否开启草稿模式。
 %   \opt{draft} 开启草稿模式，所有的图片将不会被加载，超过边界的区域将会被涂上黑色色块。
@@ -2164,8 +2171,6 @@
 % 追加选项。
 %    \begin{macrocode}
 \clist_put_left:Nn \@classoptionslist { a4paper }
-\@@_if_main_lang_de:T
-  { \clist_put_right:Nn \@classoptionslist { german, ngerman } }
 \bool_if:NTF \g_@@_integral_limits_bool
   {
     \clist_put_right:Nn \@classoptionslist { intlimits }
@@ -2222,6 +2227,62 @@
 %<thesis>\tl_const:Nn \c_@@_class_tl { thesis }
 %<thesis>\LoadClass { ctexbook }
 %    \end{macrocode}
+%
+% \changes{unreleased}{2026/07/31}{仅当文档语言包含德语时自动载入 \pkg{babel}，
+% 以提供德语断词规则；并检测用户手动载入的 \pkg{babel} 以保持兼容。}
+% 德语断行断词依赖 \pkg{babel} 的 |german| 规则（现代 babel 中
+% |german| 即指 1996 年后德语正字法）。其他语言由
+% \pkg{ctex}、\XeLaTeX{} 或 \LuaLaTeX{} 自行处理，无需 \pkg{babel}。
+% 因此仅当文档语言包含 |de|（即设置了 |lang=de|）时由文档类自动载入
+% \pkg{babel}，并作为语言状态管理器，让 \pkg{babel} 负责切换
+% \tn{languagename} 与断词规则。载入时将主语言放在选项最后，
+% 确保 \pkg{babel} 以主语言初始化。
+% 若用户在其他语言文档中自行载入 \pkg{babel}，也会被检测到，
+% 文档类同样将语言状态交给 \pkg{babel} 管理。
+%    \begin{macrocode}
+\prop_const_from_keyval:Nn \c_@@_babel_lang_prop
+  {
+    zh = chinese  ,
+    en = english  ,
+    de = german   ,
+    ja = japanese
+  }
+\cs_new:Npn \@@_babel_name:n #1
+  { \prop_item:Nn \c_@@_babel_lang_prop {#1} }
+\cs_generate_variant:Nn \@@_babel_name:n { V }
+\clist_new:N \l_@@_babel_langs_clist
+%<thesis>\clist_set_eq:NN \l_@@_tmp_clist \g_@@_lang_clist
+%<!thesis>\clist_put_right:Ne \l_@@_tmp_clist { \g_@@_lang_tl }
+\clist_if_in:NnTF \l_@@_tmp_clist { de }
+  {
+    \clist_map_inline:Nn \l_@@_tmp_clist
+      {
+        \tl_if_eq:VnF \g_@@_lang_tl {#1}
+          { \clist_put_right:Ne \l_@@_babel_langs_clist { \@@_babel_name:n {#1} } }
+      }
+    \clist_put_right:Ne \l_@@_babel_langs_clist { \@@_babel_name:V \g_@@_lang_tl }
+    \use:e
+      {
+        \exp_not:N \RequirePackage
+          [ provide = * , \l_@@_babel_langs_clist ] { babel }
+      }
+  }
+  { }
+%    \end{macrocode}
+%
+% \begin{macro}[int]{\@@_select_babel_language:n}
+% 切换到 \pkg{babel} 语言。语言已在 \pkg{babel} 中注册（对应
+% \tn{l@\ldots} 存在）时调用 \cs{selectlanguage}；否则保持 \pkg{babel}
+% 当前语言不变，避免因语言未注册而报错。模板自身的语言状态
+% （\tn{languagename}、钩子等）仍由 \cs{@@_select_language:n} 管理。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_select_babel_language:n #1
+  {
+    \cs_if_exist:cT { l@ \@@_babel_name:n {#1} }
+      { \exp_args:Ne \selectlanguage { \@@_babel_name:n {#1} } }
+  }
+%    \end{macrocode}
+% \end{macro}
 %
 % \changes{v2.2.1}{2025/03/27}{不再自动载入 \pkg{xcolor} 宏包。}
 % 载入各宏包。
@@ -3954,6 +4015,23 @@
 %
 % \subsection{多语言支持}
 %
+% 本节实现文档类内部的多语言切换。仅当文档语言为德语
+% |de|（|lang=de|）时，由文档类自动载入 \pkg{babel} 宏包，以提供德语
+% 断词规则，并让其作为语言状态管理器接管 \tn{languagename} 的切换。
+% 此时 \cs{@@_select_language:n} 会先调用 \cs{selectlanguage}，再执行
+% 原有的语言设置钩子。若用户在其他语言文档中自行载入 \pkg{babel}，
+% 文档类同样会检测并将语言状态交给 \pkg{babel} 管理。
+% 文档开头会切换到主语言（若该语言已在 \pkg{babel} 中注册），
+% 使 \pkg{babel} 的语言状态与文档类主语言对齐；
+% 未注册的语言保持 \pkg{babel} 当前语言不变。
+%
+% \pkg{babel} 的语言名与本文档类语言代码的对应关系为：
+% |zh| $\rightarrow$ |chinese|、|en| $\rightarrow$ |english|、
+% |de| $\rightarrow$ |german|、|ja| $\rightarrow$ |japanese|。
+% 未载入 \pkg{babel} 时，语言状态由文档类自行维护，行为与旧版本一致。
+% 用户仍可通过 |lang| 文档选项或
+% |abstract| 环境的可选参数切换语言。
+%
 % \begin{variable}{\l_@@_lang_tl}
 %    \begin{macrocode}
 \tl_set_eq:NN \l_@@_lang_tl \g_@@_lang_tl
@@ -4030,6 +4108,8 @@
 %<de>    lang / de .code:n =
 %<ja>    lang / ja .code:n =
       {
+        \IfPackageLoadedT { babel }
+          { \exp_args:NV \@@_select_babel_language:n \l_keys_value_tl }
         \tl_set_eq:NN \l_@@_lang_tl \l_keys_value_tl
 %<zh>        \@@_set_cjk_default_zh:
 %<ja>        \@@_set_cjk_default_ja:
@@ -4056,13 +4136,28 @@
 %<de>\AddToHook { sjtutex / lang / de }
 %<ja>\AddToHook { sjtutex / lang / ja }
   {
-%<zh>    \tl_set:Nn \languagename { chinese }
-%<en>    \tl_set:Nn \languagename { english }
-%<de>    \tl_set:Nn \languagename { ngerman }
-%<ja>    \tl_set:Nn \languagename { japanese }
-%<zh>    \ctex_set:n { autoindent = true }
+    \IfPackageLoadedF { babel }
+      {
+%<zh>        \tl_set:Nn \languagename { chinese }
+%<en>        \tl_set:Nn \languagename { english }
+%<de>        \tl_set:Nn \languagename { german }
+%<ja>        \tl_set:Nn \languagename { japanese }
+      }
+    \ctex_set:n { autoindent = true }
 %<en|de>    \ctex_set:n { autoindent = 1.5 em }
 %<ja>    \ctex_set:n { autoindent = 1 }
+  }
+%    \end{macrocode}
+%
+% \changes{unreleased}{2026/07/31}{载入 \pkg{babel} 时在文档开始处切换到主语言，
+% 使 \pkg{babel} 的语言状态与文档类主语言对齐。}
+% 载入 \pkg{babel} 时，在文档开始处切换到主语言，确保 \pkg{babel}
+% 的语言状态与文档类主语言一致。
+%    \begin{macrocode}
+\AddToHook{begindocument/end}
+  {
+    \IfPackageLoadedT { babel }
+      { \exp_args:NV \@@_select_language:n \g_@@_lang_tl }
   }
 %    \end{macrocode}
 %
@@ -4231,13 +4326,17 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% 初始化语言名称。
+% 初始化语言名称。未载入 \pkg{babel} 时由文档类直接设置；
+% 载入 \pkg{babel} 后 \tn{languagename} 由 \pkg{babel} 管理。
 %    \begin{macrocode}
 %<*scheme>
-%<zh>\tl_set:Nn \languagename { chinese  }
-%<en>\tl_set:Nn \languagename { english  }
-%<de>\tl_set:Nn \languagename { ngerman  }
-%<ja>\tl_set:Nn \languagename { japanese }
+\IfPackageLoadedF { babel }
+  {
+%<zh>    \tl_set:Nn \languagename { chinese  }
+%<en>    \tl_set:Nn \languagename { english  }
+%<de>    \tl_set:Nn \languagename { german   }
+%<ja>    \tl_set:Nn \languagename { japanese }
+  }
 %    \end{macrocode}
 %
 % 设置名称选项。默认值为英文，只需修改其他语种。
