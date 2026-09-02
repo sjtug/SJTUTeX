@@ -761,6 +761,15 @@
 %   当设置为 \opt{none} 时，将不加载任何预设配置，只保留文档类最基本的设置。
 % \end{function}
 %
+% 自定义预设配置文件名须为 \file{sjtu-\meta{文档类}-preset-\meta{名称}.def}，
+% 放置于 \TeX{} 搜索路径下即可通过 \opt{preset=}\meta{名称} 载入。
+% 预设配置在文档类载入接近尾声时读入，可以重定义或调整文档类的既有设置。
+% 文档类本身只提供一般学术论文的通用功能与格式骨架，
+% 与具体学校相关的名称常量、页眉内容与特殊页面样式均由预设提供；
+% 因此从 \opt{preset=none} 出发编写自己的预设，即可适配其他学校的
+% 格式要求。实现时可参考内置预设 \opt{base}
+% （对应源文件 \file{sjtutex-preset.dtx}）。
+%
 % \note{其他上述未提到的文档类选项会被传递给对应的 \CTeX{} 文档类，
 % 请注意 \opt{GBK}、\opt{scheme} 等选项不受 \sjtutex{} 支持。}
 %
@@ -1754,7 +1763,7 @@
   { \tl_const:cn { c_@@_name_ #2 _ #1 _tl } {#3} }
 %<*thesis>
 \cs_new_protected:Npn \@@_name_const_from_clist:nnnn #1#2#3#4
-  { \tl_const:ce { c_@@_name_ #2 _ #1 _tl } { \clist_item:nn {#4} {#3} } }
+  { \tl_const:ce { c_@@_name_ #1 _ #3 _tl } { \clist_item:nn {#4} {#2} } }
 %</thesis>
 %    \end{macrocode}
 % \end{macro}
@@ -2635,16 +2644,10 @@
 % \end{macro}
 % \end{macro}
 %
-% 设置页眉内容。
+% 页眉内容默认为空，由预设配置填设。
 %    \begin{macrocode}
-\tl_set:Nn \l_@@_header_tl
-  {
-%<thesis>    { \songti \c_@@_name_subject_zh_tl }
-%<*!thesis>
-    \includegraphics [ height = 1.2 cm ]
-      { sjtu-vi-logo-std-h-cor-red.pdf }
-%</!thesis>
-  }
+\tl_new:N \l_@@_header_tl
+%<!thesis>\tl_new:N \l_@@_info_subject_tl
 %<thesis>\tl_set:Nn \l_@@_leftmark_tl  { \leftmark }
 %<!thesis>\tl_set:Nn \l_@@_leftmark_tl  { \l_@@_info_subject_tl }
 \tl_set:Nn \l_@@_rightmark_tl { \leftmark }
@@ -2665,21 +2668,6 @@
 \fancyfoot [ C ]
   { \@@_page:nn { \@@_the_page_tl } { \@@_the_last_page_tl } }
 %    \end{macrocode}
-%
-% \begin{macro}{\headrule}
-% \cls{sjtuthesis} 的页眉线。
-%    \begin{macrocode}
-%<*thesis>
-\tl_set:Nn \headrule
-  {
-    \hrule height 2.25 pt width \headwidth
-    \skip_vertical:n {  0.75 pt }
-    \hrule height 0.75 pt width \headwidth
-    \skip_vertical:n { -3.75 pt }
-  }
-%</thesis>
-%    \end{macrocode}
-% \end{macro}
 %
 % \changes{v2.2}{2024/11/08}{更新 \cls{sjtureport} 和 \cls{sjtuarticle} 的
 % \texttt{plain} 页面样式。}

@@ -433,97 +433,14 @@
 %<ja>  { \@@_name_const:nnn { ja } #1 }
 %    \end{macrocode}
 %
-% 学位论文名称常量。
+% 学位论文专用的符号与摘要名称常量，仅 \cls{sjtuthesis} 使用。
 %    \begin{macrocode}
 \IfClassLoadedF { sjtuthesis } { \endinput }
 %<zh>\@@_symbol_const:nn { white_square } { "25A1 }
-%<zh>\@@_name_const_from_clist:nnnn { zh }
-%<en>\@@_name_const_from_clist:nnnn { en }
-%<de>\@@_name_const_from_clist:nnnn { de }
-%<ja>\@@_name_const_from_clist:nnnn { ja }
-  { degree_level } { \g_@@_thesis_type_int }
-%<zh>  { 学士, 硕士, 博士 }
-%<en>  { Bachelor, Master, Doctor }
-%<de>  { Bachelor, Master, Doktor }
-%<ja>  { 学士, 修士, 博士 }
-\clist_map_inline:nn
-  {
-%<*zh>
-    { univ             } { 上海交通大学           } ,
-    { address          } { 中国・上海             } ,
-    { thesis           } { 学位论文               } ,
-    { title_page       } { 题名页                 } ,
-    { declaration      } { 原创性声明及使用授权书 } ,
-    { orig_decl        } { 原创性声明             } ,
-    { auth_decl        } { 使用授权书             } ,
-    { decl_author      } { 学位论文作者           } ,
-    { decl_supervisor  } { 指导教师               } ,
-    { abstract         } { 摘 \protect \quad 要   }
-%</zh>
-%<*en>
-    { univ             } { Shanghai~ Jiao~ Tong~ University } ,
-    { address          } { Shanghai,~ P.R.~ China           } ,
-    { title_page       } { Title~ Page                      } ,
-    { declaration      } { Statutory~ Declaration           } ,
-    { abstract         } { Abstract                         }
-%</en>
-%<*de>
-    { univ             } { Shanghai~ Jiao~ Tong~ Universität } ,
-    { address          } { Shanghai,~ VR~ China              } ,
-    { title_page       } { Titelblatt                        } ,
-    { declaration      } { Eidesstattliche~ Erklärung        } ,
-    { abstract         } { Abstrakt                          }
-%</de>
-%<*ja>
-    { univ             } { 上海交通大学         } ,
-    { address          } { 中国・上海           } ,
-    { thesis           } { 学位請求論文         } ,
-    { title_page       } { 標題紙               } ,
-    { declaration      } { 誓約書・公表許諾書   } ,
-    { abstract         } { 要 \protect \quad 旨 }
-%</ja>
-  }
-%<zh>  { \@@_name_const:nnn { zh } #1 }
-%<en>  { \@@_name_const:nnn { en } #1 }
-%<de>  { \@@_name_const:nnn { de } #1 }
-%<ja>  { \@@_name_const:nnn { ja } #1 }
-%    \end{macrocode}
-%
-% \changes{v2.0.3}{2023/04/08}{更新学位论文初始英文主题。}
-% 初始化主题。
-%    \begin{macrocode}
-%<*zh>
-\tl_const:Nn \c_@@_name_subject_zh_tl
-  {
-    \c_@@_name_univ_zh_tl
-    \c_@@_name_degree_level_zh_tl
-    \c_@@_name_thesis_zh_tl
-  }
-%</zh>
-%<*en>
-\tl_const:Nn \c_@@_name_subject_en_tl
-  {
-    A~ Dissertation~ Submitted~ to \\
-    { \c_@@_name_univ_en_tl }~ for~
-    the~ Degree~ of~ { \c_@@_name_degree_level_en_tl }
-  }
-%</en>
-%<*de>
-\tl_const:Nn \c_@@_name_subject_de_tl
-  {
-    Eine~ Dissertation~ Eingereicht~ an \\
-    der~ { \c_@@_name_univ_de_tl }~ für~
-    { \c_@@_name_degree_level_de_tl } titel
-  }
-%</de>
-%<*ja>
-\tl_const:Nn \c_@@_name_subject_ja_tl
-  {
-    \c_@@_name_univ_ja_tl
-    \c_@@_name_degree_level_ja_tl
-    \c_@@_name_thesis_ja_tl
-  }
-%</ja>
+%<zh>\@@_name_const:nnn { zh } { abstract } { 摘 \protect \quad 要 }
+%<en>\@@_name_const:nnn { en } { abstract } { Abstract }
+%<de>\@@_name_const:nnn { de } { abstract } { Abstrakt }
+%<ja>\@@_name_const:nnn { ja } { abstract } { 要 \protect \quad 旨 }
 %</lang>
 %    \end{macrocode}
 %
