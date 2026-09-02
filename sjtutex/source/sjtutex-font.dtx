@@ -1,0 +1,771 @@
+% \iffalse meta-comment
+%
+% Copyright (C) SJTUG
+%   2018--2026 Weijian Wu   <alexarawu@outlook.com>
+%   2022--2026 Zilong Li    <logcreative@outlook.com>
+%   2024--2026 Boshi Yuan   <nemoyuan2008@outlook.com>
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.3c
+% of this license or (at your option) any later version.
+% The latest version of this license is in
+%   https://www.latex-project.org/lppl.txt
+% and version 1.3c or later is part of all distributions of LaTeX
+% version 2008 or later.
+%
+%<*!(driver|install)>
+%<+!driver>\GetIdInfo $Id: sjtutex-font.dtx 2.3.1 2026-04-21 15:09:02 +0800 f6eb9dc Alexara Wu <alexarawu@outlook.com>$
+%<text&newtx>  {New TX text fonts definition (SJTUTeX)}
+%<text&newtx>\ProvidesExplFile{sjtu-text-font-newtx.def}
+%<text&newpx>  {New PX text fonts definition (SJTUTeX)}
+%<text&newpx>\ProvidesExplFile{sjtu-text-font-newpx.def}
+%<text&lm>  {Latin Modern text fonts definition (SJTUTeX)}
+%<text&lm>\ProvidesExplFile{sjtu-text-font-lm.def}
+%<text&times>  {Times text fonts definition (SJTUTeX)}
+%<text&times>\ProvidesExplFile{sjtu-text-font-times.def}
+%<text&stixtwo>  {STIX Two text fonts definition (SJTUTeX)}
+%<text&stixtwo>\ProvidesExplFile{sjtu-text-font-stixtwo.def}
+%<text&libertinus>  {Libertinus text fonts definition (SJTUTeX)}
+%<text&libertinus>\ProvidesExplFile{sjtu-text-font-libertinus.def}
+%<text&cambria>  {Cambria text fonts definition (SJTUTeX)}
+%<text&cambria>\ProvidesExplFile{sjtu-text-font-cambria.def}
+%<text&newcm>  {New Computer Modern text fonts definition (SJTUTeX)}
+%<text&newcm>\ProvidesExplFile{sjtu-text-font-newcm.def}
+%<text&xits>  {XITS text fonts definition (SJTUTeX)}
+%<text&xits>\ProvidesExplFile{sjtu-text-font-xits.def}
+%<math&newtx>  {New TX math fonts definition (SJTUTeX)}
+%<math&newtx>\ProvidesExplFile{sjtu-math-font-newtx.def}
+%<math&newpx>  {New PX math fonts definition (SJTUTeX)}
+%<math&newpx>\ProvidesExplFile{sjtu-math-font-newpx.def}
+%<math&lm>  {Latin Modern math fonts definition (SJTUTeX)}
+%<math&lm>\ProvidesExplFile{sjtu-math-font-lm.def}
+%<math&times>  {Times math fonts definition (SJTUTeX)}
+%<math&times>\ProvidesExplFile{sjtu-math-font-times.def}
+%<math&stixtwo>  {STIX Two math fonts definition (SJTUTeX)}
+%<math&stixtwo>\ProvidesExplFile{sjtu-math-font-stixtwo.def}
+%<math&libertinus>  {Libertinus math fonts definition (SJTUTeX)}
+%<math&libertinus>\ProvidesExplFile{sjtu-math-font-libertinus.def}
+%<math&cambria>  {Cambria math fonts definition (SJTUTeX)}
+%<math&cambria>\ProvidesExplFile{sjtu-math-font-cambria.def}
+%<math&newcm>  {New Computer Modern math fonts definition (SJTUTeX)}
+%<math&newcm>\ProvidesExplFile{sjtu-math-font-newcm.def}
+%<math&xits>  {XITS math fonts definition (SJTUTeX)}
+%<math&xits>\ProvidesExplFile{sjtu-math-font-xits.def}
+%<cjk&windows>  {Windows CJK fonts definition (SJTUTeX)}
+%<cjk&windows>\ProvidesExplFile{sjtu-cjk-font-windows.def}
+%<cjk&mac>  {macOS CJK fonts definition (SJTUTeX)}
+%<cjk&mac>\ProvidesExplFile{sjtu-cjk-font-mac.def}
+%<cjk&ubuntu>  {Ubuntu CJK fonts definition (SJTUTeX)}
+%<cjk&ubuntu>\ProvidesExplFile{sjtu-cjk-font-ubuntu.def}
+%<cjk&adobe>  {Adobe CJK fonts definition (SJTUTeX)}
+%<cjk&adobe>\ProvidesExplFile{sjtu-cjk-font-adobe.def}
+%<cjk&fandol>  {Fandol CJK fonts definition (SJTUTeX)}
+%<cjk&fandol>\ProvidesExplFile{sjtu-cjk-font-fandol.def}
+%<cjk&founder>  {Founder CJK fonts definition (SJTUTeX)}
+%<cjk&founder>\ProvidesExplFile{sjtu-cjk-font-founder.def}
+%<cjk&hanyi>  {Hanyi CJK fonts definition (SJTUTeX)}
+%<cjk&hanyi>\ProvidesExplFile{sjtu-cjk-font-hanyi.def}
+%<!driver>  {\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
+%</!(driver|install)>
+%
+% \fi
+%
+% \begin{implementation}
+%
+% \paragraph*{\fbox{\file{sjtutex-font.dtx}}}
+%
+% 本文件定义各字库组合下的字体配置。字体配置文件在文档类载入时由
+% \tn{load_font} 按需读入，其实现见 \file{sjtutex.dtx} 中的字体配置小节。
+%
+% \subsection{预定义字体}
+%
+% \subsubsection{西文与数学字体}
+%
+% \changes{v2.0.3}{2023/09/25}{新增 \opt{libertinus} 字体配置。}
+%    \begin{macrocode}
+%<*math|text>
+%<@@=sjtu>
+%<*math&type1>
+%<*newtx|newpx>
+\tl_set_eq:NN \l_@@_save_encodingdefault_tl \encodingdefault
+\tl_set_eq:NN \l_@@_save_rmdefault_tl \rmdefault
+\tl_set_eq:NN \l_@@_save_sfdefault_tl \sfdefault
+\tl_set_eq:NN \l_@@_save_ttdefault_tl \ttdefault
+\tl_set:Nn \encodingdefault { OT1 }
+%<newtx>\tl_set:Nn \rmdefault { ntxtlf }
+%<newpx>\tl_set:Nn \rmdefault { zplTLF }
+\tl_set:Nn \qhv@scale { 0.94 }
+\tl_set:Nn \sfdefault { qhv }
+\tl_set:Nn \ttdefault { qcr }
+%<newtx>\RequirePackage { newtxmath }
+%<newpx>\RequirePackage { newpxmath }
+\tl_set_eq:NN \encodingdefault \l_@@_save_encodingdefault_tl
+\tl_set_eq:NN \rmdefault \l_@@_save_rmdefault_tl
+\tl_set_eq:NN \sfdefault \l_@@_save_sfdefault_tl
+\tl_set_eq:NN \ttdefault \l_@@_save_ttdefault_tl
+%</newtx|newpx>
+%<times>\PassOptionsToPackage { Symbol } { upgreek }
+%<lm|times>\RequirePackage { amssymb, upgreek }
+%<*lm>
+\SetSymbolFont { operators    } { normal } { OT1 } { lmr  } { m  } { n  }
+\SetSymbolFont { letters      } { normal } { OML } { lmm  } { m  } { it }
+\SetSymbolFont { symbols      } { normal } { OMS } { lmsy } { m  } { n  }
+\SetSymbolFont { largesymbols } { normal } { OMX } { lmex } { m  } { n  }
+\SetSymbolFont { operators    } { bold   } { OT1 } { lmr  } { bx } { n  }
+\SetSymbolFont { letters      } { bold   } { OML } { lmm  } { b  } { it }
+\SetSymbolFont { symbols      } { bold   } { OMS } { lmsy } { b  } { n  }
+\SetSymbolFont { largesymbols } { bold   } { OMX } { lmex } { m  } { n  }
+\SetMathAlphabet { \mathbf } { normal } { OT1 } { lmr  } { bx } { n  }
+\SetMathAlphabet { \mathsf } { normal } { OT1 } { lmss } { m  } { n  }
+\SetMathAlphabet { \mathit } { normal } { OT1 } { lmr  } { m  } { it }
+\SetMathAlphabet { \mathtt } { normal } { OT1 } { lmtt } { m  } { n  }
+\SetMathAlphabet { \mathbf } { bold   } { OT1 } { lmr  } { bx } { n  }
+\SetMathAlphabet { \mathsf } { bold   } { OT1 } { lmss } { bx } { n  }
+\SetMathAlphabet { \mathit } { bold   } { OT1 } { lmr  } { bx } { it }
+\SetMathAlphabet { \mathtt } { bold   } { OT1 } { lmtt } { m  } { n  }
+\@@_set_slanted_greek:
+%</lm>
+%<*times>
+\tl_set_eq:NN \l_@@_save_rmdefault_tl \rmdefault
+  \RequirePackage { mathptmx }
+\tl_set_eq:NN \rmdefault \l_@@_save_rmdefault_tl
+\tl_set:Nn \Hv@scale { 0.94 }
+\DeclareMathAlphabet { \mathsf } { OT1 } { phv } { m } { n }
+\DeclareMathAlphabet { \mathtt } { OT1 } { pcr } { m } { n }
+\SetMathAlphabet { \mathsf } { bold } { OT1 } { phv } { b } { n }
+\SetMathAlphabet { \mathtt } { bold } { OT1 } { pcr } { b } { n }
+\DeclareSymbolFont { SJTU@ptm } { OML } { ptmcm } { m } { it }
+\@@_declare_math_symbol:nnNn { \mathord } { SJTU@ptm } \upvarsigma { "26 }
+%</times>
+%<lm|times>\bool_if:NT \g_@@_upright_integral_bool
+%<lm|times>  { \RequirePackage { cmupint } }
+\@@_set_unimath_symbol:
+%</math&type1>
+%<*!(math&type1)>
+%<lm>\@@_if_engine_opentype:F
+%<*!lm>
+\@@_if_engine_opentype:TF
+  {
+%<*math>
+    \RequirePackage { unicode-math }
+%<*stixtwo>
+    \bool_if:NTF \g_@@_upright_integral_bool
+      {
+        \setmathfont { STIXTwoMath-Regular.otf }
+          [ StylisticSet = 8 ]
+      }
+      { \setmathfont { STIXTwoMath-Regular.otf } }
+    \setmathfont { STIXTwoMath-Regular.otf }
+      [
+        range        = { scr, bfscr },
+        StylisticSet = 1
+      ]
+%</stixtwo>
+%<*libertinus>
+    \bool_if:NTF \g_@@_upright_integral_bool
+      { \setmathfont { LibertinusMath-Regular.otf } }
+      {
+        \setmathfont { LibertinusMath-Regular.otf }
+          [ StylisticSet = 8 ]
+      }
+    \setmathfont { latinmodern-math.otf } [ range = \checkmark ]
+%</libertinus>
+%<cambria>    \setmathfont { Cambria~Math }
+%<*newcm>
+    \bool_if:NTF \g_@@_upright_integral_bool
+      {
+        \setmathfont { NewCMMath-Book.otf }
+          [ StylisticSet = 2 ]
+      }
+      { \setmathfont { NewCMMath-Book.otf } }
+    \setmathfont { NewCMMath-Book.otf }
+      [
+        range        = { scr, bfscr },
+        StylisticSet = 1
+      ]
+%</newcm>
+%<*xits>
+    \bool_if:NTF \g_@@_upright_integral_bool
+      {
+        \setmathfont { XITSMath-Regular }
+          [
+            Extension    = .otf,
+            BoldFont     = XITSMath-Bold,
+            StylisticSet = 8
+          ]
+      }
+      {
+        \setmathfont { XITSMath-Regular }
+          [
+            Extension    = .otf,
+            BoldFont     = XITSMath-Bold,
+          ]
+      }
+    \setmathfont { XITSMath-Regular.otf }
+      [
+        range        = { cal, bfcal },
+        StylisticSet = 1
+      ]
+%</xits>
+%</math>
+%<*newtx|newpx|stixtwo|xits>
+%<math>    \setmathrm
+%<text>    \setmainfont
+%<newtx>      { TeXGyreTermesX }
+%<newpx>      { TeXGyrePagellaX }
+%<stixtwo>      { STIXTwoText }
+%<xits>      { XITS }
+      [
+        Extension      = .otf,
+        UprightFont    = *-Regular,
+        BoldFont       = *-Bold,
+        ItalicFont     = *-Italic,
+        BoldItalicFont = *-BoldItalic
+      ]
+%<math>    \setmathsf
+%<text>    \setsansfont
+      { texgyreheros }
+      [
+        Extension      = .otf,
+        UprightFont    = *-regular,
+        BoldFont       = *-bold,
+        ItalicFont     = *-italic,
+        BoldItalicFont = *-bolditalic,
+        Scale          = 0.94
+      ]
+%<math>    \setmathtt
+%<text>    \setmonofont
+      { texgyrecursor }
+      [
+        Extension      = .otf,
+        UprightFont    = *-regular,
+        BoldFont       = *-bold,
+        ItalicFont     = *-italic,
+        BoldItalicFont = *-bolditalic,
+        Ligatures      = CommonOff
+      ]
+%</newtx|newpx|stixtwo|xits>
+%<*text&times>
+    \setmainfont { Times~New~Roman } [ Ligatures = Rare ]
+    \setsansfont { Arial } [ Scale = 0.94 ]
+    \setmonofont { Courier~New }
+%</text&times>
+%<*libertinus>
+%<math>    \setmathrm
+%<text>    \setmainfont
+      { LibertinusSerif }
+      [
+        Extension           = .otf,
+        UprightFont         = *-Regular,
+        BoldFont            = *-Bold,
+        ItalicFont          = *-Italic,
+        BoldItalicFont      = *-BoldItalic,
+        SlantedFont         = *-Regular,
+        BoldSlantedFont     = *-Bold,
+        SlantedFeatures     = { FakeSlant = 0.2 },
+        BoldSlantedFeatures = { FakeSlant = 0.2 }
+      ]
+%<math>    \setmathsf
+%<text>    \setsansfont
+      { LibertinusSans }
+      [
+        Extension           = .otf,
+        UprightFont         = *-Regular,
+        BoldFont            = *-Bold,
+        ItalicFont          = *-Italic,
+        BoldItalicFont      = *-Italic,
+        BoldItalicFeatures  = { FakeBold  = 3   },
+        SlantedFont         = *-Regular,
+        BoldSlantedFont     = *-Bold,
+        SlantedFeatures     = { FakeSlant = 0.2 },
+        BoldSlantedFeatures = { FakeSlant = 0.2 }
+      ]
+%</libertinus>
+%<*cambria>
+%<*math>
+    \setmathrm { Cambria }
+    \setmathsf { Calibri }
+    \setmathtt { Consolas } [ Scale = 0.95 ]
+%</math>
+%<*text>
+    \setmainfont { Cambria }
+    \setsansfont { Calibri }
+    \setmonofont { Consolas } [ Scale = 0.95 ]
+%</text>
+%</cambria>
+%<*newcm>
+%<math>    \setmathrm
+%<text>    \setmainfont
+      { NewCM10 }
+      [
+        Extension    = .otf,
+        SizeFeatures =
+          {
+            {
+              Size        = -9,
+              Font        = NewCM08-Book,
+              ItalicFont  = NewCM08-BookItalic,
+              SlantedFont = NewCM08-Book,
+            },
+            { Size        = 9- }
+          },
+        UprightFont         = *-Book,
+        BoldFont            = *-Bold,
+        ItalicFont          = *-BookItalic,
+        BoldItalicFont      = *-BoldItalic,
+        SlantedFont         = *-Book,
+        SlantedFeatures     = { FakeSlant = 0.25 },
+        BoldSlantedFont     = *-Bold,
+        BoldSlantedFeatures = { FakeSlant = 0.25 }
+      ]
+%<math>    \setmathsf
+%<text>    \setsansfont
+      { NewCMSans10 }
+      [
+        Extension    = .otf,
+        SizeFeatures =
+          {
+            {
+              Size       = -9,
+              Font       = NewCMSans08-Book,
+              ItalicFont = NewCMSans08-BookOblique,
+            },
+            { Size       = 9- }
+          },
+        UprightFont    = *-Book,
+        BoldFont       = *-Bold,
+        ItalicFont     = *-BookOblique,
+        BoldItalicFont = *-BoldOblique
+      ]
+%<math>    \setmathtt
+%<text>    \setmonofont
+      { NewCMMono10 }
+      [
+        Extension           = .otf,
+        UprightFont         = *-Book,
+        BoldFont            = *-Bold,
+        ItalicFont          = *-BookItalic,
+        BoldItalicFont      = *-BoldOblique,
+        SlantedFont         = *-Book,
+        SlantedFeatures     = { FakeSlant = 0.25 },
+        BoldSlantedFont     = *-Bold,
+        BoldSlantedFeatures = { FakeSlant = 0.25 }
+      ]
+%</newcm>
+  }
+%</!lm>
+%<*text&!otf>
+  {
+    \tl_set:Nn \encodingdefault { T1 }
+%<lm>    \tl_set:Nn \rmdefault { lmr  }
+%<lm>    \tl_set:Nn \sfdefault { lmss }
+%<libertinus>    \tl_set:Nn \rmdefault { LibertinusSerif-TLF }
+%<libertinus>    \tl_set:Nn \sfdefault { LibertinusSans-TLF  }
+%<lm|libertinus>    \tl_set:Nn \ttdefault { lmtt }
+%<newtx>    \PassOptionsToPackage { nohelv, nott } { newtxtext }
+%<newpx>    \PassOptionsToPackage { nohelv, nott } { newpxtext }
+%<newtx>    \RequirePackage { newtxtext }
+%<newpx>    \RequirePackage { newpxtext }
+%<*stixtwo>
+    \DeclareEncodingSubset { TS1 } { ? } { 0 }
+    \UndeclareTextCommand { \textpertenthousand } { T1 }
+    \DeclareTextSymbolDefault { \textpertenthousand } { TS1 }
+    \tl_set:Nn \rmdefault { stix2 }
+%</stixtwo>
+%<newtx|newpx|stixtwo>    \tl_set:Nn \qhv@scale { 0.94 }
+%<newtx|newpx|stixtwo>    \tl_set:Nn \sfdefault { qhv }
+%<newtx|newpx|stixtwo>    \tl_set:Nn \ttdefault { qcr }
+%<*times>
+    \tl_set:Nn \rmdefault { ptm }
+    \tl_set:Nn \Hv@scale { 0.94 }
+    \tl_set:Nn \sfdefault { phv }
+    \tl_set:Nn \ttdefault { pcr }
+%</times>
+  }
+%</text&!otf>
+%<*text&otf>
+%<cambria>  { \@@_fontset_error:nn { text } { cambria } }
+%<newcm>  { \@@_fontset_error:nn { text } { newcm } }
+%<xits>  { \@@_fontset_error:nn { text } { xits } }
+%</text&otf>
+%<*math&!otf>
+  {
+%<*libertinus>
+    \exp_args:No \PassOptionsToPackage
+      { \g_@@_math_font_options_clist } { libertinust1math }
+    \RequirePackage { libertinust1math }
+%</libertinus>
+%<*stixtwo>
+    \DeclareSizeFunction { sub } { \sub@sfcnt \@font@info }
+    \PassOptionsToPackage { notext } { stix2 }
+    \RequirePackage { stix2 }
+    \clist_map_inline:nn
+      {
+        \upalpha      { "0B } ,
+        \upbeta       { "0C } ,
+        \upgamma      { "0D } ,
+        \updelta      { "0E } ,
+        \upepsilon    { "0F } ,
+        \upzeta       { "10 } ,
+        \upeta        { "11 } ,
+        \uptheta      { "12 } ,
+        \upiota       { "13 } ,
+        \upkappa      { "14 } ,
+        \uplambda     { "15 } ,
+        \upmu         { "16 } ,
+        \upnu         { "17 } ,
+        \upxi         { "18 } ,
+        \uppi         { "19 } ,
+        \uprho        { "1A } ,
+        \upsigma      { "1B } ,
+        \uptau        { "1C } ,
+        \upupsilon    { "1D } ,
+        \upphi        { "1E } ,
+        \upchi        { "1F } ,
+        \uppsi        { "20 } ,
+        \upomega      { "21 } ,
+        \upvarepsilon { "22 } ,
+        \upvartheta   { "23 } ,
+        \upvarpi      { "24 } ,
+        \upvarrho     { "25 } ,
+        \upvarsigma   { "26 } ,
+        \upvarphi     { "27 }
+      }
+      { \@@_declare_math_symbol:nnNn { \stix@lcgc } { operators } #1 }
+    \@@_set_slanted_greek:
+%</stixtwo>
+  }
+%</math&!otf>
+%<*math&otf>
+%<cambria>  { \@@_fontset_error:nn { math } { cambria } }
+%<newcm>  { \@@_fontset_error:nn { math } { newcm } }
+%<xits>  { \@@_fontset_error:nn { math } { xits } }
+%</math&otf>
+%</!(math&type1)>
+%</math|text>
+%    \end{macrocode}
+%
+% \subsubsection{CJK 字体}
+%
+% \changes{v2.2}{2024/11/28}{新增 \opt{hanyi} 字体配置。}
+% 在字体未提供对应粗体的情况下，允许使用伪粗。
+%    \begin{macrocode}
+%<*cjk>
+\@@_if_engine_opentype:TF
+  {
+    \@@_if_main_lang_ja:TF
+      {
+%<*windows>
+        \setCJKmainfont { MS~Mincho } [ AutoFakeBold = 3 ]
+        \setCJKsansfont { MS~Gothic } [ AutoFakeBold = 3 ]
+        \setCJKmonofont { MS~Mincho }
+        \setCJKfamilyfont { jamin  } { MS~Mincho } [ AutoFakeBold = 3 ]
+        \setCJKfamilyfont { jagoth } { MS~Gothic } [ AutoFakeBold = 3 ]
+%</windows>
+%<*mac>
+        \setCJKmainfont { HiraMinProN  }
+          [
+            UprightFont    = *-W3 ,
+            BoldFont       = *-W6
+          ]
+        \setCJKsansfont { HiraKakuProN }
+          [
+            UprightFont    = *-W3 ,
+            BoldFont       = *-W6
+          ]
+        \setCJKmonofont { HiraMinProN-W3 }
+        \setCJKfamilyfont { jamin  } { HiraMinProN  }
+          [
+            UprightFont    = *-W3 ,
+            BoldFont       = *-W6
+          ]
+        \setCJKfamilyfont { jagoth } { HiraKakuProN }
+          [
+            UprightFont    = *-W3 ,
+            BoldFont       = *-W6
+          ]
+%</mac>
+%<*ubuntu>
+        \setCJKmainfont { Noto~Serif~CJK~JP }
+          [
+            UprightFont = *~Light ,
+            BoldFont    = *~Bold
+          ]
+        \setCJKsansfont { Noto~Sans~CJK~JP  }
+          [
+            UprightFont = *~Medium ,
+            BoldFont    = *~Bold
+          ]
+        \setCJKmonofont { Noto~Serif~CJK~JP }
+          [
+            UprightFont = *~Light ,
+            BoldFont    = *~Bold
+          ]
+        \setCJKfamilyfont { jamin  } { Noto~Serif~CJK~JP }
+          [
+            UprightFont = *~Light ,
+            BoldFont    = *~Bold
+          ]
+        \setCJKfamilyfont { jagoth } { Noto~Sans~CJK~JP  }
+          [
+            UprightFont = *~Medium ,
+            BoldFont    = *~Bold
+          ]
+%</ubuntu>
+%<*adobe>
+        \setCJKmainfont { KozMinPr6N }
+          [
+            UprightFont = *-Light ,
+            BoldFont    = *-Bold
+          ]
+        \setCJKsansfont { KozGoPr6N  }
+          [
+            UprightFont = *-Medium ,
+            BoldFont    = *-Bold
+          ]
+        \setCJKmonofont { KozMinPr6N-Light }
+        \setCJKfamilyfont { jamin  } { KozMinPr6N }
+          [
+            UprightFont = *-Light ,
+            BoldFont    = *-Bold
+          ]
+        \setCJKfamilyfont { jagoth } { KozGoPr6N  }
+          [
+            UprightFont = *-Medium ,
+            BoldFont    = *-Bold
+          ]
+%</adobe>
+%<*fandol|hanyi>
+        \setCJKmainfont { HaranoAjiMincho }
+          [
+            Extension   = .otf ,
+            UprightFont = *-Regular ,
+%<fandol>            BoldFont    = *-Bold
+%<hanyi>            BoldFont    = *-Medium
+          ]
+        \setCJKsansfont { HaranoAjiGothic }
+          [
+            Extension   = .otf ,
+            UprightFont = *-Medium ,
+            BoldFont    = *-Bold
+          ]
+        \setCJKmonofont { HaranoAjiGothic }
+          [
+            Extension   = .otf ,
+            UprightFont = *-Regular
+          ]
+        \setCJKfamilyfont { jamin  } { HaranoAjiMincho }
+          [
+            Extension   = .otf ,
+%<fandol>            BoldFont    = *-Bold
+%<hanyi>            BoldFont    = *-Medium
+          ]
+        \setCJKfamilyfont { jagoth } { HaranoAjiGothic }
+          [
+            Extension   = .otf ,
+            UprightFont = *-Medium ,
+            BoldFont    = *-Bold
+          ]
+%</fandol|hanyi>
+%<*founder>
+        \setCJKmainfont { ipam.ttf } [ AutoFakeBold = 3 ]
+        \setCJKsansfont { ipag.ttf } [ AutoFakeBold = 3 ]
+        \setCJKmonofont { ipag.ttf }
+        \setCJKfamilyfont { jamin  } { ipam.ttf } [ AutoFakeBold = 3 ]
+        \setCJKfamilyfont { jagoth } { ipag.ttf } [ AutoFakeBold = 3 ]
+%</founder>
+        \NewDocumentCommand \mincho   { } { \CJKfamily { jamin   } }
+        \NewDocumentCommand \gothic   { } { \CJKfamily { jagoth  } }
+      }
+%<*windows>
+      {
+        \setCJKmainfont { SimSun   }
+          [ AutoFakeBold = 3 , ItalicFont = KaiTi ]
+        \setCJKsansfont { SimHei   } [ AutoFakeBold = 3 ]
+        \setCJKmonofont { FangSong }
+      }
+    \setCJKfamilyfont { zhsong } { SimSun   }
+      [ AutoFakeBold = 3 , ItalicFont = KaiTi ]
+    \setCJKfamilyfont { zhhei  } { SimHei   } [ AutoFakeBold = 3 ]
+    \setCJKfamilyfont { zhkai  } { KaiTi    }
+    \setCJKfamilyfont { zhfs   } { FangSong }
+%</windows>
+%<*mac>
+      {
+        \setCJKmainfont { Songti~SC  }
+          [
+            UprightFont    = *~Light ,
+            BoldFont       = *~Bold ,
+            ItalicFont     = Kaiti~SC~Regular ,
+            BoldItalicFont = Kaiti~SC~Bold
+          ]
+        \setCJKsansfont { Heiti~SC   }
+          [
+            UprightFont    = *~Medium ,
+            AutoFakeBold   = 3
+          ]
+        \setCJKmonofont { STFangsong }
+      }
+    \setCJKfamilyfont { zhsong } { Songti~SC  }
+      [
+        UprightFont    = *~Light ,
+        BoldFont       = *~Bold ,
+        ItalicFont     = Kaiti~SC~Regular ,
+        BoldItalicFont = Kaiti~SC~Bold
+      ]
+    \setCJKfamilyfont { zhhei  } { Heiti~SC   }
+      [
+        UprightFont    = *~Medium ,
+        AutoFakeBold   = 3
+      ]
+    \setCJKfamilyfont { zhfs   } { STFangsong }
+    \setCJKfamilyfont { zhkai  } { Kaiti~SC   }
+      [
+        UprightFont    = *~Regular ,
+        BoldFont       = *~Bold
+        ]
+%</mac>
+%<*ubuntu>
+      {
+        \setCJKmainfont { Noto~Serif~CJK~SC }
+          [
+            UprightFont = *~Light ,
+            BoldFont    = *~Bold ,
+            ItalicFont  = AR~PL~KaitiM~GB
+          ]
+        \setCJKsansfont { Noto~Sans~CJK~SC  }
+          [
+            UprightFont = *~Medium ,
+            BoldFont    = *~Bold
+          ]
+        \setCJKmonofont { Noto~Serif~CJK~SC }
+          [
+            UprightFont = *~Light ,
+            BoldFont    = *~Bold
+          ]
+      }
+    \setCJKfamilyfont { zhsong } { Noto~Serif~CJK~SC }
+      [
+        UprightFont = *~Light ,
+        BoldFont    = *~Bold ,
+        ItalicFont  = AR~PL~KaitiM~GB
+      ]
+    \setCJKfamilyfont { zhhei  } { Noto~Sans~CJK~SC  }
+      [
+        UprightFont = *~Medium ,
+        BoldFont    = *~Bold
+      ]
+    \setCJKfamilyfont { zhkai  } { AR~PL~KaitiM~GB   }
+%</ubuntu>
+%<*adobe>
+      {
+        \setCJKmainfont { AdobeSongStd-Light       }
+          [ AutoFakeBold = 3 , ItalicFont = AdobeKaitiStd-Regular ]
+        \setCJKsansfont { AdobeHeitiStd-Regular    } [ AutoFakeBold = 3 ]
+        \setCJKmonofont { AdobeFangsongStd-Regular }
+      }
+    \setCJKfamilyfont { zhsong } { AdobeSongStd-Light       }
+      [ AutoFakeBold = 3 , ItalicFont = AdobeKaitiStd-Regular ]
+    \setCJKfamilyfont { zhhei  } { AdobeHeitiStd-Regular    } [ AutoFakeBold = 3 ]
+    \setCJKfamilyfont { zhfs   } { AdobeFangsongStd-Regular }
+    \setCJKfamilyfont { zhkai  } { AdobeKaitiStd-Regular    }
+%</adobe>
+%<*fandol>
+      {
+        \setCJKmainfont { FandolSong }
+          [
+            Extension   = .otf ,
+            UprightFont = *-Regular ,
+            BoldFont    = *-Bold ,
+            ItalicFont  = FandolKai-Regular
+          ]
+        \setCJKsansfont { FandolHei  }
+          [
+            Extension   = .otf ,
+            UprightFont = *-Regular ,
+            BoldFont    = *-Bold
+          ]
+        \setCJKmonofont { FandolFang }
+          [
+            Extension   = .otf ,
+            UprightFont = *-Regular
+          ]
+      }
+    \setCJKfamilyfont { zhsong } { FandolSong }
+      [
+        Extension   = .otf ,
+        UprightFont = *-Regular ,
+        BoldFont    = *-Bold ,
+        ItalicFont  = FandolKai-Regular
+      ]
+    \setCJKfamilyfont { zhhei  } { FandolHei  }
+      [
+        Extension   = .otf ,
+        UprightFont = *-Regular,
+        BoldFont    = *-Bold
+      ]
+    \setCJKfamilyfont { zhfs   } { FandolFang }
+      [
+        Extension   = .otf ,
+        UprightFont = *-Regular
+      ]
+    \setCJKfamilyfont { zhkai  } { FandolKai  }
+      [
+        Extension   = .otf ,
+        UprightFont = *-Regular
+      ]
+%</fandol>
+%<*founder>
+      {
+        \setCJKmainfont { FZShuSong-Z01  }
+          [ AutoFakeBold = 3 , ItalicFont = FZKai-Z03 ]
+        \setCJKsansfont { FZHei-B01      } [ AutoFakeBold = 3 ]
+        \setCJKmonofont { FZFangSong-Z02 }
+      }
+    \setCJKfamilyfont { zhsong } { FZShuSong-Z01  }
+      [ AutoFakeBold = 3 , ItalicFont = FZKai-Z03 ]
+    \setCJKfamilyfont { zhhei  } { FZHei-B01      } [ AutoFakeBold = 3 ]
+    \setCJKfamilyfont { zhkai  } { FZKai-Z03      }
+    \setCJKfamilyfont { zhfs   } { FZFangSong-Z02 }
+%</founder>
+%<*hanyi>
+      {
+        \setCJKmainfont { HYShuSongEr~S }
+          [ BoldFont = HYZhongSong~S, ItalicFont = HYKaiTi~S ]
+        \setCJKsansfont { HYZhongHei~S  } [ BoldFont = HYDaHei~S ]
+        \setCJKmonofont { HYFangSong~S  }
+      }
+    \setCJKfamilyfont { zhsong } { HYShuSongEr~S }
+      [ BoldFont = HYZhongSong~S ]
+    \setCJKfamilyfont { zhhei  } { HYZhongHei~S  }
+      [ BoldFont = HYDaHei~S     ]
+    \setCJKfamilyfont { zhkai  } { HYKaiTi~S     }
+    \setCJKfamilyfont { zhfs   } { HYFangSong~S  }
+%</hanyi>
+    \NewDocumentCommand \songti   { } { \CJKfamily { zhsong  } }
+    \NewDocumentCommand \heiti    { } { \CJKfamily { zhhei   } }
+%<!ubuntu>    \NewDocumentCommand \fangsong { } { \CJKfamily { zhfs    } }
+    \NewDocumentCommand \kaishu   { } { \CJKfamily { zhkai   } }
+  }
+  {
+    \@@_if_main_lang_ja:TF
+%<windows>      { \@@_fontset_error:nn { cjk } { windows } }
+%<windows>      { \ctex_file_input:n { ctex-fontset-windows.def } }
+%<mac>      { \@@_fontset_error:nn { cjk } { mac } }
+%<mac>      { \ctex_file_input:n { ctex-fontset-mac.def } }
+%<ubuntu>      { \@@_fontset_error:nn { cjk } { ubuntu } }
+%<ubuntu>      { \ctex_file_input:n { ctex-fontset-ubuntu.def } }
+%<adobe>      { \@@_fontset_error:nn { cjk } { adobe } }
+%<adobe>      { \ctex_file_input:n { ctex-fontset-adobe.def } }
+%<fandol>      { \@@_fontset_error:nn { cjk } { fandol } }
+%<fandol>      { \ctex_file_input:n { ctex-fontset-fandol.def } }
+%<founder>      { \@@_fontset_error:nn { cjk } { founder } }
+%<founder>      { \ctex_file_input:n { ctex-fontset-founder.def } }
+%<hanyi>      { \@@_fontset_error:nn { cjk } { hanyi } }
+%<hanyi>      { \ctex_file_input:n { ctex-fontset-hanyi.def } }
+  }
+%</cjk>
+%    \end{macrocode}
+% \end{implementation}
+%
+% \endinput

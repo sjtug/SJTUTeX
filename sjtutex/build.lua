@@ -3,7 +3,7 @@
 module             = "sjtutex"
 
 sourcefiledir      = "source"
-sourcefiles        = {"sjtutex.dtx","vi/sjtu-vi-*.pdf"}
+sourcefiles        = {"sjtutex.dtx","sjtutex-font.dtx","sjtutex-preset.dtx","sjtutex-lang-scheme.dtx","vi/sjtu-vi-*.pdf"}
 installfiles       = {"*.cls","*.def","*.pdf"}
 
 typesetexe         = "xelatex"
@@ -16,8 +16,6 @@ biberopts          = "--quiet"
 
 unpackexe          = "luatex"
 unpackfiles        = {"sjtutex.dtx"}
-unpacksuppfiles    = {"sjtutex.id"}
-gitverfiles        = {"sjtutex.dtx"}
 
 checkruns          = 3
 checkengines       = {"luatex","xetex"}  -- do not reorder this, related to runtest_tasks()
@@ -44,65 +42,83 @@ shellescape = os.type == "windows"
         return s
       end
 
-git_id_info = { }
-
-function extract_git_version()
-  mkdir(supportdir)
-  for _,i in ipairs(gitverfiles) do
-    for _,j in ipairs({sourcefiledir}) do
-      for _,k in ipairs(filelist(j, i)) do
-                local idfile = normalize_path(supportdir .. "/" .. jobname(k) .. ".id")
-        local file = normalize_path(j .. "/" .. k)
-                local cmdline = shellescape([[git log -1 --pretty=format:"$Id: ]]
-                                        .. k .. [[ %h %ai %an <%ae> $" ]] .. file)
-        local  f = assert(io.popen(cmdline, "r"))
-        local id = f:read("*all")
-        f:close()
-        git_id_info[k] = id
-        f = assert(io.open(idfile, "wb"))
-        f:write(id, "\n")
-        f:close()
-      end
-    end
-  end
-end
-
-function expand_git_version()
-  local sourcedir = tdsdir .. "/source/" .. moduledir
-  for _,i in ipairs(gitverfiles) do
-    for _,j in ipairs({sourcedir}) do
-      for _,k in ipairs(filelist(j, i)) do
-        replace_git_id(j, k)
-      end
-    end
-  end
-end
-
-function replace_git_id (path, file)
-  local f = assert(io.open(path .. "/" .. file, "rb"))
-  local s = f:read("*all")
-  f:close()
-  local id = assert(git_id_info[file])
-  local s, n = s:gsub([[(\GetIdInfo)%b$$]], "%1" .. id)
-  if n > 0 then
-    f = assert(io.open(path .. "/" .. file, "wb"))
-    f:write(s)
-    f:close()
-    cp(file, path, ctandir .. "/" .. ctanpkg)
-  end
-end
-
+-- `l3build tag X.Y.Z` performs the release rewrite in one step: version
+-- stamps of the split .dtx files, \changes{unreleased} assignment, the
+-- manual header line, and the CHANGELOG move (see update_changelog and
+-- tag_hook). The version comes from the command line only; the script
+-- keeps no version variable. Idempotent: files already stamped with the
+-- target version are left untouched.
 function update_tag(file, content, tagname, tagdate)
-  local content, date = content, tagdate:gsub("%-", "/")
-  if file:match("%.dtx$") then
-    content = content:gsub("({\\ExplFileDate})%b{}", "%1{" .. tagname .. "}")
-    content = content:gsub("{%d%d%d%d/%d%d/%d%d v%S+", "{" .. date .. " v" .. tagname)
-    content = content:gsub("(\\changes){unreleased}", "%1{v" .. tagname .. "}")
+  if not tagname then
+    print("Error: missing version number, usage: l3build tag X.Y.Z")
+    os.exit(1)
+  end
+  if not string.match(file, "%.dtx$") then return content end
+  local filetarget = string.gsub(file, "%-", "%%-")
+  local stamped = content:match(
+    "%%<%+!driver>\\GetIdInfo $Id: " .. filetarget .. " (%d+%.%d+%.%w+) ")
+  if stamped == tagname then return content end
+  local tagdateid = io.popen(
+    "git log -1 --pretty=format:'%ai %h %an <%ae>' -- source/" .. file):read('*l') or ""
+  tagdateid = string.gsub(tagdateid, "%%", "%%%%")
+  content   = string.gsub(content,
+    "%%<%+!driver>\\GetIdInfo $Id: " .. filetarget .. " " ..
+    "%d+%.%d+%.%w+ %d+%-%d+%-%d+ (.-)%$",
+    "%%<+!driver>\\GetIdInfo $Id: "  .. file       .. " " ..
+    tagname .. " " .. tagdateid ..   "$")
+  content   = string.gsub(content,
+    "(\\changes){unreleased}", "%1{v" .. tagname .. "}")
+  -- Manual header line (only present in the main .dtx driver).
+  content   = string.gsub(content,
+    "{%d%d%d%d/%d%d/%d%d v%S+",
+    "{" .. string.gsub(tagdate, "%-", "/") .. " v" .. tagname)
+  -- Footer revision hash in the manual.
+  if string.match(file, module .. "%.dtx$") then
+    local tagdocrev = io.popen(
+      "git log -1 --format='%h' -- source/*.dtx"):read('*l') or ""
+    content = string.gsub(content,
+      "\\newcommand\\sjturevhash{%w+}",
+      "\\newcommand\\sjturevhash{" .. tagdocrev .. "}")
   end
   return content
 end
 
-function tag_hook(tagname)
+-- Moves [Unreleased] to [v<tag>] - <date> and updates the compare links.
+-- Pure function, kept separate for testability.
+function update_changelog(content, tagname, tagdate)
+  local verpat = string.gsub(tagname, "%.", "%%.")
+  if content:match("## %[v" .. verpat .. "%]") then return content end
+  -- The previous version is parsed from the [Unreleased] compare link.
+  local prev = content:match(
+    "%[Unreleased%]:%s*%S+/compare/(v[^/]-)%.%.%.HEAD")
+  content = string.gsub(content, "## %[Unreleased%]\n",
+    "## [Unreleased]\n\n## [v" .. tagname .. "] - " .. tagdate .. "\n", 1)
+  if prev then
+    local label = "[v" .. tagname .. "]:"
+    local pad   = string.rep(" ", math.max(14 - #label, 1))
+    content = string.gsub(content,
+      "(%[Unreleased%]:%s*)(%S+/compare/)v[^/]-(%.%.%.HEAD)\n",
+      "%1%2v" .. tagname .. "%3\n" ..
+      label .. pad .. "%2" .. prev .. "...v" .. tagname .. "\n", 1)
+  end
+  return content
+end
+
+-- CHANGELOG goes first so it lands in the release commit. Note commit -a
+-- sweeps all tracked modifications, so release from a clean tree.
+function tag_hook(tagname, tagdate)
+  local f = io.open("CHANGELOG.md", "rb")
+  if f then
+    local content = f:read("a")
+    f:close()
+    local updated = update_changelog(content, tagname, tagdate)
+    if updated ~= content then
+      f = assert(io.open("CHANGELOG.md", "w"))
+      f:write(updated)
+      f:close()
+      print("Tagging  CHANGELOG.md")
+    end
+  end
   os.execute("git commit -a -m \"Bump version to " .. tagname .. "\"")
   os.execute("git tag v" .. tagname)
 end
@@ -132,30 +148,4 @@ function runtest_tasks(name, run)
     end
     return ""
   end
-end
-
-null_function = function() return 0 end
-
-unpack_prehook  = unpack_prehook  or null_function
-unpack_posthook = unpack_posthook or null_function
-unhooked_bundleunpack = bundleunpack
-bundleunpack = function (...)
-  extract_git_version()
-  unpack_prehook()
-  local retval = unhooked_bundleunpack(...)
-  is_unpacked = true
-  unpack_posthook()
-  return retval
-end
-target_list.bundleunpack.func = bundleunpack
-
-copyctan_prehook  = copyctan_prehook  or null_function
-copyctan_posthook = copyctan_posthook or null_function
-unhooked_copyctan = copyctan
-copyctan = function (...)
-  copyctan_prehook()
-  local retval = unhooked_copyctan(...)
-  expand_git_version()
-  copyctan_posthook()
-  return retval
 end
