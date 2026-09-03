@@ -37,56 +37,52 @@
 % \subsection{预设实现}
 %
 % \subsubsection{名称常量}
+% \changes{unreleased}{2026/09/03}{名称常量改用键值列表定义。}
 %
 % 学位论文名称与符号常量，按语种定义。
 %    \begin{macrocode}
 %<*thesis>
-\clist_map_inline:nn
+\@@_name_const_table:n
   {
-    { zh } { 学士, 硕士, 博士 } ,
-    { en } { Bachelor, Master, Doctor } ,
-    { de } { Bachelor, Master, Doktor } ,
-    { ja } { 学士, 修士, 博士 }
+    zh =
+      {
+        univ            = 上海交通大学,
+        address         = 中国・上海,
+        thesis          = 学位论文,
+        title_page      = 题名页,
+        declaration     = 原创性声明及使用授权书,
+        orig_decl       = 原创性声明,
+        auth_decl       = 使用授权书,
+        decl_author     = 学位论文作者,
+        decl_supervisor = 指导教师,
+        degree_level    = { | \g_@@_thesis_type_int 学士, 硕士, 博士 },
+      },
+    en =
+      {
+        univ         = Shanghai~ Jiao~ Tong~ University,
+        address      = { Shanghai,~ P.R.~ China },
+        title_page   = Title~ Page,
+        declaration  = Statutory~ Declaration,
+        degree_level = { | \g_@@_thesis_type_int Bachelor, Master, Doctor },
+      },
+    de =
+      {
+        univ         = Shanghai~ Jiao~ Tong~ Universität,
+        address      = { Shanghai,~ VR~ China },
+        title_page   = Titelblatt,
+        declaration  = Eidesstattliche~ Erklärung,
+        degree_level = { | \g_@@_thesis_type_int Bachelor, Master, Doktor },
+      },
+    ja =
+      {
+        univ         = 上海交通大学,
+        address      = 中国・上海,
+        thesis       = 学位請求論文,
+        title_page   = 標題紙,
+        declaration  = 誓約書・公表許諾書,
+        degree_level = { | \g_@@_thesis_type_int 学士, 修士, 博士 },
+      },
   }
-  { \@@_name_const_from_clist:nnnn { degree_level } { \g_@@_thesis_type_int } #1 }
-\clist_map_inline:nn
-  {
-    { univ             } { 上海交通大学           } ,
-    { address          } { 中国・上海             } ,
-    { thesis           } { 学位论文               } ,
-    { title_page       } { 题名页                 } ,
-    { declaration      } { 原创性声明及使用授权书 } ,
-    { orig_decl        } { 原创性声明             } ,
-    { auth_decl        } { 使用授权书             } ,
-    { decl_author      } { 学位论文作者           } ,
-    { decl_supervisor  } { 指导教师               }
-  }
-  { \@@_name_const:nnn { zh } #1 }
-\clist_map_inline:nn
-  {
-    { univ             } { Shanghai~ Jiao~ Tong~ University } ,
-    { address          } { Shanghai,~ P.R.~ China           } ,
-    { title_page       } { Title~ Page                      } ,
-    { declaration      } { Statutory~ Declaration           }
-  }
-  { \@@_name_const:nnn { en } #1 }
-\clist_map_inline:nn
-  {
-    { univ             } { Shanghai~ Jiao~ Tong~ Universität } ,
-    { address          } { Shanghai,~ VR~ China              } ,
-    { title_page       } { Titelblatt                        } ,
-    { declaration      } { Eidesstattliche~ Erklärung        }
-  }
-  { \@@_name_const:nnn { de } #1 }
-\clist_map_inline:nn
-  {
-    { univ             } { 上海交通大学         } ,
-    { address          } { 中国・上海           } ,
-    { thesis           } { 学位請求論文         } ,
-    { title_page       } { 標題紙               } ,
-    { declaration      } { 誓約書・公表許諾書   }
-  }
-  { \@@_name_const:nnn { ja } #1 }
 %    \end{macrocode}
 %
 % 初始化主题。

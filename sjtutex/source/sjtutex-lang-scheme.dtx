@@ -175,16 +175,8 @@
 %
 % 日期常量。
 %    \begin{macrocode}
-%<*zh|ja>
-\clist_map_inline:nn
-  {
-    { year  } { 年 } ,
-    { month } { 月 } ,
-    { day   } { 日 }
-  }
-%<zh>  { \@@_name_const:nnn { zh } #1 }
-%<ja>  { \@@_name_const:nnn { ja } #1 }
-%</zh|ja>
+%<zh>\@@_name_const:nn { zh } { year = 年, month = 月, day = 日 }
+%<ja>\@@_name_const:nn { ja } { year = 年, month = 月, day = 日 }
 %<*en>
 \clist_const:Nn \c_@@_name_month_en_clist
   {
@@ -415,105 +407,103 @@
 % 通用名称常量。
 %    \begin{macrocode}
 %<*lang>
-\clist_map_inline:nn
+%<zh>\@@_name_const:nn { zh }
+%<en>\@@_name_const:nn { en }
+%<de>\@@_name_const:nn { de }
+%<ja>\@@_name_const:nn { ja }
   {
-%<zh>    { keywords } { 关键词          } ,
-%<en>    { keywords } { Key~words       } ,
-%<de>    { keywords } { Schlüsselwörter } ,
-%<ja>    { keywords } { キーワード      } ,
-%<zh|ja>    { info_sep } { ： \null        } ,
-%<en|de>    { info_sep } { \hbox { :~ }    } ,
-%<zh>    { item_sep } { ，              }
-%<en|de>    { item_sep } { ,~              }
-%<ja>    { item_sep } { \quad           }
+%<zh>    keywords = 关键词,
+%<en>    keywords = Key~words,
+%<de>    keywords = Schlüsselwörter,
+%<ja>    keywords = キーワード,
+%<zh|ja>    info_sep = ： \null,
+%<en|de>    info_sep = \hbox { :~ },
+%<zh>    item_sep = ，
+%<en|de>    item_sep = { ,~ }
+%<ja>    item_sep = \quad
   }
-%<zh>  { \@@_name_const:nnn { zh } #1 }
-%<en>  { \@@_name_const:nnn { en } #1 }
-%<de>  { \@@_name_const:nnn { de } #1 }
-%<ja>  { \@@_name_const:nnn { ja } #1 }
 %    \end{macrocode}
 %
 % 学位论文专用的符号与摘要名称常量，仅 \cls{sjtuthesis} 使用。
 %    \begin{macrocode}
 \IfClassLoadedF { sjtuthesis } { \endinput }
 %<zh>\@@_symbol_const:nn { white_square } { "25A1 }
-%<zh>\@@_name_const:nnn { zh } { abstract } { 摘 \protect \quad 要 }
-%<en>\@@_name_const:nnn { en } { abstract } { Abstract }
-%<de>\@@_name_const:nnn { de } { abstract } { Abstrakt }
-%<ja>\@@_name_const:nnn { ja } { abstract } { 要 \protect \quad 旨 }
+%<zh>\@@_name_const:nn { zh } { abstract = 摘 \protect \quad 要 }
+%<en>\@@_name_const:nn { en } { abstract = Abstract }
+%<de>\@@_name_const:nn { de } { abstract = Abstrakt }
+%<ja>\@@_name_const:nn { ja } { abstract = 要 \protect \quad 旨 }
 %</lang>
 %    \end{macrocode}
 %
 % 预定义的数学环境，不包括证明环境 \env{proof}。
 %    \begin{macrocode}
 %<*scheme>
-\clist_map_inline:nn
+%<zh>\@@_name_const:nn { zh }
+%<en>\@@_name_const:nn { en }
+%<de>\@@_name_const:nn { de }
+%<ja>\@@_name_const:nn { ja }
   {
 %<*zh>
-    { assumption  } { 假设        } ,
-    { axiom       } { 公理        } ,
-    { conjecture  } { 猜想        } ,
-    { corollary   } { 推论        } ,
-    { definition  } { 定义        } ,
-    { example     } { 例          } ,
-    { exercise    } { 练习        } ,
-    { lemma       } { 引理        } ,
-    { problem     } { 问题        } ,
-    { proposition } { 命题        } ,
-    { remark      } { 注          } ,
-    { solution    } { 解          } ,
-    { theorem     } { 定理        }
+    assumption  = 假设,
+    axiom       = 公理,
+    conjecture  = 猜想,
+    corollary   = 推论,
+    definition  = 定义,
+    example     = 例,
+    exercise    = 练习,
+    lemma       = 引理,
+    problem     = 问题,
+    proposition = 命题,
+    remark      = 注,
+    solution    = 解,
+    theorem     = 定理
 %</zh>
 %<*en>
-    { assumption  } { Assumption  } ,
-    { axiom       } { Axiom       } ,
-    { conjecture  } { Conjecture  } ,
-    { corollary   } { Corollary   } ,
-    { definition  } { Definition  } ,
-    { example     } { Example     } ,
-    { exercise    } { Exercise    } ,
-    { lemma       } { Lemma       } ,
-    { problem     } { Problem     } ,
-    { proposition } { Proposition } ,
-    { remark      } { Remark      } ,
-    { solution    } { Solution    } ,
-    { theorem     } { Theorem     }
+    assumption  = Assumption,
+    axiom       = Axiom,
+    conjecture  = Conjecture,
+    corollary   = Corollary,
+    definition  = Definition,
+    example     = Example,
+    exercise    = Exercise,
+    lemma       = Lemma,
+    problem     = Problem,
+    proposition = Proposition,
+    remark      = Remark,
+    solution    = Solution,
+    theorem     = Theorem
 %</en>
 %<*de>
-    { assumption  } { Annahme     } ,
-    { axiom       } { Axiom       } ,
-    { conjecture  } { Hypothese   } ,
-    { corollary   } { Korollar    } ,
-    { definition  } { Definition  } ,
-    { example     } { Beispiel    } ,
-    { exercise    } { Übung       } ,
-    { lemma       } { Lemma       } ,
-    { problem     } { Problem     } ,
-    { proposition } { Proposition } ,
-    { remark      } { Anmerkung   } ,
-    { solution    } { Lösung      } ,
-    { theorem     } { Theorem     }
+    assumption  = Annahme,
+    axiom       = Axiom,
+    conjecture  = Hypothese,
+    corollary   = Korollar,
+    definition  = Definition,
+    example     = Beispiel,
+    exercise    = Übung,
+    lemma       = Lemma,
+    problem     = Problem,
+    proposition = Proposition,
+    remark      = Anmerkung,
+    solution    = Lösung,
+    theorem     = Theorem
 %</de>
 %<*ja>
-    { assumption  } { 仮定        } ,
-    { axiom       } { 公理        } ,
-    { conjecture  } { 予想        } ,
-    { corollary   } { 系          } ,
-    { definition  } { 定義        } ,
-    { example     } { 例          } ,
-    { exercise    } { 練習        } ,
-    { lemma       } { 補題        } ,
-    { problem     } { 問題        } ,
-    { proposition } { 命題        } ,
-    { remark      } { 注意        } ,
-    { solution    } { 解法        } ,
-    { theorem     } { 定理        }
+    assumption  = 仮定,
+    axiom       = 公理,
+    conjecture  = 予想,
+    corollary   = 系,
+    definition  = 定義,
+    example     = 例,
+    exercise    = 練習,
+    lemma       = 補題,
+    problem     = 問題,
+    proposition = 命題,
+    remark      = 注意,
+    solution    = 解法,
+    theorem     = 定理
 %</ja>
   }
-%<zh>  { \@@_name_const:nnn { zh } #1 }
-%<en>  { \@@_name_const:nnn { en } #1 }
-%<de>  { \@@_name_const:nnn { de } #1 }
-%<ja>  { \@@_name_const:nnn { ja } #1 }
 %</scheme>
 %    \end{macrocode}
 % \end{implementation}
