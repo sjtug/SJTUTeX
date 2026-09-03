@@ -129,12 +129,12 @@
     \clist_map_inline:nn
       { keywords, fund }
       { \clist_new:c { l_@@_info_ ##1 _ #1 _clist } }
-    \bool_if:NTF \g_@@_review_bool
+    \@@_info_show_new:n {#1}
+    \bool_if:NT \g_@@_review_bool
       {
         \seq_set_from_clist:cn { l_@@_info_show_ #1 _seq }
           { author, id, supervisor, department, major, degree }
       }
-      { \seq_new:c { l_@@_info_show_ #1 _seq } }
     \keys_define:nn { sjtu }
       { info / #1 .meta:nn = { sjtu / info / #1 } {##1} }
     \keys_define:nn { sjtu / info }
@@ -158,62 +158,68 @@
         fund           .clist_set:c = { l_@@_info_fund_ #1 _clist } ,
         fund              .groups:n = { sensitive } ,
         date               .meta:nn = { sjtu / info } { date = {##1} } ,
-        display-date      .tl_set:c = { l_@@_info_date_ #1 _tl } ,
-        @show+              .code:n =
-          {
-            \seq_if_in:cnF { l_@@_info_show_ #1 _seq } {##1}
-              { \seq_put_right:cn { l_@@_info_show_ #1 _seq } {##1} }
-          } ,
-        @show+            .groups:n = { sensitive }
+        display-date      .tl_set:c = { l_@@_info_date_ #1 _tl }
       }
   }
 %    \end{macrocode}
 % \end{macro}
 %
+% \changes{unreleased}{2026/09/03}{标题页信息栏条目改用键值表定义。}
 % 定义标题页信息栏条目。
+% \begin{macro}[int]{\@@_info_entry_table:n,\@@_info_entry_table_aux:nn}
+% 以语种为键、内层键值列表为值的表格接口；
+% 仅实际载入的语种（\cs{g_@@_lang_clist}）会被定义。
 %    \begin{macrocode}
-\clist_const:Nn \c_@@_info_entries_zh_clist
+\cs_new_protected:Npn \@@_info_entry_table:n #1
+  { \keyval_parse:nnn { \use_none:n } { \@@_info_entry_table_aux:nn } {#1} }
+\cs_new_protected:Npn \@@_info_entry_table_aux:nn #1#2
   {
-    author*           = { 姓名              } ,
-    id*               = { 学号              } ,
-    supervisor*       = { 导师              } ,
-    assoc-supervisor* = { 副导师            } ,
-    co-supervisor*    = { 联合导师          } ,
-    department        = { 院系              } ,
-    major             = { 学科 \, / \, 专业 } ,
-    degree            = { 申请学位          }
+    \clist_if_in:NnT \g_@@_lang_clist {#1}
+      {
+        \@@_info_keys_define:n {#1}
+        \SetInfoEntry {#1} {#2}
+      }
   }
-\clist_const:Nn \c_@@_info_entries_en_clist
+\@@_info_entry_table:n
   {
-    author*           = { Author             } ,
-    supervisor*       = { Supervisor         } ,
-    assoc-supervisor* = { Assoc.\ Supervisor } ,
-    co-supervisor*    = { Co-supervisor      } ,
-    department , major , degree
-  }
-\clist_const:Nn \c_@@_info_entries_de_clist
-  {
-    author*           = { Autor/in         } ,
-    supervisor*       = { Betreuer/in      } ,
-    assoc-supervisor* = { Zweitbetreuer/in } ,
-    co-supervisor*    = { Co-Betreuer/in   } ,
-    department , major , degree
-  }
-\clist_const:Nn \c_@@_info_entries_ja_clist
-  {
-    author*           = { 氏名       } ,
-    supervisor*       = { 指導教員   } ,
-    assoc-supervisor* = { 副指導教員 } ,
-    co-supervisor*    = { 共同指導   } ,
-    department , major , degree
-  }
-\clist_map_inline:Nn \g_@@_lang_clist
-  {
-    \@@_info_keys_define:n {#1}
-    \exp_args:Nnv \SetInfoEntry { #1 }
-      { c_@@_info_entries_ #1 _clist }
+    zh =
+      {
+        author           = * 姓名,
+        id               = * 学号,
+        supervisor       = * 导师,
+        assoc-supervisor = * 副导师,
+        co-supervisor    = * 联合导师,
+        department       = 院系,
+        major            = 学科 \, / \, 专业,
+        degree           = 申请学位,
+      },
+    en =
+      {
+        author           = * Author,
+        supervisor       = * Supervisor,
+        assoc-supervisor = * Assoc.\ Supervisor,
+        co-supervisor    = * Co-supervisor,
+        department, major, degree,
+      },
+    de =
+      {
+        author           = * Autor/in,
+        supervisor       = * Betreuer/in,
+        assoc-supervisor = * Zweitbetreuer/in,
+        co-supervisor    = * Co-Betreuer/in,
+        department, major, degree,
+      },
+    ja =
+      {
+        author           = * 氏名,
+        supervisor       = * 指導教員,
+        assoc-supervisor = * 副指導教員,
+        co-supervisor    = * 共同指導,
+        department, major, degree,
+      },
   }
 %    \end{macrocode}
+% \end{macro}
 %
 % \begin{macro}{info/id}
 % 单独处理学号。

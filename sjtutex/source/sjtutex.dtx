@@ -846,6 +846,13 @@
 %   第一个参数指定语言，
 %   第二个参数使用键值列表指定字段的键名称和显示名称，各键值对间用英文逗号隔开，
 %   如 |supervisor={校内导师},co-supervisor={行业导师}|。
+%   键名只能包含小写字母、数字与连字符；不提供显示名称的键（裸键）只会被定义，
+%   不会显示在标题页信息表中。
+%   显示名称以 |*| 开头表示该字段为敏感字段，在盲审模式下不可设定，
+%   如 |author={* 姓名}|；以 |!| 开头表示解除该字段的敏感状态，
+%   用于重定义预设中默认敏感的字段，如 |author={! 姓名}|。
+%   重定义已存在的字段只更新其显示名称或敏感状态，不会改变键的存储规则，
+%   因此可以放心修改预设字段的显示名称。
 % \end{function}
 %
 % \paragraph{适用于 \cls{sjtuthesis} 文档类的键}
@@ -3207,39 +3214,62 @@
 % \changes{v2.0}{2023/03/17}{使用语言代码前缀区别不同语种的 \opt{sjtu/info} 键。}
 % \changes{v2.3}{2025/12/12}{新增 \tn{SetInfoEntry} 命令设置 \opt{sjtu/info} 键，
 %                            移除 \texttt{info/\meta{lang}/custom} 键。}
-% \begin{macro}{\SetInfoEntry}
-% 设置 \cls{sjtuthesis} 普通 |sjtu/info| 键值类的用户接口。
+% \changes{unreleased}{2026/09/03}{\tn{SetInfoEntry} 的敏感字段标记
+%                                 从键名后缀 \texttt{*} 移至值开头，
+%                                 并新增 \texttt{!} 前缀解除敏感状态；
+%                                 重定义已存在的字段不再报忽略警告。}
+% \begin{macro}[int]{\@@_info_show_new:n}
+% 创建语种的标题页信息栏显示机制：信息表显示序列，
+% 以及向序列追加条目的 |@show+| 键（属敏感组，盲审模式下无法设定）。
+% 若已存在则不做任何事。
 %    \begin{macrocode}
 %<*thesis>
+\cs_new_protected:Npn \@@_info_show_new:n #1
+  {
+    \seq_if_exist:cF { l_@@_info_show_ #1 _seq }
+      { \seq_new:c { l_@@_info_show_ #1 _seq } }
+    \keys_if_exist:nnF { sjtu / info / #1 } { @show+ }
+      {
+        \keys_define:nn { sjtu / info / #1 }
+          {
+            @show+ .code:n =
+              {
+                \seq_if_in:cnF { l_@@_info_show_ #1 _seq } {##1}
+                  { \seq_put_right:cn { l_@@_info_show_ #1 _seq } {##1} }
+              } ,
+            @show+ .groups:n = { sensitive }
+          }
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\SetInfoEntry}
+% 设置 \cls{sjtuthesis} 普通 |sjtu/info| 键值类的用户接口。
+% 键名只能包含小写字母、数字与连字符；值以 \texttt{*} 开头表示该键为
+% 敏感字段，在盲审模式下不可设定，以 \texttt{!} 开头表示解除该键的
+% 敏感状态（用于重定义已有的敏感字段）。
+% 重定义已存在的字段只更新其显示名称或敏感状态，
+% 键本身的存储规则保持不变。
+%    \begin{macrocode}
 \msg_new:nnn { sjtutex } { key-already-defined }
   { Key~'#1'~is~already~defined~and~redefinition~is~being~ignored. }
 \msg_new:nnn { sjtutex } { key-invalid }
   { Key~'#1'~is~invalid~and~ignored. }
 \cs_new_protected:Npn \@@_keys_if_valid:nTF #1
-  { \regex_match:nnTF { \A [a-z] [a-z0-9\-]* \*? \Z } {#1} }
+  { \regex_match:nnTF { \A [a-z] [a-z0-9\-]* \Z } {#1} }
 \cs_new_protected:Npn \@@_new_tl_info_entry_aux:nn #1#2
   {
-    \tl_set:Nn \l_@@_tmp_tl {#2}
-    \tl_remove_all:Nn \l_@@_tmp_tl { * }
-    \keys_if_exist:neTF { sjtu / info / #1 } \l_@@_tmp_tl
-      { \msg_warning:nnn { sjtutex } { key-already-defined } {#2} }
+    \@@_info_show_new:n {#1}
+    \keys_if_exist:nnF { sjtu / info / #1 } {#2}
       {
-        \tl_new:c { l_@@_info_ \l_@@_tmp_tl _ #1 _tl }
-        \keys_define:ne { sjtu / info / #1 }
+        \tl_new:c { l_@@_info_ #2 _ #1 _tl }
+        \keys_define:nn { sjtu / info / #1 }
           {
-            \l_@@_tmp_tl .code:n =
+            #2 .code:n =
               {
-                \exp_not:N \tl_set:cn
-                  { l_@@_info_ \l_@@_tmp_tl _ #1 _tl } {##1}
-                \exp_not:N \@@_setup:n
-                  { info / #1 / @show+ = \l_@@_tmp_tl }
-              }
-          }
-        \regex_match:nnT { \* \Z } {#2}
-          {
-            \keys_define:ne { sjtu / info / #1  }
-              {
-                \l_@@_tmp_tl .groups:n = { sensitive }
+                \tl_set:cn { l_@@_info_ #2 _ #1 _tl } {##1}
+                \@@_setup:n { info / #1 / @show+ = #2 }
               }
           }
       }
@@ -3247,7 +3277,11 @@
 \cs_new_protected:Npn \@@_new_tl_info_entry:nn #1#2
   {
     \@@_keys_if_valid:nTF {#2}
-      { \@@_new_tl_info_entry_aux:nn {#1} {#2} }
+      {
+        \keys_if_exist:nnTF { sjtu / info / #1 } {#2}
+          { \msg_warning:nnn { sjtutex } { key-already-defined } {#2} }
+          { \@@_new_tl_info_entry_aux:nn {#1} {#2} }
+      }
       { \msg_warning:nnn { sjtutex } { key-invalid } {#2} }
   }
 \cs_new_protected:Npn \@@_new_tl_info_entry:nnn #1#2#3
@@ -3255,9 +3289,26 @@
     \@@_keys_if_valid:nTF {#2}
       {
         \@@_new_tl_info_entry_aux:nn {#1} {#2}
-        \tl_set:cn { l_@@_name_ \l_@@_tmp_tl _ #1 _tl } {#3}
+        \tl_if_head_eq_charcode:nNTF {#3} *
+          { \@@_new_tl_info_entry_sensitive:nnw {#1} {#2} #3 \q_stop }
+          {
+            \tl_if_head_eq_charcode:nNTF {#3} !
+              { \@@_new_tl_info_entry_public:nnw {#1} {#2} #3 \q_stop }
+              { \tl_set:cn { l_@@_name_ #2 _ #1 _tl } {#3} }
+          }
       }
       { \msg_warning:nnn { sjtutex } { key-invalid } {#2} }
+  }
+\cs_new_protected:Npn \@@_new_tl_info_entry_sensitive:nnw #1#2 * #3 \q_stop
+  { \@@_new_tl_info_entry_display:nnnn {#1} {#2} { sensitive } {#3} }
+\cs_new_protected:Npn \@@_new_tl_info_entry_public:nnw #1#2 ! #3 \q_stop
+  { \@@_new_tl_info_entry_display:nnnn {#1} {#2} { } {#3} }
+\cs_new_protected:Npn \@@_new_tl_info_entry_display:nnnn #1#2#3#4
+  {
+    \keys_define:nn { sjtu / info / #1 } { #2 .groups:n = {#3} }
+    \tl_set:Nn \l_@@_tmp_tl {#4}
+    \tl_trim_spaces:N \l_@@_tmp_tl
+    \tl_set_eq:cN { l_@@_name_ #2 _ #1 _tl } \l_@@_tmp_tl
   }
 \NewDocumentCommand \SetInfoEntry { m }
   {
