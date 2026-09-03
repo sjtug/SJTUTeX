@@ -1753,18 +1753,34 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}[int]{\@@_name_set:nnn,\@@_name_const:nnn,
-% \@@_name_const_from_clist:nnnn}
-% 定义默认名称的辅助函数。
+% \begin{macro}[int]{\@@_name_const:nn,\@@_name_const_table:n,
+% \@@_name_const_aux:nnn,\@@_name_const_indexed:nnn}
+% 定义默认名称常量的辅助函数。第一个参数为语种，第二个参数为键值列表；
+% 值以竖线开头表示索引列表：竖线后紧跟作为索引的整数变量，
+% 其后为逗号分隔的候选值列表，索引值指定取第几个候选
+% （仅 \cls{sjtuthesis} 使用），例如以 \cs{g_@@_thesis_type_int} 为
+% 索引变量的学位名称定义。
+% \cs{@@_name_const_table:n} 以语种为键、内层键值列表为值，
+% 便于一次定义多个语种。
 %    \begin{macrocode}
-\cs_new_protected:Npn \@@_name_set:nnn #1#2#3
-  { \tl_set:cn   { l_@@_name_ #2 _ #1 _tl } {#3} }
-\cs_new_protected:Npn \@@_name_const:nnn #1#2#3
-  { \tl_const:cn { c_@@_name_ #2 _ #1 _tl } {#3} }
-%<*thesis>
-\cs_new_protected:Npn \@@_name_const_from_clist:nnnn #1#2#3#4
-  { \tl_const:ce { c_@@_name_ #1 _ #3 _tl } { \clist_item:nn {#4} {#2} } }
-%</thesis>
+\cs_new_protected:Npn \@@_name_const:nn #1#2
+  { \keyval_parse:nnn { \use_none:n } { \@@_name_const_aux:nnn {#1} } {#2} }
+\cs_new_protected:Npn \@@_name_const_table:n #1
+  { \keyval_parse:nnn { \use_none:n } { \@@_name_const:nn } {#1} }
+\cs_new_protected:Npn \@@_name_const_aux:nnn #1#2#3
+  {
+    \tl_if_head_eq_charcode:nNTF {#3} |
+      { \@@_name_const_indexed:nnn {#1} {#2} {#3} }
+      { \tl_const:cn { c_@@_name_ #2 _ #1 _tl } {#3} }
+  }
+\cs_new_protected:Npn \@@_name_const_indexed:nnn #1#2#3
+  {
+    \tl_set:Ne \l_tmpa_tl { \tl_tail:n {#3} }
+    \int_set:Nn \l_tmpa_int { \tl_head:V \l_tmpa_tl }
+    \clist_set:Ne \l_tmpa_clist { \tl_tail:V \l_tmpa_tl }
+    \tl_const:ce { c_@@_name_ #2 _ #1 _tl }
+      { \clist_item:Nn \l_tmpa_clist { \int_use:N \l_tmpa_int } }
+  }
 %    \end{macrocode}
 % \end{macro}
 %
