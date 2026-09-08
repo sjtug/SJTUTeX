@@ -1,0 +1,511 @@
+% \iffalse meta-comment
+%
+% Copyright (C) SJTUG
+%   2018--2026 Weijian Wu   <alexarawu@outlook.com>
+%   2022--2026 Zilong Li    <logcreative@outlook.com>
+%   2024--2026 Boshi Yuan   <nemoyuan2008@outlook.com>
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.3c
+% of this license or (at your option) any later version.
+% The latest version of this license is in
+%   https://www.latex-project.org/lppl.txt
+% and version 1.3c or later is part of all distributions of LaTeX
+% version 2008 or later.
+%
+%<*!(driver|install)>
+%<+!driver>\GetIdInfo $Id: sjtutex-lang-scheme.dtx 2.3.1 2026-04-21 15:09:02 +0800 f6eb9dc Alexara Wu <alexarawu@outlook.com>$
+%<lang&zh>  {Chinese specific definition (SJTUTeX)}
+%<lang&zh>\ProvidesExplFile{sjtu-lang-zh.def}
+%<lang&en>  {English specific definition (SJTUTeX)}
+%<lang&en>\ProvidesExplFile{sjtu-lang-en.def}
+%<lang&de>  {German specific definition (SJTUTeX)}
+%<lang&de>\ProvidesExplFile{sjtu-lang-de.def}
+%<lang&ja>  {Japanese specific definition (SJTUTeX)}
+%<lang&ja>\ProvidesExplFile{sjtu-lang-ja.def}
+%<scheme&zh>  {Chinese scheme (SJTUTeX)}
+%<scheme&zh>\ProvidesExplFile{sjtu-scheme-zh.def}
+%<scheme&en>  {English scheme (SJTUTeX)}
+%<scheme&en>\ProvidesExplFile{sjtu-scheme-en.def}
+%<scheme&de>  {German scheme (SJTUTeX)}
+%<scheme&de>\ProvidesExplFile{sjtu-scheme-de.def}
+%<scheme&ja>  {Japanese scheme (SJTUTeX)}
+%<scheme&ja>\ProvidesExplFile{sjtu-scheme-ja.def}
+%<!driver>  {\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
+%</!(driver|install)>
+%
+% \fi
+%
+% \begin{implementation}
+%
+% \paragraph*{\fbox{\file{sjtutex-lang-scheme.dtx}}}
+%
+% 本文件定义各语种的名称、日期与版式设定（语言支持与方案）。
+% 语言与方案配置文件在文档类载入时按语言读取，
+% 其实现见 \file{sjtutex.dtx} 中的多语言支持小节。
+%
+% \subsection{语言与方案}
+%
+%    \begin{macrocode}
+%<*scheme>
+%<@@=sjtu>
+%<zh|ja>\keys_set_known:nn { ctex / chapter }
+%<zh|ja>  { name = { 第 \space , \space 章 } }
+%</scheme>
+%    \end{macrocode}
+%
+% 设置全文首行缩进。
+%    \begin{macrocode}
+%<*scheme>
+\ctex_if_autoindent_touched:F
+%<zh>  { \ctex_set:n { autoindent = true } }
+%<en|de>  { \ctex_set:n { autoindent = 1.5 em } }
+%<ja>  { \ctex_set:n { autoindent = 1 } }
+%    \end{macrocode}
+%
+% \begin{macro}{\verse,\quotation}
+% 修改诗歌和引用环境的缩进。
+%    \begin{macrocode}
+%<zh|ja>\ctex_patch_cmd:Nnn \verse { -1.5em } { -2 \ccwd }
+%<zh|ja>\ctex_patch_cmd:Nnn \verse {  1.5em } {  2 \ccwd }
+\ctex_patch_cmd:Nnn \quotation { 1.5em } { \parindent }
+%</scheme>
+%    \end{macrocode}
+% \end{macro}
+%
+% 设置脚注标记样式。
+%    \begin{macrocode}
+%<*scheme>
+\keys_set:nn { sjtu / style }
+%<zh|ja>  { fnmark-style = circled }
+%<en|de>  { fnmark-style = plain   }
+%</scheme>
+%    \end{macrocode}
+%
+% \begin{macro}[int]{\@@_set_cjk_default_zh:,\@@_set_cjk_default_ja:}
+% 设置 CJK 默认字体族的辅助命令。
+%    \begin{macrocode}
+%<*lang>
+%<*zh>
+\cs_new_protected:Nn \@@_set_cjk_default_zh:
+  {
+    \tl_set:Nn \CJKrmdefault { zhsong }
+    \tl_set:Nn \CJKsfdefault { zhhei  }
+    \tl_set:Nn \CJKttdefault { zhfs   }
+  }
+%</zh>
+%<*ja>
+\cs_new_protected:Nn \@@_set_cjk_default_ja:
+  {
+    \tl_set:Nn \CJKrmdefault { jamin  }
+    \tl_set:Nn \CJKsfdefault { jagoth }
+    \tl_set:Nn \CJKttdefault { jagoth }
+  }
+%</ja>
+%    \end{macrocode}
+% \end{macro}
+%
+% \changes{v2.2.1}{2025/03/27}{新增语言设置钩子。}
+% 语言设置钩子。
+%    \begin{macrocode}
+%<zh>\NewHook { sjtutex / lang / zh }
+%<en>\NewHook { sjtutex / lang / en }
+%<de>\NewHook { sjtutex / lang / de }
+%<ja>\NewHook { sjtutex / lang / ja }
+%    \end{macrocode}
+%
+% 定义语言切换键，设置 CJK 默认字体族并触发语言钩子。
+%    \begin{macrocode}
+\keys_define:nn { sjtu / private }
+  {
+%<zh>    lang / zh .code:n =
+%<en>    lang / en .code:n =
+%<de>    lang / de .code:n =
+%<ja>    lang / ja .code:n =
+      {
+        \tl_set_eq:NN \l_@@_lang_tl \l_keys_value_tl
+%<zh>        \@@_set_cjk_default_zh:
+%<ja>        \@@_set_cjk_default_ja:
+        \normalfont
+%<zh>        \UseHook { sjtutex / lang / zh }
+%<en>        \UseHook { sjtutex / lang / en }
+%<de>        \UseHook { sjtutex / lang / de }
+%<ja>        \UseHook { sjtutex / lang / ja }
+      } ,
+%<zh>    zh .meta:n = { lang = zh } ,
+%<zh>    zh .groups:n = { lang }
+%<en>    en .meta:n = { lang = en } ,
+%<en>    en .groups:n = { lang }
+%<de>    de .meta:n = { lang = de } ,
+%<de>    de .groups:n = { lang }
+%<ja>    ja .meta:n = { lang = ja } ,
+%<ja>    ja .groups:n = { lang }
+  }
+%    \end{macrocode}
+%
+% 各语言钩子的默认设置。
+%    \begin{macrocode}
+%<zh>\AddToHook { sjtutex / lang / zh }
+%<en>\AddToHook { sjtutex / lang / en }
+%<de>\AddToHook { sjtutex / lang / de }
+%<ja>\AddToHook { sjtutex / lang / ja }
+  {
+%<zh>    \tl_set:Nn \languagename { chinese }
+%<en>    \tl_set:Nn \languagename { english }
+%<de>    \tl_set:Nn \languagename { ngerman }
+%<ja>    \tl_set:Nn \languagename { japanese }
+%<zh>    \ctex_set:n { autoindent = true }
+%<en|de>    \ctex_set:n { autoindent = 1.5 em }
+%<ja>    \ctex_set:n { autoindent = 1 }
+  }
+%    \end{macrocode}
+%
+% \begin{macro}[int]{\@@_title_case_aux_zh:n,\@@_title_case_aux_en:n,
+% \@@_title_case_aux_de:n,\@@_title_case_aux_ja:n}
+% 设置标题大小写转换的辅助命令。
+%    \begin{macrocode}
+%<zh>\cs_set_eq:NN \@@_title_case_aux_zh:n \use:n
+%<en>\cs_set_eq:NN \@@_title_case_aux_en:n \MakeUppercase
+%<de>\cs_set_eq:NN \@@_title_case_aux_de:n \MakeUppercase
+%<ja>\cs_set_eq:NN \@@_title_case_aux_ja:n \use:n
+%    \end{macrocode}
+% \end{macro}
+%
+% 将形如 |yyyy-mm-dd| 或 |yyyy-mm| 的 ISO 日期格式字符串转化为日期表示。
+%
+% 日期常量。
+%    \begin{macrocode}
+%<zh>\@@_name_const:nn { zh } { year = 年, month = 月, day = 日 }
+%<ja>\@@_name_const:nn { ja } { year = 年, month = 月, day = 日 }
+%<*en>
+\clist_const:Nn \c_@@_name_month_en_clist
+  {
+    January, February, March, April, May, June,
+    July, August, September, October, November, December
+  }
+%</en>
+%<*de>
+\clist_const:Nn \c_@@_name_month_de_clist
+  {
+    Januar, Februar, März, April, Mai, Juni,
+    Juli, August, September, Oktober, November, Dezember
+  }
+%</de>
+%    \end{macrocode}
+%
+% \begin{macro}[int]{\@@_date_aux_zh:nnn,\@@_date_aux_zh:w,
+% \@@_date_aux_short_zh:nn,\@@_date_aux_short_zh:w}
+% 中文日期。
+%    \begin{macrocode}
+%<*zh>
+\cs_new:Npn \@@_date_aux_zh:nnn #1#2#3
+  {
+    \int_to_arabic:n {#1} ~ { \exp_not:V \c_@@_name_year_zh_tl  } ~
+    \int_to_arabic:n {#2} ~ { \exp_not:V \c_@@_name_month_zh_tl } ~
+    \int_to_arabic:n {#3} ~ { \exp_not:V \c_@@_name_day_zh_tl   }
+  }
+\cs_new:Npn \@@_date_aux_zh:w #1-#2-#3 \q_stop
+  { \@@_date_aux_zh:nnn {#1} {#2} {#3} }
+\cs_new:Npn \@@_date_aux_short_zh:nn #1#2
+  {
+    \int_to_arabic:n {#1} ~ { \exp_not:V \c_@@_name_year_zh_tl  } ~
+    \int_to_arabic:n {#2} ~ { \exp_not:V \c_@@_name_month_zh_tl }
+  }
+\cs_new:Npn \@@_date_aux_short_zh:w #1-#2 \q_stop
+  { \@@_date_aux_short_zh:nn {#1} {#2} }
+%</zh>
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}[int]{\@@_ordinal_en:n}
+% 上标形式的序数词。
+%    \begin{macrocode}
+%<*en>
+\cs_new:Npn \@@_ordinal_en:n #1
+  {
+    \int_to_arabic:n {#1}
+    \exp_not:N \textsuperscript
+      {
+        \int_case:nnF { \int_mod:nn {#1} { 100 } }
+          {
+            { 11 } { th }
+            { 12 } { th }
+            { 13 } { th }
+          }
+          {
+            \int_case:nnF { \int_mod:nn {#1} { 10 } }
+              {
+                { 1 } { st }
+                { 2 } { nd }
+                { 3 } { rd }
+              }
+              { th }
+          }
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}[int]{\@@_date_aux_en:nnn,\@@_date_aux_en:w,
+% \@@_date_aux_short_en:nn,\@@_date_aux_short_en:w}
+% 英文日期。
+%    \begin{macrocode}
+\cs_new:Npn \@@_date_aux_en:nnn #1#2#3
+  {
+    \clist_item:Nn \c_@@_name_month_en_clist {#2} ~
+    \@@_ordinal_en:n {#3} ,~
+    \int_to_arabic:n {#1}
+  }
+\cs_new:Npn \@@_date_aux_en:w #1-#2-#3 \q_stop
+  { \@@_date_aux_en:nnn {#1} {#2} {#3} }
+\cs_new:Npn \@@_date_aux_short_en:nn #1#2
+  {
+    \clist_item:Nn \c_@@_name_month_en_clist {#2} ,~
+    \int_to_arabic:n {#1}
+  }
+\cs_new:Npn \@@_date_aux_short_en:w #1-#2 \q_stop
+  { \@@_date_aux_short_en:nn {#1} {#2} }
+%</en>
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}[int]{\@@_date_aux_de:nnn,\@@_date_aux_de:w,
+% \@@_date_aux_short_de:nn,\@@_date_aux_short_de:w}
+% 德文日期。
+%    \begin{macrocode}
+%<*de>
+\cs_new:Npn \@@_date_aux_de:nnn #1#2#3
+  {
+    \clist_item:Nn \c_@@_name_month_de_clist {#2} ~
+    {#3} ,~ \int_to_arabic:n {#1}
+  }
+\cs_new:Npn \@@_date_aux_de:w #1-#2-#3 \q_stop
+  { \@@_date_aux_de:nnn {#1} {#2} {#3} }
+\cs_new:Npn \@@_date_aux_short_de:nn #1#2
+  {
+    \clist_item:Nn \c_@@_name_month_de_clist {#2} ,~
+    \int_to_arabic:n {#1}
+  }
+\cs_new:Npn \@@_date_aux_short_de:w #1-#2 \q_stop
+  { \@@_date_aux_short_de:nn {#1} {#2} }
+%</de>
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}[int]{\@@_date_aux_ja:nnn,\@@_date_aux_ja:w,
+% \@@_date_aux_short_ja:nn,\@@_date_aux_short_ja:w}
+% 日文日期。
+%    \begin{macrocode}
+%<*ja>
+\cs_new:Npn \@@_date_aux_ja:nnn #1#2#3
+  {
+    \int_to_arabic:n {#1} ~ { \exp_not:V \c_@@_name_year_ja_tl  } ~
+    \int_to_arabic:n {#2} ~ { \exp_not:V \c_@@_name_month_ja_tl } ~
+    \int_to_arabic:n {#3} ~ { \exp_not:V \c_@@_name_day_ja_tl   }
+  }
+\cs_new:Npn \@@_date_aux_ja:w #1-#2-#3 \q_stop
+  { \@@_date_aux_ja:nnn {#1} {#2} {#3} }
+\cs_new:Npn \@@_date_aux_short_ja:nn #1#2
+  {
+    \int_to_arabic:n {#1} ~ { \exp_not:V \c_@@_name_year_ja_tl  } ~
+    \int_to_arabic:n {#2} ~ { \exp_not:V \c_@@_name_month_ja_tl }
+  }
+\cs_new:Npn \@@_date_aux_short_ja:w #1-#2 \q_stop
+  { \@@_date_aux_short_ja:nn {#1} {#2} }
+%</ja>
+%</lang>
+%    \end{macrocode}
+% \end{macro}
+%
+% 初始化语言名称。
+%    \begin{macrocode}
+%<*scheme>
+%<zh>\tl_set:Nn \languagename { chinese  }
+%<en>\tl_set:Nn \languagename { english  }
+%<de>\tl_set:Nn \languagename { ngerman  }
+%<ja>\tl_set:Nn \languagename { japanese }
+%    \end{macrocode}
+%
+% 设置名称选项。默认值为英文，只需修改其他语种。
+%    \begin{macrocode}
+%<*!en>
+\keys_set_known:nn { sjtu / name }
+  {
+%<*zh>
+    contents      = { 目 \protect \quad 录   } ,
+    listfigure    = { 插 \protect \quad 图   } ,
+    listtable     = { 表 \protect \quad 格   } ,
+    figure        = { 图                     } ,
+    table         = { 表                     } ,
+    abstract      = { 摘 \protect \quad 要   } ,
+    index         = { 索 \protect \quad 引   } ,
+    appendix      = { 附录                   } ,
+    proof         = { 证明                   } ,
+    bib           = { 参考文献               } ,
+    figure*       = { Figure                 } ,
+    table*        = { Table                  } ,
+    algorithm     = { 算法                   } ,
+    listalgorithm = { 算 \protect \quad 法   } ,
+    abbr          = { 缩略语对照表           } ,
+    nom           = { 符号对照表             } ,
+    ack           = { 致 \protect \quad 谢   } ,
+    resume        = { 个人简历               } ,
+    digest        = { 大摘要                 } ,
+    achv          = { 学术论文和科研成果目录 }
+%</zh>
+%<*de>
+    contents      = { Inhaltsverzeichnis     } ,
+    listfigure    = { Abbildungsverzeichnis  } ,
+    listtable     = { Tabellenverzeichnis    } ,
+    figure        = { Abbildung              } ,
+    table         = { Tabelle                } ,
+    abstract      = { Zusammenfassung        } ,
+    index         = { Index                  } ,
+    appendix      = { Anhang                 } ,
+    proof         = { Beweis                 } ,
+    bib           = { Literaturverzeichnis   } ,
+    part          = { Teil                   } ,
+    chapter       = { Kapitel                } ,
+    figure*       = { Figure                 } ,
+    table*        = { Table                  } ,
+    algorithm     = { Algorithmus            } ,
+    listalgorithm = { Algorithmenverzeichnis } ,
+    abbr          = { Abkürzungsverzeichnis  } ,
+    nom           = { Symbolverzeichnis      } ,
+    ack           = { Danksagungen           } ,
+    resume        = { Lebenslauf             } ,
+    digest        = { Kurzfassung            } ,
+    achv          = { Forschungsleistungen   }
+%</de>
+%<*ja>
+    contents      = { 目 \protect \quad 次 } ,
+    listfigure    = { 図目次               } ,
+    listtable     = { 表目次               } ,
+    figure        = { 図                   } ,
+    table         = { 表                   } ,
+    abstract      = { 概 \protect \quad 要 } ,
+    index         = { 索 \protect \quad 引 } ,
+    appendix      = { 付録                 } ,
+    proof         = { 证明                 } ,
+    bib           = { 参考文献             } ,
+    figure*       = { Figure               } ,
+    table*        = { Table                } ,
+    algorithm     = { アルゴリズム         } ,
+    listalgorithm = { アルゴリズム目次     } ,
+    abbr          = { 略語表               } ,
+    nom           = { 記号表               } ,
+    ack           = { 謝 \protect \quad 辞 } ,
+    resume        = { 履歴書               } ,
+    digest        = { 要 \protect \quad 約 } ,
+    achv          = { 研究業績書           }
+%</ja>
+  }
+%</!en>
+%</scheme>
+%    \end{macrocode}
+%
+% 通用名称常量。
+%    \begin{macrocode}
+%<*lang>
+%<zh>\@@_name_const:nn { zh }
+%<en>\@@_name_const:nn { en }
+%<de>\@@_name_const:nn { de }
+%<ja>\@@_name_const:nn { ja }
+  {
+%<zh>    keywords = 关键词,
+%<en>    keywords = Key~words,
+%<de>    keywords = Schlüsselwörter,
+%<ja>    keywords = キーワード,
+%<zh|ja>    info_sep = ： \null,
+%<en|de>    info_sep = \hbox { :~ },
+%<zh>    item_sep = ，
+%<en|de>    item_sep = { ,~ }
+%<ja>    item_sep = \quad
+  }
+%    \end{macrocode}
+%
+% 学位论文专用的符号与摘要名称常量，仅 \cls{sjtuthesis} 使用。
+%    \begin{macrocode}
+\IfClassLoadedF { sjtuthesis } { \endinput }
+%<zh>\@@_symbol_const:nn { white_square } { "25A1 }
+%<zh>\@@_name_const:nn { zh } { abstract = 摘 \protect \quad 要 }
+%<en>\@@_name_const:nn { en } { abstract = Abstract }
+%<de>\@@_name_const:nn { de } { abstract = Abstrakt }
+%<ja>\@@_name_const:nn { ja } { abstract = 要 \protect \quad 旨 }
+%</lang>
+%    \end{macrocode}
+%
+% 预定义的数学环境，不包括证明环境 \env{proof}。
+%    \begin{macrocode}
+%<*scheme>
+%<zh>\@@_name_const:nn { zh }
+%<en>\@@_name_const:nn { en }
+%<de>\@@_name_const:nn { de }
+%<ja>\@@_name_const:nn { ja }
+  {
+%<*zh>
+    assumption  = 假设,
+    axiom       = 公理,
+    conjecture  = 猜想,
+    corollary   = 推论,
+    definition  = 定义,
+    example     = 例,
+    exercise    = 练习,
+    lemma       = 引理,
+    problem     = 问题,
+    proposition = 命题,
+    remark      = 注,
+    solution    = 解,
+    theorem     = 定理
+%</zh>
+%<*en>
+    assumption  = Assumption,
+    axiom       = Axiom,
+    conjecture  = Conjecture,
+    corollary   = Corollary,
+    definition  = Definition,
+    example     = Example,
+    exercise    = Exercise,
+    lemma       = Lemma,
+    problem     = Problem,
+    proposition = Proposition,
+    remark      = Remark,
+    solution    = Solution,
+    theorem     = Theorem
+%</en>
+%<*de>
+    assumption  = Annahme,
+    axiom       = Axiom,
+    conjecture  = Hypothese,
+    corollary   = Korollar,
+    definition  = Definition,
+    example     = Beispiel,
+    exercise    = Übung,
+    lemma       = Lemma,
+    problem     = Problem,
+    proposition = Proposition,
+    remark      = Anmerkung,
+    solution    = Lösung,
+    theorem     = Theorem
+%</de>
+%<*ja>
+    assumption  = 仮定,
+    axiom       = 公理,
+    conjecture  = 予想,
+    corollary   = 系,
+    definition  = 定義,
+    example     = 例,
+    exercise    = 練習,
+    lemma       = 補題,
+    problem     = 問題,
+    proposition = 命題,
+    remark      = 注意,
+    solution    = 解法,
+    theorem     = 定理
+%</ja>
+  }
+%</scheme>
+%    \end{macrocode}
+% \end{implementation}
+%
+% \endinput

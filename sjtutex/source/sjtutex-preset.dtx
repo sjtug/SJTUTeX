@@ -1,0 +1,908 @@
+% \iffalse meta-comment
+%
+% Copyright (C) SJTUG
+%   2018--2026 Weijian Wu   <alexarawu@outlook.com>
+%   2022--2026 Zilong Li    <logcreative@outlook.com>
+%   2024--2026 Boshi Yuan   <nemoyuan2008@outlook.com>
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.3c
+% of this license or (at your option) any later version.
+% The latest version of this license is in
+%   https://www.latex-project.org/lppl.txt
+% and version 1.3c or later is part of all distributions of LaTeX
+% version 2008 or later.
+%
+%<*!(driver|install)>
+%<+!driver>\GetIdInfo $Id: sjtutex-preset.dtx 2.3.1 2026-04-21 15:09:02 +0800 f6eb9dc Alexara Wu <alexarawu@outlook.com>$
+%<article>  {Article document preset for Shanghai Jiao Tong University (SJTUTeX)}
+%<article>\ProvidesExplFile{sjtu-article-preset-base.def}
+%<report>  {Report document preset for Shanghai Jiao Tong University (SJTUTeX)}
+%<report>\ProvidesExplFile{sjtu-report-preset-base.def}
+%<thesis>  {Thesis document preset for Shanghai Jiao Tong University (SJTUTeX)}
+%<thesis>\ProvidesExplFile{sjtu-thesis-preset-base.def}
+%<!driver>  {\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
+%</!(driver|install)>
+%
+% \fi
+%
+% \begin{implementation}
+%
+% \paragraph*{\fbox{\file{sjtutex-preset.dtx}}}
+%
+% 本文件定义各文档类预设的模板特定内容编排：信息键、特殊页面、
+% 摘要与目录环境等。预设文件在文档类载入时由 preset 选项按需读入，
+% 其实现见 \file{sjtutex.dtx} 中的设置接口小节。
+%
+% \subsection{预设实现}
+%
+% \subsubsection{名称常量}
+% \changes{unreleased}{2026/09/03}{名称常量改用键值列表定义。}
+%
+% 学位论文名称与符号常量，按语种定义。
+%    \begin{macrocode}
+%<*thesis>
+\@@_name_const_table:n
+  {
+    zh =
+      {
+        univ            = 上海交通大学,
+        address         = 中国・上海,
+        thesis          = 学位论文,
+        title_page      = 题名页,
+        declaration     = 原创性声明及使用授权书,
+        orig_decl       = 原创性声明,
+        auth_decl       = 使用授权书,
+        decl_author     = 学位论文作者,
+        decl_supervisor = 指导教师,
+        degree_level    = { | \g_@@_thesis_type_int 学士, 硕士, 博士 },
+      },
+    en =
+      {
+        univ         = Shanghai~ Jiao~ Tong~ University,
+        address      = { Shanghai,~ P.R.~ China },
+        title_page   = Title~ Page,
+        declaration  = Statutory~ Declaration,
+        degree_level = { | \g_@@_thesis_type_int Bachelor, Master, Doctor },
+      },
+    de =
+      {
+        univ         = Shanghai~ Jiao~ Tong~ Universität,
+        address      = { Shanghai,~ VR~ China },
+        title_page   = Titelblatt,
+        declaration  = Eidesstattliche~ Erklärung,
+        degree_level = { | \g_@@_thesis_type_int Bachelor, Master, Doktor },
+      },
+    ja =
+      {
+        univ         = 上海交通大学,
+        address      = 中国・上海,
+        thesis       = 学位請求論文,
+        title_page   = 標題紙,
+        declaration  = 誓約書・公表許諾書,
+        degree_level = { | \g_@@_thesis_type_int 学士, 修士, 博士 },
+      },
+  }
+%    \end{macrocode}
+%
+% 初始化主题。
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_name_subject_zh_tl
+  {
+    \c_@@_name_univ_zh_tl
+    \c_@@_name_degree_level_zh_tl
+    \c_@@_name_thesis_zh_tl
+  }
+\tl_const:Nn \c_@@_name_subject_en_tl
+  {
+    A~ Dissertation~ Submitted~ to \\
+    { \c_@@_name_univ_en_tl }~ for~
+    the~ Degree~ of~ { \c_@@_name_degree_level_en_tl }
+  }
+\tl_const:Nn \c_@@_name_subject_de_tl
+  {
+    Eine~ Dissertation~ Eingereicht~ an \\
+    der~ { \c_@@_name_univ_de_tl }~ für~
+    { \c_@@_name_degree_level_de_tl } titel
+  }
+\tl_const:Nn \c_@@_name_subject_ja_tl
+  {
+    \c_@@_name_univ_ja_tl
+    \c_@@_name_degree_level_ja_tl
+    \c_@@_name_thesis_ja_tl
+  }
+%</thesis>
+%    \end{macrocode}
+%
+% \subsubsection{信息键}
+%
+% \begin{macro}[int]{\@@_info_keys_define:n}
+% 定义 \cls{sjtuthesis} 不同语种 |sjtu/info| 键值类的辅助函数。
+%    \begin{macrocode}
+%<*thesis>
+%<@@=sjtu>
+\cs_new_protected:Npn \@@_info_keys_define:n #1
+  {
+    \clist_map_inline:nn
+      { title, display_title, subject }
+      { \tl_new:c { l_@@_info_ ##1 _ #1 _tl } }
+    \clist_map_inline:nn
+      { keywords, fund }
+      { \clist_new:c { l_@@_info_ ##1 _ #1 _clist } }
+    \@@_info_show_new:n {#1}
+    \bool_if:NT \g_@@_review_bool
+      {
+        \seq_set_from_clist:cn { l_@@_info_show_ #1 _seq }
+          { author, id, supervisor, department, major, degree }
+      }
+    \keys_define:nn { sjtu }
+      { info / #1 .meta:nn = { sjtu / info / #1 } {##1} }
+    \keys_define:nn { sjtu / info }
+      {        #1 .meta:nn = { sjtu / info / #1 } {##1} }
+    \keys_define:nn { sjtu / info / #1 }
+      {
+        display-title       .code:n =
+          {
+            \tl_set:co { l_@@_info_display_title_ #1 _tl }
+              { \cs:w @@_title_case_aux_ #1 :n \cs_end: {##1} }
+          } ,
+        title               .code:n =
+          {
+            \tl_set:cn { l_@@_info_title_ #1 _tl } {##1}
+            \tl_if_empty:cT { l_@@_info_display_title_ #1 _tl }
+              { \keys_set:nn { sjtu / info / #1 } { display-title = {##1} } }
+          } ,
+        subject           .tl_set:c = { l_@@_info_subject_ #1 _tl } ,
+        subject          .initial:o = { \cs:w c_@@_name_subject_ #1 _tl \cs_end: } ,
+        keywords       .clist_set:c = { l_@@_info_keywords_ #1 _clist } ,
+        fund           .clist_set:c = { l_@@_info_fund_ #1 _clist } ,
+        fund              .groups:n = { sensitive } ,
+        date               .meta:nn = { sjtu / info } { date = {##1} } ,
+        display-date      .tl_set:c = { l_@@_info_date_ #1 _tl }
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \changes{unreleased}{2026/09/03}{标题页信息栏条目改用键值表定义。}
+% 定义标题页信息栏条目。
+% \begin{macro}[int]{\@@_info_entry_table:n,\@@_info_entry_table_aux:nn}
+% 以语种为键、内层键值列表为值的表格接口；
+% 仅实际载入的语种（\cs{g_@@_lang_clist}）会被定义。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_info_entry_table:n #1
+  { \keyval_parse:nnn { \use_none:n } { \@@_info_entry_table_aux:nn } {#1} }
+\cs_new_protected:Npn \@@_info_entry_table_aux:nn #1#2
+  {
+    \clist_if_in:NnT \g_@@_lang_clist {#1}
+      {
+        \@@_info_keys_define:n {#1}
+        \SetInfoEntry {#1} {#2}
+      }
+  }
+\@@_info_entry_table:n
+  {
+    zh =
+      {
+        author           = * 姓名,
+        id               = * 学号,
+        supervisor       = * 导师,
+        assoc-supervisor = * 副导师,
+        co-supervisor    = * 联合导师,
+        department       = 院系,
+        major            = 学科 \, / \, 专业,
+        degree           = 申请学位,
+      },
+    en =
+      {
+        author           = * Author,
+        supervisor       = * Supervisor,
+        assoc-supervisor = * Assoc.\ Supervisor,
+        co-supervisor    = * Co-supervisor,
+        department, major, degree,
+      },
+    de =
+      {
+        author           = * Autor/in,
+        supervisor       = * Betreuer/in,
+        assoc-supervisor = * Zweitbetreuer/in,
+        co-supervisor    = * Co-Betreuer/in,
+        department, major, degree,
+      },
+    ja =
+      {
+        author           = * 氏名,
+        supervisor       = * 指導教員,
+        assoc-supervisor = * 副指導教員,
+        co-supervisor    = * 共同指導,
+        department, major, degree,
+      },
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{info/id}
+% 单独处理学号。
+%    \begin{macrocode}
+\keys_define:nn { sjtu / info }
+  {
+    id   .meta:n = { zh / id = {#1} } ,
+    id .groups:n = { sensitive }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% 设置页眉主题。
+%    \begin{macrocode}
+\tl_set:Nn \l_@@_header_tl { \songti \l_@@_info_subject_zh_tl }
+%    \end{macrocode}
+%
+% 页眉线为双线。
+%    \begin{macrocode}
+\tl_set:Nn \headrule
+  {
+    \hrule height 2.25 pt width \headwidth
+    \skip_vertical:n {  0.75 pt }
+    \hrule height 0.75 pt width \headwidth
+    \skip_vertical:n { -3.75 pt }
+  }
+%    \end{macrocode}
+%
+% 设置 \tn{@title} 和 \tn{@author} 以供标题页使用。
+%    \begin{macrocode}
+\tl_set:Nn \@title  { \l_@@_info_title_zh_tl }
+\tl_set:Nn \@author { \l_@@_info_author_zh_tl }
+%</thesis>
+%    \end{macrocode}
+%
+% 定义 \cls{sjtureport} 和 \cls{sjtuarticle} 中的信息键值类。
+% \begin{variable}{\l_@@_info_subject_tl,\l_@@_info_keywords_clist}
+%    \begin{macrocode}
+%<*!thesis>
+\clist_new:N \l_@@_info_keywords_clist
+\keys_define:nn { sjtu / info }
+  {
+    title             .tl_set:N = \@title ,
+    author            .tl_set:N = \@author ,
+    display-date      .tl_set:N = \@date ,
+    subject           .tl_set:N = \l_@@_info_subject_tl ,
+    keywords       .clist_set:N = \l_@@_info_keywords_clist ,
+  }
+%    \end{macrocode}
+% \end{variable}
+%
+% \changes{v2.3.1}{2026/02/26}{将非标准接口移入预设文件。}
+% \begin{macro}{\subject,\keywords}
+% 通用模板新接口。
+%    \begin{macrocode}
+\NewDocumentCommand \subject  { m }
+  { \keys_set:nn { sjtu / info } { subject  = {#1} } }
+\NewDocumentCommand \keywords { m }
+  { \keys_set:nn { sjtu / info } { keywords = {#1} } }
+%</!thesis>
+%    \end{macrocode}
+% \end{macro}
+%
+% 设置页眉校标。
+%    \begin{macrocode}
+%<!thesis>\tl_set:Nn \l_@@_header_tl
+%<!thesis>  {
+%<!thesis>    \includegraphics [ height = 1.2 cm ]
+%<!thesis>      { sjtu-vi-logo-std-h-cor-red.pdf }
+%<!thesis>  }
+%    \end{macrocode}
+%
+% \begin{macro}{info/date}
+% 日期。
+%    \begin{macrocode}
+\keys_define:nn { sjtu / info }
+  {
+    date .code:n =
+%<!thesis>      { \@@_date_set:NVn \@date \g_@@_lang_tl {#1} }
+%<*thesis>
+      {
+        \clist_map_inline:Nn \g_@@_lang_clist
+          { \@@_date_set:cnn { l_@@_info_date_ ##1 _tl } {##1} {#1} }
+
+      } ,
+    date .initial:V = \c_@@_date_tl
+%</thesis>
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsubsection{标题页}
+%
+% 构建标题页。
+%
+% 标题页信息栏表格列参数。
+% \begin{variable}{\SJTU@CT@W@width}
+%    \begin{macrocode}
+%<*thesis>
+\tl_set:Nn \SJTU@CT@W@width { 5 em }
+%    \end{macrocode}
+% \end{variable}
+%
+% \begin{macro}[int]{\SJTU@CT@W,\SJTU@CT@R,\SJTU@CT@L}
+% 标题页信息栏表格的列类型。
+%    \begin{macrocode}
+\newcolumntype { \SJTU@CT@W } [ 1 ]
+  {
+    w {#1} { \SJTU@CT@W@width }
+    @{ \tl_use:c { c_@@_name_info_sep_ \l_@@_lang_tl _tl } }
+  }
+\newcolumntype { \SJTU@CT@R }
+  { r @{ \tl_use:c { c_@@_name_info_sep_ \l_@@_lang_tl _tl } } }
+\newcolumntype { \SJTU@CT@L }
+  { >{ \linespread { 0.75 } \normalfont } l }
+%    \end{macrocode}
+% \end{macro}
+%
+% 标题页页面样式，页脚添加资助基金信息。
+%    \begin{macrocode}
+\cs_new:Npn \ps@SJTU@fund
+  {
+    \ps@empty
+    \tl_set:Nn \@oddfoot
+      {
+        \hfil
+        \minipage [ t ] { \textwidth }
+          \centering \zihao { - 5 }
+          \clist_use:cn { l_@@_info_fund_ \l_@@_lang_tl _clist } { \par }
+        \endminipage
+        \hfil
+      }
+    \tl_set_eq:NN \@evenfoot \@oddfoot
+  }
+%    \end{macrocode}
+%
+% 样式 A 标题页元素实例。
+%    \begin{macrocode}
+\clist_map_inline:nn
+  {
+    { logo    }
+      {
+        content     =
+          {
+            \includegraphics [ width = 3 cm ]
+              { sjtu-vi-badge-reg-red.pdf }
+          }
+      } ,
+    { subject }
+      {
+        format      = \zihao { -2 } \setbaselineskip { 30 bp } ,
+        content     = \tl_use:c { l_@@_info_subject_ \l_@@_lang_tl _tl } ,
+        bottom-skip = \c_zero_dim plus 1 fill
+      } ,
+    { title   }
+      {
+        format      = \zihao { 2 } \setbaselineskip { 36 bp } \bfseries ,
+        content     = \tl_use:c { l_@@_info_display_title_ \l_@@_lang_tl _tl } ,
+        bottom-skip = 30 bp plus 1 fill
+      } ,
+    { info    }
+      {
+        format      = \zihao { 4 } \setbaselineskip { 30 bp } \heiti ,
+        content     = \@@_title_page_info_table:n
+                        { \SJTU@CT@W { s } \SJTU@CT@L } ,
+        bottom-skip = 30 bp
+      } ,
+    { date    }
+      {
+        format      = \zihao { 4 } \setbaselineskip { 30 bp } \bfseries ,
+        content     = \tl_use:c { l_@@_info_date_ \l_@@_lang_tl _tl } ,
+      }
+  }
+  { \@@_declare_element_instance:nnn { title a } #1 }
+%    \end{macrocode}
+%
+% 样式 A 标题页实例。
+%    \begin{macrocode}
+\@@_declare_page_instance:nnn { title a }
+  {
+    bookmark = \tl_use:c { c_@@_name_title_page_ \g_@@_lang_tl _tl } ,
+    style    = SJTU@fund ,
+    prefix   = title a ,
+    elements = { logo, subject, title, info, date }
+  }
+%    \end{macrocode}
+%
+% 样式 B 标题页元素实例。
+%    \begin{macrocode}
+\clist_map_inline:nn
+  {
+    { subject }
+      {
+        format      = \zihao { 4 } \setbaselineskip { 24 bp } \bfseries ,
+        content     = \tl_use:c { l_@@_info_subject_ \l_@@_lang_tl _tl } ,
+        bottom-skip = \c_zero_dim plus 1 fill
+      } ,
+    { title   }
+      {
+        format      = \zihao { -2 } \setbaselineskip { 30 bp } \bfseries ,
+        content     = \tl_use:c { l_@@_info_display_title_ \l_@@_lang_tl _tl } ,
+        bottom-skip = 30 bp plus 1 fill
+      } ,
+    { info    }
+      {
+        format      = \zihao { 3 } \setbaselineskip { 30 bp } \bfseries ,
+        content     = \@@_title_page_info_table:n
+                        { \SJTU@CT@R \SJTU@CT@L } ,
+        bottom-skip = 30 bp plus 1 fill
+      } ,
+    { date    }
+      {
+        format      = \zihao { 3 } \setbaselineskip { 30 bp } ,
+        content     =
+          {
+            \tl_use:c { l_@@_info_department_ \l_@@_lang_tl _tl }
+            \skip_vertical:N \c_zero_skip
+            \tl_use:c { c_@@_name_univ_ \l_@@_lang_tl _tl }
+            \skip_vertical:N \c_zero_skip
+            \tl_use:c { c_@@_name_address_ \l_@@_lang_tl _tl }
+            \skip_vertical:N \c_zero_skip
+            \tl_use:c { l_@@_info_date_ \l_@@_lang_tl _tl }
+          }
+      }
+  }
+  { \@@_declare_element_instance:nnn { title b } #1 }
+%    \end{macrocode}
+%
+% 样式 B 标题页实例。
+%    \begin{macrocode}
+\@@_declare_page_instance:nnn { title b }
+  {
+    prefix   = title b ,
+    style    = SJTU@fund ,
+    elements = { subject, title, info, date }
+  }
+%    \end{macrocode}
+%
+% 中文标题页使用样式 A，其他语种使用样式 B。
+%    \begin{macrocode}
+\prop_const_from_keyval:Nn \c_@@_title_page_style_prop
+  {
+    zh = { title a } ,
+    en = { title b } ,
+    de = { title b } ,
+    ja = { title b }
+  }
+\clist_map_inline:Nn \g_@@_lang_clist
+  {
+    \prop_get:NnN \c_@@_title_page_style_prop {#1} \l_@@_tmp_tl
+    \DeclareInstanceCopy { sjtu / page } { title / #1 } { \l_@@_tmp_tl }
+  }
+%    \end{macrocode}
+%
+% \begin{macro}{\maketitle}
+% 生成标题页。
+%    \begin{macrocode}
+\RenewDocumentCommand \maketitle { }
+  {
+    \clist_map_inline:Nn \g_@@_lang_clist
+      { \UseInstance { sjtu / page } { title / ##1 } { ##1 } }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsubsection{原创性声明及使用授权书}
+%
+% \changes{v2.2.1}{2025/03/22}{添加原创性声明变体。}
+%
+% 声明及授权书文本。
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_orig_decl_text_a_zh_tl
+  {
+    本人郑重声明：所呈交的学位论文，是本人在导师的指导下，独立进行研究工
+    作所取得的成果。
+    除文中已经注明引用的内容外，本论文不包含任何其他个人或集体已经发表或
+    撰写过的作品成果。
+    对本文的研究做出重要贡献的个人和集体，均已在文中以明确方式标明。
+    本人完全知晓本声明的法律后果由本人承担。
+  }
+\tl_const:Nn \c_@@_orig_decl_text_b_zh_tl
+  {
+    本人郑重声明：所呈交的学位论文，是本人在导师的指导下，独立进行研究工
+    作所取得的成果。
+    除文中已经注明引用的内容外，本论文不包含任何其他个人或集体已经发表或
+    撰写过的作品成果。
+    对本文的研究做出重要贡献的个人和集体，已在文中以适当方式予以致谢。
+    若在论文撰写过程中使用了人工智能工具，本人已遵循《上海交通大学关于在
+    教育教学中使用~ AI~ 的规范》，确保人工智能生成内容的应用场景、引用范
+    围及标注方式均符合规定，并杜绝学术不端行为。
+    本人完全知晓本声明的法律后果由本人承担。
+  }
+\tl_const:Nn \c_@@_auth_decl_text_zh_tl
+  {
+    本人同意学校保留并向国家有关部门或机构送交论文的复印件和电子版，允许
+    论文被查阅和借阅。 \par
+    \vskip 6 bp
+    \noindent
+    本学位论文属于： \par
+    { \c_@@_symbol_white_square_tl } \, \textbf { 公开论文 } \par
+    { \c_@@_symbol_white_square_tl } \, \textbf { 内部论文 }，
+      保密 \, { \c_@@_symbol_white_square_tl } \, 1 \, 年 \, /
+           \, { \c_@@_symbol_white_square_tl } \, 2 \, 年 \, /
+           \, { \c_@@_symbol_white_square_tl } \, 3 \, 年，
+      过保密期后适用本授权书。 \par
+    { \c_@@_symbol_white_square_tl } \, \textbf { 秘密论文 }，
+      保密 \, \underline { \hspace { 2 em } } \, 年（不超过~ 10~ 年），
+      过保密期后适用本授权书。 \par
+    { \c_@@_symbol_white_square_tl } \, \textbf { 机密论文 }，
+      保密 \, \underline { \hspace { 2 em } } \, 年（不超过~ 20~ 年），
+      过保密期后适用本授权书。 \par
+    \hspace { 6 em }（请在以上方框内选择打“ \ensuremath { \checkmark } ”）
+  }
+%    \end{macrocode}
+%
+% 签名框。
+%    \begin{macrocode}
+\tl_const:Nn \c_@@_signature_text_zh_tl
+  {
+    签名： \\
+    日期： \hspace { \stretch { 3 } } 年
+           \hspace { \stretch { 2 } } 月
+           \hspace { \stretch { 2 } } 日
+  }
+\cs_new_protected:Npn \@@_signature:N #1
+  {
+    \parbox [ t ] { 12 em }
+      { #1 \c_@@_signature_text_zh_tl }
+  }
+%    \end{macrocode}
+%
+% 声明及授权书元素实例。
+%    \begin{macrocode}
+\clist_map_inline:nn
+  {
+    { orig / title }
+      {
+        format      = \zihao { 3 } \setbaselineskip { 30 bp }
+                      \bfseries \heiti ,
+        content     =
+          {
+            \c_@@_name_univ_zh_tl
+            \skip_vertical:N \c_zero_skip
+            \c_@@_name_thesis_zh_tl
+            \c_@@_name_orig_decl_zh_tl
+          } ,
+        bottom-skip = 12 bp
+      },
+    { orig / text  }
+      {
+        format      = \zihao { -4 } \setbaselineskip { 24 bp } ,
+        bottom-skip = 24 bp ,
+        align       = normal
+      },
+    { orig / sign  }
+      {
+        format      = \zihao { 4 } \setbaselineskip { 30 bp } ,
+        content     =
+          {
+            \@@_signature:N \c_@@_name_decl_author_zh_tl
+            \skip_horizontal:n { 2 em } \hbox:n { }
+          } ,
+        bottom-skip = 24 bp plus 1 fill ,
+        align       = right
+      },
+    { auth / title }
+      {
+        format      = \zihao { 3 } \setbaselineskip { 30 bp }
+                      \bfseries \heiti ,
+        content     =
+          {
+            \c_@@_name_univ_zh_tl
+            \skip_vertical:N \c_zero_skip
+            \c_@@_name_thesis_zh_tl
+            \c_@@_name_auth_decl_zh_tl
+          } ,
+        bottom-skip = 12 bp
+      },
+    { auth / text  }
+      {
+        format      = \zihao { -4 } \setbaselineskip { 24 bp } ,
+        content     = \c_@@_auth_decl_text_zh_tl ,
+        bottom-skip = 24 bp ,
+        align       = normal
+      },
+    { auth / sign  }
+      {
+        format      = \zihao { 4 } \setbaselineskip { 30 bp } ,
+        content     =
+          {
+            \@@_signature:N \c_@@_name_decl_author_zh_tl
+            \hfill
+            \@@_signature:N \c_@@_name_decl_supervisor_zh_tl
+          } ,
+        bottom-skip = \c_zero_dim plus 1 fill ,
+        align       = normal
+      }
+  }
+  {
+    \@@_declare_element_instance:nnn { copyright } #1
+  }
+%    \end{macrocode}
+%
+% 声明及授权书模板实例。
+%    \begin{macrocode}
+\@@_declare_page_instance:nnn { copyright }
+  {
+    bookmark  = \tl_use:c { c_@@_name_declaration_ \g_@@_lang_tl _tl } ,
+    precode   = \newgeometry
+                  {
+                    margin        = 3.0 cm ,
+                    bindingoffset = 0.5 cm
+                  } ,
+    prefix    = copyright ,
+    elements  =
+      {
+        orig / title, orig / text, orig / sign,
+        auth / title, auth / text, auth / sign
+      }
+  }
+%    \end{macrocode}
+%
+% \begin{variable}{\l_@@_copyright_page_file_tl}
+%    \begin{macrocode}
+\tl_new:N \l_@@_copyright_page_file_tl
+%    \end{macrocode}
+% \end{variable}
+%
+% \changes{v2.3}{2026/02/22}{原创性声明变体默认值固定为样式 \opt{a}。}
+% 外置版权页文件与声明变体选项。
+%    \begin{macrocode}
+\keys_define:nn { sjtu / private / copyright }
+  {
+    file .tl_set:N = \l_@@_copyright_page_file_tl ,
+    file .value_required:n = true ,
+    filename .meta:n = { file = #1 } ,
+    variant .choice: ,
+    variant .choices:nn =
+      { a, b }
+      {
+        \EditInstance { sjtu / element } { copyright / orig / text }
+          { content = \tl_use:c { c_@@_orig_decl_text_ #1 _zh_tl } }
+      } ,
+    variant  .initial:n = a
+  }
+%    \end{macrocode}
+%
+% \changes{v2.0}{2022/12/20}{不再自动载入 \pkg{pdfpages} 宏包。}
+% 未载入 \pkg{pdfpages} 宏包时的提示信息。
+%    \begin{macrocode}
+\msg_new:nnn { sjtutex } { require-pdfpages }
+  {
+    Add~'\token_to_str:N \usepackage{pdfpages}'~in~your~preamble \\
+    before~inserting~pages~of~external~PDF.
+  }
+%    \end{macrocode}
+%
+% \begin{macro}{\copyrightpage}
+% 生成声明及授权书。
+%    \begin{macrocode}
+\RenewDocumentCommand \copyrightpage { O{ } }
+  {
+    \bool_if:NF \g_@@_review_bool
+      {
+        \group_begin:
+          \keys_set_known:nnN { sjtu / private / copyright }
+            {#1} \l_@@_tmp_tl
+          \tl_if_empty:NTF \l_@@_copyright_page_file_tl
+            { \UseInstance { sjtu / page } { copyright } { zh } }
+            {
+              \cs_if_exist:NTF \includepdf
+                {
+                  \legacy_if:nTF { @openright }
+                    { \cleardoublepage } { \clearpage }
+                  \exp_args:Nnv \@@_pdf_bookmark:nn
+                    { 0 } { c_@@_name_declaration_ \g_@@_lang_tl _tl }
+                  \tl_set_rescan:NnV \l_@@_tmp_tl { } \l_@@_tmp_tl
+                  \exp_args:NNo \includepdf [ \l_@@_tmp_tl ]
+                    { \l_@@_copyright_page_file_tl }
+                }
+                {
+                  \msg_warning:nn { sjtutex } { require-pdfpages }
+                  \UseInstance { sjtu / page } { copyright } { zh }
+                }
+            }
+        \group_end:
+      }
+  }
+%</thesis>
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsubsection{摘要}
+%
+% 学位论文模板摘要后添加关键词。
+%    \begin{macrocode}
+%<*thesis>
+\AddToHook { env / abstract / end }
+  {
+    \clist_if_empty:cF { l_@@_info_keywords_ \l_@@_lang_tl _clist }
+      {
+        \par \mode_leave_vertical: \par
+        \@@_keywords_format:n
+          {
+            \tl_use:c { c_@@_name_keywords_ \l_@@_lang_tl _tl }
+            \tl_use:c { c_@@_name_info_sep_ \l_@@_lang_tl _tl }
+          }
+        \clist_use:cv { l_@@_info_keywords_ \l_@@_lang_tl _clist }
+          { c_@@_name_item_sep_ \l_@@_lang_tl _tl }
+        \par
+      }
+  }
+%</thesis>
+%    \end{macrocode}
+%
+% 通用模板摘要后添加关键词。
+%    \begin{macrocode}
+%<*!thesis>
+\AddToHook { env / abstract / end }
+  {
+    \clist_if_empty:NF \l_@@_info_keywords_clist
+      {
+        \par \mode_leave_vertical: \par
+        \@@_keywords_format:n
+          {
+            \tl_use:c { c_@@_name_keywords_ \g_@@_lang_tl _tl }
+            \tl_use:c { c_@@_name_info_sep_ \g_@@_lang_tl _tl }
+          }
+        \clist_use:Nv \l_@@_info_keywords_clist
+          { c_@@_name_item_sep_ \g_@@_lang_tl _tl }
+        \par
+      }
+  }
+%</!thesis>
+%    \end{macrocode}
+%
+% \subsubsection{目录}
+%
+% \changes{v2.1.2}{2024/03/31}{改用 \pkg{titletoc} 设置目录格式。}
+% \changes{v2.1.3}{2024/06/28}{更新目录样式。}
+% 设置目录的格式。
+%    \begin{macrocode}
+\tl_set:Nn \SJTU@leaders { \titlerule* [ 4bp ] { . } }
+\contentsmargin [ 2.55 em ] { 0 pt }
+%<article>\titlecontents { section }
+%<!article>\titlecontents { chapter }
+  [ 0 pt ] { \addvspace { 6 bp } \bfseries }
+  { \contentspush { \thecontentslabel \enskip } } { }
+  { \SJTU@leaders \thecontentspage }
+%<article>\titlecontents { subsection }
+%<!article>\titlecontents { section }
+  [ 2 em ] { }
+  { \contentspush { \thecontentslabel \enskip } } { }
+  { \SJTU@leaders \thecontentspage }
+%<article>\titlecontents { subsubsection }
+%<!article>\titlecontents { subsection }
+  [ 4 em ] { }
+  { \contentspush { \thecontentslabel \enskip } } { }
+  { \SJTU@leaders \thecontentspage }
+%    \end{macrocode}
+%
+% \begin{macro}[int]{\SJTU@titlecontents}
+% 设置索引格式的辅助函数，参数 |#3| 为编号前缀，
+% 参数 |#4| 为编号统一宽度，不设置时取编号实际宽度。
+%    \begin{macrocode}
+\NewDocumentCommand \SJTU@titlecontents { m O{\csname ext@#1\endcsname} m o }
+  {
+    \IfNoValueTF {#4}
+      {
+        \titlecontents {#1}
+          [ 0 pt ] { }
+          { \contentspush { #3 \thecontentslabel \enskip } } { }
+          { \SJTU@leaders \thecontentspage }
+      }
+      {
+        \titlecontents {#1}
+          [#4] { }
+          { \contentslabel [ #3 \thecontentslabel ] {#4} }
+          { \hspace* { - #4 } }
+          { \SJTU@leaders \thecontentspage }
+      }
+    \contentsuse {#1} {#2}
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% 设置图、表索引的格式。
+%    \begin{macrocode}
+\SJTU@titlecontents { figure } { \figurename \space }
+\SJTU@titlecontents { table  } { \tablename  \space }
+%    \end{macrocode}
+%
+% \subsubsection{大摘要}
+%
+% 重定义 \env{digest} 环境，在文档结尾生成大摘要。
+%    \begin{macrocode}
+%<*thesis>
+\NewHook { sjtutex / digest }
+\RenewDocumentEnvironment { digest } { O{ } +b }
+  {
+    \AtEndDocument
+      {
+        \group_begin:
+          \@@_select_language:n { en, #1 }
+          \legacy_if:nTF { @openright }
+            { \cleardoublepage } { \clearpage }
+          \pagenumbering { roman }
+          \tl_gset:Nn \@@_the_page_tl { \arabic { page } }
+          \UseHook { sjtutex / digest }
+          \cs_gset_eq:NN \addcontentsline \use_none:nnn
+          \clist_map_inline:Nn \l_@@_counter_without_chapter_clist
+            {
+              \counterwithout {##1} { chapter }
+              \setcounter     {##1} { 0 }
+            }
+          \tl_set_eq:Nc \l_@@_heading_title_tl
+            { l_@@_info_display_title_ \l_@@_lang_tl _tl }
+          \@@_make_heading:n { marking = \SJTU@digestname, #1, notintoc }
+          #2
+        \group_end:
+      }
+  } { }
+%</thesis>
+%    \end{macrocode}
+%
+% \subsubsection{其他宏包的设置}
+%
+% 预设涉及宏包的相应设置。
+%
+% 设置 PDF 元信息中的主题与关键词。
+%    \begin{macrocode}
+\ctex_at_end_package:nn { hyperref }
+  {
+    \ctex_after_end_preamble:n
+      {
+        \hypersetup
+          {
+%<!thesis>            pdfsubject  = \l_@@_info_subject_tl ,
+%<!thesis>            pdfkeywords = \l_@@_info_keywords_clist
+%<thesis>            pdfsubject  = \l_@@_info_subject_zh_tl ,
+%<thesis>            pdfkeywords = \l_@@_info_keywords_zh_clist
+          }
+      }
+  }
+%    \end{macrocode}
+%
+% 记录大摘要部分的末页码。
+%    \begin{macrocode}
+%<*thesis>
+\ctex_at_end_package:nn { pageslts }
+  {
+    \AddToHook { sjtutex / digest }
+      {
+        \tl_gset:Nn \@@_the_last_page_tl
+          { \lastpageref { pagesLTS.roman.local } }
+      }
+  }
+%</thesis>
+%    \end{macrocode}
+%
+% 设置定理类环境的索引格式。
+%    \begin{macrocode}
+\ctex_at_end_package:nn { thmtools }
+  {
+    \cs_set:Npn \thmtlo@newentry
+      {
+        \exp_args:NV \SJTU@titlecontents \thmt@envname [ loe ]
+          { } [ \thmt@listnumwidth ]
+      }
+  }
+%    \end{macrocode}
+%
+% 设置 \pkg{algorithm} 宏包的索引格式。
+%    \begin{macrocode}
+\ctex_at_end_package:nn { algorithm }
+  { \SJTU@titlecontents { algorithm } { \fname@algorithm \space } }
+%    \end{macrocode}
+%
+% 设置 \pkg{algorithm2e} 宏包的索引格式。
+%    \begin{macrocode}
+\ctex_at_end_package:nn { algorithm2e }
+  { \SJTU@titlecontents { algocf } { \algorithmcfname \space } }
+%    \end{macrocode}
+% \end{implementation}
+%
+% \endinput
