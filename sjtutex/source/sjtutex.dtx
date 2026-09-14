@@ -2212,7 +2212,7 @@
 \clist_new:N \l_@@_babel_langs_clist
 %<thesis>\clist_set_eq:NN \l_@@_tmp_clist \g_@@_lang_clist
 %<!thesis>\clist_put_right:Ne \l_@@_tmp_clist { \g_@@_lang_tl }
-\clist_if_in:NnTF \l_@@_tmp_clist { de }
+\clist_if_in:NnT \l_@@_tmp_clist { de }
   {
     \clist_map_inline:Nn \l_@@_tmp_clist
       {
@@ -2226,7 +2226,6 @@
           [ provide = * , \l_@@_babel_langs_clist ] { babel }
       }
   }
-  { }
 %    \end{macrocode}
 %
 % \begin{macro}[int]{\@@_select_babel_language:n}
