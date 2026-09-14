@@ -3443,6 +3443,17 @@
   { \DeclareInstance { sjtu / page } {#1} { title } {#2} }
 %    \end{macrocode}
 %
+% \begin{macro}[int]{\@@_element_instance_table:nn}
+% 以键值表批量声明元素实例；键为元素名，值为该元素的实例键值。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_element_instance_table:nn #1#2
+  {
+    \keyval_parse:nnn { \use_none:n }
+      { \@@_declare_element_instance:nnn {#1} } {#2}
+  }
+%    \end{macrocode}
+% \end{macro}
+%
 % \subsubsection{标题页}
 %
 % \changes{v2.0}{2022/12/13}{启用新版封面。}
