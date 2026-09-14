@@ -313,6 +313,8 @@
 %
 % \subsubsection{标题页}
 %
+% \changes{unreleased}{2026/09/14}{标题页与版权页元素实例改用键值表声明。}
+%
 % 构建标题页。
 %
 % 标题页信息栏表格列参数。
@@ -358,9 +360,9 @@
 %
 % 样式 A 标题页元素实例。
 %    \begin{macrocode}
-\clist_map_inline:nn
+\@@_element_instance_table:nn { title a }
   {
-    { logo    }
+    logo =
       {
         content     =
           {
@@ -368,32 +370,31 @@
               { sjtu-vi-badge-reg-red.pdf }
           }
       } ,
-    { subject }
+    subject =
       {
         format      = \zihao { -2 } \setbaselineskip { 30 bp } ,
         content     = \tl_use:c { l_@@_info_subject_ \l_@@_lang_tl _tl } ,
         bottom-skip = \c_zero_dim plus 1 fill
       } ,
-    { title   }
+    title =
       {
         format      = \zihao { 2 } \setbaselineskip { 36 bp } \bfseries ,
         content     = \tl_use:c { l_@@_info_display_title_ \l_@@_lang_tl _tl } ,
         bottom-skip = 30 bp plus 1 fill
       } ,
-    { info    }
+    info =
       {
         format      = \zihao { 4 } \setbaselineskip { 30 bp } \heiti ,
         content     = \@@_title_page_info_table:n
                         { \SJTU@CT@W { s } \SJTU@CT@L } ,
         bottom-skip = 30 bp
       } ,
-    { date    }
+    date =
       {
         format      = \zihao { 4 } \setbaselineskip { 30 bp } \bfseries ,
         content     = \tl_use:c { l_@@_info_date_ \l_@@_lang_tl _tl } ,
       }
   }
-  { \@@_declare_element_instance:nnn { title a } #1 }
 %    \end{macrocode}
 %
 % 样式 A 标题页实例。
@@ -409,28 +410,28 @@
 %
 % 样式 B 标题页元素实例。
 %    \begin{macrocode}
-\clist_map_inline:nn
+\@@_element_instance_table:nn { title b }
   {
-    { subject }
+    subject =
       {
         format      = \zihao { 4 } \setbaselineskip { 24 bp } \bfseries ,
         content     = \tl_use:c { l_@@_info_subject_ \l_@@_lang_tl _tl } ,
         bottom-skip = \c_zero_dim plus 1 fill
       } ,
-    { title   }
+    title =
       {
         format      = \zihao { -2 } \setbaselineskip { 30 bp } \bfseries ,
         content     = \tl_use:c { l_@@_info_display_title_ \l_@@_lang_tl _tl } ,
         bottom-skip = 30 bp plus 1 fill
       } ,
-    { info    }
+    info =
       {
         format      = \zihao { 3 } \setbaselineskip { 30 bp } \bfseries ,
         content     = \@@_title_page_info_table:n
                         { \SJTU@CT@R \SJTU@CT@L } ,
         bottom-skip = 30 bp plus 1 fill
       } ,
-    { date    }
+    date =
       {
         format      = \zihao { 3 } \setbaselineskip { 30 bp } ,
         content     =
@@ -445,7 +446,6 @@
           }
       }
   }
-  { \@@_declare_element_instance:nnn { title b } #1 }
 %    \end{macrocode}
 %
 % 样式 B 标题页实例。
@@ -553,9 +553,9 @@
 %
 % 声明及授权书元素实例。
 %    \begin{macrocode}
-\clist_map_inline:nn
+\@@_element_instance_table:nn { copyright }
   {
-    { orig / title }
+    orig / title =
       {
         format      = \zihao { 3 } \setbaselineskip { 30 bp }
                       \bfseries \heiti ,
@@ -567,14 +567,14 @@
             \c_@@_name_orig_decl_zh_tl
           } ,
         bottom-skip = 12 bp
-      },
-    { orig / text  }
+      } ,
+    orig / text  =
       {
         format      = \zihao { -4 } \setbaselineskip { 24 bp } ,
         bottom-skip = 24 bp ,
         align       = normal
-      },
-    { orig / sign  }
+      } ,
+    orig / sign  =
       {
         format      = \zihao { 4 } \setbaselineskip { 30 bp } ,
         content     =
@@ -584,8 +584,8 @@
           } ,
         bottom-skip = 24 bp plus 1 fill ,
         align       = right
-      },
-    { auth / title }
+      } ,
+    auth / title =
       {
         format      = \zihao { 3 } \setbaselineskip { 30 bp }
                       \bfseries \heiti ,
@@ -597,15 +597,15 @@
             \c_@@_name_auth_decl_zh_tl
           } ,
         bottom-skip = 12 bp
-      },
-    { auth / text  }
+      } ,
+    auth / text  =
       {
         format      = \zihao { -4 } \setbaselineskip { 24 bp } ,
         content     = \c_@@_auth_decl_text_zh_tl ,
         bottom-skip = 24 bp ,
         align       = normal
-      },
-    { auth / sign  }
+      } ,
+    auth / sign  =
       {
         format      = \zihao { 4 } \setbaselineskip { 30 bp } ,
         content     =
@@ -617,9 +617,6 @@
         bottom-skip = \c_zero_dim plus 1 fill ,
         align       = normal
       }
-  }
-  {
-    \@@_declare_element_instance:nnn { copyright } #1
   }
 %    \end{macrocode}
 %
