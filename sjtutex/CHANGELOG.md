@@ -23,7 +23,8 @@
   （[#83](https://github.com/sjtug/SJTUTeX/pull/83)）。
 - `\SetInfoEntry` 的敏感字段标记从键名后缀 `*` 移至显示名称开头（如 `author = * 姓名`），
   并以显示名称开头的 `!` 解除敏感状态（如 `author = ! 姓名`）；
-  重定义已存在的字段仅更新显示名称或敏感状态，不再误报忽略警告。
+  重定义已存在的字段仅更新显示名称或敏感状态，不再误报忽略警告
+  （[#82](https://github.com/sjtug/SJTUTeX/pull/82)）。
 
 ### Fixed
 
