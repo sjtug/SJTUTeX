@@ -7,8 +7,20 @@
 
 ## [Unreleased]
 
+### Added
+
+- 新增 `babel` 选项（默认 `auto`，可选 `false`）：主语言为德语时载入 `babel`，
+  其他语言仅预注册模板语言；`false` 时不载入也不预注册
+  （[#83](https://github.com/sjtug/SJTUTeX/pull/83)）。
+- 手动使用 `babel` 时可通过文档类全局选项追加语言，如 `lang=de,french`
+  （[#83](https://github.com/sjtug/SJTUTeX/pull/83)）。
+
 ### Changed
 
+- `babel=false` 时不再在文档开始处切换 `babel` 语言状态；德语断词警告仅在
+  `babel` 未载入时发出（[#83](https://github.com/sjtug/SJTUTeX/pull/83)）。
+- `babel=auto` 预注册时固定主语言，追加语言不再改变 `main`
+  （[#83](https://github.com/sjtug/SJTUTeX/pull/83)）。
 - `\SetInfoEntry` 的敏感字段标记从键名后缀 `*` 移至显示名称开头（如 `author = * 姓名`），
   并以显示名称开头的 `!` 解除敏感状态（如 `author = ! 姓名`）；
   重定义已存在的字段仅更新显示名称或敏感状态，不再误报忽略警告。
