@@ -8,7 +8,6 @@ installfiles       = {"*.cls","*.def","*.pdf"}
 
 typesetexe         = "xelatex"
 typesetfiles       = {"sjtutex.dtx"}
-typesetsuppfiles   = {"ctxdoc.cls"}
 
 bibtexexe          = "bibtex"
 biberexe           = "biber"
