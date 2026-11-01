@@ -526,6 +526,18 @@
 %   下文中 \meta{lang} 可以指定为这些选项中的其中之一。
 % \end{function}
 %
+% \begin{function}[added=2026-09-16]{babel}
+%   \begin{syntax}
+%     \OPT{babel} = <false|(auto)>
+%   \end{syntax}
+%   是否由文档类载入 \pkg{babel} 宏包管理语言状态。
+%   仅写 \opt{babel} 时等同 \opt{babel=auto}。
+%   \opt{auto}（默认）在德语文档中载入，其他语言的文档不载入，
+%   但会预注册模板语言，手动载入 \pkg{babel} 时自动带上；
+%   \opt{false} 时不作任何干预。\opt{false} 的德语文档与未包含主语言的
+%   手动载入均会收到警告。用法参见 ctex 手册「与 babel 联用」一节。
+% \end{function}
+%
 % \begin{function}{draft, final}
 %   是否开启草稿模式。
 %   \opt{draft} 开启草稿模式，所有的图片将不会被加载，超过边界的区域将会被涂上黑色色块。
@@ -1526,9 +1538,8 @@
 %       \item \pkg{graphicx}，提供图形插入的接口。
 %       \item \pkg{enumitem}，设置列表环境格式。
 %     \end{itemize}
-%   \item 当文档语言为德语（\opt{lang=de}）时，会调用 \pkg{babel} 宏包，
-%     以提供德语断词规则并接管 \tn{languagename} 的切换；
-%     其他语言的文档不会载入 \pkg{babel}，语言状态由文档类自行维护。
+%   \item 默认设置下德语文档会调用 \pkg{babel} 宏包，以提供断词规则并接管
+%     \tn{languagename} 的切换；其他语言的文档仅预注册模板语言。
 %   \item 部分西文与数学字体预设会调用相关的字体宏包，具体调用情况请参见对应的
 %     字体预设文件。
 %   \item 部分数字字体预设会调用 \pkg{unicode-math} 处理 Unicode 编码的
@@ -1812,6 +1823,13 @@
 %    \end{macrocode}
 % \end{variable}
 %
+% \begin{variable}{\g_@@_babel_bool}
+% 是否启用 \pkg{babel} 集成（即 \opt{babel=auto}）。
+%    \begin{macrocode}
+\bool_new:N \g_@@_babel_bool
+%    \end{macrocode}
+% \end{variable}
+%
 % \begin{variable}{\g_@@_baseline_skip_dim,\@@_if_fixed_baselineskip:T}
 % 固定行距。
 %    \begin{macrocode}
@@ -1965,6 +1983,18 @@
 %</thesis>
       } ,
     lang .initial:n = { zh } ,
+%    \end{macrocode}
+% \end{macro}
+%
+% \changes{unreleased}{2026/09/16}{新增 \opt{babel} 选项。}
+% \begin{macro}{babel}
+% \opt{auto} 仅德语文档载入，其余仅预注册模板语言；\opt{false} 不干预。
+%    \begin{macrocode}
+    babel .choice: ,
+    babel / false .code:n = { \bool_gset_false:N \g_@@_babel_bool } ,
+    babel / auto  .code:n = { \bool_gset_true:N  \g_@@_babel_bool } ,
+    babel .default:n = { auto } ,
+    babel .initial:n = { auto } ,
 %    \end{macrocode}
 % \end{macro}
 %
@@ -2189,15 +2219,28 @@
 %
 % \changes{unreleased}{2026/07/31}{仅当文档语言包含德语时自动载入 \pkg{babel}，
 % 以提供德语断词规则；并检测用户手动载入的 \pkg{babel} 以保持兼容。}
+% \opt{babel=false} 时德语失去断词支持，给出警告；
+% \pkg{babel} 未包含主语言时语言状态由用户自行控制，同样给出警告。
+%    \begin{macrocode}
+\msg_new:nnn { sjtutex } { babel-false-with-german }
+  {
+    Option~'babel=false'~disables~babel,~but~the~main~language~is~German. \\
+    German~hyphenation~will~be~unavailable.
+  }
+\msg_new:nnn { sjtutex } { babel-without-main-language }
+  {
+    babel~is~loaded~without~the~document~main~language~'#1'. \\
+    Its~language~state~is~left~to~babel;~see~the~ctex~manual~
+    on~using~babel~with~CTeX.
+  }
+%    \end{macrocode}
+%
 % 德语断行断词依赖 \pkg{babel} 的 |german| 规则（现代 babel 中
 % |german| 即指 1996 年后德语正字法）。其他语言由
 % \pkg{ctex}、\XeLaTeX{} 或 \LuaLaTeX{} 自行处理，无需 \pkg{babel}。
-% 因此仅当文档语言包含 |de|（即设置了 |lang=de|）时由文档类自动载入
-% \pkg{babel}，并作为语言状态管理器，让 \pkg{babel} 负责切换
-% \tn{languagename} 与断词规则。载入时将主语言放在选项最后，
-% 确保 \pkg{babel} 以主语言初始化。
-% 若用户在其他语言文档中自行载入 \pkg{babel}，也会被检测到，
-% 文档类同样将语言状态交给 \pkg{babel} 管理。
+% \opt{auto} 时仅德语文档载入 \pkg{babel}，模板语言全部注册且主语言
+% 在最后，确保 \pkg{babel} 以主语言初始化；非德语文档不载入，仅预注册，
+% 用户载入 \pkg{babel} 时自动带上。\opt{false} 时完全由用户控制。
 %    \begin{macrocode}
 \prop_const_from_keyval:Nn \c_@@_babel_lang_prop
   {
@@ -2210,9 +2253,12 @@
   { \prop_item:Nn \c_@@_babel_lang_prop {#1} }
 \cs_generate_variant:Nn \@@_babel_name:n { V }
 \clist_new:N \l_@@_babel_langs_clist
+% 额外语言（如 \opt{french}）由 \pkg{babel} 自行从类全局选项收集，
+% 排在宏包选项之前，主语言（列表最后一项）不受影响。
+%    \begin{macrocode}
 %<thesis>\clist_set_eq:NN \l_@@_tmp_clist \g_@@_lang_clist
 %<!thesis>\clist_put_right:Ne \l_@@_tmp_clist { \g_@@_lang_tl }
-\clist_if_in:NnT \l_@@_tmp_clist { de }
+\bool_if:NTF \g_@@_babel_bool
   {
     \clist_map_inline:Nn \l_@@_tmp_clist
       {
@@ -2220,23 +2266,31 @@
           { \clist_put_right:Ne \l_@@_babel_langs_clist { \@@_babel_name:n {#1} } }
       }
     \clist_put_right:Ne \l_@@_babel_langs_clist { \@@_babel_name:V \g_@@_lang_tl }
-    \use:e
+    \@@_if_main_lang_de:TF
       {
-        \exp_not:N \RequirePackage
-          [ provide = * , \l_@@_babel_langs_clist ] { babel }
+        \use:e
+          {
+            \exp_not:N \RequirePackage
+              [ provide = * , \l_@@_babel_langs_clist ] { babel }
+          }
       }
+      {
+        \exp_args:NV \PassOptionsToPackage \l_@@_babel_langs_clist { babel }
+      }
+  }
+  {
+    \@@_if_main_lang_de:T
+      { \msg_warning:nn { sjtutex } { babel-false-with-german } }
   }
 %    \end{macrocode}
 %
 % \begin{macro}[int]{\@@_select_babel_language:n}
-% 切换到 \pkg{babel} 语言。语言已在 \pkg{babel} 中注册（对应
-% \tn{l@\ldots} 存在）时调用 \cs{selectlanguage}；否则保持 \pkg{babel}
-% 当前语言不变，避免因语言未注册而报错。模板自身的语言状态
-% （\tn{languagename}、钩子等）仍由 \cs{@@_select_language:n} 管理。
+% 切换到 \pkg{babel} 语言。语言已建立（\tn{date\ldots} 存在）时调用
+% \cs{selectlanguage}，否则保持 \pkg{babel} 当前语言不变。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_select_babel_language:n #1
   {
-    \cs_if_exist:cT { l@ \@@_babel_name:n {#1} }
+    \cs_if_exist:cT { date \@@_babel_name:n {#1} }
       { \exp_args:Ne \selectlanguage { \@@_babel_name:n {#1} } }
   }
 %    \end{macrocode}
@@ -2244,14 +2298,21 @@
 %
 % \changes{unreleased}{2026/07/31}{载入 \pkg{babel} 时在文档开始处切换到主语言，
 % 使 \pkg{babel} 的语言状态与文档类主语言对齐。}
-% 载入 \pkg{babel} 时，在文档开始处切换到主语言，确保 \pkg{babel}
-% 的语言状态与文档类主语言一致。语言配置文件按文档语言数量载入多次，
-% 在此统一注册，以免重复注册回调。
+% 在文档开始处切换到主语言，使 \pkg{babel} 的语言状态与文档类一致。
+% 语言配置文件载入多次，在此统一注册，以免重复注册回调；
+% 用户载入的 \pkg{babel} 未包含主语言时给出警告。
 %    \begin{macrocode}
 \AddToHook { begindocument / end }
   {
     \IfPackageLoadedT { babel }
-      { \exp_args:NV \@@_select_language:n \g_@@_lang_tl }
+      {
+        \cs_if_exist:cF { date \@@_babel_name:V \g_@@_lang_tl }
+          {
+            \msg_warning:nnx { sjtutex } { babel-without-main-language }
+              { \@@_babel_name:V \g_@@_lang_tl }
+          }
+        \exp_args:NV \@@_select_language:n \g_@@_lang_tl
+      }
   }
 %    \end{macrocode}
 %

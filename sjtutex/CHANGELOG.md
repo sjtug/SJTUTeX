@@ -9,8 +9,8 @@
 
 ### Added
 
-- 当文档语言为德语（`lang=de`）时自动载入 `babel` 宏包（`german`），由 `babel` 接管 `\languagename` 与德语断词规则；其他语言不载入 `babel`。
-- 用户在其他语言文档中手动载入 `babel` 时，文档类同样会检测并兼容，将语言状态交给 `babel` 管理（文档开头会切换到主语言，使 `babel` 语言状态与主语言对齐；未在 `babel` 中注册的语言保持 `babel` 当前语言不变，不报错）。
+- 新增 `babel` 选项（默认 `auto`，可选 `false`）：德语文档由文档类载入 `babel` 并接管 `\languagename` 与断词规则；其他语言不载入，但预注册模板语言，手动载入 `babel` 时自动带上。`false` 时完全由用户控制。
+- 手动使用 `babel` 时可通过文档类全局选项添加额外语言（如 `\documentclass[lang=de,french]{sjtuthesis}`）；`babel=false` 的德语文档与未包含主语言的手动载入会收到警告。
 
 ### Changed
 

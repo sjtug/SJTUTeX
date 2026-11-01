@@ -123,8 +123,6 @@
 %<de>    lang / de .code:n =
 %<ja>    lang / ja .code:n =
       {
-        \IfPackageLoadedT { babel }
-          { \exp_args:NV \@@_select_babel_language:n \l_keys_value_tl }
         \tl_set_eq:NN \l_@@_lang_tl \l_keys_value_tl
 %<zh>        \@@_set_cjk_default_zh:
 %<ja>        \@@_set_cjk_default_ja:
@@ -152,7 +150,8 @@
 %<de>\AddToHook { sjtutex / lang / de }
 %<ja>\AddToHook { sjtutex / lang / ja }
   {
-    \IfPackageLoadedF { babel }
+    \IfPackageLoadedTF { babel }
+      { \exp_args:NV \@@_select_babel_language:n \l_@@_lang_tl }
       {
 %<zh>        \tl_set:Nn \languagename { chinese }
 %<en>        \tl_set:Nn \languagename { english }
