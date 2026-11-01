@@ -9,14 +9,15 @@
 
 ### Added
 
-- 新增 `babel` 选项（默认 `auto`，可选 `false`）：主语言为德语的文档由文档类载入 `babel` 并接管 `\languagename` 与断词规则；其他语言不载入，但预注册模板语言并固定主语言，手动载入 `babel` 时自动带上。`false` 时完全由用户控制。
-- 手动使用 `babel` 时可通过文档类全局选项添加额外语言（如 `\documentclass[lang=de,french]{sjtuthesis}`）；`babel=false` 且未载入 `babel` 的主语言为德语的文档，以及 `babel=auto` 下未包含主语言的手动载入，会收到警告。
+- 新增 `babel` 选项（默认 `auto`，可选 `false`）：主语言为德语时载入 `babel`，
+  其他语言仅预注册模板语言；`false` 时不载入也不预注册。
+- 手动使用 `babel` 时可通过文档类全局选项追加语言（如 `lang=de,french`）。
 
 ### Changed
 
-- `babel=false` 时文档类不再在文档开始处切换 `babel` 语言状态；德语断词警告改到文档开始处，且仅在 `babel` 未载入时发出。
-- `babel=auto` 预注册 `babel` 时显式固定主语言（`main=<主语言>`），
-  用户通过 `babel` 宏包选项追加语言不会再改变主语言；主语言仍由文档类 `lang` 选项决定。
+- `babel=false` 时不再在文档开始处切换 `babel` 语言状态；德语断词警告仅在
+  `babel` 未载入时发出。
+- `babel=auto` 预注册时固定主语言，追加语言不再改变 `main`。
 - `\SetInfoEntry` 的敏感字段标记从键名后缀 `*` 移至显示名称开头（如 `author = * 姓名`），
   并以显示名称开头的 `!` 解除敏感状态（如 `author = ! 姓名`）；
   重定义已存在的字段仅更新显示名称或敏感状态，不再误报忽略警告。

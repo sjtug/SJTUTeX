@@ -532,13 +532,10 @@
 %   \end{syntax}
 %   是否由文档类载入 \pkg{babel} 宏包管理语言状态。
 %   仅写 \opt{babel} 时等同 \opt{babel=auto}。
-%   \opt{auto}（默认）在主语言为德语的文档中载入，其他语言的文档不载入，
-%   但会预注册模板语言并固定主语言，手动载入 \pkg{babel} 时自动带上；
-%   \opt{false} 时文档类不载入也不预注册。主语言为德语且未载入 \pkg{babel}
-%   的文档会收到断词不可用的警告；\opt{auto} 下载入的 \pkg{babel}
-%   未包含主语言时同样会收到警告。主语言由 \opt{lang} 决定，\opt{auto} 下会固定
-%   传给 \pkg{babel}；如需自行决定主语言请用 \opt{babel=false}。
-%   用法参见 ctex 手册「与 babel 联用」一节。
+%   \opt{auto}（默认）仅当主语言为德语时载入，其他语言只预注册模板语言并
+%   固定主语言；\opt{false} 时不载入也不预注册。
+%   主语言由 \opt{lang} 决定，\opt{auto} 下不能通过 \pkg{babel} 选项更改；
+%   如需自行控制请用 \opt{babel=false}。用法参见 ctex 手册「与 babel 联用」。
 % \end{function}
 %
 % \begin{function}{draft, final}
@@ -1541,8 +1538,8 @@
 %       \item \pkg{graphicx}，提供图形插入的接口。
 %       \item \pkg{enumitem}，设置列表环境格式。
 %     \end{itemize}
-%   \item 默认设置下主语言为德语的文档会调用 \pkg{babel} 宏包，以提供断词规则并接管
-%     \tn{languagename} 的切换；其他语言的文档仅预注册模板语言。
+%   \item 主语言为德语的文档会调用 \pkg{babel} 宏包，提供断词并接管
+%     \tn{languagename} 的切换；其他语言仅预注册模板语言。
 %   \item 部分西文与数学字体预设会调用相关的字体宏包，具体调用情况请参见对应的
 %     字体预设文件。
 %   \item 部分数字字体预设会调用 \pkg{unicode-math} 处理 Unicode 编码的
@@ -1818,7 +1815,7 @@
 % \end{variable}
 %
 % \begin{variable}{\g_@@_lang_tl,\g_@@_lang_clist,\c_@@_lang_clist}
-% 论文主要语言与语言列表（后者仅学位论文类使用）。
+% 论文主要语言与语言列表。
 %    \begin{macrocode}
 \tl_new:N \g_@@_lang_tl
 %<thesis>\clist_new:N \g_@@_lang_clist
@@ -2223,10 +2220,9 @@
 %
 % \changes{unreleased}{2026/07/31}{仅当主语言为德语时自动载入 \pkg{babel}，
 % 以提供德语断词规则；并检测用户手动载入的 \pkg{babel} 以保持兼容。}
-% \changes{unreleased}{2026/11/01}{\opt{babel} 选项设为 \opt{false} 时不再在文档开始处
-% 改写 \pkg{babel} 语言状态，德语断词警告改在此时按实际载入情况给出。}
-% \changes{unreleased}{2026/11/01}{\opt{auto} 预注册时显式设置
-% \pkg{babel} 的 \opt{main} 选项，避免用户追加语言改变主语言。}
+% \changes{unreleased}{2026/11/01}{\opt{babel} 选项设为 \opt{false} 时不再在文档
+% 开始处切换语言；德语断词警告改在此时发出。}
+% \changes{unreleased}{2026/11/01}{\opt{auto} 预注册时固定主语言。}
 % \opt{babel=false} 时德语失去断词支持，给出警告；
 % \pkg{babel} 未包含主语言时语言状态由用户自行控制，同样给出警告。
 %    \begin{macrocode}
@@ -2238,20 +2234,16 @@
   }
 \msg_new:nnn { sjtutex } { babel-without-main-language }
   {
-    babel~is~loaded~without~the~document~main~language~'#1'. \\
-    Its~language~state~is~left~to~babel;~see~the~ctex~manual~
-    on~using~babel~with~CTeX.
+    'babel'~is~loaded~without~the~document~main~language~'#1'. \\
+    Its~language~state~is~left~to~'babel';~see~the~'ctex'~manual~
+    on~'Using~babel~with~CTeX'.
   }
 %    \end{macrocode}
 %
-% 德语断行断词依赖 \pkg{babel} 的 |german| 规则（现代 babel 中
-% |german| 即指 1996 年后德语正字法）。其他语言由
-% \pkg{ctex}、\XeLaTeX{} 或 \LuaLaTeX{} 自行处理，无需 \pkg{babel}。
-% \opt{auto} 时仅主语言为德语的文档载入 \pkg{babel}，模板语言全部注册且主语言
-% 在最后；其他语言的文档不载入，仅预注册，并用 |main=| 固定主语言，
-% 用户载入 \pkg{babel} 时自动带上。\opt{false} 时完全由用户控制。
-% 按学校规定，中英文摘要为必选，德语/日语摘要只与对应主语言同时出现，
-% 因此德语不会作为非德语主语言文档的次要语言，按主语言判断即可。
+% 德语断词依赖 |german| 规则；其他语言由 \pkg{ctex} 等处理。
+% \opt{auto} 仅主语言为德语时载入，模板语言全部注册并以 |main=| 固定
+% 主语言；其他语言只预注册，用户载入 \pkg{babel} 时自动带入。
+% \opt{false} 不干预。
 %    \begin{macrocode}
 \prop_const_from_keyval:Nn \c_@@_babel_lang_prop
   {
@@ -2308,11 +2300,10 @@
 % \changes{unreleased}{2026/07/31}{载入 \pkg{babel} 时在文档开始处切换到主语言，
 % 使 \pkg{babel} 的语言状态与文档类主语言对齐。}
 % \changes{unreleased}{2026/11/01}{\opt{babel} 选项设为 \opt{false} 时不再切换；
-% 德语断词警告改在文档开始处按实际载入情况给出。}
-% \opt{auto} 时在文档开始处切换到主语言，使 \pkg{babel} 的语言状态与
-% 文档类一致。语言配置文件载入多次，在此统一注册，以免重复注册回调；
-% 载入的 \pkg{babel} 未包含主语言时给出警告。\opt{false} 时完全由用户
-% 控制，只在 \pkg{babel} 未载入且主语言为德语时提示断词不可用。
+% 德语断词警告改在此时发出。}
+% \opt{auto} 时在文档开始处对齐 \pkg{babel} 的主语言；语言文件可能载入
+% 多次，故在此统一注册。\opt{false} 时不干预，仅在 \pkg{babel} 未载入
+% 且主语言为德语时警告。
 %    \begin{macrocode}
 \AddToHook { begindocument / end }
   {
