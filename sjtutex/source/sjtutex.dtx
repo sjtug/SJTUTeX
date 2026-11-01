@@ -1818,10 +1818,10 @@
 % \end{variable}
 %
 % \begin{variable}{\g_@@_lang_tl,\g_@@_lang_clist,\c_@@_lang_clist}
-% 论文主要语言与语言列表。
+% 论文主要语言与语言列表（后者仅学位论文类使用）。
 %    \begin{macrocode}
 \tl_new:N \g_@@_lang_tl
-\clist_new:N \g_@@_lang_clist
+%<thesis>\clist_new:N \g_@@_lang_clist
 %<thesis>\clist_set:Nn \g_@@_lang_clist { zh, en }
 \clist_const:Nn \c_@@_lang_clist { zh, en, de, ja }
 %    \end{macrocode}
@@ -2269,11 +2269,13 @@
 %    \begin{macrocode}
 \bool_if:NT \g_@@_babel_bool
   {
+%<*thesis>
     \clist_map_inline:Nn \g_@@_lang_clist
       {
         \tl_if_eq:VnF \g_@@_lang_tl {#1}
           { \clist_put_right:Ne \l_@@_babel_langs_clist { \@@_babel_name:n {#1} } }
       }
+%</thesis>
     \clist_put_right:Ne \l_@@_babel_langs_clist { \@@_babel_name:V \g_@@_lang_tl }
     \@@_if_main_lang_de:TF
       {
