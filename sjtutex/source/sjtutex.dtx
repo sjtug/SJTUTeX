@@ -1988,7 +1988,8 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \changes{unreleased}{2026/09/16}{新增 \opt{babel} 选项。}
+% \changes{unreleased}{2026/09/16}{新增 \opt{babel} 选项，
+% 德语文档自动载入 \pkg{babel}。}
 % \begin{macro}{babel}
 % \opt{auto} 仅主语言为德语的文档载入，其余仅预注册模板语言；\opt{false} 不干预。
 %    \begin{macrocode}
@@ -2219,11 +2220,6 @@
 %<thesis>\LoadClass { ctexbook }
 %    \end{macrocode}
 %
-% \changes{unreleased}{2026/07/31}{仅当主语言为德语时自动载入 \pkg{babel}，
-% 以提供德语断词规则；并检测用户手动载入的 \pkg{babel} 以保持兼容。}
-% \changes{unreleased}{2026/11/01}{\opt{babel} 选项设为 \opt{false} 时不再在文档
-% 开始处切换语言；德语断词警告改在此时发出。}
-% \changes{unreleased}{2026/11/01}{\opt{auto} 预注册时固定主语言。}
 % \opt{babel=false} 时德语失去断词支持，给出警告；
 % \pkg{babel} 未包含主语言时语言状态由用户自行控制，同样给出警告。
 %    \begin{macrocode}
@@ -2300,10 +2296,6 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \changes{unreleased}{2026/07/31}{载入 \pkg{babel} 时在文档开始处切换到主语言，
-% 使 \pkg{babel} 的语言状态与文档类主语言对齐。}
-% \changes{unreleased}{2026/11/01}{\opt{babel} 选项设为 \opt{false} 时不再切换；
-% 德语断词警告改在此时发出。}
 % \opt{auto} 时在文档开始处对齐 \pkg{babel} 的主语言；语言文件可能载入
 % 多次，故在此统一注册。\opt{false} 时不干预，仅在 \pkg{babel} 未载入
 % 且主语言为德语时警告。
