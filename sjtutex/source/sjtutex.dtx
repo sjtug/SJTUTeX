@@ -547,10 +547,10 @@
 % \end{function}
 %
 % \begin{function}[rEXP,updated=2025-01-14]{review}
-%   盲审模式。开启盲审模式会将作者姓名、导师姓名、学号、基金等个人信息留空，
-%   并使得标题页的信息表格强制显示相关字段，
-%   相关说明详见第 \ref{sec:sjtuthesiskey} 节；
-%   开启盲审模式还会删去版权使用授权书、原创性声明和致谢页。默认关闭。
+%   盲审模式。开启后，标记为敏感的个人信息字段不会被设置；
+%   版权页、致谢和简历不会输出；成果目录只输出匿名版本，
+%   作者需用带星号的环境另行提供匿名条目。
+%   标题页信息栏的字段显示顺序见第 \ref{sec:sjtuthesiskey} 节。默认关闭。
 % \end{function}
 %
 % \subsubsection{页面设置}
@@ -833,11 +833,9 @@
 %           （比如 \opt{zh} 或 \opt{en}）的键来设定对应语言的论文信息，见第
 %           \ref{sec:sjtuthesiskey} 节；
 %           各标题页中的信息表格会根据设定信息的顺序进行显示与排列，
-%           未设置的信息将不会显示，但在盲审模式开启时会例外地强制显示相关字段，
-%           中文标题页会强制显示 \texttt{info/zh} 中的 \texttt{author, id,
-%           supervisor, assoc_supervisor, co_supervisor, department, major, degree}
-%           字段，其他语言标题页会强制显示 \texttt{info/<lang>} 中的
-%           \texttt{author, supervisor, assoc_supervisor, co_supervisor} 字段，
+%           未设置的信息将不会显示；盲审模式下会例外地强制显示信息栏，
+%           显示顺序由预设规定，默认预设依次显示作者、学号、导师、院系、
+%           专业和学位（学号仅出现在中文标题页）。
 %           这种顺序也是这些信息的推荐设置顺序。如果需要更改该字段在标题页中的
 %           键显示名称，可以使用 \tn{SetInfoEntry} 命令。
 %     \item 在 \cls{sjtureport} 和 \cls{sjtuarticle} 文档类中，不需要使用语言代
