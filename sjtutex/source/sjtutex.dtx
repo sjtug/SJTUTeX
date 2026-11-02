@@ -1539,8 +1539,9 @@
 %       \item \pkg{graphicx}，提供图形插入的接口。
 %       \item \pkg{enumitem}，设置列表环境格式。
 %     \end{itemize}
-%   \item 主语言为德语的文档会调用 \pkg{babel} 宏包，提供断词并接管
-%     \tn{languagename} 的切换；其他语言仅预注册模板语言。
+%   \item 当 \opt{babel=auto}（默认）时，主语言为德语的文档会调用 \pkg{babel}
+%     宏包，提供断词并接管 \tn{languagename} 的切换，其他语言仅预注册模板语言；
+%     \opt{babel=false} 时不载入，也不预注册。
 %   \item 部分西文与数学字体预设会调用相关的字体宏包，具体调用情况请参见对应的
 %     字体预设文件。
 %   \item 部分数字字体预设会调用 \pkg{unicode-math} 处理 Unicode 编码的
