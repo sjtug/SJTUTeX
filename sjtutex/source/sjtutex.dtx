@@ -472,7 +472,8 @@
 %
 % \subsection{编译文档}
 %
-% 文档类推荐使用 \XeLaTeX{} 或 \LuaLaTeX{} 编译，同时也支持 \pdfTeX{} 引擎。为了
+% 文档类推荐使用 \XeLaTeX{} 或 \LuaLaTeX{} 编译，同时也支持 \pdfTeX{} 引擎，
+% 但需配合 TrueType 格式的中文字体集（见第 \ref{sec:fontsetup} 节）。为了
 % 生成正确的目录、脚注以及交叉引用，至少需要连续编译两次。
 %
 % 在实际使用中，一般推荐使用自动生成工具 \pkg{latexmk} 编译文档。\pkg{latexmk}
@@ -547,10 +548,10 @@
 % \end{function}
 %
 % \begin{function}[rEXP,updated=2025-01-14]{review}
-%   盲审模式。开启盲审模式会将作者姓名、导师姓名、学号、基金等个人信息留空，
-%   并使得标题页的信息表格强制显示相关字段，
-%   相关说明详见第 \ref{sec:sjtuthesiskey} 节；
-%   开启盲审模式还会删去版权使用授权书、原创性声明和致谢页。默认关闭。
+%   盲审模式。开启后，标记为敏感的个人信息字段不会被设置；
+%   版权页、致谢和简历不会输出；成果目录只输出匿名版本，
+%   作者需用带星号的环境另行提供匿名条目。
+%   标题页信息栏的字段显示顺序见第 \ref{sec:sjtuthesiskey} 节。默认关闭。
 % \end{function}
 %
 % \subsubsection{页面设置}
@@ -626,14 +627,14 @@
 %
 % \begin{function}{cjk-font}
 %   \begin{syntax}
-%     \OPT{cjk-font} = <(auto)|windows|mac|ubuntu|adobe|(fandol)|founder|hanyi|none>
+%     \OPT{cjk-font} = <windows|mac|ubuntu|adobe|fandol|founder|hanyi|none>
 %   \end{syntax}
 %   指定 CJK 字体集。\sjtutex{} 预定义了一些 CJK 字体组合，
 %   具体配置见表 \ref{tab:cjkfonts}。
-%   默认情况下会根据操作系统自动配置：
-%   Windows 系统默认使用 \opt{windows}，
-%   macOS 系统默认使用 \opt{mac}，
-%   Linux 系统默认使用 \opt{fandol}。
+%   未指定时会根据操作系统自动配置：
+%   Windows 系统使用 \opt{windows}，
+%   macOS 系统使用 \opt{mac}，
+%   Linux 系统使用 \opt{fandol}。
 %   找不到对应定义的 CJK 字体集时的回退选项为 \opt{fandol}。
 %
 %   \textbf{仅} \opt{windows}、\opt{founder} 和 \opt{hanyi} 字体集支持 \pdfLaTeX{} 直接生成 PDF。
@@ -685,11 +686,11 @@
 %
 % \begin{function}{math-font}
 %   \begin{syntax}
-%     \OPT{math-font} = <(auto)|(newtx)|times|stixtwo|xits|newpx|cambria|newcm|lm|libertinus|none>
+%     \OPT{math-font} = <newtx|times|stixtwo|xits|newpx|cambria|newcm|lm|libertinus|none>
 %   \end{syntax}
 %   指定数学字体集。\sjtutex{} 预定义了一些数学字体组合，
 %   具体配置见表 \ref{tab:latinfonts} 数学字体列。
-%   默认跟随西文字体 \opt{text-font} 的设置。
+%   未指定时跟随西文字体 \opt{text-font} 的设置。
 %   找不到定义的数学字体集时的回退选项为 \opt{newtx}。
 %
 %   \opt{xits}，\opt{newcm}，\opt{cambria} 选项仅支持 \XeLaTeX/\LuaLaTeX{} 编译。
@@ -793,7 +794,8 @@
 %     \TNA{sjtusetup}\marg{键值列表}
 %   \end{syntax}
 %   本模板提供了一系列选项，可由您自行配置。载入文档类之后，以下
-%   所有选项均可通过统一的命令 \tn{sjtusetup} 来设置。
+%   \opt{info}、\opt{style} 和 \opt{name} 域的选项均可通过统一的命令
+%   \tn{sjtusetup} 来设置。
 % \end{function}
 %
 % \tn{sjtusetup} 的参数是一组由（英文）逗号隔开的选项列表，列表中的选项通常是
@@ -833,11 +835,9 @@
 %           （比如 \opt{zh} 或 \opt{en}）的键来设定对应语言的论文信息，见第
 %           \ref{sec:sjtuthesiskey} 节；
 %           各标题页中的信息表格会根据设定信息的顺序进行显示与排列，
-%           未设置的信息将不会显示，但在盲审模式开启时会例外地强制显示相关字段，
-%           中文标题页会强制显示 \texttt{info/zh} 中的 \texttt{author, id,
-%           supervisor, assoc_supervisor, co_supervisor, department, major, degree}
-%           字段，其他语言标题页会强制显示 \texttt{info/<lang>} 中的
-%           \texttt{author, supervisor, assoc_supervisor, co_supervisor} 字段，
+%           未设置的信息将不会显示；盲审模式下会例外地强制显示信息栏，
+%           显示顺序由预设规定，默认预设依次显示作者、学号、导师、院系、
+%           专业和学位（学号仅出现在中文标题页）。
 %           这种顺序也是这些信息的推荐设置顺序。如果需要更改该字段在标题页中的
 %           键显示名称，可以使用 \tn{SetInfoEntry} 命令。
 %     \item 在 \cls{sjtureport} 和 \cls{sjtuarticle} 文档类中，不需要使用语言代
@@ -859,8 +859,8 @@
 %   第一个参数指定语言，
 %   第二个参数使用键值列表指定字段的键名称和显示名称，各键值对间用英文逗号隔开，
 %   如 |supervisor={校内导师},co-supervisor={行业导师}|。
-%   键名只能包含小写字母、数字与连字符；不提供显示名称的键（裸键）只会被定义，
-%   不会显示在标题页信息表中。
+%   键名由小写字母、数字与连字符组成，且不能以数字或连字符开头；
+%   不提供显示名称的键（裸键）只会被定义，不会显示在标题页信息表中。
 %   显示名称以 |*| 开头表示该字段为敏感字段，在盲审模式下不可设定，
 %   如 |author={* 姓名}|；以 |!| 开头表示解除该字段的敏感状态，
 %   用于重定义预设中默认敏感的字段，如 |author={! 姓名}|。
@@ -897,9 +897,9 @@
 %
 % \begin{function}[rEXP,updated=2023-03-14]{info/<lang>/keywords}
 %   \begin{syntax}
-%     \OPT{\meta{lang}}/\OPT{keywords} = \marg{中文关键字}
+%     \OPT{\meta{lang}}/\OPT{keywords} = \marg{关键词}
 %   \end{syntax}
-%   关键字列表。各关键字之间需使用英文逗号隔开。
+%   关键词列表。各关键词之间需使用英文逗号隔开。
 %   为防止歧义，可以用分组括号“|{...}|”把各字段括起来。
 % \end{function}
 %
@@ -1042,7 +1042,7 @@
 %     \OPT{float-font} = \marg{字体设置}
 %   \end{syntax}
 %   图、表等浮动体的额外字体设置。
-%   默认为 |\zihao{5}|，五号字。
+%   默认为 |\zihao{5}|，五号字；学位论文另设 14bp 行距。
 % \end{function}
 %
 % \begin{function}[added=2022-12-20]{style/caption-font}
@@ -1050,7 +1050,7 @@
 %     \OPT{caption-font} = \marg{字体设置}
 %   \end{syntax}
 %   题注字体。
-%   默认为 |\zihao{5}\bfseries|，粗体五号字。
+%   默认为 |\zihao{5}\bfseries|，粗体五号字；学位论文另设 14bp 行距。
 % \end{function}
 %
 % \begin{function}[added=2022-12-20]{style/subcaption-font}
@@ -1058,7 +1058,7 @@
 %     \OPT{subcaption-font} = \marg{字体设置}
 %   \end{syntax}
 %   子图题注字体。
-%   默认为 |\zihao{5}\normalfont|，正常字重五号字。
+%   默认为 |\zihao{5}\normalfont|，正常字重五号字；学位论文另设 14bp 行距。
 % \end{function}
 %
 % \begin{function}[added=2024-03-21]{style/theorem-header-font}
@@ -1147,7 +1147,7 @@
 %   \end{syntax}
 %   页眉字体。
 %   \begin{itemize}
-%     \item 在 \cls{sjtuthesis} 文档类中，默认为 |\zihao{-5}|，小五号字。
+%     \item 在 \cls{sjtuthesis} 文档类中，默认为 |\zihao{-5}|，小五号字，另设 12bp 行距。
 %     \item 在 \cls{sjtureport} 和 \cls{sjtuarticle} 文档类中，默认为 |\zihao{-5}\sffamily|，小五号字黑体。
 %   \end{itemize}
 % \end{function}
@@ -1156,7 +1156,7 @@
 %   \begin{syntax}
 %     \OPT{footer-font} = \marg{页脚字体}
 %   \end{syntax}
-%   页脚字体。默认为 |\zihao{-5}|，小五号字。
+%   页脚字体。默认为 |\zihao{-5}|，小五号字；学位论文另设 12bp 行距。
 % \end{function}
 %
 % \begin{function}[added=2022-12-03,updated=2024-12-30]{style/page-number}
@@ -1227,7 +1227,7 @@
 %     |algorithm|          & 算法                   & Algorithm                     & Algorithmus            & アルゴリズム         \\
 %     |listalgorithm|      & 算法                   & List of Algorithms            & Algorithmenverzeichnis & アルゴリズム目次     \\
 %     |abbr| \rexpstar     & 缩略语对照表           & Abbreviation                  & Abkürzungsverzeichnis  & 略語表               \\
-%     |nom| \rexpstar      & 主要符号对照表         & Nomenclature                  & Symbolverzeichnis      & 記号表               \\
+%     |nom| \rexpstar      & 符号对照表             & Nomenclature                  & Symbolverzeichnis      & 記号表               \\
 %     |ack| \rexpstar      & 致谢                   & Acknowledgements              & Danksagungen           & 謝辞                 \\
 %     |resume| \rexpstar   & 个人简历               & Resume                        & Lebenslauf             & 履歴書               \\
 %     |digest| \rexpstar   & 大摘要                 & Digest                        & Kurzfassung            & 要約                 \\
@@ -1263,7 +1263,7 @@
 %   \tn{mainmatter} 之后的环境为 \opt{intoc}。
 % \end{function}
 %
-% \begin{function}[added=2025-01-12]{title}
+% \begin{function}[added=2025-01-12,label=]{title}
 %   \begin{syntax}
 %     \OPT{title} = \marg{小标题}
 %   \end{syntax}
@@ -1281,7 +1281,7 @@
 % 部分环境还提供了参数 \opt{lang}，用于设置环境的语言。
 % \begin{function}[added=2025-01-12,label=]{lang}
 %   \begin{syntax}
-%     \OPT{lang} = <(zh)|en|de|ja>
+%     \OPT{lang} = <zh|en|de|ja>
 %   \end{syntax}
 %   设置该环境的局部语言选项，默认与全局语言选项相同。
 %   该选项会设置该环境的局部语言排版设置。
@@ -1336,7 +1336,7 @@
 %
 % \begin{function}[updated=2024-12-20]{abstract}
 %   \begin{syntax}
-%     \BEV{abstract}\oarg{lang=<(zh)|en|de|ja>,标题参数}
+%     \BEV{abstract}\oarg{lang=<zh|en|de|ja>,标题参数}
 %     \  \meta{\textup{\cls{sjtuthesis}} 中的摘要}
 %     \EEV{abstract}
 %     \BEV{abstract}
@@ -1515,8 +1515,8 @@
 %     \  \meta{大摘要}
 %     \EEV{digest}
 %   \end{syntax}
-%   学士论文大摘要，可以设置可选参数，指定大摘要的局部语言会同步更改小标题
-%   为对应语言设置，默认为 \opt{lang=en}。
+%   大摘要，通常用于学士论文。可以设置可选参数，指定大摘要的局部语言会同步
+%   更改小标题为对应语言设置，默认为 \opt{lang=en}。
 % \end{function}
 %
 % \section{宏包依赖情况}
@@ -1539,8 +1539,9 @@
 %       \item \pkg{graphicx}，提供图形插入的接口。
 %       \item \pkg{enumitem}，设置列表环境格式。
 %     \end{itemize}
-%   \item 主语言为德语的文档会调用 \pkg{babel} 宏包，提供断词并接管
-%     \tn{languagename} 的切换；其他语言仅预注册模板语言。
+%   \item 当 \opt{babel=auto}（默认）时，主语言为德语的文档会调用 \pkg{babel}
+%     宏包，提供断词并接管 \tn{languagename} 的切换，其他语言仅预注册模板语言；
+%     \opt{babel=false} 时不载入，也不预注册。
 %   \item 部分西文与数学字体预设会调用相关的字体宏包，具体调用情况请参见对应的
 %     字体预设文件。
 %   \item 部分数字字体预设会调用 \pkg{unicode-math} 处理 Unicode 编码的
@@ -3754,8 +3755,7 @@
 % \end{macro}
 %
 % \changes{v2.0}{2023/03/17}{\env{abstract} 环境新增指定语言的可选参数。}
-% \changes{v2.1}{2023/11/29}{\env{abstract} 环境添加目录条目，
-% \env{abstract*} 环境对应修改为不添加目录条目。}
+% \changes{v2.1}{2023/11/29}{\env{abstract} 环境添加目录条目。}
 % \begin{macro}{abstract}
 % 学位论文摘要环境。
 %    \begin{macrocode}
@@ -3779,8 +3779,7 @@
 %
 % \subsubsection{目录列表}
 %
-% \changes{v2.1}{2023/11/29}{\tn{tableofcontents} 添加目录条目，
-% \tn{tableofcontents*} 对应修改为不添加目录条目。}
+% \changes{v2.1}{2023/11/29}{\tn{tableofcontents} 添加目录条目。}
 % \begin{macro}{\tableofcontents}
 % 目录。
 %    \begin{macrocode}
