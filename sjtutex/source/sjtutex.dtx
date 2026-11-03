@@ -1815,10 +1815,12 @@
 %
 % \subsection{文档选项}
 %
-% \begin{variable}{\g_@@_thesis_type_tl}
-% 论文类型。
+% \begin{variable}{\g_@@_thesis_type_tl,\c_@@_thesis_type_clist}
+% 论文类型与可选类型列表。
 %    \begin{macrocode}
 %<thesis>\tl_new:N \g_@@_thesis_type_tl
+%<thesis>\clist_const:Nn \c_@@_thesis_type_clist
+%<thesis>  { bachelor, master, doctor }
 %    \end{macrocode}
 % \end{variable}
 %
@@ -1968,8 +1970,7 @@
 %<*thesis>
     type .choice: ,
     type .value_required:n = true ,
-    type .choices:nn =
-      { bachelor, master, doctor }
+    type .choices:Vn = \c_@@_thesis_type_clist
       { \tl_gset_eq:NN \g_@@_thesis_type_tl \l_keys_choice_tl } ,
     type .initial:n = { master } ,
 %</thesis>
@@ -2155,6 +2156,21 @@
     \@@_conditional_const:nn { main_lang_ #1 }
       { \str_if_eq_p:Vn \g_@@_lang_tl {#1} }
   }
+%    \end{macrocode}
+% \end{macro}
+%
+% \changes{unreleased}{2026/11/03}{新增论文类型快捷判断条件。}
+% \begin{macro}[int,pTF]{\@@_if_thesis_type_bachelor:,
+% \@@_if_thesis_type_master:,\@@_if_thesis_type_doctor:}
+% 快捷判断论文类型。
+%    \begin{macrocode}
+%<*thesis>
+\clist_map_inline:Nn \c_@@_thesis_type_clist
+  {
+    \@@_conditional_const:nn { thesis_type_ #1 }
+      { \str_if_eq_p:Vn \g_@@_thesis_type_tl {#1} }
+  }
+%</thesis>
 %    \end{macrocode}
 % \end{macro}
 %
