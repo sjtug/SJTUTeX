@@ -1811,9 +1811,9 @@
   {
     \prop_set_from_keyval:Nn \l_tmpa_prop {#4}
     \prop_get:NVNTF \l_tmpa_prop #2 \l_tmpa_tl
-      { \tl_const:cx { c_@@_name_ #1 _ #3 _tl } { \l_tmpa_tl } }
+      { \tl_const:ce { c_@@_name_ #1 _ #3 _tl } { \l_tmpa_tl } }
       {
-        \msg_error:nnxxx { sjtutex } { name-const-missing }
+        \msg_error:nneee { sjtutex } { name-const-missing }
           {#1} {#3} { \tl_use:N #2 }
         \tl_const:cn { c_@@_name_ #1 _ #3 _tl } { }
       }
@@ -2339,7 +2339,7 @@
           {
             \cs_if_exist:cF { date \@@_babel_name:V \g_@@_lang_tl }
               {
-                \msg_warning:nnx { sjtutex } { babel-without-main-language }
+                \msg_warning:nne { sjtutex } { babel-without-main-language }
                   { \@@_babel_name:V \g_@@_lang_tl }
               }
             \exp_args:NV \@@_select_language:n \g_@@_lang_tl
