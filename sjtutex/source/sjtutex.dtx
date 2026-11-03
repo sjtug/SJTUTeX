@@ -1775,43 +1775,50 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}[int]{\@@_name_const:nn,\@@_name_const_table:n,
-% \@@_name_const_aux:nnn,\@@_name_const_indexed:nnn}
-% 定义默认名称常量的辅助函数。第一个参数为语种，第二个参数为键值列表；
-% 值以竖线开头表示索引列表：竖线后紧跟作为索引的整数变量，
-% 其后为逗号分隔的候选值列表，索引值指定取第几个候选
-% （仅 \cls{sjtuthesis} 使用），例如以 \cs{g_@@_thesis_type_int} 为
-% 索引变量的学位名称定义。
-% \cs{@@_name_const_table:n} 以语种为键、内层键值列表为值，
-% 便于一次定义多个语种。
+% \begin{macro}[int]{\@@_name_const:nn,\@@_name_const_aux:nnn}
+% 定义单个语种的名称常量。第一个参数为语种，第二个参数为键值列表。
 %    \begin{macrocode}
 \cs_new_protected:Npn \@@_name_const:nn #1#2
   { \keyval_parse:nnn { \use_none:n } { \@@_name_const_aux:nnn {#1} } {#2} }
+\cs_new_protected:Npn \@@_name_const_aux:nnn #1#2#3
+  { \tl_const:cn { c_@@_name_ #2 _ #1 _tl } {#3} }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}[int]{\@@_name_const_table:n}
+% 以语种为键、内层键值列表为值，便于一次定义多个语种。
+%    \begin{macrocode}
 \cs_new_protected:Npn \@@_name_const_table:n #1
   { \keyval_parse:nnn { \use_none:n } { \@@_name_const:nn } {#1} }
-\cs_new_protected:Npn \@@_name_const_aux:nnn #1#2#3
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}[int]{\@@_name_const_by_key:nnn,
+% \@@_name_const_by_key_aux:nnnn}
+% 按变量的取值查表定义常量，用于取值随变量变化的名称，例如学位名称
+% 随论文类型变化。第一个参数为常量名，第二个参数为提供键的变量，
+% 第三个参数为以语种为键、内层键值列表为值的表。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_name_const_by_key:nnn #1#2#3
   {
-    \tl_if_head_eq_charcode:nNTF {#3} |
-      { \@@_name_const_indexed:nnn {#1} {#2} {#3} }
-      { \tl_const:cn { c_@@_name_ #2 _ #1 _tl } {#3} }
+    \keyval_parse:nnn { \use_none:n }
+      { \@@_name_const_by_key_aux:nnnn {#1} {#2} } {#3}
   }
-\cs_new_protected:Npn \@@_name_const_indexed:nnn #1#2#3
+\cs_new_protected:Npn \@@_name_const_by_key_aux:nnnn #1#2#3#4
   {
-    \tl_set:Ne \l_tmpa_tl { \tl_tail:n {#3} }
-    \int_set:Nn \l_tmpa_int { \tl_head:V \l_tmpa_tl }
-    \clist_set:Ne \l_tmpa_clist { \tl_tail:V \l_tmpa_tl }
-    \tl_const:ce { c_@@_name_ #2 _ #1 _tl }
-      { \clist_item:Nn \l_tmpa_clist { \int_use:N \l_tmpa_int } }
+    \prop_set_from_keyval:Nn \l_tmpa_prop {#4}
+    \tl_const:cx { c_@@_name_ #1 _ #3 _tl }
+      { \prop_item:NV \l_tmpa_prop #2 }
   }
 %    \end{macrocode}
 % \end{macro}
 %
 % \subsection{文档选项}
 %
-% \begin{variable}{\g_@@_thesis_type_int}
+% \begin{variable}{\g_@@_thesis_type_tl}
 % 论文类型。
 %    \begin{macrocode}
-%<thesis>\int_new:N \g_@@_thesis_type_int
+%<thesis>\tl_new:N \g_@@_thesis_type_tl
 %    \end{macrocode}
 % \end{variable}
 %
@@ -1963,7 +1970,7 @@
     type .value_required:n = true ,
     type .choices:nn =
       { bachelor, master, doctor }
-      { \int_gset_eq:NN \g_@@_thesis_type_int \l_keys_choice_int } ,
+      { \tl_gset_eq:NN \g_@@_thesis_type_tl \l_keys_choice_tl } ,
     type .initial:n = { master } ,
 %</thesis>
 %    \end{macrocode}
