@@ -1797,8 +1797,11 @@
 % \@@_name_const_by_key_aux:nnnn}
 % 按变量的取值查表定义常量，用于取值随变量变化的名称，例如学位名称
 % 随论文类型变化。第一个参数为常量名，第二个参数为提供键的变量，
-% 第三个参数为以语种为键、内层键值列表为值的表。
+% 第三个参数为以语种为键、内层键值列表为值的表。表中缺少当前取值
+% 对应的项时报错。
 %    \begin{macrocode}
+\msg_new:nnn { sjtutex } { name-const-missing }
+  { Missing~value~for~name~constant~'#1'~in~language~'#2'~(key~'#3'). }
 \cs_new_protected:Npn \@@_name_const_by_key:nnn #1#2#3
   {
     \keyval_parse:nnn { \use_none:n }
@@ -1807,8 +1810,13 @@
 \cs_new_protected:Npn \@@_name_const_by_key_aux:nnnn #1#2#3#4
   {
     \prop_set_from_keyval:Nn \l_tmpa_prop {#4}
-    \tl_const:cx { c_@@_name_ #1 _ #3 _tl }
-      { \prop_item:NV \l_tmpa_prop #2 }
+    \prop_get:NVNTF \l_tmpa_prop #2 \l_tmpa_tl
+      { \tl_const:cx { c_@@_name_ #1 _ #3 _tl } { \l_tmpa_tl } }
+      {
+        \msg_error:nnxxx { sjtutex } { name-const-missing }
+          {#1} {#3} { \tl_use:N #2 }
+        \tl_const:cn { c_@@_name_ #1 _ #3 _tl } { }
+      }
   }
 %    \end{macrocode}
 % \end{macro}
