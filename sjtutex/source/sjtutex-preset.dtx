@@ -38,8 +38,11 @@
 %
 % \subsubsection{名称常量}
 % \changes{unreleased}{2026/09/03}{名称常量改用键值列表定义。}
+% \changes{unreleased}{2026/11/03}{学位名称常量改用类型名称作键，
+% 不再使用索引记号。}
 %
-% 学位论文名称与符号常量，按语种定义。
+% 学位论文名称与符号常量，按语种定义；学位名称随论文类型变化，
+% 故单独以类型名称作键定义。
 %    \begin{macrocode}
 %<*thesis>
 \@@_name_const_table:n
@@ -55,7 +58,6 @@
         auth_decl       = 使用授权书,
         decl_author     = 学位论文作者,
         decl_supervisor = 指导教师,
-        degree_level    = { | \g_@@_thesis_type_int 学士, 硕士, 博士 },
       },
     en =
       {
@@ -63,7 +65,6 @@
         address      = { Shanghai,~ P.R.~ China },
         title_page   = Title~ Page,
         declaration  = Statutory~ Declaration,
-        degree_level = { | \g_@@_thesis_type_int Bachelor, Master, Doctor },
       },
     de =
       {
@@ -71,7 +72,6 @@
         address      = { Shanghai,~ VR~ China },
         title_page   = Titelblatt,
         declaration  = Eidesstattliche~ Erklärung,
-        degree_level = { | \g_@@_thesis_type_int Bachelor, Master, Doktor },
       },
     ja =
       {
@@ -80,8 +80,14 @@
         thesis       = 学位請求論文,
         title_page   = 標題紙,
         declaration  = 誓約書・公表許諾書,
-        degree_level = { | \g_@@_thesis_type_int 学士, 修士, 博士 },
       },
+  }
+\@@_name_const_by_key:nnn { degree_level } { \g_@@_thesis_type_tl }
+  {
+    zh = { bachelor = 学士, master = 硕士, doctor = 博士 },
+    en = { bachelor = Bachelor, master = Master, doctor = Doctor },
+    de = { bachelor = Bachelor, master = Master, doctor = Doktor },
+    ja = { bachelor = 学士, master = 修士, doctor = 博士 }
   }
 %    \end{macrocode}
 %
